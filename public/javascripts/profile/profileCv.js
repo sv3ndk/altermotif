@@ -24,7 +24,7 @@ function initDeleteCv(okLabel, cancelLabel) {
 		"buttons" : [ {
 			text : okLabelValue,
 			click : function() {
-				$('#hiddenDeleteCvForm\\:hiddenDeleteCvButton').trigger('click');
+				$('#hiddenDeleteCvForm form').submit();
 				$(this).dialog("close");
 			}
 		},

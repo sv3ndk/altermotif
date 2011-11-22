@@ -28,7 +28,7 @@
 		<ul>
 			<li>
 				#{if userProfile.hasCv()}
-					<a href="${userProfile.cvLink.address}"><img src="@{'/public/images/pdficon.gif'}" class="iconLink"></img> <span class="dabLink">&{'viewMyCv'}</span></a>
+					<a href="${userProfile.cvLink.address}" target="_blank"><img src="@{'/public/images/pdficon.gif'}" class="iconLink"></img> <span class="dabLink">&{'viewMyCv'}</span></a>
 				#{/if}
 				#{if !userProfile.hasCv()}
 					<img src="@{'/public/images/pdficon.gif'}" class="iconLinkInactive"></img> <span class="dabLinkDisabled">&{'viewMyCv'}</span>
@@ -36,7 +36,7 @@
 			</li>
 			<li>
 				#{if userProfile.hasCv()}
-					<img id="removeCvButton" src="@{'/public/images/trash.png'}" class="iconLink"> <span class="dabLinkDisabled" id="removeCvLink">&{'removeMyCv'}</span>
+					<img id="removeCvButton" src="@{'/public/images/trash.png'}" class="iconLink"> <span class="dabLink" id="removeCvLink">&{'removeMyCv'}</span>
 				#{/if}
 				#{if !userProfile.hasCv()}
 					<img src="@{'/public/images/trash.png'}" class="iconLinkInactive"></img> <span class="dabLinkDisabled">&{'removeMyCv'}</span>
@@ -65,6 +65,16 @@
 		<img  src="@{'/public/images/image_upload.gif'}" class="iconLink" />
 	</div>
 
+
+	<div id="confirmDeleteCvPopup" title="&{'confirmationPopupTitle'}">
+		&{'profileConfirmDeleteCv'}
+	</div>
+
+	<div  style="display: none" id="hiddenDeleteCvForm">
+		#{form @profile.ProfileCv.deleteCv()}
+	
+		#{/form }
+	</div>
 
 </div>
 				

@@ -21,6 +21,7 @@ GET     /messages/inbox			                messages.MessagesInbox.MessagesInbox
 GET     /messages/outbox		                messages.MessagesOutbox.MessagesOutbox
 GET     /messages/deleted		                messages.MessagesDeleted.MessagesDeleted
 
+GET     /errors/upl				                errors.UploadError.uploadError
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

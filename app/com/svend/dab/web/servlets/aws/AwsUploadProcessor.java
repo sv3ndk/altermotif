@@ -1,5 +1,6 @@
 package com.svend.dab.web.servlets.aws;
 
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,12 +16,11 @@ import org.springframework.stereotype.Component;
 import com.svend.dab.core.IProfilePhotoService;
 import com.svend.dab.core.IUserProfileService;
 import com.svend.dab.core.beans.Config;
+import com.svend.dab.core.beans.DabUploadFailedException;
 import com.svend.dab.core.beans.profile.UserProfile;
-import com.svend.dab.web.servlets.DabUploadFailedException;
-import com.svend.dab.web.servlets.DabUploadFailedException.failureReason;
-import com.svend.dab.web.servlets.IUploadProcessor;
-import com.svend.dab.web.servlets.UPLOAD_TYPE;
-import com.svend.dab.web.servlets.UploadRequest;
+import com.svend.dab.core.beans.DabUploadFailedException.failureReason;
+import com.svend.dab.web.upload.IUploadProcessor;
+import com.svend.dab.web.upload.UPLOAD_TYPE;
 
 /**
  * This receives a parsed upload request and calls the appropriate business logic operations depending on the content
@@ -124,42 +124,42 @@ public class AwsUploadProcessor implements IUploadProcessor {
 	 * 
 	 * @return
 	 */
-	private UserProfile validatePermKeyAndGetProfile(UploadRequest uploadRequest) {
-
-		if (uploadRequest.getUploadPermKey() == null || uploadRequest.getUsername() == null || uploadRequest.getStream() == null) {
-			throw new DabUploadFailedException(failureReason.technicalError);
-		} else {
-
-			UserProfile profile = userProfileService.loadUserProfile(uploadRequest.getUsername(), false);
-
-			if (profile == null) {
-				throw new DabUploadFailedException(failureReason.userNotFound);
-			}
-
-			if (!uploadRequest.getUploadPermKey().equals(profile.getUploadPermKey())) {
-
-				logger.log(Level.WARNING, "upload key mismatch : " + uploadRequest.getUploadPermKey() + " != " + profile.getUploadPermKey() + " => waiting a bit more...");
-
-				// TODO: exponential back-off here..
-				try {
-					Thread.sleep(WAIT_PERIOD_IF_FAILED_PERM_KEY_IN_MILLS);
-				} catch (InterruptedException e) {
-					logger.log(Level.WARNING, "interrupted while sleeping (was retrying for )!?", e);
-				}
-
-				profile = userProfileService.loadUserProfile(uploadRequest.getUsername(), false);
-
-				if (!uploadRequest.getUploadPermKey().equals(profile.getUploadPermKey())) {
-					throw new DabUploadFailedException("cannot upload CV file: upload key mismatch : " + uploadRequest.getUploadPermKey() + " != " + profile.getUploadPermKey(),
-							failureReason.securityError);
-				}
-			}
-
-			return profile;
-
-		}
-	}
-
+//	private UserProfile validatePermKeyAndGetProfile(UploadRequest uploadRequest) {
+//
+//		if (uploadRequest.getUploadPermKey() == null || uploadRequest.getUsername() == null || uploadRequest.getStream() == null) {
+//			throw new DabUploadFailedException(failureReason.technicalError);
+//		} else {
+//
+//			UserProfile profile = userProfileService.loadUserProfile(uploadRequest.getUsername(), false);
+//
+//			if (profile == null) {
+//				throw new DabUploadFailedException(failureReason.userNotFound);
+//			}
+//
+//			if (!uploadRequest.getUploadPermKey().equals(profile.getUploadPermKey())) {
+//
+//				logger.log(Level.WARNING, "upload key mismatch : " + uploadRequest.getUploadPermKey() + " != " + profile.getUploadPermKey() + " => waiting a bit more...");
+//
+//				// TODO: exponential back-off here..
+//				try {
+//					Thread.sleep(WAIT_PERIOD_IF_FAILED_PERM_KEY_IN_MILLS);
+//				} catch (InterruptedException e) {
+//					logger.log(Level.WARNING, "interrupted while sleeping (was retrying for )!?", e);
+//				}
+//
+//				profile = userProfileService.loadUserProfile(uploadRequest.getUsername(), false);
+//
+//				if (!uploadRequest.getUploadPermKey().equals(profile.getUploadPermKey())) {
+//					throw new DabUploadFailedException("cannot upload CV file: upload key mismatch : " + uploadRequest.getUploadPermKey() + " != " + profile.getUploadPermKey(),
+//							failureReason.securityError);
+//				}
+//			}
+//
+//			return profile;
+//
+//		}
+//	}
+//
 	/**
 	 * @param stream
 	 * @param maxStreamSizeInBytes

@@ -6,7 +6,7 @@ import com.svend.dab.core.IUserProfileService;
 import com.svend.dab.core.UserProfileService;
 import com.svend.dab.core.beans.Config;
 import com.svend.dab.eda.errorhandling.NonFailingJsonMessageConverter;
-import com.svend.dab.web.servlets.IUploadProcessor;
+import com.svend.dab.web.upload.IUploadProcessor;
 
 public class BeanProvider {
 	
