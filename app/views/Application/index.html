@@ -1,0 +1,33 @@
+#{extends 'masterTemplate.html' /}
+
+#{set 'moreStyles'}
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/homepage.css'}" />
+#{/set}
+
+
+
+<div id="homePageTitleContainer">
+	<p id="homePageTitle1">
+		&{'homePageTitle1'}
+	</p>
+	<p id="homePageTitle2">
+		&{'homePageTitle2'}
+	</p>
+</div>
+
+
+<div id="homepageMainLogo">
+	<img src="@{'/public/images/homePageImage.png'}"></img>
+</div>
+
+
+<div id="homePageExplanationContainer">
+	<p class="homePageExplanation">
+		&{'homePageExplanation'}
+	</p>
+	<p class="homePageExplanation" id="lien">
+		<span class="dabLinkDisabled">&{'homePageFindAProject'}</span>  
+	</p>
+</div>
+
+

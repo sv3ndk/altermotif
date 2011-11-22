@@ -1,0 +1,15 @@
+<div >
+	<img class="userProfilePhoto"
+		src="${_mainPhoto.normalPhotoAddress}" />
+
+	<p class="centerParagraph ">
+		#{if _isPhotoGalleryVisible}
+			<a class="dabLink" href="${_mainPhoto.normalPhotoAddress}" title="${_mainPhoto.caption}" rel="profilePhotos">&{'profileMorePhotos'}</a>
+			#{list items:_photos, as:'onePhoto'}
+				#{if !onePhoto_isFirst}
+				<a href="${onePhoto.normalPhotoAddress}" rel="profilePhotos" style="display: none" title="${onePhoto.caption}">photo${onePhoto_index}</a>
+				#{/if}
+			#{/list}
+		#{/if}
+	</p>
+</div>

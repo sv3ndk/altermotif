@@ -1,0 +1,260 @@
+#{extends 'masterTemplate.html' /}
+
+#{set 'moreStyles'}
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/profile.css'}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/nondab/colorbox/colorbox.css'}" />
+#{/set}
+
+
+#{set 'moreScripts'}
+
+    <script src="@{'/public/javascripts/nondab/colorbox/jquery.colorbox.js'}" type="text/javascript"
+    	charset="${_response_encoding}"></script>
+    <script src="@{'/public/javascripts/profile/profileView.js'}" type="text/javascript"
+    	charset="${_response_encoding}"></script>
+    	
+    <script type="text/javascript">
+
+    	// ajax calls to get get new info regardingthe content of the page
+	   	var pollNewReceivedReferencesAction 		= #{jsAction @profile.ProfileView.getNewReceivedReferences(':alreadyKnownRefs', ':vuser') /};
+	   	var getRemovedReceivedReferencesJsonAction 	= #{jsAction @profile.ProfileView.getRemovedReceivedReferencesJson(':alreadyKnownRefs', ':vuser') /};
+	   	var pollNewSentReferencesAction 			= #{jsAction @profile.ProfileView.getNewSentReferences(':alreadyKnownRefs', ':vuser') /};
+	   	var getRemovedSentReferencesJsonAction 		= #{jsAction @profile.ProfileView.getRemovedSentReferencesJson(':alreadyKnownRefs', ':vuser') /};
+
+	    var getRemovedContactsJsonAction 			= #{jsAction @profile.ProfileView.getRemoveContacts(':vuser', ':knownPendingReceivedIds', , ':knownPendingSentIds', ':knownContactsIds') /};
+	   	var pollNewPendingReceivedContacsAction 	= #{jsAction @profile.ProfileView.getNewReceivedContactRequests(':alreadyKnownContacts', ':vuser') /};
+	   	var pollNewPendingSentContacsAction	 		= #{jsAction @profile.ProfileView.getNewSentContactRequets(':alreadyKnownContacts', ':vuser') /};
+	   	var pollNewContacsAction 					= #{jsAction @profile.ProfileView.getNewContacts(':alreadyKnownContacts', ':vuser') /};
+	    
+	    
+	    // ajax calls to post updates
+	    var postAReferenceAction = #{jsAction @profile.ProfileView.postLeaveAReference(':createdReferenceText', ':vuser') /};
+	    var removeAReferenceAction= #{jsAction @profile.ProfileView.postRemoveAReference(':deletedReferenceId', ':vuser') /};
+	    
+	    var addToMyContactsAction		= #{jsAction @profile.ProfileView.addToMyContacts(':invitationText', ':otherUser') /};
+	    var cancelContactRequestAction	= #{jsAction @profile.ProfileView.cancelContactRequest(':otherUser') /};
+	    var rejectContactRequestAction	= #{jsAction @profile.ProfileView.rejectContactRequest(':otherUser') /};
+	    var acceptContactRequestAction	= #{jsAction @profile.ProfileView.acceptContactRequest(':otherUser') /};
+	    var removeContactAction			= #{jsAction @profile.ProfileView.removeContact(':otherUser') /};
+
+    
+		$(document).ready(function() {
+			init("&{'OkButton'}", "&{'CancelButton'}", "${visitedUserProfile.privacySettings.profileActive}");
+		})
+	</script>
+#{/set}
+
+
+
+
+<div id="personalContainer"	class="pageContainer">
+
+	<p id="userProfileTitle" class="pageTitle">
+		#{if profileVisibility.firstNameVisible}
+			${visitedUserProfile.pdata.firstName}
+		#{/if}
+		#{if profileVisibility.lastNameVisible}
+			${visitedUserProfile.pdata.lastName}
+		#{/if}
+		#{if profileVisibility.neitherFirstNameNorlastNameIsVisible}
+			${visitedUserProfile.username}
+		#{/if}
+	</p>
+	
+	<div id="userProfilePhotoContainer">
+		#{photoGallery mainPhoto:visitedUserProfile.mainPhoto, photos:visitedUserProfile.photos, isPhotoGalleryVisible:profileVisibility.userPhotoGalleryVisible/}
+	</div>
+	
+	#{profile.userProfileBasicDetails visitedUserProfile:visitedUserProfile, profileVisibility:profileVisibility/}
+
+	<div class="userProfileSection" id="userProfilePersonalStuff">
+	
+		<dl>
+			<dt>
+				&{'profilePersonalObjectives'}:
+			</dt>
+			<dd>
+				${visitedUserProfile.pdata.personalObjective}
+			</dd>
+			<dt>
+				&{'profilePersonalDescription'}:
+			</dt>
+			<dd>
+				${visitedUserProfile.pdata.personalDescription}
+			</dd>
+			<dt>
+				&{'profilePersonalPhilosophy'}:
+			</dt>
+			<dd>
+				${visitedUserProfile.pdata.personalPhilosophy}
+			</dd>
+			<dt>
+				&{'profilePersonalAssets'}:
+			</dt>
+			<dd>
+				${visitedUserProfile.pdata.personalAssets}
+			</dd>
+		</dl>
+	</div>
+	
+	<div class="userProfileSection" id="profileReceivedReference">
+	
+		<div class="profileViewTogglableSection">
+			<span class="toggleLink dabLink" id="profileReceivedReferencesLink"></span>
+			<div id="receivedReferenceContainer" class="toggleContainer" style="display: none" >
+			
+				#{if profileVisibility.leaveAReferenceLinkVisible}
+					<span id="profileLeaveAReferenceLink" class="dabLink">&{'profileLeaveAReference'}</span>
+						<br />
+						<br />
+					
+				#{/if}
+				
+				 #{list items:visitedUserProfile.receivedReferences, as:'oneReference'}
+						#{profile.receivedReference reference: oneReference, loggedInUserProfileId:userSession.loggedInUserProfileId /}
+				 #{/list}
+			</div>
+		</div>
+
+		<div class="profileViewTogglableSection">
+			<span class="toggleLink dabLink" id="profileSentReferencesLink"></span>
+			<div id="writtendReferenceContainer" class="toggleContainer" style="display: none">
+				 #{list items:visitedUserProfile.writtenReferences, as:'oneReference'}
+						#{profile.writtenReference reference: oneReference, profileVisibility:profileVisibility/}
+				 #{/list}
+			</div>
+		</div>
+
+		<div class="profileViewTogglableSection">
+			<span class="toggleLink dabLink">&{'profileProjects'} (${visitedUserProfile.numberOfProjects}) </span>
+			<div class="toggleContainer" style="display: none">
+				 #{list items:visitedUserProfile.projects, as:'oneProject'}
+				 
+				 #{/list}
+			</div>
+		</div>
+
+		<div class="profileViewTogglableSection">
+			<span class="toggleLink dabLink">&{'profileGroups'}  </span>
+			<div class="toggleContainer" style="display: none">
+			</div>
+		</div>
+		
+		<div class="profileViewTogglableSection">
+			<span class="toggleLink dabLink" id="profileContactsLink"></span>
+			
+			#{if profileVisibility.pendingInvitationTextVisible}
+				<span class="profilePendingInvitations" id="profilePendingInvitations">&{'profileYouHavePendingInvitations'}</span>
+			#{/if}
+								
+			<div class="toggleContainer" id="contactsContainer" style="display: none">
+			
+				<div id="addToContact">
+					<span id="addToContactLink" class="dabLink" >&{'profileAddToContactsP1'} ${visitedUserProfile.username} &{'profileAddToContactsP2'}</span>
+					<br />
+					<br />
+				</div>
+				
+				<div id="cancelAddedToContact">
+					<span id="cancelAddedToContact_visited_Text">&{'profileAddedToContactsP1'} ${visitedUserProfile.username} &{'profileAddedToContactsP2'}</span>
+					<span id="cancelAddedToContact_visited_Link" class="dabLink" >&{'profileCancelAddedToContactRequest'}</span>
+					<br />
+					<br />
+				</div>
+			
+				#{if profileVisibility.visitingHisOwnProfile}
+					<div id="pendingReceivedContactRequestsContainer">
+						 #{list items:visitedUserProfile.pendingReceivedContactRequests, as:'oneContact'}
+								#{profile.receivedContactRequest contact: oneContact/}
+						 #{/list}
+					</div>
+	
+					<div id="pendingSentContactRequestsContainer">
+						 #{list items:visitedUserProfile.pendingSentContactRequests, as:'oneContact'}
+								#{profile.sentContactRequest contact: oneContact/}
+						 #{/list}
+					</div>
+				#{/if}
+
+
+					<div id="confirmedContactContainer">
+						 #{list items:visitedUserProfile.myActiveContacts, as:'oneContact'}
+								#{profile.contact contact: oneContact, profileVisibility:profileVisibility/}
+						 #{/list}
+					</div>
+			
+			</div>
+		</div>
+	
+	</div>
+	
+
+</div>
+
+
+
+<!-- hidden data -->
+<span id="vuser" style="display: none"}>${visitedUserProfile.username}</span>
+<span id="profileReceivedReferences" style="display: none"}>&{'profileReceivedReferences'}</span>
+<span id="profileWrittenReferences" style="display: none"}>&{'profileWrittenReferences'}</span>
+<span id="profileContacts" style="display: none"}>&{'profileContacts'}</span>
+<span id="isAddToContactLinkVisible" style="display: none"}>${profileVisibility.addToContactLinkVisible}</span>
+<span id="isAddedToContactLinkVisible" style="display: none"}>${profileVisibility.addedToContactVisible}</span>
+
+<img id="defaultProfileThumbImage" src="@{'/public/images/defaultProfilePicture.png'}" style="display: none"></img>
+<img id="defaultProfileImage" src="@{'/public/images/defaultProfilePicture.png'}" style="display: none"></img>
+
+
+<!-- reference popups -->
+
+<div id="leaveAReferencePopup"
+	title="&{'profileLeaveAReference'}">
+	<p>
+		&{'profileLeaveAReference'}
+	</p>
+
+	<textarea id="leaveAReferenceTextArea" cols="60" rows="6" ></textarea>
+</div>
+
+<div id="confirmRemoveWrittenReferenceDialog"
+	title="&{'confirmationPopupTitle'}">
+	&{'profileConfirmRemoveWrittenReference'}
+</div>
+
+<!-- contacts popups -->
+
+
+<div id="addToContactPopup"
+	title="&{'profileAddToContactsP1'} ${visitedUserProfile.username} &{'profileAddToContactsP1'}">
+	<textarea cols="45" rows="7"></textarea>
+</div>
+
+<div id="contactInvitationPopup"
+	title="&{'profileContactInvitationTextPopupTitle'}">
+	<textarea readonly="readonly" rows="7" cols="45" ></textarea>
+</div>
+
+<div id="addedToContactConfirmationPopup"
+	title="&{'confirmationPopupTitle'}">
+	&{'profileAddToContactConfirmed'}
+</div>
+
+<div id="cancelAddedToContactPopup"
+	title="&{'confirmationPopupTitle'}">
+	&{'profileConfirmRemoveRequestedContact'}
+</div>
+
+<div id="rejectAddedToContactPopup"
+	title="&{'confirmationPopupTitle'}">
+	&{'profileConfirmRejectRequestedContact'}
+</div>
+
+<div id="acceptAddedToContactPopup"
+	title="&{'confirmationPopupTitle'}">
+	&{'profileConfirmAcceptRequestedContact'}
+</div>
+
+<div id="removeContactPopup"
+	title="&{'confirmationPopupTitle'}">
+	&{'profileConfirmRemoveContact'}
+</div>

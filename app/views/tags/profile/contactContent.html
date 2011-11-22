@@ -1,0 +1,19 @@
+
+	<span class="hiddenContactId" style="display: none" id="${_contact.contactId}">${_contact.contactId}</span>
+
+	<img src="${_contact.otherUser.mainPhotoThumbLink}" class="profileContactThumb"></img>
+
+	<div class="profileContactLink">
+	
+		#{if _profileVisibility.visitingHisOwnProfile}
+			<img src="@{'/public/images/trash.png'}" class="deleteImageLink" ></img>
+			<span class="hiddenUserName" style="display: none">${_contact.otherUser.userName}</span>
+		#{/if}
+	
+		<a href="@{profile.ProfileView.profileView( _contact.otherUser.userName)}" class="dabLink">${_contact.otherUser.userName}</a>
+		
+		${_contact.otherUser.location}
+	</div>
+
+
+

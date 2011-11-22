@@ -1,0 +1,80 @@
+<div id="userProfileBasicDetails">
+	<table>
+		<tr>
+			<td><label>&{'profileUsername'}</label>
+			</td>
+			<td>${_visitedUserProfile.username}</td>
+		</tr>
+		#{if _profileVisibility.ageVisible}
+		<tr>
+			<td><label>&{'profileAge'}</label></td>
+			<td>${_visitedUserProfile.pdata.age} &{'yearsOld'}</td>
+		</tr>
+		#{/if}
+
+
+		#{if _profileVisibility.userProfileGenderVisible}
+		<tr>
+			<td><label>&{'profileGender'}</label></td>
+			<td>&{_visitedUserProfile.pdata.genderLabel}</td>
+		</tr>
+		#{/if}
+
+
+		<tr>
+			<td><label>&{'profileCity'}</label></td>
+			<td>${_visitedUserProfile.pdata.location}</td>
+		</tr>
+		
+		#{list items:_visitedUserProfile.pdata.languages, as:'oneLg'}
+			<tr>
+				<td>
+					#{if oneLg_isFirst}
+						<label>&{'profileLanguages'}</label>
+					#{/if}
+				</td>
+				<td>&{oneLg.name} : &{'level' + oneLg.level}</td>
+			</tr>
+		#{/list}
+
+		<tr>
+			<td><label>&{'profileLatestLogin'}</label></td>
+			<td>${_visitedUserProfile.dateOfLatestLogin.format(controllers.BeanProvider.config.dateDisplayFormat)}</td>
+		</tr>
+
+		<tr>
+			<td><label>&{'profileWebSite'}</label></td>
+			<td><a href="${_visitedUserProfile.pdata.website}" class="dabLink">${_visitedUserProfile.pdata.website}</a></td>
+		</tr>
+		
+		
+		#{if _profileVisibility.cvLinkVisible}
+		<tr>
+			<td id="viewProfileCvLink">
+				<a href="${_visitedUserProfile.cvLink.address}" class="dabLink" target="_blank">
+					<img src="@{'/public/images/pdficon.gif'}" class="iconLink" id="downloadCvButton"></img>
+				</a>
+				<a href="${_visitedUserProfile.cvLink.address}" class="dabLink" target="_blank">
+					&{'profileCV'}
+				</a>
+			</td>
+			<td></td>
+		</tr>
+		#{/if}
+		
+		
+		
+		#{if _profileVisibility.mayContactThisUser}
+		<tr>
+			<td>
+				<a href="@{messages.MessagesNew.messagesNew(_visitedUserProfile.username)}" class="dabLink">&{'profileContactThisUser'} ${_visitedUserProfile.username}</a>
+			</td>
+			<td></td>
+		</tr>
+		#{/if}
+
+
+
+	</table>
+
+</div>

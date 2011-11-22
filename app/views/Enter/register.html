@@ -1,0 +1,119 @@
+#{extends 'masterTemplate.html' /}
+
+
+#{set 'moreStyles'}
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/nondab/jquery/jquery.buttonCaptcha.styles.css'}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/enter/register.css'}" />
+#{/set}
+
+
+#{set 'moreScripts'}
+    <script src="@{'/public/javascripts/enter/register.js'}" type="text/javascript"
+    	charset="${_response_encoding}"></script>
+    <script src="@{'/public/javascripts/nondab/jquery/jquery.buttonCaptcha.min.js'}" type="text/javascript"
+    	charset="${_response_encoding}"></script>
+    	
+    <script type="text/javascript">
+		$(document).ready(function() {
+			initCaptcha("&{'registerPageCaptchaTitle'}", "${captcha.value }");
+		})
+	</script>
+#{/set}
+
+
+		
+<div id="registerWelcomText">
+	&{'registerPageWelcomText'}
+</div>
+
+
+
+<div id="registerMenu">
+		
+	#{form @Enter.doRegister() }
+
+		<p class="registerMessage">
+			&{'registerMessage'}
+		</p>
+
+		<table>
+		
+			<tr>
+				<td><label>&{'username'}: </label></td>
+				<td><input type="text" id="username" name="createdProfile.username" value="${flash['createdProfile.username']}" size="25"/></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><div class="errorMessage">#{error 'createdProfile.username' /}</div></td>
+			</tr>
+
+			<tr>
+				<td><label>&{'profileFirstName'}: </label></td>
+				<td><input type="text" id="firstname" name="createdProfile.firstName" value="${flash['createdProfile.firstName']}" size="25"/></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><div class="errorMessage">#{error 'createdProfile.firstname' /}</div></td>
+			</tr>
+
+			<tr>
+				<td><label>&{'profileLastName'}: </label></td>
+				<td><input type="text" id="lastName" name="createdProfile.lastName" value="${flash['createdProfile.lastName']}" size="25"/></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><div class="errorMessage">#{error 'createdProfile.lastName' /}</div></td>
+			</tr>
+
+			<tr>
+				<td><label>&{'profileDateOfBirth'}: </label></td>
+				<td><input type="text" id="dateOfBirth" name="createdProfile.dateOfBirthStr" value="${flash['createdProfile.dateOfBirthStr']}" size="11"/></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><div class="errorMessage">#{error 'createdProfile.dateOfBirthStr' /}</div></td>
+			</tr>
+
+			<tr>
+				<td><label>&{'profileEmail'}: </label></td>
+				<td><input type="text" id="email" name="createdProfile.email" value="${flash['createdProfile.email']}" size="25"/></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><div class="errorMessage">#{error 'createdProfile.email' /}</div></td>
+			</tr>
+
+			<tr>
+				<td><label>&{'password'}: </label></td>
+				<td><input type="password" id="firstpassword" name="createdProfile.firstpassword"  size="25"/></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><div class="errorMessage">#{error 'createdProfile.firstpassword' /}</div></td>
+			</tr>
+
+			<tr>
+				<td><label>&{'passwordAgain'}: </label></td>
+				<td><input type="password" id="secondpassword" name="createdProfile.secondpassword"  size="25"/></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><div class="errorMessage">#{error 'createdProfile.secondpassword' /}</div></td>
+			</tr>
+			
+		</table>
+
+		<p class="registerButton ">
+				<input type="submit" value=" &{'registerButtonText'} "
+					id="registerButton" />
+		</p>
+
+	#{/form}
+
+
+</div>
+
+<div id="belowRegisterMenu">
+	<label>&{'alreadyAMember'} </label>
+	<a href="@{Enter.login()}" class="dabLink">&{'signIn'}</a>
+</div>

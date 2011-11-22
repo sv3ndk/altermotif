@@ -1,0 +1,14 @@
+
+
+<div class="oneProjectParticipationLine">
+
+	<img src="${_participation.projectSummary.mainPhotoThumbLink}" styleClass="oneLinerThumb" />
+
+	<div>
+		<a href="@{projects.ProjectsView.projectsView( _participation.projectSummary.projectId )}" class="dabLink">${_participation.projectSummary.name}</a>
+		<br />
+		&{'projectRole'}: &{_participation.role.label}
+		<br />
+		&{'projectStatus'}: &{_participation.projectSummary.status.label}
+	</div>
+</div>

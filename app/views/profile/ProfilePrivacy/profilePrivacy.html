@@ -1,0 +1,103 @@
+#{extends 'masterTemplate.html' /}
+
+#{set 'moreStyles'}
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/profile.css'}" />
+#{/set}
+
+
+#{set 'moreScripts'}
+    <script src="@{'/public/javascripts/profile/profilePrivacy.js'}" type="text/javascript"
+    	charset="${_response_encoding}"></script>
+    	
+    <script type="text/javascript">
+			var okLabelValue = "&{'OkButton'}";
+			var cancelLabelTextValue = "&{'CancelButton'}";
+			var warningUnsavedChangesTextValue = "&{'warningUnsavedChangesText'}";
+
+			$(document).ready(function() {
+			
+			init();
+
+		})
+	</script>
+#{/set}
+
+
+
+<div id="privacyContainer" class="pageContainer">
+
+	<div id="editProfileContainer">
+	
+	
+				<div id="editForm">
+				#{form @profile.ProfilePrivacy.doEdit() }
+				<table>
+							<tr>
+								<td class="formlabel"><span >&{'privacySettingsProfileIsActive'}: </span></td>
+								<td><input type="checkbox" name="privacySetting.profileActive" class="profileActiveCheckbx" ${editedPrivacy.profileActive ? 'checked' : ''} ></input> </td>
+							</tr>
+							<tr>
+								<td><br /> 	</td>
+							</tr>
+						
+							#{profile.privacySetting  
+								settingLabel:"privacySettingsFirstName", 
+								visibilityName:"settings.firstNameVisibility", 
+								visibilityId:"firstName", 
+								visibilityProfileVal:editedPrivacy.firstNameVisibility	
+								/}
+							
+							#{profile.privacySetting  
+								settingLabel:"privacySettingsLastName", 
+								visibilityName:"settings.lastNameVisibility", 
+								visibilityId:"lastName", 
+								visibilityProfileVal:editedPrivacy.lastNameVisibility,
+								explanation: messages.get('privacySettingsNameExplanation') + userSession.loggedInUserProfileId
+								/}
+							
+							#{profile.privacySetting  
+								settingLabel:"privacySettingsAge", 
+								visibilityName:"settings.ageVisibility", 
+								visibiliRrotyId:"age", 
+								visibilityProfileVal:editedPrivacy.ageVisibility,
+								/}
+								
+							#{profile.privacySetting  
+								settingLabel:"privacySettingsPhotos", 
+								visibilityName:"settings.photosVisibility", 
+								visibilityId:"photos", 
+								visibilityProfileVal:editedPrivacy.photosVisibility,
+								explanation: messages.get('privacySettingsPhotoExplanation') 
+								/}
+								
+							#{profile.privacySetting  
+								settingLabel:"privacySettingsCV", 
+								visibilityName:"settings.cvVisibility", 
+								visibilityId:"cv", 
+								visibilityProfileVal:editedPrivacy.cvVisibility,
+								/}
+
+					
+					
+					<tr id="visibleButtons">
+						<td><input id="updatePrivacySettingsButton" type="button" value=" &{'privacySettingsConfirmButton'} " disabled="disabled"> </input> </td>
+						<td><input id="cancelPrivacySettingsButton" type="button" value=" &{'privacySettingsCancelChanges'} " disabled="disabled"> </input> </td>
+					</tr>
+				</table>
+					#{/form}
+			</div>
+				
+				
+			<div id="cancelForm">			
+			#{form @profile.ProfilePrivacy.cancel() }
+			#{/form}
+			</div>
+			
+			<div id="confirmDeactivateProfilePopup"
+				title="&{'confirmationPopupTitle'}">
+				<span>&{'privacySettingsConfirmDeactivateProfile'}</span>
+			</div>
+			
+	
+	</div>
+</div>

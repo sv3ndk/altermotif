@@ -1,0 +1,20 @@
+<tr>
+	<td class="formlabel"><label>&{_settingLabel}: </label></td>
+	<td>
+			#{select _visibilityName, value: _visibilityProfileVal, id:_visibilityId}
+				#{option 'everybody'}&{'privacySettingsEverybody'}#{/option}
+				#{option 'loggedin'}&{'privacySettingsloggedInUsers'}#{/option}
+				#{option 'mycontacts'}&{'privacySettingsmyContacts'}#{/option}
+				#{option 'nobody'}&{'privacySettingsNobody'}#{/option}
+			#{/select}
+			<br />
+			<span class="formFieldExplanation">${_explanation}</span>
+			
+	
+	</td>
+</tr>
+
+<tr>
+	<td></td>
+	<td></td>
+</tr>

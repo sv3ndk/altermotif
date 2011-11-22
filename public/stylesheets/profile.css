@@ -1,0 +1,321 @@
+/* basic mechanics for the whole profile page (with the 4 tabs) */
+*/
+
+#profileMenu {
+	margin-top: -35px;
+	margin-left: 200px;
+	color: #000000;
+	float: left;
+	font: italic 1.3em Cambria, Times New Roman, serif;
+}
+
+#messagesMenu {
+	margin-top: 0px;
+	margin-left: 200px;
+	color: #000000;
+	float: left;
+	font: italic 1.3em Cambria, Times New Roman, serif;
+}
+
+#messagesMenu li,#profileMenu li {
+	display: inline;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+#messagesMenu li a,#profileMenu li a {
+	background: none repeat scroll 0 0 #BBBBBB;
+	/*    display: block; */
+	font-size: 0.7em;
+	font-style: normal;
+	font-weight: bold;
+	margin: 1px;
+	padding: 2px 6px 4px;
+	text-align: left;
+	text-decoration: none;
+	width: 80px;
+}
+
+#messagesMenu li a:hover,#profileMenu li a:hover {
+	background: none repeat scroll 0 0 #DADADA;
+	width: 86px;
+}
+
+#messagesMenu li a.selected,#profileMenu li a.selected {
+	background: none repeat scroll 0 0 #EFEFEF;
+	color: #000000;
+	cursor: default;
+	width: 90px;
+}
+
+
+/**************************
+home page
+****************************/
+.notificationContainer {
+	margin-top: 100px;
+}
+
+.homeToggleBlock {
+	margin: 20px 0px 20px 0px;
+}
+
+
+
+/* ********
+ style for the view profile tab
+*/
+
+
+#userProfilePhotoContainer {
+	width: 300px;
+	float: left;
+	margin-left: 3%;
+	text-align: center;
+}
+
+.userProfilePhoto {
+	max-width: 300px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#viewProfileCvLink a.dabLink {
+	margin-left: 10px;
+}
+
+#userProfileBasicDetails {
+	width: 30%;
+	float: left;
+	margin-left: 50px;
+}
+
+#userProfileBasicDetails label {
+	font-weight: bold;
+	margin-right: 10px;
+}
+
+#userProfilePersonalStuff {
+	clear: both;
+	max-width: 70%;
+	padding: 30px;
+}
+
+#userProfilePersonalStuff dt {
+	font-weight: bold;
+	margin-top: 5px;
+}
+
+.profileViewTogglableSection {
+	margin-bottom: 15px;
+}
+
+#profileReceivedReference {
+	 margin-top: 20px;
+}
+
+#profileWrittenReferences {
+	
+}
+
+
+.profileReference {
+	border: 1px solid;
+	padding: 20px;
+	margin: 20px 0;
+}
+
+.referenceFromFor {
+	font-weight: bold;
+}
+
+
+.profileContact {
+	border: 1px solid;
+	padding: 20px;
+	margin: 20px 0;
+	height: 80px;
+}
+
+
+.profileContactLink {
+	margin-top: 30px;
+}
+
+.profileContactThumb {
+	float: left;
+	border: none;
+	height: 80px;
+	padding: 0 10px 0 0;
+}
+
+.profilePendingInvitations {
+	font-style: italic;
+	font-weight: bold;
+	margin-left: 10px;
+}
+
+#profileLeaveAReference {
+	margin-bottom: 10px;
+}
+
+/* ********
+ style for the edit profile tab
+*/
+#editProfileContainer {
+	margin-top: 30px;
+	margin-left: 15%;
+}
+
+#editProfileContainer td {
+	vertical-align: top;
+	padding: 10px 0 0 10px;
+}
+
+
+#editProfileContainer .errorRow td{
+	padding: 0px 0 0 10px;
+}
+
+.editProfileUpdateBottomButton {
+	 margin: 30px 10px 10px 120px;
+}
+
+.editProfileCancelBottomButton {
+	margin: 30px 10px 10px 15px;
+}
+
+#city_map_canvas {
+	width: 365px;
+	height: 250px;
+	margin-top: -15px ;
+}
+
+.latLongData {
+	font-size: 0.7em;
+	float: right;
+	text-align: right;
+	background: none repeat scroll 0 0 white;
+	border: thin none;
+	margin: 0 5px;
+}
+
+.languageLabel {
+	float: left;
+	width: 100px;
+}
+
+.languageAutoComplete {
+	margin: 10px 10px 15px 0;
+}
+
+.cancelAddLanguageButton {
+	text-decoration: underline;
+	cursor: pointer;
+	color: blue;
+	font-weight: normal;
+	margin-left: 15px;
+}
+
+/* ********
+ style for the edit profile tab
+*/
+
+.genderRadio {
+	margin: 10px;
+}
+
+
+#profileMPThumbContainer {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 30px;
+	width: 860px;
+}
+
+#profileMPThumbContainer img {
+	float: left;
+	max-height: 75px;
+	max-width: 75px;
+	margin: 5px;
+	cursor: pointer;
+}
+
+#profileMPThumbContainer img.yoohoo {
+	border: 2px solid;
+	padding: 2px;
+	margin: 3px;
+}
+
+#profileMPCentralPhotoContainer {
+	clear: left;
+	margin-left: auto;
+	margin-right: auto;
+	width: 500px;
+}
+
+#profileMPCentralPhoto {
+	width: 100%;
+	margin-top: -80px;
+	margin-bottom: 20px;
+}
+
+#profileMPToolboxFiller {
+	clear: left;
+	float: left;
+	height: 10px;
+	width: 50%;
+}
+
+#profileMPToolbox {
+	float: left;
+	margin-left: 250px;
+	margin-top: 20px;
+}
+
+#profileMPToolbox ul li {
+	list-style: none outside none;
+	margin-left: 0;
+	padding-left: 0;
+	margin-bottom: 6px;
+}
+
+#profileMPToolbox ul li span {
+	margin-left: 8px;
+}
+
+#pleaseWaitDialog img.progress {
+	margin-left: 30px;
+	margin-top: 10px;
+	text-align: center;
+}
+
+#photoActions {
+	margin-left: 100px;
+	margin-top: 70px;
+}
+
+#photoActions ul li {
+	list-style: none;
+	margin-bottom: 10px;
+}
+
+#photoActions ul li span,#photoActions ul li a.dabLink {
+	margin-left: 10px;
+}
+
+#profilePhotoMpcaptionDiv {
+	text-align: center;
+}
+
+/* ********
+ style for the manage cv screen
+*/
+#cvConfirmUpload {
+	margin-left: 10px;
+}
+
+#cvFileName {
+	font-style: italic;
+	padding-left: 50px;
+}

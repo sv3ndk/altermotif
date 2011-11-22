@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:task="http://www.springframework.org/schema/task" xmlns:cloud="http://schema.cloudfoundry.org/spring"
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo" xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    	http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/s 	pring-context-3.0.xsd
+        http://www.springframework.org/schema/tx
+     	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+     	http://www.springframework.org/schema/data/mongo
+        http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
+        http://schema.cloudfoundry.org/spring http://schema.cloudfoundry.org/spring/cloudfoundry-spring-0.7.xsd
+        http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.0.xsd">
+
+	<!-- ================================ basic stuff ========================== -->
+
+	<context:annotation-config />
+	<context:component-scan base-package="com.svend" />
+
+	<bean id="validator"
+      class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+
+
+	<!-- ================================ RabbitMQ config ========================== -->
+
+	<!-- 
+	
+	todo: put this back...
+
+	<bean id="dabEventTemplate" class="org.springframework.amqp.rabbit.core.RabbitTemplate">
+		<property name="connectionFactory" ref="rabbitConnectionFactory"/>
+		<property name="messageConverter" ref="jsonEventConverter"/>
+		<property name="routingKey" value="dab.events"/>
+	</bean>
+
+	<bean id="dabRetryEventTemplate" class="org.springframework.amqp.rabbit.core.RabbitTemplate">
+		<property name="connectionFactory" ref="rabbitConnectionFactory"/>
+		<property name="messageConverter" ref="jsonEventConverter"/>
+		<property name="routingKey" value="dab.events.retry"/>
+		<property name="queue" value="dab.events.retry"/>
+		<property name="channelTransacted" value="true"/>
+	</bean>
+
+	<rabbit:template id="dabEventTemplate" connection-factory="rabbitConnectionFactory" message-converter="jsonEventConverter" routing-key="dab.events" />
+
+	<rabbit:template id="dabRetryEventTemplate" connection-factory="rabbitConnectionFactory" message-converter="jsonEventConverter" routing-key="dab.events.retry"
+		queue="dab.events.retry" channel-transacted="true" />
+
+	<rabbit:listener-container connection-factory="rabbitConnectionFactory" message-converter="jsonEventConverter" error-handler="receptionEventErrorHandler">
+		<rabbit:listener queues="dab.events" ref="eventHandler" method="handle" />
+	</rabbit:listener-container>
+	
+	 -->
+	
+
+	<!-- Request that queues, exchanges and bindings be automatically declared on the broker: 
+	-->
+	<rabbit:admin connection-factory="rabbitConnectionFactory" />
+	
+
+	<!-- Declare the "messages" queue: 
+	-->
+	<rabbit:queue name="dab.events" durable="true" />
+
+	<rabbit:queue name="dab.events.retry" durable="true" />
+
+
+	<task:annotation-driven scheduler="myScheduler" executor="myExecutor" />
+	<task:executor id="myExecutor" pool-size="1" />
+	<task:scheduler id="myScheduler" pool-size="1" />
+
+	<tx:annotation-driven transaction-manager="txManager" />
+
+
+	<!-- connection directly injected by cloudfoundry
+	<cloud:rabbit-connection-factory id="rabbitConnectionFactory" />
+	-->
+	
+	<!--  local deployment
+	<bean id="rabbitConnectionFactory" class="org.springframework.amqp.rabbit.connection.CachingConnectionFactory"></bean>
+	-->
+	
+ 	<!-- CF deployment 
+ {"rabbitmq-2.4":[{"name":"rabbitmq-altermotif-dev","label":"rabbitmq-2.4","plan":"free","tags":["rabbitmq"],"credentials":{"url":"amqp://wwfbvdve:wBZIjIwaNvvZrfEn@172.30.48.102:11096/ztzduacf"}}],
+ 
+ amqp://wwfbvdve:wBZIjIwaNvvZrfEn@172.30.48.102:11096/ztzduacf
+	<bean id="rabbitConnectionFactory" class="org.springframework.amqp.rabbit.connection.CachingConnectionFactory">
+		<property name="username" value="wwfbvdve"/>
+		<property name="password" value="wBZIjIwaNvvZrfEn"/>
+		<property name="host" value="172.30.48.102"/>
+		<property name="port" value="11096"/>
+		<property name="virtualHost" value="ztzduacf"/>
+	</bean>
+
+	<bean id="receptionEventErrorHandler" class="com.svend.dab.eda.errorhandling.EventReceptionErrorHandler"></bean>
+
+	<bean id="txManager" class="org.springframework.amqp.rabbit.transaction.RabbitTransactionManager">
+		<property name="connectionFactory" ref="rabbitConnectionFactory"></property>
+	</bean>
+	
+	<bean class="com.svend.dab.eda.errorhandling.NonFailingJsonMessageConverter" id="jsonEventConverter" />
+ 	-->
+
+	<!-- ================================ MongoDB config ========================== -->
+
+	<!--  cloud:mongo-db-factory id="mongoDbFactory" /-->
+
+<!-- 
+	<mongo:mongo id="mongo" host="localhost" port="27017" />
+	
+	<mongo:db-factory  dbname="dabdb" host="127.0.0.1" port="27017" username="" password="" />
+
+ -->
+ 
+ 	<!-- local deployment  
+ 	-->
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg >
+			<bean class="org.springframework.data.mongodb.core.SimpleMongoDbFactory" >
+				<constructor-arg name="mongo">
+					<bean class="com.mongodb.Mongo">
+						<constructor-arg name="host" value="localhost" />
+						<constructor-arg name="port" value="27017" />
+					</bean>
+				</constructor-arg>
+				<constructor-arg name="databaseName" value="dabdb" />
+			</bean>
+		</constructor-arg>
+	</bean>
+	
+ 	<!-- CF deployment 
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg >
+			<bean class="org.springframework.data.mongodb.core.SimpleMongoDbFactory" >
+				<constructor-arg name="mongo">
+					<bean class="com.mongodb.Mongo">
+						<constructor-arg name="host" value="172.30.48.72" />
+						<constructor-arg name="port" value="25063" />
+					</bean>
+				</constructor-arg>
+				<constructor-arg name="databaseName" value="db" />
+				<constructor-arg name="userCredentials">
+					<bean class="org.springframework.data.authentication.UserCredentials">
+						<constructor-arg name="username" value="bf6dcf65-6a85-4e23-ac49-0c59547ad78c"/>
+						<constructor-arg name="password" value="d450ffe8-2f8d-49ed-85b3-e507667569a2"/>
+					</bean>
+				</constructor-arg>
+				
+			</bean>
+		</constructor-arg>
+	</bean>
+ 	 -->
+ 
+
+ 	<mongo:repositories base-package="com.svend.dab.dao.mongo" >
+ 	</mongo:repositories>
+
+
+<!-- 
+	
+	"mongodb-1.8":[{"name":"mongodb-altermotif-dev","label":"mongodb-1.8","plan":"free","tags":["mongodb","mongodb-1.8","nosql"],"credentials":
+	{"hostname":"172.30.48.72","host":"172.30.48.72","port":25063,"username":"bf6dcf65-6a85-4e23-ac49-0c59547ad78c","password":"d450ffe8-2f8d-49ed-85b3-e507667569a2",
+	"name":"1888afcc-41f0-4995-b9cd-422cab8bb30c","db":"db"}}]} -->
+
+ -->
+ 	
+</beans>

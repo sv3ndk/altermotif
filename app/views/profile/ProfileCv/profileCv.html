@@ -1,0 +1,70 @@
+#{extends 'masterTemplate.html' /}
+
+#{set 'moreStyles'}
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/profile.css'}" />
+#{/set}
+
+
+#{set 'moreScripts'}
+    <script src="@{'/public/javascripts/profile/profileCv.js'}" type="text/javascript"
+    	charset="${_response_encoding}"></script>
+    	
+    <script type="text/javascript">
+    
+		var okLabelValue = "&{'OkButton'}";
+		var cancelLabelValue = "&{'CancelButton'}";
+    
+		$(document).ready(function() {
+			init();
+		})
+	</script>
+#{/set}
+
+
+
+<div class="pageContainer">
+
+	<div id="photoActions">
+		<ul>
+			<li>
+				#{if userProfile.hasCv()}
+					<a href="${userProfile.cvLink.address}"><img src="@{'/public/images/pdficon.gif'}" class="iconLink"></img> <span class="dabLink">&{'viewMyCv'}</span></a>
+				#{/if}
+				#{if !userProfile.hasCv()}
+					<img src="@{'/public/images/pdficon.gif'}" class="iconLinkInactive"></img> <span class="dabLinkDisabled">&{'viewMyCv'}</span>
+				#{/if}
+			</li>
+			<li>
+				#{if userProfile.hasCv()}
+					<img id="removeCvButton" src="@{'/public/images/trash.png'}" class="iconLink"> <span class="dabLinkDisabled" id="removeCvLink">&{'removeMyCv'}</span>
+				#{/if}
+				#{if !userProfile.hasCv()}
+					<img src="@{'/public/images/trash.png'}" class="iconLinkInactive"></img> <span class="dabLinkDisabled">&{'removeMyCv'}</span>
+				#{/if}
+			</li>
+			<li >
+				<img id="uploadCvButton" src="@{'/public/images/upload.png'}" class="iconLink"></img> <span id="uploadCvLink" class="dabLink">&{'profileSelectCvToUpload'}</span>
+			</li>
+			
+		</ul>
+	</div>
+	
+	
+	<!-- this form is used to actually submit data to the upload servlet -->
+	<div  style="display: none" id="hiddenForm">
+	<form id="hiddenUploadCvForm" method="post"
+		enctype="multipart/form-data" action="@{profile.ProfileCv.uploadCv()}"   >
+		<input type="file" id="theFile" name="theFile" value=" " />
+		<input type="hidden" name="uploadtype" value="CV" /> 
+	</form>
+	</div>
+	
+	<div id="pleaseWaitDialog">
+		&{'uploadCVPleaseWait'}
+		<br />
+		<img  src="@{'/public/images/image_upload.gif'}" class="iconLink" />
+	</div>
+
+
+</div>
+				

@@ -1,0 +1,35 @@
+
+#registerMenu {
+	border: 1px solid;
+    margin-left: 200px;
+    width: 380px;
+    padding: 10px;
+}
+
+#registerWelcomText {
+	padding: 30px;
+}
+
+
+.loginMessage {
+	margin-top: 20px;
+	text-align: center;	
+	font-weight: bold;
+}
+
+.registerMessage {
+	margin-top: 20px;
+	font-weight: bold;
+}
+
+.registerButton {
+	margin-bottom: 20px;	
+	text-align: center;
+}
+
+#belowRegisterMenu {
+	margin-left: 350px;
+    margin-top: 1%;
+}
+
+

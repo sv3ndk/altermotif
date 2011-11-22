@@ -1,0 +1,64 @@
+#{extends 'masterTemplate.html' /}
+
+#{set 'moreStyles'}
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/enter/login.css'}" />
+#{/set}
+
+
+#{set 'moreScripts'}
+    <script src="@{'/public/javascripts/enter/login.js'}" type="text/javascript"
+    	charset="${_response_encoding}"></script>
+    	
+    <script type="text/javascript">
+		$(document).ready(function() {
+			init();
+		})
+	</script>
+#{/set}
+
+
+<div id="signinMenu">
+	
+	#{form @Enter.doLogin() }
+
+		<p class="loginMessage">
+			&{'loginMessage'}
+		</p>
+
+		<table>
+			<tr>
+				<td><label>&{'username'}: </label></td>
+				<td><input type="text" id="usernameInput" name="username" value="${flash.username}"/></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><div class="errorMessage">#{error 'username' /}</div></td>
+			</tr>
+			<tr>
+				<td><label>&{'password'}: </label></td>
+				<td><input type="password" id="password" name="password" /></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><div class="errorMessage">#{error 'password' /}</div></td>
+			</tr>
+		
+		</table>
+
+		<p class="loginButton">
+			<input type="submit" value=" &{'loginButtonText'} "></input>
+		</p>
+	#{/form}
+
+</div>
+
+<div id="belowSigninMenu">
+	&{'notYetAMember'}
+	<a href="@{Enter.register()}" class="dabLink">&{'register'}</a>
+	&{'forFreeOfCourse'}
+</div>
+
+
+
+
+

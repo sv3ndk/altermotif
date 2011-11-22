@@ -1,0 +1,312 @@
+# Present is all or most pages
+english=English
+french=Français
+dutch=Nederlands
+donate=donate
+signIn=sign in  
+orText=or 
+register=register 
+forFreeOfCourse=(for free of course)
+loggedInAs=current user
+logout=logout
+confirmationPopupTitle=Confirmation
+OkButton=OK
+CancelButton=Cancel
+
+# error messages
+validation.required=this value is required
+passwordMayNotBeEmpty=password may not be empty
+passwordMustBeIdentical=passwords must be identical
+errorUsernameFormat=the username can only contain lower case characters and numbers
+errorLocaltionMissingOrKnown=missing or unknown location
+atLeastOneLanguage=You must provide at least one language
+userAlreadyExist=This username is already taken by another user!
+incorrectEmailFormat=Incorrect email format!
+missingNewMessageRecipient=Please fill in the "to" field of this new message
+missingNewMessageSubject=Please fill in the "subject" field of this new message
+missingNewMessageContent=The content of the message may not be empty
+newMessageUnknownRecipient=Unknown recipient
+errorIncorrectDate=Incorrect date: expected DD/MM/YYYY
+uploadGenericError=Error while uploading data
+uploadedFileTooBigError=The file you submitted is bigger than the allowed maximum 
+profileUploadCvNotAPdf=Error: the CV must be a PDF file!
+profileUploadPhotoNotAnImage=The file you tried to upload is not an image
+illegalHttpAddressFormat=Link format incorrect
+
+# note: this message is not displayed by Firefox: they actually refuse to do that because some website exploit this against their users, see here:https://bugzilla.mozilla.org/show_bug.cgi?id=578828 
+warningUnsavedChangesText=There are some unsaved changes to your profile. They will be lost if you navigate without saving!
+
+# error page (among other things, displayed after a refused upload)
+errorPageMessage=Error while processing your request
+errorPageGoBack=Go back
+
+# captcha error message (should never occur: validation is on the client side, this is just a second level validation)
+registerPageInvalidCaptcha=Incorrect validation code
+
+whoShouldSeeThis=Who should see this?
+
+#Home page messages
+pageTitle=Altermotif
+homePageTitle1=Realize your own goals
+homePageTitle2=A space where ideas are put into reality
+homePageExplanation=How does it work? => Present an idea; motivate people around it and make it happen!
+homePageFindAProject=Find a project
+homePageRules=Rules
+homePageDisclaimer=Disclaimer
+homePagePrivacy=Privacy
+homePageContacts=Contact
+youDoNotHaveUnreadMessages=There are no unread messages in your inbox.
+homeYouHavePendingInvitationNotificationPart1=You have pending contact invitation(s). You should visit your
+homeYouHavePendingInvitationNotificationLinkName=profile page
+homeYouHavePendingInvitationNotificationPart2=in order to accept or reject them.
+
+# sign-in and login sreen:
+username=Username
+password=Password
+passwordAgain=Repeat password
+notYetAMember=Not yet a member?
+alreadyAMember=Already a member?
+loginButtonText=login
+registerButtonText=register
+registerMessage=Create your account (it's free)! 
+loginMessage=Log into your account!
+loginErrorMessage=Login error
+loginErrorDetailMessage=Username and/or password incorrect!
+registerPageCaptchaTitle=Please drag letters in alphabetical order 
+registerPageWelcomText=Welcome! Once you've registered, you'll be able to edit your account and decide whether you want others to see your profiile or bits of information like your birthday or your real name. Registering on 'Droit au but' means you are entering a network of people who are seeking new ways of interaction and production. Unhindered by the blinding pursuit of profit, actions have clear intentions and cooperation is based on mutual motivation. In this way, you are not working for the economy, but you are entering an economy that is working for you, by putting your goal back in the center of attention.
+
+#Top menu 
+topMenuProfile=Profile
+topMenuProfileHome=Home
+topMenuProfileMyProfile=My Profile
+topMenuProfileEditProfile=Edit my profile
+topMenuProfileManagePhotos=Manage my photos
+topMenuProfileManageCv=Manage my CV
+topMenuProfilePrivacySettings=Privacy settings
+
+topMenuMessages=Messages
+topMenuMessagesInbox=Inbox
+topMenuMessagesOutbox=Outbox
+topMenuMessagesNew=New
+topMenuMessagesDeleted=Deleted
+
+topMenuGroups=Groups
+
+topMenuProjects=Projects
+topMenuProjectNew=New project
+topMenuProjectFind=Find a project
+
+#profile screen - "home page"
+yourProjects=Your projects
+yourGroups=Your groups
+yourInbox=Your inbox
+yourApplications=Your applications
+
+#profile screen - "view profile"
+profileYourProfileIsInactiveNotificationPart1=Your profile is currently inactive, only you can see this page. If you want to change this, activate your profile in the
+profileYourProfileIsInactiveNotificationLinkName=private settings  
+profileYourProfileIsInactiveNotificationPart2=page
+profileUsername=Username
+profileFirstName=First name/Name of organisation
+profileLastName=Last name/Status
+profileUsername=Username
+yearsOld=years old
+profileAge=Age
+profileCity=City
+profileLanguages=Languages
+profileLatestLogin=Latest login
+profileWebSite=Personnal Website
+profileCV=CV
+profileContactThisUser=Contact
+profileMorePhotos=More photos...
+profileEditPhotos=Edit photos...
+profilePersonalObjectives=Personal objectives
+profilePersonalDescription=Personal description
+profilePersonalPhilosophy=Personal philosophy
+profilePersonalAssets=Personal assets and skills
+profileReceivedReferences=Reference received
+profileWrittenReferences=Reference left
+profileLeaveAReference=Leave a reference
+profileConfirmRemoveReceivedReference=Are you sure you want to remove this received reference?
+profileConfirmRemoveWrittenReference=Are you sure you want to remove this written reference?
+from=From
+dabfor=For
+leftOn=Left on
+profileProjects=Projects
+profileGroups=Groups
+profileContacts=Contacts
+profileAddToContactsP1=Add
+profileAddToContactsP2=to contacts
+profileAddedToContactsP1=You have already requested
+profileAddedToContactsP2=to be in your contacts
+profileCancelAddedToContactRequest=cancel request
+profileConfirmAddToContacts=Introduce yourself! You may join a short message to your invitation:
+profileAddToContactConfirmed=Request sent! This user will be added to your contact as soon as he accepts your invitation.
+profileReceivedContactRequest=Received contact invitation
+profileViewReceivedContactRequestInvitation=View invitation text
+profileContactInvitationTextPopupTitle=Contact invitation
+profileAcceptContactRequest=accept
+profileRejectContactRequest=reject 
+profileSentContactRequest=Contact invitation sent by you, waiting for feedback...
+profileYouHavePendingInvitations=You have received contact invitations! 
+profileConfirmRemoveRequestedContact=Are you sure you want to cancel your invitation for contact?
+profileConfirmRejectRequestedContact=Are you sure you want to reject this invitation for contact?
+profileConfirmAcceptRequestedContact=Are you sure your want to accept this invitation for contact?
+profileConfirmRemoveContact=Are you sure your want to remove this contact from your profile?
+
+#edit profile (usually the labels are the same as the view profile, except some)
+profileDateOfBirth=Date of birth
+addALanguage=Add a language
+add=Add
+profileEmail=Email address
+profileEmailMessage=(the email value will only be visible to administrators)
+profileGender=Gender
+profileMale=Male
+profileFemale=Female
+profileGenderUnspecified=Unspecified
+profileCvUploadButton=Upload
+profileCvClearButton=Clear
+profileCvUploaded=CV Uploaded
+profileCvUploadFailed=Error while uploading CV
+profileConfirmDeleteCv=Are you sure you want to remove your CV from your profile?
+profileCvUploadConfirmOrClear=Click 'Upload' to confirm or 'Clear' to reset
+
+profileEditPhotos=Edit Photos
+profileUdpateProfile=Update profile
+profileCancelChanges=Cancel changes
+profileRemoveProfile=Desactivate profile
+
+#profile screen: manage photos
+profileMPDeletePhotoLink=Delete this photo
+confirmDeletePhoto=Are you sure you want to delete this photo from your profile?
+profileMPUploadPhoto=Upload a photo (max 5Mb)
+uploadPhotoPleaseWait=Please wait while your photo is being uploaded and resized
+profileMSetProfilePhoto=Set this as profile photo
+profileMPClickToSetCaption=Click here to set photo caption
+profileMPCaptionPopupTitle=Photo caption
+profileMPCaptionPopupText=Please enter a description for this photo
+
+
+#profile screen: manage cv
+viewMyCv=Download my CV
+removeMyCv=Remove this CV from my profile
+profileSelectCvToUpload=Select a CV to upload (pdf only, max 3Mb)
+uploadCVPleaseWait=Please wait while the CV is being uploaded
+
+
+# manage privacy settings screens
+privacySettingsProfileIsActive=My profile is active
+privacySettingsFirstName=My first name is visible to 
+privacySettingsLastName=My last name is visible to 
+privacySettingsNameExplanation=If neither your first nor last name is visible to a user, then this person will only see your username: 
+privacySettingsAge=My age is visible to 
+privacySettingsPhotos=My photo gallery is visible to 
+privacySettingsPhotoExplanation=Your main profile photo is always visible to everybody. It appears as a thumbnail at several places (references you leave, contact list of other users,...)
+privacySettingsCV=My CV is available to 
+privacySettingsEverybody=Everybody 
+privacySettingsloggedInUsers=People logged in Altermotif 
+privacySettingsmyContacts=My contacts 
+privacySettingsNobody=Nobody
+privacySettingsConfirmButton=Update settings
+privacySettingsCancelChanges=Cancel changes
+privacySettingsConfirmDeactivateProfile=Are you sure you want to deactivate your profile? You will still have access to it but as long as it remains inactive, your public profile will no longer be visible and you will not appear among the contact list of your contacts. All your posted messages and references and actions performed on projects will remain visible. If you are concerned about privacy, you may also want to set to blank all your personnal data in the "edit profile" page. 
+
+
+# profile screen - messages tab
+profileMessagesSend=Send
+profileMessagesFrom=From
+profileMessagesTo=To
+profileMessagesChooseFromMyContacts=Choose from my contacts...
+profileMessagesChooseFromMyContactsPopupTitle=Select a message recipient
+profileMessagesSubject=Subject
+profileMessagesReceived=Received
+profileMessagesSent=Sent
+profileMessagesDeleteSelected=Delete selected
+profileMessagesUndeleteSelected=Undelete selected
+profileMessagesPrevious=Previous
+profileMessagesNext=Next
+profileMessagesReply=Reply
+profileMessagesForward=Forward
+profileMessagesDelete=Delete
+profileInboxMessagesConfirmDeletion=Are you sure you want to delete those received messages?
+profileOutboxMessagesConfirmDeletion=Are you sure you want to delete those written messages?
+profileDeletedMessagesConfirmUndeletion=Are you sure you want to undelete those received and/or written messages?
+
+#language skills
+level0=low
+level1=average
+level2=good
+fr=French
+en=English
+nl=Dutch
+es=Spanish
+
+
+#################################
+# projects
+
+# info about a project, as they appear a bit everywhere on the website (anywhere there is a "short info" concerning a project)
+projectRole=Project role
+projectRoleInitiator=Initiator
+projectRoleAdmin=Administrator
+projectRoleMember=Member
+projectStatus=Project status
+projectStatusStarted=Started
+projectStatusCancelled=Cancelled
+projectStatusDone=Done
+
+# create project page
+projectNewProjectName=Project name
+projectNewProjectGoal=Project goal
+projectNewProjectGoalExplanation=Describe clearly what the purpose of this project is
+projectNewProjectLocations=Location(s)
+projectNewProjectLocationsExplanation=Where will the project take place? Where can participants come from?
+projectNewProject=Project
+projectNewReason=Reason for project
+projectNewReasonExplanation=This field is optional. You can describe here why you are pursuing this project: why do you think it is important?
+projectNewStrategy=Strategy
+projectNewStrategyExplanation=This field is optional. Describe here how you intent to reach the goal of this project. You can explain stepwise how you want to go forward. What timing do you have in mind? What difficulties might be encountered? Which actions or assets could be required?
+projectNewOffer=What can you offer?
+projectNewOfferExplanation=This field is optional. Describe here what participants can obtain for their participation in the project. Are there any compensations for assets that are invested in the project? How will possible revenue be used? How will ownership be dealt with?...
+projectNewRequiredTasks=Required tasks
+projectNewRequiredTasksExplanation=Create a list of tasks that have to be done for the accomplishment of the project.
+projectNewRequiredAssets=Required assets
+projectNewRequiredAssetsExplanation=Create a list of assets that have will be required for the accomplishment of the project.
+projectNewDueDate=Due date
+projectNewDueDateExplanation=When should the project be finished?
+projectNewUsefulLinks=Useful links
+projectNewAddOneUsefullLink=Add link...
+projectNewConfirmRemoveLinkPopupMessage=Are you sure you want to remove this useful link?
+projectNewAddNewLinkTitle=Enter a new link
+projectNewUsefulLinksExplanation=Website addresses that might be useful for the project
+projectNewSelectThemes=Select themes
+projectNewSelectThemesExplanation=By selecting the themes that correspond to the project, you'll make sure the project is displayed to people who are looking for such an opportunity
+projectNewSelectTags=Project tags
+projectNewSelectTagsExplanation=Enter keywords related to the project. Others will be able to  find your project based on these keywords. 
+projectNewSelectLanguage=Language
+projectNewSelectLanguageExplanation=Indicate what language should be used for communication between project participants  
+
+projectNewStartProjectButton=Start project 
+
+projectNewPrivacySettingsMembers=Members of this project
+projectNewPrivacySettingsAdmin=Administrators of this project
+projectNewPrivacySettingsOwner=Creator of this project (me)
+
+# view project page
+viewProjectGoal=Goal
+viewProjectLocation=Location(s)
+viewProjectCommunicationIn=Communication in
+viewProjectCreatedOn=Created on
+viewProjectDueDate=Due date
+viewProjectInitiator=Initiator
+viewProjectProject=Project
+viewProjectReason=Reason for project
+viewProjectStrategy=Project strategy
+viewProjectRewards=Project rewards
+viewProjectLinks=Useful links
+viewProjectParticipants=Participants
+viewProjectApplications=Applications
+viewProjectApply=Apply
+viewProjectApplyConfirmationText=Please motivate your application for participation in the project. Indicate why you want to participate and how you wish to contribute to the project (e.g. which means and/or tasks you could fulfill?). The more information you give, the more likely it is that your application will be taken seriouly.
+
+
