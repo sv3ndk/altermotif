@@ -7,11 +7,11 @@ var selectedPhotoIndex = 0;
 
 var isPhotoInterractionEnabled = true;
 
-function initManagePhotosPage(okText, cancelText, setCaptionText) {
+function init() {
 
-	initClickOnTHumbmail(setCaptionText);
+	initClickOnTHumbmail();
 
-	initDeletePhotoLink(okText, cancelText);
+	initDeletePhotoLink();
 
 	initUploadPhoto();
 
@@ -21,11 +21,11 @@ function initManagePhotosPage(okText, cancelText, setCaptionText) {
 
 	// simulates a click on the first image (in order to trigger the
 	// initialization of the state of the page)
-	$("#profileMPThumbContainer img")[0].click();
+	$("#profileMPThumbContainer img:first").click();
 
 }
 
-function initClickOnTHumbmail(setCaptionText) {
+function initClickOnTHumbmail() {
 
 	$("#profileMPThumbContainer img").click(function(event) {
 		
@@ -94,7 +94,7 @@ function initClickOnTHumbmail(setCaptionText) {
 
 }
 
-function initDeletePhotoLink(okText, cancelText) {
+function initDeletePhotoLink() {
 
 	$("#deletePhotoLink.dabLink, #deletePhotoButton.iconLink").click(function(event) {
 

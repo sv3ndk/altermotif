@@ -227,13 +227,18 @@ home page
 
 
 #profileMPThumbContainer {
+	margin-left: 250px;
+}
+	
+.profileMPThumbContainer {
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 30px;
 	width: 860px;
+	float: left;
 }
 
-#profileMPThumbContainer img {
+.profileMPThumbContainer img {
 	float: left;
 	max-height: 75px;
 	max-width: 75px;
@@ -241,7 +246,7 @@ home page
 	cursor: pointer;
 }
 
-#profileMPThumbContainer img.yoohoo {
+.profileMPThumbContainer img.yoohoo {
 	border: 2px solid;
 	padding: 2px;
 	margin: 3px;

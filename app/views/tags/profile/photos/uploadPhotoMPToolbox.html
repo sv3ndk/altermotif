@@ -1,0 +1,24 @@
+
+<div id="profileMPToolboxFiller"></div>
+
+	<div id="profileMPToolbox">
+		<ul>
+			<li>
+				<img id="deletePhotoButton" src="@{'/public/images/trash.png'}" class="iconLink"> <span class="dabLink" id="deletePhotoLink">&{'profileMPDeletePhotoLink'}</span>
+			</li>
+			<li>
+				#{if _uploadPhotoLinkActive}
+					<img id="uploadPhotoButton" src="@{'/public/images/upload.png'}" class="iconLink"> <span class="dabLink" id="uploadPhotoLink">&{'profileMPUploadPhoto'}</span>
+				#{/if}
+				#{if !_uploadPhotoLinkActive}
+					<img id="uploadPhotoButton" src="@{'/public/images/upload.png'}" class="iconLinkInactive"> <span class="dabLinkDisabled" id="uploadPhotoLink">&{'profileMPUploadPhoto'}</span>
+				#{/if}
+			</li>
+			
+			
+			<li>
+				<img id="setProfilePhotoButton" src="@{'/public/images/profilePhoto.jpg'}" class="iconLinkInactive"> <span class="dabLinkDisabled" id="setProfilePhotoLink">&{'profileMSetProfilePhoto'}</span>
+			</li>
+		</ul>
+
+	</div>

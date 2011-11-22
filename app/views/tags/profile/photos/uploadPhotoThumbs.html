@@ -1,0 +1,59 @@
+
+
+		<div id="profileMPThumbContainer">
+			<div class="profileMPThumbContainer">
+
+			#{list items:_photoPack, as: 'onePhoto'}
+
+				#{if onePhoto_index < 11}
+
+					#{if !onePhoto.isPhotoEmpty}
+						<img src="${onePhoto.thumbAddress}" alt="${onePhoto.caption}"></img>
+						
+						<!-- hidden address of the real photo -->
+						<span style="display: none">
+							${onePhoto.normalPhotoAddress}
+						</span>
+					#{/if}
+	
+					#{if onePhoto.isPhotoEmpty}
+						<img src="@{'/public/images/empty.png'}" class="profileEmptyImage"></img>
+					#{/if}
+	
+					<span style="display: none">
+						${onePhoto.caption}
+					</span>
+				#{/if}
+			#{/list }
+			
+			
+			</div>
+			
+
+		<div class="profileMPThumbContainer">
+
+			#{list items:_photoPack, as: 'onePhoto'}
+
+				#{if onePhoto_index > 10}
+
+					#{if !onePhoto.isPhotoEmpty}
+						<img src="${onePhoto.thumbAddress}" alt="${onePhoto.caption}"></img>
+						
+						<!-- hidden address of the real photo -->
+						<span style="display: none">
+							${onePhoto.normalPhotoAddress}
+						</span>
+					#{/if}
+	
+					#{if onePhoto.isPhotoEmpty}
+						<img src="@{'/public/images/empty.png'}" class="profileEmptyImage"></img>
+					#{/if}
+	
+					<span style="display: none">
+						${onePhoto.caption}
+					</span>
+				#{/if}
+			#{/list }
+			
+		</div>
+		</div>

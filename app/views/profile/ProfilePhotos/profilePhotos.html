@@ -1,3 +1,33 @@
 #{extends 'masterTemplate.html' /}
 
-profilePhotos
+#{set 'moreStyles'}
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/profile.css'}" />
+#{/set}
+
+
+#{set 'moreScripts'}
+    <script src="@{'/public/javascripts/profile/profilePhotos.js'}" type="text/javascript"
+    	charset="${_response_encoding}"></script>
+    	
+    <script type="text/javascript">
+			var okText = "&{'OkButton'}";
+			var cancelText = "&{'CancelButton'}";
+			var setCaptionText = "&{'profileMPClickToSetCaption'}";
+
+			$(document).ready(function() {
+				init();
+			})
+		</script>
+#{/set}
+
+
+#{profile.photos.uploadPhotoThumbs photoPack:userProfile.photosPack20/}
+
+#{profile.photos.uploadPhotoMPToolbox uploadPhotoLinkActive:uploadPhotoLinkActive/}
+
+#{profile.photos.profileMPCentralPhotoContainer uploadPhotoLinkActive:uploadPhotoLinkActive/}
+
+
+
+ 
+  

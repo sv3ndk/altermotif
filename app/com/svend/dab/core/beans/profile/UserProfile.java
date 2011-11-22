@@ -1,6 +1,7 @@
 package com.svend.dab.core.beans.profile;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -66,6 +67,11 @@ public class UserProfile implements Serializable {
 
 	@Transient
 	private List<OwnerAwareContact> myActiveContacts;
+	
+	// arrays of 10 links to the photos of the user (no matter how many actually present in DB)
+	@Transient
+	private ArrayList<Photo> photosPack20;
+
 
 	private Date dateOfLatestLogin;
 
@@ -169,6 +175,35 @@ public class UserProfile implements Serializable {
 		}
 		
 	}
+	
+	
+	public ArrayList<Photo> getPhotosPack20() {
+		
+		if (photosPack20 == null) {
+			photosPack20 = new ArrayList<Photo>(20);
+			
+			int numberOfPhotosFoundInProfile = 0;
+
+			try {
+				if (photos != null && ! photos.isEmpty()) {
+					for (; numberOfPhotosFoundInProfile < 10 && numberOfPhotosFoundInProfile < photos.size(); numberOfPhotosFoundInProfile++) {
+						photosPack20.add(photos.get(numberOfPhotosFoundInProfile));
+					}
+				}
+			} catch (Exception e) {
+				logger.log(Level.SEVERE, "Error while loading photos from profile, filling up with empty links...", e);
+			}
+			
+			// filling up to 10 (if required)
+			for ( ; numberOfPhotosFoundInProfile < 20 ; numberOfPhotosFoundInProfile++) {
+				photosPack20.add(new Photo());
+			}
+		}
+		
+		return photosPack20;
+	}
+
+	
 	
 	// -----------------------------------------------------
 	// CV
