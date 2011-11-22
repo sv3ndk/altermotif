@@ -31,5 +31,11 @@ public class ProfilePhotos extends DabLoggedController {
 
 		render();
 	}
+	
+	
+	public static void doUploadPhoto() {
+		
+	}
+	
 
 }
