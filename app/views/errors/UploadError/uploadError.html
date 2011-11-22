@@ -1,0 +1,19 @@
+#{extends 'masterTemplate.html' /}
+
+#{set 'moreStyles'}
+#{/set}
+
+
+
+<div class="pageContainer">
+
+
+<br />
+<br />
+<label class="errorMessage">&{'errorPageMessage'}: ${messages.get(flash.uploadErrorMessageKey)}</label>
+&nbsp;	
+<a href="${flash.suggestedNavigation}" class="dabLink ">&{'errorPageGoBack'}</a>
+<br />
+<br />
+
+</div>
