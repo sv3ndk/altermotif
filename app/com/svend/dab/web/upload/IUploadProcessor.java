@@ -11,9 +11,10 @@ import java.io.File;
  */
 public interface IUploadProcessor {
 	
-//	public void processUploadRequest(UploadRequest uploadRequest);
-
-	public void processUploadRequest(File theFile, String uploadtype, String username);
+	public void processUploadCvRequest(File theFile, String loggedInUserProfileId);
 	
 
+	public void processUploadPhotoRequest(File theFile, String username);
+
+	
 }

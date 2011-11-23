@@ -1,6 +1,5 @@
 package com.svend.dab.web.servlets.aws;
 
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -55,37 +54,6 @@ public class AwsUploadProcessor implements IUploadProcessor {
 	// -----------------------------------
 	// IStore interface
 	// -----------------------------------
-
-	@Override
-	// public void processUploadRequest(UploadRequest uploadRequest) {
-	public void processUploadRequest(File theFile, String uploadtype, String username) {
-
-		if (theFile == null || uploadtype == null) {
-			throw new DabUploadFailedException("cannot process: upload request null ?! ", failureReason.technicalError);
-		}
-
-		UPLOAD_TYPE ut = null;
-		try {
-			ut = UPLOAD_TYPE.valueOf(uploadtype);
-		} catch (IllegalArgumentException e) {
-			throw new DabUploadFailedException("Could not parse incoming upload request: unknown upload type: " + uploadtype, failureReason.fileFormatIncorrectError, e);
-		}
-
-		switch (ut) {
-		case CV:
-			processUploadCvRequest(theFile, username);
-			break;
-
-		case PHOTO:
-			processUploadPhotoRequest(theFile, username);
-			break;
-
-		default:
-			throw new DabUploadFailedException("Warning : unrecognized upload type:" + ut, failureReason.technicalError);
-		}
-
-	}
-
 	// -----------------------------------
 	// Photo upload
 
@@ -94,10 +62,24 @@ public class AwsUploadProcessor implements IUploadProcessor {
 	 * 
 	 * @param uploadRequest
 	 */
-	private void processUploadPhotoRequest(File theFile, String username) {
+	@Override
+	public void processUploadPhotoRequest(File theFile, String username) {
 
-		// TODO
-		// profilePhotoService.addOnePhoto(profile, readAndCloseStream(uploadRequest.getStream(), config.getMaxUploadedPhotoSizeInBytes()));
+		if (theFile == null) {
+			throw new DabUploadFailedException("cannot process: upload request null ?! ", failureReason.technicalError);
+		}
+
+		UserProfile profile = userProfileService.loadUserProfile(username, false);
+
+		if (profile == null) {
+			throw new DabUploadFailedException("cannot process: no user profile found for  " + username, failureReason.technicalError);
+		}
+
+		try {
+			profilePhotoService.addOnePhoto(profile, readAndCloseStream(new FileInputStream(theFile), config.getMaxUploadedPhotoSizeInBytes()));
+		} catch (FileNotFoundException e) {
+			throw new DabUploadFailedException("Could not upload photo" + failureReason.fileFormatIncorrectError, e);
+		}
 	}
 
 	/**
@@ -105,9 +87,19 @@ public class AwsUploadProcessor implements IUploadProcessor {
 	 * 
 	 * @param uploadRequest
 	 */
-	private void processUploadCvRequest(File theFile, String username) {
+
+	@Override
+	public void processUploadCvRequest(File theFile, String username) {
+
+		if (theFile == null) {
+			throw new DabUploadFailedException("cannot process: upload request null ?! ", failureReason.technicalError);
+		}
 
 		UserProfile profile = userProfileService.loadUserProfile(username, false);
+
+		if (profile == null) {
+			throw new DabUploadFailedException("cannot process: no user profile found for  " + username, failureReason.technicalError);
+		}
 
 		// TODO: pass directly stream to s3 client ... (but how to check for magic number then?)
 		try {
@@ -124,42 +116,42 @@ public class AwsUploadProcessor implements IUploadProcessor {
 	 * 
 	 * @return
 	 */
-//	private UserProfile validatePermKeyAndGetProfile(UploadRequest uploadRequest) {
-//
-//		if (uploadRequest.getUploadPermKey() == null || uploadRequest.getUsername() == null || uploadRequest.getStream() == null) {
-//			throw new DabUploadFailedException(failureReason.technicalError);
-//		} else {
-//
-//			UserProfile profile = userProfileService.loadUserProfile(uploadRequest.getUsername(), false);
-//
-//			if (profile == null) {
-//				throw new DabUploadFailedException(failureReason.userNotFound);
-//			}
-//
-//			if (!uploadRequest.getUploadPermKey().equals(profile.getUploadPermKey())) {
-//
-//				logger.log(Level.WARNING, "upload key mismatch : " + uploadRequest.getUploadPermKey() + " != " + profile.getUploadPermKey() + " => waiting a bit more...");
-//
-//				// TODO: exponential back-off here..
-//				try {
-//					Thread.sleep(WAIT_PERIOD_IF_FAILED_PERM_KEY_IN_MILLS);
-//				} catch (InterruptedException e) {
-//					logger.log(Level.WARNING, "interrupted while sleeping (was retrying for )!?", e);
-//				}
-//
-//				profile = userProfileService.loadUserProfile(uploadRequest.getUsername(), false);
-//
-//				if (!uploadRequest.getUploadPermKey().equals(profile.getUploadPermKey())) {
-//					throw new DabUploadFailedException("cannot upload CV file: upload key mismatch : " + uploadRequest.getUploadPermKey() + " != " + profile.getUploadPermKey(),
-//							failureReason.securityError);
-//				}
-//			}
-//
-//			return profile;
-//
-//		}
-//	}
-//
+	// private UserProfile validatePermKeyAndGetProfile(UploadRequest uploadRequest) {
+	//
+	// if (uploadRequest.getUploadPermKey() == null || uploadRequest.getUsername() == null || uploadRequest.getStream() == null) {
+	// throw new DabUploadFailedException(failureReason.technicalError);
+	// } else {
+	//
+	// UserProfile profile = userProfileService.loadUserProfile(uploadRequest.getUsername(), false);
+	//
+	// if (profile == null) {
+	// throw new DabUploadFailedException(failureReason.userNotFound);
+	// }
+	//
+	// if (!uploadRequest.getUploadPermKey().equals(profile.getUploadPermKey())) {
+	//
+	// logger.log(Level.WARNING, "upload key mismatch : " + uploadRequest.getUploadPermKey() + " != " + profile.getUploadPermKey() + " => waiting a bit more...");
+	//
+	// // TODO: exponential back-off here..
+	// try {
+	// Thread.sleep(WAIT_PERIOD_IF_FAILED_PERM_KEY_IN_MILLS);
+	// } catch (InterruptedException e) {
+	// logger.log(Level.WARNING, "interrupted while sleeping (was retrying for )!?", e);
+	// }
+	//
+	// profile = userProfileService.loadUserProfile(uploadRequest.getUsername(), false);
+	//
+	// if (!uploadRequest.getUploadPermKey().equals(profile.getUploadPermKey())) {
+	// throw new DabUploadFailedException("cannot upload CV file: upload key mismatch : " + uploadRequest.getUploadPermKey() + " != " + profile.getUploadPermKey(),
+	// failureReason.securityError);
+	// }
+	// }
+	//
+	// return profile;
+	//
+	// }
+	// }
+	//
 	/**
 	 * @param stream
 	 * @param maxStreamSizeInBytes

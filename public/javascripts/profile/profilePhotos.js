@@ -37,21 +37,13 @@ function initClickOnTHumbmail() {
 		$(this).addClass("yoohoo");
 
 		if ($(this).hasClass("profileEmptyImage")) {
-			$("#deletePhotoLink").removeClass("dabLink");
-			$("#deletePhotoLink").addClass("dabLinkDisabled");
-			$("#deletePhotoButton").removeClass("iconLink");
-			$("#deletePhotoButton").addClass("iconLinkInactive");
+			$("#deletePhotoLink, #photoCaption").removeClass("dabLink").addClass("dabLinkDisabled");
+			$("#deletePhotoButton, #photoCaptionImage").removeClass("iconLink").addClass("iconLinkInactive");
 			$("#photoCaption").text(setCaptionText);
-			$("#photoCaption").removeClass("dabLink");
-			$("#photoCaption").addClass("dabLinkDisabled");
-			$("#photoCaptionImage").removeClass("iconLink");
-			$("#photoCaptionImage").addClass("iconLinkInactive");
 			isPhotoInterractionEnabled = false;
 		} else {
-			$("#deletePhotoLink").removeClass("dabLinkDisabled");
-			$("#deletePhotoLink").addClass("dabLink");
-			$("#deletePhotoButton").removeClass("iconLinkInactive");
-			$("#deletePhotoButton").addClass("iconLink");
+			$("#deletePhotoLink, #photoCaption").removeClass("dabLinkDisabled").addClass("dabLink");
+			$("#deletePhotoButton, #photoCaptionImage").removeClass("iconLinkInactive").addClass("iconLink");
 			
 			var newCaption = $(this).attr("alt");
 			if (newCaption == "") {
@@ -61,10 +53,6 @@ function initClickOnTHumbmail() {
 			}
 			
 			$("#photoCaption").text();
-			$("#photoCaption").removeClass("dabLinkDisabled");
-			$("#photoCaption").addClass("dabLink");
-			$("#photoCaptionImage").removeClass("iconLinkInactive");
-			$("#photoCaptionImage").addClass("iconLink");
 
 			isPhotoInterractionEnabled = true;
 		}
@@ -72,15 +60,11 @@ function initClickOnTHumbmail() {
 		// if this thumbnail is the first photo: this is already the profile photo => disactivate the "set photo as profile photo" link, otherwise
 		// activate it
 		if ($(this).attr("src") == $("#profileMPThumbContainer img:first").attr("src")) {
-			$("#setProfilePhotoButton").removeClass("iconLink");
-			$("#setProfilePhotoButton").addClass("iconLinkInactive");
-			$("#setProfilePhotoLink").removeClass("dabLink");
-			$("#setProfilePhotoLink").addClass("dabLinkDisabled");
+			$("#setProfilePhotoButton").removeClass("iconLink").addClass("iconLinkInactive");
+			$("#setProfilePhotoLink").removeClass("dabLink").addClass("dabLinkDisabled");
 		} else {
-			$("#setProfilePhotoButton").removeClass("iconLinkInactive");
-			$("#setProfilePhotoButton").addClass("iconLink");
-			$("#setProfilePhotoLink").removeClass("dabLinkDisabled");
-			$("#setProfilePhotoLink").addClass("dabLink");
+			$("#setProfilePhotoButton").removeClass("iconLinkInactive").addClass("iconLink");
+			$("#setProfilePhotoLink").removeClass("dabLinkDisabled").addClass("dabLink");
 		}
 
 		// discovers the index of the photo which has been
@@ -99,34 +83,48 @@ function initDeletePhotoLink() {
 	$("#deletePhotoLink.dabLink, #deletePhotoButton.iconLink").click(function(event) {
 
 		if (isPhotoInterractionEnabled) {
-
-			$("#dialogConfirmDeletePhoto").dialog({
-				resizable : false,
-				width : 350,
-				modal : true,
-				"buttons" : [ {
-					text : okText,
-					click : function() {
-						$("#hiddenDeletePhotoForm\\:deletedPhotoIndex").val(selectedPhotoIndex);
-						$("#hiddenDeletePhotoForm\\:link").click();
-						$(this).dialog("close");
-					}
-				},
-
-				{
-					text : cancelText,
-					click : function() {
-						$(this).dialog("close");
-					}
-				}
-
-				],
-
-			});
+			$("#dialogConfirmDeletePhoto").dialog("open");
 		}
 
 		return null;
 	});
+	
+	
+	$("#dialogConfirmDeletePhoto").dialog( {
+		resizable : false,
+		autoOpen : false,
+		width : 350,
+		modal : true,
+		"buttons" : [ {
+			text : okText,
+			click : function() {
+		
+				$.post(deletePhotoAction(
+						{deletedPhotoIdx: selectedPhotoIndex}), 
+						function(data) {
+							// NOPe
+						}
+				);
+				
+				setTimeout(function() {
+					window.location.reload();
+				}, 500);
+				
+			}
+			
+		},
+
+		{
+			text : cancelText,
+			click : function() {
+				$(this).dialog("close");
+			}
+		}
+
+		],
+
+	});
+
 }
 
 function initUploadPhoto() {
@@ -142,12 +140,15 @@ function initUploadPhoto() {
 	});
 
 	$("#uploadPhotoButton.iconLink, #uploadPhotoLink.dabLink").click(function() {
+		$("#hiddenUploadPhotoForm").show();
 		$("#theFile").click();
+		$("#hiddenUploadPhotoForm").hide();
+
 	});
 
 	$("#theFile").change(function() {
 		$("#pleaseWaitDialog").dialog("open");
-		$("#hiddenSubmitPhotoButton").click();
+		$("#hiddenUploadPhotoForm form").submit();
 	});
 }
 
@@ -181,13 +182,28 @@ function initClickOnSetPhotoCaption(okText, cancelText) {
 		"buttons" : [ {
 			text : okText,
 			click : function() {
-				$("#hiddenEditPhotoCaptionForm\\:photoIndex").val(selectedPhotoIndex);
-				$("#hiddenEditPhotoCaptionForm\\:photoCaption").val($("#editedCaption").val());
 
-				// the hidden form is not submitted if we do not
-				// close the dialog before...
-				$(this).dialog("close");
-				$("#hiddenEditPhotoCaptionForm\\:hiddenButton").click();
+				var newCaption = $("#editedCaption").val();
+				
+				$.post(
+					updatePhotoCaptionAction(
+							{profilePhotoIndex: selectedPhotoIndex, profilePhotoCaption: newCaption}
+							), 
+					function(data) {
+						$("#photoCaption").text(newCaption)
+
+						$("#profileMPThumbContainer img").each(function(index, imageElement) {
+							if (index == selectedPhotoIndex) {
+								$(imageElement).attr("alt", newCaption);
+							}
+							
+						});
+						
+						$("	#editCaptionDialog").dialog("close");
+						
+					}
+				);
+
 			}
 		},
 

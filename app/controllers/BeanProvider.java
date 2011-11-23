@@ -2,6 +2,7 @@ package controllers;
 
 import play.modules.spring.Spring;
 
+import com.svend.dab.core.IProfilePhotoService;
 import com.svend.dab.core.IUserProfileService;
 import com.svend.dab.core.UserProfileService;
 import com.svend.dab.core.beans.Config;
@@ -26,5 +27,8 @@ public class BeanProvider {
 		return (IUploadProcessor) Spring.getBeanOfType(IUploadProcessor.class);
 	}
 	
+	public static IProfilePhotoService  getProfilePhotoService() {
+		return (IProfilePhotoService) Spring.getBeanOfType(IProfilePhotoService.class);
+	}
 
 }

@@ -117,6 +117,12 @@ public class ProfilePhotoService implements IProfilePhotoService {
 			logger.log(Level.WARNING, "Cannot remove a photo from a null profile: not doing anything");
 		} else {
 			Photo removed = profile.removePhoto(deletedPhotoIdx);
+			
+			if (removed == null) {
+				logger.log(Level.WARNING, "It seems the profile refused to remove photo with index == " + deletedPhotoIdx + " => not propagating any event");
+				return;
+			}
+			
 			userProfileService.updatePhotoGallery(profile);
 
 			// sends a event to propagate the photo update
@@ -124,6 +130,7 @@ public class ProfilePhotoService implements IProfilePhotoService {
 
 			// actual removal of the file from s3 is done asynchronously, in order to improve gui response time
 			try {
+				
 				emitter.emit(new BinaryNoLongerRequiredEvent(removed.getNormalPhotoLink()));
 			} catch (DabException e) {
 				logger.log(Level.WARNING, "Could not emit event for removing one photo of profile " + profile.getUsername()

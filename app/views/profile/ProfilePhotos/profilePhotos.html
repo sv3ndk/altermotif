@@ -14,6 +14,9 @@
 			var cancelText = "&{'CancelButton'}";
 			var setCaptionText = "&{'profileMPClickToSetCaption'}";
 
+		   	var deletePhotoAction 			= #{jsAction @profile.ProfilePhotos.doDeletePhoto(':deletedPhotoIdx') /};
+		   	var updatePhotoCaptionAction 	= #{jsAction @profile.ProfilePhotos.doUpdatePhotoCaption(':profilePhotoIndex', ':profilePhotoCaption') /};
+			
 			$(document).ready(function() {
 				init();
 			})
@@ -26,6 +29,43 @@
 #{profile.photos.uploadPhotoMPToolbox uploadPhotoLinkActive:uploadPhotoLinkActive/}
 
 #{profile.photos.profileMPCentralPhotoContainer uploadPhotoLinkActive:uploadPhotoLinkActive/}
+
+
+
+
+	<!-- this form is used to actually submit data to the upload servlet -->
+	<div id="hiddenUploadPhotoForm" style="display: none">
+		<form method="post"
+			enctype="multipart/form-data" action="@{profile.ProfilePhotos.doUploadPhoto()}">
+			<input type="file" id="theFile" name="theFile"  />
+		</form>
+	</div>
+	
+	<div id="pleaseWaitDialog">
+		&{'uploadPhotoPleaseWait'}
+		<br />
+		<img  src="@{'/public/images/image_upload.gif'}" class="iconLink" />
+	</div>
+	
+	
+	<div id="dialogConfirmDeletePhoto"
+		title="&{'confirmationPopupTitle'}" style="display: none">
+		<p>
+			<span class="ui-icon ui-icon-alert"
+				style="float: left; margin: 0 7px 20px 0;"></span>
+			&{'confirmDeletePhoto'}
+		</p>
+	</div>
+	
+	
+	<div id="editCaptionDialog"
+		title="&{'profileMPCaptionPopupTitle'}">
+		<p>
+			&{'profileMPCaptionPopupText'}
+		</p>
+
+		<input type="text" id="editedCaption" size="60"></input>
+	</div>
 
 
 

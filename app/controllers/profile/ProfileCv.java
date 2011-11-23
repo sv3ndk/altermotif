@@ -39,14 +39,17 @@ public class ProfileCv extends DabLoggedController {
 
 		render();
 	}
+	
+	
+	
 
-	public static void uploadCv(File theFile, String uploadtype) {
+	public static void uploadCv(File theFile) {
 
 
 		try {
 
 			IUploadProcessor uploadProcessor = BeanProvider.getUploadProcessor();
-			uploadProcessor.processUploadRequest(theFile, uploadtype, getSessionWrapper().getLoggedInUserProfileId());
+			uploadProcessor.processUploadCvRequest(theFile, getSessionWrapper().getLoggedInUserProfileId());
 			profileCv();
 		} catch (DabUploadFailedException e) {
 
