@@ -77,19 +77,6 @@ public class UserMessage implements Serializable {
 		this.id = id;
 	}
 
-	/**
-	 * @return the CSS class to be used to display this (alright, this should be
-	 *         handed in the WEB layer, but let's not be purists...
-	 */
-	public String getCssClass() {
-		if (read) {
-			return "inboxRow";
-		} else {
-			return "inboxRowUnread";
-		}
-
-	}
-
 	// -----------------------------------
 	//
 

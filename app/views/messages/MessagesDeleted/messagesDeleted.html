@@ -1,3 +1,27 @@
 #{extends 'masterTemplate.html' /}
 
+#{set 'moreStyles'}
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/messages.css'}" />
+#{/set}
+
+
+#{set 'moreScripts'}
+    <script src="@{'/public/javascripts/messages/messagesDeleted.js'}" type="text/javascript"
+    	charset="${_response_encoding}"></script>
+    	
+    <script type="text/javascript">
+    
+		var okLabelValue = "&{'OkButton'}";
+		var cancelLabelValue = "&{'CancelButton'}";
+    
+		$(document).ready(function() {
+			init();
+		})
+	</script>
+#{/set}
+
+
+
+
+
 messagesDeleted

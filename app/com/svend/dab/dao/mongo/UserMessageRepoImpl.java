@@ -133,8 +133,14 @@ public class UserMessageRepoImpl implements IUserMessageDao {
 
 	
 	@Override
-	public Page<UserMessage> findAllUserMessageBytoUserUserNameAndDeletedByRecipient(String toUserName, Boolean deletedByRecipient, Pageable pageable) {
-		throw new NotImplementedException("TODO (play migration)");
+	public List<UserMessage> findAllUserMessageBytoUserUserNameAndDeletedByRecipient(String toUserName, boolean deletedByRecipient, int pageNumber, int pageSize) {
+		
+		if (pageNumber >= 0 && pageSize > 0) {
+			Query query = query(where("toUser._id").is(toUserName).and("deletedByRecipient").is(deletedByRecipient) ).limit(pageSize).skip(pageNumber*pageSize);
+			return mongoTemplate.find(query, UserMessage.class);
+		} else {
+			return new LinkedList<UserMessage>();
+		}
 	}
 
 	@Override

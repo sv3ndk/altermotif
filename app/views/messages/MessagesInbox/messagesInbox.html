@@ -1,3 +1,94 @@
 #{extends 'masterTemplate.html' /}
 
-messagesInbox
+#{set 'moreStyles'}
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/messages.css'}" />
+#{/set}
+
+
+#{set 'moreScripts'}
+    <script src="@{'/public/javascripts/messages/messagesInbox.js'}" type="text/javascript"
+    	charset="${_response_encoding}"></script>
+    	
+    <script type="text/javascript">
+    
+		var okLabelValue = "&{'OkButton'}";
+		var cancelLabelValue = "&{'CancelButton'}";
+
+	   	var loadOnePageAction 	= #{jsAction @messages.MessagesInbox.loadInboxMessages(':pageNumber') /};
+		
+		$(document).ready(function() {
+			init();
+		})
+	</script>
+#{/set}
+
+
+
+<div id="messagesContainer" class="messagesMainContainer">
+	
+	<div id="messagesInboxTable">
+	
+		<table class="messagesListTable">
+			<tbody >
+				<tr class="messagesListTableHeader">
+					<td class="inboxOutboxDeleteCheckbox">
+						<input type="checkbox" id="selectAllNone"
+						 />
+					</td>
+					<td>&{'profileMessagesFrom'}</td>
+					<td>&{'profileMessagesSubject'}</td>
+					<td>&{'profileMessagesReceived'}</td>
+				</tr>
+				
+				<tr id="hiddenInboxRowTemplate" style="display: none"> 
+					<td class="inboxOutboxDeleteCheckbox"><input type="checkbox" /></td>
+					<td class="messageRowFrom">
+						<a class="dabLink"></a>
+					</td>
+					
+					<td class="messageRowSubject">
+						<span></span>
+					</td>
+					
+					<td class="messageRowCreationTime">
+						<span></span>
+					</td>
+				</tr>
+				
+				
+				<tr class="messagesListTableHeader" id="topMessageListLastRow">
+
+					<td colspan="2"><span id="messageDeleteSelected" class="messagesReactionLinkDisabled" >&{'profileMessagesDeleteSelected'}</span></td>
+					<td colspan="2" class="profileMessagesInboxBottomRight">
+						<span id="messagesPreviousLink" class="messagesReactionLinkDisabled" >&{'profileMessagesPrevious'}</span>
+						<span id="messagesNextLink" class="messagesReactionLinkDisabled" >&{'profileMessagesNext'}</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	
+
+		<table class="messageDetailTable">
+			<tr class="messagesListTableHeader">
+				<td>&{'profileMessagesFrom'}: <a id="messageDetailFrom" class="messagesListTableHeaderSmall"></a></td>
+				<td>&{'profileMessagesSubject'}: <span id="messageDetailSubject" class="messagesListTableHeaderSmall"></span></td>
+				<td> <span id="messageDetailDate" class="messagesListTableHeaderSmall"></span></td>
+				<td class="profileMessagesInboxBottomRight">
+					<span class="messagesReactionLinkDisabled" id="replyToLink">&{'profileMessagesReply'}</span> 
+					<span class="messagesReactionLinkDisabled" id="forwardLink" style="margin-left: 10px">&{'profileMessagesForward'}</span> 
+				</td>
+			</tr>
+			
+			<tr>
+				<td colspan="4">
+					<textarea id="messageContent" class="messagesInboxDetailContainer"></textarea>
+				</td>
+			</tr>
+			
+		</table>
+
+	
+	</div>
+</div>
+
+

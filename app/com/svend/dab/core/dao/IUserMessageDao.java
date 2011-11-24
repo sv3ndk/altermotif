@@ -41,7 +41,7 @@ public interface IUserMessageDao {
 	public void updateTOUserProfileRef(ProfileRef profileRef);
 	
 	
-	public Page<UserMessage> findAllUserMessageBytoUserUserNameAndDeletedByRecipient(String toUserName, Boolean deletedByRecipient, Pageable pageable);
+	public abstract List<UserMessage> findAllUserMessageBytoUserUserNameAndDeletedByRecipient(String toUserName, boolean deletedByRecipient, int pageNumber, int inboxOutboxPageSize);
 	
 	public Page<UserMessage> findAllUserMessageByFromUserUserNameAndDeletedByEmitter(String fromUserName, Boolean deletedByEmitter, Pageable pageable);
 
@@ -50,5 +50,6 @@ public interface IUserMessageDao {
 	public abstract void save(List<UserMessage> foundMessages);
 
 	public abstract void save(UserMessage userMessage);
+
 
 }

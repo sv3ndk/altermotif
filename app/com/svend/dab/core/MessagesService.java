@@ -52,9 +52,9 @@ public class MessagesService implements IMessagesServices, Serializable {
 	}
 
 	@Override
-	public Page<UserMessage> getReceivedMessages(String toUserName, int pageNumber) {
-		PageRequest pageRequest = new PageRequest(pageNumber, config.getInboxOutboxPageSize(), new Sort(Direction.DESC, "creationDate"));
-		return userMessageDao.findAllUserMessageBytoUserUserNameAndDeletedByRecipient(toUserName, false, pageRequest);
+	public List<UserMessage> getReceivedMessages(String toUserName, int pageNumber) {
+		//PageRequest pageRequest = new PageRequest(pageNumber, config.getInboxOutboxPageSize(), new Sort(Direction.DESC, "creationDate"));
+		return userMessageDao.findAllUserMessageBytoUserUserNameAndDeletedByRecipient(toUserName, false, pageNumber, config.getInboxOutboxPageSize());
 	}
 
 	@Override

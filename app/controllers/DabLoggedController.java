@@ -18,12 +18,11 @@ public class DabLoggedController extends Controller {
 		
 		DabController.addDefaults();
     	
-    	if (getSessionWrapper().getLoggedInUserProfileId() == null) {
-    		Application.index();
+    	if (!getSessionWrapper().isLoggedIn() ) {
+    		Enter.login();
     	}
     	
-    	renderArgs.put("numberOfUnreadReceivedMessages", "todo...");
-    	
+		renderArgs.put("numberOfUnreadReceivedMessages", BeanProvider.getMessagesService().getNumberOfUnreadMessages(getSessionWrapper().getLoggedInUserProfileId()));
     	
 	}
 	

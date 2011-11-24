@@ -25,7 +25,7 @@ public interface IMessagesServices {
 	 * @param visibleMessageId
 	 * @return
 	 */
-	public Page<UserMessage> getReceivedMessages(String userName, int pageNumber);
+	public List<UserMessage> getReceivedMessages(String userName, int pageNumber);
 	
 	
 	public Page<UserMessage> getWrittenMessages(String fromUserName, int pageNumber);
