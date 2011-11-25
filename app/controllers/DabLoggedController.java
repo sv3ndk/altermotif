@@ -1,6 +1,7 @@
 package controllers;
 
 import models.altermotif.SessionWrapper;
+import play.mvc.After;
 import play.mvc.Before;
 import play.mvc.Controller;
 
@@ -14,7 +15,7 @@ import play.mvc.Controller;
 public class DabLoggedController extends Controller {
 
 	@Before
-	static void addDefaults() {
+	static void makeSureUserIsLoggedIn() {
 		
 		DabController.addDefaults();
     	
@@ -22,9 +23,12 @@ public class DabLoggedController extends Controller {
     		Enter.login();
     	}
     	
-		renderArgs.put("numberOfUnreadReceivedMessages", BeanProvider.getMessagesService().getNumberOfUnreadMessages(getSessionWrapper().getLoggedInUserProfileId()));
-    	
+    	renderArgs.put("numberOfUnreadReceivedMessages", BeanProvider.getMessagesService().getNumberOfUnreadMessages(getSessionWrapper().getLoggedInUserProfileId()));
 	}
+
+	
+	
+	
 	
 	
 	public static SessionWrapper getSessionWrapper() {

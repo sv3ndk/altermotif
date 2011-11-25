@@ -10,7 +10,6 @@ public class DabController extends Controller{
 	@Before
 	static void addDefaults() {
     	new SessionWrapper(session).putInArgsList(renderArgs);
-    	renderArgs.put("numberOfUnreadReceivedMessages", "todo...");
 	}
 	
 	

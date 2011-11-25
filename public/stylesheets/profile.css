@@ -80,8 +80,9 @@ home page
 	margin-right: auto;
 }
 
-#viewProfileCvLink a.dabLink {
-	margin-left: 10px;
+
+#viewProfileCvLink img.dabLink {
+	text-decoration: none;
 }
 
 #userProfileBasicDetails {

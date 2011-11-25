@@ -129,6 +129,11 @@ public class MessagesService implements IMessagesServices, Serializable {
 			userMessageDao.save(foundMessages);
 		}
 	}
+
+	@Override
+	public UserMessage getMessageById(String messageId) {
+		return userMessageDao.retrieveUserMessageById(messageId);
+	}
 	
 
 

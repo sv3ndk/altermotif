@@ -17,7 +17,9 @@ GET     /projects/view			                projects.ProjectsView.projectsView
 GET     /projects/search		                projects.ProjectsSearch.projectsSearch
 
 GET     /messages/new			                messages.MessagesNew.messagesNew
+GET     /messages/new/to		                messages.MessagesNew.messagesNewTo
 GET     /messages/inbox			                messages.MessagesInbox.MessagesInbox
+GET     /messages/inbox/reply	                messages.MessagesInbox.doReplyTo
 GET     /messages/outbox		                messages.MessagesOutbox.MessagesOutbox
 GET     /messages/deleted		                messages.MessagesDeleted.MessagesDeleted
 

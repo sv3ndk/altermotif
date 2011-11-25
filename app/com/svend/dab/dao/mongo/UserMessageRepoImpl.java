@@ -116,6 +116,14 @@ public class UserMessageRepoImpl implements IUserMessageDao {
 
 		return mongoTemplate.find(theQuery, UserMessage.class);
 	}
+	
+	
+	
+	@Override
+	public UserMessage retrieveUserMessageById(String messageId) {
+		return mongoTemplate.findById(messageId, UserMessage.class);
+	}
+	
 
 	@Override
 	public void updateFromUserProfileRef(ProfileRef profileRef) {
@@ -167,4 +175,5 @@ public class UserMessageRepoImpl implements IUserMessageDao {
 		mongoTemplate.save(userMessage);
 		
 	}
+
 }

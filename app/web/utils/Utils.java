@@ -2,6 +2,8 @@ package web.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -15,6 +17,10 @@ import org.cloudfoundry.org.codehaus.jackson.JsonParseException;
 import org.cloudfoundry.org.codehaus.jackson.map.JsonMappingException;
 import org.cloudfoundry.org.codehaus.jackson.map.ObjectMapper;
 
+import com.svend.dab.core.beans.Config;
+
+import controllers.BeanProvider;
+
 import models.altermotif.MappedValue;
 
 public class Utils {
@@ -25,6 +31,13 @@ public class Utils {
 	
 	private static ObjectMapper jsonMapper = new ObjectMapper();
 
+	private static Config config;
+	
+
+	// ----------------------------------
+	// ----------------------------------
+	
+	
 	private enum filenames {
 
 		en("languagenames_en_iso8859.properties"), fr("languagenames_fr_iso8859.properties"), nl("languagenames_nl_iso8859.properties");
@@ -36,6 +49,9 @@ public class Utils {
 		final String filename;
 
 	}
+
+	// ----------------------------------
+	// ----------------------------------
 
 	public static List<MappedValue> getAllPossibleLanguageNames(String inLanguage) {
 
@@ -81,5 +97,39 @@ public class Utils {
 			return new HashSet<String>();
 		}
 	}
+	
+	
+	public static String formatDate(Date date) {
+		
+		if (date == null) {
+			return "";
+		} 
+
+		return new SimpleDateFormat(getConfig().getDateDisplayFormat()).format(date );	
+	}
+	
+
+	
+	// ----------------------------------
+	// ----------------------------------
+
+	
+	
+	private static Config getConfig() {
+		
+		if (config == null) {
+			synchronized (Utils.class) {
+				if (config == null) {
+					config = BeanProvider.getConfig();
+					
+				}
+			}
+		}
+		
+		return config;
+		
+	}
+
+
 
 }

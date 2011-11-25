@@ -50,6 +50,7 @@
 		
 		#{if _profileVisibility.cvLinkVisible}
 		<tr>
+			<td></td>
 			<td id="viewProfileCvLink">
 				<a href="${_visitedUserProfile.cvLink.address}" class="dabLink" target="_blank">
 					<img src="@{'/public/images/pdficon.gif'}" class="iconLink" id="downloadCvButton"></img>
@@ -58,7 +59,6 @@
 					&{'profileCV'}
 				</a>
 			</td>
-			<td></td>
 		</tr>
 		#{/if}
 		
@@ -66,10 +66,10 @@
 		
 		#{if _profileVisibility.mayContactThisUser}
 		<tr>
+			<td></td>
 			<td>
 				<a href="@{messages.MessagesNew.messagesNewTo(_visitedUserProfile.username)}" class="dabLink">&{'profileContactThisUser'} ${_visitedUserProfile.username}</a>
 			</td>
-			<td></td>
 		</tr>
 		#{/if}
 

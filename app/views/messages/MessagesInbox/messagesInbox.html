@@ -15,6 +15,8 @@
 		var cancelLabelValue = "&{'CancelButton'}";
 
 	   	var loadOnePageAction 	= #{jsAction @messages.MessagesInbox.loadInboxMessages(':pageNumber') /};
+	   	var markAsReadAction 	= #{jsAction @messages.MessagesInbox.doMarkMessageAsRead(':messageId') /};
+
 		
 		$(document).ready(function() {
 			init();
@@ -28,11 +30,11 @@
 	
 	<div id="messagesInboxTable">
 	
-		<table class="messagesListTable">
+		<table class="messagesListTable" id="messagesListTable">
 			<tbody >
 				<tr class="messagesListTableHeader">
 					<td class="inboxOutboxDeleteCheckbox">
-						<input type="checkbox" id="selectAllNone"
+						<input type="checkbox" id="masterCheckbox"
 						 />
 					</td>
 					<td>&{'profileMessagesFrom'}</td>
@@ -40,8 +42,8 @@
 					<td>&{'profileMessagesReceived'}</td>
 				</tr>
 				
-				<tr id="hiddenInboxRowTemplate" style="display: none"> 
-					<td class="inboxOutboxDeleteCheckbox"><input type="checkbox" /></td>
+				<tr id="hiddenInboxRowTemplate" style="display: none" class="inboxRowTr"> 
+					<td class="inboxOutboxDeleteCheckbox"><input type="checkbox" class="msgCb"/></td>
 					<td class="messageRowFrom">
 						<a class="dabLink"></a>
 					</td>
@@ -70,7 +72,7 @@
 
 		<table class="messageDetailTable">
 			<tr class="messagesListTableHeader">
-				<td>&{'profileMessagesFrom'}: <a id="messageDetailFrom" class="messagesListTableHeaderSmall"></a></td>
+				<td>&{'profileMessagesFrom'}: <a id="messageDetailFrom" class="messagesListTableHeaderSmall dabLink"></a></td>
 				<td>&{'profileMessagesSubject'}: <span id="messageDetailSubject" class="messagesListTableHeaderSmall"></span></td>
 				<td> <span id="messageDetailDate" class="messagesListTableHeaderSmall"></span></td>
 				<td class="profileMessagesInboxBottomRight">
@@ -90,5 +92,27 @@
 	
 	</div>
 </div>
+
+
+
+<div id="confirmDeleteInboxMessages"
+	title="&{'confirmationPopupTitle'}">
+		&{'profileInboxMessagesConfirmDeletion'}
+</div>
+
+
+
+<div id="hiddenReplyToForm" class="hidden">
+	#{form @messages.MessagesInbox.doReplyTo() }
+		<input type="hidden" name="messageId" class="hiddenSubmit" />
+	#{/form}
+</div>
+
+<div id="hiddenForwardForm" class="hidden">
+	#{form @messages.MessagesInbox.doForward() }
+		<input type="hidden" name="messageId" class="hiddenSubmit" />
+	#{/form}
+</div>
+
 
 

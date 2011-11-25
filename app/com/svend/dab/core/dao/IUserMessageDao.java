@@ -21,7 +21,8 @@ public interface IUserMessageDao {
 	
 	public Page<UserMessage> findDeletedMessages(String username, Pageable pageable);
 	
-	public List<UserMessage> retrieveUserMessageById(List<String> undeletedMessagesIds);
+	public List<UserMessage> retrieveUserMessageById(List<String> messageIds);
+	public abstract UserMessage retrieveUserMessageById(String messageId);
 
 	public void markMessageAsDeletedByRecipient(List<String> messageIds);
 	public void markMessageAsDeletedByEmitter(List<String> messageIds);
@@ -50,6 +51,7 @@ public interface IUserMessageDao {
 	public abstract void save(List<UserMessage> foundMessages);
 
 	public abstract void save(UserMessage userMessage);
+
 
 
 }

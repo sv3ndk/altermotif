@@ -46,6 +46,8 @@ public interface IMessagesServices {
 	public void markMessagesAsDeletedByEmitter(List<String> deletedMessages);
 
 	public void undeleteMessages(List<String> undeletedMessages, String username);
+
+	public UserMessage getMessageById(String messageId);
 	
 
 
