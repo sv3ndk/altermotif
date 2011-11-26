@@ -6,8 +6,6 @@ var okLabelValue;
 var cancelLabelValue;
 var warningUnsavedChangesTextValue;
 
-// this is a map of languagge iso codes (e.g. "en") to language name "ENglish", in the language chosen by the user
-var allPossibleLanguagesMap;
 
 // reverve of the above: mapping from the human name to the code
 var allPossibleLanguagesMap_reverse;
@@ -28,6 +26,10 @@ var profileLanguages ;
 function init(oklabel, cancelLabel, warningUnsavedChangesText) {
 	okLabelValue = oklabel;
 	cancelLabelValue = cancelLabel;
+
+	// this script is in language.js
+	initAllPossibleLanguagesMap();
+	
 	warningUnsavedChangesTextValue = warningUnsavedChangesText;
 
 	registerDatePicker();
@@ -106,17 +108,6 @@ function initializeGeoCoder(initLat, initLong) {
 
 function initLanguageMechanics() {
 
-	// builds the mapping between language code and language human name
-	var allPossibleLanguageNames = $("#allPossibleLanguageNames").text();
-	allPossibleLanguages = JSON.parse(allPossibleLanguageNames);
-	allPossibleLanguagesMap = new Array();
-	allPossibleLanguagesMap_reverse = new Array();
-	allPossibleLanguagesList = [];
-	for ( var oneKey in allPossibleLanguages) {
-		allPossibleLanguagesMap[allPossibleLanguages[oneKey].code] = allPossibleLanguages[oneKey].name;
-		allPossibleLanguagesMap_reverse[allPossibleLanguages[oneKey].name] = allPossibleLanguages[oneKey].code;
-		allPossibleLanguagesList.push(allPossibleLanguages[oneKey].name);
-	}
 
 	// builds the mapping between level code and level human name
 	var allPossibleLevelNames = $("#allPossibleLevelNames").text();

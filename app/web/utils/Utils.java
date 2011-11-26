@@ -17,6 +17,8 @@ import org.cloudfoundry.org.codehaus.jackson.JsonParseException;
 import org.cloudfoundry.org.codehaus.jackson.map.JsonMappingException;
 import org.cloudfoundry.org.codehaus.jackson.map.ObjectMapper;
 
+import play.mvc.Scope.RenderArgs;
+
 import com.google.gson.JsonElement;
 import com.svend.dab.core.beans.Config;
 import com.svend.dab.core.beans.profile.Contact;
@@ -25,6 +27,7 @@ import com.svend.dab.core.beans.profile.UserProfile;
 import controllers.BeanProvider;
 
 import models.altermotif.MappedValue;
+import models.altermotif.SessionWrapper;
 
 public class Utils {
 
@@ -55,6 +58,21 @@ public class Utils {
 
 	// ----------------------------------
 	// ----------------------------------
+	
+	
+	public static void addAllPossibleLanguageNamesToRenderArgs(SessionWrapper sessionWrapper, RenderArgs renderArgs) {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		List<MappedValue> allPossibleLanguageNames = Utils.getAllPossibleLanguageNames(sessionWrapper.getSelectedLg());
+		
+		try {
+			renderArgs.put("allPossibleLanguageNames", mapper.writeValueAsString(allPossibleLanguageNames));
+		} catch (Exception e) {
+			logger.log(Level.WARNING, "Could not put allPossibleLanguageNames in model", e);
+		}
+	}
+
+	
 
 	public static List<MappedValue> getAllPossibleLanguageNames(String inLanguage) {
 

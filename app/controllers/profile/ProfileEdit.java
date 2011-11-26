@@ -38,17 +38,10 @@ public class ProfileEdit extends DabLoggedController {
 			renderArgs.put(EDITED_PROFILE_RENDERARG_NAME, new EditedProfile(userProfile));
 		}
 		
-		ObjectMapper mapper = new ObjectMapper();
-		List<MappedValue> allPossibleLanguageNames = Utils.getAllPossibleLanguageNames(getSessionWrapper().getSelectedLg());
-		
-		try {
-			renderArgs.put("allPossibleLanguageNames", mapper.writeValueAsString(allPossibleLanguageNames));
-		} catch (Exception e) {
-			logger.log(Level.WARNING, "Could not put allPossibleLanguageNames in model", e);
-		}
-		
+		Utils.addAllPossibleLanguageNamesToRenderArgs(getSessionWrapper(), renderArgs);
 		render();
 	}
+
 	
 
 

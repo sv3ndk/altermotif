@@ -7,6 +7,9 @@ function init(okLabel, cancelLabel, isProfileActive) {
 	okLabelValue = okLabel;
 	cancelLabelValue = cancelLabel;
 	visitedProfileId = $("#vuser").text();
+	
+	// this script is in language.js
+	initAllPossibleLanguagesMap();
 
 	initLeaveAReferenceForm(okLabel, cancelLabel);
 
@@ -22,6 +25,17 @@ function init(okLabel, cancelLabel, isProfileActive) {
 	// this cannot be called inside updateAllText(), becasuse it is based on data in the page that are not reloaded by Ajax
 	updateContactAddedToCOntactText($("#isAddToContactLinkVisible").text() == "true", $("#isAddedToContactLinkVisible").text() == "true");
 
+	insertLanguageLabels();
+	
+}
+
+
+function insertLanguageLabels() {
+	
+	$(".languageCell").each(function(index, element) {
+		var languageCode = $(element).find("span.hidden").text();
+		$(element).find("span.langugeLabel").text(allPossibleLanguagesMap[languageCode]);
+	});
 	
 }
 
@@ -29,6 +43,8 @@ function updateAllTexts() {
 	updateReceivedReferencesText();
 	updateSentReferencesText();
 	updateContactText();
+	
+	
 }
 
 function initYourProfileIsInactiveNotification(isProfileActive) {

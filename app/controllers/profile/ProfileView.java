@@ -26,7 +26,8 @@ public class ProfileView extends DabController {
 		UserProfile visitedUserProfile = BeanProvider.getUserProfileService().loadUserProfile(vuser, true);
 		renderArgs.put("visitedUserProfile", visitedUserProfile);
 		new ProfileViewProfileVisibility(visitedUserProfile, getSessionWrapper()).putInArgsList(renderArgs);
-		
+
+		Utils.addAllPossibleLanguageNamesToRenderArgs(getSessionWrapper(), renderArgs);
 
 		render();
 	}

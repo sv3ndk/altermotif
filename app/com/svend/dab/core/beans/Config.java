@@ -74,7 +74,7 @@ public class Config {
 	}
 
 	public String getDateTimeDisplayFormat() {
-		return "dd MMM yyyy HH:mm";
+		return "dd/MM/yyyy HH:mm";
 	}
 
 	/**
