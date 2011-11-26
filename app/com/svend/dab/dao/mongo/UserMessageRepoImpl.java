@@ -10,16 +10,10 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.commons.lang.NotImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.CollectionCallback;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -112,21 +106,22 @@ public class UserMessageRepoImpl implements IUserMessageDao {
 	
 
 	@Override
-	public Page<UserMessage> findDeletedMessages(String username, Pageable pageable) {
-		final Query query = query(new Criteria().orOperator(where("toUser._id").is(username).and("deletedByRecipient").is(true),
-				where("fromUser._id").is(username).and("deletedByEmitter").is(true)));
-
-		query.limit(pageable.getPageSize());
-		query.skip(pageable.getOffset());
-
-		// TODO: shouldn't we count the number of result in the query instead?
-		Long count = mongoTemplate.getCollection("userMessage").count();
-
-		List<UserMessage> list = mongoTemplate.find(query, UserMessage.class);
-		logger.log(Level.INFO, "found " + list.size());
-		return new PageImpl<UserMessage>(list, pageable, count);
+	public long countNumberOfDeletedMessages(String username) {
+		Criteria deletedAsRecipientCriterium = where("toUser._id").is(username).and("deletedByRecipient").is(true);
+		Criteria deletedAsEmitterCriterium = where("fromUser._id").is(username).and("deletedByEmitter").is(true);
+		final Query query = query(new Criteria().orOperator(new Criteria[] {deletedAsRecipientCriterium, deletedAsEmitterCriterium}));
+		
+		return mongoTemplate.execute("userMessage", new CollectionCallback<Long>() {
+			@Override
+			public Long doInCollection(DBCollection collection) throws MongoException, DataAccessException {
+				return collection.count(query.getQueryObject());
+			}
+		});
 	}
 
+	
+	
+	
 	@Override
 	public void markMessageAsDeletedByRecipient(Collection<String> messageIds, String recipientId) {
 		Query theQuery = query(where("toUser._id").is(recipientId).and("id").in(messageIds));
@@ -170,9 +165,9 @@ public class UserMessageRepoImpl implements IUserMessageDao {
 
 	
 	@Override
-	public List<UserMessage> findAllUserMessageBytoUserUserNameAndDeletedByRecipient(String toUserName, boolean deletedByRecipient, int pageNumber, int pageSize) {
+	public List<UserMessage> findAllUserMessageBytoUserUserNameAndDeletedByRecipient(String toUserName, int pageNumber, int pageSize) {
 		if (pageNumber >= 0 && pageSize > 0) {
-			Query query = query(where("toUser._id").is(toUserName).and("deletedByRecipient").is(deletedByRecipient) ).limit(pageSize).skip(pageNumber*pageSize);
+			Query query = query(where("toUser._id").is(toUserName).and("deletedByRecipient").is(false) ).limit(pageSize).skip(pageNumber*pageSize);
 			query.sort().on("creationDate", Order.DESCENDING);
 			return mongoTemplate.find(query, UserMessage.class);
 		} else {
@@ -181,9 +176,9 @@ public class UserMessageRepoImpl implements IUserMessageDao {
 	}
 
 	@Override
-	public List<UserMessage> findAllUserMessageByFromUserUserNameAndDeletedByEmitter(String fromUserName, Boolean deletedByEmitter, int pageNumber, int pageSize) {
+	public List<UserMessage> findAllUserMessageByFromUserUserNameAndDeletedByEmitter(String fromUserName,  int pageNumber, int pageSize) {
 		if (pageNumber >= 0 && pageSize > 0) {
-			Query query = query(where("fromUser._id").is(fromUserName).and("deletedByEmitter").is(deletedByEmitter) ).limit(pageSize).skip(pageNumber*pageSize);
+			Query query = query(where("fromUser._id").is(fromUserName).and("deletedByEmitter").is(false) ).limit(pageSize).skip(pageNumber*pageSize);
 			query.sort().on("creationDate", Order.DESCENDING);
 			return mongoTemplate.find(query, UserMessage.class);
 		} else {
@@ -192,27 +187,34 @@ public class UserMessageRepoImpl implements IUserMessageDao {
 	}
 
 	@Override
-	public List<UserMessage> findAllUserMessageBytoUserUserNameAndReadAndDeletedByRecipient(String username, boolean read, boolean deletedByRecipient) {
-		Query query = query(where("toUser._id").is(username).and("read").is(read).and("deletedByRecipient").is(deletedByRecipient));
+	public List<UserMessage> findAllUserMessageBytoUserUserNameAndReadAndDeletedByRecipient(String username, boolean read) {
+		Query query = query(where("toUser._id").is(username).and("read").is(read).and("deletedByRecipient").is(false));
 		query.sort().on("creationDate", Order.DESCENDING);
 		return mongoTemplate.find(query, UserMessage.class);
 	}
 
+	
+	@Override
+	public List<UserMessage> findDeletedMessages(String username, int pageNumber, int inboxOutboxPageSize) {
+		Criteria deletedAsRecipientCriterium = where("toUser._id").is(username).and("deletedByRecipient").is(true);
+		Criteria deletedAsEmitterCriterium = where("fromUser._id").is(username).and("deletedByEmitter").is(true);
+		Query query = query(new Criteria().orOperator(new Criteria[] {deletedAsRecipientCriterium, deletedAsEmitterCriterium}));
+		query.sort().on("creationDate", Order.DESCENDING);
+		return mongoTemplate.find(query, UserMessage.class);
+	}
+	
+	
 	@Override
 	public void save(List<UserMessage> messages) {
-		
 		for (UserMessage msg : messages) {
-			mongoTemplate.save (msg);
+			save (msg);
 		}
-		
 	}
 
 	@Override
 	public void save(UserMessage userMessage) {
 		mongoTemplate.save(userMessage);
-		
 	}
-
 
 
 }

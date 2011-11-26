@@ -57,7 +57,7 @@ public class MessagesService implements IMessagesServices, Serializable {
 
 	@Override
 	public List<UserMessage> getReceivedMessages(String toUserName, int pageNumber) {
-		return userMessageDao.findAllUserMessageBytoUserUserNameAndDeletedByRecipient(toUserName, false, pageNumber, config.getInboxOutboxPageSize());
+		return userMessageDao.findAllUserMessageBytoUserUserNameAndDeletedByRecipient(toUserName, pageNumber, config.getInboxOutboxPageSize());
 	}
 	
 	@Override
@@ -71,22 +71,28 @@ public class MessagesService implements IMessagesServices, Serializable {
 		long numberOfWrittendMessages = userMessageDao.countNumberOfWrittenMessages(username);
 		return numberOfWrittendMessages > (pageNumber + 1 ) * config.getInboxOutboxPageSize();
 	}
+
 	
+	@Override
+	public boolean isThereMoreDeletedPagesThen(String username, int pageNumber) {
+		long numberOfDeletedMessages = userMessageDao.countNumberOfDeletedMessages(username);
+		return numberOfDeletedMessages > (pageNumber + 1 ) * config.getInboxOutboxPageSize();
+	}
+
 
 	@Override
 	public List<UserMessage> getWrittenMessages(String fromUserName, int pageNumber) {
-		return userMessageDao.findAllUserMessageByFromUserUserNameAndDeletedByEmitter(fromUserName, false, pageNumber, config.getInboxOutboxPageSize());
+		return userMessageDao.findAllUserMessageByFromUserUserNameAndDeletedByEmitter(fromUserName, pageNumber, config.getInboxOutboxPageSize());
 	}
 	
 	@Override
-	public Page<UserMessage> getDeletedMessages(String username, int pageNumber) {
-		PageRequest pageRequest = new PageRequest(pageNumber, config.getInboxOutboxPageSize(), new Sort(Direction.DESC, "creationDate"));
-		return userMessageDao.findDeletedMessages(username, pageRequest);
+	public List<UserMessage> getDeletedMessages(String username, int pageNumber) {
+		return userMessageDao.findDeletedMessages(username, pageNumber, config.getInboxOutboxPageSize());
 	}
 	
 	@Override
 	public List<UserMessage> getUnreadReceivedMessages(String username) {
-		return userMessageDao.findAllUserMessageBytoUserUserNameAndReadAndDeletedByRecipient(username, false, false);
+		return userMessageDao.findAllUserMessageBytoUserUserNameAndReadAndDeletedByRecipient(username, false);
 	}
 	
 	@Override
@@ -155,6 +161,7 @@ public class MessagesService implements IMessagesServices, Serializable {
 			return (int) Math.ceil(messageOrder / config.getInboxOutboxPageSize());
 		}
 	}
+
 
 
 

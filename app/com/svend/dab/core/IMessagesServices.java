@@ -32,10 +32,9 @@ public interface IMessagesServices {
 	
 	public List<UserMessage> getWrittenMessages(String fromUserName, int pageNumber);
 
-	public Page<UserMessage> getDeletedMessages(String username, int pageNumber);
+	public List<UserMessage> getDeletedMessages(String username, int pageNumber);
 	
 	public  List<UserMessage> getUnreadReceivedMessages(String username);
-	
 	
 	public void markMessageAsRead(String readMessageId);
 
@@ -43,6 +42,8 @@ public interface IMessagesServices {
 	public boolean isThereMoreInboxPagesThen(String username, int pageNumber);
 
 	public boolean isThereMoreOutboxPagesThen(String username, int pageNumber);
+	
+	public boolean isThereMoreDeletedPagesThen(String username, int pageNumber);
 	
 	public void markMessagesAsDeletedByRecipient(Collection<String> messageIds, String recipientId);
 
@@ -53,6 +54,7 @@ public interface IMessagesServices {
 	public UserMessage getMessageById(String messageId);
 
 	public int getInboxPageNumberOfMessage(String loggedInUserProfileId, String desiredMessagesId);
+
 
 
 

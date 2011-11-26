@@ -105,12 +105,8 @@ function updateDisplayedMessage(eventTarget) {
 
 	var htmlElem = eventTarget;
 	var message;
-	var markMessageAsUnread;
 	
 	while (htmlElem.attr("id") != "messagesListTable") {
-		if (htmlElem.hasClass("inboxRowUnread")) {
-			markMessageAsUnread = true;
-		}
 		message = htmlElem.data("fullMessage");
 		
 		// breaking now makes sure htmlElem points to the table row, whatever the user clicked

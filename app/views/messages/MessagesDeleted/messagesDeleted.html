@@ -6,6 +6,9 @@
 
 
 #{set 'moreScripts'}
+    <script src="@{'/public/javascripts/messages/messagesDeletionLogic.js'}" type="text/javascript"
+    	charset="${_response_encoding}"></script>
+
     <script src="@{'/public/javascripts/messages/messagesDeleted.js'}" type="text/javascript"
     	charset="${_response_encoding}"></script>
     	
@@ -13,6 +16,9 @@
     
 		var okLabelValue = "&{'OkButton'}";
 		var cancelLabelValue = "&{'CancelButton'}";
+	   	var currentPage = 0;
+		
+	   	var loadOnePageAction 		= #{jsAction @messages.MessagesDeleted.loadMessages(':pageNumber') /};
     
 		$(document).ready(function() {
 			init();
@@ -22,6 +28,95 @@
 
 
 
+<div id="messagesContainer" class="messagesMainContainer">
+	<div id="messagesDeletedTable">
+	
+			<table class="messagesListTable" id="messagesListTable">
+				<tbody >
+					<tr class="messagesListTableHeader">
+						<td class="inboxOutboxDeleteCheckbox">
+							<input type="checkbox" id="masterCheckbox"
+							 />
+						</td>
+						<td>&{'profileMessagesFrom'}</td>
+						<td>&{'profileMessagesTo'}</td>
+						<td>&{'profileMessagesSubject'}</td>
+						<td>&{'profileMessagesReceived'}</td>
+					</tr>
 
 
-messagesDeleted
+					<tr id="hiddenRowTemplate" style="display: none" class="inboxRowTr"> 
+						<td class="inboxOutboxDeleteCheckbox"><input type="checkbox" class="msgCb"/></td>
+						<td class="messageRowFrom">
+							<a class="dabLink"></a>
+						</td>
+						<td class="messageRowTo">
+							<a class="dabLink"></a>
+						</td>
+						
+						<td class="messageRowSubject">
+							<span></span>
+						</td>
+						
+						<td class="messageRowCreationTime">
+							<span></span>
+						</td>
+					</tr>
+					
+					
+					
+					<tr class="messagesListTableHeader" id="topMessageListLastRow">
+						<td colspan="3"><span id="messageDeleteSelected" class="messagesReactionLinkDisabled" >&{'profileMessagesUndeleteSelected'}</span></td>
+						<td colspan="2" class="profileMessagesInboxBottomRight">
+							<span id="messagesPreviousLink" class="messagesReactionLinkDisabled" >&{'profileMessagesPrevious'}</span>
+							<span id="messagesNextLink" class="messagesReactionLinkDisabled" >&{'profileMessagesNext'}</span>
+						</td>
+					</tr>
+					
+					
+				</tbody>
+			</table>
+			
+			
+		<table class="messageDetailTable">
+			<tr class="messagesListTableHeader">
+				<td>&nbsp;</td>
+				<td>&{'profileMessagesFrom'}: <a id="messageDetailFrom" class="messagesListTableHeaderSmall dabLink"></a></td>
+				<td>&{'profileMessagesTo'}:   <a id="messageDetailTo" class="messagesListTableHeaderSmall dabLink"></a></td>
+				<td>&{'profileMessagesSubject'}: <span id="messageDetailSubject" class="messagesListTableHeaderSmall"></span></td>
+				<td> <span id="messageDetailDate" class="messagesListTableHeaderSmall"></span></td>
+				<td class="profileMessagesInboxBottomRight">
+					<span class="messagesReactionLinkDisabled" id="replyToLink">&{'profileMessagesReply'}</span> 
+					<span class="messagesReactionLinkDisabled" id="forwardLink" style="margin-left: 10px">&{'profileMessagesForward'}</span> 
+				</td>
+			</tr>
+			
+			<tr>
+				<td colspan="5">
+					<textarea id="messageContent" class="messagesInboxDetailContainer"></textarea>
+				</td>
+			</tr>
+			
+		</table>
+			
+	
+	</div>
+</div>
+
+
+
+
+<div id="hiddenReplyToForm" class="hidden">
+	#{form @messages.MessagesDeleted.doReplyTo() }
+		<input type="hidden" name="messageId" class="hiddenSubmit" />
+	#{/form}
+</div>
+
+<div id="hiddenForwardForm" class="hidden">
+	#{form @messages.MessagesDeleted.doForward() }
+		<input type="hidden" name="messageId" class="hiddenSubmit" />
+	#{/form}
+</div>
+
+
+

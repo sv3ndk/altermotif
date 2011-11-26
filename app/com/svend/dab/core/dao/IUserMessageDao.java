@@ -27,7 +27,8 @@ public interface IUserMessageDao {
 
 	public abstract long countNumberOfWrittenMessages(String username);
 	
-	public Page<UserMessage> findDeletedMessages(String username, Pageable pageable);
+	public abstract long countNumberOfDeletedMessages(String username);
+	public abstract List<UserMessage> findDeletedMessages(String username, int pageNumber, int inboxOutboxPageSize);
 	
 	public List<UserMessage> retrieveUserMessageById(List<String> messageIds);
 	public abstract UserMessage retrieveUserMessageById(String messageId);
@@ -51,15 +52,17 @@ public interface IUserMessageDao {
 	public void updateTOUserProfileRef(ProfileRef profileRef);
 	
 	
-	public abstract List<UserMessage> findAllUserMessageBytoUserUserNameAndDeletedByRecipient(String toUserName, boolean deletedByRecipient, int pageNumber, int inboxOutboxPageSize);
+	public abstract List<UserMessage> findAllUserMessageBytoUserUserNameAndDeletedByRecipient(String toUserName, int pageNumber, int inboxOutboxPageSize);
 	
-	public List<UserMessage> findAllUserMessageByFromUserUserNameAndDeletedByEmitter(String fromUserName, Boolean deletedByEmitter, int pageNumber, int pageSize);
+	public List<UserMessage> findAllUserMessageByFromUserUserNameAndDeletedByEmitter(String fromUserName, int pageNumber, int pageSize);
 		
-	public List<UserMessage> findAllUserMessageBytoUserUserNameAndReadAndDeletedByRecipient(String username, boolean read, boolean deletedByRecipient);
+	public List<UserMessage> findAllUserMessageBytoUserUserNameAndReadAndDeletedByRecipient(String username, boolean read);
 
 	public abstract void save(List<UserMessage> foundMessages);
 
 	public abstract void save(UserMessage userMessage);
+
+
 
 
 
