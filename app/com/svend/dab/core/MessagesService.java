@@ -3,6 +3,7 @@ package com.svend.dab.core;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -56,7 +57,6 @@ public class MessagesService implements IMessagesServices, Serializable {
 
 	@Override
 	public List<UserMessage> getReceivedMessages(String toUserName, int pageNumber) {
-		//PageRequest pageRequest = new PageRequest(pageNumber, config.getInboxOutboxPageSize(), new Sort(Direction.DESC, "creationDate"));
 		return userMessageDao.findAllUserMessageBytoUserUserNameAndDeletedByRecipient(toUserName, false, pageNumber, config.getInboxOutboxPageSize());
 	}
 	
@@ -66,12 +66,16 @@ public class MessagesService implements IMessagesServices, Serializable {
 		return numberOfReceivedMessages > (pageNumber + 1 ) * config.getInboxOutboxPageSize();
 	}
 
+	@Override
+	public boolean isThereMoreOutboxPagesThen(String username, int pageNumber) {
+		long numberOfWrittendMessages = userMessageDao.countNumberOfWrittenMessages(username);
+		return numberOfWrittendMessages > (pageNumber + 1 ) * config.getInboxOutboxPageSize();
+	}
 	
 
 	@Override
-	public Page<UserMessage> getWrittenMessages(String fromUserName, int pageNumber) {
-		PageRequest pageRequest = new PageRequest(pageNumber, config.getInboxOutboxPageSize(), new Sort(Direction.DESC, "creationDate"));
-		return userMessageDao.findAllUserMessageByFromUserUserNameAndDeletedByEmitter(fromUserName, false, pageRequest);
+	public List<UserMessage> getWrittenMessages(String fromUserName, int pageNumber) {
+		return userMessageDao.findAllUserMessageByFromUserUserNameAndDeletedByEmitter(fromUserName, false, pageNumber, config.getInboxOutboxPageSize());
 	}
 	
 	@Override
@@ -105,19 +109,13 @@ public class MessagesService implements IMessagesServices, Serializable {
 	}
 	
 	
-	
-	
-	/* (non-Javadoc)
-	 * @see com.svend.dab.core.IMessagesServices#markMessagesAsDeletedByEmitter(java.util.List)
-	 */
 	@Override
-	public void markMessagesAsDeletedByEmitter(List<String> deletedMessages) {
-		if (deletedMessages != null && deletedMessages.size() > 0) {
-			userMessageDao.markMessageAsDeletedByEmitter(deletedMessages);
-		} else {
-			logger.log(Level.WARNING, "This is weird: received a request to delete an empty list of outbox messages => not doing anything");
+	public void markMessagesAsDeletedByEmitter(Set<String> messageIds, String emitterId) {
+		if (!Strings.isNullOrEmpty(emitterId) && CollectionUtils.isNotEmpty(messageIds)) {
+			userMessageDao.markMessageAsDeletedByEmitter(messageIds, emitterId);
 		}
 	}
+
 	
 	@Override
 	public void undeleteMessages(List<String> undeletedMessagesIds, String username) {
@@ -157,6 +155,7 @@ public class MessagesService implements IMessagesServices, Serializable {
 			return (int) Math.ceil(messageOrder / config.getInboxOutboxPageSize());
 		}
 	}
+
 
 
 

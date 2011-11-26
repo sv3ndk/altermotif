@@ -38,8 +38,8 @@ public class MessageNewHelper {
 
 	public void caterScopeForForward(String userId, RenderArgs renderArgs, Flash flash, String messageId) {
 		UserMessage message = BeanProvider.getMessagesService().getMessageById(messageId);
-		// security meseare: makes sure nobody tries to anwser to a message he did not receive...
-		if ( message != null && userId.equals(message.getToUser().getUserName())) {
+		// security meseare: makes sure nobody tries to forwad to a message he did not receive or sent...
+		if ( message != null && (userId.equals(message.getFromUser().getUserName()) || userId.equals(message.getToUser().getUserName()))) {
 			flash.put(FLASH_FORM_SUBJECT,"FW: " + message.getSubject());
 			flash.put(FLASH_FORM_CONTENT, buildMessageRepliedContent(userId, message));
 		}

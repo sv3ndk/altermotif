@@ -6,6 +6,8 @@
 
 
 #{set 'moreScripts'}
+    <script src="@{'/public/javascripts/messages/messagesDeletionLogic.js'}" type="text/javascript"
+    	charset="${_response_encoding}"></script>
     <script src="@{'/public/javascripts/messages/messagesInbox.js'}" type="text/javascript"
     	charset="${_response_encoding}"></script>
     	
@@ -14,9 +16,9 @@
 		var okLabelValue = "&{'OkButton'}";
 		var cancelLabelValue = "&{'CancelButton'}";
 
-	   	var loadOnePageAction 			= #{jsAction @messages.MessagesInbox.loadInboxMessages(':pageNumber') /};
-	   	var markAsReadAction 			= #{jsAction @messages.MessagesInbox.doMarkMessageAsRead(':messageId') /};
-	   	var deleteInboxMessageAction 	= #{jsAction @messages.MessagesInbox.doDeleteNessage(':messageIds') /};
+	   	var loadOnePageAction 		= #{jsAction @messages.MessagesInbox.loadInboxMessages(':pageNumber') /};
+	   	var markAsReadAction 		= #{jsAction @messages.MessagesInbox.doMarkMessageAsRead(':messageId') /};
+	   	var deleteMessageAction 	= #{jsAction @messages.MessagesInbox.doDeleteMessage(':messageIds') /};
 	   	
 	   	var currentPage = ${pageNumber};
 
@@ -45,7 +47,7 @@
 					<td>&{'profileMessagesReceived'}</td>
 				</tr>
 				
-				<tr id="hiddenInboxRowTemplate" style="display: none" class="inboxRowTr"> 
+				<tr id="hiddenRowTemplate" style="display: none" class="inboxRowTr"> 
 					<td class="inboxOutboxDeleteCheckbox"><input type="checkbox" class="msgCb"/></td>
 					<td class="messageRowFrom">
 						<a class="dabLink"></a>
@@ -75,6 +77,7 @@
 
 		<table class="messageDetailTable">
 			<tr class="messagesListTableHeader">
+				<td>&nbsp;</td>
 				<td>&{'profileMessagesFrom'}: <a id="messageDetailFrom" class="messagesListTableHeaderSmall dabLink"></a></td>
 				<td>&{'profileMessagesSubject'}: <span id="messageDetailSubject" class="messagesListTableHeaderSmall"></span></td>
 				<td> <span id="messageDetailDate" class="messagesListTableHeaderSmall"></span></td>
@@ -85,7 +88,7 @@
 			</tr>
 			
 			<tr>
-				<td colspan="4">
+				<td colspan="5">
 					<textarea id="messageContent" class="messagesInboxDetailContainer"></textarea>
 				</td>
 			</tr>
@@ -98,7 +101,7 @@
 
 
 
-<div id="confirmDeleteInboxMessages"
+<div id="confirmDeleteMessages"
 	title="&{'confirmationPopupTitle'}">
 		&{'profileInboxMessagesConfirmDeletion'}
 </div>

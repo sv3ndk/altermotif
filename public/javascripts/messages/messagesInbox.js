@@ -6,18 +6,17 @@ var currentMessageId;
 // init ran at page load
 function init() {
 	
+	loadCurrentMessagePage();
+	
+	registerClickOnInboxRow();
+	
 	$("#replyToLink").click(replyTo);
 	$("#forwardLink").click(forwardMessage);
 	
-	loadCurrentMessagePage();
-
-	registerClickOnInboxRow();
-	
-	registerClickOnInboxCheckbox();
-	
-	initConfirmDeleteDialog();
-	
 	initNextPrevious();
+	
+	// this is present in messagesDeletionLogic.js
+	initDeletionLogic();
 }
 
 
@@ -65,13 +64,13 @@ function loadCurrentMessagePage() {
 
 
 function removeAllDisplayedMessages() {
-	$("#messagesListTable tr.inboxRowTr").filter(":not(#hiddenInboxRowTemplate)").remove();
+	$("#messagesListTable tr.inboxRowTr").filter(":not(#hiddenRowTemplate)").remove();
 }
 
 
 function addOneDisplayedMessage(addedMessage) {
 	
-	var oneMessage = $("#hiddenInboxRowTemplate").clone().show();
+	var oneMessage = $("#hiddenRowTemplate").clone().show();
 	
 	oneMessage.removeAttr("id");
 	
@@ -98,7 +97,11 @@ function addOneDisplayedMessage(addedMessage) {
 	
 }
 
-// when the user clicks on a message, we show the content
+
+////////////////////////////////////////////
+//show message content when clicking on top table
+
+
 function registerClickOnInboxRow() {
 	$("#messagesListTable").on("click", '.inboxRow, .inboxRowUnread', function(event) {
 		updateDisplayedMessage($(event.target));
@@ -166,8 +169,6 @@ function updateDisplayedMessage(eventTarget) {
 /////////////////////////////////////
 // reply , forward
 
-
-
 function replyTo() {
 	if (messageReactionEnabled && currentMessageId != undefined) {
 		$("#hiddenReplyToForm input.hiddenSubmit").val(currentMessageId);
@@ -182,41 +183,6 @@ function forwardMessage() {
 	}
 }
 
-
-
-////////////////////////////////////////////
-// show message content when clicking on top table
-
-
-function registerClickOnInboxCheckbox() {
-	$("#messagesListTable").on("change", ":checkbox:not(#masterCheckbox)", function(target) {
-			
-			// as soon as one checkbox is unselected, the master check box should also be deselected 
-			if ($(target).attr("checked") == undefined) {
-				$("#masterCheckbox").removeAttr("checked");
-			}
-			
-			// as soon as they are all selected, the master checkbox is selected as well
-			if (areAllCheckBoxSelected()) {
-				$("#masterCheckbox").attr("checked", "checked");
-			}
-			
-			refreshDeleteSelectedLinkState();
-		}); 
-			
-			
-	
-	// click on the top level checkbox: 
-	$("#masterCheckbox").click(function()  {
-		if ($("#masterCheckbox").attr("checked") == undefined) {
-			getAllNormalCheckBoxes().removeAttr("checked");
-		} else {
-			getAllNormalCheckBoxes().attr("checked", "checked");
-		}
-		refreshDeleteSelectedLinkState();
-	});
-	
-}
 
 
 ///////////////////////////////////////
@@ -237,112 +203,4 @@ function initNextPrevious() {
 			loadCurrentMessagePage();
 		}
 	});
-
-	
-}
-
-
-
-
-
-
-
-///////////////////////////////////////
-// deletion logic
-
-
-function isAtLeastOneCheckBoxSelected() {
-	return getAllNormalCheckBoxes().filter(":checked").size() > 0;
-}
-
-function areAllCheckBoxSelected() {
-	return getAllNormalCheckBoxes().filter(":not(:checked)").size() == 0;
-}
-
-// normal means not the "master" one and not the hiiden one which is used to generate the message at load time
-function getAllNormalCheckBoxes() {
-	return $("#messagesListTable :checkbox").filter(":not(#masterCheckbox)").filter(":not(#hiddenInboxRowTemplate :checkbox)");
-}
-
-
-function refreshDeleteSelectedLinkState() {
-	if (isAtLeastOneCheckBoxSelected()) {
-		$("#messageDeleteSelected").removeClass("messagesReactionLinkDisabled").addClass("messagesReactionLinkEnabled");
-	} else {
-		$("#messageDeleteSelected").removeClass("messagesReactionLinkEnabled").addClass("messagesReactionLinkDisabled");
-	}
-}
-
-
-function initConfirmDeleteDialog() {
-	$("#confirmDeleteInboxMessages").dialog({
-		autoOpen : false,
-		modal : true,
-		"buttons" : [ {
-			text : okLabelValue,
-			click : doDeleteSelectedMessages
-		}, {
-			text : cancelLabelValue,
-			click : function() {
-				$(this).dialog("close");
-			}
-		}]
-	});
-	
-	$("#messageDeleteSelected").click(function() {
-		if (isAtLeastOneCheckBoxSelected()) {
-			$("#confirmDeleteInboxMessages").dialog("open");
-		}
-	});
-	
-}
-
-
-function doDeleteSelectedMessages() {
-	
-	var allSelectedCheckBoxes = getAllNormalCheckBoxes().filter(":checked");
-	
-	var deletedMessageIds = [];
-
-	if (allSelectedCheckBoxes != undefined && allSelectedCheckBoxes.length  > 0) {
-		allSelectedCheckBoxes.each(function() {
-			var deletedMessage = $(this).parent().parent().data("fullMessage");
-			deletedMessageIds.push(deletedMessage.id);
-		});
-		
-		$.post(
-				deleteInboxMessageAction({messageIds: JSON.stringify(deletedMessageIds)}), 
-				function(response) {
-					loadCurrentMessagePage();
-					$("#confirmDeleteInboxMessages").dialog("close");
-				}
-			);
-	} else {
-		$("#confirmDeleteInboxMessages").dialog("close");
-	}
-
-}
-
-// init ran at each message navigation
-function onRefreshMessageList(event) {
-
-	try {
-		if (event.status == "success") {
-			registerClickOnInboxRow();
-			prepareNextLink();
-			preparePreviousLink();
-			registerClickOnInboxCheckbox();
-			$("#messageDeleteSelected").click(function() {
-				var numberDeleted = $(".inboxOutboxDeleteCheckbox > :checkbox").filter(":checked").size();
-				if (numberDeleted > 0) {
-					$("#confirmDeleteInboxMessages").dialog("open");
-				}
-			});
-			$("#selectAllNone").click(selectAllNone);
-			eraseDisplayedMessageContent();
-			$("#confirmDeleteInboxMessages").dialog("close");
-		}
-	} catch (e) {
-		alert(e);
-	}
 }

@@ -2,6 +2,7 @@ package com.svend.dab.core.dao;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +24,8 @@ public interface IUserMessageDao {
 	public abstract Long countNumberOfReceivedMessages(String username);
 
 	public abstract long countNumberOfReceivedMessagesBefore(String userid, String messageId);
+
+	public abstract long countNumberOfWrittenMessages(String username);
 	
 	public Page<UserMessage> findDeletedMessages(String username, Pageable pageable);
 	
@@ -30,7 +33,8 @@ public interface IUserMessageDao {
 	public abstract UserMessage retrieveUserMessageById(String messageId);
 
 	public void markMessageAsDeletedByRecipient(Collection<String> messageIds, String recipientId);
-	public void markMessageAsDeletedByEmitter(List<String> messageIds);
+	
+	public abstract void markMessageAsDeletedByEmitter(Set<String> messageIds, String emitterId);
 	
 	/**
 	 * updates all messages where this user is the "from user" and replace the fromUser field
@@ -49,13 +53,15 @@ public interface IUserMessageDao {
 	
 	public abstract List<UserMessage> findAllUserMessageBytoUserUserNameAndDeletedByRecipient(String toUserName, boolean deletedByRecipient, int pageNumber, int inboxOutboxPageSize);
 	
-	public Page<UserMessage> findAllUserMessageByFromUserUserNameAndDeletedByEmitter(String fromUserName, Boolean deletedByEmitter, Pageable pageable);
-
+	public List<UserMessage> findAllUserMessageByFromUserUserNameAndDeletedByEmitter(String fromUserName, Boolean deletedByEmitter, int pageNumber, int pageSize);
+		
 	public List<UserMessage> findAllUserMessageBytoUserUserNameAndReadAndDeletedByRecipient(String username, boolean read, boolean deletedByRecipient);
 
 	public abstract void save(List<UserMessage> foundMessages);
 
 	public abstract void save(UserMessage userMessage);
+
+
 
 
 

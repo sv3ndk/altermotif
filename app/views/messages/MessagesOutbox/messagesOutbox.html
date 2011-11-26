@@ -6,6 +6,8 @@
 
 
 #{set 'moreScripts'}
+    <script src="@{'/public/javascripts/messages/messagesDeletionLogic.js'}" type="text/javascript"
+    	charset="${_response_encoding}"></script>
     <script src="@{'/public/javascripts/messages/messagesOutbox.js'}" type="text/javascript"
     	charset="${_response_encoding}"></script>
     	
@@ -13,7 +15,12 @@
     
 		var okLabelValue = "&{'OkButton'}";
 		var cancelLabelValue = "&{'CancelButton'}";
-    
+	   	var currentPage = 0;
+
+	   	var loadOnePageAction 		= #{jsAction @messages.MessagesOutbox.loadOutboxMessages(':pageNumber') /};
+	   	var deleteMessageAction 	= #{jsAction @messages.MessagesOutbox.doDeleteMessage(':messageIds') /};
+
+		
 		$(document).ready(function() {
 			init();
 		})
@@ -22,6 +29,89 @@
 
 
 
+<div id="messagesContainer" class="messagesMainContainer">
+	
+	<div id="messagesOutboxTable">
+	
+		<table class="messagesListTable" id="messagesListTable">
+			<tbody >
+				<tr class="messagesListTableHeader">
+					<td class="inboxOutboxDeleteCheckbox">
+						<input type="checkbox" id="masterCheckbox"
+						 />
+					</td>
+					<td>&{'profileMessagesTo'}</td>
+					<td>&{'profileMessagesSubject'}</td>
+					<td>&{'profileMessagesReceived'}</td>
+				</tr>
+				
+				
+				<tr id="hiddenRowTemplate" style="display: none" class="inboxRowTr"> 
+					<td class="inboxOutboxDeleteCheckbox"><input type="checkbox" class="msgCb"/></td>
+					<td class="messageRowTo">
+						<a class="dabLink"></a>
+					</td>
+					
+					<td class="messageRowSubject">
+						<span></span>
+					</td>
+					
+					<td class="messageRowCreationTime">
+						<span></span>
+					</td>
+				</tr>
+				
+				
+				<tr class="messagesListTableHeader" id="topMessageListLastRow">
+
+					<td colspan="2"><span id="messageDeleteSelected" class="messagesReactionLinkDisabled" >&{'profileMessagesDeleteSelected'}</span></td>
+					<td colspan="2" class="profileMessagesInboxBottomRight">
+						<span id="messagesPreviousLink" class="messagesReactionLinkDisabled" >&{'profileMessagesPrevious'}</span>
+						<span id="messagesNextLink" class="messagesReactionLinkDisabled" >&{'profileMessagesNext'}</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		
+		
+		<table class="messageDetailTable">
+			<tbody>
+				<tr class="messagesListTableHeader">
+					<td>&nbsp;</td>
+					<td>&{'profileMessagesTo'}: <a id="messageDetailTo" class="messagesListTableHeaderSmall dabLink"></a></td>
+					<td>&{'profileMessagesSubject'}: <span id="messageDetailSubject" class="messagesListTableHeaderSmall"></span></td>
+					<td> <span id="messageDetailDate" class="messagesListTableHeaderSmall"></span></td>
+					<td class="profileMessagesInboxBottomRight">
+						<span class="messagesReactionLinkDisabled" id="forwardLink" style="margin-left: 10px">&{'profileMessagesForward'}</span> 
+					</td>
+					
+				</tr>
+				
+				
+			<tr>
+				<td colspan="5">
+					<textarea id="messageContent" class="messagesInboxDetailContainer"></textarea>
+				</td>
+			</tr>
+				
+			</tbody>
+		</table>
+		
+		
+	</div>
+</div>
 
 
-messagesInbox
+<div id="hiddenForwardForm" class="hidden">
+	#{form @messages.MessagesOutbox.doForward() }
+		<input type="hidden" name="messageId" class="hiddenSubmit" />
+	#{/form}
+</div>
+
+
+<div id="confirmDeleteMessages"
+	title="&{'confirmationPopupTitle'}">
+		&{'profileOutboxMessagesConfirmDeletion'}
+</div>
+

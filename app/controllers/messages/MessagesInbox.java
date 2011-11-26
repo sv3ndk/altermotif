@@ -21,9 +21,7 @@ public class MessagesInbox extends DabLoggedController {
 
 	private static Logger logger = Logger.getLogger(MessagesInbox.class.getName());
 	
-	
 	public static String FLASH_REDIRECT_INBOX_MESSAGE_ID = "toMessageId";
-	
 	
     public static void messagesInbox() {
     	
@@ -88,14 +86,10 @@ public class MessagesInbox extends DabLoggedController {
 	}
 
 	
-	public static void doDeleteNessage(String messageIds) {
+	public static void doDeleteMessage(String messageIds) {
 		Set<String> ids = Utils.jsonToSetOfStrings(messageIds);
 		BeanProvider.getMessagesService().markMessagesAsDeletedByRecipient(ids, getSessionWrapper().getLoggedInUserProfileId());
 		renderJSON(new MappedValue("result", "ok"));
 	}
-	
-	
-
-	
 
 }
