@@ -3,30 +3,32 @@ var messageReactionEnabled = false;
 var currentMessageId;
 
 
-
 // init ran at page load
 function init() {
 	
 	$("#replyToLink").click(replyTo);
 	$("#forwardLink").click(forwardMessage);
 	
-	loadPage(0);
+	loadCurrentMessagePage();
 
 	registerClickOnInboxRow();
 	
 	registerClickOnInboxCheckbox();
 	
 	initConfirmDeleteDialog();
+	
+	initNextPrevious();
 }
 
 
+////////////////////////////////////
+////////////////////////////////////
 
 
-
-function loadPage(pageNumber) {
+function loadCurrentMessagePage() {
 	$.post(
 			loadOnePageAction(
-					{pageNumber: pageNumber}
+					{pageNumber: currentPage}
 					), 
 
 			function(messagePage) {
@@ -41,6 +43,21 @@ function loadPage(pageNumber) {
 					}
 				}
 				
+				$("#masterCheckbox").removeAttr("checked");
+				
+				if (messagePage.previousPageExists) {
+					$("#messagesPreviousLink").addClass("messagesReactionLinkEnabled").removeClass("messagesReactionLinkDisabled");
+				} else {
+					$("#messagesPreviousLink").addClass("messagesReactionLinkDisabled").removeClass("messagesReactionLinkEnabled");
+				}
+
+				if (messagePage.nextPageExists) {
+					$("#messagesNextLink").addClass("messagesReactionLinkEnabled").removeClass("messagesReactionLinkDisabled");
+				} else {
+					$("#messagesNextLink").addClass("messagesReactionLinkDisabled").removeClass("messagesReactionLinkEnabled");
+				}
+				
+				
 			}
 		);
 }
@@ -48,7 +65,7 @@ function loadPage(pageNumber) {
 
 
 function removeAllDisplayedMessages() {
-	
+	$("#messagesListTable tr.inboxRowTr").filter(":not(#hiddenInboxRowTemplate)").remove();
 }
 
 
@@ -134,18 +151,20 @@ function updateDisplayedMessage(eventTarget) {
 		if (markMessageAsUnread) {
 			
 			htmlElem.find("td").removeClass("inboxRowUnread").addClass("inboxRow");
-			
 			$.post(
 					markAsReadAction({messageId: message.id}), 
 					function(response) {
 						// NOP
 					}
 				);
-			
 		}
 	
 	}
 }
+
+
+/////////////////////////////////////
+// reply , forward
 
 
 
@@ -162,6 +181,11 @@ function forwardMessage() {
 		$("#hiddenForwardForm form").submit();
 	}
 }
+
+
+
+////////////////////////////////////////////
+// show message content when clicking on top table
 
 
 function registerClickOnInboxCheckbox() {
@@ -195,8 +219,40 @@ function registerClickOnInboxCheckbox() {
 }
 
 
+///////////////////////////////////////
+// next, previous page
+
+function initNextPrevious() {
+	
+	$("#messagesPreviousLink").click(function () {
+		if (currentPage > 0 && $("#messagesPreviousLink").hasClass("messagesReactionLinkEnabled")) {
+			currentPage--;
+			loadCurrentMessagePage();
+		}
+	});
+
+	$("#messagesNextLink").click(function () {
+		if ( $("#messagesNextLink").hasClass("messagesReactionLinkEnabled")) {
+			currentPage++;
+			loadCurrentMessagePage();
+		}
+	});
+
+	
+}
+
+
+
+
+
+
+
+///////////////////////////////////////
+// deletion logic
+
+
 function isAtLeastOneCheckBoxSelected() {
-	return $("#messagesListTable :checkbox").filter(":not(#masterCheckbox)").filter(":checked").size() > 0;
+	return getAllNormalCheckBoxes().filter(":checked").size() > 0;
 }
 
 function areAllCheckBoxSelected() {
@@ -224,15 +280,13 @@ function initConfirmDeleteDialog() {
 		modal : true,
 		"buttons" : [ {
 			text : okLabelValue,
-			click : confirmDeleteMessages
+			click : doDeleteSelectedMessages
 		}, {
 			text : cancelLabelValue,
 			click : function() {
 				$(this).dialog("close");
 			}
-		}
-
-		]
+		}]
 	});
 	
 	$("#messageDeleteSelected").click(function() {
@@ -241,15 +295,33 @@ function initConfirmDeleteDialog() {
 		}
 	});
 	
-
 }
 
 
+function doDeleteSelectedMessages() {
+	
+	var allSelectedCheckBoxes = getAllNormalCheckBoxes().filter(":checked");
+	
+	var deletedMessageIds = [];
 
+	if (allSelectedCheckBoxes != undefined && allSelectedCheckBoxes.length  > 0) {
+		allSelectedCheckBoxes.each(function() {
+			var deletedMessage = $(this).parent().parent().data("fullMessage");
+			deletedMessageIds.push(deletedMessage.id);
+		});
+		
+		$.post(
+				deleteInboxMessageAction({messageIds: JSON.stringify(deletedMessageIds)}), 
+				function(response) {
+					loadCurrentMessagePage();
+					$("#confirmDeleteInboxMessages").dialog("close");
+				}
+			);
+	} else {
+		$("#confirmDeleteInboxMessages").dialog("close");
+	}
 
-
-
-
+}
 
 // init ran at each message navigation
 function onRefreshMessageList(event) {
@@ -272,70 +344,5 @@ function onRefreshMessageList(event) {
 		}
 	} catch (e) {
 		alert(e);
-	}
-}
-
-
-
-
-function confirmDeleteMessages() {
-	var numberSelected = $(".inboxOutboxDeleteCheckbox > :checkbox").filter(":checked").size();
-
-	var deletedIndices = "";
-	var first = true;
-
-	if (numberSelected > 0) {
-		var selectedCk = $(".inboxOutboxDeleteCheckbox > :checkbox").filter(":checked").each(function() {
-			if (!first) {
-				deletedIndices += ",";
-			}
-			deletedIndices += $(this).attr("id").substring(2);
-			first = false;
-		});
-	}
-
-	$("#hiddenMarkMessagesAsDeletedForm\\:messageIds").val(deletedIndices);
-	$("#hiddenMarkMessagesAsDeletedForm\\:hiddenLink").click();
-}
-
-function selectAllNone() {
-	$(".inboxOutboxDeleteCheckbox > :checkbox").attr("checked", $("#selectAllNone").attr("checked"));
-	refreshDeleteSelectedLinkState();
-}
-
-
-function eraseDisplayedMessageContent() {
-	$("#messageContent").val("");
-	$('#messageDetailFrom').html("");
-	$('#messageDetailFrom').attr("href", "#");
-
-	$('#messageDetailSubject').html("");
-	$('#messageDetailDate').html("");
-
-	$('#replyToLink').removeClass("messagesReactionLinkEnabled").addClass("messagesReactionLinkDisabled");
-	$('#forwardLink').removeClass("messagesReactionLinkEnabled").addClass("messagesReactionLinkDisabled");
-}
-
-function prepareNextLink() {
-	nextPageExists = $("#isNextPageLinkActive").text();
-	if (nextPageExists == "true") {
-		$("#messagesNextLink").removeClass("messagesReactionLinkDisabled").addClass("messagesReactionLinkEnabled");
-		$("#messagesNextLink").click(function() {
-			$("#hiddenNextPageForm\\:hiddenLink").click();
-		});
-	} else {
-		$("#messagesNextLink").removeClass("messagesReactionLinkEnabled").addClass("messagesReactionLinkDisabled");
-	}
-}
-
-function preparePreviousLink() {
-	previousPageExists = $("#isPreviousPageLinkActive").text();
-	if (previousPageExists == "true") {
-		$("#messagesPreviousLink").removeClass("messagesReactionLinkDisabled").addClass("messagesReactionLinkEnabled");
-		$("#messagesPreviousLink").click(function() {
-			$("#hiddenPreviousPageForm\\:hiddenLink").click();
-		});
-	} else {
-		$("#messagesPreviousLink").removeClass("messagesReactionLinkEnabled").addClass("messagesReactionLinkDisabled");
 	}
 }

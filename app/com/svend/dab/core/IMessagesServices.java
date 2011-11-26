@@ -1,5 +1,6 @@
 package com.svend.dab.core;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -38,16 +39,22 @@ public interface IMessagesServices {
 	public void markMessageAsRead(String readMessageId);
 
 	public Long getNumberOfUnreadMessages(String username);
+	public boolean isThereMoreInboxPagesThen(String username, int pageNumber);
+
 	
 
 
-	public void markMessagesAsDeletedByRecipient(List<String> deletedMessages);
+//	public void markMessagesAsDeletedByRecipient(List<String> deletedMessages);
+	public void markMessagesAsDeletedByRecipient(Collection<String> messageIds, String loggedInUserProfileId);
 
 	public void markMessagesAsDeletedByEmitter(List<String> deletedMessages);
 
 	public void undeleteMessages(List<String> undeletedMessages, String username);
 
 	public UserMessage getMessageById(String messageId);
+
+	public int getInboxPageNumberOfMessage(String loggedInUserProfileId, String desiredMessagesId);
+
 	
 
 

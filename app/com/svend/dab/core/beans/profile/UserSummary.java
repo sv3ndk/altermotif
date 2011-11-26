@@ -86,8 +86,6 @@ public class UserSummary implements Serializable {
 	 */
 	public String getMainPhotoThumbLink() {
 		if (mainPhoto == null ) {
-			// @{'/public/images/defaultPictureThumb.jpg'}
-			// TODO: call Play reverse router here...
 			return "";
 		} else {
 			return mainPhoto.getThumbAddress();

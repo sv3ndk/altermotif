@@ -5,8 +5,11 @@ package controllers.messages;
 
 import java.util.logging.Logger;
 
+import com.svend.dab.core.beans.profile.UserProfile;
+
 import models.altermotif.messages.NewMessage;
 import play.data.validation.Validation;
+import web.utils.Utils;
 import controllers.Application;
 import controllers.BeanProvider;
 import controllers.DabLoggedController;
@@ -64,6 +67,9 @@ public class MessagesNew extends DabLoggedController {
 			messageNewHelper.caterScopeForForward(getSessionWrapper().getLoggedInUserProfileId(), renderArgs, flash, flash.get(FLASH_FORWARD_MESSAGE_ID));
 		}
 	
+		UserProfile  loggedInUserProfile = BeanProvider.getUserProfileService().loadUserProfile(getSessionWrapper().getLoggedInUserProfileId(), true);
+		renderArgs.put("loggedinUserProfile", loggedInUserProfile);
+		
 		render();
 	}
 	

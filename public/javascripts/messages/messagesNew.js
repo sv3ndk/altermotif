@@ -2,11 +2,7 @@ var okLabelValue;
 var cancelLabelValue;
 var numberOfActiveContactsValue;
 
-function init(okLabel, cancelLabel, numberOfActiveContacts) {
-	okLabelValue = okLabel;
-	cancelLabelValue = cancelLabel;
-	numberOfActiveContactsValue = numberOfActiveContacts;
-
+function init() {
 	updateChooseContactLinkState();
 	initchooseMessageRecipientPopup();
 
@@ -14,13 +10,13 @@ function init(okLabel, cancelLabel, numberOfActiveContacts) {
 
 function initchooseMessageRecipientPopup() {
 
-	$("#messagesNewForm\\:messagesTo").bind("change", function() {
+	$("#messagesTo").bind("change", function() {
 		updateChooseContactLinkState();
 	});
 
-	$("#messagesNewForm\\:chooseFromMyContacts").click(function() {
-		if ($("#messagesNewForm\\:chooseFromMyContacts").hasClass("dabLinkLSpaced")) {
-			$("#chooseFromMyContacts").dialog("open");
+	$("#choooseFromMyContactsLink").click(function() {
+		if ($("#choooseFromMyContactsLink").hasClass("dabLinkLSpaced")) {
+			$("#chooseFromMyContactsPopup").dialog("open");
 		}
 	});
 
@@ -32,7 +28,7 @@ function initchooseMessageRecipientPopup() {
 		popupHeight = 435;
 	}
 
-	$("#chooseFromMyContacts").dialog({
+	$("#chooseFromMyContactsPopup").dialog({
 		autoOpen : false,
 		width : 550,
 		height : popupHeight,
@@ -44,19 +40,19 @@ function initchooseMessageRecipientPopup() {
 		if (username == null || username == "") {
 			username = $(event.target).parent().find(".contactUserName").text();
 		}
-		$("#messagesNewForm\\:messagesTo").val(username);
+		$("#messagesTo").val(username);
 		updateChooseContactLinkState();
-		$("#chooseFromMyContacts").dialog("close");
+		$("#chooseFromMyContactsPopup").dialog("close");
 	});
 
 }
 
 function updateChooseContactLinkState() {
-	if (numberOfActiveContactsValue > 0 && ($("#messagesNewForm\\:messagesTo").val() == "" || $("#messagesNewForm\\:messagesTo").val() == null)) {
-		$("#messagesNewForm\\:chooseFromMyContacts").removeClass("dabLinkLSpacedDisabled");
-		$("#messagesNewForm\\:chooseFromMyContacts").addClass("dabLinkLSpaced");
+	if (numberOfActiveContactsValue > 0 && ($("#messagesTo").val() == "" || $("#messagesTo").val() == null)) {
+		$("#choooseFromMyContactsLink").removeClass("dabLinkLSpacedDisabled");
+		$("#choooseFromMyContactsLink").addClass("dabLinkLSpaced");
 	} else {
-		$("#messagesNewForm\\:chooseFromMyContacts").removeClass("dabLinkLSpaced");
-		$("#messagesNewForm\\:chooseFromMyContacts").addClass("dabLinkLSpacedDisabled");
+		$("#choooseFromMyContactsLink").removeClass("dabLinkLSpaced");
+		$("#choooseFromMyContactsLink").addClass("dabLinkLSpacedDisabled");
 	}
 }

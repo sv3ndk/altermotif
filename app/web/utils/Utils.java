@@ -17,7 +17,10 @@ import org.cloudfoundry.org.codehaus.jackson.JsonParseException;
 import org.cloudfoundry.org.codehaus.jackson.map.JsonMappingException;
 import org.cloudfoundry.org.codehaus.jackson.map.ObjectMapper;
 
+import com.google.gson.JsonElement;
 import com.svend.dab.core.beans.Config;
+import com.svend.dab.core.beans.profile.Contact;
+import com.svend.dab.core.beans.profile.UserProfile;
 
 import controllers.BeanProvider;
 
@@ -109,6 +112,15 @@ public class Utils {
 	}
 	
 
+	public static String formatDateWithTime(Date date) {
+		if (date == null) {
+			return "";
+		} 
+		return new SimpleDateFormat(getConfig().getDateTimeDisplayFormat()).format(date );	
+	}
+
+	
+	
 	
 	// ----------------------------------
 	// ----------------------------------
@@ -129,6 +141,10 @@ public class Utils {
 		return config;
 		
 	}
+
+
+
+
 
 
 

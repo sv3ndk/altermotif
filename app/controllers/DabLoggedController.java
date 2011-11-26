@@ -23,10 +23,9 @@ public class DabLoggedController extends Controller {
     		Enter.login();
     	}
     	
-    	renderArgs.put("numberOfUnreadReceivedMessages", BeanProvider.getMessagesService().getNumberOfUnreadMessages(getSessionWrapper().getLoggedInUserProfileId()));
 	}
 
-	
+
 	
 	
 	

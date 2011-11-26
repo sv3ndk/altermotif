@@ -14,7 +14,9 @@
     
 		var okLabelValue = "&{'OkButton'}";
 		var cancelLabelValue = "&{'CancelButton'}";
-    
+    	var numberOfActiveContactsValue = "${loggedinUserProfile.numberOfActiveContacts}";
+		
+		
 		$(document).ready(function() {
 			init();
 		})
@@ -46,7 +48,7 @@
 						<td>
 							&{'profileMessagesTo'}: 
 							<input id="messagesTo" size="20" name="writtenMessage.toUserName" value="${flash['writtenMessage.toUserName']}"  />
-							<span id="choooseFromMyContacts" class="dabLinkLSpaced">&{'profileMessagesChooseFromMyContacts'}</span>
+							<span id="choooseFromMyContactsLink" class="dabLinkLSpaced">&{'profileMessagesChooseFromMyContacts'}</span>
 						</td>
 					</tr>
 					
@@ -68,8 +70,11 @@
 		</div>
 		
 		<textarea rows="10" class="messagesNewTextArea" name="writtenMessage.messageContent" >${flash['writtenMessage.messageContent']}</textarea>
+	#{/form}
+	
+	
+	#{messages.contactList popupTitle:messages.get('profileMessagesChooseFromMyContactsPopupTitle'), contacts:loggedinUserProfile.myActiveContacts /}
+	
 		
-		
-	#{/form}	
 
 </div>

@@ -1,10 +1,12 @@
 package com.svend.dab.core;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Component;
 
+import com.google.common.base.Strings;
 import com.svend.dab.core.beans.Config;
 import com.svend.dab.core.beans.message.UserMessage;
 import com.svend.dab.core.dao.IUserMessageDao;
@@ -56,6 +59,14 @@ public class MessagesService implements IMessagesServices, Serializable {
 		//PageRequest pageRequest = new PageRequest(pageNumber, config.getInboxOutboxPageSize(), new Sort(Direction.DESC, "creationDate"));
 		return userMessageDao.findAllUserMessageBytoUserUserNameAndDeletedByRecipient(toUserName, false, pageNumber, config.getInboxOutboxPageSize());
 	}
+	
+	@Override
+	public boolean isThereMoreInboxPagesThen(String username, int pageNumber) {
+		long numberOfReceivedMessages = userMessageDao.countNumberOfReceivedMessages(username);
+		return numberOfReceivedMessages > (pageNumber + 1 ) * config.getInboxOutboxPageSize();
+	}
+
+	
 
 	@Override
 	public Page<UserMessage> getWrittenMessages(String fromUserName, int pageNumber) {
@@ -71,7 +82,7 @@ public class MessagesService implements IMessagesServices, Serializable {
 	
 	@Override
 	public List<UserMessage> getUnreadReceivedMessages(String username) {
-		return userMessageDao.findAllUserMessageBytoUserUserNameAndReadAndDeletedByRecipient(username, false, false, new Sort(Direction.DESC, "creationDate"));
+		return userMessageDao.findAllUserMessageBytoUserUserNameAndReadAndDeletedByRecipient(username, false, false);
 	}
 	
 	@Override
@@ -85,15 +96,16 @@ public class MessagesService implements IMessagesServices, Serializable {
 	}
 	
 	
-	/* (non-Javadoc)
-	 * @see com.svend.dab.core.IMessagesServices#markMessagesAsDeletedByRecipient(java.util.List)
-	 */
+	
 	@Override
-	public void markMessagesAsDeletedByRecipient(List<String> messageIds) {
-		if (messageIds != null && messageIds.size() > 0) {
-			userMessageDao.markMessageAsDeletedByRecipient(messageIds);
+	public void markMessagesAsDeletedByRecipient(Collection<String> messageIds, String recipientId) {
+		if (!Strings.isNullOrEmpty(recipientId) && CollectionUtils.isNotEmpty(messageIds)) {
+		 userMessageDao.markMessageAsDeletedByRecipient(messageIds, recipientId);
 		}
 	}
+	
+	
+	
 	
 	/* (non-Javadoc)
 	 * @see com.svend.dab.core.IMessagesServices#markMessagesAsDeletedByEmitter(java.util.List)
@@ -134,7 +146,19 @@ public class MessagesService implements IMessagesServices, Serializable {
 	public UserMessage getMessageById(String messageId) {
 		return userMessageDao.retrieveUserMessageById(messageId);
 	}
-	
+
+	@Override
+	public int getInboxPageNumberOfMessage(String userid, String messageId) {
+		
+		if (Strings.isNullOrEmpty(userid)  || Strings.isNullOrEmpty(messageId)) {
+			return 0;
+		} else {
+			long messageOrder = userMessageDao.countNumberOfReceivedMessagesBefore(userid, messageId);
+			return (int) Math.ceil(messageOrder / config.getInboxOutboxPageSize());
+		}
+	}
+
+
 
 
 

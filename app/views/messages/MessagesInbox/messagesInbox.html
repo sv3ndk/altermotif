@@ -14,8 +14,11 @@
 		var okLabelValue = "&{'OkButton'}";
 		var cancelLabelValue = "&{'CancelButton'}";
 
-	   	var loadOnePageAction 	= #{jsAction @messages.MessagesInbox.loadInboxMessages(':pageNumber') /};
-	   	var markAsReadAction 	= #{jsAction @messages.MessagesInbox.doMarkMessageAsRead(':messageId') /};
+	   	var loadOnePageAction 			= #{jsAction @messages.MessagesInbox.loadInboxMessages(':pageNumber') /};
+	   	var markAsReadAction 			= #{jsAction @messages.MessagesInbox.doMarkMessageAsRead(':messageId') /};
+	   	var deleteInboxMessageAction 	= #{jsAction @messages.MessagesInbox.doDeleteNessage(':messageIds') /};
+	   	
+	   	var currentPage = ${pageNumber};
 
 		
 		$(document).ready(function() {

@@ -9,20 +9,18 @@ function init(hasPendingInvitation) {
 
 function registerClickOnUnreadInbox() {
 
+	
 	$('.inboxRowUnread').click(function(event) {
-		// id of the hidden field containing the message content
 
-		// if the user clicked on the link, we do not want to view the message
-		// nor to mark it as read
-		var clickedId5 = event.target.id.substring(0, 4);
-		if (clickedId5 != "link") {
-			var messageIdId = "i_" + event.target.id.substring(2);
-			var messageIdEl = $("body").find('#' + messageIdId);
-
-			$("#hiddenNavigateToMessageForm\\:hiddenMessageId").val(messageIdEl.text());
-			$("#hiddenNavigateToMessageForm\\:hiddenLink").click();
-
+		var clickedRow = $(event.target);
+		
+		while (!clickedRow.hasClass("inboxRowTr")) {
+			clickedRow = clickedRow.parent();
 		}
+		
+		$("#hiddenRedirectToInboxForm #messageId").val(clickedRow.find("span.hidden").text())
+		$("#hiddenRedirectToInboxForm form").submit();
+		
 	});
 }
 

@@ -1,5 +1,6 @@
 package com.svend.dab.core.dao;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -18,13 +19,17 @@ public interface IUserMessageDao {
 	public abstract void  markMessageAsRead(String messageId);
 	
 	public abstract Long countNumberOfUnreadMessages(String username);
+
+	public abstract Long countNumberOfReceivedMessages(String username);
+
+	public abstract long countNumberOfReceivedMessagesBefore(String userid, String messageId);
 	
 	public Page<UserMessage> findDeletedMessages(String username, Pageable pageable);
 	
 	public List<UserMessage> retrieveUserMessageById(List<String> messageIds);
 	public abstract UserMessage retrieveUserMessageById(String messageId);
 
-	public void markMessageAsDeletedByRecipient(List<String> messageIds);
+	public void markMessageAsDeletedByRecipient(Collection<String> messageIds, String recipientId);
 	public void markMessageAsDeletedByEmitter(List<String> messageIds);
 	
 	/**
@@ -46,11 +51,13 @@ public interface IUserMessageDao {
 	
 	public Page<UserMessage> findAllUserMessageByFromUserUserNameAndDeletedByEmitter(String fromUserName, Boolean deletedByEmitter, Pageable pageable);
 
-	public List<UserMessage> findAllUserMessageBytoUserUserNameAndReadAndDeletedByRecipient(String username, boolean read, boolean deletedByRecipient,  Sort sort);
+	public List<UserMessage> findAllUserMessageBytoUserUserNameAndReadAndDeletedByRecipient(String username, boolean read, boolean deletedByRecipient);
 
 	public abstract void save(List<UserMessage> foundMessages);
 
 	public abstract void save(UserMessage userMessage);
+
+
 
 
 
