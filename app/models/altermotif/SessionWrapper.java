@@ -1,5 +1,7 @@
 package models.altermotif;
 
+import com.google.common.base.Strings;
+
 import play.i18n.Lang;
 import play.mvc.Scope;
 import play.mvc.Scope.RenderArgs;
@@ -22,7 +24,7 @@ public class SessionWrapper extends AbstractRenderableModel {
 	public static String LANGUAGE_SESSION_PARAM = "dablg";
 	public static String USERNAME_SESSION_PARAM = "userid";
 	
-	public final static String POSSIBLE_LANGUAGES[] = {"en", "fr", "nl"};
+	public final static String POSSIBLE_LANGUAGES[] = {"en", "fr", "nl", "tr"};
 	
 
 	public SessionWrapper(Session session) {
@@ -51,7 +53,9 @@ public class SessionWrapper extends AbstractRenderableModel {
 		if (selectedLgIndex > 0 && selectedLgIndex -1< POSSIBLE_LANGUAGES.length) {
 			return POSSIBLE_LANGUAGES[selectedLgIndex-1];
 		} 
-		return "en";
+		
+		// defaulting to English
+		return POSSIBLE_LANGUAGES[0];
 		
 	}
 	
@@ -64,13 +68,13 @@ public class SessionWrapper extends AbstractRenderableModel {
 		try {
 			return Integer.parseInt(session.get(LANGUAGE_SESSION_PARAM));
 		} catch (Exception exc) {
-			// defaulting to english in case of any erryr
+			// defaulting to english in case of any erryr (index count start at 1)
 			return 1;
 		}
 	}
 
 	public void updateSelectedLanguage(String selection) {
-		if (selection != null) {
+		if (!Strings.isNullOrEmpty(selection)) {
 			String adjusted = selection.trim();
 			session.put(LANGUAGE_SESSION_PARAM, adjusted);
 

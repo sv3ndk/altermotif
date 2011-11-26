@@ -2,6 +2,7 @@
 english=English
 french=Français
 dutch=Nederlands
+turkish=Turque
 donate=faire un don
 signIn=se connecter
 orText=ou
@@ -17,7 +18,7 @@ CancelButton=Annuler
 validation.required=Valeur obligatoire
 passwordMayNotBeEmpty=Le mot de passe ne peut pas être vide
 passwordMustBeIdentical=Les mots de passe doivent être identiques
-errorUsernameFormat=***the username can only contain lower case characters and numbers
+errorUsernameFormat=Le nom d'utilisateur ne peut uniquement contenir des minuscules et des numéros
 errorLocaltionMissingOrKnown=Location manquante ou inconnue
 atLeastOneLanguage=Vous devez fournir au moins une langue
 userAlreadyExist=Ce nom d'utilisateur est déjà pris par un autre utilisateur
@@ -43,7 +44,7 @@ errorPageGoBack=Retourner
 # captcha error message (should never occur: validation is on the client side, this is just a second level validation)
 registerPageInvalidCaptcha=Code de validation incorrect
 
-whoShouldSeeThis=***Who should see this?
+whoShouldSeeThis=Qui peut voir ceci?
 
 #Home page messages
 pageTitle=Altermotif
@@ -83,7 +84,7 @@ topMenuProfileMyProfile=Mon profil
 topMenuProfileEditProfile=Modifier mon profil
 topMenuProfileManagePhotos=Gérer mes photos
 topMenuProfileManageCv=Gérer mon CV
-topMenuProfilePrivacySettings=***Privacy settings
+topMenuProfilePrivacySettings=Conditions de confidentialité
 
 topMenuMessages=Messages
 topMenuMessagesInbox=Boîte de réception
@@ -94,8 +95,8 @@ topMenuMessagesDeleted=Messages supprimés
 topMenuGroups=Groupes
 
 topMenuProjects=Projets
-topMenuProjectNew=***New project
-topMenuProjectFind=***Find a project
+topMenuProjectNew=Nouveau projet
+topMenuProjectFind=Trouver un projet
 
 #profile screen - "home page"
 yourProjects=Vos projets
@@ -104,12 +105,12 @@ yourInbox=Vos messages reçus
 yourApplications=Vos candidatures
 
 #profile screen - "view profile"
-profileYourProfileIsInactiveNotificationPart1=***Your profile is currently inactive, only you can see this page. If you want to change this, activate your profile in the
-profileYourProfileIsInactiveNotificationLinkName=***private settings  
+profileYourProfileIsInactiveNotificationPart1=Votre profil est actuellement inactif, seulement vous pouvez voir cette page. Si vous voulez changer cela, activez votre profil dans les
+profileYourProfileIsInactiveNotificationLinkName=conditions de confidentialité
 profileYourProfileIsInactiveNotificationPart2=***page
 profileUsername=Nom d'utilisateur
-profileFirstName=***Prénom/name of organisation
-profileLastName=Nom de famille
+profileFirstName=Prénom/Nom de l'organisation
+profileLastName=Nom de famille/Statut
 profileAge=Age
 yearsOld=ans
 profileCity=Ville
@@ -117,9 +118,9 @@ profileLanguages=Langues
 profileLatestLogin=Dernière connection
 profileWebSite=Site personnel
 profileCV=CV
-profileContactThisUser=***Contacter
+profileContactThisUser=Contacter
 profileMorePhotos=Plus de photos...
-profileEditPhotos=Editer les photos...
+profileEditPhotos=Modifier les photos...
 profilePersonalObjectives=Aspirations personnelles
 profilePersonalDescription=Description personnelle
 profilePersonalPhilosophy=Philosophie personnelle
@@ -135,24 +136,24 @@ leftOn=Laissé le
 profileProjects=Projets
 profileGroups=Groupes
 profileContacts=Contacts
-profileAddToContactsP1=***Add
-profileAddToContactsP2=***to contacts
-profileAddedToContactsP1=***You have already requested
-profileAddedToContactsP2=***to be in your contacts
-profileCancelAddedToContactRequest=***cancel request
-profileConfirmAddToContacts=***Introduce yourself! You may join a short message to your invitation:
-profileAddToContactConfirmed=***This user will be added to your contact as soon as he accepts your invitation.
-profileReceivedContactRequest=***Received contact invitation 
-profileViewReceivedContactRequestInvitation=***View invitation text
-profileContactInvitationTextPopupTitle***=Contact invitation
-profileAcceptContactRequest=***accept
-profileRejectContactRequest=***reject
-profileSentContactRequest=***Contact invitation sent by you, waiting for his/her feedback...
-profileYouHavePendingInvitations=***You have received contact(s) invitations! 
-profileConfirmRemoveRequestedContact=***Are you sure you want to cancel your invitation for contact request?
-profileConfirmRejectRequestedContact=***Are your sure you want to reject this invitation for contact request?
-profileConfirmAcceptRequestedContact=***Are you sure your want to accept this invitation for contact?
-profileConfirmRemoveContact=***Are you sure your want to remove this contact from your profile?
+profileAddToContactsP1=Ajouter
+profileAddToContactsP2=aux contacts
+profileAddedToContactsP1=Vous avez déjà demandé à cet utilisateur
+profileAddedToContactsP2=d'être dans vos contacts
+profileCancelAddedToContactRequest=Annuler la demande
+profileConfirmAddToContacts=Présentez-vous! Vous pouvez joindre un court message à votre invitation:
+profileAddToContactConfirmed=Cet utilisateur sera ajouté à votre liste de contacts dès qu'il accepte votre invitation.
+profileReceivedContactRequest=Demande d'ajout à la liste de contacts reçu 
+profileViewReceivedContactRequestInvitation=Voir le message d'invitation
+profileContactInvitationTextPopupTitle=Demande d'ajout à la liste de contacts
+profileAcceptContactRequest=accepter
+profileRejectContactRequest=refuser
+profileSentContactRequest=Demande d'ajout à la liste de contacts envoyée
+profileYouHavePendingInvitations=Vous avez recu des demandes d'ajout à la liste de contacts!
+profileConfirmRemoveRequestedContact=Êtes-vous certain de vouloir annuler cette demande d'ajout?
+profileConfirmRejectRequestedContact=Êtes-vous certain de vouloir refuser cette demande d'ajout?
+profileConfirmAcceptRequestedContact=Êtes-vous certain de vouloir accepter cette demande d'ajout?
+profileConfirmRemoveContact=Etes-vous sûr de vouloir supprimer ce contact?
 
 
 #edit profile (usually the labels are the same as the view profile, except some)
@@ -181,12 +182,12 @@ profileRemoveProfile=Désactiver le profil
 profileMPDeletePhotoLink=Effacer cette photo
 confirmDeletePhoto=Êtes-vous certain de vouloir effacer cette photo de votre profile?
 profileMPUploadPhoto=Télécharger une photo (max 5Mb)
-uploadPhotoPleaseWait=***Veuillez attendre jusqu'à ce que la photo soit téléchargée et redimensionnée
-profileMSetProfilePhoto=***Set this as profile photo
-profileMPClickToSetCaption=***Click here to set photo caption
-profileMPCaptionPopupTitle=***Photo caption
-profileMPCaptionPopupText=***Please enter a description for this photo
-privacySettingsConfirmDeactivateProfile=*Are you sure you want to deactivate your profile? You will still have access to it but as long as it remains inactive, your public profile will no longer be visible and you will not appear among the contact list of your contacts. All your posted messages and references and actions performed on projects will remain visible. If you are concerned about privacy, you may also want to set to blank all your personnal data in the "edit profile" page.
+uploadPhotoPleaseWait=Veuillez attendre jusqu'à ce que la photo soit téléchargée et redimensionnée
+profileMSetProfilePhoto=Choisir comme photo principale
+profileMPClickToSetCaption=Cliquez ici pour ajouter une légende
+profileMPCaptionPopupTitle=Légende
+profileMPCaptionPopupText=Veuillez ajouter une description à cette photo
+privacySettingsConfirmDeactivateProfile=Êtes-vous certain de vouloir désactiver votre profil? Vous y aurez encore accès tant qu'il reste inactif, mais votre profil public ne sera plus visible et vous ne figurerez plus dans le liste de contacts de vos contacts. Tous vos messages, références et actions faits sur des projets resteront visibles. Si vous avez des inquiétudes par rapport à votre confidentialité, vous pouvez toujours supprimer tous vos données personnels sur la page "Modifier mon profil".
 
 
 #profile screen: manage cv
@@ -197,33 +198,33 @@ uploadCVPleaseWait=Veuillez attendre jusqu'à ce que le CV soit téléchargé
 
 
 # manage privacy settings screens
-privacySettingsProfileIsActive=***My profile is active
-privacySettingsFirstName=***My first name is visible to 
-privacySettingsLastName=***My last name is visible to 
-privacySettingsNameExplanation=***If neither your first nor last name is visible to somebody, then this person will only see your username: 
-privacySettingsAge=***My age is visible to 
-privacySettingsPhotos=***My photo gallery is visible to 
-privacySettingsPhotoExplanation=***Your main profile photo is always visible to everybody. I appears as a thumbnail at several places (references you leave, contact list of other users,...)
-privacySettingsCV=***My CV is available to 
-privacySettingsEverybody=***Everybody 
-privacySettingsloggedInUsers=***People logged in Altermotif 
-privacySettingsmyContacts=***My contacts 
-privacySettingsNobody=***Nobody
-privacySettingsConfirmButton=***Update settings
-privacySettingsCancelChanges=***Cancel changes
+privacySettingsProfileIsActive=Mon profil est actif
+privacySettingsFirstName=Mon prénom est visible à
+privacySettingsLastName=Mon nom de famille est visible à
+privacySettingsNameExplanation=Si votre prénom et votre nom de famille sont invisibles à un autre utilisateur, alors celui-ci ne verra que votre nom d'utilisateur
+privacySettingsAge=Mon age est visible à
+privacySettingsPhotos=Ma galerie de photos est visible à
+privacySettingsPhotoExplanation=Votre photo principale est toujours visible à tout le monde. Ça apparaît en tant que cliché réduit à plusieurs endroits (références laissées par vous, liste de contacts des autres utilisateurs...)
+privacySettingsCV=Mon CV est disponible pour
+privacySettingsEverybody=Tout le monde
+privacySettingsloggedInUsers=Les utilisateurs connectés à Altermotif
+privacySettingsmyContacts=Mes contacts
+privacySettingsNobody=Personne
+privacySettingsConfirmButton=Mettre à jour les conditions
+privacySettingsCancelChanges=Annuler les changements
 
 
 # profile screen - messages tab
 profileMessagesSend=Envoyer
 profileMessagesFrom=De
 profileMessagesTo=À
-profileMessagesChooseFromMyContacts=***Choose from my contacts...
-profileMessagesChooseFromMyContactsPopupTitle=***Select a message recipient
+profileMessagesChooseFromMyContacts=Choiser de mes contacts...
+profileMessagesChooseFromMyContactsPopupTitle=Choisissez le destinataire
 profileMessagesSubject=Objet
 profileMessagesReceived=Messages reçus
 profileMessagesSent=Messages envoyés
 profileMessagesDeleteSelected=Supprimer sélection
-profileMessagesUndeleteSelected=***Undelete selected
+profileMessagesUndeleteSelected=Annuler la suppression
 profileMessagesPrevious=Précédent
 profileMessagesNext=Suivant
 profileMessagesReply=Répondre
@@ -235,78 +236,76 @@ profileOutboxMessagesConfirmDeletion=Êtes-vous certain de vouloir effacer ces m
 profileDeletedMessagesConfirmUndeletion=Êtes-vous certain de vouloir annuler la suppression de ces messages?
 
 #language skills
-low=débutant
-average=médiocre
-good=bon
-fr=français
-en=anglais
-nl=néerlandais
-es=espagnol
+level0=débutant
+level1=médiocre
+level2=bon
 
 
 #################################
 # projects
 
 # info about a project, as they appear a bit everywhere on the website (anywhere there is a "short info" concerning a project)
-projectRole=***Project role
-projectRoleInitiator=***Initiator
-projectRoleAdmin=***Administrator
-projectRoleMember=***Member
-projectStatus=***Project status
-projectStatusStarted=***Started
-projectStatusCancelled=***Cancelled
-projectStatusDone=***Done
+projectRole=Rôle en projet
+projectRoleInitiator=Initiateur
+projectRoleAdmin=Administrateur
+projectRoleMember=Membre
+projectStatus=Statut du projet
+projectStatusStarted=Démarré
+projectStatusCancelled=Annulé
+projectStatusDone=Terminé
 
 # create project page
-projectNewProjectName=***Project name
-projectNewProjectGoal=***Project goal
-projectNewProjectGoalExplanation=***Describe clearly what the purpose of this project is
-projectNewProjectLocations=***Location(s)
-projectNewProjectLocationsExplanation=***Where will the project take place? Where can participants come from?
-projectNewProject=***Project
-projectNewReason=***Reason for project
-projectNewReasonExplanation=***This field is optional. You can describe here why you are pursuing this project: why do you think it is important?
-projectNewStrategy=***Strategy
-projectNewStrategyExplanation=***This field is optional. Describe here how you intent to reach the goal of this project. You can explain stepwise how you want to go forward. What timing do you have in mind? What difficulties might be encountered? Which actions or assets could be required?
-projectNewOffer=***What can you offer?
-projectNewOfferExplanation=***This field is optional. Describe here what participants can obtain for their participation in the project. Are there any compensations for assets that are invested in the project? How will possible revenue be used? How will ownership be dealt with?...
-projectNewRequiredTasks=***Required tasks
-projectNewRequiredTasksExplanation=***Create a list of tasks that have to be done for the accomplishment of the project.
-projectNewRequiredAssets=***Required assets
-projectNewRequiredAssetsExplanation=***Create a list of assets that have will be required for the accomplishment of the project.
-projectNewDueDate=***Due date
-projectNewDueDateExplanation=***When should the project be finished?
-projectNewUsefulLinks=***Useful links
+projectNewProjectName=Nom du projet
+projectNewProjectGoal=But du projet
+projectNewProjectGoalExplanation=Décrivez clairement quel est le but de ce projet
+projectNewProjectLocations=Emplacement(s)
+projectNewProjectLocationsExplanation=Où aura lieu le projet? D'où peuvent venir les participants?
+projectNewProject=Projet
+projectNewReason=Motivation derrière le project
+projectNewReasonExplanation=Ce champ est optionnel. Vous pouvez décrire ici pourquoi vous poursuivez ce projet: pourquoi pensez-vous qu'il est important?
+projectNewStrategy=Stratégie
+projectNewStrategyExplanation=Ce champ est optionnel. Décrivez ici comment vous avez l'intention d'atteindre le but de ce projet. Vous pouvez expliquer pas à pas comment vous voulez avancer. Quels délais avez-vous en tête? Quels difficultés pourraient se présenter? Quels actions et moyens pourraient être requis?
+projectNewOffer=Qu'est-ce que vous pouvez offrir?
+projectNewOfferExplanation=Ce champ est optionnel. Décrivez ici ce que les participants peuvent obtenir pour leur participation dans le projet. Y a-t-il des compensations pour des actifs qui sont investis dans ce projet? Comment des revenus éventuels seront-ils utilisés? Comment sera traitée la propriété?...
+projectNewRequiredTasks=Tâches requises
+projectNewRequiredTasksExplanation=Créez une liste des tâches qui doivent être effectuées pour la réalisation du projet
+projectNewRequiredAssets=Moyens requis
+projectNewRequiredAssetsExplanation=Créez une liste des moyens qui sont requis pour la réalisation du projet
+projectNewDueDate=Echéance
+projectNewDueDateExplanation=Quand le projet devrait-il être terminé?
+projectNewUsefulLinks=Liens utiles
 projectNewAddOneUsefullLink=***Add link
 projectNewConfirmRemoveLinkPopupMessage=***Are you sure you want to remove this useful link?
 projectNewAddNewLinkTitle=***Enter a new link
 projectNewUsefulLinksExplanation=***Website addresses that might be useful for the project
 projectNewSelectThemes=***Select themes
-projectNewSelectThemesExplanation=***By selecting the themes that correspond to the project, you'll make sure the project is displayed to people who are looking for such an opportunity
-projectNewSelectTags=***Project tags
-projectNewSelectTagsExplanation=***Enter keywords related to the project. Others will be able to  find your project based on these keywords. 
-projectNewSelectLanguage=***Language
-projectNewSelectLanguageExplanation=***Indicate what language should be used for communication between project participants  
+projectNewUsefulLinksExplanation=Des addresses des sites web qui peuvent être utile pour le projet
+projectNewSelectThemes=Choisissez des thèmes
+projectNewSelectThemesExplanation=En choisissant des thèmes correspondant au projet, vous garantisserez que le projet sera montré aux utilisateurs qui cherchent une telle opportunité
+projectNewSelectTags=Etiquettes du projet
+projectNewSelectTagsExplanation=Entrez des mots clés liés au projet. D'autres utilisateurs pourront trouver votre projet à base de ces mots clés.
+projectNewSelectLanguage=Langue
+projectNewSelectLanguageExplanation=Indiquez quelle langue devrait être utilisé pour la communication entre les participants au projet
 
-projectNewStartProjectButton=***Start project 
+projectNewStartProjectButton=Démarrer le projet
 
-projectNewPrivacySettingsMembers=***Members of this project
-projectNewPrivacySettingsAdmin=***Administrators of this project
-projectNewPrivacySettingsOwner=***Creator of this project (me)
+projectNewPrivacySettingsMembers=Membres de ce projet
+projectNewPrivacySettingsAdmin=Administrateurs de ce projet
+projectNewPrivacySettingsOwner=Créateur de ce projet (moi)
 
 # view project page
-viewProjectGoal=***Goal
-viewProjectLocation=***Location(s)
-viewProjectCommunicationIn=***Communication in
-viewProjectCreatedOn=***Created on
-viewProjectDueDate=***Due date
-viewProjectInitiator=***Initiator
-viewProjectProject=***Project
-viewProjectReason=***Reason for project
-viewProjectStrategy=***Project strategy
-viewProjectRewards=***Project rewards
-viewProjectLinks=***Useful links
-viewProjectParticipants=***Participants
+viewProjectGoal=But
+viewProjectLocation=Emplacement(s)
+viewProjectCommunicationIn=Communication en
+viewProjectCreatedOn=Créé le
+viewProjectDueDate=Echéance
+viewProjectInitiator=Initiateur
+viewProjectProject=Projet
+viewProjectReason=Motivation derrière le projet
+viewProjectStrategy=Stratégie du projet
+viewProjectRewards=Récompenses du projet
+viewProjectLinks=Liens utiles
+viewProjectParticipants=Participants
 viewProjectApplications=***Applications
 viewProjectApply=***Apply
 viewProjectApplyConfirmationText=*Please motivate your application for participation in the project. Indicate why you want to participate and how you wish to contribute to the project (e.g. which means and/or tasks you could fulfill?). The more information you give, the more likely it is that your application will be taken seriouly.

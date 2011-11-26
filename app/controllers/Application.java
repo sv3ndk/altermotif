@@ -9,7 +9,7 @@ public class Application extends DabController {
     }
 
     public static void udpateLanguage(String selection) {
-    	new SessionWrapper(session).updateSelectedLanguage(selection);
+    	getSessionWrapper().updateSelectedLanguage(selection);
     	renderJSON("{'ok': true}");
     }
     

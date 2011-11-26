@@ -1,4 +1,4 @@
-#Wed Nov 23 19:09:32 CET 2011
+#Sat Nov 26 19:30:37 CET 2011
 eclipse.preferences.version=1
 encoding//app/views/masterTemplate.html=UTF-8
 encoding//app/web/utils/languagenames_en_iso8859.properties=ISO-8859-1
@@ -6,3 +6,4 @@ encoding//app/web/utils/languagenames_fr_iso8859.properties=ISO-8859-1
 encoding//conf/messages.en=UTF-8
 encoding//conf/messages.fr=UTF-8
 encoding//conf/messages.nl=UTF-8
+encoding//conf/messages.tr=UTF-8
