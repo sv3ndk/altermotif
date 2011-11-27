@@ -1,0 +1,46 @@
+<div id="projectBasicDetails">
+
+	<table>
+		<tbody>
+			<tr>
+				<td><label>&{'viewProjectGoal'}: </label></td>
+				<td>${_visitedProject.pdata.goal}</td>
+			</tr>
+			
+			#{list items:_visitedProject.pdata.locations, as: 'oneLoc'}
+				<tr>
+					<td>
+						#{if oneLoc_isFirst}
+							<label>&{'viewProjectLocation'}: </label>
+						#{/if}
+					</td>
+					<td>
+						${oneLoc.location}
+					</td>
+				</tr>
+			#{/list}
+			
+			
+			<tr>
+				<td><label>&{'viewProjectCommunicationIn'}: </label></td>
+				<td class="languageCell"><span class="hidden">${_visitedProject.pdata.language}</span><span class="langugeLabel"> </span></td>
+			</tr>
+			
+			<tr>
+				<td><label>&{'viewProjectCreatedOn'}: </label></td>
+				<td>${_visitedProject.pdata.creationDate.format(controllers.BeanProvider.config.dateDisplayFormat)} </td>
+			</tr>
+			
+			<tr>
+				<td><label>&{'viewProjectDueDate'}: </label></td>
+				<td>${_visitedProject.pdata.dueDate.format(controllers.BeanProvider.config.dateDisplayFormat)} </td>
+			</tr>
+			
+			<tr>
+				<td><label>&{'viewProjectInitiator'}: </label></td>
+				<td><a href="@{profile.ProfileView.profileView( _visitedProject.initiator.user.userName )}" class="dabLink">${_visitedProject.initiator.user.userName}</a> </td>
+			</tr>
+			
+		</tbody>
+	</table>
+</div>

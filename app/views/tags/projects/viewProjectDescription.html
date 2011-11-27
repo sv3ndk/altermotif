@@ -1,0 +1,44 @@
+	<dl>
+		<dt>
+			&{'viewProjectProject'}:
+		</dt>
+		<dd>
+			${_visitedProject.pdata.description}
+		</dd>
+
+
+		<dt>
+			&{'viewProjectReason'}:
+		</dt>
+		<dd>
+			${_visitedProject.pdata.reason}
+		</dd>
+		
+		<dt>
+			&{'viewProjectStrategy'}:
+		</dt>
+		<dd>
+			${_visitedProject.pdata.strategy}
+		</dd>
+
+		<dt>
+			&{'viewProjectRewards'}:
+		</dt>
+		<dd>
+			${_visitedProject.pdata.offer}
+		</dd>
+
+		<dt>
+			&{'viewProjectLinks'}:
+		</dt>
+		<dd>
+			#{list items:_visitedProject.links, as: 'oneLink'}
+				<ul>
+					<li><a href="${oneLink}">${oneLink}</a>
+					</li>
+				</ul>
+			#{/list}
+		</dd>
+		
+		
+	</dl>
