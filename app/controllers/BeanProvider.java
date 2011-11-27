@@ -4,6 +4,7 @@ import play.modules.spring.Spring;
 
 import com.svend.dab.core.IMessagesServices;
 import com.svend.dab.core.IProfilePhotoService;
+import com.svend.dab.core.IProjectService;
 import com.svend.dab.core.IUserProfileService;
 import com.svend.dab.core.UserProfileService;
 import com.svend.dab.core.beans.Config;
@@ -34,6 +35,10 @@ public class BeanProvider {
 
 	public static IMessagesServices  getMessagesService() {
 		return (IMessagesServices) Spring.getBeanOfType(IMessagesServices.class);
+	}
+	
+	public static IProjectService  getProjectService() {
+		return (IProjectService) Spring.getBeanOfType(IProjectService.class);
 	}
 
 }

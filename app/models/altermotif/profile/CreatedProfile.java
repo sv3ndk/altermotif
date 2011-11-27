@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import play.data.validation.Email;
 import play.data.validation.Match;
 import play.data.validation.Required;
+import web.utils.Utils;
 
 import com.svend.dab.core.beans.profile.PersonalData;
 import com.svend.dab.core.beans.profile.UserProfile;
@@ -44,11 +45,6 @@ public class CreatedProfile {
 	@Required
 	private String dateOfBirthStr;
 
-// this does not seem to work...
-//	@Required
-//	@As(value="dd/MM/yyyy")
-//	private Date dateBirth = new Date();
-
 	@Required
 	@Email( message="incorrectEmailFormat") 
 	private String email;
@@ -82,11 +78,7 @@ public class CreatedProfile {
 	}
 	
 	public Date getDateOfBirth() throws ParseException {
-		if (getDateOfBirthStr() == null) {
-			return null;
-		} else {
-			return new SimpleDateFormat(DATE_FORMAT).parse(getDateOfBirthStr());
-		}
+		return Utils.convertStringToDate(getDateOfBirthStr());
 	}
 
 	

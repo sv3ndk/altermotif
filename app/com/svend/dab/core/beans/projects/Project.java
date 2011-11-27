@@ -3,6 +3,7 @@ package com.svend.dab.core.beans.projects;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import org.springframework.data.annotation.Transient;
@@ -44,7 +45,9 @@ public class Project {
 
 	private List<Photo> photos;
 	
-	private List<String> links;
+	private Set<String> links;
+
+	private Set<String> tags;
 	
 	private STATUS status;
 	
@@ -69,8 +72,6 @@ public class Project {
 	@Transient
 	private String noThemes = "(todo...)";
 
-	@Transient
-	private String noTags = "(todo...)";
 
 	private static Logger logger = Logger.getLogger(Project.class.getName());
 	
@@ -240,13 +241,6 @@ public class Project {
 		this.noThemes = noThemes;
 	}
 
-	public String getNoTags() {
-		return noTags;
-	}
-
-	public void setNoTags(String noTags) {
-		this.noTags = noTags;
-	}
 
 	public String getId() {
 		return id;
@@ -280,15 +274,21 @@ public class Project {
 		this.status = status;
 	}
 
-	public List<String> getLinks() {
+	public Set<String> getLinks() {
 		return links;
 	}
 
-	public void setLinks(List<String> links) {
+	public void setLinks(Set<String> links) {
 		this.links = links;
 	}
 
+	public Set<String> getTags() {
+		return tags;
+	}
 
+	public void setTags(Set<String> tags) {
+		this.tags = tags;
+	}
 
 
 

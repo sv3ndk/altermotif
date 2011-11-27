@@ -174,9 +174,11 @@ home page
 }
 
 
+/* usualy the table overwrite the td padding value => we have to re-specify it for each table*/
 #editProfileContainer .errorRow td{
 	padding: 0px 0 0 10px;
 }
+
 
 .editProfileUpdateBottomButton {
 	 margin: 30px 10px 10px 120px;

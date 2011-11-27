@@ -44,7 +44,7 @@ public class SessionWrapper extends AbstractRenderableModel {
 	}
 
 	/**
-	 * @return the index of the currently selected language, (order must be the same as in the template drop down)
+	 * @return the the currently selected language code, 
 	 * 
 	 * final because called from constructor
 	 */

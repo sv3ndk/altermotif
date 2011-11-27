@@ -1,2 +1,79 @@
 #{extends 'masterTemplate.html' /}
-projectsNew
+
+#{set 'moreStyles'}
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/projects/projectsEdit.css'}" />
+#{/set}
+
+
+#{set 'moreScripts'}
+	<script type="text/javascript"
+		src="http://maps.google.com/maps/api/js?sensor=false"></script>
+
+    <script src="@{'/public/javascripts/dabGeocoder.js'}" type="text/javascript"
+    	charset="${_response_encoding}"></script>
+    	
+    <script src="@{'/public/javascripts/language.js'}" type="text/javascript"
+	   	charset="${_response_encoding}"></script>
+    	
+    <script src="@{'/public/javascripts/projects/projectsEdit.js'}" type="text/javascript"
+    	charset="${_response_encoding}"></script>
+    	
+    <script type="text/javascript">
+    
+		var okLabelValue = "&{'OkButton'}";
+		var cancelLabelValue = "&{'CancelButton'}";
+    
+		$(document).ready(function() {
+			init();
+		})
+	</script>
+#{/set}
+
+<span id="allPossibleLanguageNames" style="display: none">${allPossibleLanguageNames}</span>
+
+<div class="pageContainer">
+
+	<div id="projectNewContainer">
+		#{form @projects.ProjectsNew.doCreateProject() }
+			<table id="editProjectTable">
+			
+				#{dab.inputText 
+					label:messages.get('projectNewProjectName'),
+					required: true,
+					inputName: "editedProject.pdata.name",
+					cols: 35
+				/}
+
+
+				#{dab.inputText 
+					label: messages.get('projectNewProjectGoal'),
+					required: true,
+					inputName: "editedProject.pdata.goal",
+					cols: 35,
+					explanation: messages.get('projectNewProjectGoalExplanation')
+				/}
+				
+				
+				#{projects.projectCreateEditCommon editedProject:editedProject  /}
+				
+				
+				<tr>
+					<td></td>
+					<td>
+						<input type="submit" value="&{'projectNewStartProjectButton'}" />
+					</td>
+				</tr>
+			
+			</table>
+			
+			
+			
+		#{/form }
+	</div>
+
+	<!--  hidden non submitted data: after a successful geodecoding, the latitude and longitude land temporarily here (and are directly post-processed by the call back mechanism) -->
+</div>
+
+
+
+

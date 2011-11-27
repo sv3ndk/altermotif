@@ -3,7 +3,8 @@ var allPossibleLanguagesMap;
 
 // => just call allPossibleLanguagesMap['fr'] to get the name of the French language in the current user language 
 
-
+//list of all languages (for auto completion)
+var allPossibleLanguagesList;
 
 function initAllPossibleLanguagesMap() {
 	

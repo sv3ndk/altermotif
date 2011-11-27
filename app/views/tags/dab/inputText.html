@@ -1,0 +1,58 @@
+	<tr>
+	
+	
+		<td class="formLeftColumn">
+			${_label}
+			#{if _required}
+				*
+			#{/if}
+			:
+		</td>
+		
+		<td class="formMidleColumn">
+		
+		
+			#{if _rows == null}
+				#{if _disabled }
+					<input name="${_inputName}"  value="${_inputValue == null ? flash[_inputName] : _inputValue}" size="${_cols}" disabled="disabled" id="${_inputId}"/>
+				#{/if}
+				#{if !_disabled }
+					<input name="${_inputName}"  value="${_inputValue == null ? flash[_inputName] : _inputValue}" size="${_cols}" id="${_inputId}"/>
+				#{/if}
+				
+			#{/if}
+			#{if _rows != null}
+				<textarea name="${_inputName}" rows="${_rows}" cols="${_cols}">${_inputValue == null ? flash[_inputName] : _inputValue}</textarea>
+			#{/if}
+			
+			
+			#{if _explanation != null}
+				<br />
+				<span class="formFieldExplanation">${_explanation}</span>
+			#{/if}
+			
+		</td>
+		
+		
+		<td class="formRightColumn">
+			#{if _visibilityName != null}	
+				&{'whoShouldSeeThis'}
+				#{select _visibilityName, value: _visibilityValue == null ? flash[_visibilityName] : _visibilityValue}
+					#{option 'everybody'}&{'privacySettingsEverybody'}#{/option}
+					#{option 'loggedin'}&{'privacySettingsloggedInUsers'}#{/option}
+					#{option 'members'}&{'projectNewPrivacySettingsMembers'}#{/option}
+					#{option 'admins'}&{'projectNewPrivacySettingsAdmin'}#{/option}
+					#{option 'owner'}&{'projectNewPrivacySettingsOwner'}#{/option}
+				#{/select}
+			#{/if}
+		</td>
+		
+	</tr>
+	
+	
+	<tr class="errorRow">
+		<td></td>
+		<td colspan="2"><div class="errorMessage">#{error _inputName /}</div></td>
+		
+	</tr>
+

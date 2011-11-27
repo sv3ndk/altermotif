@@ -6,8 +6,11 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.commons.collections.CollectionUtils;
+
 import models.altermotif.profile.CreatedProfile;
 import models.altermotif.profile.EditedProfile;
+import models.altermotif.projects.CreatedProject;
 import play.data.validation.Validation;
 import play.mvc.Scope.Flash;
 
@@ -63,12 +66,9 @@ public class DabValidators {
 			Validation.addError(renderArgName + ".languagesJson", "atLeastOneLanguage", "");
 		}
 
-		logger.log(Level.INFO, "Validation.errors().size()" + Validation.errors().size());
-		logger.log(Level.INFO, "Validation.hasError(renderArgName + .username)" + Validation.hasError(renderArgName + ".username"));
 		// username is not submitted by the edit form (it is present in the bean because we re-use it from the register screen)
 		// there are always at min 2 errors: the one for username + one global for editedProfile
 		if (Validation.errors().size() == 2 && Validation.hasError(renderArgName + ".username")) {
-			logger.log(Level.INFO, "clearing user");
 			Validation.clear();
 		}
 
@@ -100,5 +100,26 @@ public class DabValidators {
 		}
 		return true;
 	}
+	
+	
+	
+	
+	public static void validateCreatedProject(CreatedProject editedProject, Validation validation, Flash flash) {
+
+		Validation.valid("editedProject", editedProject);
+		Validation.valid("editedProject.pdata", editedProject.getPdata());
+
+		// in case of any error in the parsing of the incoming location, we fall back to an empty list => error message of the empty list
+		// (this should never happen as this is prevalidated on js side 
+		if (!Validation.hasError("editedProject.pdata.allLocationJson")) {
+			if (CollectionUtils.isEmpty(editedProject.getPdata().getParsedJsonLocations())) {
+				Validation.addError("editedProject.pdata.allLocationJson", "projectNewAtLeastOneMessageErrorMessage", "");
+			}
+		}
+
+		
+
+	}
+	
 
 }

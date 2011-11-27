@@ -1,0 +1,33 @@
+#projectPhotoContainer {
+	width: 300px;
+	float: left;
+	margin-left: 3%;
+	text-align: center;
+}
+
+#projectBasicDetails {
+	width: 30%;
+	float: left;
+	margin-left: 50px;
+}
+
+#projectBasicDetails label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+#projectBody {
+	clear: both;
+	max-width: 70%;
+	padding: 30px;
+}
+
+#projectBody dt {
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+#projectParticipants {
+	margin-top: 30px;
+	
+}

@@ -6,19 +6,14 @@ var okLabelValue;
 var cancelLabelValue;
 var warningUnsavedChangesTextValue;
 
-
 // reverve of the above: mapping from the human name to the code
 var allPossibleLanguagesMap_reverse;
-
-// list of all languages (for auto completion)
-var allPossibleLanguagesList;
 
 // mappting between a level (0, 1 or 2) and the name of this level
 var allPossibleLevelNamesMap;
 
 // languages of the profile: this is udpated in real type as the user modifies his list of langauges
 var profileLanguages ; 
-
 
 // ------------------------------
 // ------------------------------
@@ -50,61 +45,12 @@ function initCityEdition() {
 
 	initLat = $("#locationLat").val();
 	initLong = $("#locationLong").val();
-
-	initializeGeoCoder(initLat, initLong);
+	
+	// this is present in geocoder.js
+	initializeGeoCoder("#location", "city_map_canvas", "#locationLat", "#locationLong", initLat, initLong);
 }
 
-function initializeGeoCoder(initLat, initLong) {
-	var latlng = new google.maps.LatLng(initLat, initLong);
-	var options = {
-		zoom : 8,
-		center : latlng,
-		mapTypeId : google.maps.MapTypeId.ROADMAP
-	};
 
-	geocoder = new google.maps.Geocoder();
-
-	map = new google.maps.Map(document.getElementById("city_map_canvas"), options);
-
-	marker = new google.maps.Marker({
-		map : map,
-		draggable : false
-	});
-
-	marker.setPosition(latlng);
-	map.setCenter(latlng);
-
-	$("#location").autocomplete({
-		// This bit uses the geocoder to fetch address values
-		source : function(request, response) {
-			geocoder.geocode({
-				'address' : request.term
-			}, function(results, status) {
-				response($.map(results, function(item) {
-					return {
-						label : item.formatted_address,
-						value : item.formatted_address,
-						latitude : item.geometry.location.lat(),
-						longitude : item.geometry.location.lng()
-					};
-				}));
-			});
-		},
-		// This bit is executed upon selection of an address
-		select : function(event, ui) {
-			chosenLatLng = new google.maps.LatLng(ui.item.latitude, ui.item.longitude);
-
-			$("#locationLat").val(ui.item.latitude);
-			$("#locationLong").val(ui.item.longitude);
-			$("#location").val(ui.item.label);
-
-			marker.setPosition(chosenLatLng);
-			map.setCenter(chosenLatLng);
-
-		}
-	});
-
-}
 
 function initLanguageMechanics() {
 
@@ -167,6 +113,7 @@ function initLanguageButtons() {
 		switchLanguageMode("normal");
 	});
 
+	// allPossibleLanguagesList is defined in languages.js 
 	$("#addLanguageInput").autocomplete({
 		source : allPossibleLanguagesList
 	});
@@ -235,11 +182,6 @@ function switchLanguageMode( mode) {
 		$("#addLanguageInput, #addLanguageSecondButton, #cancelAddLanguageButton").hide();
 		$("#addALanguageLink").toggle(500);
 		$("#addLanguageInput").val('');
-		
-		if (profileLanguages.length > 1) {
-			
-		}
-		
 	} else {
 		$("#addALanguageLink").hide();
 		$("#addLanguageInput, #addLanguageSecondButton, #cancelAddLanguageButton").toggle(250);

@@ -1,0 +1,185 @@
+<tr>
+	<td class="formlabel"><label>&{'projectNewProjectLocations'}*: </label></td>
+	<td colspan="2">
+	
+		<div>
+			<ul id="locationGroup">
+				<li id="hiddenLocationTemplate" class="hidden"><label class="projectLocationText"></label> <img id="trashImg" src="@{'/public/images/trash.png'}"  class="deleteImageLink"></img></li>
+			</ul>
+			
+			<input id="hiddenAllLocationJson" name="editedProject.pdata.allLocationJson" type="hidden" value="${flash['editedProject.pdata.allLocationJson']}"/>
+			
+			<div class="hidden">
+				<input id="locationLat"  />
+				<input id="locationLong" />
+			</div>
+			
+			<ul>
+				<li class="hidden" id="locationInputCommand1">
+					<input id="addLocationInput" class="languageAutoComplete rightspaced" size="65"> </input>
+					<span  id="addLocationSecondButton" class="dabLink rightspaced" >&{'add'}</span>
+					<span  id="addLocationCancelButton" class="dabLink" >&{'CancelButton'}</span>
+				</li>
+				<li>
+					<span id="addLocationLink" class="dabLink" >&{'projectNewProjectaddALocation'}</span>
+				</li>
+			</ul>
+		</div>
+	</td>
+</tr>
+<tr class="errorRow">
+	<td ></td>
+	<td><div class="errorMessage">#{error 'editedProject.pdata.allLocationJson' /}</div></td>
+</tr>
+<tr class="hidden" id="locationInputCommand2">
+	<td ></td>
+	<td><div id="project_map_canvas" ></div></td>
+</tr>
+
+#{dab.inputText 
+	label:messages.get('projectNewProject'),
+	required: true,
+	inputName: "editedProject.pdata.description",
+	inputValue: _editedProject?.pdata?.description,
+	visibilityName: "editedProject.pdata.descriptionVisibility",
+	visibilityValue: _editedProject?.pdata?.descriptionVisibility,
+	cols: 65,
+	rows: 4
+/}
+
+#{dab.inputText 
+	label:messages.get('projectNewReason'),
+	required: false,
+	inputName: "editedProject.pdata.reason",
+	inputValue: _editedProject?.pdata?.reason,
+	explanation: messages.get('projectNewReasonExplanation'),
+	cols: 65,
+	rows: 4
+/}
+
+#{dab.inputText 
+	label:messages.get('projectNewStrategy'),
+	required: false,
+	inputName: "editedProject.pdata.strategy",
+	inputValue: _editedProject?.pdata?.strategy,
+	visibilityName: "editedProject.pdata.strategyVisibility",
+	visibilityValue: _editedProject?.pdata?.strategyVisibility,
+	explanation: messages.get('projectNewStrategyExplanation'),
+	cols: 65,
+	rows: 4
+/}
+
+#{dab.inputText 
+	label:messages.get('projectNewOffer'),
+	required: false,
+	inputName: "editedProject.pdata.offer",
+	inputValue: _editedProject?.pdata?.offer,
+	visibilityName: "editedProject.pdata.offerVisibility",
+	visibilityValue: _editedProject?.pdata?.offerVisibility,
+	explanation: messages.get('projectNewOfferExplanation'),
+	cols: 65,
+	rows: 4
+/}
+
+
+#{dab.inputText 
+	label:messages.get('projectNewRequiredTasks'),
+	required: false,
+	inputName: "todo",
+	inputValue: "(TODO...)",
+	explanation: messages.get('projectNewRequiredTasksExplanation'),
+	cols: 35,
+	disabled: true
+/}
+
+
+#{dab.inputText 
+	label:messages.get('projectNewRequiredAssets'),
+	required: false,
+	inputName: "todo",
+	inputValue: "(TODO...)",
+	explanation: messages.get('projectNewRequiredAssetsExplanation'),
+	cols: 35,
+	disabled: true
+/}
+
+
+#{dab.inputText
+	inputId: "projectNewDueDate", 
+	label:messages.get('projectNewDueDate'),
+	required: false,
+	inputName: "editedProject.pdata.dueDateStr",
+	inputValue: _editedProject?.pdata?.dueDateStr,
+	explanation: messages.get('projectNewDueDateExplanation'),
+	cols: 11,
+/}
+
+<tr>
+	<td class="formlabel"><label>&{'projectNewUsefulLinks'}: </label></td>
+	<td colspan="2">
+		<div>
+			<ul id="linksGroup">
+				<li id="hiddenLinkTemplate" class="hidden"><a class="dablink"></a> <img id="trashImg" src="@{'/public/images/trash.png'}"  class="deleteImageLink"></img></li>
+			</ul>
+			
+			<input id="hiddenAllLinksJson" name="editedProject.allLinksJson" type="hidden" value="${flash['editedProject.allLinksJson']}"/>
+
+			<ul>
+				<li class="hidden" id="linkInputCommand">
+					<input id="addLinkInput" class="rightspaced" size="65"> </input>
+					<span  id="addLinkSecondButton" class="dabLink rightspaced" >&{'add'}</span>
+					<span  id="addLinkCancelButton" class="dabLink" >&{'CancelButton'}</span>
+				</li>
+				<li>
+					<span id="addLinkLink" class="dabLink" >&{'projectNewAddOneUsefullLink'}</span>
+				</li>
+			</ul>
+		</div>
+	</td>
+</tr>
+
+
+#{dab.inputText 
+	label:messages.get('projectNewSelectThemes'),
+	required: false,
+	inputName: "todo",
+	inputValue: "(TODO...)",
+	explanation: messages.get('projectNewSelectThemesExplanation'),
+	cols: 35,
+	disabled: true
+/}
+
+
+<tr>
+	<td class="formlabel"><label>&{'projectNewSelectTags'}: </label></td>
+	<td colspan="2">
+		<div>
+			<ul id="tagGroup">
+				<li id="hiddenTagTemplate" class="hidden"><span ></span> <img id="trashImg" src="@{'/public/images/trash.png'}"  class="deleteImageLink"></img></li>
+			</ul>
+			
+			<input id="hiddenAllTagsJson" name="editedProject.allTagsJson" type="hidden" value="${flash['editedProject.allTagsJson']}"/>
+
+			<ul>
+				<li class="hidden" id="tagInputCommand">
+					<input id="addTagInput" class="rightspaced" size="15"> </input>
+					<span  id="addTagSecondButton" class="dabLink rightspaced" >&{'add'}</span>
+					<span  id="addTagCancelButton" class="dabLink" >&{'CancelButton'}</span>
+				</li>
+				<li>
+					<span id="addTagLink" class="dabLink" >&{'projectNewAddOneTagLink'}</span>
+				</li>
+			</ul>
+		</div>
+	</td>
+</tr>
+
+
+#{dab.inputText 
+	inputId: "projectNewLanguage", 
+	label:messages.get('projectNewSelectLanguage'),
+	required: true,
+	inputName: "editedProject.pdata.language",
+	cols: 20
+/}
+

@@ -25,10 +25,13 @@ public class ProfileEdit extends DabLoggedController {
 
 	private static Logger logger = Logger.getLogger(ProfileEdit.class.getName());
 	
+	public final static String FLASH_PARAM_SKIP_LOAD_PROFILE = "skipLoadPrf";
 	
-	public static void profileEdit(String s) {
+	
+	
+	public static void profileEdit() {
 		
-		if (s == null) {
+		if (! flash.contains(FLASH_PARAM_SKIP_LOAD_PROFILE)) {
 			UserProfile userProfile = BeanProvider.getUserProfileService().loadUserProfile(getSessionWrapper().getLoggedInUserProfileId(), true);
 			if (userProfile == null) {
 				logger.log(Level.WARNING, "Could not load profile for supposedly logged in user " + getSessionWrapper().getLoggedInUserProfileId() + " => redirecting to home page");
@@ -44,8 +47,6 @@ public class ProfileEdit extends DabLoggedController {
 
 	
 
-
-
 	public static void doEdit(EditedProfile editedProfile) {
 		
 		if (editedProfile.getWebsite() != null && ! editedProfile.getWebsite().startsWith("http")) {
@@ -58,7 +59,8 @@ public class ProfileEdit extends DabLoggedController {
 			
 			params.flash();
 			Validation.keep();
-			profileEdit("1");
+			flash.put(FLASH_PARAM_SKIP_LOAD_PROFILE, true);
+			profileEdit();
 		} else {
 			// update the toUserPRoilfe...
 			UserProfile partialProfile = new UserProfile();
@@ -76,7 +78,8 @@ public class ProfileEdit extends DabLoggedController {
 	 * 
 	 */
 	public static void cancelEdit() {
-		profileEdit(null);
+		flash.remove(FLASH_PARAM_SKIP_LOAD_PROFILE);
+		profileEdit();
 	}
 	
 	

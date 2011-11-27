@@ -2,7 +2,14 @@
 
 <div class="oneProjectParticipationLine">
 
-	<img src="${_participation.projectSummary.mainPhotoThumbLink}" styleClass="oneLinerThumb" />
+	#{if _participation.projectSummary.mainPhotoThumbLink == null} 
+		<img src="@{'/public/images/defaultProjectThumb.jpg'}" class="oneLinerThumb" />
+	#{/if}
+	
+	#{if _participation.projectSummary.mainPhotoThumbLink != null} 
+		<img src="${_participation.projectSummary.mainPhotoThumbLink}" class="oneLinerThumb" />
+	#{/if}
+	
 
 	<div>
 		<a href="@{projects.ProjectsView.projectsView( _participation.projectSummary.projectId )}" class="dabLink">${_participation.projectSummary.name}</a>

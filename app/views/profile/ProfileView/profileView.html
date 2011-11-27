@@ -137,7 +137,7 @@
 			<span class="toggleLink dabLink">&{'profileProjects'} (${visitedUserProfile.numberOfProjects}) </span>
 			<div class="toggleContainer" style="display: none">
 				 #{list items:visitedUserProfile.projects, as:'oneProject'}
-				 
+					#{projectSummary participation: oneProject /}
 				 #{/list}
 			</div>
 		</div>

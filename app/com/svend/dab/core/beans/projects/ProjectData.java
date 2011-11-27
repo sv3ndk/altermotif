@@ -1,9 +1,9 @@
 package com.svend.dab.core.beans.projects;
 
 import java.util.Date;
+import java.util.Set;
 
-import org.springframework.data.annotation.Transient;
-
+import com.svend.dab.core.beans.Location;
 import com.svend.dab.core.beans.projects.Project.PROJECT_VISIBILITY;
 
 /**
@@ -17,9 +17,8 @@ public class ProjectData {
 	private String goal;
 
 	private String description;
-	
-	@Transient
-	private String nolocation ="(TODO..)";
+
+	private Set<Location> locations;
 
 	private PROJECT_VISIBILITY descriptionVisibility = PROJECT_VISIBILITY.everybody;
 	
@@ -85,17 +84,6 @@ public class ProjectData {
 	public void setReason(String reason) {
 		this.reason = reason;
 	}
-
-
-	public String getNolocation() {
-		return nolocation;
-	}
-
-
-	public void setNolocation(String nolocation) {
-		this.nolocation = nolocation;
-	}
-
 
 	public String getStrategy() {
 		return strategy;
@@ -164,6 +152,16 @@ public class ProjectData {
 
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
+	}
+
+
+	public Set<Location> getLocations() {
+		return locations;
+	}
+
+
+	public void setLocations(Set<Location> locations) {
+		this.locations = locations;
 	}
 
 }
