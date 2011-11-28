@@ -65,6 +65,10 @@ public class ProjectsEdit extends DabLoggedController{
 		
 		if (Validation.hasErrors()) {
 			params.flash();
+			
+			// overwrites the flash data with the corrected versions
+			flash.put("editedProject.allLinksJson", editedProject.getAllLinksJson());
+
 			Validation.keep();
 			flash.put(FLASH_SKIP_LOADING_PROFILE, true);
 			projectsEdit(flash.get(FLASH_PROJECT_ID));

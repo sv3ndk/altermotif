@@ -3,6 +3,8 @@ package controllers.validators;
 import java.net.URI;
 import java.net.URL;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import models.altermotif.profile.CreatedProfile;
@@ -13,8 +15,10 @@ import org.apache.commons.collections.CollectionUtils;
 
 import play.data.validation.Validation;
 import play.mvc.Scope.Flash;
+import web.utils.Utils;
 
 import com.google.common.base.Strings;
+import com.mongodb.util.Hash;
 
 /**
  * @author Svend
@@ -105,6 +109,17 @@ public class DabValidators {
 	
 	
 	public static void validateCreatedProject(EditedProject editedProject, Validation validation, Flash flash) {
+
+		Set<String> updatedSite = new HashSet<String>();
+		for (String website : editedProject.getparsedLinks()) {
+			String sanitized = Utils.sanitizedUrl(website);
+			if (!Strings.isNullOrEmpty(sanitized)) {
+				updatedSite.add(sanitized);
+			}
+		}
+		editedProject.setAllLinks(updatedSite);
+		
+		
 		Validation.valid("editedProject", editedProject);
 		Validation.valid("editedProject.pdata", editedProject.getPdata());
 

@@ -230,6 +230,18 @@ public class Utils {
 	}
 
 	
+	public static String sanitizedUrl(String website) {
+		
+		if (website == null) {
+			return "";
+		}
+		
+		if (website.length() < 7 || !website.substring(0, 7).equalsIgnoreCase("http://")) {
+			return "http://" + website;
+		} else {
+			return website;
+		}
+	}
 	
 	// ----------------------------------
 	// ----------------------------------
@@ -250,6 +262,9 @@ public class Utils {
 		return config;
 		
 	}
+
+
+
 
 
 

@@ -1,9 +1,12 @@
 package models.altermotif.projects;
 
+import java.io.IOException;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.cloudfoundry.org.codehaus.jackson.JsonGenerationException;
+import org.cloudfoundry.org.codehaus.jackson.map.JsonMappingException;
 import org.cloudfoundry.org.codehaus.jackson.map.ObjectMapper;
 
 import web.utils.Utils;
@@ -14,6 +17,9 @@ import com.svend.dab.core.beans.projects.Project;
 public class EditedProject {
 	
 	private static Logger logger = Logger.getLogger(EditedProject.class.getName());
+	
+	ObjectMapper mapper = new ObjectMapper();
+
 	
 	private String allLinksJson;
 	
@@ -34,10 +40,9 @@ public class EditedProject {
 
 	public EditedProject(Project project, String userLanguage) {
 		pdata = new EditedProjectData(project.getPdata(), userLanguage);
-		ObjectMapper mapper = new ObjectMapper();
 		try {
-			allLinksJson = mapper.writeValueAsString(project.getLinks());
 			allTagsJson = mapper.writeValueAsString(project.getTags());
+			setAllLinks(project.getLinks());
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "could not marsal to json => falling back to empty json string provided to the gui" , e); 
 		} 
@@ -75,10 +80,17 @@ public class EditedProject {
 			if (pdata != null) {
 				pdata.applyToProjectData(project.getPdata(), userLanguage);
 			}
-			
 		}
 	}
 
+	// final because called from constructor
+	public final  void setAllLinks(Set<String> updatedSite) {
+		try {
+			allLinksJson = mapper.writeValueAsString(updatedSite);
+		} catch (Exception e) {
+			logger.log(Level.WARNING, "could not marsal to json => falling back to empty json string provided to the gui" , e); 
+		} 
+	}
 	
 
 	public String getAllLinksJson() {
@@ -104,6 +116,7 @@ public class EditedProject {
 	public void setPdata(EditedProjectData pdata) {
 		this.pdata = pdata;
 	}
+
 	
 
 }
