@@ -13,6 +13,7 @@ GET     /profile/cv				                profile.ProfileCv.profileCv
 GET     /profile/privacy		                profile.ProfilePrivacy.profilePrivacy
 
 GET     /projects/new			                projects.ProjectsNew.projectsNew
+GET     /projects/edit			                projects.ProjectsEdit.projectsEdit
 GET     /projects/view			                projects.ProjectsView.projectsView
 GET     /projects/search		                projects.ProjectsSearch.projectsSearch
 

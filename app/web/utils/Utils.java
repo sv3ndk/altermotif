@@ -2,7 +2,6 @@ package web.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -10,30 +9,21 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
-import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.cloudfoundry.org.codehaus.jackson.JsonParseException;
-import org.cloudfoundry.org.codehaus.jackson.map.JsonMappingException;
+import models.altermotif.MappedValue;
+import models.altermotif.SessionWrapper;
+
 import org.cloudfoundry.org.codehaus.jackson.map.ObjectMapper;
 
 import play.mvc.Scope.RenderArgs;
 
 import com.google.common.base.Strings;
-import com.google.common.collect.ObjectArrays;
-import com.google.gson.JsonElement;
-import com.mongodb.util.Hash;
 import com.svend.dab.core.beans.Config;
-import com.svend.dab.core.beans.Location;
-import com.svend.dab.core.beans.profile.Contact;
-import com.svend.dab.core.beans.profile.UserProfile;
 
 import controllers.BeanProvider;
-
-import models.altermotif.MappedValue;
-import models.altermotif.SessionWrapper;
 
 public class Utils {
 
@@ -43,7 +33,8 @@ public class Utils {
 	private static HashMap<String, List<MappedValue>> allPossibleLanguageNames = null;
 	
 	// map of language name to language code
-	private static HashMap<String, HashMap<String, String>> allPossibleLanguageMap = null;
+	private static HashMap<String, HashMap<String, String>> languageToCodeMap = null;
+	private static HashMap<String, HashMap<String, String>> codeToLanguageMap = null;
 	
 	private static ObjectMapper jsonMapper = new ObjectMapper();
 
@@ -91,12 +82,14 @@ public class Utils {
 				if (allPossibleLanguageNames == null) {
 
 					allPossibleLanguageNames = new HashMap<String, List<MappedValue>>();
-					allPossibleLanguageMap = new HashMap<String, HashMap<String,String>>();
+					languageToCodeMap = new HashMap<String, HashMap<String,String>>();
+					codeToLanguageMap = new HashMap<String, HashMap<String,String>>();
 
 					for (filenames propertyFileName : filenames.values()) {
 						
 						List<MappedValue> addedListOfNames = new LinkedList<MappedValue>();
-						HashMap<String, String> addedMapOfNames = new HashMap<String, String>();
+						HashMap<String, String> addedLanguageToCodeMap = new HashMap<String, String>();
+						HashMap<String, String> addedCodeMap = new HashMap<String, String>();
 
 						try {
 							InputStream is = Utils.class.getResourceAsStream(propertyFileName.filename);
@@ -108,11 +101,13 @@ public class Utils {
 								String name = languageNamesProp.getProperty(code);
 								
 								addedListOfNames.add(new MappedValue(code, name));
-								addedMapOfNames.put(name, code);
+								addedLanguageToCodeMap.put(name, code);
+								addedCodeMap.put(code, name);
 							}
 							
 							allPossibleLanguageNames.put(propertyFileName.toString(), addedListOfNames);
-							allPossibleLanguageMap.put(propertyFileName.toString(), addedMapOfNames);
+							languageToCodeMap.put(propertyFileName.toString(), addedLanguageToCodeMap);
+							codeToLanguageMap.put(propertyFileName.toString(), addedCodeMap);
 							
 						} catch (IOException e) {
 							logger.log(Level.WARNING, "Could not load languages names as jar resource", e);
@@ -126,13 +121,16 @@ public class Utils {
 		return allPossibleLanguageNames.get(inLanguage);
 	}
 	
-	public static HashMap<String, String> getAllPossibleLangugeMap(String inLanguage) {
-		
+	public static HashMap<String, String> getLangugeToCodeMap(String inLanguage) {
 		// makes sure the lazy loader is executed...
 		getAllPossibleLanguageNames(inLanguage);
-		
-		return allPossibleLanguageMap.get(inLanguage);
-		
+		return languageToCodeMap.get(inLanguage);
+	}
+
+	public static HashMap<String, String> getCodeToLanguageMap(String inLanguage) {
+		// makes sure the lazy loader is executed...
+		getAllPossibleLanguageNames(inLanguage);
+		return codeToLanguageMap.get(inLanguage);
 	}
 	
 	
@@ -141,16 +139,21 @@ public class Utils {
 	 * @return
 	 */
 	public static String resolveCodeOfLanguage(String languageHumanName, String userLanguage) {
-		
-		HashMap<String, String> languagesMap = getAllPossibleLangugeMap(userLanguage);
-		
-		if (languagesMap == null) {
+		HashMap<String, String> languagesToCodeMap = getLangugeToCodeMap(userLanguage);
+		if (languagesToCodeMap == null) {
 			return "";
 		} else {
-			return languagesMap.get(languageHumanName);
+			return languagesToCodeMap.get(languageHumanName);
 		}
+	}
 
-
+	public static String resolveLanguageOfCode(String code, String userLanguage) {
+		HashMap<String, String> codeToLanguage = getCodeToLanguageMap(userLanguage);
+		if (codeToLanguage == null) {
+			return "";
+		} else {
+			return codeToLanguage.get(code);
+		}
 	}
 
 	

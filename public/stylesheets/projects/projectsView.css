@@ -5,6 +5,14 @@
 	text-align: center;
 }
 
+#projectToolBox{
+	border: thin solid;
+	padding: 20px 20px 20px 20px;
+	float: left;
+	margin-left: 40px;
+	
+}
+
 #projectBasicDetails {
 	width: 30%;
 	float: left;
@@ -31,3 +39,4 @@
 	margin-top: 30px;
 	
 }
+

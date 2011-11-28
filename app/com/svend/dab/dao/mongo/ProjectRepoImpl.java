@@ -6,6 +6,9 @@ package com.svend.dab.dao.mongo;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Project;
+import com.svend.dab.core.beans.projects.ProjectData;
 
 /**
  * @author Svend
@@ -42,6 +46,20 @@ public class ProjectRepoImpl implements IProjectDao {
 	@Override
 	public void save(Project project) {
 		mongoTemplate.save(project);
+	}
+
+	@Override
+	public void updateProjectPDataLinksAndTags(String projectId, Project project) {
+		Query query = query(where("_id").is(projectId));
+		
+		// for some reason, Mongo prefers list to set (and I happen to prefer set to lists...)
+		List<String> links =new LinkedList<String>();
+		links.addAll(project.getLinks());
+		List<String> tags =new LinkedList<String>();
+		tags.addAll(project.getTags());
+		
+		Update update = new Update().set("pdata", project.getPdata()).set("links", links).set("tags", tags);
+		mongoTemplate.updateFirst(query, update, Project.class);
 	}
 
 }

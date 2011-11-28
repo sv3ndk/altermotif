@@ -3,14 +3,14 @@ package controllers.validators;
 import java.net.URI;
 import java.net.URL;
 import java.util.Date;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.apache.commons.collections.CollectionUtils;
 
 import models.altermotif.profile.CreatedProfile;
 import models.altermotif.profile.EditedProfile;
-import models.altermotif.projects.CreatedProject;
+import models.altermotif.projects.EditedProject;
+
+import org.apache.commons.collections.CollectionUtils;
+
 import play.data.validation.Validation;
 import play.mvc.Scope.Flash;
 
@@ -104,8 +104,7 @@ public class DabValidators {
 	
 	
 	
-	public static void validateCreatedProject(CreatedProject editedProject, Validation validation, Flash flash) {
-
+	public static void validateCreatedProject(EditedProject editedProject, Validation validation, Flash flash) {
 		Validation.valid("editedProject", editedProject);
 		Validation.valid("editedProject.pdata", editedProject.getPdata());
 
@@ -116,10 +115,21 @@ public class DabValidators {
 				Validation.addError("editedProject.pdata.allLocationJson", "projectNewAtLeastOneMessageErrorMessage", "");
 			}
 		}
-
 		
-
+		// TODO: validate HTTP addresses
+		
 	}
 	
+	public static void validateEditedProject(EditedProject editedProject, Validation validation, Flash flash) {
+		
+		validateCreatedProject(editedProject, validation, flash);
+
+		// discaring the errors concerning the name and the goal: in edition these are raed only; => never submitted  
+		if (Validation.errors().size() == 3 && Validation.hasError("editedProject.pdata.name") && Validation.hasError("editedProject.pdata.goal")) {
+			Validation.clear();
+		}
+		
+		
+	}
 
 }

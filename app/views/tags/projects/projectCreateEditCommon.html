@@ -7,7 +7,7 @@
 				<li id="hiddenLocationTemplate" class="hidden"><label class="projectLocationText"></label> <img id="trashImg" src="@{'/public/images/trash.png'}"  class="deleteImageLink"></img></li>
 			</ul>
 			
-			<input id="hiddenAllLocationJson" name="editedProject.pdata.allLocationJson" type="hidden" value="${flash['editedProject.pdata.allLocationJson']}"/>
+			<input id="hiddenAllLocationJson" name="editedProject.pdata.allLocationJson" type="hidden" value="${_editedProject == null ? flash['editedProject.pdata.allLocationJson'] : _editedProject.pdata.allLocationJson}"/>
 			
 			<div class="hidden">
 				<input id="locationLat"  />
@@ -119,10 +119,10 @@
 	<td colspan="2">
 		<div>
 			<ul id="linksGroup">
-				<li id="hiddenLinkTemplate" class="hidden"><a class="dablink"></a> <img id="trashImg" src="@{'/public/images/trash.png'}"  class="deleteImageLink"></img></li>
+				<li id="hiddenLinkTemplate" class="hidden"><span class="dabLinkDisabled"></span> <img id="trashImg" src="@{'/public/images/trash.png'}"  class="deleteImageLink"></img></li>
 			</ul>
 			
-			<input id="hiddenAllLinksJson" name="editedProject.allLinksJson" type="hidden" value="${flash['editedProject.allLinksJson']}"/>
+			<input id="hiddenAllLinksJson" name="editedProject.allLinksJson" type="hidden" value="${_editedProject == null ? flash['editedProject.allLinksJson'] : _editedProject.allLinksJson}"/>
 
 			<ul>
 				<li class="hidden" id="linkInputCommand">
@@ -158,7 +158,7 @@
 				<li id="hiddenTagTemplate" class="hidden"><span ></span> <img id="trashImg" src="@{'/public/images/trash.png'}"  class="deleteImageLink"></img></li>
 			</ul>
 			
-			<input id="hiddenAllTagsJson" name="editedProject.allTagsJson" type="hidden" value="${flash['editedProject.allTagsJson']}"/>
+			<input id="hiddenAllTagsJson" name="editedProject.allTagsJson" type="hidden" value="${_editedProject == null ? flash['editedProject.allTagsJson'] : _editedProject.allTagsJson  }"/>
 
 			<ul>
 				<li class="hidden" id="tagInputCommand">
@@ -180,6 +180,7 @@
 	label:messages.get('projectNewSelectLanguage'),
 	required: true,
 	inputName: "editedProject.pdata.language",
+	inputValue: _editedProject?.pdata?.language,
 	cols: 20
 /}
 

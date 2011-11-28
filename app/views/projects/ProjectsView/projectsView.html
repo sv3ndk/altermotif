@@ -38,12 +38,38 @@
 <div id="projectViewContainer" class="pageContainer">
 
 	<p class="pageTitle">
-		&{visitedProject.pdata.name}
+		${visitedProject?.pdata?.name}
 	</p>
 	
 	<div id="projectPhotoContainer">(todo: put photo here...)</div>
 	
 	#{projects.viewProjectBasicDetails visitedProject:visitedProject/}
+	
+	#{if projectVisibility.isToolBoxVisible() }
+		<div id="projectToolBox">
+		<ul>
+			<li>
+				#{if projectVisibility.isEditProjectLinkVisisble() }
+					<a href="@{projects.ProjectsEdit.projectsEdit( visitedProject.id)}" class="dabLink">&{'projectViewEditProjet'}</a>
+				#{/if}
+			</li>
+
+			<li>
+				#{if projectVisibility.isCancelProjectLinkVisisble() }
+					<span class="dabLinkDisabled">&{'projectViewCancelProjet'}</span>
+				#{/if}
+			</li>
+
+			<li>
+				#{if projectVisibility.isEndProjectLinkVisisble() }
+					<span class="dabLinkDisabled">&{'projectViewEndProjet'}</span>
+				#{/if}
+			</li>
+		</ul>
+		
+		</div>
+	#{/if}
+	
 	
 	<div id="projectBody">
 		#{projects.viewProjectDescription visitedProject:visitedProject/}

@@ -1,6 +1,5 @@
 package models.altermotif.projects;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -10,7 +9,6 @@ import org.cloudfoundry.org.codehaus.jackson.map.ObjectMapper;
 import play.data.validation.Required;
 import web.utils.Utils;
 
-import com.google.common.base.Strings;
 import com.svend.dab.core.beans.Location;
 import com.svend.dab.core.beans.projects.Project.PROJECT_VISIBILITY;
 import com.svend.dab.core.beans.projects.ProjectData;
@@ -21,17 +19,22 @@ import com.svend.dab.core.beans.projects.ProjectData;
  *         project data common to the creattion and to the edition screens
  * 
  */
-public class CommonProjectData {
+public class EditedProjectData {
 
-
-	private static Logger logger = Logger.getLogger(CommonProjectData.class.getName());
+	private static Logger logger = Logger.getLogger(EditedProjectData.class.getName());
 
 	// ////////////////////////////
 	// bean fields
 
+	@Required
+	private String name;
+
+	@Required
+	private String goal;
+
 	@Required(message = "projectNewAtLeastOneMessageErrorMessage")
 	private String allLocationJson;
-	
+
 	private Set<Location> cachedParsedLocations;
 
 	@Required
@@ -48,14 +51,43 @@ public class CommonProjectData {
 	private String offer;
 
 	private PROJECT_VISIBILITY offerVisibility = PROJECT_VISIBILITY.everybody;
-	
+
 	private String dueDateStr;
-	
+
 	@Required
 	private String language;
 
 	// ////////////////////////////
 	// business logic
+
+	public EditedProjectData(ProjectData pdata, String userLanguage) {
+		if (pdata != null) {
+			name = pdata.getName();
+			goal = pdata.getGoal();
+			description = pdata.getDescription();
+			descriptionVisibility = pdata.getDescriptionVisibility();
+			reason = pdata.getReason();
+			strategy = pdata.getStrategy();
+			strategyVisibility = pdata.getStrategyVisibility();
+			offer = pdata.getOffer();
+			offerVisibility = pdata.getOfferVisibility();
+			dueDateStr = Utils.formatDate(pdata.getDueDate());
+			language = Utils.resolveLanguageOfCode(pdata.getLanguage(), userLanguage); 
+					
+			ObjectMapper mapper = new ObjectMapper();
+			try {
+				allLocationJson = mapper.writeValueAsString(pdata.getLocations());
+			} catch (Exception e) {
+				logger.log(Level.WARNING, "could not marsal to json => falling back to empty json string provided to the gui" , e); 
+			} 
+			
+		}
+		
+	}
+
+	public EditedProjectData() {
+		super();
+	}
 
 	public Set<Location> getParsedJsonLocations() {
 
@@ -68,13 +100,16 @@ public class CommonProjectData {
 		}
 		return cachedParsedLocations;
 	}
-	
-	
+
 	/**
 	 * @param pdata
 	 */
 	public void applyToProjectData(ProjectData pdata, String userLanguage) {
 		if (pdata != null) {
+			
+// these are read-only data...
+//			pdata.setName(name);
+//			pdata.setGoal(goal);
 			pdata.setDescription(description);
 			pdata.setDescriptionVisibility(descriptionVisibility);
 			pdata.setReason(reason);
@@ -88,14 +123,8 @@ public class CommonProjectData {
 		}
 	}
 
-	
-	
-
 	// ///////////////////////////////
 	// getters, setters
-	
-	
-
 
 	public String getAllLocationJson() {
 		return allLocationJson;
@@ -169,13 +198,28 @@ public class CommonProjectData {
 		this.dueDateStr = dueDateStr;
 	}
 
-
 	public String getLanguage() {
 		return language;
 	}
 
 	public void setLanguage(String language) {
 		this.language = language;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getGoal() {
+		return goal;
+	}
+
+	public void setGoal(String goal) {
+		this.goal = goal;
 	}
 
 }

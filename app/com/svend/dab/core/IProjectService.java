@@ -12,6 +12,8 @@ public interface IProjectService {
 	public void createProject(Project createdProject, String creatorId);
 	
 	public Project loadProject(String projectId, boolean generatePhotoLinks);
+
+	public void updateProject(Project updated);
 	
 	
 

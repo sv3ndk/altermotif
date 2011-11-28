@@ -2,7 +2,7 @@ package controllers.projects;
 
 import java.util.logging.Logger;
 
-import models.altermotif.projects.CreatedProject;
+import models.altermotif.projects.EditedProject;
 import play.data.validation.Validation;
 import web.utils.Utils;
 
@@ -23,7 +23,7 @@ public class ProjectsNew extends DabLoggedController {
 		render();
 	}
 
-	public static void doCreateProject(CreatedProject editedProject) {
+	public static void doCreateProject(EditedProject editedProject) {
 
 		DabValidators.validateCreatedProject(editedProject, validation, flash);
 
@@ -32,7 +32,9 @@ public class ProjectsNew extends DabLoggedController {
 			Validation.keep();
 			projectsNew();
 		} else {
-			Project createdProject = editedProject.toProject(getSessionWrapper().getSelectedLg());
+			
+			Project createdProject = new Project(); 
+			editedProject.applyToProject(createdProject, getSessionWrapper().getSelectedLg());
 			BeanProvider.getProjectService().createProject(createdProject, getSessionWrapper().getLoggedInUserProfileId());
 			Application.index();
 		}

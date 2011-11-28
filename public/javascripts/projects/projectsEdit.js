@@ -187,8 +187,7 @@ function addOneLink() {
 
 function graphicalAddOneLink(addedLink, immediate) {
 	var newLinkRow = $("#hiddenLinkTemplate").clone().removeAttr("id");
-	newLinkRow.find("a").attr("href", addedLink);
-	newLinkRow.find("a").text(addedLink);
+	newLinkRow.find("span").text(addedLink);
 	$("#linksGroup").append(newLinkRow);
 	
 	if (immediate) {

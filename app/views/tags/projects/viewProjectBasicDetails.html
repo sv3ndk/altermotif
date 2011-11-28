@@ -4,7 +4,7 @@
 		<tbody>
 			<tr>
 				<td><label>&{'viewProjectGoal'}: </label></td>
-				<td>${_visitedProject.pdata.goal}</td>
+				<td>${_visitedProject?.pdata?.goal}</td>
 			</tr>
 			
 			#{list items:_visitedProject.pdata.locations, as: 'oneLoc'}
@@ -33,7 +33,11 @@
 			
 			<tr>
 				<td><label>&{'viewProjectDueDate'}: </label></td>
-				<td>${_visitedProject.pdata.dueDate.format(controllers.BeanProvider.config.dateDisplayFormat)} </td>
+				<td>
+					#{if _visitedProject.pdata.dueDate != null}
+						${_visitedProject.pdata.dueDate.format(controllers.BeanProvider.config.dateDisplayFormat)} 
+						#{/if}
+				</td>
 			</tr>
 			
 			<tr>

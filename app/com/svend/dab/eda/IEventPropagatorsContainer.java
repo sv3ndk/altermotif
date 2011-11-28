@@ -12,6 +12,7 @@ import com.svend.dab.eda.events.profile.UserReferenceRemovedEvent;
 import com.svend.dab.eda.events.profile.UserReferenceWritten;
 import com.svend.dab.eda.events.profile.UserSummaryUpdated;
 import com.svend.dab.eda.events.projects.ProjectCreated;
+import com.svend.dab.eda.events.projects.ProjectUpdated;
 import com.svend.dab.eda.events.s3.BinaryNoLongerRequiredEvent;
 
 /**
@@ -47,5 +48,8 @@ public interface IEventPropagatorsContainer {
 	public IEventPropagator<ProfileRefUpdated> getProfileRefUpdatedPropagator();
 	
 	public IEventPropagator<ProjectCreated> getProjectCreatedPropagator();
+	
+	public IEventPropagator<ProjectUpdated> getProjectUpdatedPropagator() ;
+
 
 }

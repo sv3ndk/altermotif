@@ -302,6 +302,9 @@ projectNewPrivacySettingsAdmin=Administratoren van dit project
 projectNewPrivacySettingsOwner=Starter van dit project (ik)
 
 # view project page
+projectViewEditProjet=***Edit project
+projectViewEndProjet=***End project
+projectViewCancelProjet=***Cancel project
 viewProjectGoal=Doel
 viewProjectLocation=Locatie(s)
 viewProjectCommunicationIn=Communicatie in
@@ -317,3 +320,6 @@ viewProjectParticipants=Deelnemers
 viewProjectApplications=***Applications
 viewProjectApply=***Apply
 viewProjectApplyConfirmationText=***Please motivate your application for participation in the project. Indicate why you want to participate and how you wish to contribute to the project (e.g. which means and/or tasks you could fulfill?). The more information you give, the more likely it is that your application will be taken seriouly.
+
+# edit project page
+projectEditConfirmButton=***Update project

@@ -20,6 +20,7 @@ import com.svend.dab.eda.events.profile.UserReferenceRemovedEvent;
 import com.svend.dab.eda.events.profile.UserReferenceWritten;
 import com.svend.dab.eda.events.profile.UserSummaryUpdated;
 import com.svend.dab.eda.events.projects.ProjectCreated;
+import com.svend.dab.eda.events.projects.ProjectUpdated;
 import com.svend.dab.eda.events.s3.BinaryNoLongerRequiredEvent;
 
 /**
@@ -88,6 +89,10 @@ public class DelegatingPropagator implements IEventPropagator<Event>, IEventProp
 	@Autowired
 	@Qualifier("projectCreatedPropagator")
 	private IEventPropagator<ProjectCreated> projectCreatedPropagator;
+
+	@Autowired
+	@Qualifier("projectUpdatedPropagator")
+	private IEventPropagator<ProjectUpdated> projectUpdatedPropagator;
 	
 	// -----------------------------------------------------------------
 	// -----------------------------------------------------------------
@@ -174,6 +179,11 @@ public class DelegatingPropagator implements IEventPropagator<Event>, IEventProp
 	@Override
 	public IEventPropagator<ProjectCreated> getProjectCreatedPropagator() {
 		return projectCreatedPropagator;
+	}
+
+	@Override
+	public IEventPropagator<ProjectUpdated> getProjectUpdatedPropagator() {
+		return projectUpdatedPropagator;
 	}
 
 }

@@ -1,18 +1,12 @@
 package controllers.profile;
 
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import models.altermotif.MappedValue;
 import models.altermotif.profile.EditedProfile;
-
-import org.cloudfoundry.org.codehaus.jackson.map.ObjectMapper;
-
 import play.data.validation.Validation;
 import web.utils.Utils;
 
-import com.apple.eawt.Application;
 import com.svend.dab.core.beans.profile.UserProfile;
 
 import controllers.BeanProvider;
