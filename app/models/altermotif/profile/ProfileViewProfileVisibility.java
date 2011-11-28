@@ -51,9 +51,10 @@ public class ProfileViewProfileVisibility extends AbstractRenderableModel{
 	}
 
 	public boolean isUserProfileGenderVisible() {
-		if (visitedUserProfile == null) {
+		if (visitedUserProfile == null || visitedUserProfile.getPdata() == null || visitedUserProfile.getPdata().getGender() == null || visitedUserProfile.getPdata().getGenderLabel() == null) {
 			return false;
 		}
+		
 		return !"U".equals(visitedUserProfile.getPdata().getGender());
 	}
 

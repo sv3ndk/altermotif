@@ -5,9 +5,9 @@
 	#{list items:_contacts, as:'oneContact'}
 		<div class="oneContactPopupLine" >
 			<img src="${oneContact.otherUser.mainPhotoThumbLink != null ? oneContact.otherUser.mainPhotoThumbLink : '/public/images/defaultProfileThumb.jpg'}" class="oneLinerThumb"></img>
-			<span class="contactUserName">&{oneContact.otherUser.userName}</span>
+			<span class="contactUserName">${oneContact.otherUser.userName}</span>
 			<br />
-			<span >&{oneContact.otherUser.location}</span>
+			<span >${oneContact?.otherUser?.location}</span>
 				
 		</div>
 	#{/list }
