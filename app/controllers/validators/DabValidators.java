@@ -110,6 +110,7 @@ public class DabValidators {
 	
 	public static void validateCreatedProject(EditedProject editedProject, Validation validation, Flash flash) {
 
+		// TODO: validate HTTP addresses
 		Set<String> updatedSite = new HashSet<String>();
 		for (String website : editedProject.getparsedLinks()) {
 			String sanitized = Utils.sanitizedUrl(website);
@@ -130,8 +131,6 @@ public class DabValidators {
 				Validation.addError("editedProject.pdata.allLocationJson", "projectNewAtLeastOneMessageErrorMessage", "");
 			}
 		}
-		
-		// TODO: validate HTTP addresses
 		
 	}
 	

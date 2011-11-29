@@ -43,6 +43,24 @@ function initLocationLogic() {
 		switchLocationMode("normal");
 	});
 	
+	// click on the delete icon
+	$("#locationGroup").on("click", "img.deleteImageLink", function(event){
+		var removedTagValue = $(event.target).prev().text();
+		
+		var removedIndex = 0;
+		for (var oneKey in allLocations) {
+			if (allLocations[oneKey].location == removedTagValue) {
+				break;
+			}
+			removedIndex ++;
+		}
+
+		allLocations.splice(removedIndex, 1);
+		$("#hiddenAllLocationJson").val(JSON.stringify(allLocations));
+		$(event.target).parent().remove();
+	});
+	
+	
 }
 
 function switchLocationMode(mode) {
@@ -60,7 +78,6 @@ function switchLocationMode(mode) {
 		$("#addLocationInput").focus();
 		google.maps.event.trigger(map, "resize");
 	}
-	
 }
 
 
@@ -152,10 +169,7 @@ function initAddLinkLogic() {
 		allLinks.splice(removedIndex, 1);
 		$("#hiddenAllLinksJson").val(JSON.stringify(allLinks));
 		$(event.target).parent().remove();
-		
 	});
-
-	
 	
 }
 
@@ -223,6 +237,26 @@ function initAddTagLogic() {
 		addOneTag();
 		switchTagMode("normal");
 	});
+	
+	
+	// click on the delete icon
+	$("#tagGroup").on("click", "img.deleteImageLink", function(event){
+		var removedTagValue = $(event.target).prev().text();
+		
+		var removedIndex = 0;
+		for (var oneKey in allTags) {
+			if (allTags[oneKey] == removedTagValue) {
+				break;
+			}
+			removedIndex ++;
+		}
+
+		allTags.splice(removedIndex, 1);
+		$("#hiddenAllTagsJson").val(JSON.stringify(allTags));
+		$(event.target).parent().remove();
+	});
+
+	
 }
 
 function switchTagMode(mode) {

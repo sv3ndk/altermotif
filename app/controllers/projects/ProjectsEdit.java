@@ -37,6 +37,9 @@ public class ProjectsEdit extends DabLoggedController{
 				renderArgs.put("editedProjectName", project.getPdata().getName());
 				renderArgs.put("editedProjectGoal", project.getPdata().getGoal());
 				
+				logger.log(Level.INFO, "name " + project.getPdata().getName());
+				
+				
 				if (!flash.contains(FLASH_SKIP_LOADING_PROFILE)) {
 					renderArgs.put("editedProject", new EditedProject(project, getSessionWrapper().getSelectedLg()));
 				}
