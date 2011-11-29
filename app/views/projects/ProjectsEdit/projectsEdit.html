@@ -36,35 +36,37 @@
 	<div id="projectNewContainer">
 		#{form @projects.ProjectsEdit.doEditProject() }
 			<table id="editProjectTable">
-			
-				<tr>
-					<td class="formlabel"><label >&{'projectNewProjectName'}: </label></td>
-					<td>${editedProjectName}</td>
-				</tr>
-
-				<tr>
-					<td class="formlabel"><label>&{'projectNewProjectGoal'}: </label></td>
-					<td>${editedProjectGoal}</td>
-				</tr>
-
-				#{projects.projectCreateEditCommon editedProject:editedProject  /}
-				
-				
-				<tr>
-					<td></td>
-					<td>
-						<input type="submit" value="&{'projectEditConfirmButton'}" />
-					</td>
-				</tr>
-			
+					
+						<tr>
+							<td class="formlabel"><label >&{'projectNewProjectName'}: </label></td>
+							<td>${editedProjectName}</td>
+						</tr>
+		
+						<tr>
+							<td class="formlabel"><label>&{'projectNewProjectGoal'}: </label></td>
+							<td>${editedProjectGoal}</td>
+						</tr>
+		
+						#{projects.projectCreateEditCommon editedProject:editedProject  /}
+						
 			</table>
-			
-			
-			
 		#{/form }
+		
+		<div>
+			<input id="editProfileButton" type="submit"  value=" &{'projectEditConfirmButton'} " class="editProjectBottomButton"/>
+			<input id="cancelProfileButton" type="submit"  value=" &{'profileCancelChanges'} " class="editProjectBottomButton"/>
+		</div>
+		
+			
+	</div>
+	
+	<div id="cancelEditionContainer">
+		#{form @Application.index()}
+		#{/form}
 	</div>
 
-	<!--  hidden non submitted data: after a successful geodecoding, the latitude and longitude land temporarily here (and are directly post-processed by the call back mechanism) -->
+
+
 </div>
 
 

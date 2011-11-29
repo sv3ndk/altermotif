@@ -13,6 +13,8 @@ function init() {
 	initAddTagLogic();
 	
 	setupSetLanguageAutoComplete();
+	
+	initSubmitCancelButtons();
 }
 
 
@@ -314,6 +316,20 @@ function setupSetLanguageAutoComplete() {
 }
 
 
+function initSubmitCancelButtons() {
+	
+	$("#editProfileButton").click(function() {
+		$("#projectNewContainer form").submit();
+	});
+
+	
+	$("#cancelProfileButton").click(function() {
+		$("#cancelEditionContainer form").submit();
+	});
+	
+}
+
+
 ///////////////////////////////////////////////////////
 // utilities
 
@@ -327,3 +343,5 @@ function parseJsonStringIntoObject(jqSelector) {
 	}
 	
 }
+
+
