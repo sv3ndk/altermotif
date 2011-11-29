@@ -1,32 +1,21 @@
-var okLabelValue;
-var cancelLabelValue;
 var visitedProfileId;
 
-function init(okLabel, cancelLabel, isProfileActive) {
+function init() {
 
-	okLabelValue = okLabel;
-	cancelLabelValue = cancelLabel;
 	visitedProfileId = $("#vuser").text();
 	
 	// this script is in language.js
 	initAllPossibleLanguagesMap();
 
-	initLeaveAReferenceForm(okLabel, cancelLabel);
-
-	// contact invitation mechanisms
+	initLeaveAReferenceForm();
 	initContactMechanics();
-
-	initYourProfileIsInactiveNotification(isProfileActive);
-	
+	initYourProfileIsInactiveNotification();
 	insertDefaultPhotosWhereNeeded();
-	
 	updateAllTexts();
 
 	// this cannot be called inside updateAllText(), becasuse it is based on data in the page that are not reloaded by Ajax
 	updateContactAddedToCOntactText($("#isAddToContactLinkVisible").text() == "true", $("#isAddedToContactLinkVisible").text() == "true");
-
 	insertLanguageLabels();
-	
 }
 
 
@@ -47,7 +36,7 @@ function updateAllTexts() {
 	
 }
 
-function initYourProfileIsInactiveNotification(isProfileActive) {
+function initYourProfileIsInactiveNotification() {
 
 	$("#yourProfileIsInactiveNotificationContainer").notify();
 
@@ -91,7 +80,7 @@ function showConfirmRemoveReferencePopup(deletedRefId, referenceToUser) {
 }
 
 
-function initLeaveAReferenceForm(okLabel, cancelLabel) {
+function initLeaveAReferenceForm() {
 	
 	$('#hiddenLeaveAReferenceForm\\:hiddenleaveAReferenceVisistedProfileId').val(visitedProfileId);
 	
@@ -108,7 +97,7 @@ function initLeaveAReferenceForm(okLabel, cancelLabel) {
 			$('#leaveAReferenceTextArea').val('');
 		},
 		"buttons" : [ {
-			text : okLabel,
+			text : okLabelValue,
 			click : function(event) {
 				
 				$.post(postAReferenceAction(
@@ -130,7 +119,7 @@ function initLeaveAReferenceForm(okLabel, cancelLabel) {
 		},
 
 		{
-			text : cancelLabel,
+			text : cancelLabelValue,
 			click : function() {
 				$(this).dialog("close");
 			}
@@ -144,7 +133,7 @@ function initLeaveAReferenceForm(okLabel, cancelLabel) {
 		modal : true,
 		position : 'top',
 		"buttons" : [ {
-			text : okLabel,
+			text : okLabelValue,
 			click : function() {
 				
 				$.post(removeAReferenceAction(
@@ -159,7 +148,6 @@ function initLeaveAReferenceForm(okLabel, cancelLabel) {
 				}, 340);
 
 				// refresh written references here
-				
 				setTimeout(function() {
 					$("#confirmRemoveWrittenReferenceDialog").dialog("close");
 				}, 350);
@@ -167,7 +155,7 @@ function initLeaveAReferenceForm(okLabel, cancelLabel) {
 		},
 
 		{
-			text : cancelLabel,
+			text : cancelLabelValue,
 			click : function() {
 				$(this).dialog("close");
 			}
@@ -630,7 +618,6 @@ function updateConfirmedContacts() {
 				insertDefaultPhotosWhereNeeded();
 				$("#confirmedContactContainer div.hidden").slideDown();
 				updateAllTexts();
-		
 		}
 	);
 }
@@ -667,13 +654,9 @@ function collectKnowConfirmedContactIds() {
 function insertDefaultPhotosWhereNeeded() {
 	var hiddenDefaultProfileImageSrc = $("#defaultProfileThumbImage").attr("src");
 
-	// default profile photo
-	$("img.userProfilePhoto[src='']").attr("src", $("#defaultProfileImage").attr("src"))
-	
 	// default thumbnail to all contacts
 	$("img.profileContactThumb[src='']").each(function(index, element) {
 		$(element).attr("src", hiddenDefaultProfileImageSrc);
 	});
 	
 }
-

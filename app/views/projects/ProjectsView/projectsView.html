@@ -41,7 +41,10 @@
 		${visitedProject?.pdata?.name}
 	</p>
 	
-	<div id="projectPhotoContainer">(todo: put photo here...)</div>
+	
+	<div id="projectPhotoContainer">
+		#{photoGallery mainPhoto:visitedProject.mainPhoto , galleryType:'project', photos:visitedProject.photos, isPhotoGalleryVisible:projectVisibility.isPhotoGalleryVisible() /}
+	</div>
 	
 	#{projects.viewProjectBasicDetails visitedProject:visitedProject/}
 	

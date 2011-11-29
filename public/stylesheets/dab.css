@@ -314,3 +314,9 @@ fieldset legend {
 	padding: 20px;
 	height: 60px;
 }
+
+.mainPhoto {
+	max-width: 300px;
+	margin-left: auto;
+	margin-right: auto;
+}

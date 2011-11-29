@@ -24,7 +24,7 @@ public class ProjectVisibility {
 	
 	
 	//////////////////////////
-	// toolbax visibility
+	// toolbox visibility
 	
 	public boolean isEditProjectLinkVisisble() {
 		return pep.isAllowedToEditAtLeastPartially(visitingUserId);
@@ -44,6 +44,13 @@ public class ProjectVisibility {
 		return isEditProjectLinkVisisble() || isCancelProjectLinkVisisble() || isEndProjectLinkVisisble();
 	}
 	
+	
+	///////////////////////////////
+	// photo gallery
+	
+	public boolean isPhotoGalleryVisible() {
+		return false;
+	}
 	
 
 }

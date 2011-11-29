@@ -291,6 +291,4 @@ function initSelectGender() {
 	} else {
 		$("#genderRadioUnspecified").attr('checked', true);
 	}
-	
-	
 }

@@ -31,7 +31,6 @@
 	   	var pollNewPendingSentContacsAction	 		= #{jsAction @profile.ProfileView.getNewSentContactRequets(':alreadyKnownContacts', ':vuser') /};
 	   	var pollNewContacsAction 					= #{jsAction @profile.ProfileView.getNewContacts(':alreadyKnownContacts', ':vuser') /};
 	    
-	    
 	    // ajax calls to post updates
 	    var postAReferenceAction = #{jsAction @profile.ProfileView.postLeaveAReference(':createdReferenceText', ':vuser') /};
 	    var removeAReferenceAction= #{jsAction @profile.ProfileView.postRemoveAReference(':deletedReferenceId', ':vuser') /};
@@ -42,9 +41,12 @@
 	    var acceptContactRequestAction	= #{jsAction @profile.ProfileView.acceptContactRequest(':otherUser') /};
 	    var removeContactAction			= #{jsAction @profile.ProfileView.removeContact(':otherUser') /};
 
-    
+	    var okLabelValue = "&{'OkButton'}";
+	    var cancelLabelValue = "&{'CancelButton'}";
+	    var isProfileActive = "${visitedUserProfile.privacySettings.profileActive}"; 
+	    
 		$(document).ready(function() {
-			init("&{'OkButton'}", "&{'CancelButton'}", "${visitedUserProfile.privacySettings.profileActive}");
+			init();
 		})
 	</script>
 #{/set}
@@ -70,7 +72,7 @@
 	</p>
 	
 	<div id="userProfilePhotoContainer">
-		#{photoGallery mainPhoto:visitedUserProfile.mainPhoto, photos:visitedUserProfile.photos, isPhotoGalleryVisible:profileVisibility.userPhotoGalleryVisible/}
+		#{photoGallery mainPhoto:visitedUserProfile.mainPhoto, galleryType:'profile', photos:visitedUserProfile.photos, isPhotoGalleryVisible:profileVisibility.userPhotoGalleryVisible/}
 	</div>
 	
 	#{profile.userProfileBasicDetails visitedUserProfile:visitedUserProfile, profileVisibility:profileVisibility/}
@@ -210,8 +212,6 @@
 <span id="isAddedToContactLinkVisible" style="display: none"}>${profileVisibility.addedToContactVisible}</span>
 
 <img id="defaultProfileThumbImage" src="@{'/public/images/defaultProfileThumb.jpg'}" style="display: none"></img>
-<img id="defaultProfileImage" src="@{'/public/images/defaultProfilePicture.png'}" style="display: none"></img>
-
 
 <!-- reference popups -->
 

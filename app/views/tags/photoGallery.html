@@ -1,6 +1,14 @@
 <div >
-	<img class="userProfilePhoto"
-		src="${_mainPhoto.normalPhotoAddress}" />
+
+	#{if _mainPhoto.normalPhotoAddress == null && _galleryType == "profile"}
+		<img class="mainPhoto" src="@{'/public/images/defaultProfilePicture.png'}" />
+	#{/if}
+	#{if _mainPhoto.normalPhotoAddress == null && _galleryType == "project"}
+		<img class="mainPhoto" src="@{'/public/images/defaultProjectImage.jpg'}" />
+	#{/if}
+	#{if _mainPhoto.normalPhotoAddress != null}
+		<img class="mainPhoto" src="${_mainPhoto.normalPhotoAddress}" />
+	#{/if}
 
 	<p class="centerParagraph ">
 		#{if _isPhotoGalleryVisible}
