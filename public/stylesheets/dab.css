@@ -2,7 +2,7 @@ body {
 	margin: 0px;
 }
 
-body,p,br,input,textarea,dt,dd,a,span {
+body,p,pre,br,input,textarea,dt,dd,a,span {
 	color: #33170D;
 	font-family: sans-serif;
 	font-size: 1em;
