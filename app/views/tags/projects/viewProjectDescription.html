@@ -1,44 +1,44 @@
-	<dl>
-		<dt>
-			&{'viewProjectProject'}:
-		</dt>
-		<dd>
-			<pre>${_visitedProject.pdata.description}</pre>
-		</dd>
+<dl class="descriptionList">
+	<dt>
+		&{'viewProjectProject'}:
+	</dt>
+	<dd>
+		<pre>${_visitedProject.pdata.description}</pre>
+	</dd>
 
 
-		<dt>
-			&{'viewProjectReason'}:
-		</dt>
-		<dd>
-			<pre>${_visitedProject.pdata.reason}</pre>
-		</dd>
-		
-		<dt>
-			&{'viewProjectStrategy'}:
-		</dt>
-		<dd>
-			<pre>${_visitedProject.pdata.strategy}</pre>
-		</dd>
+	<dt>
+		&{'viewProjectReason'}:
+	</dt>
+	<dd>
+		<pre>${_visitedProject.pdata.reason}</pre>
+	</dd>
+	
+	<dt>
+		&{'viewProjectStrategy'}:
+	</dt>
+	<dd>
+		<pre>${_visitedProject.pdata.strategy}</pre>
+	</dd>
 
-		<dt>
-			&{'viewProjectRewards'}:
-		</dt>
-		<dd>
-			<pre>${_visitedProject.pdata.offer}</pre>
-		</dd>
+	<dt>
+		&{'viewProjectRewards'}:
+	</dt>
+	<dd>
+		<pre>${_visitedProject.pdata.offer}</pre>
+	</dd>
 
-		<dt>
-			&{'viewProjectLinks'}:
-		</dt>
-		<dd>
-			#{list items:_visitedProject.links, as: 'oneLink'}
-				<ul>
-					<li><a href="${oneLink}">${oneLink}</a>
-					</li>
-				</ul>
-			#{/list}
-		</dd>
-		
-		
-	</dl>
+	<dt>
+		&{'viewProjectLinks'}:
+	</dt>
+	<dd>
+		#{list items:_visitedProject.links, as: 'oneLink'}
+			<ul>
+				<li><a href="${oneLink}" class="dabLink">${oneLink}</a>
+				</li>
+			</ul>
+		#{/list}
+	</dd>
+	
+	
+</dl>

@@ -92,6 +92,9 @@
 							<img class="oneLinerThumb" src="${participant.user.mainPhotoThumbLink}"/> 
 						#{/if }
 		
+		
+						<br />
+						<a href="@{profile.ProfileView.profileView(participant.user.userName)}" class="dabLink">${participant.user.userName}</a>
 						<br />
 						${participant.user.location}
 						<br />

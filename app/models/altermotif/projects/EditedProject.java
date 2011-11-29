@@ -84,9 +84,12 @@ public class EditedProject {
 	}
 
 	// final because called from constructor
-	public final  void setAllLinks(Set<String> updatedSite) {
+	public final  void setAllLinks(Set<String> updatedSites) {
 		try {
-			allLinksJson = mapper.writeValueAsString(updatedSite);
+			synchronized (this) {
+				allLinksJson = mapper.writeValueAsString(updatedSites);
+				cachedParsedLinks = updatedSites;
+			}
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "could not marsal to json => falling back to empty json string provided to the gui" , e); 
 		} 

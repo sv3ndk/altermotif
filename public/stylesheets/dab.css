@@ -325,3 +325,14 @@ fieldset legend {
 #aboutUsContainer {
 	width: 500px;
 }
+
+.descriptionList dd dt {
+	margin-top: 5px;
+}
+.descriptionList dd pre {
+	margin-left: 15px;
+}
+
+.descriptionList dd li {
+	margin-left: 15px;
+}
