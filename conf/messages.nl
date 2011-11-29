@@ -59,6 +59,7 @@ homePageRules=Gebruiksvoorwaarden
 homePageDisclaimer=Disclaimer
 homePagePrivacy=Privacy
 homePageContacts=Contacteer ons
+homePageAboutUs=***About us
 youDoNotHaveUnreadMessages=Er zijn geen ongelezen berichten in uw postvak IN
 homeYouHavePendingInvitationNotificationPart1=U heeft hangende contactverzoeken. U zou uw
 homeYouHavePendingInvitationNotificationLinkName=profielpagina

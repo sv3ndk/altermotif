@@ -56,6 +56,7 @@ homePageRules=Conditions d'utilisation
 homePageDisclaimer=Disclaimer
 homePagePrivacy=Confidentialité
 homePageContacts=Contactez-nous
+homePageAboutUs=***About us
 youDoNotHaveUnreadMessages=Il n'y a pas de messages non lu dans votre boîte de réception
 homeYouHavePendingInvitationNotificationPart1=Vouz avez une demande d'ajout à votre liste de contacts. Visitez votre
 homeYouHavePendingInvitationNotificationLinkName=profile

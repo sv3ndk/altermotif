@@ -320,3 +320,8 @@ fieldset legend {
 	margin-left: auto;
 	margin-right: auto;
 }
+
+
+#aboutUsContainer {
+	width: 500px;
+}

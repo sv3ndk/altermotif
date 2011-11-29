@@ -167,10 +167,11 @@
 	 #{doLayout /}	
 	
 	<div id="bottomLinksContainer">
-		<span class="bottomLinks">&{'homePageRules'}</span>
-		<span class="bottomLinks">&{'homePageDisclaimer'}</span>
-		<span class="bottomLinks">&{'homePagePrivacy'}</span>
-		<span class="bottomLinks">&{'homePageContacts'}</span>
+		<a href="@{Application.aboutUs()}" class="dabLink">&{'homePageAboutUs'}</a>
+		<a href="#" class="dabLinkDisabled">&{'homePageRules'}</a>
+		<a href="#" class="dabLinkDisabled">&{'homePageDisclaimer'}</a>
+		<a href="#" class="dabLinkDisabled">&{'homePagePrivacy'}</a>
+		<a href="#" class="dabLinkDisabled">&{'homePageContacts'}</a>
 	</div>
 
 </body>

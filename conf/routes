@@ -4,6 +4,7 @@
 
 # Home page
 GET     /                                       Application.index
+GET     /info/aboutus                           Application.aboutUs
 
 GET     /profile/home                           profile.ProfileHome.profileHome
 GET     /profile/public			                profile.ProfileView.profileView
