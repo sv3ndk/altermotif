@@ -83,25 +83,7 @@
 			
 				<div class="toggleContainer">
 				 #{list items:visitedProject.participants, as:'participant'}
-				 	<div class="oneUserSummary">
-
-						#{if participant.user.mainPhotoThumbLink == null}
-							<img src="@{'/public/images/defaultProfileThumb.jpg'}" class="oneLinerThumb" />
-						#{/if }
-						#{if participant.user.mainPhotoThumbLink != null}
-							<img class="oneLinerThumb" src="${participant.user.mainPhotoThumbLink}"/> 
-						#{/if }
-		
-		
-						<br />
-						<a href="@{profile.ProfileView.profileView(participant.user.userName)}" class="dabLink">${participant.user.userName}</a>
-						<br />
-						${participant.user.location}
-						<br />
-						${messages.get(participant.role.label) }
-		
-					</div>
-				 
+				 	#{projects.participant participant:participant /}
 				 #{/list}
 				</div>
 			</div>

@@ -42,12 +42,9 @@ public class Enter extends DabController {
 	}
 
 	public static void doLogin(@Required String username, @Required String password) {
-
-		logger.log(Level.INFO, "do login");
-		
-		if (validation.hasErrors()) {
+		if (Validation.hasErrors()) {
 			params.flash();
-			validation.keep();
+			Validation.keep();
 			login();
 		}
 
@@ -58,9 +55,9 @@ public class Enter extends DabController {
 			getSessionWrapper().setLoggedInUserProfileId(username);
 			ProfileHome.profileHome();
 		} else {
-			validation.addError("password", "loginErrorDetailMessage", "");
+			Validation.addError("password", "loginErrorDetailMessage", "");
 			params.flash();
-			validation.keep();
+			Validation.keep();
 			login();
 		}
 	}
@@ -72,7 +69,6 @@ public class Enter extends DabController {
 	public static void doLogout() {
 		getSessionWrapper().setLoggedInUserProfileId(null);
 		Application.index();
-		
 	}
 
 	// -----------------------------------
@@ -107,9 +103,5 @@ public class Enter extends DabController {
 			ProfileHome.profileHome();
 		}
 	}
-	
-	
-
-	
 
 }

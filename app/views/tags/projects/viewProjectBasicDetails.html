@@ -42,7 +42,17 @@
 			
 			<tr>
 				<td><label>&{'viewProjectInitiator'}: </label></td>
-				<td><a href="@{profile.ProfileView.profileView( _visitedProject.initiator.user.userName )}" class="dabLink">${_visitedProject.initiator.user.userName}</a> </td>
+				<td>
+				
+					#{if _visitedProject.initiator.user.isProfileActive() }
+						<a href="@{profile.ProfileView.profileView( _visitedProject.initiator.user.userName )}" class="dabLink">${_visitedProject.initiator.user.userName}</a>
+					#{/if}
+					
+					#{if !_visitedProject.initiator.user.isProfileActive() }
+						<span class="dabLinkDisabled">${_visitedProject.initiator.user.userName}</span>
+					#{/if}
+					
+				 </td>
 			</tr>
 			
 		</tbody>

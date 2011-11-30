@@ -13,6 +13,7 @@ import web.utils.Utils;
 import controllers.Application;
 import controllers.BeanProvider;
 import controllers.DabLoggedController;
+import controllers.profile.ProfileHome;
 
 /**
  * @author Svend
@@ -85,7 +86,7 @@ public class MessagesNew extends DabLoggedController {
 			
 		} else {
 			BeanProvider.getMessagesService().sendMessage(getSessionWrapper().getLoggedInUserProfileId(), writtenMessage.getToUserName(), writtenMessage.getSubject(), writtenMessage.getMessageContent());
-			Application.index();
+			ProfileHome.profileHome();
 		}
 	}
 	

@@ -64,7 +64,7 @@ public class ProfileViewProfileVisibility extends AbstractRenderableModel{
 	}
 
 	public boolean isMayContactThisUser() {
-		return true;
+		return userSession.isLoggedIn() && ! isVisitingHisOwnProfile();
 	}
 	
 	// -----------------------------------------

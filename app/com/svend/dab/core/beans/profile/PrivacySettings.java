@@ -13,7 +13,8 @@ public class PrivacySettings {
 	private VISIBILITY photosVisibility = VISIBILITY.everybody;
 	private VISIBILITY cvVisibility = VISIBILITY.everybody;
 	
-	private boolean isProfileActive = true;
+	// this must be false by default, because checkboxes are not submitted from HTML form => we only receive info if true (otherwise we must consider false)
+	private boolean isProfileActive;
 
 	// this enum must be aligned with the select items in the profilePrivacySettings.xhtml (or rather, this xhtml should be aligned with this enum...)
 	public enum VISIBILITY {

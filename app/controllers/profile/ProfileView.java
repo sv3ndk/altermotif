@@ -1,6 +1,5 @@
 package controllers.profile;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -24,11 +23,17 @@ public class ProfileView extends DabController {
 	public static void profileView(String vuser) {
 
 		UserProfile visitedUserProfile = BeanProvider.getUserProfileService().loadUserProfile(vuser, true);
+		ProfileViewProfileVisibility visibility = new ProfileViewProfileVisibility(visitedUserProfile, getSessionWrapper());
+
+		// all links to this profile should be disabled anyway. If a use still lands on this page, we redirect him to his own home page
+		// (although an inactive user CAN see his own profile...) 
+		if (visitedUserProfile == null || (!visitedUserProfile.getPrivacySettings().isProfileActive() && !visibility.isVisitingHisOwnProfile())) {
+			ProfileHome.profileHome();
+		}
+
 		renderArgs.put("visitedUserProfile", visitedUserProfile);
-		new ProfileViewProfileVisibility(visitedUserProfile, getSessionWrapper()).putInArgsList(renderArgs);
-
+		visibility.putInArgsList(renderArgs);
 		Utils.addAllPossibleLanguageNamesToRenderArgs(getSessionWrapper(), renderArgs);
-
 		render();
 	}
 

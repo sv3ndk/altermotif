@@ -15,6 +15,7 @@ import com.svend.dab.core.beans.projects.ProjectPep;
 import controllers.Application;
 import controllers.BeanProvider;
 import controllers.DabLoggedController;
+import controllers.profile.ProfileHome;
 import controllers.validators.DabValidators;
 
 public class ProjectsEdit extends DabLoggedController{
@@ -85,7 +86,7 @@ public class ProjectsEdit extends DabLoggedController{
 				editedProject.applyToProject(updated, getSessionWrapper().getSelectedLg());
 				BeanProvider.getProjectService().updateProject(updated);
 			}
-			Application.index();
+			ProfileHome.profileHome();
 		}
 	}
 	

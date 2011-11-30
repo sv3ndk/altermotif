@@ -94,6 +94,7 @@ public class CreatedProfile {
 	public UserProfile toUserProfile() {
 		UserProfile profile = new UserProfile();
 		applyToProfile(profile);
+		profile.getPrivacySettings().setProfileActive(true);
 		return profile;
 	}
 	

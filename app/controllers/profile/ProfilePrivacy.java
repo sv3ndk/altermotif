@@ -37,11 +37,8 @@ public class ProfilePrivacy extends DabLoggedController {
     
     
     public static void doEdit(PrivacySettings settings) {
-
     	BeanProvider.getUserProfileService().updatePrivacySettings(getSessionWrapper().getLoggedInUserProfileId(), settings);
-    	
-    	Application.index();
-    	
+    	ProfileHome.profileHome();
     }
     
     

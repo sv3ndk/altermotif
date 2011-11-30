@@ -41,27 +41,22 @@ function loadCurrentMessagePage() {
 		$("#masterCheckbox").removeAttr("checked");
 
 		if (messagePage.previousPageExists) {
-			$("#messagesPreviousLink").addClass("messagesReactionLinkEnabled")
-					.removeClass("messagesReactionLinkDisabled");
+			$("#messagesPreviousLink").addClass("messagesReactionLinkEnabled").removeClass("messagesReactionLinkDisabled");
 		} else {
-			$("#messagesPreviousLink").addClass("messagesReactionLinkDisabled")
-					.removeClass("messagesReactionLinkEnabled");
+			$("#messagesPreviousLink").addClass("messagesReactionLinkDisabled").removeClass("messagesReactionLinkEnabled");
 		}
 
 		if (messagePage.nextPageExists) {
-			$("#messagesNextLink").addClass("messagesReactionLinkEnabled")
-					.removeClass("messagesReactionLinkDisabled");
+			$("#messagesNextLink").addClass("messagesReactionLinkEnabled").removeClass("messagesReactionLinkDisabled");
 		} else {
-			$("#messagesNextLink").addClass("messagesReactionLinkDisabled")
-					.removeClass("messagesReactionLinkEnabled");
+			$("#messagesNextLink").addClass("messagesReactionLinkDisabled").removeClass("messagesReactionLinkEnabled");
 		}
 
 	});
 }
 
 function removeAllDisplayedMessages() {
-	$("#messagesListTable tr.inboxRowTr").filter(":not(#hiddenRowTemplate)")
-			.remove();
+	$("#messagesListTable tr.inboxRowTr").filter(":not(#hiddenRowTemplate)").remove();
 }
 
 function addOneDisplayedMessage(addedMessage) {
@@ -71,19 +66,14 @@ function addOneDisplayedMessage(addedMessage) {
 	oneMessage.removeAttr("id");
 
 	if (addedMessage.fromUser.isProfileActive) {
-		oneMessage.find(".messageRowFrom a").text(
-				addedMessage.fromUser.userName);
-		oneMessage.find(".messageRowFrom a").attr("href",
-				"/profile/public?vuser=" + addedMessage.fromUser.userName);
+		oneMessage.find(".messageRowFrom a.dabLink").text(addedMessage.fromUser.userName);
+		oneMessage.find(".messageRowFrom a.dabLink").attr("href", "/profile/public?vuser=" + addedMessage.fromUser.userName);
 	} else {
-
+		oneMessage.find(".messageRowFrom span.dabLinkDisabled").text(addedMessage.fromUser.userName);
 	}
 
 	oneMessage.find(".messageRowSubject span").text(addedMessage.subject);
-
-	oneMessage.find(".messageRowCreationTime span").text(
-			addedMessage.creationDate);
-
+	oneMessage.find(".messageRowCreationTime span").text(addedMessage.creationDate);
 	oneMessage.data("fullMessage", addedMessage);
 
 	if (addedMessage.read) {
@@ -100,18 +90,16 @@ function addOneDisplayedMessage(addedMessage) {
 // show message content when clicking on top table
 
 function registerClickOnInboxRow() {
-	$("#messagesListTable").on("click", '.inboxRow, .inboxRowUnread',
-			function(event) {
-				updateDisplayedMessage($(event.target));
-			});
+	$("#messagesListTable").on("click", '.inboxRow, .inboxRowUnread', function(event) {
+		updateDisplayedMessage($(event.target));
+	});
 }
 
 function updateDisplayedMessage(eventTarget) {
 
 	// if we clicked on the user name link or on the checkbox: no need to
 	// refresh the message content
-	if (eventTarget.hasClass("dabLink")
-			|| eventTarget.attr("type") == "checkbox") {
+	if (eventTarget.hasClass("dabLink") || eventTarget.attr("type") == "checkbox") {
 		return;
 	}
 
@@ -141,22 +129,18 @@ function updateDisplayedMessage(eventTarget) {
 		$('#messageDetailDate').text(message.creationDate);
 
 		$('#messageDetailFrom').text(message.fromUser.userName);
-		$('#messageDetailFrom').attr("href",
-				"/profile/public?vuser=" + message.fromUser.userName);
+		$('#messageDetailFrom').attr("href", "/profile/public?vuser=" + message.fromUser.userName);
 
 		if (!messageReactionEnabled) {
-			$('#replyToLink').removeClass("messagesReactionLinkDisabled")
-					.addClass("messagesReactionLinkEnabled");
-			$('#forwardLink').removeClass("messagesReactionLinkDisabled")
-					.addClass("messagesReactionLinkEnabled");
+			$('#replyToLink').removeClass("messagesReactionLinkDisabled").addClass("messagesReactionLinkEnabled");
+			$('#forwardLink').removeClass("messagesReactionLinkDisabled").addClass("messagesReactionLinkEnabled");
 		}
 		messageReactionEnabled = true;
 		currentMessageId = message.id;
 
 		if (markMessageAsUnread) {
 
-			htmlElem.find("td").removeClass("inboxRowUnread").addClass(
-					"inboxRow");
+			htmlElem.find("td").removeClass("inboxRowUnread").addClass("inboxRow");
 			$.post(markAsReadAction({
 				messageId : message.id
 			}), function(response) {
@@ -189,15 +173,12 @@ function forwardMessage() {
 
 function initNextPrevious() {
 
-	$("#messagesPreviousLink").click(
-			function() {
-				if (currentPage > 0
-						&& $("#messagesPreviousLink").hasClass(
-								"messagesReactionLinkEnabled")) {
-					currentPage--;
-					loadCurrentMessagePage();
-				}
-			});
+	$("#messagesPreviousLink").click(function() {
+		if (currentPage > 0 && $("#messagesPreviousLink").hasClass("messagesReactionLinkEnabled")) {
+			currentPage--;
+			loadCurrentMessagePage();
+		}
+	});
 
 	$("#messagesNextLink").click(function() {
 		if ($("#messagesNextLink").hasClass("messagesReactionLinkEnabled")) {
