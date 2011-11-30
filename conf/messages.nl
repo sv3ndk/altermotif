@@ -327,3 +327,7 @@ viewProjectApplyConfirmationText=***Please motivate your application for partici
 
 # edit project page
 projectEditConfirmButton=***Update project
+projectEditEditPhotos=***Edit photos...
+
+#project photos page
+projectPhotosSetAsMainPhoto=***Set as main project photo

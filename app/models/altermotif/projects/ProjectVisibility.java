@@ -52,5 +52,9 @@ public class ProjectVisibility {
 		return false;
 	}
 	
+	public boolean isEditPhotoGalleryLinkVisible() {
+		return pep.isAllowedToEditPhotoGallery(visitingUserId);
+	}
+	
 
 }

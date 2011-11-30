@@ -19,5 +19,9 @@
 				#{/if}
 			#{/list}
 		#{/if}
+		
+		#{if _isProjectEditLinkVisible}
+			<a href="@{projects.ProjectsEditPhotos.projectsEditPhotos( _visitedProjectId)}" class="dabLink">&{'projectEditEditPhotos'}</a>
+		#{/if}
 	</p>
 </div>

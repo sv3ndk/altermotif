@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 
+import com.svend.dab.core.beans.PhotoPack;
 import com.svend.dab.core.beans.aws.S3Link;
 import com.svend.dab.core.beans.profile.PrivacySettings.VISIBILITY;
 import com.svend.dab.core.beans.projects.Participation;
@@ -68,10 +69,9 @@ public class UserProfile implements Serializable {
 	@Transient
 	private List<OwnerAwareContact> myActiveContacts;
 	
-	// arrays of 10 links to the photos of the user (no matter how many actually present in DB)
+	// arrays of 20 links to the photos of the user (no matter how many actually present in DB)
 	@Transient
-	private ArrayList<Photo> photosPack20;
-
+	private PhotoPack cachedPhotosPack20;
 
 	private Date dateOfLatestLogin;
 
@@ -177,30 +177,15 @@ public class UserProfile implements Serializable {
 	}
 	
 	
-	public ArrayList<Photo> getPhotosPack20() {
-		
-		if (photosPack20 == null) {
-			photosPack20 = new ArrayList<Photo>(20);
-			
-			int numberOfPhotosFoundInProfile = 0;
-
-			try {
-				if (photos != null && ! photos.isEmpty()) {
-					for (; numberOfPhotosFoundInProfile < 10 && numberOfPhotosFoundInProfile < photos.size(); numberOfPhotosFoundInProfile++) {
-						photosPack20.add(photos.get(numberOfPhotosFoundInProfile));
-					}
+	public List<Photo> getPhotosPack20() {
+		if (cachedPhotosPack20 == null) {
+			synchronized (this) {
+				if (cachedPhotosPack20 == null) {
+					cachedPhotosPack20 = new  PhotoPack(20, photos);
 				}
-			} catch (Exception e) {
-				logger.log(Level.SEVERE, "Error while loading photos from profile, filling up with empty links...", e);
-			}
-			
-			// filling up to 10 (if required)
-			for ( ; numberOfPhotosFoundInProfile < 20 ; numberOfPhotosFoundInProfile++) {
-				photosPack20.add(new Photo());
 			}
 		}
-		
-		return photosPack20;
+		return cachedPhotosPack20.getPack();
 	}
 
 	
@@ -1037,6 +1022,4 @@ public class UserProfile implements Serializable {
 	public void setProjects(List<Participation> project) {
 		this.projects = project;
 	}
-
-
 }

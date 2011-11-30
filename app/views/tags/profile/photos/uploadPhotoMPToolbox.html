@@ -1,24 +1,102 @@
 
 <div id="profileMPToolboxFiller"></div>
 
-	<div id="profileMPToolbox">
-		<ul>
-			<li>
-				<img id="deletePhotoButton" src="@{'/public/images/trash.png'}" class="iconLink"> <span class="dabLink" id="deletePhotoLink">&{'profileMPDeletePhotoLink'}</span>
-			</li>
-			<li>
-				#{if _uploadPhotoLinkActive}
-					<img id="uploadPhotoButton" src="@{'/public/images/upload.png'}" class="iconLink"> <span class="dabLink" id="uploadPhotoLink">&{'profileMPUploadPhoto'}</span>
-				#{/if}
-				#{if !_uploadPhotoLinkActive}
-					<img id="uploadPhotoButton" src="@{'/public/images/upload.png'}" class="iconLinkInactive"> <span class="dabLinkDisabled" id="uploadPhotoLink">&{'profileMPUploadPhoto'}</span>
-				#{/if}
-			</li>
-			
-			
-			<li>
-				<img id="setProfilePhotoButton" src="@{'/public/images/profilePhoto.jpg'}" class="iconLinkInactive"> <span class="dabLinkDisabled" id="setProfilePhotoLink">&{'profileMSetProfilePhoto'}</span>
-			</li>
-		</ul>
+<div id="profileMPToolbox">
+	<ul>
+		<li>
+			<img id="deletePhotoButton" src="@{'/public/images/trash.png'}" class="iconLink"> <span class="dabLink" id="deletePhotoLink">&{'profileMPDeletePhotoLink'}</span>
+		</li>
+		<li>
+			#{if _uploadPhotoLinkActive}
+				<img id="uploadPhotoButton" src="@{'/public/images/upload.png'}" class="iconLink"> <span class="dabLink" id="uploadPhotoLink">&{'profileMPUploadPhoto'}</span>
+			#{/if}
+			#{if !_uploadPhotoLinkActive}
+				<img id="uploadPhotoButton" src="@{'/public/images/upload.png'}" class="iconLinkInactive"> <span class="dabLinkDisabled" id="uploadPhotoLink">&{'profileMPUploadPhoto'}</span>
+			#{/if}
+		</li>
+		
+		
+		<li>
+			<img id="setAsMainPhotoImage" src="@{'/public/images/profilePhoto.jpg'}" class="iconLinkInactive"> <span class="dabLinkDisabled" id="setAsMainPhotoLink">&{_setAsMainPhotoText}</span>
+		</li>
+	</ul>
 
-	</div>
+</div>
+
+
+<div id="pleaseWaitUploadDialog">
+	&{'uploadPhotoPleaseWait'}
+	<br />
+	<img  src="@{'/public/images/image_upload.gif'}" class="iconLink" />
+</div>
+
+
+<div id="dialogConfirmDeletePhoto"
+	title="&{'confirmationPopupTitle'}" style="display: none">
+	<p>
+		<span class="ui-icon ui-icon-alert"
+			style="float: left; margin: 0 7px 20px 0;"></span>
+		&{'confirmDeletePhoto'}
+	</p>
+</div>
+
+	
+	
+<div id="hiddenUploadPhotoForm" style="display: none">
+	#{if "profile".equals(_photoEditType)}
+		<form method="post"
+			enctype="multipart/form-data" action="@{profile.ProfilePhotos.doUploadPhoto()}">
+			<input type="file" id="theFile" name="theFile"  />
+		</form>
+	#{/if}
+
+	#{if "project".equals(_photoEditType)}
+		<form method="post"
+			enctype="multipart/form-data" action="@{projects.ProjectsEditPhotos.doUploadPhoto()}">
+			<input type="file" id="theFile" name="theFile"  />
+		</form>
+	#{/if}
+</div>
+
+
+
+<div id="hiddenDeletePhotoForm" style="display: none">
+	#{if "profile".equals(_photoEditType)}
+		<form method="post"
+			enctype="multipart/form-data" action="@{profile.ProfilePhotos.doDeletePhoto()}">
+			<input type="hidden" id="deletedPhotoIdx" name="deletedPhotoIdx"  />
+		</form>
+	#{/if}
+
+	#{if "project".equals(_photoEditType)}
+		<form method="post"
+			enctype="multipart/form-data" action="@{projects.ProjectsEditPhotos.doDeletePhoto()}">
+			<input type="hidden" id="deletedPhotoIdx" name="deletedPhotoIdx"  />
+		</form>
+	#{/if}
+</div>
+	
+
+
+<div id="hiddenSetAsMainPhotoForm" style="display: none">
+	#{if "profile".equals(_photoEditType)}
+		<form method="post"
+			enctype="multipart/form-data" action="@{profile.ProfilePhotos.doSetAsMainPhoto()}">
+			<input type="hidden" id="photoIndex" name="photoIndex"  />
+		</form>
+	#{/if}
+
+	#{if "project".equals(_photoEditType)}
+		<form method="post"
+			enctype="multipart/form-data" action="@{projects.ProjectsEditPhotos.doSetAsMainPhoto()}">
+			<input type="hidden" id="photoIndex" name="photoIndex"  />
+		</form>
+	#{/if}
+</div>
+	
+	
+<div id="editCaptionDialog"
+	title="&{'profileMPCaptionPopupTitle'}">
+	<p>&{'profileMPCaptionPopupText'}</p>
+	<input type="text" id="editedCaption" size="60"></input>
+</div>

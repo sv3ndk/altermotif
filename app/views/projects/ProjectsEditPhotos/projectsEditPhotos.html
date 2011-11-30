@@ -4,21 +4,20 @@
     <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/profile.css'}" />
 #{/set}
 
-
 #{set 'moreScripts'}
-
     <script src="@{'/public/javascripts/photoedit.js'}" type="text/javascript"
     	charset="${_response_encoding}"></script>
 
-    <script src="@{'/public/javascripts/profile/profilePhotos.js'}" type="text/javascript"
+    <script src="@{'/public/javascripts/projects/projectsEditPhotos.js'}" type="text/javascript"
     	charset="${_response_encoding}"></script>
+
     	
     <script type="text/javascript">
 			var okText = "&{'OkButton'}";
 			var cancelText = "&{'CancelButton'}";
 			var setCaptionText = "&{'profileMPClickToSetCaption'}";
 
-		   	var updatePhotoCaptionAction 	= #{jsAction @profile.ProfilePhotos.doUpdatePhotoCaption(':profilePhotoIndex', ':profilePhotoCaption') /};
+		   	var updatePhotoCaptionAction 	= #{jsAction @projects.ProjectsEditPhotos.doUpdatePhotoCaption(':photoIndex', ':photoCaption') /};
 			
 			$(document).ready(function() {
 				init();
@@ -27,9 +26,11 @@
 #{/set}
 
 
-#{profile.photos.uploadPhotoThumbs photoPack:userProfile.photosPack20/}
 
-#{profile.photos.uploadPhotoMPToolbox uploadPhotoLinkActive:uploadPhotoLinkActive, setAsMainPhotoText:'profileMSetProfilePhoto', photoEditType:"profile"/}
+#{profile.photos.uploadPhotoThumbs photoPack:editedProject.photosPack20/}
+
+#{profile.photos.uploadPhotoMPToolbox uploadPhotoLinkActive:uploadPhotoLinkActive, setAsMainPhotoText:"projectPhotosSetAsMainPhoto", photoEditType:"project" /}
 
 #{profile.photos.profileMPCentralPhotoContainer /}
+
 

@@ -1,32 +1,27 @@
-#{extends 'masterTemplate.html' /}
+#{extends 'masterTemplate.html' /} #{set 'moreStyles'}
+<link rel="stylesheet" type="text/css" media="screen"
+	href="@{'/public/stylesheets/projects/projectsView.css'}" />
+#{/set} #{set 'moreScripts'}
+<script type="text/javascript"
+	src="http://maps.google.com/maps/api/js?sensor=false"></script>
 
-#{set 'moreStyles'}
-    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/projects/projectsView.css'}" />
-#{/set}
+<script src="@{'/public/javascripts/dabGeocoder.js'}"
+	type="text/javascript" charset="${_response_encoding}"></script>
 
+<script src="@{'/public/javascripts/language.js'}"
+	type="text/javascript" charset="${_response_encoding}"></script>
 
-#{set 'moreScripts'}
-	<script type="text/javascript"
-		src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script src="@{'/public/javascripts/projects/projectsView.js'}"
+	type="text/javascript" charset="${_response_encoding}"></script>
 
-    <script src="@{'/public/javascripts/dabGeocoder.js'}" type="text/javascript"
-    	charset="${_response_encoding}"></script>
-    	
-    <script src="@{'/public/javascripts/language.js'}" type="text/javascript"
-	   	charset="${_response_encoding}"></script>
-    	
-    <script src="@{'/public/javascripts/projects/projectsView.js'}" type="text/javascript"
-    	charset="${_response_encoding}"></script>
-    	
-    <script type="text/javascript">
-    
-		var okLabelValue = "&{'OkButton'}";
-		var cancelLabelValue = "&{'CancelButton'}";
-    
-		$(document).ready(function() {
-			init();
-		})
-	</script>
+<script type="text/javascript">
+	var okLabelValue = "&{'OkButton'}";
+	var cancelLabelValue = "&{'CancelButton'}";
+
+	$(document).ready(function() {
+		init();
+	})
+</script>
 #{/set}
 
 
@@ -37,59 +32,54 @@
 
 <div id="projectViewContainer" class="pageContainer">
 
-	<p class="pageTitle">
-		${visitedProject?.pdata?.name}
-	</p>
-	
-	
-	<div id="projectPhotoContainer">
-		#{photoGallery mainPhoto:visitedProject.mainPhoto , galleryType:'project', photos:visitedProject.photos, isPhotoGalleryVisible:projectVisibility.isPhotoGalleryVisible() /}
-	</div>
-	
-	#{projects.viewProjectBasicDetails visitedProject:visitedProject/}
-	
-	#{if projectVisibility.isToolBoxVisible() }
-		<div id="projectToolBox">
+	<p class="pageTitle">${visitedProject?.pdata?.name}</p>
+
+
+	<div id="projectPhotoContainer">#{photoGallery
+		mainPhoto:visitedProject.mainPhoto , galleryType:'project',
+		photos:visitedProject.photos,
+		isPhotoGalleryVisible:projectVisibility.isPhotoGalleryVisible(),
+		isProjectEditLinkVisible:projectVisibility.isEditPhotoGalleryLinkVisible(),
+		visitedProjectId:visitedProject.id
+		 /}</div>
+
+	#{projects.viewProjectBasicDetails visitedProject:visitedProject/} #{if
+	projectVisibility.isToolBoxVisible() }
+	<div id="projectToolBox">
 		<ul>
-			<li>
-				#{if projectVisibility.isEditProjectLinkVisisble() }
-					<a href="@{projects.ProjectsEdit.projectsEdit( visitedProject.id)}" class="dabLink">&{'projectViewEditProjet'}</a>
-				#{/if}
+			<li>#{if projectVisibility.isEditProjectLinkVisisble() } <a
+				href="@{projects.ProjectsEdit.projectsEdit( visitedProject.id)}"
+				class="dabLink">&{'projectViewEditProjet'}</a> #{/if}
 			</li>
 
-			<li>
-				#{if projectVisibility.isCancelProjectLinkVisisble() }
-					<span class="dabLinkDisabled">&{'projectViewCancelProjet'}</span>
-				#{/if}
+			<li>#{if projectVisibility.isCancelProjectLinkVisisble() } <span
+				class="dabLinkDisabled">&{'projectViewCancelProjet'}</span> #{/if}
 			</li>
 
-			<li>
-				#{if projectVisibility.isEndProjectLinkVisisble() }
-					<span class="dabLinkDisabled">&{'projectViewEndProjet'}</span>
-				#{/if}
+			<li>#{if projectVisibility.isEndProjectLinkVisisble() } <span
+				class="dabLinkDisabled">&{'projectViewEndProjet'}</span> #{/if}
 			</li>
 		</ul>
-		
-		</div>
+
+	</div>
 	#{/if}
-	
-	
+
+
 	<div id="projectBody">
 		#{projects.viewProjectDescription visitedProject:visitedProject/}
-		
-			<div id="projectParticipants">
-			
-				<span class="toggleLink dabLink">&{'viewProjectParticipants'} (${visitedProject.numberOfParticipants}) </span>
-			
-				<div class="toggleContainer">
-				 #{list items:visitedProject.participants, as:'participant'}
-				 	#{projects.participant participant:participant /}
-				 #{/list}
-				</div>
-			</div>
-			
-	
+
+		<div id="projectParticipants">
+
+			<span class="toggleLink dabLink">&{'viewProjectParticipants'}
+				(${visitedProject.numberOfParticipants}) </span>
+
+			<div class="toggleContainer">#{list
+				items:visitedProject.participants, as:'participant'}
+				#{projects.participant participant:participant /} #{/list}</div>
+		</div>
+
+
 	</div>
-	
-	
+
+
 </div>

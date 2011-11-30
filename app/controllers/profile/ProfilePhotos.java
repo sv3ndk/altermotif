@@ -34,8 +34,8 @@ public class ProfilePhotos extends DabLoggedController {
 		}
 		renderArgs.put("userProfile", userProfile);
 
-		// we may upload more photos only if there is less then 10 or the list is still null
-		boolean isActive = getSessionWrapper().isLoggedIn() && (userProfile.getPhotos() == null || userProfile.getPhotos().size() < MAX_NUMBER_OF_PHOTOS);
+		// we may upload more photos only if there is less then 20 or the list is still null
+		boolean isActive =  userProfile.getPhotos() == null || userProfile.getPhotos().size() < MAX_NUMBER_OF_PHOTOS;
 		renderArgs.put("uploadPhotoLinkActive", isActive);
 
 		render();
@@ -82,8 +82,7 @@ public class ProfilePhotos extends DabLoggedController {
 		}
 
 		BeanProvider.getProfilePhotoService().removeProfilePhoto(userProfile, deletedPhotoIdx);
-		
-		renderJSON("<response>success</response>");
+		profilePhotos();
 	}
 
 	
@@ -102,7 +101,12 @@ public class ProfilePhotos extends DabLoggedController {
 
 		logger.log(Level.INFO, "rendeing profie");
 		renderJSON(new MappedValue("response", "ok"));
+	}
+	
+	public static void doSetAsMainPhoto(int photoIndex) {
+		// TODO
 		
 	}
+
 
 }

@@ -1,5 +1,7 @@
 package com.svend.dab.core.beans.projects;
 
+import com.svend.dab.core.beans.projects.Participant.ROLE;
+
 /**
  * @author svend
  * 
@@ -17,6 +19,9 @@ public class ProjectPep {
 	}
 	
 	
+	// -----------------------------------------------
+	// project edition
+	
 	/**
 	 * Only the project owner or the project admin may edit  
 	 * 
@@ -27,7 +32,9 @@ public class ProjectPep {
 		if (user == null) {
 			return false;
 		}
-		return user.equals(project.getInitiator().getUser().getUserName());
+		
+		ROLE role = project.findRoleOfUser(user);
+		return role == ROLE.initiator;
 	}
 
 
@@ -35,7 +42,8 @@ public class ProjectPep {
 		if (user == null) {
 			return false;
 		}
-		return user.equals(project.getInitiator().getUser().getUserName());
+		ROLE role = project.findRoleOfUser(user);
+		return role == ROLE.initiator;
 	}
 
 
@@ -43,7 +51,20 @@ public class ProjectPep {
 		if (user == null) {
 			return false;
 		}
-		return user.equals(project.getInitiator().getUser().getUserName());
+		ROLE role = project.findRoleOfUser(user);
+		return role == ROLE.initiator;
+	}
+	
+	// ------------------------------------------
+	// photo gallery
+
+
+	public boolean isAllowedToEditPhotoGallery(String user) {
+		if (user == null) {
+			return false;
+		}
+		ROLE role = project.findRoleOfUser(user);
+		return role == ROLE.initiator || role == ROLE.admin;
 	}
 	
 	
