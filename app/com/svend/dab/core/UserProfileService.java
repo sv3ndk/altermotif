@@ -21,6 +21,7 @@ import com.svend.dab.core.beans.profile.Contact;
 import com.svend.dab.core.beans.profile.PrivacySettings;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserReference;
+import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.dao.ICvBinaryDao;
 import com.svend.dab.dao.mongo.IUserProfileDao;
 import com.svend.dab.eda.EventEmitter;
@@ -33,6 +34,7 @@ import com.svend.dab.eda.events.profile.UserPrivacySettingsUpdatedEvent;
 import com.svend.dab.eda.events.profile.UserProfilePersonalDataUpdatedEvent;
 import com.svend.dab.eda.events.profile.UserReferenceRemovedEvent;
 import com.svend.dab.eda.events.profile.UserReferenceWritten;
+import com.svend.dab.eda.events.profile.UserSummaryUpdated;
 import com.svend.dab.eda.events.s3.BinaryNoLongerRequiredEvent;
 
 /**
@@ -392,9 +394,14 @@ public class UserProfileService implements IUserProfileService, Serializable {
 	}
 
 	@Override
-	public void updatePhotoGallery(UserProfile profile) {
+	public void updatePhotoGallery(UserProfile profile, boolean hasMainPhotoChanged) {
 		userProfileRepo.updatePhotoGallery(profile);
 
+		if (hasMainPhotoChanged) {
+			// sends a event to propagate the photo update
+			emitter.emit(new UserSummaryUpdated(new UserSummary(profile)));
+		}
+		
 	}
 
 	@Override
@@ -406,18 +413,13 @@ public class UserProfileService implements IUserProfileService, Serializable {
 		if (userProfile == null) {
 			logger.log(Level.WARNING, "Could determing removed contact of non existing user: " + removedRefs);
 		} else {
-			
-			
 			for (String knownRef : knownPendingReceivedIds) {
 				if (!userProfile.getPendingReceivedContactRequestIds().contains(knownRef)) {
 					removedRefs.add(knownRef);
 				}
 			}
 			for (String knownRef : knownPendingSentIds) {
-				logger.log(Level.WARNING, "kown ref: " + removedRefs);
 				if (!userProfile.getPendingSentContactRequestIds().contains(knownRef)) {
-					logger.log(Level.WARNING, "okkkkkkkkk: ");
-					
 					removedRefs.add(knownRef);
 				}
 			}

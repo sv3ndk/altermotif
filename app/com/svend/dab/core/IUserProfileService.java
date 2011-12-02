@@ -36,19 +36,16 @@ public interface IUserProfileService {
 	 * @param userProfile
 	 */
 	public abstract void loggedIn(UserProfile userProfile);
-
 	
 	public void updateProfilePersonalData(UserProfile userProfile);
 	
-	
 	public abstract void updatePrivacySettings(String loggedInUserProfileId, PrivacySettings settings);
-
 	
 	public abstract void updateCv(UserProfile profile, byte[] cvContent);
 	
 	public abstract void removeCv(UserProfile editedUserProfile);
 
-	public abstract void updatePhotoGallery(UserProfile profile);
+	public abstract void updatePhotoGallery(UserProfile profile, boolean hasMainPhotoChanged);
 	
 	// ----------------------------------
 	// references

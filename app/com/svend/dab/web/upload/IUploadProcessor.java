@@ -14,7 +14,6 @@ public interface IUploadProcessor {
 	public void processUploadCvRequest(File theFile, String loggedInUserProfileId);
 	
 
-	public void processUploadPhotoRequest(File theFile, String username);
 
 	
 }

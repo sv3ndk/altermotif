@@ -189,6 +189,11 @@ public class UserProfile implements Serializable {
 	}
 
 	
+	public boolean isPhotoPackFullAlready() {
+		return photos != null && photos.size() < 20;
+	}
+	
+	
 	
 	// -----------------------------------------------------
 	// CV

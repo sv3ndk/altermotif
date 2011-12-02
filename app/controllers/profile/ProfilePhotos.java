@@ -44,8 +44,7 @@ public class ProfilePhotos extends DabLoggedController {
 	public static void doUploadPhoto(File theFile) {
 
 		try {
-			IUploadProcessor uploadProcessor = BeanProvider.getUploadProcessor();
-			uploadProcessor.processUploadPhotoRequest(theFile, getSessionWrapper().getLoggedInUserProfileId());
+			BeanProvider.getProfilePhotoService().addOnePhoto(getSessionWrapper().getLoggedInUserProfileId(), theFile);
 			profilePhotos();
 		} catch (DabUploadFailedException e) {
 

@@ -1,5 +1,7 @@
 package com.svend.dab.core;
 
+import java.io.File;
+
 import com.svend.dab.core.beans.profile.UserProfile;
 
 /**
@@ -8,7 +10,7 @@ import com.svend.dab.core.beans.profile.UserProfile;
  */
 public interface IProfilePhotoService {
 
-	public abstract void addOnePhoto(UserProfile updatedProfile, byte[] photoContent);
+	public abstract void addOnePhoto(String username, File photoContent);
 	
 	
 	/**

@@ -1,4 +1,4 @@
-package com.svend.dab.core;
+package com.svend.dab.core.projects;
 
 import com.svend.dab.core.beans.projects.Project;
 

@@ -1,4 +1,4 @@
-package com.svend.dab.core;
+package com.svend.dab.core.projects;
 
 import java.util.Date;
 import java.util.UUID;
