@@ -27,7 +27,7 @@ public class UserLoggedInEvent extends Event {
 
 	@Override
 	public IEventPropagator<UserLoggedInEvent> selectEventProcessor(IEventPropagatorsContainer container) {
-		return container.getUserLoggedInEventPropagator();
+		return container.getPropagatorByName("userLoggedInEventPropagator");
 	}
 
 	public String getUsername() {

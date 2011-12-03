@@ -15,9 +15,9 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
+import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Project;
-import com.svend.dab.core.beans.projects.ProjectData;
 
 /**
  * @author Svend
@@ -62,4 +62,24 @@ public class ProjectRepoImpl implements IProjectDao {
 		mongoTemplate.updateFirst(query, update, Project.class);
 	}
 
+	@Override
+	public void addOnePhoto(String id, Photo newPhoto) {
+		genericUpdateProject(id, new Update().addToSet("photos", newPhoto));
+	}
+	
+	
+	@Override
+	public void removeOnePhoto(String id, Photo removed) {
+		genericUpdateProject(id, new Update(). pull("photos", removed));
+	}
+	
+	// --------------------------------
+	//
+	
+
+	protected void genericUpdateProject(String projectId, Update update) {
+		Query query = query(where("_id").is(projectId));
+		mongoTemplate.updateFirst(query, update, Project.class);
+	}
+	
 }

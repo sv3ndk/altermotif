@@ -23,7 +23,7 @@ public class ProjectsView extends DabController{
 		Project project = BeanProvider.getProjectService().loadProject(p, true);
 		if (project != null) {
 			renderArgs.put("visitedProject", project);
-			renderArgs.put("projectVisibility", new ProjectVisibility(new ProjectPep(project), getSessionWrapper().getLoggedInUserProfileId()));
+			renderArgs.put("projectVisibility", new ProjectVisibility(new ProjectPep(project), project, getSessionWrapper().getLoggedInUserProfileId()));
 			
 			Utils.addAllPossibleLanguageNamesToRenderArgs(getSessionWrapper(), renderArgs);
 			render();

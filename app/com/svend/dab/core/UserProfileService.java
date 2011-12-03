@@ -396,13 +396,12 @@ public class UserProfileService implements IUserProfileService, Serializable {
 	@Override
 	public void updatePhotoGallery(UserProfile profile, boolean hasMainPhotoChanged) {
 		userProfileRepo.updatePhotoGallery(profile);
-
 		if (hasMainPhotoChanged) {
-			// sends a event to propagate the photo update
 			emitter.emit(new UserSummaryUpdated(new UserSummary(profile)));
 		}
-		
 	}
+	
+	
 
 	@Override
 	public List<String> determineNonExistingAnyContact(String userId, List<String> knownPendingReceivedIds, List<String> knownPendingSentIds, List<String> knownContactsIds) {
@@ -476,9 +475,5 @@ public class UserProfileService implements IUserProfileService, Serializable {
 		
 		return newContacts;
 	}
-
-
-
-
 
 }

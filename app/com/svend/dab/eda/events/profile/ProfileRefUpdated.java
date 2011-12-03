@@ -32,7 +32,7 @@ public class ProfileRefUpdated extends Event {
 	 */
 	@Override
 	public IEventPropagator<ProfileRefUpdated> selectEventProcessor(IEventPropagatorsContainer container) {
-		return container.getProfileRefUpdatedPropagator();
+		return container.getPropagatorByName("profileRefUpdatedPropagator");
 	}
 
 

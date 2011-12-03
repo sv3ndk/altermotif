@@ -32,7 +32,7 @@ public class ContactRelationshipRemoved extends Event {
 
 	@Override
 	public IEventPropagator<ContactRelationshipRemoved> selectEventProcessor(IEventPropagatorsContainer container) {
-		return container.getContactRelationshipRemovedPropagator();
+		return container.getPropagatorByName("contactRelationshipRemovedPropagator");
 	}
 
 	public String getCancellingUser() {

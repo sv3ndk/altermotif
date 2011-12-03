@@ -3,31 +3,27 @@
  */
 package com.svend.dab.core;
 
-
 import static com.svend.dab.core.PhotoUtils.JPEG_MIME_TYPE;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.google.common.io.ByteStreams;
-import com.svend.dab.core.beans.Config;
 import com.svend.dab.core.beans.DabException;
 import com.svend.dab.core.beans.DabUploadFailedException;
 import com.svend.dab.core.beans.DabUploadFailedException.failureReason;
 import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.profile.UserProfile;
+import com.svend.dab.core.beans.profile.UserSummary;
+import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.dao.IPhotoBinaryDao;
+import com.svend.dab.dao.mongo.IUserProfileDao;
 import com.svend.dab.eda.EventEmitter;
+import com.svend.dab.eda.events.profile.UserSummaryUpdated;
 import com.svend.dab.eda.events.s3.BinaryNoLongerRequiredEvent;
-
 
 /**
  * @author Svend
@@ -36,12 +32,6 @@ import com.svend.dab.eda.events.s3.BinaryNoLongerRequiredEvent;
 @Service
 public class ProfilePhotoService implements IProfilePhotoService {
 
-	public static int NORMAL_PHOTO_MAX_GREATEST_DIMENSION = 800;
-	
-	// keeping 160px and not 80 in order to improve image quality of the thumbnail
-	public static int THUMB_PHOTO_MAX_GREATEST_DIMENSION = 160;
-	
-
 	@Autowired
 	private IPhotoBinaryDao photoDao;
 
@@ -49,8 +39,11 @@ public class ProfilePhotoService implements IProfilePhotoService {
 	private EventEmitter emitter;
 
 	@Autowired
+	private IUserProfileDao userProfileRepo;
+
+	@Autowired
 	private IUserProfileService userProfileService;
-	
+
 	@Autowired
 	private PhotoUtils photoUtils;
 
@@ -65,7 +58,6 @@ public class ProfilePhotoService implements IProfilePhotoService {
 	 * @see com.svend.dab.core.IProfilePhotoService#addOnePhoto(com.svend.dab.core.beans.profile.UserProfile, byte[])
 	 */
 	@Override
-	
 	public void addOnePhoto(String username, File photoContent) {
 
 		if (photoContent == null) {
@@ -77,22 +69,29 @@ public class ProfilePhotoService implements IProfilePhotoService {
 		if (profile == null) {
 			throw new DabUploadFailedException("cannot process: no user profile found for  " + username, failureReason.technicalError);
 		}
-		
+
 		if (profile.isPhotoPackFullAlready()) {
 			throw new DabUploadFailedException("cannot process: no user profile found for  " + username + ": already 20 photos! (the front end shoud prevent this!)", failureReason.technicalError);
 		}
 
 		byte[] receivedPhoto = photoUtils.readPhotoContent(photoContent);
-		
+
 		// todo: optimization: we could probably launch two threads here to perform both operation in parallel...
-		byte[] normalSize = resizePhotoToNormalSize(receivedPhoto);
-		byte[] thumbSize = resizePhotoToThumbSize(receivedPhoto);
-		
-		Photo photo = profile.createOnePhotoPlaceholder();
+		byte[] normalSize = photoUtils.resizePhotoToNormalSize(receivedPhoto);
+		byte[] thumbSize = photoUtils.resizePhotoToThumbSize(receivedPhoto);
 
+		Photo photo = photoUtils.createOnePhotoPlaceholder(profile.getPhotoS3RootFolder(), profile.getThumbsS3RootFolder());
+
+		// saves first the photo in S3 => in case of failure, we just have some lost space over there (+ a message on the user screen)
 		photoDao.savePhoto(photo, normalSize, thumbSize, JPEG_MIME_TYPE);
-		userProfileService.updatePhotoGallery(profile, photo.equals(profile.getMainPhoto()));
 
+		boolean hasMainPhotoChanged = profile.isPhotoPackEmpty();
+		userProfileRepo.addOnePhoto(profile.getUsername(), photo);
+
+		if (hasMainPhotoChanged) {
+			UserProfile updatedProfile = userProfileRepo.findOne(profile.getUsername());
+			emitter.emit(new UserSummaryUpdated(new UserSummary(updatedProfile)));
+		}
 	}
 
 	/*
@@ -106,22 +105,24 @@ public class ProfilePhotoService implements IProfilePhotoService {
 		if (profile == null) {
 			logger.log(Level.WARNING, "Cannot remove a photo from a null profile: not doing anything");
 		} else {
-			Photo removed = profile.removePhoto(deletedPhotoIdx);
-			
+
+			Photo removed = profile.getPhoto(deletedPhotoIdx);
 			if (removed == null) {
 				logger.log(Level.WARNING, "It seems the profile refused to remove photo with index == " + deletedPhotoIdx + " => not propagating any event");
-				return;
 			}
-			
-			userProfileService.updatePhotoGallery(profile, deletedPhotoIdx== 0);
+
+			userProfileRepo.removeOnePhoto(profile.getUsername(), removed);
+
+			if (deletedPhotoIdx == 0) {
+				UserProfile updatedProfile = userProfileRepo.findOne(profile.getUsername());
+				emitter.emit(new UserSummaryUpdated(new UserSummary(updatedProfile)));
+			}
 
 			// actual removal of the file from s3 is done asynchronously, in order to improve gui response time
 			try {
-				
 				emitter.emit(new BinaryNoLongerRequiredEvent(removed.getNormalPhotoLink()));
 			} catch (DabException e) {
-				logger.log(Level.WARNING, "Could not emit event for removing one photo of profile " + profile.getUsername()
-						+ " => this might lead to dead space in s3 storage", e);
+				logger.log(Level.WARNING, "Could not emit event for removing one photo of profile " + profile.getUsername() + " => this might lead to dead space in s3 storage", e);
 			}
 		}
 	}
@@ -137,8 +138,7 @@ public class ProfilePhotoService implements IProfilePhotoService {
 			userProfile.movePhotoToFirstPosition(photoIndex);
 			userProfileService.updatePhotoGallery(userProfile, true);
 		} else {
-			logger.log(Level.WARNING, "Not setting photo as profile photo: invalid index or user profile null or user profile with null photo set. Index="
-					+ photoIndex);
+			logger.log(Level.WARNING, "Not setting photo as profile photo: invalid index or user profile null or user profile with null photo set. Index=" + photoIndex);
 		}
 	}
 
@@ -165,29 +165,8 @@ public class ProfilePhotoService implements IProfilePhotoService {
 		}
 	}
 
+
 	// -------------------------------------
 	// -------------------------------------
-
-
-	
-	
-	/**
-	 * @param photoContent
-	 * @return
-	 */
-	protected byte[] resizePhotoToThumbSize(byte[] photoContent) {
-		return photoUtils.resizePhotoToTargetSize(photoContent, THUMB_PHOTO_MAX_GREATEST_DIMENSION);
-	}
-	
-	
-	
-	/**
-	 * @param photoContent
-	 * @return
-	 */
-	protected byte[] resizePhotoToNormalSize(byte[] photoContent) {
-		return photoUtils.resizePhotoToTargetSize(photoContent, NORMAL_PHOTO_MAX_GREATEST_DIMENSION);
-	}
-
 
 }

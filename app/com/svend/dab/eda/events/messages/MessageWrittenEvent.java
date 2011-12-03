@@ -38,7 +38,7 @@ public class MessageWrittenEvent extends Event {
 
 	@Override
 	public IEventPropagator<MessageWrittenEvent> selectEventProcessor(IEventPropagatorsContainer container) {
-		return container.getMessageWrittenEventPropagator();
+		return container.getPropagatorByName("messageWrittenEventPropagator");
 	}
 
 	public String getFromUserName() {

@@ -33,7 +33,7 @@ public class UserSummaryUpdated extends Event {
 	 */
 	@Override
 	public IEventPropagator<UserSummaryUpdated> selectEventProcessor(IEventPropagatorsContainer container) {
-		return container.getUserSummaryUpdatedPropagator();
+		return container.getPropagatorByName("userSummaryUpdatedPropagator");
 	}
 
 

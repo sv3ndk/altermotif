@@ -36,7 +36,7 @@ public class ProjectCreated extends Event {
 	 */
 	@Override
 	public IEventPropagator<ProjectCreated> selectEventProcessor(IEventPropagatorsContainer container) {
-		return container.getProjectCreatedPropagator();
+		return container.getPropagatorByName("projectCreatedPropagator");
 	}
 
 	public Project getCreatedProject() {

@@ -11,7 +11,7 @@ public class ProjectUpdated extends Event {
 
 	@Override
 	public IEventPropagator selectEventProcessor(IEventPropagatorsContainer container) {
-		return container.getProjectUpdatedPropagator();
+		return container.getPropagatorByName("projectUpdatedPropagator");
 	}
 
 	public ProjectUpdated() {

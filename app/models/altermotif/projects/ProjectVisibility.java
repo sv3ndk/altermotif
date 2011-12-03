@@ -1,5 +1,6 @@
 package models.altermotif.projects;
 
+import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.ProjectPep;
 
 /**
@@ -13,10 +14,13 @@ public class ProjectVisibility {
 	// this may be null (if the user is not logged in)
 	private final String visitingUserId;
 	
+	private final Project project;
 	
-	public ProjectVisibility(ProjectPep pep, String visitingUserId) {
+	
+	public ProjectVisibility(ProjectPep pep, Project project, String visitingUserId) {
 		super();
 		this.pep = pep;
+		this.project = project;
 		this.visitingUserId = visitingUserId;
 	}
 
@@ -49,7 +53,7 @@ public class ProjectVisibility {
 	// photo gallery
 	
 	public boolean isPhotoGalleryVisible() {
-		return false;
+		return project.getPhotos() != null;
 	}
 	
 	public boolean isEditPhotoGalleryLinkVisible() {

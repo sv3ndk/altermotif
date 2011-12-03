@@ -17,7 +17,7 @@ public class UserReferenceRemovedEvent extends Event {
 
 	@Override
 	public IEventPropagator<UserReferenceRemovedEvent> selectEventProcessor(IEventPropagatorsContainer container) {
-		return container.getUserReferenceRemovedEventPropagator();
+		return container.getPropagatorByName("userReferenceRemovedEventPropagator");
 	}
 
 	public String getReferenceId() {

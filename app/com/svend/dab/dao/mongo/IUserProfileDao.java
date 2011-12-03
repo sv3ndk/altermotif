@@ -5,12 +5,12 @@ import java.util.List;
 
 import com.svend.dab.core.beans.profile.Contact;
 import com.svend.dab.core.beans.profile.PersonalData;
+import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.profile.PrivacySettings;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserReference;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Participation;
-import com.svend.dab.core.beans.projects.Project;
 
 public interface IUserProfileDao {
 
@@ -26,6 +26,10 @@ public interface IUserProfileDao {
 	public void replacePersonalData(UserProfile updatedUser, PersonalData pData);
 	
 	public void updatePhotoGallery(UserProfile userProfile);
+	
+	public void addOnePhoto(String username, Photo photo);
+	
+	public void removeOnePhoto(String username, Photo photo);
 	
 	public void updateCv(UserProfile editedUserProfile);
 	
@@ -86,6 +90,7 @@ public interface IUserProfileDao {
 	
 	public void addProjectParticipation(UserProfile userProfile, Participation participation);
 
+	public void updateProjectMainPhoto(String userName, String projectId, Photo mainPhoto);
 
 
 	
@@ -95,5 +100,8 @@ public interface IUserProfileDao {
 	public UserProfile findOne(String userId);
 
 	public void save(UserProfile createdUserProfile);
+
+
+
 
 }

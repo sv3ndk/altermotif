@@ -49,7 +49,6 @@ public class ProjectService implements IProjectService {
 			return null;
 		}
 		
-		
 		Project prj = projectDao.findOne(projectId);
 
 		if (prj != null && generatePhotoLinks) {
@@ -61,5 +60,6 @@ public class ProjectService implements IProjectService {
 		return prj;
 	}
 
+	
 
 }

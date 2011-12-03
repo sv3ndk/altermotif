@@ -95,6 +95,9 @@ public class Project {
 
 		participants.add(new Participant(role, user));
 	}
+	
+	// ------------------------------------------------
+	// photos
 
 	/**
 	 * @return
@@ -124,6 +127,29 @@ public class Project {
 	public boolean isPhotoPackFull() {
 		return photos != null && photos.size() > MAX_NUMBER_OF_PHOTOS;
 	}
+
+	public String getPhotoS3RootFolder() {
+		return "/projects/" + id + "/photos/";
+	}
+
+	public String getThumbsS3RootFolder() {
+		return "/projects/" + id + "/thumbs/";
+	}
+	
+	public boolean isPhotoPackEmpty() {
+		return photos == null || photos.size() == 0;
+	}
+	
+	public Photo getPhoto(int photoIdx) {
+		if (isPhotoPackEmpty() || photos.size() <= photoIdx) {
+			return null;
+		}
+		return photos.get(photoIdx);
+	}
+
+
+	//_--------------------------------------
+	// roles
 
 
 	public Participant getInitiator() {
@@ -180,9 +206,13 @@ public class Project {
 	}
 
 	public void generatePhotoLinks(Date expirationdate) {
-		if (getMainPhoto() != null) {
-			getMainPhoto().generatePresignedLinks(expirationdate, false, true);
+		
+		if (photos != null) {
+			for (Photo photo : photos) {
+				photo.generatePresignedLinks(expirationdate, true, true);
+			}
 		}
+		
 
 		if (participants != null) {
 			for (Participant participant : participants) {
@@ -324,6 +354,9 @@ public class Project {
 	public void setTags(Set<String> tags) {
 		this.tags = tags;
 	}
+
+
+
 
 
 }

@@ -51,7 +51,6 @@ public class AwsS3PhotoDao implements IPhotoBinaryDao {
 		} else {
 
 			awsS3Tool.uploadBinary(photo.getNormalPhotoLink().getS3BucketName(), photo.getNormalPhotoLink().getS3Key(), normalSizedPhoto, mimeType);
-
 			awsS3Tool.uploadBinary(photo.getThumbLink().getS3BucketName(), photo.getThumbLink().getS3Key(), thumbPhoto, mimeType);
 			
 		}

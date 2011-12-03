@@ -21,7 +21,7 @@ public class UserReferenceWritten extends Event {
 
 	@Override
 	public IEventPropagator<UserReferenceWritten> selectEventProcessor(IEventPropagatorsContainer container) {
-		return container.getReferenceLeftEventPropagator();
+		return container.getPropagatorByName("userReferenceWrittenEventPropagator");
 	}
 
 	public String getFromUserName() {

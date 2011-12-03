@@ -83,7 +83,7 @@ public class Photo implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Photo, link=" + getNormalPhotoAddress() + ", caption=" + getCaption();
+		return "Photo, generated link=" + getNormalPhotoAddress() + ", caption=" + getCaption() + " photo s3 location is " + normalPhotoLink;
 	}
 
 	/**

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.svend.dab.core.beans.profile.Contact;
+import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.profile.PrivacySettings;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserReference;
@@ -44,6 +45,9 @@ public interface IUserProfileService {
 	public abstract void updateCv(UserProfile profile, byte[] cvContent);
 	
 	public abstract void removeCv(UserProfile editedUserProfile);
+	
+	//----------------------
+	// photos
 
 	public abstract void updatePhotoGallery(UserProfile profile, boolean hasMainPhotoChanged);
 	
@@ -84,6 +88,8 @@ public interface IUserProfileService {
 	public abstract List<Contact> getOtherReceivedPendingContactRequestsThan(String vuser, Set<String> contactsToDiscard);
 
 	public abstract List<Contact> getOtherConfirmedCo1ntactsThan(String vuser, Set<String> contactsToDiscard);
+
+
 
 	
 

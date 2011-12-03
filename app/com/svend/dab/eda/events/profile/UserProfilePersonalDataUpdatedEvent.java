@@ -36,7 +36,7 @@ public class UserProfilePersonalDataUpdatedEvent extends Event {
 
 	@Override
 	public IEventPropagator<UserProfilePersonalDataUpdatedEvent> selectEventProcessor(IEventPropagatorsContainer container) {
-		return container.getUserProfileUpdateEventPropagator();
+		return container.getPropagatorByName("userProfilePersonalDataEventPropagator");
 	}
 
 	public PersonalData getPersonalData() {

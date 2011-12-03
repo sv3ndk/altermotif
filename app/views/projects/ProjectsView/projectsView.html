@@ -1,27 +1,34 @@
-#{extends 'masterTemplate.html' /} #{set 'moreStyles'}
-<link rel="stylesheet" type="text/css" media="screen"
-	href="@{'/public/stylesheets/projects/projectsView.css'}" />
-#{/set} #{set 'moreScripts'}
-<script type="text/javascript"
-	src="http://maps.google.com/maps/api/js?sensor=false"></script>
+#{extends 'masterTemplate.html' /} 
 
-<script src="@{'/public/javascripts/dabGeocoder.js'}"
-	type="text/javascript" charset="${_response_encoding}"></script>
+#{set 'moreStyles'}
+	<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/projects/projectsView.css'}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/nondab/colorbox/colorbox.css'}" />
+#{/set} 
 
-<script src="@{'/public/javascripts/language.js'}"
-	type="text/javascript" charset="${_response_encoding}"></script>
+#{set 'moreScripts'}
+	<script type="text/javascript"
+		src="http://maps.google.com/maps/api/js?sensor=false"></script>
 
-<script src="@{'/public/javascripts/projects/projectsView.js'}"
-	type="text/javascript" charset="${_response_encoding}"></script>
-
-<script type="text/javascript">
-	var okLabelValue = "&{'OkButton'}";
-	var cancelLabelValue = "&{'CancelButton'}";
-
-	$(document).ready(function() {
-		init();
-	})
-</script>
+    <script src="@{'/public/javascripts/nondab/colorbox/jquery.colorbox.js'}" type="text/javascript"
+    	charset="${_response_encoding}"></script>
+	
+	<script src="@{'/public/javascripts/dabGeocoder.js'}"
+		type="text/javascript" charset="${_response_encoding}"></script>
+	
+	<script src="@{'/public/javascripts/language.js'}"
+		type="text/javascript" charset="${_response_encoding}"></script>
+	
+	<script src="@{'/public/javascripts/projects/projectsView.js'}"
+		type="text/javascript" charset="${_response_encoding}"></script>
+	
+	<script type="text/javascript">
+		var okLabelValue = "&{'OkButton'}";
+		var cancelLabelValue = "&{'CancelButton'}";
+	
+		$(document).ready(function() {
+			init();
+		})
+	</script>
 #{/set}
 
 

@@ -5,7 +5,16 @@ function init() {
 	initAllPossibleLanguagesMap();
 	
 	insertLangugeName();
+
 	
+	// photo gallery
+	$("a[rel='profilePhotos']").colorbox({
+		transition : "none",
+		width : "75%",
+		height : "75%",
+		photo : true
+	});
+
 	
 }
 

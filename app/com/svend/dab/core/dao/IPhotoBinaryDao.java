@@ -8,8 +8,6 @@ import com.svend.dab.core.beans.profile.Photo;
  *
  */
 public interface IPhotoBinaryDao {
-
-	
 	
 	/**
 	 * @param removedPhoto
@@ -17,11 +15,7 @@ public interface IPhotoBinaryDao {
 	public abstract void removePhoto(S3PhotoLink removedPhoto);
 	
 
-//	public abstract void savePhoto(Photo photo, InputStream photoContentStream, String detectedMimeType, int length);
-
-
 	public abstract void savePhoto(Photo photo, byte[] normalSize, byte[] thumbSize, String mimeType);
-	
 
 	
 }

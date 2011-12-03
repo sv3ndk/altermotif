@@ -63,7 +63,7 @@ public class ContactRelationshipResponse extends Event{
 	
 	@Override
 	public IEventPropagator<ContactRelationshipResponse> selectEventProcessor(IEventPropagatorsContainer container) {
-		return container.getContactRelationshipResponsePropagator();
+		return container.getPropagatorByName("contactRelationshipResponsePropagator");
 	}
 
 	// -----------------------------------------------

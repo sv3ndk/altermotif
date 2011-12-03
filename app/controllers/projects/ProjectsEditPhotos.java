@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import play.mvc.Router;
 
 import com.svend.dab.core.beans.DabUploadFailedException;
+import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.ProjectPep;
 
@@ -66,8 +67,10 @@ public class ProjectsEditPhotos extends DabLoggedController {
 	public static void doUploadPhoto(File theFile) {
 		
 		try {
+			// TODO: security check for this user here
+			
 			BeanProvider.getProjectPhotoService().addOnePhoto(flash.get(FLASH_EDITED_PROJECT_ID), theFile);
-			flash.keep(FLASH_EDITED_PROJECT_ID);
+			projectsEditPhotos(flash.get(FLASH_EDITED_PROJECT_ID));
 			
 		} catch (DabUploadFailedException e) {
 			flash.put(SESSION_ATTR_SUGGESTED_NAVIGATION, Router.reverse("profile.ProjectsEditPhotos.projectsEditPhotos(" + flash.get(FLASH_EDITED_PROJECT_ID)) + ")");
@@ -96,6 +99,23 @@ public class ProjectsEditPhotos extends DabLoggedController {
 	
 	public static void doDeletePhoto(int deletedPhotoIdx) {
 
+		UserProfile userProfile = BeanProvider.getUserProfileService().loadUserProfile(getSessionWrapper().getLoggedInUserProfileId(), true);
+
+		if (userProfile == null) {
+			logger.log(Level.WARNING, "Could delete photo: no user found for  " + getSessionWrapper().getLoggedInUserProfileId() + "This is very weird! => redirecting to home page");
+			controllers.Application.index();
+		}
+		
+		Project project = BeanProvider.getProjectService().loadProject(flash.get(FLASH_EDITED_PROJECT_ID), false);
+		
+		if (project == null) {
+			logger.log(Level.WARNING, "Could delete photo: no project  found for  " + flash.get(FLASH_EDITED_PROJECT_ID) + "This is very weird! => redirecting to home page");
+			controllers.Application.index();
+		}
+
+		BeanProvider.getProjectPhotoService().removeProjectPhoto(project, deletedPhotoIdx);
+		projectsEditPhotos(flash.get(FLASH_EDITED_PROJECT_ID));
+		
 	}
 
 	public static void doUpdatePhotoCaption(int photoIndex, String photoCaption) {

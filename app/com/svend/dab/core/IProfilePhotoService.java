@@ -3,6 +3,7 @@ package com.svend.dab.core;
 import java.io.File;
 
 import com.svend.dab.core.beans.profile.UserProfile;
+import com.svend.dab.core.beans.projects.Project;
 
 /**
  * @author Svend
@@ -39,4 +40,5 @@ public interface IProfilePhotoService {
 	 */
 
 	public abstract void updatePhotoCaption(UserProfile profile, int photoIndex, String profilePhotoCaption);
+
 }

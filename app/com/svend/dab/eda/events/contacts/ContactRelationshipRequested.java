@@ -28,7 +28,7 @@ public class ContactRelationshipRequested extends Event {
 
 	@Override
 	public IEventPropagator<ContactRelationshipRequested> selectEventProcessor(IEventPropagatorsContainer container) {
-		return container.getContactRelationshipRequestedPropagator();
+		return container.getPropagatorByName("contactRelationshipRequestedPropagator");
 	}
 
 	public String getFromUser() {

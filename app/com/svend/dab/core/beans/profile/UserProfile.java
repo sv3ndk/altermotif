@@ -1,11 +1,9 @@
 package com.svend.dab.core.beans.profile;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,7 +14,6 @@ import com.svend.dab.core.beans.PhotoPack;
 import com.svend.dab.core.beans.aws.S3Link;
 import com.svend.dab.core.beans.profile.PrivacySettings.VISIBILITY;
 import com.svend.dab.core.beans.projects.Participation;
-import com.svend.dab.dao.aws.s3.AwsS3CvDao;
 
 /**
  * @author Svend
@@ -54,13 +51,13 @@ public class UserProfile implements Serializable {
 	private List<Contact> pendingReceivedContactRequests = new LinkedList<Contact>();
 
 	@Transient
-	private List<String> pendingReceivedContactRequestsIds ;
-	
+	private List<String> pendingReceivedContactRequestsIds;
+
 	@Transient
-	private List<String> pendingSentContactRequestsIds ;
-	
+	private List<String> pendingSentContactRequestsIds;
+
 	@Transient
-	private List<String> contactIds ;
+	private List<String> contactIds;
 
 	private List<Contact> contacts = new LinkedList<Contact>();
 
@@ -68,7 +65,7 @@ public class UserProfile implements Serializable {
 
 	@Transient
 	private List<OwnerAwareContact> myActiveContacts;
-	
+
 	// arrays of 20 links to the photos of the user (no matter how many actually present in DB)
 	@Transient
 	private PhotoPack cachedPhotosPack20;
@@ -146,11 +143,11 @@ public class UserProfile implements Serializable {
 	 * @param personalPhilosophy
 	 * @param personalAssets
 	 */
-	public UserProfile(String userName, String password, String firstName, String email, String gender, String lastName, String location, String locationLat,
-			String locationLong, String website, String personalObjective, String personalDescription, String personalPhilosophy, String personalAssets) {
+	public UserProfile(String userName, String password, String firstName, String email, String gender, String lastName, String location, String locationLat, String locationLong, String website,
+			String personalObjective, String personalDescription, String personalPhilosophy, String personalAssets) {
 
-		this.pdata = new PersonalData(location, password, firstName, lastName, email, gender, null, null, website, locationLat, locationLong,
-				personalObjective, personalDescription, personalPhilosophy, personalAssets);
+		this.pdata = new PersonalData(location, password, firstName, lastName, email, gender, null, null, website, locationLat, locationLong, personalObjective, personalDescription,
+				personalPhilosophy, personalAssets);
 		this.username = userName;
 
 	}
@@ -167,34 +164,48 @@ public class UserProfile implements Serializable {
 	}
 
 	public Long getNumberOfProjects() {
-		
+
 		if (projects == null) {
 			return 0L;
 		} else {
 			return Long.valueOf(getProjects().size());
 		}
-		
+
 	}
-	
-	
+
 	public List<Photo> getPhotosPack20() {
 		if (cachedPhotosPack20 == null) {
 			synchronized (this) {
 				if (cachedPhotosPack20 == null) {
-					cachedPhotosPack20 = new  PhotoPack(20, photos);
+					cachedPhotosPack20 = new PhotoPack(20, photos);
 				}
 			}
 		}
 		return cachedPhotosPack20.getPack();
 	}
 
-	
 	public boolean isPhotoPackFullAlready() {
-		return photos != null && photos.size() < 20;
+		return photos != null && photos.size() >= 20;
 	}
+
+	public boolean isPhotoPackEmpty() {
+		return photos == null || photos.size() == 0;
+	}
+
+
+	/**
+	 * @param photoIdx
+	 * @return
+	 */
+	public Photo getPhoto(int photoIdx) {
+		if (isPhotoPackEmpty() || photos.size() <= photoIdx) {
+			return null;
+		}
+		return photos.get(photoIdx);
+	}
+
 	
-	
-	
+
 	// -----------------------------------------------------
 	// CV
 
@@ -214,37 +225,15 @@ public class UserProfile implements Serializable {
 		return cvLink != null;
 	}
 
-
 	// -----------------------------------------------------
 	// Photos
 
-	/**
-	 * @param photoContentStream
-	 * @param detectedMimeType
-	 * @param length
-	 * @return
-	 */
-	public Photo createOnePhotoPlaceholder() {
+	public String getPhotoS3RootFolder() {
+		return "/profiles/" + username + "/photos/";
+	}
 
-		String photoId = UUID.randomUUID().toString().replace("-", "");
-
-		S3Link normalPhotoLink = new S3Link();
-		normalPhotoLink.setS3Key("/profiles/" + username + "/photos/" + photoId);
-		normalPhotoLink.setS3BucketName(AwsS3CvDao.DEFAULT_S3_BUCKET);
-
-		S3Link thumbPhotoLink = new S3Link();
-		thumbPhotoLink.setS3Key("/profiles/" + username + "/thumbs/" + photoId);
-		thumbPhotoLink.setS3BucketName(AwsS3CvDao.DEFAULT_S3_BUCKET);
-
-		Photo added = new Photo("", normalPhotoLink, thumbPhotoLink);
-
-		if (photos == null) {
-			photos = new LinkedList<Photo>();
-		}
-
-		photos.add(added);
-
-		return added;
+	public String getThumbsS3RootFolder() {
+		return "/profiles/" + username + "/thumbs/";
 	}
 
 	/**
@@ -286,7 +275,7 @@ public class UserProfile implements Serializable {
 				reference.generatePhotoLink(expirationdate);
 			}
 		}
-		
+
 		if (projects != null) {
 			for (Participation participation : projects) {
 				participation.generatePhotoLink(expirationdate);
@@ -294,7 +283,6 @@ public class UserProfile implements Serializable {
 		}
 
 	}
-	
 
 	/**
 	 * @param deletedPhotoIdx
@@ -513,11 +501,10 @@ public class UserProfile implements Serializable {
 		}
 		return response;
 	}
-	
+
 	// ------------------------------------------------------------
 	// projects
-	
-	
+
 	public Participation retrieveParticipation(Participation part) {
 		if (projects != null) {
 			for (Participation participation : projects) {
@@ -528,7 +515,6 @@ public class UserProfile implements Serializable {
 		}
 		return null;
 	}
-	
 
 	// ------------------------------------------------------------
 	// contacts
@@ -544,7 +530,6 @@ public class UserProfile implements Serializable {
 		return !pendingReceivedContactRequests.isEmpty();
 
 	}
-
 
 	/**
 	 * @return
@@ -926,7 +911,7 @@ public class UserProfile implements Serializable {
 						contactIds.add(contact.getContactId());
 					}
 				}
-				
+
 			}
 		}
 		return contactIds;
@@ -939,7 +924,7 @@ public class UserProfile implements Serializable {
 	public List<Contact> getPendingSentContactRequests() {
 		return pendingSentContactRequests;
 	}
-	
+
 	public List<String> getPendingSentContactRequestIds() {
 		if (pendingSentContactRequestsIds == null) {
 			synchronized (this) {
@@ -949,14 +934,11 @@ public class UserProfile implements Serializable {
 						pendingSentContactRequestsIds.add(contact.getContactId());
 					}
 				}
-				
+
 			}
 		}
 		return pendingSentContactRequestsIds;
 	}
-
-
-	
 
 	public void setPendingSentContactRequests(List<Contact> pendingSentContactRequests) {
 		this.pendingSentContactRequests = pendingSentContactRequests;
@@ -965,7 +947,7 @@ public class UserProfile implements Serializable {
 	public List<Contact> getPendingReceivedContactRequests() {
 		return pendingReceivedContactRequests;
 	}
-	
+
 	public List<String> getPendingReceivedContactRequestIds() {
 		if (pendingReceivedContactRequestsIds == null) {
 			synchronized (this) {
@@ -975,13 +957,12 @@ public class UserProfile implements Serializable {
 						pendingReceivedContactRequestsIds.add(contact.getContactId());
 					}
 				}
-				
+
 			}
 		}
 		return pendingReceivedContactRequestsIds;
-	
+
 	}
-	
 
 	public void setPendingReceivedContactRequests(List<Contact> pendingReceivedContactRequests) {
 		this.pendingReceivedContactRequests = pendingReceivedContactRequests;
@@ -1027,4 +1008,6 @@ public class UserProfile implements Serializable {
 	public void setProjects(List<Participation> project) {
 		this.projects = project;
 	}
+
+
 }

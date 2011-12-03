@@ -44,7 +44,7 @@ public class BinaryNoLongerRequiredEvent extends Event {
 
 	@Override
 	public IEventPropagator<BinaryNoLongerRequiredEvent> selectEventProcessor(IEventPropagatorsContainer container) {
-		return container.getBinaryNoLongerRequiredPropagator();
+		return container.getPropagatorByName("binaryNoLongerRequiredPropagator");
 	}
 
 	public String getBinaryBucket() {

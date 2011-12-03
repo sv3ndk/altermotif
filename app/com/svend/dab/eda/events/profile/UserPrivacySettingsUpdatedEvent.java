@@ -33,7 +33,7 @@ public class UserPrivacySettingsUpdatedEvent extends Event {
 	 */
 	@Override
 	public IEventPropagator<UserPrivacySettingsUpdatedEvent> selectEventProcessor(IEventPropagatorsContainer container) {
-		return container.getUserPrivacySettingsUpdatedPropagator();
+		return container.getPropagatorByName("userPrivacySettingsUpdatedPropagator");
 	}
 	
 	// --------------------------------------

@@ -11,6 +11,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.LinkedList;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,37 +25,63 @@ import com.google.common.io.ByteStreams;
 import com.svend.dab.core.beans.Config;
 import com.svend.dab.core.beans.DabUploadFailedException;
 import com.svend.dab.core.beans.DabUploadFailedException.failureReason;
+import com.svend.dab.core.beans.aws.S3Link;
+import com.svend.dab.core.beans.profile.Photo;
+import com.svend.dab.dao.aws.s3.AwsS3CvDao;
 
 @Component
 public class PhotoUtils {
-	
-	private static Logger logger = Logger.getLogger(PhotoUtils.class.getName());
-	
-	public static String JPEG_MIME_TYPE ="image/jpeg";
 
-	
+	private static Logger logger = Logger.getLogger(PhotoUtils.class.getName());
+
+	public static String JPEG_MIME_TYPE = "image/jpeg";
+
+	public static int NORMAL_PHOTO_MAX_GREATEST_DIMENSION = 800;
+
+	// keeping 160px and not 80 in order to improve image quality of the thumbnail
+	public static int THUMB_PHOTO_MAX_GREATEST_DIMENSION = 160;
+
 	@Autowired
 	private Config config;
 
 	
-	public byte[] readPhotoContent(File photoContent) throws DabUploadFailedException{
-		
-		InputStream photoContentStream = null ;
-		
+	public Photo createOnePhotoPlaceholder(String photoRootFolder, String thumbRootFolder) {
+
+		String photoId = UUID.randomUUID().toString().replace("-", "");
+
+		S3Link normalPhotoLink = new S3Link();
+		normalPhotoLink.setS3Key(photoRootFolder + photoId);
+		normalPhotoLink.setS3BucketName(AwsS3CvDao.DEFAULT_S3_BUCKET);
+
+		S3Link thumbPhotoLink = new S3Link();
+		thumbPhotoLink.setS3Key(thumbRootFolder + photoId);
+		thumbPhotoLink.setS3BucketName(AwsS3CvDao.DEFAULT_S3_BUCKET);
+
+		return new Photo("", normalPhotoLink, thumbPhotoLink);
+	}
+
+	
+	
+	/**
+	 * @param photoContent
+	 * @return
+	 * @throws DabUploadFailedException
+	 */
+	public byte[] readPhotoContent(File photoContent) throws DabUploadFailedException {
+
+		InputStream photoContentStream = null;
+
 		try {
-			
+
 			photoContentStream = new BufferedInputStream(new FileInputStream(photoContent));
-			
+
 			if (photoContentStream.available() == 0 || photoContentStream.available() > config.getMaxUploadedPhotoSizeInBytes()) {
 				throw new DabUploadFailedException("Photo size is too big", failureReason.fileTooBig);
 			}
 
-			
 			byte[] receivedPhoto = new byte[photoContentStream.available()];
 			ByteStreams.readFully(photoContentStream, receivedPhoto);
 			return receivedPhoto;
-
-			
 
 		} catch (IOException e) {
 			throw new DabUploadFailedException("Could not upload photo" + failureReason.fileFormatIncorrectError, e);
@@ -64,11 +92,25 @@ public class PhotoUtils {
 				logger.log(Level.WARNING, "Could not close uploaded content stream", e);
 			}
 		}
-	
+
 	}
-	
-	
-	
+
+	/**
+	 * @param photoContent
+	 * @return
+	 */
+	public byte[] resizePhotoToThumbSize(byte[] photoContent) {
+		return resizePhotoToTargetSize(photoContent, THUMB_PHOTO_MAX_GREATEST_DIMENSION);
+	}
+
+	/**
+	 * @param photoContent
+	 * @return
+	 */
+	public byte[] resizePhotoToNormalSize(byte[] photoContent) {
+		return resizePhotoToTargetSize(photoContent, NORMAL_PHOTO_MAX_GREATEST_DIMENSION);
+	}
+
 	/**
 	 * @param photoContent
 	 * @return
@@ -80,7 +122,7 @@ public class PhotoUtils {
 		try {
 			in = new ByteArrayInputStream(photoContent);
 			BufferedImage image = ImageIO.read(in);
-			
+
 			if (image == null) {
 				throw new DabUploadFailedException("cannot read this image", failureReason.fileFormatIncorrectError);
 			}
@@ -91,7 +133,6 @@ public class PhotoUtils {
 				return photoContent;
 			} else {
 
-				
 				int newWidth = (int) (image.getWidth() * scaleCoef);
 				int newHeight = (int) (image.getHeight() * scaleCoef);
 
@@ -105,17 +146,17 @@ public class PhotoUtils {
 				g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 				g.drawImage(image, 0, 0, newWidth, newHeight, null);
 				g.dispose();
-				
+
 				baos = new ByteArrayOutputStream();
-				ImageIO.write( resizedImage, "jpg", baos );
-				
+				ImageIO.write(resizedImage, "jpg", baos);
+
 				return baos.toByteArray();
 
 			}
 
 		} catch (IOException e) {
 			throw new DabUploadFailedException("", failureReason.technicalError, e);
-			
+
 		} finally {
 
 			if (in != null) {
@@ -162,8 +203,6 @@ public class PhotoUtils {
 			return 1d;
 		}
 	}
-
-
 
 	public void setConfig(Config config) {
 		this.config = config;

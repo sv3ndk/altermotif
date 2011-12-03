@@ -16,15 +16,14 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
-import com.mongodb.WriteResult;
 import com.svend.dab.core.beans.profile.Contact;
 import com.svend.dab.core.beans.profile.PersonalData;
+import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.profile.PrivacySettings;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserReference;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Participation;
-import com.svend.dab.core.beans.projects.Project;
 
 @Service
 public class UserProfileRepoImpl implements IUserProfileDao {
@@ -67,8 +66,24 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 
 	@Override
 	public void updatePhotoGallery(UserProfile userProfile) {
+		
+		// TODO: we should only insert/remove one or a few photos here...
 		genericUpdateUser(userProfile.getUsername(), new Update().set("photos", userProfile.getPhotos()));
 	}
+	
+
+	@Override
+	public void addOnePhoto(String username, Photo photo) {
+		genericUpdateUser(username, new Update().addToSet("photos", photo));
+	}
+	
+	@Override
+	public void removeOnePhoto(String username, Photo removed) {
+		genericUpdateUser(username, new Update(). pull("photos", removed));
+	}
+
+
+	
 
 	@Override
 	public void updateCv(UserProfile userProfile) {
@@ -232,8 +247,24 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 		if (existingParticipation == null) {
 			genericUpdateUser(userProfile.getUsername(), new Update().addToSet("projects", part));
 		}		
-		
 	}
+	
+	@Override
+	public void updateProjectMainPhoto(String userName, String projectId, Photo mainPhoto) {
+		Query query = query(where("username").is(userName).and("projects.projectSummary.projectId").is(projectId));
+		
+		Update update;
+		if (mainPhoto == null) {
+			logger.log(Level.INFO, "removing photo of " + userName + " of project " + projectId);
+			update = new Update().unset("projects.$.projectSummary.mainPhoto");
+		} else {
+			logger.log(Level.INFO, "add photo of " + userName + " of project " + projectId + " with photo" + mainPhoto);
+			update = new Update().set("projects.$.projectSummary.mainPhoto", mainPhoto);
+		}
+		mongoTemplate.updateFirst(query, update, UserProfile.class);
+	}
+
+
 
 	
 	
@@ -261,6 +292,7 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 	public void save(UserProfile createdUserProfile) {
 		mongoTemplate.save(createdUserProfile);
 	}
+
 
 	
 

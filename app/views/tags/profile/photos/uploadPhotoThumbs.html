@@ -9,11 +9,7 @@
 
 					#{if !onePhoto.isPhotoEmpty}
 						<img src="${onePhoto.thumbAddress}" alt="${onePhoto.caption}"></img>
-						
-						<!-- hidden address of the real photo -->
-						<span style="display: none">
-							${onePhoto.normalPhotoAddress}
-						</span>
+						<span style="display: none">${onePhoto.normalPhotoAddress}</span>
 					#{/if}
 	
 					#{if onePhoto.isPhotoEmpty}

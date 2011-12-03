@@ -36,7 +36,6 @@ public class ProjectSummary {
 		} else {
 			return mainPhoto.getThumbAddress();
 		}
-		
 	}
 	
 	
@@ -44,6 +43,10 @@ public class ProjectSummary {
 		if (mainPhoto != null) {
 			mainPhoto.generatePresignedLinks(expirationdate, false, true);
 		}
+	}
+	
+	public boolean hasAThumbPhoto() {
+		return mainPhoto != null && getMainPhotoThumbLink() != null;
 	}
 	
 	
