@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.springframework.data.annotation.Id;
+
 import com.svend.dab.core.beans.aws.S3Link;
 
 /**
@@ -18,8 +20,9 @@ public class Photo implements Serializable {
 	/**
 	 * 
 	 */
+	
 	private static final long serialVersionUID = 1L;
-
+	
 	private String caption;
 
 	private S3Link normalPhotoLink;
@@ -158,6 +161,6 @@ public class Photo implements Serializable {
 	public void setThumbLink(S3Link thumbLink) {
 		this.thumbLink = thumbLink;
 	}
-	
+
 
 }

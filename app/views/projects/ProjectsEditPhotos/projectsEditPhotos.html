@@ -11,23 +11,21 @@
     <script src="@{'/public/javascripts/projects/projectsEditPhotos.js'}" type="text/javascript"
     	charset="${_response_encoding}"></script>
 
-    	
     <script type="text/javascript">
-			var okText = "&{'OkButton'}";
-			var cancelText = "&{'CancelButton'}";
-			var setCaptionText = "&{'profileMPClickToSetCaption'}";
+		var okText = "&{'OkButton'}";
+		var cancelText = "&{'CancelButton'}";
+		var setCaptionText = "&{'profileMPClickToSetCaption'}";
+		var mainPhotoIndex = "${editedProject.mainPhotoIndex}";
 
-		   	var updatePhotoCaptionAction 	= #{jsAction @projects.ProjectsEditPhotos.doUpdatePhotoCaption(':photoIndex', ':photoCaption') /};
-			
-			$(document).ready(function() {
-				init();
-			})
-		</script>
+	   	var updatePhotoCaptionAction 	= #{jsAction @projects.ProjectsEditPhotos.doUpdatePhotoCaption(':photoIndex', ':photoCaption') /};
+		
+		$(document).ready(function() {
+			init();
+		})
+	</script>
 #{/set}
 
-
-
-#{profile.photos.uploadPhotoThumbs photoPack:editedProject.photosPack20/}
+#{profile.photos.uploadPhotoThumbs photoPack:editedProject.photosPack20, mainPhotoIndex:editedProject.mainPhotoIndex + 1 /}
 
 #{profile.photos.uploadPhotoMPToolbox uploadPhotoLinkActive:uploadPhotoLinkActive, setAsMainPhotoText:"projectPhotosSetAsMainPhoto", photoEditType:"project" /}
 

@@ -243,6 +243,11 @@ home page
 	cursor: pointer;
 }
 
+.profileMPThumbContainer img.mainPhoto {
+	max-height: 100px;
+	max-width: 100px;
+}
+
 .profileMPThumbContainer img.yoohoo {
 	border: 2px solid;
 	padding: 2px;

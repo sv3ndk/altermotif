@@ -40,13 +40,14 @@ public class Project {
 	
 	public static final int MAX_NUMBER_OF_PHOTOS = 20;
 
-
 	private String id;
 
 	private ProjectData pdata = new ProjectData();
 
 	private List<Participant> participants;
-
+	
+	private int mainPhotoIndex;
+	
 	private List<Photo> photos;
 
 	private Set<String> links;
@@ -105,7 +106,7 @@ public class Project {
 	public Photo getMainPhoto() {
 
 		if (photos != null && !photos.isEmpty()) {
-			return photos.get(0);
+			return photos.get(mainPhotoIndex);
 		}
 
 		return new Photo();
@@ -353,6 +354,14 @@ public class Project {
 
 	public void setTags(Set<String> tags) {
 		this.tags = tags;
+	}
+
+	public int getMainPhotoIndex() {
+		return mainPhotoIndex;
+	}
+
+	public void setMainPhotoIndex(int mainPhotoIndex) {
+		this.mainPhotoIndex = mainPhotoIndex;
 	}
 
 

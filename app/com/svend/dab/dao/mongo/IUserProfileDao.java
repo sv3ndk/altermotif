@@ -25,11 +25,21 @@ public interface IUserProfileDao {
 
 	public void replacePersonalData(UserProfile updatedUser, PersonalData pData);
 	
+	
+	// ------------------------------------------
+	// photos
+	
 	public void updatePhotoGallery(UserProfile userProfile);
 	
 	public void addOnePhoto(String username, Photo photo);
 	
 	public void removeOnePhoto(String username, Photo photo);
+	
+	public void removeOnePhotoAndResetMainPhotoIndex(String username, Photo removed);
+	
+	public void removeOnePhotoAndDecrementMainPhotoIndex(String username, Photo removed);
+
+	public void movePhotoToFirstPosition(String username, int photoIndex);
 	
 	public void updateCv(UserProfile editedUserProfile);
 	
@@ -100,6 +110,8 @@ public interface IUserProfileDao {
 	public UserProfile findOne(String userId);
 
 	public void save(UserProfile createdUserProfile);
+
+
 
 
 

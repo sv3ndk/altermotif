@@ -35,6 +35,8 @@ public class UserProfile implements Serializable {
 
 	private PrivacySettings privacySettings;
 
+	private int mainPhotoIndex;
+	
 	private List<Photo> photos;
 
 	private List<UserReference> writtenReferences = new LinkedList<UserReference>();
@@ -309,27 +311,10 @@ public class UserProfile implements Serializable {
 	public Photo getMainPhoto() {
 
 		if (photos != null && !photos.isEmpty()) {
-			return photos.get(0);
+			return photos.get(mainPhotoIndex);
 		}
 
 		return new Photo();
-	}
-
-	/**
-	 * @param photoIndex
-	 */
-	public void movePhotoToFirstPosition(int photoIndex) {
-		if (photoIndex >= 0 && photos != null && photoIndex < photos.size()) {
-
-			if (photoIndex != 0) {
-				Photo moved = photos.remove(photoIndex);
-				photos.add(0, moved);
-			}
-
-		} else {
-			logger.log(Level.WARNING, "Not moving photo: index is out of bound of we have null photo list. index was: " + photoIndex);
-		}
-
 	}
 
 	// ------------------------------------------------------------
@@ -1007,6 +992,14 @@ public class UserProfile implements Serializable {
 
 	public void setProjects(List<Participation> project) {
 		this.projects = project;
+	}
+
+	public int getMainPhotoIndex() {
+		return mainPhotoIndex;
+	}
+
+	public void setMainPhotoIndex(int mainPhotoIndex) {
+		this.mainPhotoIndex = mainPhotoIndex;
 	}
 
 

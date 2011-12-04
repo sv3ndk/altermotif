@@ -41,4 +41,5 @@ public interface IProfilePhotoService {
 
 	public abstract void updatePhotoCaption(UserProfile profile, int photoIndex, String profilePhotoCaption);
 
+
 }

@@ -42,16 +42,19 @@
 	<p class="pageTitle">${visitedProject?.pdata?.name}</p>
 
 
-	<div id="projectPhotoContainer">#{photoGallery
-		mainPhoto:visitedProject.mainPhoto , galleryType:'project',
-		photos:visitedProject.photos,
-		isPhotoGalleryVisible:projectVisibility.isPhotoGalleryVisible(),
-		isProjectEditLinkVisible:projectVisibility.isEditPhotoGalleryLinkVisible(),
-		visitedProjectId:visitedProject.id
-		 /}</div>
+	<div id="projectPhotoContainer">
+		#{photoGallery
+			mainPhoto:visitedProject.mainPhoto , 
+			galleryType:'project',
+			photos:visitedProject.photos,
+			isPhotoGalleryVisible:projectVisibility.isPhotoGalleryVisible(),
+			isProjectEditLinkVisible:projectVisibility.isEditPhotoGalleryLinkVisible(),
+			visitedProjectId:visitedProject.id
+		 /}
+	</div>
 
-	#{projects.viewProjectBasicDetails visitedProject:visitedProject/} #{if
-	projectVisibility.isToolBoxVisible() }
+	#{projects.viewProjectBasicDetails visitedProject:visitedProject/} 
+	#{if projectVisibility.isToolBoxVisible() }
 	<div id="projectToolBox">
 		<ul>
 			<li>#{if projectVisibility.isEditProjectLinkVisisble() } <a
@@ -82,7 +85,9 @@
 
 			<div class="toggleContainer">#{list
 				items:visitedProject.participants, as:'participant'}
-				#{projects.participant participant:participant /} #{/list}</div>
+				#{projects.participant participant:participant /} 
+				#{/list}
+			</div>
 		</div>
 
 

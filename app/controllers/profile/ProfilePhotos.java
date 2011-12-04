@@ -103,7 +103,17 @@ public class ProfilePhotos extends DabLoggedController {
 	}
 	
 	public static void doSetAsMainPhoto(int photoIndex) {
-		// TODO
+		UserProfile userProfile = BeanProvider.getUserProfileService().loadUserProfile(getSessionWrapper().getLoggedInUserProfileId(), true);
+		
+		if (userProfile == null) {
+			logger.log(Level.WARNING, "Could not set photo as main photo: no user found for  " + getSessionWrapper().getLoggedInUserProfileId() + "This is very weird! => redirecting to home page");
+			controllers.Application.index();
+		}
+		
+		BeanProvider.getProfilePhotoService().movePhotoToFirstPosition(userProfile, photoIndex);
+		
+		profilePhotos();
+
 		
 	}
 

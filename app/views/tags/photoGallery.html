@@ -12,10 +12,11 @@
 
 	<p class="centerParagraph ">
 		#{if _isPhotoGalleryVisible}
-			<a class="dabLink" href="${_mainPhoto.normalPhotoAddress}" title="${_mainPhoto.caption}" rel="profilePhotos">&{'profileMorePhotos'}</a>
+			<a class="dabLink" href="${_photos[0].normalPhotoAddress}" title="${_photos[0].caption}" rel="profilePhotos">&{'profileMorePhotos'}</a>
+			
 			#{list items:_photos, as:'onePhoto'}
 				#{if !onePhoto_isFirst}
-				<a href="${onePhoto.normalPhotoAddress}" rel="profilePhotos" style="display: none" title="${onePhoto.caption}">photo${onePhoto_index}</a>
+					<a href="${onePhoto.normalPhotoAddress}" rel="profilePhotos" style="display: none" title="${onePhoto.caption}">photo${onePhoto_index}</a>
 				#{/if}
 			#{/list}
 		#{/if}

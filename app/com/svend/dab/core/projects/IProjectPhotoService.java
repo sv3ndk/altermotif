@@ -15,4 +15,8 @@ public interface IProjectPhotoService {
 
 	public abstract void removeProjectPhoto(Project project, int deletedPhotoIdx);
 
+	public abstract void replacePhotoCaption(Project project, int photoIndex, String photoCaption);
+
+	public abstract void putPhotoInFirstPositio(Project project, int photoIndex);
+
 }

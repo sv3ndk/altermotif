@@ -54,7 +54,13 @@ function initClickOnTHumbmail() {
 
 		// if this thumbnail is the first photo: this is already the profile photo => disactivate the "set photo as profile photo" link, otherwise
 		// activate it
-		if ($(this).attr("src") == $("#profileMPThumbContainer img:first").attr("src")) {
+		
+		//mainPhotoIndex;
+		
+		var clickedIndex = $("#profileMPThumbContainer img").index($(this));
+		
+//		if ($(this).attr("src") == $("#profileMPThumbContainer img:first").attr("src")) {
+		if (clickedIndex == mainPhotoIndex) {
 			$("#setAsMainPhotoImage").removeClass("iconLink").addClass("iconLinkInactive");
 			$("#setAsMainPhotoLink").removeClass("dabLink").addClass("dabLinkDisabled");
 		} else {

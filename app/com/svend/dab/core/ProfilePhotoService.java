@@ -23,6 +23,7 @@ import com.svend.dab.core.dao.IPhotoBinaryDao;
 import com.svend.dab.dao.mongo.IUserProfileDao;
 import com.svend.dab.eda.EventEmitter;
 import com.svend.dab.eda.events.profile.UserSummaryUpdated;
+import com.svend.dab.eda.events.projects.ProjectMainPhotoUpdated;
 import com.svend.dab.eda.events.s3.BinaryNoLongerRequiredEvent;
 
 /**
@@ -111,11 +112,14 @@ public class ProfilePhotoService implements IProfilePhotoService {
 				logger.log(Level.WARNING, "It seems the profile refused to remove photo with index == " + deletedPhotoIdx + " => not propagating any event");
 			}
 
-			userProfileRepo.removeOnePhoto(profile.getUsername(), removed);
-
-			if (deletedPhotoIdx == 0) {
-				UserProfile updatedProfile = userProfileRepo.findOne(profile.getUsername());
-				emitter.emit(new UserSummaryUpdated(new UserSummary(updatedProfile)));
+			if (profile.getMainPhotoIndex() < deletedPhotoIdx) {
+				userProfileRepo.removeOnePhoto(profile.getUsername(), removed);
+			} else if (profile.getMainPhotoIndex() == deletedPhotoIdx) {
+				userProfileRepo.removeOnePhotoAndResetMainPhotoIndex(profile.getUsername(), removed);
+				profile.setMainPhotoIndex(0);
+				emitter.emit(new UserSummaryUpdated(new UserSummary(profile)));
+			} else {
+				userProfileRepo.removeOnePhotoAndDecrementMainPhotoIndex(profile.getUsername(), removed);
 			}
 
 			// actual removal of the file from s3 is done asynchronously, in order to improve gui response time
@@ -135,8 +139,12 @@ public class ProfilePhotoService implements IProfilePhotoService {
 	@Override
 	public void movePhotoToFirstPosition(UserProfile userProfile, int photoIndex) {
 		if (userProfile != null && userProfile.getPhotos() != null && photoIndex >= 0 && photoIndex < userProfile.getPhotos().size()) {
-			userProfile.movePhotoToFirstPosition(photoIndex);
-			userProfileService.updatePhotoGallery(userProfile, true);
+
+			userProfileRepo.movePhotoToFirstPosition(userProfile.getUsername(), photoIndex);
+
+			userProfile.setMainPhotoIndex(photoIndex);
+			emitter.emit(new UserSummaryUpdated(new UserSummary(userProfile)));
+
 		} else {
 			logger.log(Level.WARNING, "Not setting photo as profile photo: invalid index or user profile null or user profile with null photo set. Index=" + photoIndex);
 		}
@@ -164,7 +172,6 @@ public class ProfilePhotoService implements IProfilePhotoService {
 			logger.log(Level.WARNING, "Not updating photo caption: invalid index or user profile null or user profile with null photo set. Index=" + photoIndex);
 		}
 	}
-
 
 	// -------------------------------------
 	// -------------------------------------

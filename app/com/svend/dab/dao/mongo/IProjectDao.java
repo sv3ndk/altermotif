@@ -17,9 +17,16 @@ public interface IProjectDao {
 
 	void updateProjectPDataLinksAndTags(String id, Project project);
 
-//	void updatePhotoGallery(Project updatedProject);
-
 	void addOnePhoto(String id, Photo newPhoto);
 
 	void removeOnePhoto(String id, Photo removed);
+
+	void removeOnePhotoAndResetMainPhotoIndex(String id, Photo removed);
+	
+	void removeOnePhotoAndDecrementMainPhotoIndex(String id, Photo removed);
+	
+	void updatePhotoCaption(String id, String s3PhotoKey, String photoCaption);
+
+	void movePhotoToFirstPosition(String id, int mainPhotoIndex);
+
 }

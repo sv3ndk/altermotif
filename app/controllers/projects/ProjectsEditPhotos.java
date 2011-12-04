@@ -1,6 +1,3 @@
-/**
- * 
- */
 package controllers.projects;
 
 import static controllers.errors.UploadError.SESSION_ATTR_ERROR_MESSAGE_KEY;
@@ -97,19 +94,22 @@ public class ProjectsEditPhotos extends DabLoggedController {
 		
 	}
 	
+	/**
+	 * @param deletedPhotoIdx
+	 */
 	public static void doDeletePhoto(int deletedPhotoIdx) {
 
 		UserProfile userProfile = BeanProvider.getUserProfileService().loadUserProfile(getSessionWrapper().getLoggedInUserProfileId(), true);
-
 		if (userProfile == null) {
 			logger.log(Level.WARNING, "Could delete photo: no user found for  " + getSessionWrapper().getLoggedInUserProfileId() + "This is very weird! => redirecting to home page");
 			controllers.Application.index();
 		}
+		// TODO: security check for this user here
 		
 		Project project = BeanProvider.getProjectService().loadProject(flash.get(FLASH_EDITED_PROJECT_ID), false);
 		
 		if (project == null) {
-			logger.log(Level.WARNING, "Could delete photo: no project  found for  " + flash.get(FLASH_EDITED_PROJECT_ID) + "This is very weird! => redirecting to home page");
+			logger.log(Level.WARNING, "Could delete photo: no project  found for  project" + flash.get(FLASH_EDITED_PROJECT_ID) + "This is very weird! => redirecting to home page");
 			controllers.Application.index();
 		}
 
@@ -118,12 +118,54 @@ public class ProjectsEditPhotos extends DabLoggedController {
 		
 	}
 
+	
+	
+	/**
+	 * @param photoIndex
+	 * @param photoCaption
+	 */
 	public static void doUpdatePhotoCaption(int photoIndex, String photoCaption) {
 
+		UserProfile userProfile = BeanProvider.getUserProfileService().loadUserProfile(getSessionWrapper().getLoggedInUserProfileId(), true);
+		if (userProfile == null) {
+			logger.log(Level.WARNING, "Could update caption for photo: no user found for  " + getSessionWrapper().getLoggedInUserProfileId() + "This is very weird! => redirecting to home page");
+			controllers.Application.index();
+		}
+		// TODO: security check for this user here
+		
+		Project project = BeanProvider.getProjectService().loadProject(flash.get(FLASH_EDITED_PROJECT_ID), false);
+		
+		if (project == null) {
+			logger.log(Level.WARNING, "Could update caption for: no project  found for  " + flash.get(FLASH_EDITED_PROJECT_ID) + "This is very weird! => redirecting to home page");
+			controllers.Application.index();
+		}
+		
+		BeanProvider.getProjectPhotoService().replacePhotoCaption(project, photoIndex, photoCaption);
+		flash.keep(FLASH_EDITED_PROJECT_ID);
+		
 	}
+	
+	
+	
 	
 	public static void doSetAsMainPhoto(int photoIndex) {
 		
+		UserProfile userProfile = BeanProvider.getUserProfileService().loadUserProfile(getSessionWrapper().getLoggedInUserProfileId(), true);
+		if (userProfile == null) {
+			logger.log(Level.WARNING, "Could set as main photo: no user found for  " + getSessionWrapper().getLoggedInUserProfileId() + "This is very weird! => redirecting to home page");
+			controllers.Application.index();
+		}
+		// TODO: security check for this user here
+		
+		Project project = BeanProvider.getProjectService().loadProject(flash.get(FLASH_EDITED_PROJECT_ID), false);
+		
+		if (project == null) {
+			logger.log(Level.WARNING, "Could set as main photo: no project  found for  " + flash.get(FLASH_EDITED_PROJECT_ID) + "This is very weird! => redirecting to home page");
+			controllers.Application.index();
+		}
+		
+		BeanProvider.getProjectPhotoService().putPhotoInFirstPositio(project, photoIndex);
+		projectsEditPhotos(flash.get(FLASH_EDITED_PROJECT_ID));
 	}
 
 }

@@ -83,6 +83,21 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 	}
 
 
+	@Override
+	public void movePhotoToFirstPosition(String username, int photoIndex) {
+		genericUpdateUser(username, new Update().set("mainPhotoIndex", photoIndex));
+	}
+
+	@Override
+	public void removeOnePhotoAndResetMainPhotoIndex(String username, Photo removed) {
+		genericUpdateUser(username, new Update(). pull("photos", removed).set("mainPhotoIndex", 0));
+	}
+
+	@Override
+	public void removeOnePhotoAndDecrementMainPhotoIndex(String username, Photo removed) {
+		genericUpdateUser(username, new Update(). pull("photos", removed).inc("mainPhotoIndex", -1));
+	}
+	
 	
 
 	@Override
@@ -292,6 +307,7 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 	public void save(UserProfile createdUserProfile) {
 		mongoTemplate.save(createdUserProfile);
 	}
+
 
 
 	

@@ -17,6 +17,7 @@
 			var okText = "&{'OkButton'}";
 			var cancelText = "&{'CancelButton'}";
 			var setCaptionText = "&{'profileMPClickToSetCaption'}";
+			var mainPhotoIndex = "${userProfile.mainPhotoIndex}";
 
 		   	var updatePhotoCaptionAction 	= #{jsAction @profile.ProfilePhotos.doUpdatePhotoCaption(':profilePhotoIndex', ':profilePhotoCaption') /};
 			
@@ -27,9 +28,8 @@
 #{/set}
 
 
-#{profile.photos.uploadPhotoThumbs photoPack:userProfile.photosPack20/}
+#{profile.photos.uploadPhotoThumbs photoPack:userProfile.photosPack20, mainPhotoIndex:userProfile.mainPhotoIndex + 1/}
 
 #{profile.photos.uploadPhotoMPToolbox uploadPhotoLinkActive:uploadPhotoLinkActive, setAsMainPhotoText:'profileMSetProfilePhoto', photoEditType:"profile"/}
 
 #{profile.photos.profileMPCentralPhotoContainer /}
-

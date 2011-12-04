@@ -99,8 +99,15 @@ public class ProjectPhotoService implements IProjectPhotoService{
 			if (removed == null) {
 				logger.log(Level.WARNING, "It seems the profile refused to remove photo with index == " + deletedPhotoIdx + " => not propagating any event");
 			}
+			
+			if (project.getMainPhotoIndex() < deletedPhotoIdx) {
+				projectDao.removeOnePhoto(project.getId(), removed);
+			} else if (project.getMainPhotoIndex() == deletedPhotoIdx) {
+				projectDao.removeOnePhotoAndResetMainPhotoIndex(project.getId(), removed);
+			} else {
+				projectDao.removeOnePhotoAndDecrementMainPhotoIndex(project.getId(), removed);
+			}
 
-			projectDao.removeOnePhoto(project.getId(), removed);
 
 			if (deletedPhotoIdx == 0) {
 				// the new main photo will now be the second one (potentially null, which means we should remove the main photo from all project summary
@@ -115,6 +122,35 @@ public class ProjectPhotoService implements IProjectPhotoService{
 			}
 		}
 		
+	}
+
+
+	@Override
+	public void replacePhotoCaption(Project project, int photoIndex, String photoCaption) {
+		if (project == null) {
+			logger.log(Level.WARNING, "Cannot update photo caption of a null project: not doing anything");
+		} else {
+			Photo editedPhoto = project.getPhoto(photoIndex);
+			
+			if (editedPhoto == null) {
+				logger.log(Level.WARNING, "Cannot update photo caption: no photo found with index " + photoIndex);
+			} else {
+				projectDao.updatePhotoCaption(project.getId(), editedPhoto.getNormalPhotoLink().getS3Key(), photoCaption);
+			}
+			
+		}
+	}
+
+
+	
+	@Override
+	public void putPhotoInFirstPositio(Project project, int photoIndex) {
+		if (project == null) {
+			logger.log(Level.WARNING, "Cannot move photo in first position for a null project: not doing anything");
+		} else {
+			projectDao.movePhotoToFirstPosition(project.getId(), photoIndex);
+			emitter.emit(new ProjectMainPhotoUpdated(project.getPhoto(photoIndex), project.getId()));
+		}
 	}
 
 

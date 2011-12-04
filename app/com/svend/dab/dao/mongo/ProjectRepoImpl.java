@@ -73,6 +73,29 @@ public class ProjectRepoImpl implements IProjectDao {
 		genericUpdateProject(id, new Update(). pull("photos", removed));
 	}
 	
+	@Override
+	public void removeOnePhotoAndResetMainPhotoIndex(String id, Photo removed) {
+		genericUpdateProject(id, new Update(). pull("photos", removed).set("mainPhotoIndex", 0));
+	}
+	
+	@Override
+	public void removeOnePhotoAndDecrementMainPhotoIndex(String id, Photo removed) {
+		genericUpdateProject(id, new Update(). pull("photos", removed).inc("mainPhotoIndex", -1));
+	}
+	
+	
+	@Override
+	public void updatePhotoCaption(String projectId, String s3PhotoKey, String photoCaption) {
+		Query query = query(where("_id").is(projectId).and("photos.normalPhotoLink.s3Key").is(s3PhotoKey));
+		Update update = new Update().set("photos.$.caption", photoCaption);
+		mongoTemplate.updateFirst(query, update, Project.class);
+	}
+
+	@Override
+	public void movePhotoToFirstPosition(String projectId, int mainPhotoIndex) {
+		genericUpdateProject(projectId, new Update().set("mainPhotoIndex", mainPhotoIndex));
+	}
+	
 	// --------------------------------
 	//
 	
@@ -81,5 +104,8 @@ public class ProjectRepoImpl implements IProjectDao {
 		Query query = query(where("_id").is(projectId));
 		mongoTemplate.updateFirst(query, update, Project.class);
 	}
+
+
+
 	
 }
