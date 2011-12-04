@@ -24,6 +24,8 @@ public class ProjectVisibility {
 		this.visitingUserId = visitingUserId;
 	}
 
+	
+	
 
 	
 	
@@ -58,6 +60,31 @@ public class ProjectVisibility {
 	
 	public boolean isEditPhotoGalleryLinkVisible() {
 		return pep.isAllowedToEditPhotoGallery(visitingUserId);
+	}
+	
+	//////////////////////////////////
+	// applications
+	
+	public boolean isVisibleApplicationBox() {
+		return pep.isAllowedToSeeApplications(visitingUserId);
+	}
+	
+	
+	public boolean isApplyLinkVisible() {
+		if (visitingUserId == null) {
+			// must be logged in to apply
+			return false;
+		}
+		return ! project.isUserAlreadyMember(visitingUserId) && ! project.isUserAlreadyApplying(visitingUserId);
+	}
+	
+	public boolean isCancelApplicationLinkVisible() {
+		if (visitingUserId == null) {
+			// must be logged in to apply
+			return false;
+		}
+		
+		return project.isUserAlreadyApplying(visitingUserId);
 	}
 	
 

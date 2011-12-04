@@ -27,11 +27,7 @@
 
 #{get 'moreStyles' /}
 
-	
-
-<link rel="shortcut icon" type="image/png"
-	href="@{'/public/images/favicon.png'}">
-
+<link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
 
 <!-- getting the jquery online => should be faster to load for visitor who already have jquery in cache -->
 <script type="text/javascript"
@@ -46,6 +42,10 @@
 	charset="${_response_encoding}"></script>
 
  <script  type="text/javascript">
+ 
+	 var okLabelValue = "&{'OkButton'}";
+	 var cancelLabelValue = "&{'CancelButton'}";
+ 
 	$(document).ready(function() {
 		var updateLanguageAction = #{jsAction @Application.udpateLanguage(':selection') /};
 		initMasterLayout(updateLanguageAction);

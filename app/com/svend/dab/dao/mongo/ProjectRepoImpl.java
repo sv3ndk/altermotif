@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.profile.UserSummary;
+import com.svend.dab.core.beans.projects.Participant;
 import com.svend.dab.core.beans.projects.Project;
 
 /**
@@ -96,16 +97,22 @@ public class ProjectRepoImpl implements IProjectDao {
 		genericUpdateProject(projectId, new Update().set("mainPhotoIndex", mainPhotoIndex));
 	}
 	
+	@Override
+	public void addOneParticipant(String projectId, Participant createdParticipant) {
+		genericUpdateProject(projectId, new Update().addToSet("participants", createdParticipant));
+	}
+	
+	@Override
+	public void updateParticipantList(String projectId, List<Participant> newPList) {
+		genericUpdateProject(projectId, new Update().set("participants", newPList));
+	}
+	
 	// --------------------------------
 	//
-	
 
 	protected void genericUpdateProject(String projectId, Update update) {
 		Query query = query(where("_id").is(projectId));
 		mongoTemplate.updateFirst(query, update, Project.class);
 	}
-
-
-
 	
 }

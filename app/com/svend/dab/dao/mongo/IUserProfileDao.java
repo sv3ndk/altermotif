@@ -100,6 +100,8 @@ public interface IUserProfileDao {
 	
 	public void addProjectParticipation(UserProfile userProfile, Participation participation);
 
+	public void removeParticipation(String username, Participation existingParticipation);
+
 	public void updateProjectMainPhoto(String userName, String projectId, Photo mainPhoto);
 
 
@@ -110,6 +112,7 @@ public interface IUserProfileDao {
 	public UserProfile findOne(String userId);
 
 	public void save(UserProfile createdUserProfile);
+
 
 
 

@@ -22,9 +22,9 @@
 
 	<div class="homeToggleBlock">
 		
-		<span class="toggleLink dabLink">&{'yourProjects'} (${visitedUserProfile.numberOfProjects}) </span>
+		<span class="toggleLink dabLink">&{'yourProjects'} (${visitedUserProfile.numberOfConfirmedProjects})...</span>
 		<div class="toggleContainer" style="display: none">
-			 #{list items:visitedUserProfile.projects, as:'oneProject'}
+			 #{list items:visitedUserProfile.confirmedProjects, as:'oneProject'}
 					#{projectSummary participation: oneProject /}
 			 #{/list}
 		</div>
@@ -95,23 +95,13 @@
 			
 			
 			<div class="homeToggleBlock">
-				<span class="toggleLink dabLink">&{'yourApplications'} ... </span>
-					<div id="applicationsDetails" class="toggleContainer">Aliquam
-						ligula magna, venenatis eu sodales eget, lobortis eget nisi. Duis
-						adipiscing scelerisque tristique. Nullam nec justo urna, nec
-						rutrum eros. Nulla in arcu nisi, eget sodales elit. Praesent
-						tincidunt quam eu metus viverra congue. Cras sit amet est dui.
-						Quisque suscipit dapibus quam in tempor. Duis sodales nulla sed
-						nisl venenatis vulputate. Nunc est justo, ultricies a iaculis id,
-						bibendum quis velit. Nam a sollicitudin urna. Duis aliquam tortor
-						vel odio ullamcorper eget tempus justo pulvinar. Curabitur eu
-						augue ac diam scelerisque tincidunt non dictum leo. Cras tincidunt
-						nisi ac justo commodo eleifend. Sed imperdiet condimentum ligula,
-						vitae eleifend massa vulputate vitae. Fusce quis ligula eget
-						mauris ultrices vestibulum. Fusce at nulla diam, sed molestie
-						libero. Praesent luctus sapien id mi imperdiet at egestas nunc
-						consectetur.</div>
+				<span class="toggleLink dabLink">&{'yourApplications'} (${visitedUserProfile.numberOfApplications})...</span>
+				<div id="applicationsDetails" class="toggleContainer">
+					 #{list items:visitedUserProfile.applications, as:'oneProject'}
+					 	#{projectSummary participation: oneProject /}
+					 #{/list}
 				</div>
+			</div>
 		
 		
 	</div>

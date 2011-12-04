@@ -37,11 +37,13 @@ public class Participant {
 	
 	private boolean accepted = true;
 	
+	private String applicationText;
 	
 
-	public Participant(ROLE role, UserProfile user) {
+	public Participant(ROLE role, UserProfile user, String applicationText) {
 		super();
 		this.role = role;
+		this.applicationText = applicationText;
 		this.user = new UserSummary(user);
 	}
 	
@@ -85,6 +87,20 @@ public class Participant {
 
 	public void setAccepted(boolean accepted) {
 		this.accepted = accepted;
+	}
+
+
+
+
+	public String getApplicationText() {
+		return applicationText;
+	}
+
+
+
+
+	public void setApplicationText(String applicationText) {
+		this.applicationText = applicationText;
 	}
 
 	

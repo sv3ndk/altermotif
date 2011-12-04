@@ -12,16 +12,11 @@
     	charset="${_response_encoding}"></script>
     	
     <script type="text/javascript">
-    
-		var okLabelValue = "&{'OkButton'}";
-		var cancelLabelValue = "&{'CancelButton'}";
-
 	   	var loadOnePageAction 		= #{jsAction @messages.MessagesInbox.loadInboxMessages(':pageNumber') /};
 	   	var markAsReadAction 		= #{jsAction @messages.MessagesInbox.doMarkMessageAsRead(':messageId') /};
 	   	var deleteMessageAction 	= #{jsAction @messages.MessagesInbox.doDeleteMessage(':messageIds') /};
 	   	
 	   	var currentPage = ${pageNumber};
-
 		
 		$(document).ready(function() {
 			init();

@@ -41,8 +41,6 @@
 	    var acceptContactRequestAction	= #{jsAction @profile.ProfileView.acceptContactRequest(':otherUser') /};
 	    var removeContactAction			= #{jsAction @profile.ProfileView.removeContact(':otherUser') /};
 
-	    var okLabelValue = "&{'OkButton'}";
-	    var cancelLabelValue = "&{'CancelButton'}";
 	    var isProfileActive = "${visitedUserProfile.privacySettings.profileActive}"; 
 	    
 		$(document).ready(function() {
@@ -129,9 +127,9 @@
 		</div>
 
 		<div class="profileViewTogglableSection">
-			<span class="toggleLink dabLink">&{'profileProjects'} (${visitedUserProfile.numberOfProjects}) </span>
+			<span class="toggleLink dabLink">&{'profileProjects'} (${visitedUserProfile.numberOfConfirmedProjects})</span>
 			<div class="toggleContainer" style="display: none">
-				 #{list items:visitedUserProfile.projects, as:'oneProject'}
+				 #{list items:visitedUserProfile.confirmedProjects, as:'oneProject'}
 					#{projectSummary participation: oneProject /}
 				 #{/list}
 			</div>
@@ -168,23 +166,22 @@
 				#{if profileVisibility.visitingHisOwnProfile}
 					<div id="pendingReceivedContactRequestsContainer">
 						 #{list items:visitedUserProfile.pendingReceivedContactRequests, as:'oneContact'}
-								#{profile.receivedContactRequest contact: oneContact/}
+							#{profile.receivedContactRequest contact: oneContact/}
 						 #{/list}
 					</div>
 	
 					<div id="pendingSentContactRequestsContainer">
 						 #{list items:visitedUserProfile.pendingSentContactRequests, as:'oneContact'}
-								#{profile.sentContactRequest contact: oneContact/}
+							#{profile.sentContactRequest contact: oneContact/}
 						 #{/list}
 					</div>
 				#{/if}
 
-
-					<div id="confirmedContactContainer">
-						 #{list items:visitedUserProfile.myActiveContacts, as:'oneContact'}
-								#{profile.contact contact: oneContact, profileVisibility:profileVisibility/}
-						 #{/list}
-					</div>
+				<div id="confirmedContactContainer">
+					 #{list items:visitedUserProfile.myActiveContacts, as:'oneContact'}
+						#{profile.contact contact: oneContact, profileVisibility:profileVisibility/}
+					 #{/list}
+				</div>
 			
 			</div>
 		</div>
@@ -217,26 +214,22 @@
 	<textarea id="leaveAReferenceTextArea" cols="60" rows="6" ></textarea>
 </div>
 
-<div id="confirmRemoveWrittenReferenceDialog"
-	title="&{'confirmationPopupTitle'}">
+<div id="confirmRemoveWrittenReferenceDialog" title="&{'confirmationPopupTitle'}">
 	&{'profileConfirmRemoveWrittenReference'}
 </div>
 
 <!-- contacts popups -->
 
 
-<div id="addToContactPopup"
-	title="&{'profileAddToContactsP1'} ${visitedUserProfile.username} &{'profileAddToContactsP1'}">
+<div id="addToContactPopup" title="&{'profileAddToContactsP1'} ${visitedUserProfile.username} &{'profileAddToContactsP1'}">
 	<textarea cols="45" rows="7"></textarea>
 </div>
 
-<div id="contactInvitationPopup"
-	title="&{'profileContactInvitationTextPopupTitle'}">
+<div id="contactInvitationPopup" title="&{'profileContactInvitationTextPopupTitle'}">
 	<textarea readonly="readonly" rows="7" cols="45" ></textarea>
 </div>
 
-<div id="addedToContactConfirmationPopup"
-	title="&{'confirmationPopupTitle'}">
+<div id="addedToContactConfirmationPopup" title="&{'confirmationPopupTitle'}">	
 	&{'profileAddToContactConfirmed'}
 </div>
 

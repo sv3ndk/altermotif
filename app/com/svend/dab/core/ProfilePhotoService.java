@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.svend.dab.core;
 
 import static com.svend.dab.core.PhotoUtils.JPEG_MIME_TYPE;
@@ -18,12 +15,10 @@ import com.svend.dab.core.beans.DabUploadFailedException.failureReason;
 import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserSummary;
-import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.dao.IPhotoBinaryDao;
 import com.svend.dab.dao.mongo.IUserProfileDao;
 import com.svend.dab.eda.EventEmitter;
 import com.svend.dab.eda.events.profile.UserSummaryUpdated;
-import com.svend.dab.eda.events.projects.ProjectMainPhotoUpdated;
 import com.svend.dab.eda.events.s3.BinaryNoLongerRequiredEvent;
 
 /**
@@ -139,9 +134,7 @@ public class ProfilePhotoService implements IProfilePhotoService {
 	@Override
 	public void movePhotoToFirstPosition(UserProfile userProfile, int photoIndex) {
 		if (userProfile != null && userProfile.getPhotos() != null && photoIndex >= 0 && photoIndex < userProfile.getPhotos().size()) {
-
 			userProfileRepo.movePhotoToFirstPosition(userProfile.getUsername(), photoIndex);
-
 			userProfile.setMainPhotoIndex(photoIndex);
 			emitter.emit(new UserSummaryUpdated(new UserSummary(userProfile)));
 
@@ -172,8 +165,5 @@ public class ProfilePhotoService implements IProfilePhotoService {
 			logger.log(Level.WARNING, "Not updating photo caption: invalid index or user profile null or user profile with null photo set. Index=" + photoIndex);
 		}
 	}
-
-	// -------------------------------------
-	// -------------------------------------
 
 }

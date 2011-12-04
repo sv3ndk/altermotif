@@ -10,10 +10,13 @@ import java.util.logging.Logger;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 
+import com.google.common.base.Strings;
 import com.svend.dab.core.beans.PhotoPack;
 import com.svend.dab.core.beans.aws.S3Link;
 import com.svend.dab.core.beans.profile.PrivacySettings.VISIBILITY;
 import com.svend.dab.core.beans.projects.Participation;
+
+import controllers.Application;
 
 /**
  * @author Svend
@@ -36,7 +39,7 @@ public class UserProfile implements Serializable {
 	private PrivacySettings privacySettings;
 
 	private int mainPhotoIndex;
-	
+
 	private List<Photo> photos;
 
 	private List<UserReference> writtenReferences = new LinkedList<UserReference>();
@@ -64,6 +67,12 @@ public class UserProfile implements Serializable {
 	private List<Contact> contacts = new LinkedList<Contact>();
 
 	private List<Participation> projects = new LinkedList<Participation>();
+
+	@Transient
+	private List<Participation> cachedConfirmedProjects;
+
+	@Transient
+	private List<Participation> cachedApplication;
 
 	@Transient
 	private List<OwnerAwareContact> myActiveContacts;
@@ -165,16 +174,6 @@ public class UserProfile implements Serializable {
 		return pdata != null && pdata.isComplete();
 	}
 
-	public Long getNumberOfProjects() {
-
-		if (projects == null) {
-			return 0L;
-		} else {
-			return Long.valueOf(getProjects().size());
-		}
-
-	}
-
 	public List<Photo> getPhotosPack20() {
 		if (cachedPhotosPack20 == null) {
 			synchronized (this) {
@@ -194,7 +193,6 @@ public class UserProfile implements Serializable {
 		return photos == null || photos.size() == 0;
 	}
 
-
 	/**
 	 * @param photoIdx
 	 * @return
@@ -205,8 +203,6 @@ public class UserProfile implements Serializable {
 		}
 		return photos.get(photoIdx);
 	}
-
-	
 
 	// -----------------------------------------------------
 	// CV
@@ -992,6 +988,91 @@ public class UserProfile implements Serializable {
 
 	public void setProjects(List<Participation> project) {
 		this.projects = project;
+	}
+
+	public List<Participation> getConfirmedProjects() {
+		if (cachedConfirmedProjects == null) {
+			synchronized (this) {
+				if (cachedConfirmedProjects == null) {
+					cachedConfirmedProjects = new LinkedList<Participation>();
+					for (Participation participation : projects) {
+						if (participation.isAccepted()) {
+							cachedConfirmedProjects.add(participation);
+						}
+					}
+				}
+			}
+		}
+		return cachedConfirmedProjects;
+	}
+
+	public List<Participation> getApplications() {
+		if (cachedApplication == null) {
+			synchronized (this) {
+				if (cachedApplication == null) {
+					cachedApplication = new LinkedList<Participation>();
+					for (Participation participation : projects) {
+						if (!participation.isAccepted()) {
+							cachedApplication.add(participation);
+						}
+					}
+				}
+			}
+		}
+		return cachedApplication;
+	}
+
+	public boolean isMemberOfOrHasAppliedTo(String projectsId) {
+
+		if (Strings.isNullOrEmpty(projectsId)) {
+			return false;
+		}
+
+		if (projects == null) {
+			return false;
+		}
+
+		for (Participation participation : projects) {
+			if (projectsId.equals(participation.getProjectSummary().getProjectId())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public Long getNumberOfConfirmedProjects() {
+
+		if (getConfirmedProjects() == null) {
+			return 0L;
+		} else {
+			return Long.valueOf(getConfirmedProjects().size());
+		}
+
+	}
+
+	public Long getNumberOfApplications() {
+		
+		if (getApplications() == null) {
+			return 0L;
+		} else {
+			return Long.valueOf(getApplications().size());
+		}
+		
+	}
+
+	public Participation getApplication(String projectId) {
+		
+		if (Strings.isNullOrEmpty(projectId)) {
+			return null;
+		}
+		
+		for (Participation participation: getApplications()) {
+			if (projectId.equals(participation.getProjectSummary().getProjectId())) {
+				return participation;
+			}
+		}
+		return null;
+		
 	}
 
 	public int getMainPhotoIndex() {

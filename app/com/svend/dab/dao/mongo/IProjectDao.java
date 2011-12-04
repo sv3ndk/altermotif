@@ -1,7 +1,10 @@
 package com.svend.dab.dao.mongo;
 
+import java.util.List;
+
 import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.profile.UserSummary;
+import com.svend.dab.core.beans.projects.Participant;
 import com.svend.dab.core.beans.projects.Project;
 
 /**
@@ -16,6 +19,8 @@ public interface IProjectDao {
 	void save(Project project);
 
 	void updateProjectPDataLinksAndTags(String id, Project project);
+	
+	// project photos
 
 	void addOnePhoto(String id, Photo newPhoto);
 
@@ -28,5 +33,11 @@ public interface IProjectDao {
 	void updatePhotoCaption(String id, String s3PhotoKey, String photoCaption);
 
 	void movePhotoToFirstPosition(String id, int mainPhotoIndex);
+	
+	 // project participants
+
+	void addOneParticipant(String projectId, Participant createdParticipant);
+
+	void updateParticipantList(String projectId, List<Participant> newPList);
 
 }

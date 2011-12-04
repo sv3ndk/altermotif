@@ -1,6 +1,7 @@
 #{extends 'masterTemplate.html' /} 
 
 #{set 'moreStyles'}
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/profile.css'}" />
 	<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/projects/projectsView.css'}" />
     <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/nondab/colorbox/colorbox.css'}" />
 #{/set} 
@@ -22,8 +23,15 @@
 		type="text/javascript" charset="${_response_encoding}"></script>
 	
 	<script type="text/javascript">
-		var okLabelValue = "&{'OkButton'}";
-		var cancelLabelValue = "&{'CancelButton'}";
+	
+	    var applytoProject = #{jsAction @projects.ProjectsView.doApplyToProject(':projectId', ':applicationText') /};
+	    var cancelApplicationToProject = #{jsAction @projects.ProjectsView.doCancelApplyToProject(':projectId') /};
+	    var rejectApplicationToProject = #{jsAction @projects.ProjectsView.doRejectApplicationToProject(':projectId', ':applicant') /};
+	    
+	    var isApplyLinkVisible = ${projectVisibility.isApplyLinkVisible()};
+	    var isCancelApplicationLinkVisible = ${projectVisibility.isCancelApplicationLinkVisible()};
+	    
+	    var projectId = "${visitedProject.id}"; 
 	
 		$(document).ready(function() {
 			init();
@@ -33,9 +41,7 @@
 
 
 <!-- some hidden data, for javascript -->
-<span id="allPossibleLanguageNames" style="display: none">${allPossibleLanguageNames}</span>
-
-
+<span id="allPossibleLanguageNames" class="hidden">${allPossibleLanguageNames}</span>
 
 <div id="projectViewContainer" class="pageContainer">
 
@@ -53,25 +59,25 @@
 		 /}
 	</div>
 
-	#{projects.viewProjectBasicDetails visitedProject:visitedProject/} 
+	#{projects.viewProjectBasicDetails visitedProject:visitedProject, projectVisibility:projectVisibility/} 
 	#{if projectVisibility.isToolBoxVisible() }
-	<div id="projectToolBox">
-		<ul>
-			<li>#{if projectVisibility.isEditProjectLinkVisisble() } <a
-				href="@{projects.ProjectsEdit.projectsEdit( visitedProject.id)}"
-				class="dabLink">&{'projectViewEditProjet'}</a> #{/if}
-			</li>
-
-			<li>#{if projectVisibility.isCancelProjectLinkVisisble() } <span
-				class="dabLinkDisabled">&{'projectViewCancelProjet'}</span> #{/if}
-			</li>
-
-			<li>#{if projectVisibility.isEndProjectLinkVisisble() } <span
-				class="dabLinkDisabled">&{'projectViewEndProjet'}</span> #{/if}
-			</li>
-		</ul>
-
-	</div>
+		<div id="projectToolBox">
+			<ul>
+				<li>#{if projectVisibility.isEditProjectLinkVisisble() } <a
+					href="@{projects.ProjectsEdit.projectsEdit( visitedProject.id)}"
+					class="dabLink">&{'projectViewEditProjet'}</a> #{/if}
+				</li>
+	
+				<li>#{if projectVisibility.isCancelProjectLinkVisisble() } <span
+					class="dabLinkDisabled">&{'projectViewCancelProjet'}</span> #{/if}
+				</li>
+	
+				<li>#{if projectVisibility.isEndProjectLinkVisisble() } 
+					<span class="dabLinkDisabled">&{'projectViewEndProjet'}</span> 
+					#{/if}
+				</li>
+			</ul>
+		</div>
 	#{/if}
 
 
@@ -79,19 +85,46 @@
 		#{projects.viewProjectDescription visitedProject:visitedProject/}
 
 		<div id="projectParticipants">
-
-			<span class="toggleLink dabLink">&{'viewProjectParticipants'}
-				(${visitedProject.numberOfParticipants}) </span>
-
-			<div class="toggleContainer">#{list
-				items:visitedProject.participants, as:'participant'}
-				#{projects.participant participant:participant /} 
+			<span class="toggleLink dabLink">&{'viewProjectParticipants'} (${visitedProject.numberOfConfirmedParticipants}) </span>
+			<div class="toggleContainer">
+				#{list items:visitedProject.confirmedParticipants, as:'participant'}
+					#{projects.participant participant:participant /} 
 				#{/list}
 			</div>
 		</div>
-
-
+		
+		#{if projectVisibility.isVisibleApplicationBox()}
+		<div id="projectApplications">
+			<span class="toggleLink dabLink">&{'viewProjectApplications'} (${visitedProject.numberOfApplications}) </span>
+			<div class="toggleContainer">
+				#{list items:visitedProject.unconfirmedParticipants, as:'application'}
+					#{projects.application application:application /} 
+				#{/list}
+			</div>
+		</div>
+		#{/if}
+		
+		
 	</div>
 
+</div>
 
+
+<div id="confirmApplyToProjectDialog" title="&{'confirmationPopupTitle'}">
+	&{'viewProjectConfirmApply'}
+	<br />
+	<br />
+	<textarea cols="45" rows="7"></textarea>
+</div>
+
+<div id="confirmCancelApplicationToProjectDialog" title="&{'confirmationPopupTitle'}">
+	&{'viewProjectConfirmCancelApplication'}
+</div>
+
+<div id="applicationMotivationPopup" title="&{'applicationMoticationTextPopupTitle'}">
+	<textarea readonly="readonly" rows="7" cols="45" ></textarea>
+</div>
+
+<div id="confirmRejectApplicationtDialog" title="&{'confirmationPopupTitle'}">
+	&{'viewProjectConfirmRejectApplication'}
 </div>

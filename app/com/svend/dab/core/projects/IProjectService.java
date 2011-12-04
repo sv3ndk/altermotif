@@ -15,5 +15,9 @@ public interface IProjectService {
 
 	public void updateProject(Project updated);
 
+	public void applyToProject(String loggedInUserProfileId, String applicationText, Project project);
+
+	public void cancelApplication(String loggedInUserProfileId, Project project);
+
 
 }

@@ -82,8 +82,6 @@ function showConfirmRemoveReferencePopup(deletedRefId, referenceToUser) {
 
 function initLeaveAReferenceForm() {
 	
-	$('#hiddenLeaveAReferenceForm\\:hiddenleaveAReferenceVisistedProfileId').val(visitedProfileId);
-	
 	$('#profileLeaveAReferenceLink').click(function() {
 		showLeaveAReferencePopup();
 	});
@@ -101,7 +99,8 @@ function initLeaveAReferenceForm() {
 			click : function(event) {
 				
 				$.post(postAReferenceAction(
-						{createdReferenceText: $('#leaveAReferenceTextArea').val(), vuser: visitedProfileId}), 
+						{createdReferenceText: $('#leaveAReferenceTextArea').val(), vuser: visitedProfileId}
+						), 
 						function(data) {
 							//
 						}

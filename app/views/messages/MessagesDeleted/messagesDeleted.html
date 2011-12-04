@@ -13,11 +13,7 @@
     	charset="${_response_encoding}"></script>
     	
     <script type="text/javascript">
-    
-		var okLabelValue = "&{'OkButton'}";
-		var cancelLabelValue = "&{'CancelButton'}";
 	   	var currentPage = 0;
-		
 	   	var loadOnePageAction 		= #{jsAction @messages.MessagesDeleted.loadMessages(':pageNumber') /};
     
 		$(document).ready(function() {

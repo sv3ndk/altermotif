@@ -39,11 +39,9 @@ public class ProjectCreatedPropagator implements IEventPropagator<ProjectCreated
 			throw new DabPreConditionViolationException("Cannot propagate ProjectCreated event: creator profile does not exist: " + event.getCreatorId());
 		}
 		
-		project.addParticipant(ROLE.initiator, creatorProfile);
-		
+		project.addParticipant(ROLE.initiator, creatorProfile, "");
 		projetRepo.save(project);
-		
-		userProfileRepo.addProjectParticipation(creatorProfile, new Participation(project, ROLE.initiator));
+		userProfileRepo.addProjectParticipation(creatorProfile, new Participation(project, ROLE.initiator, true));
 		
 	}
 }

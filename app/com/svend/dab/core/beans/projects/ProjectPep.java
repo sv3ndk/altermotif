@@ -66,7 +66,25 @@ public class ProjectPep {
 		ROLE role = project.findRoleOfUser(user);
 		return role == ROLE.initiator || role == ROLE.admin;
 	}
+
 	
+	// applications
+
+	public boolean isAllowedToSeeApplications(String user) {
+		if (user == null) {
+			return false;
+		}
+		ROLE role = project.findRoleOfUser(user);
+		return role == ROLE.initiator || role == ROLE.admin || role == ROLE.member;
+	}
+	
+	public boolean isAllowedToAcceptOrRejectApplications(String user) {
+		if (user == null) {
+			return false;
+		}
+		ROLE role = project.findRoleOfUser(user);
+		return role == ROLE.initiator || role == ROLE.admin;
+	}
 	
 	
 

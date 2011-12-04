@@ -265,6 +265,12 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 	}
 	
 	@Override
+	public void removeParticipation(String username, Participation existingParticipation) {
+		genericUpdateUser(username, new Update().pull("projects", existingParticipation));
+	}
+	
+	
+	@Override
 	public void updateProjectMainPhoto(String userName, String projectId, Photo mainPhoto) {
 		Query query = query(where("username").is(userName).and("projects.projectSummary.projectId").is(projectId));
 		

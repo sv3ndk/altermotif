@@ -320,7 +320,17 @@ viewProjectLinks=Useful links
 viewProjectParticipants=Participants
 viewProjectApplications=Applications
 viewProjectApply=Apply
+viewProjectYouHaveAlreadyApplied=You have already applied to this project
+viewProjectCancelApplicationLink=Cancel application
 viewProjectApplyConfirmationText=Please motivate your application for participation in the project. Indicate why you want to participate and how you wish to contribute to the project (e.g. which means and/or tasks you could fulfill?). The more information you give, the more likely it is that your application will be taken seriouly.
+viewProjectApply=Apply to project
+viewProjectConfirmApply=Please enter a short motivation text explaining why you want to join this project. This text will be sent, togheter with your application, to the administrators of the project
+viewProjectConfirmCancelApplication=Are you sure you want to cancel your application for this projects?
+viewProjectViewApplicationText=View application text
+viewProjectViewAcceptContactRequest=Accept
+viewProjectViewRejectContactRequest=Reject
+applicationMoticationTextPopupTitle=Motivation text
+viewProjectConfirmRejectApplication=Are you sure you want to reject this participation application?
 
 # edit project page
 projectEditConfirmButton=Update project

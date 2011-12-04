@@ -87,14 +87,14 @@ public class Project {
 	// --------------------
 	//
 
-	public void addParticipant(ROLE role, UserProfile user) {
+	public void addParticipant(ROLE role, UserProfile user, String applicationText) {
 		if (participants == null) {
 			participants = new LinkedList<Participant>();
 		}
 
 		// TODO: we could make sure here that nobody tries to set a creator after the creation...
 
-		participants.add(new Participant(role, user));
+		participants.add(new Participant(role, user, applicationText));
 	}
 	
 	// ------------------------------------------------
@@ -182,7 +182,7 @@ public class Project {
 			return null;
 		}
 
-		for (Participant participant : participants) {
+		for (Participant participant : getConfirmedParticipants()) {
 			if (user.equals(participant.getUser().getUserName())) {
 				return participant.getRole();
 			}
@@ -190,7 +190,7 @@ public class Project {
 		return null;
 	}
 
-	public int getNumberOfParticipants() {
+	public int getNumberOfConfirmedParticipants() {
 		if (getConfirmedParticipants() == null) {
 			return 0;
 		}
@@ -204,22 +204,6 @@ public class Project {
 		}
 
 		return getUnconfirmedParticipants().size();
-	}
-
-	public void generatePhotoLinks(Date expirationdate) {
-		
-		if (photos != null) {
-			for (Photo photo : photos) {
-				photo.generatePresignedLinks(expirationdate, true, true);
-			}
-		}
-		
-
-		if (participants != null) {
-			for (Participant participant : participants) {
-				participant.generatePhotoLinks(expirationdate);
-			}
-		}
 	}
 
 	public List<Participant> getConfirmedParticipants() {
@@ -251,25 +235,74 @@ public class Project {
 	}
 
 	/**
-	 * @param loggedInUserProfileId
+	 * @param userId
 	 * @return true if this user is already part of this project or has applied for it
 	 */
-	public boolean isUserAlreadyMemberOrApplicant(String loggedInUserProfileId) {
-		if (participants == null || loggedInUserProfileId == null) {
+	public boolean isUserAlreadyMember(String userId) {
+		if (getConfirmedParticipants() == null || userId == null) {
 			return false;
 		}
 
-		for (Participant participant : participants) {
-			if (loggedInUserProfileId.equals(participant.getUser().getUserName())) {
+		for (Participant participant : getConfirmedParticipants()) {
+			if (userId.equals(participant.getUser().getUserName())) {
 				return true;
 			}
 		}
 
 		return false;
 	}
+	
+	
+	public boolean isUserAlreadyApplying(String userId) {
+		if (getUnconfirmedParticipants() == null || userId == null) {
+			return false;
+		}
+		
+		for (Participant participant : getUnconfirmedParticipants()) {
+			if (userId.equals(participant.getUser().getUserName())) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
+	
+	
+	public Participant getParticipation(String userId) {
+		if (userId == null) {
+			return null;
+		}
+		
+		for (Participant participant : participants) {
+			if (userId.equals(participant.getUser().getUserName())) {
+				return participant;
+			}
+		}
+		
+		return null;
+
+	}
+
 
 	// ------------------------------------------------------------------------------
 	//
+	public void generatePhotoLinks(Date expirationdate) {
+		
+		if (photos != null) {
+			for (Photo photo : photos) {
+				photo.generatePresignedLinks(expirationdate, true, true);
+			}
+		}
+		
+		
+		if (participants != null) {
+			for (Participant participant : participants) {
+				participant.generatePhotoLinks(expirationdate);
+			}
+		}
+	}
+	
 
 	public ProjectData getPdata() {
 		return pdata;
@@ -363,6 +396,8 @@ public class Project {
 	public void setMainPhotoIndex(int mainPhotoIndex) {
 		this.mainPhotoIndex = mainPhotoIndex;
 	}
+
+	
 
 
 

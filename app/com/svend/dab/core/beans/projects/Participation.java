@@ -13,17 +13,18 @@ public class Participation {
 	private ProjectSummary projectSummary;
 	private ROLE role;
 
-
+	private boolean accepted = true;
 	
 	
 	public Participation() {
 		super();
 	}
 
-	public Participation(Project project, ROLE role) {
+	public Participation(Project project, ROLE role, boolean accepted) {
 		super();
 		this.projectSummary = new ProjectSummary(project);
 		this.role = role;
+		this.accepted = accepted;
 	}
 	
 	
@@ -51,6 +52,14 @@ public class Participation {
 
 	public void setRole(ROLE role) {
 		this.role = role;
+	}
+
+	public boolean isAccepted() {
+		return accepted;
+	}
+
+	public void setAccepted(boolean accepted) {
+		this.accepted = accepted;
 	}
 
 

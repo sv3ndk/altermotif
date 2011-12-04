@@ -1,25 +1,24 @@
-	
-	<span class="hiddenReceivedContactRequestId" style="display: none" id="${_contact.contactId}">${_contact.contactId}</span>
-	
-	&{'profileReceivedContactRequest'}
-	
-	#{if _contact.hasInvitationText}
-		<span  class="dabLink viewInvitationLink">&{'profileViewReceivedContactRequestInvitation'}</span>
-	#{/if}
+<span class="hiddenReceivedContactRequestId" style="display: none" id="${_contact.contactId}">${_contact.contactId}</span>
 
-	<span style="display: none">${_contact.invitationText}</span>
-	
-	<span> -  </span>
-	<span  class="dabLink acceptRequestedContact">&{'profileAcceptContactRequest'}</span>
-	<span> &{'orText'}  </span>
-	<span  class="dabLink rejectRequestedContact">&{'profileRejectContactRequest'}</span>
-	
-	<span class="hiddenUserName" style="display: none">${_contact.requestedByUser.userName}</span>
-	
-	<img src="${_contact.requestingUserMainPhotoThumbLink}" class="profileContactThumb"></img>
-	
-	<div class="profileContactLink">
-		<a href="@{profile.ProfileView.profileView( _contact.requestedByUser.userName)}" class="dabLink">${_contact.requestedByUser.userName}</a>
-		${_contact.requestedByUser.location}
-	</div>
+&{'profileReceivedContactRequest'}
+
+#{if _contact.hasInvitationText}
+	<span  class="dabLink viewInvitationLink">&{'profileViewReceivedContactRequestInvitation'}</span>
+#{/if}
+
+<span style="display: none">${_contact.invitationText}</span>
+
+<span> -  </span>
+<span  class="dabLink acceptRequestedContact">&{'profileAcceptContactRequest'}</span>
+<span> &{'orText'}  </span>
+<span  class="dabLink rejectRequestedContact">&{'profileRejectContactRequest'}</span>
+
+<span class="hiddenUserName" style="display: none">${_contact.requestedByUser.userName}</span>
+
+<img src="${_contact.requestingUserMainPhotoThumbLink}" class="profileContactThumb"></img>
+
+<div class="profileContactLink">
+	<a href="@{profile.ProfileView.profileView( _contact.requestedByUser.userName)}" class="dabLink">${_contact.requestedByUser.userName}</a>
+	${_contact.requestedByUser.location}
+</div>
 	
