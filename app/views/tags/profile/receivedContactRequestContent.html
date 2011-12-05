@@ -15,7 +15,9 @@
 
 <span class="hiddenUserName" style="display: none">${_contact.requestedByUser.userName}</span>
 
-<img src="${_contact.requestingUserMainPhotoThumbLink}" class="profileContactThumb"></img>
+<a href="@{profile.ProfileView.profileView( _contact.requestedByUser.userName)}" class="dabLink">
+	<img src="${_contact.requestingUserMainPhotoThumbLink}" class="profileContactThumb" />
+</a>
 
 <div class="profileContactLink">
 	<a href="@{profile.ProfileView.profileView( _contact.requestedByUser.userName)}" class="dabLink">${_contact.requestedByUser.userName}</a>

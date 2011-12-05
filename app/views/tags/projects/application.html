@@ -1,29 +1,33 @@
-<div id="application${ _application.user.userName}">
-	#{if _application.applicationText != null}
-		<span  class="dabLink viewInvitationText">&{'viewProjectViewApplicationText'}</span>
-	#{/if}
-	
-	<span style="display: none">${_application.applicationText}</span>
-	
-	<span> -  </span>
-	<span  class="dabLink acceptApplication">&{'viewProjectViewAcceptContactRequest'}</span>
-	<span> &{'orText'}  </span>
-	<span  class="dabLink rejectApplication">&{'viewProjectViewRejectContactRequest'}</span>
-	
-	<span class="hiddenUserName" style="display: none">${_application.user.userName}</span>
-	
-	
-	#{if _application.user.mainPhotoThumbLink != null}
-		<img src="${_application.user.mainPhotoThumbLink}" class="profileContactThumb"></img>
-	#{/if}
-	#{if _application.user.mainPhotoThumbLink == null}
-		<img src="@{'/public/images/defaultProfileThumb.jpg'}" class="profileContactThumb"></img>
-	#{/if}
-	
-	<div class="profileContactLink">
-		<a href="@{profile.ProfileView.profileView( _application.user.userName)}" class="dabLink">${_application.user.userName}</a>
-		<br />
-		${_application.user.location}
+#{if _application.user.isProfileActive() }
+	<div id="application${ _application.user.userName}">
+		#{if _application.applicationText != null}
+			<span  class="dabLink viewInvitationText">&{'viewProjectViewApplicationText'}</span>
+		#{/if}
+		
+		<span style="display: none">${_application.applicationText}</span>
+		
+		<span> -  </span>
+		<span  class="dabLink acceptApplication">&{'viewProjectViewAcceptContactRequest'}</span>
+		<span> &{'orText'}  </span>
+		<span  class="dabLink rejectApplication">&{'viewProjectViewRejectContactRequest'}</span>
+		
+		<span class="hiddenUserName" style="display: none">${_application.user.userName}</span>
+		
+		
+		<a href="@{profile.ProfileView.profileView( _application.user.userName)}" class="dabLink">
+			#{if _application.user.mainPhotoThumbLink != null}
+				<img src="${_application.user.mainPhotoThumbLink}" class="profileContactThumb"></img>
+			#{/if}
+			#{if _application.user.mainPhotoThumbLink == null}
+				<img src="@{'/public/images/defaultProfileThumb.jpg'}" class="profileContactThumb"></img>
+			#{/if}
+		</a>
+		
+		<div class="profileContactLink">
+			<a href="@{profile.ProfileView.profileView( _application.user.userName)}" class="dabLink">${_application.user.userName}</a>
+			<br />
+			${_application.user.location}
+		</div>
 	</div>
-</div>
+#{/if}
 	

@@ -66,7 +66,7 @@ public class Project {
 	private List<Participant> cachedConfirmedParticipants;
 
 	@Transient
-	private List<Participant> cachedUnconfirmedParticipants;
+	private List<Participant> cachedUnconfirmedActiveParticipants;
 
 	// arrays of 20 links to the photos of the user (no matter how many actually present in DB)
 	@Transient
@@ -199,11 +199,13 @@ public class Project {
 	}
 
 	public int getNumberOfApplications() {
-		if (getUnconfirmedParticipants() == null) {
+		if (getUnconfirmedActiveParticipants() == null) {
 			return 0;
 		}
 
-		return getUnconfirmedParticipants().size();
+		
+		
+		return getUnconfirmedActiveParticipants().size();
 	}
 
 	public List<Participant> getConfirmedParticipants() {
@@ -214,22 +216,22 @@ public class Project {
 		return cachedConfirmedParticipants;
 	}
 
-	public List<Participant> getUnconfirmedParticipants() {
-		if (cachedUnconfirmedParticipants == null) {
+	public List<Participant> getUnconfirmedActiveParticipants() {
+		if (cachedUnconfirmedActiveParticipants == null) {
 			categorizeParticipants();
 		}
-		return cachedUnconfirmedParticipants;
+		return cachedUnconfirmedActiveParticipants;
 	}
 
 	protected void categorizeParticipants() {
 		cachedConfirmedParticipants = new LinkedList<Participant>();
-		cachedUnconfirmedParticipants = new LinkedList<Participant>();
+		cachedUnconfirmedActiveParticipants = new LinkedList<Participant>();
 
 		for (Participant participant : participants) {
 			if (participant.isAccepted()) {
 				cachedConfirmedParticipants.add(participant);
-			} else {
-				cachedUnconfirmedParticipants.add(participant);
+			} else if (participant.getUser().isProfileActive()) {
+				cachedUnconfirmedActiveParticipants.add(participant);
 			}
 		}
 	}
@@ -254,11 +256,11 @@ public class Project {
 	
 	
 	public boolean isUserAlreadyApplying(String userId) {
-		if (getUnconfirmedParticipants() == null || userId == null) {
+		if (getUnconfirmedActiveParticipants() == null || userId == null) {
 			return false;
 		}
 		
-		for (Participant participant : getUnconfirmedParticipants()) {
+		for (Participant participant : getUnconfirmedActiveParticipants()) {
 			if (userId.equals(participant.getUser().getUserName())) {
 				return true;
 			}

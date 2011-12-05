@@ -97,16 +97,13 @@
 		<div id="projectApplications">
 			<span class="toggleLink dabLink">&{'viewProjectApplications'} (${visitedProject.numberOfApplications}) </span>
 			<div class="toggleContainer">
-				#{list items:visitedProject.unconfirmedParticipants, as:'application'}
+				#{list items:visitedProject.unconfirmedActiveParticipants, as:'application'}
 					#{projects.application application:application /} 
 				#{/list}
 			</div>
 		</div>
 		#{/if}
-		
-		
 	</div>
-
 </div>
 
 

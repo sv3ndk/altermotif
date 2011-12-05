@@ -10,14 +10,16 @@
 
 		#{if _reference.toUser.profileActive}
 			<a href="@{profile.ProfileView.profileView( _reference.toUser.userName )}" class="dabLink">${_reference.toUser.userName}</a>
+			<a href="@{profile.ProfileView.profileView( _reference.toUser.userName )}" class="dabLink">
+				<img src="${_reference.toUser.mainPhotoThumbLink}" class="profileContactThumb" />
+			</a>
 		#{/if }
 		#{if ! _reference.toUser.profileActive}
 			<span class="dabLinkDisabled">${_reference.toUser.userName}</span>
+			<img src="${_reference.toUser.mainPhotoThumbLink}" class="profileContactThumb"></img>
 		#{/if }
 		
 		${_reference.toUser.location} &{'leftOn'} ${_reference.creationDateStr}
-
-		<img src="${_reference.toUser.mainPhotoThumbLink}" class="profileContactThumb"></img>
 		
 	</p>
 	<p>

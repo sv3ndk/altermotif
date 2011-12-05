@@ -1,12 +1,14 @@
 <div class="oneProjectParticipationLine">
 
-	#{if !_participation.projectSummary.hasAThumbPhoto() } 
-		<img src="@{'/public/images/defaultProjectThumb.jpg'}" class="oneLinerThumb" />
+	<a href="@{projects.ProjectsView.projectsView( _participation.projectSummary.projectId )}" class="dabLink"> 
+	#{if !_participation.projectSummary.hasAThumbPhoto() }
+			<img src="@{'/public/images/defaultProjectThumb.jpg'}" class="oneLinerThumb" />
 	#{/if}
 	
 	#{if _participation.projectSummary.hasAThumbPhoto() } 
 		<img src="${_participation.projectSummary.mainPhotoThumbLink}" class="oneLinerThumb" />
 	#{/if}
+	</a>
 	
 
 	<div>

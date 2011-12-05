@@ -1,7 +1,8 @@
-
 <span class="hiddenContactId" style="display: none" id="${_contact.contactId}">${_contact.contactId}</span>
 
-<img src="${_contact.otherUser.mainPhotoThumbLink}" class="profileContactThumb"></img>
+<a href="@{profile.ProfileView.profileView( _contact.otherUser.userName)}" class="dabLink">
+	<img src="${_contact.otherUser.mainPhotoThumbLink}" class="profileContactThumb" />
+</a>
 
 <div class="profileContactLink">
 

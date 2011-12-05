@@ -1,17 +1,17 @@
+<span class="hiddenSentContactRequestId" style="display: none" id="${_contact.contactId}">${_contact.contactId}</span>
 
+&{'profileSentContactRequest'}
 
-	<span class="hiddenSentContactRequestId" style="display: none" id="${_contact.contactId}">${_contact.contactId}</span>
+<span  class="dabLinkLSpaced cancelRequestedContact">&{'profileCancelAddedToContactRequest'}</span>
 
-	&{'profileSentContactRequest'}
+<span class="hiddenUserName" style="display: none">${_contact.requestedToUser.userName} </span>
 
-	<span  class="dabLinkLSpaced cancelRequestedContact">&{'profileCancelAddedToContactRequest'}</span>
+<a href="@{profile.ProfileView.profileView( _contact.requestedToUser.userName)}" class="dabLink">
+	<img src="${_contact.recipientUserMainPhotoThumbLink}" class="profileContactThumb" />
+</a>
 
-	<span class="hiddenUserName" style="display: none">${_contact.requestedToUser.userName} </span>
-	
-	<img src="${_contact.recipientUserMainPhotoThumbLink}" class="profileContactThumb"></img>
-
-	<div class="profileContactLink">
-		<a href="@{profile.ProfileView.profileView( _contact.requestedToUser.userName)}" class="dabLink">${_contact.requestedToUser.userName}</a>
-		${_contact.requestedToUser.location}
-	</div>
+<div class="profileContactLink">
+	<a href="@{profile.ProfileView.profileView( _contact.requestedToUser.userName)}" class="dabLink">${_contact.requestedToUser.userName}</a>
+	${_contact.requestedToUser.location}
+</div>
 

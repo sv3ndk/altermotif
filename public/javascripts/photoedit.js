@@ -128,7 +128,7 @@ function initDeletePhotoLink() {
 		width : 350,
 		modal : true,
 		"buttons" : [ {
-			text : okText,
+			text : okTextValue,
 			click : function() {
 				$("#hiddenDeletePhotoForm #deletedPhotoIdx").val(selectedPhotoIndex);
 				$("#hiddenDeletePhotoForm form").submit();
@@ -137,7 +137,7 @@ function initDeletePhotoLink() {
 		},
 
 		{
-			text : cancelText,
+			text : cancelTextValue,
 			click : function() {
 				$(this).dialog("close");
 			}
@@ -176,7 +176,7 @@ function initClickOnSetPhotoCaption() {
 		width : 650,
 		modal : true,
 		"buttons" : [ {
-			text : okText,
+			text : okLabelValue,
 			click : function() {
 				var newCaption = $("#editedCaption").val();
 				doUpdatePhotoCaption(selectedPhotoIndex, newCaption);
@@ -184,7 +184,7 @@ function initClickOnSetPhotoCaption() {
 		},
 
 		{
-			text : cancelText,
+			text : cancelLabelValue,
 			click : function() {
 				$(this).dialog("close");
 			}

@@ -1,27 +1,27 @@
-	<span class="hiddenRefid" style="display: none" id="${_reference.id}">${_reference.id}</span>
+<span class="hiddenRefid" style="display: none" id="${_reference.id}">${_reference.id}</span>
+
+<p>
+	#{if _loggedInUserProfileId == _reference.fromUser.userName}
+		<img src="@{'/public/images/trash.png'}" class="deleteImageLink" onclick="showConfirmRemoveReferencePopup('${_reference.id}', '${_reference.toUser.userName}')"></img>
+	#{/if }
+
+	<span class="referenceFromFor">&{'from'}: </span>
+
+	#{if _reference.fromUser.profileActive}
+		<a href="@{profile.ProfileView.profileView( _reference.fromUser.userName )}" class="dabLink">${_reference.fromUser.userName}</a>
+		<a href="@{profile.ProfileView.profileView( _reference.fromUser.userName )}" class="dabLink">
+			<img src="${_reference.fromUser.mainPhotoThumbLink}" class="profileContactThumb" />
+		</a>
+	#{/if }
+	#{if ! _reference.fromUser.profileActive}
+		<span class="dabLinkDisabled">${_reference.fromUser.userName}</span>
+		<img src="${_reference.fromUser.mainPhotoThumbLink}" class="profileContactThumb" />
+	#{/if }
 	
-	<p>
-
-
-		#{if _loggedInUserProfileId == _reference.fromUser.userName}
-			<img src="@{'/public/images/trash.png'}" class="deleteImageLink" onclick="showConfirmRemoveReferencePopup('${_reference.id}', '${_reference.toUser.userName}')"></img>
-		#{/if }
-
-		<span class="referenceFromFor">&{'from'}: </span>
-
-		#{if _reference.fromUser.profileActive}
-			<a href="@{profile.ProfileView.profileView( _reference.fromUser.userName )}" class="dabLink">${_reference.fromUser.userName}</a>
-		#{/if }
-		#{if ! _reference.fromUser.profileActive}
-			<span class="dabLinkDisabled">${_reference.fromUser.userName}</span>
-		#{/if }
-		
-		${_reference.fromUser.location} &{'leftOn'} ${_reference.creationDateStr}
-
-		<img src="${_reference.fromUser.mainPhotoThumbLink}" class="profileContactThumb"></img>
-		
-	</p>
-	<p>
-	<pre>${_reference.text}</pre>
-	</p>
+	${_reference.fromUser.location} &{'leftOn'} ${_reference.creationDateStr}
+	
+</p>
+<p>
+<pre>${_reference.text}</pre>
+</p>
 

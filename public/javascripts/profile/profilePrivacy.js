@@ -78,7 +78,7 @@ function initWarningSetProfileInactive() {
 		},
 
 		{
-			text : cancelLabelTextValue,
+			text : cancelLabelValue,
 			click : function() {
 				$("#editProfileContainer input.profileActiveCheckbx").attr('checked', 'checked');
 				$(this).dialog("close");

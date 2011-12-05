@@ -1,18 +1,25 @@
-	<div class="oneUserSummary">
+<div class="oneUserSummary">
 
-	#{if _participant.user.mainPhotoThumbLink == null}
-		<img src="@{'/public/images/defaultProfileThumb.jpg'}" class="oneLinerThumb" />
-	#{/if }
-	#{if _participant.user.mainPhotoThumbLink != null}
-		<img class="oneLinerThumb" src="${_participant.user.mainPhotoThumbLink}"/> 
-	#{/if }
-
-
-	<br />
 		#{if _participant.user.isProfileActive() }
+			<a href="@{profile.ProfileView.profileView(_participant.user.userName)}" class="dabLink">
+		#{/if }
+
+			#{if _participant.user.mainPhotoThumbLink == null}
+				<img src="@{'/public/images/defaultProfileThumb.jpg'}" class="oneLinerThumb" />
+			#{/if }
+			#{if _participant.user.mainPhotoThumbLink != null}
+				<img class="oneLinerThumb" src="${_participant.user.mainPhotoThumbLink}"/> 
+			#{/if }
+
+		#{if _participant.user.isProfileActive() }
+			</a>
+			<br />
 			<a href="@{profile.ProfileView.profileView(_participant.user.userName)}" class="dabLink">${_participant.user.userName}</a>
 		#{/if }
+
+		
 		#{if !_participant.user.isProfileActive() }
+			<br />
 			<span class="dabLinkDisabled">${_participant.user.userName}</span>
 		#{/if }
 		
