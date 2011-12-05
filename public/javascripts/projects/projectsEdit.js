@@ -336,7 +336,7 @@ function initSubmitCancelButtons() {
 function parseJsonStringIntoObject(jqSelector) {
 
 	var allLanguageJson = $(jqSelector).val();
-	if (allLanguageJson != null && allLanguageJson != "")  {
+	if (allLanguageJson != null && allLanguageJson != "" && allLanguageJson != "null")  {
 		return JSON.parse(allLanguageJson);
 	} else {
 		return [];

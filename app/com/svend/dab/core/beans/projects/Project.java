@@ -194,7 +194,6 @@ public class Project {
 		if (getConfirmedParticipants() == null) {
 			return 0;
 		}
-
 		return getConfirmedParticipants().size();
 	}
 
@@ -202,9 +201,6 @@ public class Project {
 		if (getUnconfirmedActiveParticipants() == null) {
 			return 0;
 		}
-
-		
-		
 		return getUnconfirmedActiveParticipants().size();
 	}
 
@@ -398,11 +394,5 @@ public class Project {
 	public void setMainPhotoIndex(int mainPhotoIndex) {
 		this.mainPhotoIndex = mainPhotoIndex;
 	}
-
-	
-
-
-
-
 
 }

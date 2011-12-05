@@ -8,9 +8,9 @@ import web.utils.Utils;
 
 import com.svend.dab.core.beans.projects.Project;
 
-import controllers.Application;
 import controllers.BeanProvider;
 import controllers.DabLoggedController;
+import controllers.profile.ProfileHome;
 import controllers.validators.DabValidators;
 
 public class ProjectsNew extends DabLoggedController {
@@ -32,11 +32,10 @@ public class ProjectsNew extends DabLoggedController {
 			Validation.keep();
 			projectsNew();
 		} else {
-			
 			Project createdProject = new Project(); 
 			editedProject.applyToProject(createdProject, getSessionWrapper().getSelectedLg());
 			BeanProvider.getProjectService().createProject(createdProject, getSessionWrapper().getLoggedInUserProfileId());
-			Application.index();
+			ProfileHome.profileHome();
 		}
 
 	}

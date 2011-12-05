@@ -9,6 +9,7 @@ import org.cloudfoundry.org.codehaus.jackson.map.ObjectMapper;
 import play.data.validation.Required;
 import web.utils.Utils;
 
+import com.google.common.base.Strings;
 import com.svend.dab.core.beans.Location;
 import com.svend.dab.core.beans.projects.Project.PROJECT_VISIBILITY;
 import com.svend.dab.core.beans.projects.ProjectData;
@@ -107,9 +108,15 @@ public class EditedProjectData {
 	public void applyToProjectData(ProjectData pdata, String userLanguage) {
 		if (pdata != null) {
 			
-// these are read-only data...
-//			pdata.setName(name);
-//			pdata.setGoal(goal);
+			// typically null when editing a project (as opposed to creating one) => in that case, we do not want to overwrite the old that with those nulls
+			if (!Strings.isNullOrEmpty(name)) {
+				pdata.setName(name);
+			}
+			
+			if (!Strings.isNullOrEmpty(goal)) {
+				pdata.setGoal(goal);
+			}
+			
 			pdata.setDescription(description);
 			pdata.setDescriptionVisibility(descriptionVisibility);
 			pdata.setReason(reason);
