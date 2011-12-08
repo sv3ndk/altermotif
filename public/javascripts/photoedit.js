@@ -128,7 +128,7 @@ function initDeletePhotoLink() {
 		width : 350,
 		modal : true,
 		"buttons" : [ {
-			text : okTextValue,
+			text : okLabelValue,
 			click : function() {
 				$("#hiddenDeletePhotoForm #deletedPhotoIdx").val(selectedPhotoIndex);
 				$("#hiddenDeletePhotoForm form").submit();
@@ -137,7 +137,7 @@ function initDeletePhotoLink() {
 		},
 
 		{
-			text : cancelTextValue,
+			text : cancelLabelValue,
 			click : function() {
 				$(this).dialog("close");
 			}

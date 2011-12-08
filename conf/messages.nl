@@ -2,7 +2,7 @@
 english=English
 french=Français
 dutch=Nederlands
-turkish=***Turkish
+turkish=Türkçe
 donate=donaties
 signIn=Aanmelden
 orText=of 
@@ -14,9 +14,9 @@ confirmationPopupTitle=Bevestig
 OkButton=OK
 CancelButton=Annuleer
 
-aboutUsPart1=***AlterMotif is a project like any other project that could be on this website. It started with an idea about how this world could be made a better place. Little by little, we realized that the root of the problem lies at the omnipresent striving for growth and profit without regard for the cost that this imposes on other people; on the environment and withholding people from actions that could truly make them fulfilled and aware. We then came to understand that the solution lies in entrepreneurship. By initiating projects inspired by our personal motives, enacted through new forms of cooperation, we can offer alternative ways of doing things and hence become real agents of change.
-aboutUsPart2=***Like all projects on AlterMotif, this idea has inspired and motivated a group of people to come together, each contributing whatever they can to make this dream come true. To make sure that profit cannot become a motivator of AlterMotif and that all donations to AlterMotif are used for its purpose, we founded a non-profit association with the official goal of “encouraging and facilitating each form of cooperation around non-profit purposes”. 
-aboutUsPart3=**The AlterMotif project is an ongoing pursuit. A pursuit for another world in which people can reappropriate their work by pulling actions from the market into their social environment and in which real values have precedence over monetary values. AlterMotif invites you to become part of this project. Start a project, join other projects, share your experience on the forums, donate, spread the word… anything will do so that together, we can make it happen!
+aboutUsPart1=AlterMotif is een project zoals elk ander project dat op deze website zou kunnen staan. Het startte met een idee over hoe deze wereld een betere plek zou kunnen worden. Beetje bij beetje realiseerden we ons dat de kern van het probleem schuilt in het alomtegenwoordige streven naar groei en winst zonder aandacht voor de kost die dit oplegt aan andere mensen; aan het milieu en die mensen weerhoud van akties die hen wezenlijk bewust en voldaan zouden kunnen maken. Daarop daagde het begrip dat de oplossing schuilt in ondernemerschap. Door projecten op te starten die geïnspireerd worden door onze persoonlijke motieven, uitgevoerd via nieuwe vormen van samenwerking, kunnen we alternatieve manieren aandragen om dingen te doen en aldus echte bronnen van verandering worden.
+aboutUsPart2=Zoals elk ander project op AlterMotif, heeft dit idee een groep mensen geïnspireerd en gemotiveerd om samen te komen en deze droom te realiseren, waarbij elkeen bijdraagt wat zij/hij kan. Om te garanderen dat winst geen motivator kan worden van AlterMotif en dat alle donaties aan AlterMotif voor dit doel gebruikt worden, hebben we een vereniging zonder winstoogmerk opgericht met tot doel om “elke vorm van samenwerking rond niet-winstgerichte doeleinden aan te moedigen en te faciliteren".
+aboutUsPart3=Het AlterMotif project is een continu streven. Een streven naar een andere wereld waar mensen zich opnieuw hun arbeid kunnen toeëigenen door acties vanuit de markt naar hun sociale omgeving over te brengen en waar echte waarden voorrang hebben op monetaire waarden. AlterMotif nodigt u uit om deel te nemen aan dit project. Start een project, sluit u aan bij andere projecten, deel uw ervaring op de fora, donneer, verspreid de boodschap, sluit u aan bij ons team… Om het even welke actie volstaat opdat we dit gezamenlijk kunnen omvormen in een nieuwe realiteit!
 
 # error messages
 validation.required=Deze informatie is noodzakelijk
@@ -92,7 +92,7 @@ topMenuProfileMyProfile=Mijn profiel
 topMenuProfileEditProfile=Wijzig mijn profiel
 topMenuProfileManagePhotos=Beheer mijn foto's
 topMenuProfileManageCv=Beheer mijn CV
-topMenuProfilePrivacySettings=***Privacy settings
+topMenuProfilePrivacySettings=Privacy instellingen
 
 topMenuMessages=Berichten
 topMenuMessagesInbox=Postvak in
@@ -270,8 +270,8 @@ projectNewProjectGoal=Doel van het project
 projectNewProjectGoalExplanation=Leg duidelijk uit wat het doel van dit project is
 projectNewProjectLocations=Locatie(s)
 projectNewProjectLocationsExplanation=Waar zal het project plaatsvinden? Waar kunnen de deelnemers vandaan komen?
-projectNewProjectaddALocation=***add a location...
-projectNewAtLeastOneMessageErrorMessage=***You must provide at least one location for this project
+projectNewProjectaddALocation=Voeg een locatie toe
+projectNewAtLeastOneMessageErrorMessage=U moet minstens één locatie voor dit project invoeren
 projectNewProject=Project
 projectNewReason=Reden voor het project
 projectNewReasonExplanation=Dit veld is optioneel. U kan hier beschrijven waarom u dit project nastreeft: waarom denkt u dat het belangrijk is?
@@ -286,15 +286,15 @@ projectNewRequiredAssetsExplanation=Creëer een lijst van middelen die vereist z
 projectNewDueDate=Uiterste termijn
 projectNewDueDateExplanation=Wanneer zou het project moeten volbracht zijn?
 projectNewUsefulLinks=Nuttige 
-linkenprojectNewAddOneUsefullLink=***Add link
-projectNewConfirmRemoveLinkPopupMessage=***Are you sure you want to remove this useful link?
-projectNewAddNewLinkTitle=***Enter a new link
+linkenprojectNewAddOneUsefullLink=Een link toevoegen
+projectNewConfirmRemoveLinkPopupMessage=Weet u zeker dat u deze nuttige link wil verwijderen?
+projectNewAddNewLinkTitle=Een nieuwe link toevoegen
 projectNewUsefulLinks=Nuttige linken
 projectNewUsefulLinksExplanation=Website adressen die nuttig kunnen zijn voor het project
 projectNewSelectThemes=Selecteer thema's
 projectNewSelectThemesExplanation=Door de thema's te selecteren die passen bij het project, zorgt u ervoor dat het project getoond wordt aan de gebruikers die op zoek zijn naar een dergelijke opportuniteit
 projectNewSelectTags=Projectmarkeringen
-projectNewAddOneTagLink=***add a tag...
+projectNewAddOneTagLink=Een markering toevoegen
 projectNewSelectTagsExplanation=Plaats kernwoorden die gerelateerd zijn aan het project. Anderen zullen uw project kunnen vinden op basis van deze kernwoorden.
 projectNewSelectLanguage=Taal
 projectNewSelectLanguageExplanation=Duidt aan in welke taal de deelnemers aan dit project zouden moeten communiceren
@@ -321,24 +321,24 @@ viewProjectStrategy=Projectstrategie
 viewProjectRewards=Projectcompensaties
 viewProjectLinks=Nuttige linken
 viewProjectParticipants=Deelnemers
-viewProjectApplications=***Applications
-viewProjectApply=***Apply
-viewProjectYouHaveAlreadyApplied=***You have already applied to this project
-viewProjectCancelApplicationLink=***Cancel application
-viewProjectApplyConfirmationText=***Please motivate your application for participation in the project. Indicate why you want to participate and how you wish to contribute to the project (e.g. which means and/or tasks you could fulfill?). The more information you give, the more likely it is that your application will be taken seriouly.
-viewProjectApply=***Apply to project
-viewProjectConfirmApply=***Please enter a short motication text explaining why you want to join this project. This text will be sent, togheter with your application, to the administrators of the project
-viewProjectConfirmCancelApplication=***Are you sure you want to cancel your application for this projects?
-viewProjectViewApplicationText=***View application text
-viewProjectViewAcceptContactRequest=***Accept
-viewProjectViewRejectContactRequest=***Reject
-applicationMoticationTextPopupTitle=***Motivation text
-viewProjectConfirmRejectApplication=***Are you sure you want to reject this participation application?
+viewProjectApplications=Kandidaturen
+viewProjectApply=Zich kandidaat stellen
+viewProjectYouHaveAlreadyApplied=U heeft zich al voor dit project kandidaat gesteld
+viewProjectCancelApplicationLink=Kandidatuur intrekken
+viewProjectApplyConfirmationText=Gelieve hier je kandidatuur te motiveren.Geef aan waarom je aan het project wil deelnemen en hoe je eraan kan bijdragen (bv. welke middelen en/of taken kan je vervullen?). Hoe meer informatie je verschaft, hoe groter de kans is dat uw kanidatuur ernstig zal worden genomen.
+viewProjectApply=Zich kandidaat stellen
+viewProjectConfirmApply=Gelieve kort te motiveren waarom u zich wil aansluiten bij dit project. Deze tekst zal samen met uw kandidatuur verzonden worden naar de administratoren van dit project.
+viewProjectConfirmCancelApplication=Weet u zeker dat u uw kandidatuur voor dit project wil intrekken?
+viewProjectViewApplicationText=Zie kandidatuur
+viewProjectViewAcceptContactRequest=Accepteren
+viewProjectViewRejectContactRequest=Verwerpen
+applicationMoticationTextPopupTitle=Motivatietekst
+viewProjectConfirmRejectApplication=Weet u zeker dat u deze kandidaatstelling wil verwerpen?
 
 
 # edit project page
-projectEditConfirmButton=***Update project
-projectEditEditPhotos=***Edit photos...
+projectEditConfirmButton=Project actualiseren
+projectEditEditPhotos=Foto's wijzigen...
 
 #project photos page
-projectPhotosSetAsMainPhoto=***Set as main project photo
+projectPhotosSetAsMainPhoto=Instellen als standaard projectfoto

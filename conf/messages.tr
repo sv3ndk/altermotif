@@ -3,48 +3,48 @@ english=English
 french=Français
 dutch=Nederlands
 turkish=Türkçe
-donate=Baðýþ Yapýn
-signIn=Oturum Açýn  
+donate=AlterMotif'e Destek Olun
+signIn=Oturum Açın  
 orText=veya 
 register=Kaydolun 
-forFreeOfCourse=(Ücretsiz)
+forFreeOfCourse=(Tabii ki Ücretsiz!)
 loggedInAs=current user
-logout=Çýkýþ
+logout=Çıkış
 confirmationPopupTitle=Onay
 OkButton=Tamam
-CancelButton=Ýptal
+CancelButton=İptal
 
-aboutUsPart1=***AlterMotif is a project like any other project that could be on this website. It started with an idea about how this world could be made a better place. Little by little, we realized that the root of the problem lies at the omnipresent striving for growth and profit without regard for the cost that this imposes on other people; on the environment and withholding people from actions that could truly make them fulfilled and aware. We then came to understand that the solution lies in entrepreneurship. By initiating projects inspired by our personal motives, enacted through new forms of cooperation, we can offer alternative ways of doing things and hence become real agents of change.
-aboutUsPart2=***Like all projects on AlterMotif, this idea has inspired and motivated a group of people to come together, each contributing whatever they can to make this dream come true. To make sure that profit cannot become a motivator of AlterMotif and that all donations to AlterMotif are used for its purpose, we founded a non-profit association with the official goal of “encouraging and facilitating each form of cooperation around non-profit purposes”. 
-aboutUsPart3=***The AlterMotif project is an ongoing pursuit. A pursuit for another world in which people can reappropriate their work by pulling actions from the market into their social environment and in which real values have precedence over monetary values. AlterMotif invites you to become part of this project. Start a project, join other projects, share your experience on the forums, donate, spread the word… anything will do so that together, we can make it happen!
+aboutUsPart1=AlterMotif, bu sitede yeralan herhangi bir proje olabilirdi. Herşey basit bir fikirle başladı: yaşadığımız dünyayı daha iyi bir yer yapmayı nasıl başarabiliriz? Sonra yavaş yavaş farkına vardık ki; sorunlarımızın temelinde yatan önemli bir şey vardı: sürekli büyümek, daha fazla kar etmek, kalkınmak istiyoruz. Sonuçlarına aldırış etmeden, diğer insanlara ve dünyamızın sağlığına olan etkilerine rağmen sürdürüyoruz bu oyunu. Bu oyun bizi asıl yapmak istediğimiz asıl şeylerden de alıkoyuyor üstelik. Bunu değiştirmenin en etkin yolunun, kişisel girişimler olduğuna karar verdik. Kişisel motivasyonumuza dayalı, yeni yardımlaşma şekilleriyle hayata geçirilen projeler dünyaya yeni açılımlar sunabilir ve gerçek bir değişime katkı yapabilirler.
+aboutUsPart2=AlterMotif bu sitede yer alan diğer projeler gibi, bir fikir olarak başladı ve bir grup insana ilham verdi, onları biraraya getirdi. AlterMotif, bu insanların ortak çabalarının sonucu. AlterMotif, başlangıç prensibine sadık kalmak için kar amacı gütmeyen bir kuruluş olarak tasarlandı. Böylece, kar etmek, asla AlterMotif'in asıl amacı olamaycak. Siteye yapılan tüm bağışlar yine bu amaç için, yani kar amacı gütmeyen her türlü yardımlaşma şekline destek olmak için kullanılacak.
+aboutUsPart3=AlterMotif, kendini sürekli yenileyen, hiç sona ermeyen bir proje. Bu projenin amacı, insanların isteklerine, yeteneklerine sahip çıkarak, yaptıkları 'işi' pazar ekonomisinin dar zihniyetinden kurtararak yeniden toplumsal bir platforma yerleştirdiği   A pursuit for another world in which people can reappropriate their work by pulling actions from the market into their social environment and in which real values have precedence over monetary values. AlterMotif invites you to become part of this project. Start a project, join other projects, share your experience on the forums, donate, spread the word, join our team… anything will do so that together, we can make it happen!
 
 
 # error messages
-validation.required=Bu alan boþ olamaz
-passwordMayNotBeEmpty=Þifre boþ olamaz
-passwordMustBeIdentical=Girdiðiniz þifreler ayný olmalý
-errorUsernameFormat=Kullanýcý adý sadece küçük harf ve sayýlardan oluþabilir
+errorValueRequired=Bu alan boş olamaz
+passwordMayNotBeEmpty=Şifre boş olamaz
+passwordMustBeIdentical=Girdiğiniz şifreler aynı değil!
+errorUsernameFormat=Kullanıcı adı sadece küçük harf ve sayılardan oluşabilir
 errorLocaltionMissingOrKnown=Bilinmeyen veya listede olmayan yer
-atLeastOneLanguage=En azýndan bir dil seçmelisiniz
-userAlreadyExist=Bu kullanýcý adý bir baþkasý tarafýndan alýnmýþ!
-incorrectEmailFormat=E-Posta adresi uygun formatta olmalý
-missingNewMessageRecipient=Lütfen alýcý giriniz
-missingNewMessageSubject=Mesajýn konusu boþ olamaz
-missingNewMessageContent=Yeni mesaj boþ olamaz
-newMessageUnknownRecipient=Bilinmeyen alýcý 
-errorIncorrectDate=Incorrect date: Ýstenen tarih formatý GG AAA YYYY
-uploadGenericError=Bilgi yüklenirken hata oluþtu
-uploadedFileTooBigError=Yüklemek istediðiniz çok büyük 
-profileUploadCvNotAPdf=Error: Özgeçmiþ PDF formatýnda olmalý
-profileUploadPhotoNotAnImage=Yüklemeye çalýþtýðýnýz dosya resim dosyasý deðil
+atLeastOneLanguage=En azından bir dil seçmelisiniz
+userAlreadyExist=Bu kullanıcı adı bir başkası tarafından alınmış!
+incorrectEmailFormat=E-Posta adresi uygun formatta değil!
+missingNewMessageRecipient=Lütfen alıcı giriniz
+missingNewMessageSubject=Mesajın konusu boş olamaz
+missingNewMessageContent=Yeni mesaj boş olamaz
+newMessageUnknownRecipient=Bilinmeyen alıcı 
+errorIncorrectDate=İstenen tarih formatı GG AAA YYYY
+uploadGenericError=Bilgi yüklenirken hata oluştu
+uploadedFileTooBigError=Yüklemek istediğiniz dosya çok büyük 
+profileUploadCvNotAPdf=Hata: Özgeçmiş PDF formatında olmalı
+profileUploadPhotoNotAnImage=Yüklemeye çalıştığınız dosya resim dosyası değil
 illegalHttpAddressFormat=***Link format incorrect
 
 
 # note: this message is not displayed by Firefox: they actually refuse to do that because some website exploit this against their users, see here:https://bugzilla.mozilla.org/show_bug.cgi?id=578828 
-warningUnsavedChangesText=Profilinizi deðiþtirdiniz fakat bu deðiþiklikleri kaydetmediniz. Sayfadan ayrýlmadan önce yaptýðýnýz deðiþiklikleri kaydedin
+warningUnsavedChangesText=Profilinizi değiştirdiniz fakat bu değişiklikleri kaydetmediniz. Sayfadan ayrılmadan önce yaptığınız değişiklikleri kaydedin
 
 # error page (among other things, displayed after a refused upload)
-errorPageMessage=Ýstediðinizi iþlerken hata oluþtu
+errorPageMessage=İstediğinizi işlerken hata oluştu
 errorPageGoBack=Geri dön
 
 # captcha error message (should never occur: validation is on the client side, this is just a second level validation)
@@ -54,50 +54,50 @@ whoShouldSeeThis=Bunu kimler görebilir?
 
 #Home page messages
 pageTitle=AlterMotif
-homePageTitle1=Kiþisel hedeflerinize ulaþýn!
-homePageTitle2=Fikirlerin gerçek olduðu bir yer
-homePageExplanation=Nasýl mý? => Bir fikir sunun, diðer üyelerin desteðini alýn, ve hedefinize ulaþýn!
+homePageTitle1=Kişisel hedeflerinize ulaşın!
+homePageTitle2=Fikirlerin gerçek olduğu bir yer
+homePageExplanation=Nasıl mı? => Bir fikir sunun, diğer üyelerin desteğini alın, ve hedefinize ulaşın!
 homePageFindAProject=Proje Bul
 homePageRules=Kurallar
-homePageDisclaimer=Disclaimer
-homePagePrivacy=Gizlilik Politikasý
-homePageContacts=Ýletiþim
-homePageAboutUs=***About us
+homePageDisclaimer=Kullanım Kuralları
+homePagePrivacy=Gizlilik Politikası
+homePageContacts=İletişim
+homePageAboutUs=Hakkımızda
 youDoNotHaveUnreadMessages=Yeni ileti yok
-homeYouHavePendingInvitationNotificationPart1=Bekleyen baðlantý teklifiniz var. Kabul veya reddetmek için
-homeYouHavePendingInvitationNotificationLinkName=profil sayfanýza gidin
+homeYouHavePendingInvitationNotificationPart1=Bekleyen bağlantı teklifiniz var. Kabul veya reddetmek için
+homeYouHavePendingInvitationNotificationLinkName=profil sayfanıza gidin
 homeYouHavePendingInvitationNotificationPart2=***in order to accept or reject them.
 
 
 # sign-in and login sreen:
-username=kullanýcý adý
-password=þifre
-passwordAgain=þifre tekrar
-notYetAMember=Henüz kaydolmadýnýz mý?
+username=kullanıcı adı
+password=şifre
+passwordAgain=şifre tekrar
+notYetAMember=Henüz kaydolmadınız mı?
 alreadyAMember=Üye misiniz?
-loginButtonText=Giriþ Yapýn
+loginButtonText=Giriş Yapın
 registerButtonText=Kaydolun
-registerMessage=Hesabýnýzý oluþturun(ücretsiz)! 
-loginMessage=Oturum Açýn
-loginErrorMessage=Oturum açma hatasý
-loginErrorDetailMessage=Kullanýcý adý/þifre hatalý!
-registerPageCaptchaTitle=Lütfen harfleri alfabetik sýraya koyun 
-registerPageWelcomText=Hoþgeldiniz!Kaydolduktan sonra, hesabýnýzý kiþiselleþtirebilir, profilinizi görünür veya gizli yapabilir, hesabýnýzla ilgili bazý bilgilerin (gerçek adýnýz ve doðum tarihiniz gibi)gizlilik derecesine karar verebilirsiniz. AlterMotif, yeni iletiþim ve üretim þekilleri arayan insanlarýn oluþturduðu bir topluluktur.Üye olarak bu topluluða katýlmýþ oluyorsunuz.Burada iþbirliði karþýlýklý motivasyona dayanýyor.Projelerin belirgin amaçlarý var ve bu amaçlar kar etmekle sýnýrlý deðil. Günümüzde yaptýðýmýz her iþ, her eylem, aklýmýza gelen her türlü fikir, ne kadar kar getirdiði ile ölçülüyor. AlterMotif ise sizi bu sýnýrlamalardan kurtarmak amacýyla kuruldu. Kendi isteklerinizi gerçekleþtirebilin, projelerinizi, sizin gibi düþünen insanlarýn desteði ile hayata geçirebilin diye. AlterMotif dünyasýnda siz ekonomi için çalýþmýyorsunuz, ekonomi sizin için çalýþýyor. Buradaki en önemli þey, sizin hedefleriniz.Sizin ne yapmak istediðiniz.
+registerMessage=Hesabınızı oluşturun(Tabii ki ücretsiz)! 
+loginMessage=Oturum Açın
+loginErrorMessage=Oturum açma hatası
+loginErrorDetailMessage=Kullanıcı adı/şifre hatalı!
+registerPageCaptchaTitle=Lütfen harfleri alfabetik sıraya koyun 
+registerPageWelcomText=Hoşgeldiniz!Kaydolduktan sonra, hesabınızı kişiselleştirebilir, profilinizi görünür veya gizli yapabilir, hesabınızla ilgili bazı bilgilerin (gerçek adınız ve doğum tarihiniz gibi)gizlilik derecesine karar verebilirsiniz. AlterMotif, yeni iletişim ve üretim şekilleri arayan insanların oluşturduğu bir topluluktur.Artık siz de bu topluluğun bir parçası oldunuz.Burada işbirliği karşılıklı motivasyona dayanıyor.Projelerin belirgin amaçları var ve bu amaçlar kar etmekle sınırlı değil. Hayatta yapmak istediklerinizi değerlendirirken sürekli tek bir kritere, yani projenizin kar potensiyeline önem vermekten sıkıldınız mı? AlterMotif sizi bu sınırlamadan kurtarmak amacıyla kuruldu.Gerçek isteklerinizin peşinden gidin, projelerinizi, sizin gibi düşünen insanların desteği ile hayata geçirebilin diye. AlterMotif dünyasında siz ekonomi için çalışmıyorsunuz, ekonomi sizin için çalışıyor. Buradaki en önemli şey, sizin hedefleriniz.Sizin ne yapmak istediğiniz.
 
 #Top menu 
 topMenuProfile=Profil
 topMenuProfileHome=Anasayfa
 topMenuProfileMyProfile=Profilim
-topMenuProfileEditProfile=Profilimi deðiþtir
-topMenuProfileManagePhotos=Resim ayarlarý
-topMenuProfileManageCv=Özgeçmiþim
-topMenuProfilePrivacySettings=Gizlilik ayarlarý
+topMenuProfileEditProfile=Profilimi değiştir
+topMenuProfileManagePhotos=Resim ayarları
+topMenuProfileManageCv=Özgeçmişim
+topMenuProfilePrivacySettings=Gizlilik ayarları
 
 topMenuMessages=Mesajlar
 topMenuMessagesInbox=Gelen Kutusu
-topMenuMessagesOutbox=Gönderilmiþ Mesajlar
+topMenuMessagesOutbox=Gönderilmiş Mesajlar
 topMenuMessagesNew=Yeni
-topMenuMessagesDeleted=Silinmiþ Mesajlar
+topMenuMessagesDeleted=Silinmiş Mesajlar
 
 topMenuGroups=Gruplar
 
@@ -108,140 +108,140 @@ topMenuProjectFind=Proje Bul
 
 #profile screen - "home page"
 yourProjects=Projeleriniz
-yourGroups=Gruplarýnýz
+yourGroups=Gruplarınız
 yourInbox=Gelen Kutusu
-yourApplications=Baþvurularýnýz
+yourApplications=Başvurularınız
 
 #profile screen - "view profile"
-profileYourProfileIsInactiveNotificationPart1=Profilinizi pasif durumda. Bu sayfayý sadece siz görebilirsiniz. Bunu deðiþtirmek için, profilinizi aktif yapmak için
-profileYourProfileIsInactiveNotificationLinkName=gizlilik ayarlarýna gidin
-profileYourProfileIsInactiveNotificationPart2=page
-profileUsername=Kullanýcý Ýsmi
-profileFirstName=Ýsim/Kurum Adý
+profileYourProfileIsInactiveNotificationPart1=Profilinizi pasif durumda. Bu sayfayı sadece siz görebilirsiniz. Profilinizi aktif yapmak için
+profileYourProfileIsInactiveNotificationLinkName=gizlilik ayarlarına gidin
+profileYourProfileIsInactiveNotificationPart2=sayfa
+profileUsername=Kullanıcı İsmi
+profileFirstName=İsim/Kurum Adı
 profileLastName=Soyisim/Kurum tipi
-profileUsername=Kullanýcý ismi
-yearsOld=yaþýnda
-profileAge=Yaþ
-profileCity=Þehir
-profileLanguages=Diller
+profileUsername=Kullanıcı ismi
+yearsOld=Yaş
+profileAge=Yaş
+profileCity=Şehir
+profileLanguages=Konuştuğu Diller
 profileLatestLogin=Son oturum açma
-profileWebSite=kiþisel internet sitesi
-profileCV=CV-Özgeçmiþ
-profileContactThisUser=Bu kullanýcýyla baðlantý kurun
-profileMorePhotos=Diðer resimler...
-profileEditPhotos=Resimleri deðiþtir...
-profilePersonalObjectives=Kiþisel Hedefleri
-profilePersonalDescription=Hakkýmda
-profilePersonalPhilosophy=Hayat görüþü
+profileWebSite=Kişisel internet sitesi
+profileCV=CV-Özgeçmiş
+profileContactThisUser=Bu kullanıcıyla bağlantı kurun
+profileMorePhotos=Diğer resimler...
+profileEditPhotos=Resimleri değiştir...
+profilePersonalObjectives=Kişisel Hedefleri
+profilePersonalDescription=Hakkımda
+profilePersonalPhilosophy=Hayat görüşü
 profilePersonalAssets=Yetenek ve becerileri
-profileReceivedReferences=Önceki referanslarý
-profileWrittenReferences=Býraktýðý referanslar
-profileLeaveAReference=Referans býrakýn
-profileConfirmRemoveReceivedReference=Sizin için býrakýlmýþ bu referansý silmek istediðinize emin misiniz?
-profileConfirmRemoveWrittenReference=Býraktýðýnýz bu referansý silmek istediðinize emin misiniz?
+profileReceivedReferences=Önceki referansları
+profileWrittenReferences=Bıraktığı referanslar
+profileLeaveAReference=Referans bırakın
+profileConfirmRemoveReceivedReference=Sizin için bırakılmış bu referansı silmek istediğinize emin misiniz?
+profileConfirmRemoveWrittenReference=Bıraktığınız bu referansı silmek istediğinize emin misiniz?
 from=Kimden
 dabfor=Kim için
-leftOn=Þu tarihte býrakýldý
+leftOn=Şu tarihte bırakıldı
 profileProjects=Projeler
 profileGroups=Gruplar
-profileContacts=Baðlantýlarý
-profileAddToContactsP1=Baðlantýlarýma
+profileContacts=Bağlantıları
+profileAddToContactsP1=Bağlantılarıma
 profileAddToContactsP2=Ekle
-profileAddedToContactsP1=Bu kullanýcýya baðlantý teklifi
-profileAddedToContactsP2=zaten göndermiþtiniz!
-profileCancelAddedToContactRequest=Baðlantý isteðini iptal et
-profileConfirmAddToContacts=Kendinizi tanýtýn!Davetinize kýsa bir mesaj ekleyin:
-profileAddToContactConfirmed=Baðlantý isteði gönderildi!Baðlantý isteðinizi kabul ettiði anda bu kullanýcý listenize eklenecek.
-profileReceivedContactRequest=Gelen baðlantý istekleri
-profileViewReceivedContactRequestInvitation=Ýsteði görüntüle
-profileContactInvitationTextPopupTitle=Baðlantý isteði
+profileAddedToContactsP1=Bu kullanıcıya bağlantı teklifi
+profileAddedToContactsP2=göndermiştiniz!
+profileCancelAddedToContactRequest=Bağlantı isteğini iptal et
+profileConfirmAddToContacts=Kendinizi tanıtın!Davetinize kısa bir mesaj ekleyin:
+profileAddToContactConfirmed=Bağlantı isteği gönderildi!Bağlantı isteğinizi kabul ettiği anda bu kullanıcı listenize eklenecek.
+profileReceivedContactRequest=Gelen bağlantı istekleri
+profileViewReceivedContactRequestInvitation=İsteği görüntüle
+profileContactInvitationTextPopupTitle=Bağlantı isteği
 profileAcceptContactRequest=Kabul Et
 profileRejectContactRequest=Reddet
-profileSentContactRequest=Baðlantý isteði gönderildi, cevap bekliyor...
-profileYouHavePendingInvitations=Bekleyen baðlantý isteðiniz var!
-profileConfirmRemoveRequestedContact=Bu baðlantý isteðini iptal etmek istediðinize emin misiniz?
-profileConfirmRejectRequestedContact=Bu baðlantý isteðini reddetmek istediðinize emin misiniz?
-profileConfirmAcceptRequestedContact=Bu baðlantý isteðini kabul etmek istediðinize emin misiniz?
-profileConfirmRemoveContact=Bu baðlantýyý listenizden silmek istediðinize emin misiniz?
+profileSentContactRequest=Bağlantı isteği gönderildi, cevap bekliyor...
+profileYouHavePendingInvitations=Bekleyen bağlantı isteğiniz var!
+profileConfirmRemoveRequestedContact=Bu bağlantı isteğini iptal etmek istediğinize emin misiniz?
+profileConfirmRejectRequestedContact=Bu bağlantı isteğini reddetmek istediğinize emin misiniz?
+profileConfirmAcceptRequestedContact=Bu bağlantı isteğini kabul etmek istediğinize emin misiniz?
+profileConfirmRemoveContact=Bu bağlantıyı listenizden silmek istediğinize emin misiniz?
 
 
 #edit profile (usually the labels are the same as the view profile, except some)
-profileDateOfBirth=Doðum Tarihi
+profileDateOfBirth=Doğum Tarihi
 addALanguage=Dil ekle
 add=Ekle
 profileEmail=E-Posta adresi
 profileEmailMessage=(sadece site yöneticileri görebilir)
 profileGender=Cinsiyet
 profileMale=Erkek
-profileFemale=Kadýn
-profileGenderUnspecified=Belirtilmemiþ
+profileFemale=Kadın
+profileGenderUnspecified=Belirtilmemiş
 profileCvUploadButton=Yükle
 profileCvClearButton=Sil
-profileCvUploaded=özgeçmiþ yüklendi
-profileCvUploadFailed=Özgeçmiþ yüklenirken hata oluþtu
-profileConfirmDeleteCv=Özgeçmiþi profil sayfanýzdan silmek istediðinize emin misiniz?
-profileCvUploadConfirmOrClear=Onaylamak için 'Yükle' veya tekrar baþlamak için 'Sil'e týklayýn
+profileCvUploaded=Özgeçmiş yüklendi
+profileCvUploadFailed=Özgeçmiş yüklenirken hata oluştu
+profileConfirmDeleteCv=Özgeçmiş silinsin mi?
+profileCvUploadConfirmOrClear=Onaylamak için 'Yükle' veya tekrar başlamak için 'Sil'e tıklayın
 
 profileEditPhotos=Resimleri Güncelle
 profileUdpateProfile=Profili Güncelle
-profileCancelChanges=Deðiþiklikleri iptal et
+profileCancelChanges=Değişiklikleri iptal et
 profileRemoveProfile=Profili Sil
 
 #profile screen: manage photos
 profileMPDeletePhotoLink=Bu resmi sil
-confirmDeletePhoto=Bu resmi profilinizden silmek istediðinize emin misiniz?
-profileMPUploadPhoto=Karþýdan resim yükleyin (en fazla 5Mb)
+confirmDeletePhoto=Bu resmi profilinizden silmek istediğinize emin misiniz?
+profileMPUploadPhoto=Karşıdan resim yükleyin (en fazla 5Mb)
 uploadPhotoPleaseWait=Resim yüklenirken lütfen bekleyin
-profileMSetProfilePhoto=Bu resmi profil resmi yapýn
-profileMPClickToSetCaption=Resme açýklama eklemek için týklayýn
-profileMPCaptionPopupTitle=Açýklama
-profileMPCaptionPopupText=Lütfen bu resim için bir açýklama girin
+profileMSetProfilePhoto=Bu resmi profil resmi yapın
+profileMPClickToSetCaption=Resme açıklama eklemek için tıklayın
+profileMPCaptionPopupTitle=Açıklama
+profileMPCaptionPopupText=Resme açıklama ekleyin
 
 
 #profile screen: Özgeçmiþ ayarlarý
-viewMyCv=Özgeçmiþimi Ýndir
-removeMyCv=Özgeçmiþimi profilimden sil
-profileSelectCvToUpload=Karþýdan yüklemek için özgeçmiþ seçin(dosya PDF formatýnda olmalý, en fazla 3Mb)
-uploadCVPleaseWait=Özgeçmiþ yüklenirken lütfen bekleyin
+viewMyCv=Özgeçmişimi İndir
+removeMyCv=Özgeçmişimi profilimden sil
+profileSelectCvToUpload=Karşıdan yüklemek için özgeçmiş seçin(dosya PDF formatında olmalı, en fazla 3Mb)
+uploadCVPleaseWait=Özgeçmiş yüklenirken lütfen bekleyin
 
 
 # manage privacy settings screens
 privacySettingsProfileIsActive=Profiliniz Aktif
-privacySettingsFirstName=Ýsmim þu kiþilere görünür olsun 
-privacySettingsLastName=Soyismim þu kiþilere görünür olsun 
-privacySettingsNameExplanation=Hem isminiz hem soyisminiz gizli olursa, diðer üyeler sadece kullanýcý isminizi görebilirler
-privacySettingsAge=Yaþým þu kiþilere görünür olsun
-privacySettingsPhotos=Resimlerim þu kiþilere görünür olsun
-privacySettingsPhotoExplanation=Kullanýcý resminiz bütün kullanýcýlara açýk.Býraktýðýnýz referanslar, kullanýcýlarýn baðlantý listeleri gibi sayfalarda küçük resim olarak görünecek
-privacySettingsCV=Özgemiþim þu kiþilere görünür olsun
+privacySettingsFirstName=Adım şu kişilere görünür olsun 
+privacySettingsLastName=Soyadım şu kişilere görünür olsun 
+privacySettingsNameExplanation=Hem isminiz hem soyisminiz gizli olursa, diğer üyeler sadece kullanıcı isminizi görecekler
+privacySettingsAge=Yaşım şu kişilere görünür olsun
+privacySettingsPhotos=Resimlerim şu kişilere görünür olsun
+privacySettingsPhotoExplanation=Kullanıcı resminiz bütün kullanıcılara açık.Bıraktığınız referanslar, kullanıcıların bağlantı listeleri gibi sayfalarda küçük resim olarak görünecek
+privacySettingsCV=Özgemişim şu kişilere görünür olsun
 privacySettingsEverybody=Herkes 
-privacySettingsloggedInUsers=AlterMotif hesabý olanlar 
-privacySettingsmyContacts=Baðlantý listemdeki kullanýcýlar 
+privacySettingsloggedInUsers=AlterMotif hesabı olanlar 
+privacySettingsmyContacts=Bağlantı listemdeki kullanıcılar 
 privacySettingsNobody=Hiç kimse
-privacySettingsConfirmButton=Ayarlarý güncelle
-privacySettingsCancelChanges=Deðiþiklikleri iptal et
-privacySettingsConfirmDeactivateProfile=.Profilinizi dondurmak istediðinize emin misiniz?Profilinizi dondurduðunuz sürece hesabýnýza giriþ yapabilirsiniz, fakat profiliniz diðer kullanýcýlara görünmez olacak, baðlantýlarýnýzýn listelerinde görünmeyeceksiniz.Proje sayfalarýndaki mesajlarýnýz, býraktýðýnýz referanslar görünür olmaya devam edecek. Eðer kiþisel bilgilerinizi silmek istiyorsanýz, profilizi güncelleyin sekmesinden tüm bilgilerinizi silmeniz yeterlidir.
+privacySettingsConfirmButton=Ayarları güncelle
+privacySettingsCancelChanges=Değişiklikleri iptal et
+privacySettingsConfirmDeactivateProfile=.Profilinizi dondurmak istediğinize emin misiniz?Profilinizi dondurduğunuz sürece hesabınıza giriş yapabilirsiniz, fakat profiliniz diğer kullanıcılara görünmez olacak, bağlantılarınızın listelerinde görünmeyeceksiniz.Proje sayfalarındaki mesajlarınız, bıraktığınız referanslar görünür olmaya devam edecek. Eğer kişisel bilgilerinizi silmek istiyorsanız, profilizi güncelleyin sekmesinden tüm bilgilerinizi silmeniz yeterlidir.
 
 
 # profile screen - messages tab
 profileMessagesSend=Yolla
 profileMessagesFrom=Kimden
 profileMessagesTo=Kime
-profileMessagesChooseFromMyContacts=Baðlantýlarýmdan seç...
-profileMessagesChooseFromMyContactsPopupTitle=Alýcý seç
+profileMessagesChooseFromMyContacts=Bağlantılarımdan seç...
+profileMessagesChooseFromMyContactsPopupTitle=Alıcı seç
 profileMessagesSubject=Konu
 profileMessagesReceived=Gelen Mesaj
-profileMessagesSent=Yollandý
-profileMessagesDeleteSelected=Seçili mesajlarý sil
-profileMessagesUndeleteSelected=Seçili mesajlarý geri al
+profileMessagesSent=Yollandı
+profileMessagesDeleteSelected=Seçili mesajları sil
+profileMessagesUndeleteSelected=Seçili mesajları geri al
 profileMessagesPrevious=Önceki
 profileMessagesNext=Sonraki
-profileMessagesReply=Yanýtla
-profileMessagesForward=Ýlet
+profileMessagesReply=Yanıtla
+profileMessagesForward=İlet
 profileMessagesDelete=Sil
-profileInboxMessagesConfirmDeletion=Bu mesajlarý silmek istediðinize emin misiniz?
-profileOutboxMessagesConfirmDeletion=Gönderilmiþ mesajlarý silmek istediðinize emin misiniz?
-profileDeletedMessagesConfirmUndeletion=Gelen/Gönderilmiþ mesajlarý geri almak istediðinize emin misiniz?
+profileInboxMessagesConfirmDeletion=Bu mesajları silmek istediğinize emin misiniz?
+profileOutboxMessagesConfirmDeletion=Gönderilmiş mesajları silmek istediğinize emin misiniz?
+profileDeletedMessagesConfirmUndeletion=Gelen/Gönderilmiş mesajları geri almak istediğinize emin misiniz?
 
 #language skills
 level0=az
@@ -255,88 +255,86 @@ level2=iyi
 # info about a project, as they appear a bit everywhere on the website (anywhere there is a "short info" concerning a project)
 projectRole=Proje'deki Rolü
 projectRoleInitiator=Proje Sahibi
-projectRoleAdmin=Yönetici
-projectRoleMember=Üye
+projectRoleAdmin=Proje Yöneticisi
+projectRoleMember=Katılımcı
 projectStatus=Projenin Durumu
 projectStatusStarted=Devam ediyor
-projectStatusCancelled=Ýptal oldu
-projectStatusDone=Tamamlandý
+projectStatusCancelled=İptal oldu
+projectStatusDone=Tamamlandı
 
 # create project page
-projectNewProjectName=Proje Adý
-projectNewProjectGoal=Projenin Amacý
-projectNewProjectGoalExplanation=Proje'nin hedeflerini kýsaca açýklayýn
+projectNewProjectName=Proje Adı
+projectNewProjectGoal=Projenin Amacı
+projectNewProjectGoalExplanation=Proje'nin hedeflerini kısaca açıklayın
 projectNewProjectLocations=Mekan(lar)
-projectNewProjectLocationsExplanation=Proje nerede gerçekleþecek?Katýlýmcýlar nerede olmalý?
-projectNewProjectaddALocation=***add a location...
-projectNewAtLeastOneMessageErrorMessage=***You must provide at least one location for this project
+projectNewProjectLocationsExplanation=Proje nerede gerçekleşecek?Katılımcılar nerede olmalı?
+projectNewProjectaddALocation=Yer ekleyin
+projectNewAtLeastOneMessageErrorMessage=Bu proje için en az bir yer belirlemelisiniz
 projectNewProject=Proje
 projectNewReason=Projenin Nedenleri
-projectNewReasonExplanation=Bu kýsým isteðe baðlýdýr. Bu bölümde, neden bu projenin önemli olduðunu, neden bu projeyi gerçekleþtirmek istediðinizi açýklayabilirsiniz: bu proje sizce neden önemli? 
+projectNewReasonExplanation=Bu kısım isteğe bağlıdır. Bu bölümde,bu projenin neden önemli olduğunu, neden bu projeyi gerçekleştirmek istediğinizi açıklayabilirsiniz: bu proje sizce neden önemli? 
 projectNewStrategy=Strateji
-projectNewStrategyExplanation=Bu kýsým isteðe baðlýdýr. Bu bölümde, projenin hedeflerine ulaþmak için izleyeceðiniz yöntemi açýklayabilirsiniz. Projenin geliþim aþamalarýný sýralayabilirsiniz. Zamanýnýzý nasýl kullanacaksýnýz? Nasýl zorluklarla karþýlaþmayý bekliyorsunuz? Ne tür eylemler ve becerilere ihtiyacýnýz var?
-projectNewOffer=Katýlýmcýlara ne sunabilirsiniz?
-projectNewOfferExplanation=Bu kýsým isteðe baðlýdýr. Bu bölümde, katýlýmcýlara, bu projede yer alarak neler elde edebileceklerini açýklayabilirsiniz.Proje için kullanýlan becerilere karþýlýk sunabileceðiniz birþey var mý? Olasý gelirler nasýl kullanýlacak? Hak paylaþýmý nasýl yapýlacak?...
-projectNewRequiredTasks=Yapýlmasý gerekenler
-projectNewRequiredTasksExplanation=Proje için yapýlmasý gerekenlerin bir listesini yapýn.
+projectNewStrategyExplanation=Bu kısım isteğe bağlıdır. Bu bölümde, projenin hedeflerine ulaşmak için izleyeceğiniz yöntemleri açıklayabilirsiniz. Projenin gelişim aşamalarını sıralayabilirsiniz. Zamanınızı nasıl kullanacaksınız? Nasıl zorluklarla karşılaşmayı bekliyorsunuz? Ne tür becerilere ihtiyacınız var?
+projectNewOffer=Katılımcılara ne sunabilirsiniz?
+projectNewOfferExplanation=Bu kısım isteğe bağlıdır. Bu bölümde, katılımcılara, bu projede yer alarak neler elde edebileceklerini açıklayabilirsiniz.Proje için kullanılan becerilere karşılık sunabileceğiniz birşey var mı? Olası gelirler nasıl kullanılacak? Hak paylaşımı nasıl yapılacak?...
+projectNewRequiredTasks=Yapılması gerekenler
+projectNewRequiredTasksExplanation=Proje için yapılması gerekenlerin bir listesini yapın.
 projectNewRequiredAssets=Gerekli beceriler
-projectNewRequiredAssetsExplanation=Proje için gerekli yetenek/becerilerin bir listesini yapýn.
-projectNewDueDate=Bitiþ Tarihi
-projectNewDueDateExplanation=Bu projeyi ne zaman tamamlamayý düþünüyorsunuz?
-projectNewUsefulLinks=Faydalý Baðlantýlar
-projectNewAddOneUsefullLink=***Add link...
-projectNewConfirmRemoveLinkPopupMessage=***Are you sure you want to remove this useful link?
-projectNewAddNewLinkTitle=***Enter a new link
-projectNewUsefulLinksExplanation=Proje için faydalý olabilecek internet siteleri
+projectNewRequiredAssetsExplanation=Proje için gerekli yetenek/becerilerin bir listesini yapın.
+projectNewDueDate=Bitiş Tarihi
+projectNewDueDateExplanation=Bu projeyi ne zaman tamamlamayı düşünüyorsunuz?
+projectNewUsefulLinks=Faydalı linkler
+projectNewAddOneUsefullLink=Link ekle
+projectNewConfirmRemoveLinkPopupMessage=Link silinsin mi?
+projectNewAddNewLinkTitle=Yeni link
+projectNewUsefulLinksExplanation=Proje için faydalı olabilecek internet siteleri
 projectNewSelectThemes=Konu seçin
-projectNewSelectThemesExplanation=Projenizin konusunu doðru seçerek, projenizin ayný konuda çalýþmak isteyen insanlar tarafýndan kolayca bulunmasýný saðlayýn.
+projectNewSelectThemesExplanation=Projenizin konusunu doğru seçerek, projenizin aynı konuda çalışmak isteyen insanlar tarafından kolayca bulunmasını sağlayın.
 projectNewSelectTags=Proje etiketleri
-projectNewAddOneTagLink=***add a tag...
-projectNewSelectTagsExplanation=Projenizle ilintili anahtar kelimeler girin. Diðerleri projenizi anahtar kelimelerle arayabilecekler. 
+projectNewAddOneTagLink=Etiket ekleyin
+projectNewSelectTagsExplanation=Projenizle ilgili anahtar kelimeler girin. Diğer kullanıcılar projenize daha kolay ulaşabilirler. 
 projectNewSelectLanguage=Dil
-projectNewSelectLanguageExplanation=Proje katýlýmcýlarý arasýnda kullanýlacak dili belirleyin  
+projectNewSelectLanguageExplanation=Proje'nin iletişim dilini belirleyin  
 
-projectNewStartProjectButton=Projeyi Baþlat 
+projectNewStartProjectButton=Projeyi Başlat 
 
-projectNewPrivacySettingsMembers=Projenin Üyeleri
-projectNewPrivacySettingsAdmin=Projenin Yöneticileri
-projectNewPrivacySettingsOwner=Projenin sahibi (ben)
+projectNewPrivacySettingsMembers=Proje Üyeleri
+projectNewPrivacySettingsAdmin=Proje Yöneticileri
+projectNewPrivacySettingsOwner=Proje sahibi (ben)
 
 # view project page
-projectViewEditProjet=***Edit project
-projectViewEndProjet=***End project
-projectViewCancelProjet=***Cancel project
+projectViewEditProjet=Projeyi güncelle
+projectViewEndProjet=Projeyi sonlandır
+projectViewCancelProjet=Projeyi iptal et
 viewProjectGoal=Amaç
 viewProjectLocation=Mekan(lar)
-viewProjectCommunicationIn=Ýletiþim dili
-viewProjectCreatedOn=Tarihinde Yaratýldý
-viewProjectDueDate=Bitiþ Tarihi
+viewProjectCommunicationIn=İletişim dili
+viewProjectCreatedOn=Tarihinde Yaratıldı
+viewProjectDueDate=Bitiş Tarihi
 viewProjectInitiator=Proje Sahibi
 viewProjectProject=Proje
 viewProjectReason=Projenin Nedenleri
 viewProjectStrategy=Proje Stratejisi
-viewProjectRewards=Proje Kazanýmlarý
-viewProjectLinks=Faydalý linkler
-viewProjectParticipants=Katýlýmcýlar
-viewProjectApplications=***Applications
-viewProjectApply=***Apply
-viewProjectYouHaveAlreadyApplied=***You have already applied to this project
-viewProjectCancelApplicationLink=***Cancel application
-viewProjectApplyConfirmationText=***Please motivate your application for participation in the project. Indicate why you want to participate and how you wish to contribute to the project (e.g. which means and/or tasks you could fulfill?). The more information you give, the more likely it is that your application will be taken seriouly.
-viewProjectApply=***Apply to project
-viewProjectConfirmApply=***Please enter a short motication text explaining why you want to join this project. This text will be sent, togheter with your application, to the administrators of the project
-viewProjectConfirmCancelApplication=***Are you sure you want to cancel your application for this projects?
-viewProjectViewApplicationText=***View application text
-viewProjectViewAcceptContactRequest=***Accept
-viewProjectViewRejectContactRequest=***Reject
-applicationMoticationTextPopupTitle=***Motivation text
-viewProjectConfirmRejectApplication=***Are you sure you want to reject this participation application?
-
-
+viewProjectRewards=Proje Kazanımları
+viewProjectLinks=Faydalı linkler
+viewProjectParticipants=Katılımcılar
+viewProjectApplications=Uygulamalar
+viewProjectApply=Aday ol
+viewProjectYouHaveAlreadyApplied=Bu projeye zaten aday oldunuz
+viewProjectCancelApplicationLink=Başvuruyu iptal et
+viewProjectApplyConfirmationText=Bu projeye neden katılmak istediğinizi ve projeye nasıl katkıda bulunabileceğinizi açıklayın.(bu proje için neler yapabilirsiniz?). Bu açıklamalar başvurunuzun ciddiye alınmasına yardımcı olur.
+viewProjectApply=Aday ol
+viewProjectConfirmApply=Bu projeye neden katılmak istediğinizi proje yöneticilerine kısaca açıklayın
+viewProjectConfirmCancelApplication=Başvurunuzu iptal etmek istediğinize emin misiniz?
+viewProjectViewApplicationText=Başvuru önizleme
+viewProjectViewAcceptContactRequest=Kabul et
+viewProjectViewRejectContactRequest=Reddet
+applicationMoticationTextPopupTitle=Motivasyon mektubu
+viewProjectConfirmRejectApplication=Bu başvuruyu reddetmek istediğinize emin misiniz?
 
 # edit project page
-projectEditConfirmButton=***Update project
-projectEditEditPhotos=***Edit photos...
+projectEditConfirmButton=Proje güncelle
+projectEditEditPhotos=Resimleri değiştir
 
 #project photos page
-projectPhotosSetAsMainPhoto=***Set as main project photo
+projectPhotosSetAsMainPhoto=Proje resmi
