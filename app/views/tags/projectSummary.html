@@ -17,5 +17,10 @@
 		&{'projectRole'}: &{_participation.role.label}
 		<br />
 		&{'projectStatus'}: &{_participation.projectSummary.status.label}
+		#{if _participation.projectSummary.creationDate != null}
+			<br />
+			&{'viewProjectCreatedOn'}: ${_participation.projectSummary.creationDate.format(controllers.BeanProvider.config.dateDisplayFormat)}
+		#{/if}
+		
 	</div>
 </div>

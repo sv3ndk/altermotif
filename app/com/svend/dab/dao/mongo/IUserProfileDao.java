@@ -2,6 +2,7 @@ package com.svend.dab.dao.mongo;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import com.svend.dab.core.beans.profile.Contact;
 import com.svend.dab.core.beans.profile.PersonalData;
@@ -17,7 +18,12 @@ public interface IUserProfileDao {
 	// -----------------------------
 	// core profile data
 	
-	public List<UserProfile> retrieveUserProfilesById(List<String> ids);
+	public Set<String> getAllUsernames();
+	
+	
+	public List<UserProfile> retrieveUserProfilesByIds(List<String> ids);
+	
+	public UserProfile retrieveUserProfileById(String userId);
 	
 	public void replacePrivacySettings(String updatedUserId, PrivacySettings newPrivacySettings);
 	
@@ -107,11 +113,9 @@ public interface IUserProfileDao {
 
 	
 	
-	
-	
-	public UserProfile findOne(String userId);
 
 	public void save(UserProfile createdUserProfile);
+
 
 
 

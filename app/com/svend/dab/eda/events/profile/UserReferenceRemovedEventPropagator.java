@@ -31,8 +31,8 @@ public class UserReferenceRemovedEventPropagator implements IEventPropagator<Use
 		if (event == null || event.getReferenceId() == null || "".equals(event.getReferenceId())) {
 			logger.log(Level.WARNING, "Cannot remove a reference: null reference or reference with null or empty id");
 		} else {
-			UserProfile fromProfile = userProfileDao.findOne(event.getFromProfileId());
-			UserProfile toProfile = userProfileDao.findOne(event.getToProfileId());
+			UserProfile fromProfile = userProfileDao.retrieveUserProfileById(event.getFromProfileId());
+			UserProfile toProfile = userProfileDao.retrieveUserProfileById(event.getToProfileId());
 			if (fromProfile == null ) {
 				throw new DabPreConditionViolationException("Cannot propagate an reference removed event: from user does not exist: " + event.getFromProfileId());
 			} else if (toProfile == null) {

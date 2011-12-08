@@ -15,6 +15,8 @@ public class ProjectSummary {
 	private String name;
 	private Photo mainPhoto;
 	
+	private Date creationDate ;
+	
 	private STATUS status;
 	
 
@@ -28,6 +30,7 @@ public class ProjectSummary {
 		this.name = project.getPdata().getName();
 		this.mainPhoto = project.getMainPhoto();
 		this.status = project.getStatus();
+		this.creationDate = project.getPdata().getCreationDate();
 	}
 	
 	public String getMainPhotoThumbLink() {
@@ -85,6 +88,14 @@ public class ProjectSummary {
 
 	public void setStatus(STATUS status) {
 		this.status = status;
+	}
+
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
 	}
 
 

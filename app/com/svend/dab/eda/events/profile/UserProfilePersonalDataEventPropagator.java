@@ -36,7 +36,7 @@ public class UserProfilePersonalDataEventPropagator implements IEventPropagator<
 			logger.log(Level.WARNING, "Cannot update a null profile => not doing anything");
 		} else {
 
-			UserProfile profile = userProfileRepo.findOne(event.getUsername());
+			UserProfile profile = userProfileRepo.retrieveUserProfileById(event.getUsername());
 
 			if (profile == null) {
 				throw new DabPreConditionViolationException("cannot update an unexisting profile");

@@ -58,12 +58,12 @@ public class ContactRelationshipResponsePropagator implements IEventPropagator<C
 
 		if (violations.isEmpty()) {
 
-			UserProfile fromUser = userProfileRepo.findOne(event.getFromUser());
+			UserProfile fromUser = userProfileRepo.retrieveUserProfileById(event.getFromUser());
 			if (fromUser == null) {
 				throw new DabPreConditionViolationException("cannot propagate a contact response: fromUser '"+ event.getFromUser() + "' does not (or no longer) exist");
 			}
 
-			UserProfile toUser = userProfileRepo.findOne(event.getToUser());
+			UserProfile toUser = userProfileRepo.retrieveUserProfileById(event.getToUser());
 			if (toUser == null) {
 				throw new DabPreConditionViolationException("cannot propagate a contact response: toUser '" + event.getToUser() + "' does not (or no longer) exist");
 			}

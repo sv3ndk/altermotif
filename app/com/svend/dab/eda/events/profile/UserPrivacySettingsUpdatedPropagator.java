@@ -32,7 +32,7 @@ public class UserPrivacySettingsUpdatedPropagator implements IEventPropagator<Us
 	@Override
 	public void propagate(UserPrivacySettingsUpdatedEvent event) throws DabException {
 		
-		UserProfile profile = userProfileRepo.findOne(event.getUserId());
+		UserProfile profile = userProfileRepo.retrieveUserProfileById(event.getUserId());
 		
 		if (profile == null) {
 			throw new DabPreConditionViolationException("cannot propagate privacy settinsg: unexisting profile for " + event.getUserId());

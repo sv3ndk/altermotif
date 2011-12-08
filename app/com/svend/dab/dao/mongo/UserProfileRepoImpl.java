@@ -4,8 +4,10 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,8 +35,27 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 
 	private static Logger logger = Logger.getLogger(UserProfileRepoImpl.class.getName());
 
+	
 	@Override
-	public List<UserProfile> retrieveUserProfilesById(List<String> ids) {
+	public Set<String> getAllUsernames() {
+		Query query = query(where("username").exists(true));
+		query.fields().include("username");
+		List<UserProfile> list =  mongoTemplate.find(query, UserProfile.class);
+		Set<String > names = new HashSet<String>();
+		
+		if (list != null) {
+			for (UserProfile profile : list) {
+				names.add(profile.getUsername());
+			}
+		}
+		return names;
+		
+	}
+
+	
+	
+	@Override
+	public List<UserProfile> retrieveUserProfilesByIds(List<String> ids) {
 
 		// for some reason this does not work...
 		// Query theQuery = query(where("id").in(ids));
@@ -304,7 +325,7 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 	}
 
 	@Override
-	public UserProfile findOne(String userId) {
+	public UserProfile retrieveUserProfileById(String userId) {
 		// TODO Auto-generated method stub
 		return mongoTemplate.findOne(query(where("username").is(userId)), UserProfile.class);
 	}
@@ -313,6 +334,7 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 	public void save(UserProfile createdUserProfile) {
 		mongoTemplate.save(createdUserProfile);
 	}
+
 
 
 

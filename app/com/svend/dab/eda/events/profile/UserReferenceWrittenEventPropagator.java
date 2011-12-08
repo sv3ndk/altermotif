@@ -33,8 +33,8 @@ public class UserReferenceWrittenEventPropagator implements IEventPropagator<Use
 
 		if (event != null && event.getFromUserName() != null && event.getToUserName() != null) {
 
-			UserProfile fromProfile = userProfileRepo.findOne(event.getFromUserName());
-			UserProfile toProfile = userProfileRepo.findOne(event.getToUserName());
+			UserProfile fromProfile = userProfileRepo.retrieveUserProfileById(event.getFromUserName());
+			UserProfile toProfile = userProfileRepo.retrieveUserProfileById(event.getToUserName());
 
 			if (fromProfile == null || toProfile == null) {
 				throw new DabPreConditionViolationException("Cannot propagate an reference left event: from or to user name does not exist");

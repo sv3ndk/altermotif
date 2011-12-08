@@ -47,7 +47,7 @@ public class UserSummaryUpdatedPropagator implements IEventPropagator<UserSummar
 		
 		logger.log(Level.INFO, "propagating user summary updated");
 		
-		UserProfile profile = userProfileRepo.findOne(event.getUpdatedSummary().getUserName());
+		UserProfile profile = userProfileRepo.retrieveUserProfileById(event.getUpdatedSummary().getUserName());
 		
 		if (profile == null) {
 			throw new DabPreConditionViolationException("cannot propagate a UserSummaryUpdated event: no profile found in database for username " + event.getUpdatedSummary().getUserName());

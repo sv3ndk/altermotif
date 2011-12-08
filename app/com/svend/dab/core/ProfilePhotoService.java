@@ -85,7 +85,7 @@ public class ProfilePhotoService implements IProfilePhotoService {
 		userProfileRepo.addOnePhoto(profile.getUsername(), photo);
 
 		if (hasMainPhotoChanged) {
-			UserProfile updatedProfile = userProfileRepo.findOne(profile.getUsername());
+			UserProfile updatedProfile = userProfileRepo.retrieveUserProfileById(profile.getUsername());
 			emitter.emit(new UserSummaryUpdated(new UserSummary(updatedProfile)));
 		}
 	}

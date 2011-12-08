@@ -30,8 +30,8 @@ public class MessageWrittenEventPropagator implements IEventPropagator<MessageWr
 	@Override
 	public void propagate(MessageWrittenEvent event) throws DabException {
 		
-		UserProfile fromUser = userProfileRepo.findOne(event.getFromUserName());
-		UserProfile toUser = userProfileRepo.findOne(event.getToUserName());
+		UserProfile fromUser = userProfileRepo.retrieveUserProfileById(event.getFromUserName());
+		UserProfile toUser = userProfileRepo.retrieveUserProfileById(event.getToUserName());
 
 		if (fromUser == null) {
 			throw new DabPreConditionViolationException("cannot propagate a message emission event: fromUser does not (or no longer) exist: " + event.getFromUserName());

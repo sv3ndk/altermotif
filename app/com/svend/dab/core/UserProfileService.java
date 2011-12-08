@@ -74,7 +74,7 @@ public class UserProfileService implements IUserProfileService, Serializable {
 	 */
 	@Override
 	public UserProfile loadUserProfile(String userName, boolean shouldPrepareLinks) {
-		UserProfile profile = userProfileRepo.findOne(userName);
+		UserProfile profile = userProfileRepo.retrieveUserProfileById(userName);
 
 		if (profile != null && shouldPrepareLinks) {
 			Date expirationdate = new Date();

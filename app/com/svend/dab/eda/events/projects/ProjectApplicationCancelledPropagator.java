@@ -40,7 +40,7 @@ public class ProjectApplicationCancelledPropagator implements IEventPropagator<P
 		}
 		
 		Project project = projetRepo.findOne(event.getProjectId());
-		UserProfile profile = userProfileDao.findOne(event.getUserId());
+		UserProfile profile = userProfileDao.retrieveUserProfileById(event.getUserId());
 		
 		if (project ==null || profile == null) {
 			logger.log(Level.WARNING, "Cannot propagate a project application cancellation event: no project found for id ==" + event.getProjectId() + " or no profile for username=" + event.getUserId());

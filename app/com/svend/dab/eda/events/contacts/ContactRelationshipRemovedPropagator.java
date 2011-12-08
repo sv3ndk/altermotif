@@ -49,8 +49,8 @@ public class ContactRelationshipRemovedPropagator implements IEventPropagator<Co
 
 		if (violations.isEmpty()) {
 
-			UserProfile cancellingUser = userProfileRepo.findOne(event.getCancellingUser());
-			UserProfile otherUser = userProfileRepo.findOne(event.getOtherUser());
+			UserProfile cancellingUser = userProfileRepo.retrieveUserProfileById(event.getCancellingUser());
+			UserProfile otherUser = userProfileRepo.retrieveUserProfileById(event.getOtherUser());
 
 			if (cancellingUser == null) {
 				throw new DabPreConditionViolationException("cannot propagate a request for for removal of contact: fromUser does not (or no longer) exist");

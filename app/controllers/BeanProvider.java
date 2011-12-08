@@ -2,6 +2,7 @@ package controllers;
 
 import play.modules.spring.Spring;
 
+import com.svend.dab.core.AdminService;
 import com.svend.dab.core.IMessagesServices;
 import com.svend.dab.core.IProfilePhotoService;
 import com.svend.dab.core.IUserProfileService;
@@ -45,6 +46,10 @@ public class BeanProvider {
 	
 	public static IProjectPhotoService  getProjectPhotoService() {
 		return (IProjectPhotoService) Spring.getBeanOfType(IProjectPhotoService.class);
+	}
+
+	public static AdminService getAdminService() {
+		return (AdminService) Spring.getBeanOfType(AdminService.class);
 	}
 
 }

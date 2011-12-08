@@ -37,7 +37,7 @@ public class ProjectApplicationEventPropagator implements IEventPropagator<Proje
 		}
 		
 		Project project = projetRepo.findOne(event.getProjectId());
-		UserProfile profile = userProfileDao.findOne(event.getApplyingUserId());
+		UserProfile profile = userProfileDao.retrieveUserProfileById(event.getApplyingUserId());
 		
 		if (project ==null || profile == null) {
 			logger.log(Level.WARNING, "Cannot propagate a project application event: no project found for id ==" + event.getProjectId() + " or no profile for username=" + event.getApplyingUserId());

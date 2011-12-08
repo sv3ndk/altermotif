@@ -52,8 +52,8 @@ public class ContactRelationshipRequestedPropagator implements IEventPropagator<
 			
 			logger.log(Level.INFO, "validation ok " );
 
-			UserProfile fromUser = userProfileRepo.findOne(event.getFromUser());
-			UserProfile toUser = userProfileRepo.findOne(event.getToUser());
+			UserProfile fromUser = userProfileRepo.retrieveUserProfileById(event.getFromUser());
+			UserProfile toUser = userProfileRepo.retrieveUserProfileById(event.getToUser());
 
 			logger.log(Level.INFO, "fromUser: "  + fromUser);
 			logger.log(Level.INFO, "toUser: "  + toUser);

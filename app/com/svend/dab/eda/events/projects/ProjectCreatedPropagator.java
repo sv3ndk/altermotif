@@ -33,7 +33,7 @@ public class ProjectCreatedPropagator implements IEventPropagator<ProjectCreated
 	public void propagate(ProjectCreated event) throws DabException {
 		
 		Project project = event.getCreatedProject();
-		UserProfile creatorProfile = userProfileRepo.findOne(event.getCreatorId());
+		UserProfile creatorProfile = userProfileRepo.retrieveUserProfileById(event.getCreatorId());
 		
 		if (creatorProfile == null ) {
 			throw new DabPreConditionViolationException("Cannot propagate ProjectCreated event: creator profile does not exist: " + event.getCreatorId());
