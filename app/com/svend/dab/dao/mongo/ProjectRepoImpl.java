@@ -106,6 +106,13 @@ public class ProjectRepoImpl implements IProjectDao {
 	public void updateParticipantList(String projectId, List<Participant> newPList) {
 		genericUpdateProject(projectId, new Update().set("participants", newPList));
 	}
+
+	@Override
+	public void markParticipantAsAccepted(String projectId, String participantId) {
+		Query query = query(where("_id").is(projectId).and("participants.user._id").is(participantId));
+		Update update = new Update().set("participants.$.accepted", true);
+		mongoTemplate.updateFirst(query, update, Project.class);
+	}
 	
 	// --------------------------------
 	//
@@ -114,5 +121,6 @@ public class ProjectRepoImpl implements IProjectDao {
 		Query query = query(where("_id").is(projectId));
 		mongoTemplate.updateFirst(query, update, Project.class);
 	}
+
 	
 }

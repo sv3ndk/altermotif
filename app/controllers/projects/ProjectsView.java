@@ -3,6 +3,7 @@ package controllers.projects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import models.altermotif.MappedValue;
 import models.altermotif.projects.ProjectVisibility;
 
 import web.utils.Utils;
@@ -80,8 +81,11 @@ public class ProjectsView extends DabController{
 		
 	}
 	
+	/**
+	 * @param projectId
+	 * @param applicant
+	 */
 	public static void doRejectApplicationToProject(String projectId, String applicant) {
-		
 		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
 		if (project != null) {
 			
@@ -92,14 +96,32 @@ public class ProjectsView extends DabController{
 			} else {
 				logger.log(Level.WARNING, "user trying to reject application but is not allowed to,  this should be impossible, userid is" + getSessionWrapper().getLoggedInUserProfileId() + ", projectid is " + projectId);
 			}
-			
-			
 		} else {
 			logger.log(Level.WARNING, "user trying to reject application to a non existant project : " + projectId +" this should be impossible!");
 		}
+	}
+
+	/**
+	 * @param projectId
+	 * @param applicant
+	 */
+	public static void doAcceptApplicationToProject(String projectId, String applicant) {
 		
+		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
+		if (project != null) {
+			
+			ProjectPep pep = new ProjectPep(project);
+			
+			if (pep.isAllowedToAcceptOrRejectApplications(getSessionWrapper().getLoggedInUserProfileId())) {
+				BeanProvider.getProjectService().acceptApplication(applicant, project);
+			} else {
+				logger.log(Level.WARNING, "user trying to accept application but is not allowed to,  this should be impossible, userid is" + getSessionWrapper().getLoggedInUserProfileId() + ", projectid is " + projectId);
+			}
+		} else {
+			logger.log(Level.WARNING, "user trying to accept application to a non existant project : " + projectId +" this should be impossible!");
+		}
 		
-		
+		renderJSON(new MappedValue("truc", "much"));
 	}
 	
 }

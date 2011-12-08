@@ -17,7 +17,9 @@ public interface IProjectService {
 
 	public void applyToProject(String loggedInUserProfileId, String applicationText, Project project);
 
-	public void cancelApplication(String loggedInUserProfileId, Project project);
+	public void cancelApplication(String rejectedApplicantId, Project project);
+
+	public void acceptApplication(String applicantId, Project project);
 
 
 }

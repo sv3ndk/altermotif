@@ -6,7 +6,6 @@ function init() {
 	initPhotoGallery();
 	initApplicationMecanics();
 	
-	
 	refreshApplyLinkVisibility();
 	
 }
@@ -36,6 +35,7 @@ function initApplicationMecanics() {
 	
 	initViewParticipationMotivationText();
 	initRejectApplication();
+	initAcceptAppliction();
 	
 	$('#applyToProjectLink').click(function() {
 		$("#confirmApplyToProjectDialog").dialog("open");
@@ -188,5 +188,48 @@ function initRejectApplication() {
 		
 		]
 	});
+	
+}
+
+function initAcceptAppliction() {
+	
+	$("span.acceptApplication").click(function(event) {
+		applicantId = $(event.target).next().next().next().text();
+		$("#confirmAcceptApplicationtDialog").dialog("open");		
+	});
+	
+	$("#confirmAcceptApplicationtDialog").dialog({
+		autoOpen : false,
+		width: 400,
+		"buttons" : [ {
+			text : okLabelValue,
+			click : function(event) {
+				
+				$.post(acceptApplicationToProject(
+						{projectId: projectId, applicant: applicantId}
+						), 
+						function(data) {
+							setTimeout(400, function() {
+								refreshApplicationsAndPartipants();
+								$("#confirmAcceptApplicationtDialog").dialog("close");		
+							})
+						}
+				);
+				
+			}
+		},
+		
+		{
+			text : cancelLabelValue,
+			click : function() {
+				$(this).dialog("close");
+			}
+		}
+		
+		]
+	});
+}
+
+function refreshApplicationsAndPartipants() {
 	
 }

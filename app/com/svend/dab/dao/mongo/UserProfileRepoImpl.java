@@ -307,6 +307,13 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 	}
 
 
+	@Override
+	public void markParticipationHasAccepted(String userName, String projectId) {
+		Query query = query(where("username").is(userName).and("projects.projectSummary.projectId").is(projectId));
+		Update update = new Update().set("projects.$.accepted", true);
+		mongoTemplate.updateFirst(query, update, UserProfile.class);
+	}
+
 
 	
 	
@@ -334,11 +341,6 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 	public void save(UserProfile createdUserProfile) {
 		mongoTemplate.save(createdUserProfile);
 	}
-
-
-
-
-	
 
 
 }

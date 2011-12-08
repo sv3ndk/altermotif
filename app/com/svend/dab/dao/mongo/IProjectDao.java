@@ -40,4 +40,6 @@ public interface IProjectDao {
 
 	void updateParticipantList(String projectId, List<Participant> newPList);
 
+	void markParticipantAsAccepted(String projectId, String participantId);
+
 }

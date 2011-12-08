@@ -331,6 +331,7 @@ viewProjectViewAcceptContactRequest=Accept
 viewProjectViewRejectContactRequest=Reject
 applicationMoticationTextPopupTitle=Motivation text
 viewProjectConfirmRejectApplication=Are you sure you want to reject this participation application?
+viewProjectConfirmAcceptApplication=Are you sure you want to accept this participation application?
 
 # edit project page
 projectEditConfirmButton=Update project

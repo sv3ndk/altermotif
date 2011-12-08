@@ -334,6 +334,7 @@ viewProjectViewAcceptContactRequest=Accepteren
 viewProjectViewRejectContactRequest=Verwerpen
 applicationMoticationTextPopupTitle=Motivatietekst
 viewProjectConfirmRejectApplication=Weet u zeker dat u deze kandidaatstelling wil verwerpen?
+viewProjectConfirmAcceptApplication=***Are you sure you want to accept this participation application?
 
 
 # edit project page

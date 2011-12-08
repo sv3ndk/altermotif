@@ -14,6 +14,7 @@ import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.Project.STATUS;
 import com.svend.dab.dao.mongo.IProjectDao;
 import com.svend.dab.eda.EventEmitter;
+import com.svend.dab.eda.events.projects.ProjectApplicationAccepted;
 import com.svend.dab.eda.events.projects.ProjectApplicationCancelled;
 import com.svend.dab.eda.events.projects.ProjectApplicationEvent;
 import com.svend.dab.eda.events.projects.ProjectCreated;
@@ -83,6 +84,17 @@ public class ProjectService implements IProjectService {
 			return;
 		}
 		eventEmitter.emit(new ProjectApplicationCancelled(userId, project.getId()));
+	}
+
+	@Override
+	public void acceptApplication(String applicantId, Project project) {
+
+		if (Strings.isNullOrEmpty(applicantId) || project == null) {
+			logger.log(Level.WARNING, "not letting a null user cancel a proejct application or a user cancelling for a null project");
+			return;
+		}
+		eventEmitter.emit(new ProjectApplicationAccepted(applicantId, project.getId()));
+		
 	}
 
 	

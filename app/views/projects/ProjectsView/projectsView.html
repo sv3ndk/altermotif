@@ -27,6 +27,7 @@
 	    var applytoProject = #{jsAction @projects.ProjectsView.doApplyToProject(':projectId', ':applicationText') /};
 	    var cancelApplicationToProject = #{jsAction @projects.ProjectsView.doCancelApplyToProject(':projectId') /};
 	    var rejectApplicationToProject = #{jsAction @projects.ProjectsView.doRejectApplicationToProject(':projectId', ':applicant') /};
+	    var acceptApplicationToProject = #{jsAction @projects.ProjectsView.doAcceptApplicationToProject(':projectId', ':applicant') /};
 	    
 	    var isApplyLinkVisible = ${projectVisibility.isApplyLinkVisible()};
 	    var isCancelApplicationLinkVisible = ${projectVisibility.isCancelApplicationLinkVisible()};
@@ -124,4 +125,8 @@
 
 <div id="confirmRejectApplicationtDialog" title="&{'confirmationPopupTitle'}">
 	&{'viewProjectConfirmRejectApplication'}
+</div>
+
+<div id="confirmAcceptApplicationtDialog" title="&{'confirmationPopupTitle'}">
+	&{'viewProjectConfirmAcceptApplication'}
 </div>

@@ -331,6 +331,8 @@ viewProjectViewAcceptContactRequest=Kabul et
 viewProjectViewRejectContactRequest=Reddet
 applicationMoticationTextPopupTitle=Motivasyon mektubu
 viewProjectConfirmRejectApplication=Bu başvuruyu reddetmek istediğinize emin misiniz?
+viewProjectConfirmAcceptApplication=***Are you sure you want to accept this participation application?
+
 
 # edit project page
 projectEditConfirmButton=Proje güncelle

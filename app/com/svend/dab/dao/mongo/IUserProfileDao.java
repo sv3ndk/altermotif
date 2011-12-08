@@ -31,7 +31,8 @@ public interface IUserProfileDao {
 
 	public void replacePersonalData(UserProfile updatedUser, PersonalData pData);
 	
-	
+	public void save(UserProfile createdUserProfile);
+
 	// ------------------------------------------
 	// photos
 	
@@ -110,16 +111,7 @@ public interface IUserProfileDao {
 
 	public void updateProjectMainPhoto(String userName, String projectId, Photo mainPhoto);
 
-
-	
-	
-
-	public void save(UserProfile createdUserProfile);
-
-
-
-
-
+	public void markParticipationHasAccepted(String userId, String projectId);
 
 
 
