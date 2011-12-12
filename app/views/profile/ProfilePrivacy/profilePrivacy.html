@@ -30,7 +30,18 @@
 				<table>
 							<tr>
 								<td class="formlabel"><span >&{'privacySettingsProfileIsActive'}: </span></td>
-								<td><input type="checkbox" name="settings.profileActive" class="profileActiveCheckbx" ${editedPrivacy.profileActive ? 'checked' : ''} /> </td>
+								
+								<td>
+									#{if privacyPep.isAllowedToUpdateProfileActiveStatus()}
+										<input type="checkbox" name="settings.profileActive" class="profileActiveCheckbx" ${editedPrivacy.profileActive ? 'checked' : ''} />
+									#{/if}
+									#{if ! privacyPep.isAllowedToUpdateProfileActiveStatus()}
+										<input type="checkbox" name="settings.profileActive" class="profileActiveCheckbx" ${editedPrivacy.profileActive ? 'checked' : ''} disabled="disabled"/>
+										<br />
+										<span class="formFieldExplanation">&{'privacySettingsMayNotDeactivateExplanation'}</span>
+									#{/if}
+									 
+								</td>
 							</tr>
 							<tr>
 								<td><br /> 	</td>

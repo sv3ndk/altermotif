@@ -63,12 +63,10 @@ public class ProjectApplicationCancelledPropagator implements IEventPropagator<P
 		}
 		
 		// same idea as above
-		Participation existingParticipation = profile.getApplication(event.getProjectId());
-		if (existingParticipation != null) {
-			userProfileDao.removeParticipation(profile.getUsername(), existingParticipation);
-			
+		Participation participation = profile.getApplication(event.getProjectId());
+		if (participation != null) {
+			userProfileDao.removeParticipation(event.getUserId(), event.getProjectId());
 		}
-
 		
 	}
 

@@ -207,6 +207,7 @@ uploadCVPleaseWait=Please wait while the CV is being uploaded
 
 # manage privacy settings screens
 privacySettingsProfileIsActive=My profile is active
+privacySettingsMayNotDeactivateExplanation=You may not deactivate your profile because your are the owner of at least one project. You must transmit this ownership to another member of this project before being able to deactivate your profile.
 privacySettingsFirstName=My first name is visible to 
 privacySettingsLastName=My last name is visible to 
 privacySettingsNameExplanation=If neither your first nor last name is visible to a user, then this person will only see your username: 
@@ -324,7 +325,7 @@ viewProjectYouHaveAlreadyApplied=You have already applied to this project
 viewProjectCancelApplicationLink=Cancel application
 viewProjectApplyConfirmationText=Please motivate your application for participation in the project. Indicate why you want to participate and how you wish to contribute to the project (e.g. which means and/or tasks you could fulfill?). The more information you give, the more likely it is that your application will be taken seriouly.
 viewProjectApply=Apply to project
-viewProjectConfirmApply=Please enter a short motivation text explaining why you want to join this project. This text will be sent, togheter with your application, to the administrators of the project
+viewProjectConfirmApply=Please enter a short motivation text explaining why you want to join this project. This text will be sent, together with your application, to the administrators of the project
 viewProjectConfirmCancelApplication=Are you sure you want to cancel your application for this projects?
 viewProjectViewApplicationText=View application text
 viewProjectViewAcceptContactRequest=Accept
@@ -332,6 +333,15 @@ viewProjectViewRejectContactRequest=Reject
 applicationMoticationTextPopupTitle=Motivation text
 viewProjectConfirmRejectApplication=Are you sure you want to reject this participation application?
 viewProjectConfirmAcceptApplication=Are you sure you want to accept this participation application?
+profileViewRemoveParticipant=remove
+profileViewLeaveProject=leave
+profileViewMakeAdmin=make admin
+profileViewMakeMember=make member
+profileViewGiveOwnerShip=give ownership
+viewProjectConfirmRemoveParticipant=Are you sure you want to remove this participant from this project? Any task or asset assigned to him will now be unassigned.
+viewProjectConfirmLeaveProject=Are your sure you want to leave this project? Any task or asset currently assigned to you will now become unassigned
+viewProjectconfirMMakeAdmin=Are you sure you want to grant admin rights to this user on this project?
+viewProjectconfirMMakeMember=Are your sure you want to downgrade the privileges of this user to simple member?
 
 # edit project page
 projectEditConfirmButton=Update project

@@ -205,6 +205,7 @@ uploadCVPleaseWait=Veuillez attendre jusqu'à ce que le CV soit téléchargé
 
 # manage privacy settings screens
 privacySettingsProfileIsActive=Mon profil est actif
+privacySettingsMayNotDeactivateExplanation=***You may not deactivate your profile because your are the owner of at least one project. You must transmit this ownership to another member of this project before being able to deactivate your profile.
 privacySettingsFirstName=Mon prénom est visible à
 privacySettingsLastName=Mon nom de famille est visible à
 privacySettingsNameExplanation=Si votre prénom et votre nom de famille sont invisibles à un autre utilisateur, alors celui-ci ne verra que votre nom d'utilisateur
@@ -332,8 +333,15 @@ viewProjectViewRejectContactRequest=***Reject
 applicationMoticationTextPopupTitle=***Motivation text
 viewProjectConfirmRejectApplication=***Are you sure you want to reject this participation application?
 viewProjectConfirmAcceptApplication=***Are you sure you want to accept this participation application?
-
-
+profileViewRemoveParticipant=***remove
+profileViewLeaveProject=***leave
+profileViewMakeAdmin=***make admin
+profileViewMakeMember***=make member
+profileViewGiveOwnerShip=***give ownership
+viewProjectConfirmRemoveParticipant=***Are you sure you want to remove this participant from this project? Any task or asset assigned to him will now be unassigned.
+viewProjectConfirmLeaveProject=***Are your sure you want to leave this project? Any task or asset currently assigned to you will now become unassigned
+viewProjectconfirMMakeAdmin=***Are you sure you want to grant admin rights to this user on this project? 
+viewProjectconfirMMakeMember=***Are your sure you want to downgrade the privileges of this user to simple member?
 
 # edit project page
 projectEditConfirmButton=***Update project

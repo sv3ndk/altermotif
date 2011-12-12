@@ -5,6 +5,7 @@ import java.util.List;
 import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Participant;
+import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.Project;
 
 /**
@@ -41,5 +42,16 @@ public interface IProjectDao {
 	void updateParticipantList(String projectId, List<Participant> newPList);
 
 	void markParticipantAsAccepted(String projectId, String participantId);
+
+	void removeParticipant(String projectId, String userId);
+
+	void updateParticipantRole(String projectId, String userId, ROLE role);
+	
+	/**
+	 * @param projectId
+	 * @return a project with only the participants (if any)
+	 */
+	public Project loadProjectParticipants(String projectId);
+
 
 }

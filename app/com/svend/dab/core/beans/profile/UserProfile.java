@@ -14,6 +14,7 @@ import com.google.common.base.Strings;
 import com.svend.dab.core.beans.PhotoPack;
 import com.svend.dab.core.beans.aws.S3Link;
 import com.svend.dab.core.beans.profile.PrivacySettings.VISIBILITY;
+import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.Participation;
 
 import controllers.Application;
@@ -1039,6 +1040,22 @@ public class UserProfile implements Serializable {
 		}
 		return false;
 	}
+	
+	public boolean isOwnerOfAtLeastOneProject() {
+		
+		if (getConfirmedProjects() == null) {
+			return false;
+		}
+		
+		for (Participation participation : getConfirmedProjects()) {
+			if (participation.getRole() == ROLE.admin) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
 
 	public Long getNumberOfConfirmedProjects() {
 
@@ -1061,19 +1078,29 @@ public class UserProfile implements Serializable {
 	}
 
 	public Participation getApplication(String projectId) {
-		
 		if (Strings.isNullOrEmpty(projectId)) {
 			return null;
 		}
-		
 		for (Participation participation: getApplications()) {
 			if (projectId.equals(participation.getProjectSummary().getProjectId())) {
 				return participation;
 			}
 		}
 		return null;
-		
 	}
+
+	public Participation getProject(String projectId) {
+		if (Strings.isNullOrEmpty(projectId)) {
+			return null;
+		}
+		for (Participation project: getProjects()) {
+			if (projectId.equals(project.getProjectSummary().getProjectId())) {
+				return project;
+			}
+		}
+		return null;
+	}
+	
 
 	public int getMainPhotoIndex() {
 		return mainPhotoIndex;
@@ -1082,6 +1109,7 @@ public class UserProfile implements Serializable {
 	public void setMainPhotoIndex(int mainPhotoIndex) {
 		this.mainPhotoIndex = mainPhotoIndex;
 	}
+
 
 
 }

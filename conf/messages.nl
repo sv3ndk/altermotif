@@ -208,6 +208,7 @@ uploadCVPleaseWait=Gelieve te wachten totdat de CV is opgeladen
 
 # manage privacy settings screens
 privacySettingsProfileIsActive=Mijn profiel is actief
+privacySettingsMayNotDeactivateExplanation=***You may not deactivate your profile because your are the owner of at least one project. You must transmit this ownership to another member of this project before being able to deactivate your profile.
 privacySettingsFirstName=Mijn voornaam is zichtbaar voor
 privacySettingsLastName=Mijn achternaam is zichtbaar voor
 privacySettingsNameExplanation=Wanneer zowel mijn voor- als achternaam onzichtbaar zijn, dan zal deze gebruiker enkel uw gebruikersnaam zien:
@@ -335,6 +336,15 @@ viewProjectViewRejectContactRequest=Verwerpen
 applicationMoticationTextPopupTitle=Motivatietekst
 viewProjectConfirmRejectApplication=Weet u zeker dat u deze kandidaatstelling wil verwerpen?
 viewProjectConfirmAcceptApplication=***Are you sure you want to accept this participation application?
+profileViewRemoveParticipant=***remove
+profileViewLeaveProject=***leave
+profileViewMakeAdmin=***make admin
+profileViewMakeMember***=make member
+profileViewGiveOwnerShip=***give ownership
+viewProjectConfirmRemoveParticipant=***Are you sure you want to remove this participant from this project? Any task or asset assigned to him will now be unassigned.
+viewProjectConfirmLeaveProject=***Are your sure you want to leave this project? Any task or asset currently assigned to you will now become unassigned
+viewProjectconfirMMakeAdmin=***Are you sure you want to grant admin rights to this user on this project? 
+viewProjectconfirMMakeMember=***Are your sure you want to downgrade the privileges of this user to simple member?
 
 
 # edit project page

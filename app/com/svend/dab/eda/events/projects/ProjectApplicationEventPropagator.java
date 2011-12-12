@@ -45,7 +45,7 @@ public class ProjectApplicationEventPropagator implements IEventPropagator<Proje
 		}
 
 		// in case of event retries, the user could already have been inserted => just doing nothing in that case
-		if (! project.isUserAlreadyApplying(event.getApplyingUserId()) && ! project.isUserAlreadyMember(event.getApplyingUserId())) {
+		if (! project.isUserApplying(event.getApplyingUserId()) && ! project.isUserAlreadyMember(event.getApplyingUserId())) {
 			Participant createdParticipant = new Participant(ROLE.member, profile, event.getApplicationText());
 			createdParticipant.setAccepted(false);
 			projetRepo.addOneParticipant(event.getProjectId(), createdParticipant);

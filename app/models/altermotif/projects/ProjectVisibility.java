@@ -1,5 +1,6 @@
 package models.altermotif.projects;
 
+import com.google.common.base.Strings;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.ProjectPep;
 
@@ -24,10 +25,6 @@ public class ProjectVisibility {
 		this.visitingUserId = visitingUserId;
 	}
 
-	
-	
-
-	
 	
 	//////////////////////////
 	// toolbox visibility
@@ -69,23 +66,43 @@ public class ProjectVisibility {
 		return pep.isAllowedToSeeApplications(visitingUserId);
 	}
 	
+	public boolean isAllowedToAcceptOrRejectApplications() {
+		return pep.isAllowedToAcceptOrRejectApplications(visitingUserId);
+	}
+	
 	
 	public boolean isApplyLinkVisible() {
 		if (visitingUserId == null) {
-			// must be logged in to apply
 			return false;
 		}
-		return ! project.isUserAlreadyMember(visitingUserId) && ! project.isUserAlreadyApplying(visitingUserId);
+		return ! project.isUserAlreadyMember(visitingUserId) && ! project.isUserApplying(visitingUserId);
 	}
 	
 	public boolean isCancelApplicationLinkVisible() {
 		if (visitingUserId == null) {
-			// must be logged in to apply
 			return false;
 		}
-		
-		return project.isUserAlreadyApplying(visitingUserId);
+		return project.isUserApplying(visitingUserId);
 	}
 	
+	public boolean isDeleteParticipantLinkVisible(String rejectedUserId) {
+		return pep.isAllowedToEjectParticipant(visitingUserId, rejectedUserId) && ! Strings.isNullOrEmpty(visitingUserId) && !visitingUserId.equals(rejectedUserId);
+	}
+	
+	public boolean isLeaveProjectLinkVisible(String rejectedUserId) {
+		return visitingUserId != null && visitingUserId.equals(rejectedUserId) && pep.isAllowedToLeave(visitingUserId);
+	}
+	
+	public boolean isMakeAdminLinkVisible(String upgradedUserId) {
+		return pep.isAllowedToMakeAdmin(visitingUserId, upgradedUserId);
+	}
+
+	public boolean isMakeMemberLinkVisible(String downgradedUser) {
+		return pep.isAllowedToMakeMember(visitingUserId, downgradedUser);
+	}
+
+	public boolean isGiveOwnershipLinkVisible(String downgradedUser) {
+		return pep.isAllowedGiveOwnership(visitingUserId, downgradedUser);
+	}
 
 }

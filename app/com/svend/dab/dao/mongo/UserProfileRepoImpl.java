@@ -12,12 +12,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.mongodb.core.CollectionCallback;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCollection;
+import com.mongodb.MongoException;
+import com.mongodb.WriteResult;
 import com.svend.dab.core.beans.profile.Contact;
 import com.svend.dab.core.beans.profile.PersonalData;
 import com.svend.dab.core.beans.profile.Photo;
@@ -25,6 +31,7 @@ import com.svend.dab.core.beans.profile.PrivacySettings;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserReference;
 import com.svend.dab.core.beans.profile.UserSummary;
+import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.Participation;
 
 @Service
@@ -286,8 +293,18 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 	}
 	
 	@Override
-	public void removeParticipation(String username, Participation existingParticipation) {
-		genericUpdateUser(username, new Update().pull("projects", existingParticipation));
+	public void removeParticipation(final String username, final String projectId) {
+		
+		// db.userProfile.update({'_id':'toto'},{'$pull':{'projects':{'projectSummary.projectId':'a13784b5bb9b474fa90f0839c7ea356c'}}});
+		
+		mongoTemplate.execute("userProfile", new CollectionCallback<WriteResult>() {
+			@Override
+			public WriteResult doInCollection(DBCollection collection) throws MongoException, DataAccessException {
+				BasicDBObject queryDbo = new BasicDBObject("_id", username);
+				BasicDBObject pullDbo = new BasicDBObject("$pull", new BasicDBObject("projects", new BasicDBObject("projectSummary.projectId", projectId)));
+				return collection.update(queryDbo, pullDbo);
+			}
+		});
 	}
 	
 	
@@ -315,7 +332,12 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 	}
 
 
-	
+	@Override
+	public void updateProjectRole(String userName, String projectId, ROLE role) {
+		Query query = query(where("username").is(userName).and("projects.projectSummary.projectId").is(projectId));
+		Update update = new Update().set("projects.$.role", role);
+		mongoTemplate.updateFirst(query, update, UserProfile.class);
+	}
 	
 	// -------------------------------------
 	// -------------------------------------
@@ -341,6 +363,9 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 	public void save(UserProfile createdUserProfile) {
 		mongoTemplate.save(createdUserProfile);
 	}
+
+
+
 
 
 }

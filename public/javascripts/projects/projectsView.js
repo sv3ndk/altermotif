@@ -2,11 +2,17 @@ function init() {
 
 	// this is present in languages.js
 	initAllPossibleLanguagesMap();
+
+	// this is present in simpleActions.js
+	initAskAndAct();
+	
 	insertLangugeName();
 	initPhotoGallery();
 	initApplicationMecanics();
-	
+	initParticipantsMecanics();
 	refreshApplyLinkVisibility();
+	
+//	setInterval(refreshApplicationsAndPartipants, 2000);
 	
 }
 
@@ -34,8 +40,7 @@ function insertLangugeName() {
 function initApplicationMecanics() {
 	
 	initViewParticipationMotivationText();
-	initRejectApplication();
-	initAcceptAppliction();
+	initAcceptRejectAppliction();
 	
 	$('#applyToProjectLink').click(function() {
 		$("#confirmApplyToProjectDialog").dialog("open");
@@ -149,87 +154,260 @@ function initViewParticipationMotivationText() {
 	});
 }
 
+
+//////////////////////////////////////////////////////////////////
+// applications
 	
 var applicantId;
 var applicationDiv;
-function initRejectApplication() {
 
-	$("span.rejectApplication").click(function(event) {
-		applicantId = $(event.target).next().text();
-		applicationDiv = $(event.target).parent();
-		$("#confirmRejectApplicationtDialog").dialog("open");		
-	});
+function initAcceptRejectAppliction() {
+	// this is defined in simpleActions.js
+	askAndAct_On("#projectApplications", "span.acceptApplication", confirmAcceptApplicationText, whenUserConfirmsAcceptApplication);
+	askAndAct_On("#projectApplications", "span.rejectApplication", confirmRejectApplicationText, whenUserConfirmsRejectApplication);
+}
+
+function whenUserConfirmsAcceptApplication() {
+	applicantId = $(event.target).next().next().next().text();
+	setConfirmationFunction(onConfirmAcceptApplication);
+}
 	
-	$("#confirmRejectApplicationtDialog").dialog({
-		autoOpen : false,
-		width: 400,
-		"buttons" : [ {
-			text : okLabelValue,
-			click : function(event) {
-				
-				$.post(rejectApplicationToProject(
-						{projectId: projectId, applicant: applicantId}
-						), 
-						function(data) {
-							applicationDiv.slideUp();
-							$("#confirmRejectApplicationtDialog").dialog("close");
-						}
-				);
-				
-			}
-		},
-		
-		{
-			text : cancelLabelValue,
-			click : function() {
-				$(this).dialog("close");
-			}
+function onConfirmAcceptApplication() {
+	$.post(acceptApplicationToProject(
+			{projectId: projectId, applicant: applicantId}
+		), 
+		function(data) {
+			setTimeout(function() {
+				refreshApplicationsAndPartipants();
+				closeConfirmationDialog();
+			},400);
 		}
-		
-		]
-	});
+	);
+}
+	
+function whenUserConfirmsRejectApplication() {
+	applicantId = $(event.target).next().next().next().text();
+	setConfirmationFunction(onConfirmRejectApplication);
+}	
+				
+function onConfirmRejectApplication() {
+	$.post(rejectApplicationToProject(
+		{projectId: projectId, applicant: applicantId}
+		), 
+		function(data) {
+			refreshApplicationsAndPartipants();
+			closeConfirmationDialog();
+		}
+	);
+}
+
+
+//////////////////////////////////////
+
+var participantId;
+
+function initParticipantsMecanics() {
+	// this is defined in simpleActions.js
+	askAndAct_On("#projectParticipants", "span.removeParticipant", confirmRemoveParticipantText, whenUserConfirmsRemoveParticipant);
+	askAndAct_On("#projectParticipants", "span.leaveProject", confirmLeaveProjectText, whenUserConfirmsLeavesProject);
+	askAndAct_On("#projectParticipants", "span.makeAdmin", confirmMakeAdminText, whenUserConfirmsMakeAdmin);
+	askAndAct_On("#projectParticipants", "span.makeMember", confirmMakeMemberText, whenUserConfirmsMakeMember);
+}
+
+function whenUserConfirmsRemoveParticipant(event) {
+	participantId = $(event.target).parent().find("span.hidden").text();
+	setConfirmationFunction(onConfirmRemoveParticipant);
+}
+
+function onConfirmRemoveParticipant() {
+	$.post(removeParticipantOfProject(
+			{projectId: projectId, participant: participantId}
+		), 
+		function(data) {
+			setTimeout(function() {
+				refreshApplicationsAndPartipants();
+				closeConfirmationDialog();
+			}, 400);
+		}
+	);
+}
+
+
+function whenUserConfirmsLeavesProject() {
+	setConfirmationFunction(onConfirmLeaveProject);
+}
+
+function onConfirmLeaveProject() {
+	$.post(leaveProject(
+			{projectId: projectId}
+		), 
+		function(data) {
+			setTimeout(function() {
+				refreshApplicationsAndPartipants();
+				closeConfirmationDialog();
+				
+				// TODO: this is a bit ugly: we should check errors from server side rather than assuming the exit is successful	
+				isApplyLinkVisible = true;
+				isCancelApplicationLinkVisible = false;
+				refreshApplyLinkVisibility();
+			}, 400);
+		}
+	);
+}
+
+function whenUserConfirmsMakeAdmin() {
+	participantId = $(event.target).parent().find("span.hidden").text();
+	setConfirmationFunction(onConfirmMakeAdmin);
+}
+
+function onConfirmMakeAdmin() {
+	$.post(makeAdmin(
+			{projectId: projectId, participant:participantId}
+	), 
+	
+		function(data) {
+			setTimeout(function() {
+				updateParticipantOneLineContainer(participantId);
+				closeConfirmationDialog();
+			}, 400);
+		}
+	);
+}
+
+
+function whenUserConfirmsMakeMember() {
+	participantId = $(event.target).parent().find("span.hidden").text();
+	setConfirmationFunction(onConfirmMakeMember);
+}
+
+function onConfirmMakeMember() {
+	$.post(makeMember(
+			{projectId: projectId, participant:participantId}
+	), 
+	
+		function(data) {
+			setTimeout(function() {
+				updateParticipantOneLineContainer(participantId);
+				closeConfirmationDialog();
+			}, 400);
+		}
+	);
 	
 }
 
-function initAcceptAppliction() {
+
+
 	
-	$("span.acceptApplication").click(function(event) {
-		applicantId = $(event.target).next().next().next().text();
-		$("#confirmAcceptApplicationtDialog").dialog("open");		
-	});
-	
-	$("#confirmAcceptApplicationtDialog").dialog({
-		autoOpen : false,
-		width: 400,
-		"buttons" : [ {
-			text : okLabelValue,
-			click : function(event) {
-				
-				$.post(acceptApplicationToProject(
-						{projectId: projectId, applicant: applicantId}
-						), 
-						function(data) {
-							setTimeout(400, function() {
-								refreshApplicationsAndPartipants();
-								$("#confirmAcceptApplicationtDialog").dialog("close");		
-							})
-						}
-				);
-				
-			}
-		},
-		
-		{
-			text : cancelLabelValue,
-			click : function() {
-				$(this).dialog("close");
-			}
-		}
-		
-		]
-	});
-}
+	/////////////////////////////////////////////
+// refreshing the participants and applications
+
 
 function refreshApplicationsAndPartipants() {
+
+	var knownParticipantUsernames = computedKnownParticipantUsernames();
+	var knownApplicationUsernames = computedKnownApplicationUsernames();
+
+	refreshRemovedApplicationsAndParticipants(knownParticipantUsernames, knownApplicationUsernames);
+	refreshAddedApplicationsAndParticipants(knownParticipantUsernames, knownApplicationUsernames);
+}
+
+
+function refreshRemovedApplicationsAndParticipants(knownParticipantUsernames, knownApplicationUsernames) {
+
+	partJson = JSON.stringify(knownParticipantUsernames);
+	appJson = JSON.stringify(knownApplicationUsernames);
+	
+	$.post(determineRemovedParticipantsAndApplications(
+			{projectId: projectId, knownParticipantUsernames: partJson, knownApplicationUsernames: appJson}
+			), 
+			function(data) {
+				removeObsoletParticipants(data.confirmedParticipants);
+				removeObsoletApplications(data.unconfirmedParticipants);
+			}
+		);
+}
+
+function refreshAddedApplicationsAndParticipants(knownParticipantUsernames, knownApplicationUsernames) {
+	$.post(determineAddedParticipantsAndApplications(
+			{projectId: projectId, knownParticipantUsernames: partJson, knownApplicationUsernames: appJson}
+		), 
+		function(htmlData) {
+			addNewParticipantsAndApplications(htmlData);
+		}
+	);
 	
 }
+
+function computedKnownParticipantUsernames() {
+	var knownParticipantUsernames = [];
+	$("#projectParticipants .oneUserSummary .oneLinerContentContainer .hiddenUserName").each(
+			function(index, element) {
+				knownParticipantUsernames.push($(element).text());
+			}
+	);
+	return knownParticipantUsernames;
+}
+
+function computedKnownApplicationUsernames() {
+	var knownApplicationUsernames = [];
+	$("#projectApplications .oneLinerContentContainer .hiddenUserName").each(
+			function(index, element) {
+				knownApplicationUsernames.push($(element).text());
+			}
+	);
+	return knownApplicationUsernames;
+}
+
+
+function removeObsoletParticipants(removedConfirmedParticipants) {
+	for (var key in removedConfirmedParticipants) {
+		var divToRemove = $("#participant" + removedConfirmedParticipants[key]);
+		$(divToRemove).slideUp(250);
+	}
+}
+
+function removeObsoletApplications(removedUnconfirmedParticipants) {
+	for (var key in removedUnconfirmedParticipants) {
+		var divToRemove = $("#application" + removedUnconfirmedParticipants[key] );
+		$(divToRemove).slideUp(250);
+	}
+}
+
+
+function addNewParticipantsAndApplications(htmlData) {
+	$("#numberOfParticipantSpan").text($(htmlData).find("#numberOfParticipantSpan").text());
+	$("#numberOfApplicantsSpan").text($(htmlData).find("#numberOfApplicantsSpan").text());
+	
+	$(htmlData).find("#projectParticipants .oneUserSummary").each(
+			function(index, element){
+				$(element).addClass("hidden");
+				$("#projectParticipants .toggleContainer").append(element);
+				$("#projectParticipants .toggleContainer .oneUserSummary.hidden").slideDown(250);
+			}
+		);
+
+	if ($(htmlData).find("#projectApplications") == undefined || $(htmlData).find("#projectApplications").length == 0) {
+		$("#projectApplications").remove();
+	} else {
+		$(htmlData).find("#projectApplications .oneUserSummary").each(
+			function(index, element){
+				$("#projectApplications .toggleContainer").append(element);
+			}
+		);
+	}
+}
+
+
+function updateParticipantOneLineContainer(participantId) {
+	// oneLinerContentContainer
+	
+	$.post(retrieveUpdatedParticipantContentData(
+			{projectId: projectId, participant:participantId}
+			), 
+			function(htmlData) {
+				$("#participant"+participantId).find(".oneLinerContentContainer").replaceWith($(htmlData).find(".oneLinerContentContainer"));
+			}
+		);
+}
+
+

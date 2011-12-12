@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import models.altermotif.profile.EditedProfile;
 
 import com.svend.dab.core.beans.profile.PrivacySettings;
+import com.svend.dab.core.beans.profile.PrivacySettingsPep;
 import com.svend.dab.core.beans.profile.UserProfile;
 
 import controllers.Application;
@@ -30,6 +31,8 @@ public class ProfilePrivacy extends DabLoggedController {
 				
 			}
 			renderArgs.put(EDITED_PRIVACY_RENDERARG_NAME , userProfile.getPrivacySettings());
+			renderArgs.put("privacyPep" , new PrivacySettingsPep(userProfile));
+			
     	}
     	
         render();

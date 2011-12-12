@@ -11,6 +11,7 @@ import com.svend.dab.core.beans.profile.PrivacySettings;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserReference;
 import com.svend.dab.core.beans.profile.UserSummary;
+import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.Participation;
 
 public interface IUserProfileDao {
@@ -19,7 +20,6 @@ public interface IUserProfileDao {
 	// core profile data
 	
 	public Set<String> getAllUsernames();
-	
 	
 	public List<UserProfile> retrieveUserProfilesByIds(List<String> ids);
 	
@@ -107,11 +107,13 @@ public interface IUserProfileDao {
 	
 	public void addProjectParticipation(UserProfile userProfile, Participation participation);
 
-	public void removeParticipation(String username, Participation existingParticipation);
+	public void removeParticipation(String username, String projectId);
 
 	public void updateProjectMainPhoto(String userName, String projectId, Photo mainPhoto);
 
 	public void markParticipationHasAccepted(String userId, String projectId);
+
+	public void updateProjectRole(String userId, String projectId, ROLE role);
 
 
 

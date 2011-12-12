@@ -10,29 +10,39 @@
 	<script type="text/javascript"
 		src="http://maps.google.com/maps/api/js?sensor=false"></script>
 
-    <script src="@{'/public/javascripts/nondab/colorbox/jquery.colorbox.js'}" type="text/javascript"
-    	charset="${_response_encoding}"></script>
-	
-	<script src="@{'/public/javascripts/dabGeocoder.js'}"
-		type="text/javascript" charset="${_response_encoding}"></script>
-	
-	<script src="@{'/public/javascripts/language.js'}"
-		type="text/javascript" charset="${_response_encoding}"></script>
-	
-	<script src="@{'/public/javascripts/projects/projectsView.js'}"
-		type="text/javascript" charset="${_response_encoding}"></script>
+    <script src="@{'/public/javascripts/nondab/colorbox/jquery.colorbox.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+	<script src="@{'/public/javascripts/dabGeocoder.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+	<script src="@{'/public/javascripts/language.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+	<script src="@{'/public/javascripts/simpleActions.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+	<script src="@{'/public/javascripts/projects/projectsView.js'}" type="text/javascript" charset="${_response_encoding}"></script>
 	
 	<script type="text/javascript">
 	
-	    var applytoProject = #{jsAction @projects.ProjectsView.doApplyToProject(':projectId', ':applicationText') /};
-	    var cancelApplicationToProject = #{jsAction @projects.ProjectsView.doCancelApplyToProject(':projectId') /};
-	    var rejectApplicationToProject = #{jsAction @projects.ProjectsView.doRejectApplicationToProject(':projectId', ':applicant') /};
-	    var acceptApplicationToProject = #{jsAction @projects.ProjectsView.doAcceptApplicationToProject(':projectId', ':applicant') /};
+	    var applytoProject 				= #{jsAction @projects.ProjectsView.doApplyToProject(':projectId', ':applicationText') /};
+	    var cancelApplicationToProject 	= #{jsAction @projects.ProjectsView.doCancelApplyToProject(':projectId') /};
+	    var rejectApplicationToProject 	= #{jsAction @projects.ProjectsView.doRejectApplicationToProject(':projectId', ':applicant') /};
+	    var leaveProject 				= #{jsAction @projects.ProjectsView.doLeaveProject(':projectId') /};
+	    var acceptApplicationToProject 	= #{jsAction @projects.ProjectsView.doAcceptApplicationToProject(':projectId', ':applicant') /};
+	    
+	    var removeParticipantOfProject 	= #{jsAction @projects.ProjectsView.doRemoveParticipantOfProject(':projectId', ':participant') /};
+	    var makeAdmin 					= #{jsAction @projects.ProjectsView.doMakeAdmin(':projectId', ':participant') /};
+	    var makeMember 					= #{jsAction @projects.ProjectsView.doMakeMember(':projectId', ':participant') /};
+	    
+	    var determineRemovedParticipantsAndApplications = #{jsAction @projects.ProjectsView.doDetermineRemovedParticipantsAndApplications(':projectId', ':knownParticipantUsernames', ':knownApplicationUsernames') /};
+	    var determineAddedParticipantsAndApplications 	= #{jsAction @projects.ProjectsView.doDetermineAddedParticipantsAndApplications(':projectId', ':knownParticipantUsernames', ':knownApplicationUsernames') /};
+	    var retrieveUpdatedParticipantContentData 		= #{jsAction @projects.ProjectsView.doRetrieveParticipantContentData(':projectId', ':participant') /};
+	    
 	    
 	    var isApplyLinkVisible = ${projectVisibility.isApplyLinkVisible()};
 	    var isCancelApplicationLinkVisible = ${projectVisibility.isCancelApplicationLinkVisible()};
 	    
 	    var projectId = "${visitedProject.id}"; 
+	    var confirmRemoveParticipantText 	= "&{'viewProjectConfirmRemoveParticipant'}";
+	    var confirmAcceptApplicationText 	= "&{'viewProjectConfirmAcceptApplication'}";
+	    var confirmRejectApplicationText 	= "&{'viewProjectConfirmRejectApplication'}";
+	    var confirmLeaveProjectText 		= "&{'viewProjectConfirmLeaveProject'}";
+	    var confirmMakeAdminText 			= "&{'viewProjectconfirMMakeAdmin'}";
+	    var confirmMakeMemberText 			= "&{'viewProjectconfirMMakeMember'}";
 	
 		$(document).ready(function() {
 			init();
@@ -85,25 +95,12 @@
 	<div id="projectBody">
 		#{projects.viewProjectDescription visitedProject:visitedProject/}
 
-		<div id="projectParticipants">
-			<span class="toggleLink dabLink">&{'viewProjectParticipants'} (${visitedProject.numberOfConfirmedParticipants}) </span>
-			<div class="toggleContainer">
-				#{list items:visitedProject.confirmedParticipants, as:'participant'}
-					#{projects.participant participant:participant /} 
-				#{/list}
-			</div>
-		</div>
-		
-		#{if projectVisibility.isVisibleApplicationBox()}
-		<div id="projectApplications">
-			<span class="toggleLink dabLink">&{'viewProjectApplications'} (${visitedProject.numberOfApplications}) </span>
-			<div class="toggleContainer">
-				#{list items:visitedProject.unconfirmedActiveParticipants, as:'application'}
-					#{projects.application application:application /} 
-				#{/list}
-			</div>
-		</div>
-		#{/if}
+		#{projects.viewProjectParticipantsAndApplications 	confirmedParticipants:visitedProject.confirmedParticipants, 
+															unconfirmedActiveParticipants:visitedProject.unconfirmedActiveParticipants,
+															numberOfConfirmedParticipants:visitedProject.numberOfConfirmedParticipants,
+															numberOfApplications:visitedProject.numberOfApplications,
+															projectVisibility:projectVisibility
+												 			/}
 	</div>
 </div>
 
@@ -123,10 +120,3 @@
 	<textarea readonly="readonly" rows="7" cols="45" ></textarea>
 </div>
 
-<div id="confirmRejectApplicationtDialog" title="&{'confirmationPopupTitle'}">
-	&{'viewProjectConfirmRejectApplication'}
-</div>
-
-<div id="confirmAcceptApplicationtDialog" title="&{'confirmationPopupTitle'}">
-	&{'viewProjectConfirmAcceptApplication'}
-</div>

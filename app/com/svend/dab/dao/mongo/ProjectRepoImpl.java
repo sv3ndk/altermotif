@@ -6,19 +6,30 @@ package com.svend.dab.dao.mongo;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.mongodb.core.CollectionCallback;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCollection;
+import com.mongodb.MongoException;
+import com.mongodb.WriteResult;
 import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Participant;
+import com.svend.dab.core.beans.projects.Participant.ROLE;
+import com.svend.dab.core.beans.projects.Participation;
 import com.svend.dab.core.beans.projects.Project;
+import com.svend.dab.core.beans.projects.ProjectSummary;
 
 /**
  * @author Svend
@@ -114,6 +125,38 @@ public class ProjectRepoImpl implements IProjectDao {
 		mongoTemplate.updateFirst(query, update, Project.class);
 	}
 	
+	@Override
+	public void removeParticipant(final String projectId, final String userId) {
+		// Spring data is currently missing one level of indirection for this, 
+		// db.project.update({'pdata.name':'eee'}, { $pull : {'participants': {'user._id' : 'testuser'}} }); 
+		mongoTemplate.execute("project", new CollectionCallback<WriteResult>() {
+			@Override
+			public WriteResult doInCollection(DBCollection collection) throws MongoException, DataAccessException {
+				BasicDBObject queryDbo = new BasicDBObject("_id", projectId);
+				BasicDBObject pullDbo = new BasicDBObject("$pull", new BasicDBObject("participants", new BasicDBObject("user._id", userId)));
+				return collection.update(queryDbo, pullDbo);
+			}
+		});
+	}
+	
+	
+	@Override
+	public void updateParticipantRole(String projectId, String userId, ROLE role) {
+		Query query = query(where("_id").is(projectId).and("participants.user._id").is(userId));
+		Update update = new Update().set("participants.$.role", role);
+		mongoTemplate.updateFirst(query, update, Project.class);
+	}
+
+	
+	@Override
+	public Project loadProjectParticipants(String projectId) {
+		Query query = query(where("_id").is(projectId));
+		query.fields().include("participants");
+		return mongoTemplate.findOne(query, Project.class);
+	}
+	
+	
+	
 	// --------------------------------
 	//
 
@@ -121,6 +164,9 @@ public class ProjectRepoImpl implements IProjectDao {
 		Query query = query(where("_id").is(projectId));
 		mongoTemplate.updateFirst(query, update, Project.class);
 	}
+
+
+
 
 	
 }

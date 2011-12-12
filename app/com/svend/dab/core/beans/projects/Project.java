@@ -251,7 +251,7 @@ public class Project {
 	}
 	
 	
-	public boolean isUserAlreadyApplying(String userId) {
+	public boolean isUserApplying(String userId) {
 		if (getUnconfirmedActiveParticipants() == null || userId == null) {
 			return false;
 		}

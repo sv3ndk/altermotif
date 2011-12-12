@@ -216,7 +216,7 @@ public class ProfileView extends DabController {
 	 */
 	public static void getRemoveContacts(String vuser, List<String> knownPendingReceivedIds, List<String> knownPendingSentIds, List<String> knownContactsIds) {
 
-		// todo: optimization: we actuall load the profile twice here!
+		// todo: optimization: we actually load the profile twice here!
 
 		RemoveContactsJsonResponse response = new RemoveContactsJsonResponse();
 		response.setRemovedIds(BeanProvider.getUserProfileService().determineNonExistingAnyContact(vuser, knownPendingReceivedIds, knownPendingSentIds, knownContactsIds));

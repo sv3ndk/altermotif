@@ -1,31 +1,64 @@
-<div class="oneUserSummary">
+<div class="oneUserSummary" id="participant${ _participant.user.userName}">
 
+	<div class="oneLinerThumbContainer">
 		#{if _participant.user.isProfileActive() }
 			<a href="@{profile.ProfileView.profileView(_participant.user.userName)}" class="dabLink">
 		#{/if }
-
+	
 			#{if _participant.user.mainPhotoThumbLink == null}
 				<img src="@{'/public/images/defaultProfileThumb.jpg'}" class="oneLinerThumb" />
 			#{/if }
 			#{if _participant.user.mainPhotoThumbLink != null}
 				<img class="oneLinerThumb" src="${_participant.user.mainPhotoThumbLink}"/> 
 			#{/if }
-
+	
 		#{if _participant.user.isProfileActive() }
 			</a>
-			<br />
+		#{/if }
+	</div>
+
+	<div class="oneLinerContentContainer">
+
+		<span class="hidden hiddenUserName" >${_participant.user.userName}</span>
+
+		<br />
+		#{if _participant.user.isProfileActive() }
 			<a href="@{profile.ProfileView.profileView(_participant.user.userName)}" class="dabLink">${_participant.user.userName}</a>
 		#{/if }
-
-		
 		#{if !_participant.user.isProfileActive() }
-			<br />
 			<span class="dabLinkDisabled">${_participant.user.userName}</span>
 		#{/if }
-		
-	<br />
-	${_participant.user.location}
-	<br />
-	${messages.get(_participant.role.label) }
+		<br />
+			
+		#{if _projectVisibility.isDeleteParticipantLinkVisible(_participant.user.userName)}
+			<span class="dabLink removeParticipant">&{'profileViewRemoveParticipant'}</span>
+			<span>&nbsp;&nbsp;&nbsp;</span>
+		#{/if}
+	
+		#{if _projectVisibility.isLeaveProjectLinkVisible(_participant.user.userName)}
+			<span class="dabLink leaveProject">&{'profileViewLeaveProject'}</span>
+			<span>&nbsp;&nbsp;&nbsp;</span>
+		#{/if}
+	
+		#{if _projectVisibility.isMakeAdminLinkVisible(_participant.user.userName)}
+			<span class="dabLink makeAdmin">&{'profileViewMakeAdmin'}</span>
+			<span>&nbsp;&nbsp;&nbsp;</span>
+		#{/if}
+	
+		#{if _projectVisibility.isMakeMemberLinkVisible(_participant.user.userName)}
+			<span class="dabLink makeMember">&{'profileViewMakeMember'}</span>
+			<span>&nbsp;&nbsp;&nbsp;</span>
+		#{/if}
+	
+		#{if _projectVisibility.isGiveOwnershipLinkVisible(_participant.user.userName)}
+			<span class="dabLink">&{'profileViewGiveOwnerShip'}</span>
+			<span>&nbsp;&nbsp;&nbsp;</span>
+		#{/if}
+			
+		<br />
+		${_participant.user.location}
+		<br />
+		${messages.get(_participant.role.label) }
+	</div>
 
 </div>
