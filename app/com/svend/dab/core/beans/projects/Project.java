@@ -63,6 +63,9 @@ public class Project {
 	private Participant cachedInitiator;
 
 	@Transient
+	private Participant cachedProposedInitiator;
+
+	@Transient
 	private List<Participant> cachedConfirmedParticipants;
 
 	@Transient
@@ -154,7 +157,6 @@ public class Project {
 
 
 	public Participant getInitiator() {
-
 		if (participants == null) {
 			// this should never happen: we should always have one participant: the initiator!
 			return null;
@@ -168,10 +170,30 @@ public class Project {
 				}
 			}
 		}
-
 		return cachedInitiator;
 	}
 
+	/**
+	 * @return this method often returns null: it returns the {@link Participant} of a member of this projcet to who the owner has proposed to transfer the ownership (this only exist until this user either accept or refuse)
+	 */
+	public Participant getProposedInitiator() {
+		
+		if (participants == null) {
+			// this should never happen: we should always have one participant: the initiator!
+			return null;
+		}
+		
+		if (cachedProposedInitiator == null) {
+			for (Participant participant : participants) {
+				if (participant.isOwnershipProposed()) {
+					cachedProposedInitiator = participant;
+					break;
+				}
+			}
+		}
+		return cachedProposedInitiator;
+	}
+	
 	/**
 	 * @param user
 	 * @return the {@link ROLE} that this user plays in this project, or null of this user is not part of this project

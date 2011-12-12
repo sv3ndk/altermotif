@@ -51,7 +51,22 @@
 		#{/if}
 	
 		#{if _projectVisibility.isGiveOwnershipLinkVisible(_participant.user.userName)}
-			<span class="dabLink">&{'profileViewGiveOwnerShip'}</span>
+			<span class="dabLink giveOwnership">&{'profileViewGiveOwnerShip'}</span>
+			<span>&nbsp;&nbsp;&nbsp;</span>
+		#{/if}
+
+		#{if _projectVisibility.isCancelGiveOwnershipLinkVisible(_participant.user.userName)}
+			<span class="dabLink cancelGiveOwnership">&{'profileViewCancelGiveOwnerShip'}</span>
+			<span>&nbsp;&nbsp;&nbsp;</span>
+		#{/if}
+
+		#{if _projectVisibility.isAcceptOwnershipLinkVisible(_participant.user.userName)}
+			<span class="dabLink acceptOwnership">&{'profileViewAcceptOwnerShip'}</span>
+			<span>&nbsp;&nbsp;&nbsp;</span>
+		#{/if}
+		
+		#{if _projectVisibility.isRefuseOwnershipLinkVisible(_participant.user.userName)}
+			<span class="dabLink refuseOwnership">&{'profileViewRefuseOwnerShip'}</span>
 			<span>&nbsp;&nbsp;&nbsp;</span>
 		#{/if}
 			
@@ -60,5 +75,4 @@
 		<br />
 		${messages.get(_participant.role.label) }
 	</div>
-
 </div>

@@ -108,6 +108,10 @@ public class ProjectRepoImpl implements IProjectDao {
 		genericUpdateProject(projectId, new Update().set("mainPhotoIndex", mainPhotoIndex));
 	}
 	
+	///////////////////////////
+	// project participants
+
+	
 	@Override
 	public void addOneParticipant(String projectId, Participant createdParticipant) {
 		genericUpdateProject(projectId, new Update().addToSet("participants", createdParticipant));
@@ -156,6 +160,12 @@ public class ProjectRepoImpl implements IProjectDao {
 	}
 	
 	
+	@Override
+	public void updateOwnerShipProposed(String projectId, String userName, boolean ownershipProposed) {
+		Query query = query(where("_id").is(projectId).and("participants.user._id").is(userName));
+		Update update = new Update().set("participants.$.ownershipProposed", ownershipProposed);
+		mongoTemplate.updateFirst(query, update, Project.class);
+	}
 	
 	// --------------------------------
 	//
@@ -164,7 +174,6 @@ public class ProjectRepoImpl implements IProjectDao {
 		Query query = query(where("_id").is(projectId));
 		mongoTemplate.updateFirst(query, update, Project.class);
 	}
-
 
 
 

@@ -216,6 +216,62 @@ public class ProjectsView extends DabController {
 		renderJSON(new MappedValue("truc", "much"));
 	}
 	
+	
+	public static void doGiveOwnership(String projectId, String participant) {
+		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
+		if (project != null) {
+			
+			ProjectPep pep = new ProjectPep(project);
+			
+			if (pep.isAllowedToGiveOwnership(getSessionWrapper().getLoggedInUserProfileId(), participant)) {
+				BeanProvider.getProjectService().proposeOwnerShip(participant, project);
+			} else {
+				logger.log(Level.WARNING, "user trying to give ownership to participant member but is not allowed to,  this should be impossible, userid is" + getSessionWrapper().getLoggedInUserProfileId()
+						+ ", projectid is " + projectId);
+			}
+		} else {
+			logger.log(Level.WARNING, "user trying to give ownership to participant member of non existant project : " + projectId + " this should be impossible!");
+		}
+		renderJSON(new MappedValue("truc", "much"));
+	}
+
+	
+	public static void doCancelGiveOwnership(String projectId, String participant) {
+		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
+		if (project != null) {
+			ProjectPep pep = new ProjectPep(project);
+			
+			if (pep.isAllowedToCancelOwnershipTransfer(getSessionWrapper().getLoggedInUserProfileId(), participant)) {
+				BeanProvider.getProjectService().cancelOwnershipTransfer(participant, project);
+			} else {
+				logger.log(Level.WARNING, "user trying cancel an ownership transfer to participant member but is not allowed to,  this should be impossible, userid is" + getSessionWrapper().getLoggedInUserProfileId()
+						+ ", projectid is " + projectId);
+			}
+		} else {
+			logger.log(Level.WARNING, "user trying to cancel an  ownership transfer to participant member of non existant project : " + projectId + " this should be impossible!");
+		}
+		renderJSON(new MappedValue("truc", "much"));
+	}
+
+	/**
+	 * @param projectId
+	 */
+	public static void doRefuseOwnership(String projectId) {
+		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
+		if (project != null) {
+			ProjectPep pep = new ProjectPep(project);
+			
+			if (pep.isAllowedToAcceptOrRefuseOwnershipTransfer(getSessionWrapper().getLoggedInUserProfileId())) {
+				BeanProvider.getProjectService().cancelOwnershipTransfer(getSessionWrapper().getLoggedInUserProfileId(), project);
+			} else {
+				logger.log(Level.WARNING, "user trying refuse an ownership transfer to participant member but is not allowed to,  this should be impossible, userid is" + getSessionWrapper().getLoggedInUserProfileId()
+						+ ", projectid is " + projectId);
+			}
+		} else {
+			logger.log(Level.WARNING, "user trying to refuse an  ownership transfer to participant member of non existant project : " + projectId + " this should be impossible!");
+		}
+		renderJSON(new MappedValue("truc", "much"));
+	}
 
 	// --------------------------------------------------------
 	// async refresh logic
@@ -267,6 +323,8 @@ public class ProjectsView extends DabController {
 			logger.log(Level.WARNING, "user trying retrieve participant content data of non existant project : " + projectId + " this should be impossible!");
 		}
 	}
+	
+	
 	
 
 }

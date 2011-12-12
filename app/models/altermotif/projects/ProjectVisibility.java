@@ -101,8 +101,22 @@ public class ProjectVisibility {
 		return pep.isAllowedToMakeMember(visitingUserId, downgradedUser);
 	}
 
-	public boolean isGiveOwnershipLinkVisible(String downgradedUser) {
-		return pep.isAllowedGiveOwnership(visitingUserId, downgradedUser);
+	public boolean isGiveOwnershipLinkVisible(String upgradedUser) {
+		return pep.isAllowedToGiveOwnership(visitingUserId, upgradedUser);
+	}
+
+	public boolean isCancelGiveOwnershipLinkVisible(String upgradedUser) {
+		return pep.isAllowedToCancelOwnershipTransfer(visitingUserId, upgradedUser);
+	}
+
+	public boolean isAcceptOwnershipLinkVisible(String upgradedUser) {
+		// we only display this link in the container showing this user (this is not a PEP related decision, this is just  a graphical decision)
+		return upgradedUser != null && upgradedUser.equals(visitingUserId) && pep.isAllowedToAcceptOrRefuseOwnershipTransfer(visitingUserId);
+	}
+	
+	public boolean isRefuseOwnershipLinkVisible(String upgradedUser) {
+		// we only display this link in the container showing this user (this is not a PEP related decision, this is just  a graphical decision)
+		return upgradedUser != null && upgradedUser.equals(visitingUserId) && pep.isAllowedToAcceptOrRefuseOwnershipTransfer(visitingUserId);
 	}
 
 }

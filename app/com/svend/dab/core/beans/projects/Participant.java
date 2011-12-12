@@ -10,17 +10,15 @@ import com.svend.dab.core.beans.profile.UserSummary;
  * 
  * 
  * @author Svend
- *
+ * 
  */
 public class Participant {
-	
+
 	public enum ROLE {
-		initiator("projectRoleInitiator"),
-		admin("projectRoleAdmin"),
-		member("projectRoleMember");
-		
+		initiator("projectRoleInitiator"), admin("projectRoleAdmin"), member("projectRoleMember");
+
 		private final String label;
-		
+
 		private ROLE(String label) {
 			this.label = label;
 		}
@@ -29,16 +27,18 @@ public class Participant {
 			return label;
 		}
 	}
-	
-	
+
 	private ROLE role;
-	
+
+	// this is true if the current owner of the project has offered the owner of the project to this participant, but he has not accepted/refused yet
+	private boolean ownershipProposed = false;
+
 	private UserSummary user;
-	
+
+	// this determine if the application to participate to this project has been accepted
 	private boolean accepted = true;
-	
+
 	private String applicationText;
-	
 
 	public Participant(ROLE role, UserProfile user, String applicationText) {
 		super();
@@ -46,9 +46,6 @@ public class Participant {
 		this.applicationText = applicationText;
 		this.user = new UserSummary(user);
 	}
-	
-	
-
 
 	public Participant() {
 		super();
@@ -57,8 +54,7 @@ public class Participant {
 	public void generatePhotoLinks(Date expirationdate) {
 		user.generatePhotoLink(expirationdate);
 	}
-	
-	
+
 	public ROLE getRole() {
 		return role;
 	}
@@ -75,34 +71,28 @@ public class Participant {
 		this.user = user;
 	}
 
-
-
-
 	public boolean isAccepted() {
 		return accepted;
 	}
-
-
-
 
 	public void setAccepted(boolean accepted) {
 		this.accepted = accepted;
 	}
 
-
-
-
 	public String getApplicationText() {
 		return applicationText;
 	}
-
-
-
 
 	public void setApplicationText(String applicationText) {
 		this.applicationText = applicationText;
 	}
 
-	
+	public boolean isOwnershipProposed() {
+		return ownershipProposed;
+	}
+
+	public void setOwnershipProposed(boolean ownershipProposed) {
+		this.ownershipProposed = ownershipProposed;
+	}
 
 }

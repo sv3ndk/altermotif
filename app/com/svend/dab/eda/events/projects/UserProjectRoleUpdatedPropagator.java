@@ -28,7 +28,6 @@ public class UserProjectRoleUpdatedPropagator implements IEventPropagator<UserPr
 	@Override
 	public void propagate(UserProjectRoleUpdated event) throws DabException {
 
-		
 		if (event == null ) {
 			logger.log(Level.WARNING, "Cannot propagate a project application cancellation event: event is null ");
 			return;

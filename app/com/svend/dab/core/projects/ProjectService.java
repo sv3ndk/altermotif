@@ -24,6 +24,7 @@ import com.svend.dab.eda.events.projects.ProjectApplicationAccepted;
 import com.svend.dab.eda.events.projects.ProjectApplicationCancelled;
 import com.svend.dab.eda.events.projects.ProjectApplicationEvent;
 import com.svend.dab.eda.events.projects.ProjectCreated;
+import com.svend.dab.eda.events.projects.ProjectOwnershipProposed;
 import com.svend.dab.eda.events.projects.ProjectParticipantRemoved;
 import com.svend.dab.eda.events.projects.ProjectUpdated;
 import com.svend.dab.eda.events.projects.UserProjectRoleUpdated;
@@ -134,6 +135,30 @@ public class ProjectService implements IProjectService {
 		}
 		eventEmitter.emit(new UserProjectRoleUpdated(username, ROLE.member, project.getId()));
 	}
+	
+	
+	@Override
+	public void proposeOwnerShip(String username, Project project) {
+		if (Strings.isNullOrEmpty(username) || project == null) {
+			logger.log(Level.WARNING, "not give ownership to to a null participant or on a null project");
+			return;
+		}
+		eventEmitter.emit(new ProjectOwnershipProposed(username, project.getId()));
+	}
+
+	
+	@Override
+	public void cancelOwnershipTransfer(String username, Project project) {
+		if (Strings.isNullOrEmpty(username) || project == null) {
+			logger.log(Level.WARNING, "not cancelling an ownership transfer to to a null participant or on a null project");
+			return;
+		}
+		
+		// no event in this case: this is a single atomic change
+		projectDao.updateOwnerShipProposed(project.getId(), username, false);
+	}
+
+	
 	
 
 	@Override

@@ -212,10 +212,15 @@ function initParticipantsMecanics() {
 	askAndAct_On("#projectParticipants", "span.leaveProject", confirmLeaveProjectText, whenUserConfirmsLeavesProject);
 	askAndAct_On("#projectParticipants", "span.makeAdmin", confirmMakeAdminText, whenUserConfirmsMakeAdmin);
 	askAndAct_On("#projectParticipants", "span.makeMember", confirmMakeMemberText, whenUserConfirmsMakeMember);
+	askAndAct_On("#projectParticipants", "span.giveOwnership", confirmGiveOwnershipText, whenUserConfirmsGiveOwnership);
+	askAndAct_On("#projectParticipants", "span.cancelGiveOwnership", confirmCancelGiveOwnershipText, whenUserConfirmsCancelGiveOwnership);
+	askAndAct_On("#projectParticipants", "span.acceptOwnership", confirmAcceptOwnershipText, whenUserAcceptsOwnership);
+	askAndAct_On("#projectParticipants", "span.refuseOwnership", confirmRefuseOwnershipText, whenUserRefusesOwnership);
 }
 
+// remove participant
 function whenUserConfirmsRemoveParticipant(event) {
-	participantId = $(event.target).parent().find("span.hidden").text();
+	recordActionedParticipantId();
 	setConfirmationFunction(onConfirmRemoveParticipant);
 }
 
@@ -233,6 +238,7 @@ function onConfirmRemoveParticipant() {
 }
 
 
+// leave project
 function whenUserConfirmsLeavesProject() {
 	setConfirmationFunction(onConfirmLeaveProject);
 }
@@ -255,8 +261,9 @@ function onConfirmLeaveProject() {
 	);
 }
 
+//make admin 
 function whenUserConfirmsMakeAdmin() {
-	participantId = $(event.target).parent().find("span.hidden").text();
+	recordActionedParticipantId();
 	setConfirmationFunction(onConfirmMakeAdmin);
 }
 
@@ -275,8 +282,9 @@ function onConfirmMakeAdmin() {
 }
 
 
+// make member
 function whenUserConfirmsMakeMember() {
-	participantId = $(event.target).parent().find("span.hidden").text();
+	recordActionedParticipantId();
 	setConfirmationFunction(onConfirmMakeMember);
 }
 
@@ -292,9 +300,91 @@ function onConfirmMakeMember() {
 			}, 400);
 		}
 	);
+}
+
+// transfer ownership
+function whenUserConfirmsGiveOwnership() {
+	recordActionedParticipantId();
+	setConfirmationFunction(onConfirmGiveOwnership);
+}
+
+function onConfirmGiveOwnership() {
+	$.post(giveOwnership(
+			{projectId: projectId, participant:participantId}
+	), 
+		function(data) {
+			setTimeout(function() {
+				updateParticipantOneLineContainer(participantId);
+				
+				// also re-display the block for the previoulsy proposed ownership
+				if (proposedOwnerId != undefined && proposedOwnerId != "") {
+					updateParticipantOneLineContainer(proposedOwnerId);
+				}
+				
+				proposedOwnerId = participantId;
+				
+				closeConfirmationDialog();
+			}, 400);
+		}
+	);
+}
+
+
+// cancel transfer ownnership
+function whenUserConfirmsCancelGiveOwnership() {
+	recordActionedParticipantId();
+	setConfirmationFunction(onConfirmCancelGiveOwnership);
+}
+
+function onConfirmCancelGiveOwnership() {
+	$.post(cancelGiveOwnership(
+			{projectId: projectId, participant:participantId}
+	), 
+		function(data) {
+			setTimeout(function() {
+				updateParticipantOneLineContainer(participantId);
+				closeConfirmationDialog();
+			}, 400);
+		}
+	);
+}
+
+// accept/refuse ownership transfer
+
+function whenUserAcceptsOwnership() {
+	recordActionedParticipantId();
+	setConfirmationFunction(onAcceptOwnership);
+}
+
+function onAcceptOwnership() {
+	// this must be a regular form POST: we must refresh the whole page because his rights have changed a lot now 
 	
 }
 
+
+function whenUserRefusesOwnership() {
+	recordActionedParticipantId();
+	setConfirmationFunction(onRefuseOwnership);
+}
+
+
+function onRefuseOwnership() {
+	$.post(refuseOwnership(
+			{projectId: projectId, participant:participantId}
+	), 
+		function(data) {
+			setTimeout(function() {
+				updateParticipantOneLineContainer(participantId);
+				closeConfirmationDialog();
+			}, 400);
+		}
+	);
+}
+
+// 
+function recordActionedParticipantId() {
+	participantId = $(event.target).parent().find("span.hidden").text();
+}
 
 
 	

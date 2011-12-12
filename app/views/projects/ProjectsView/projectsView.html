@@ -27,22 +27,30 @@
 	    var removeParticipantOfProject 	= #{jsAction @projects.ProjectsView.doRemoveParticipantOfProject(':projectId', ':participant') /};
 	    var makeAdmin 					= #{jsAction @projects.ProjectsView.doMakeAdmin(':projectId', ':participant') /};
 	    var makeMember 					= #{jsAction @projects.ProjectsView.doMakeMember(':projectId', ':participant') /};
+	    var giveOwnership 				= #{jsAction @projects.ProjectsView.doGiveOwnership(':projectId', ':participant') /};
+	    var cancelGiveOwnership 		= #{jsAction @projects.ProjectsView.doCancelGiveOwnership(':projectId', ':participant') /};
+	    var refuseOwnership 			= #{jsAction @projects.ProjectsView.doRefuseOwnership(':projectId') /};
 	    
 	    var determineRemovedParticipantsAndApplications = #{jsAction @projects.ProjectsView.doDetermineRemovedParticipantsAndApplications(':projectId', ':knownParticipantUsernames', ':knownApplicationUsernames') /};
 	    var determineAddedParticipantsAndApplications 	= #{jsAction @projects.ProjectsView.doDetermineAddedParticipantsAndApplications(':projectId', ':knownParticipantUsernames', ':knownApplicationUsernames') /};
 	    var retrieveUpdatedParticipantContentData 		= #{jsAction @projects.ProjectsView.doRetrieveParticipantContentData(':projectId', ':participant') /};
 	    
-	    
 	    var isApplyLinkVisible = ${projectVisibility.isApplyLinkVisible()};
 	    var isCancelApplicationLinkVisible = ${projectVisibility.isCancelApplicationLinkVisible()};
 	    
 	    var projectId = "${visitedProject.id}"; 
+	    var proposedOwnerId = "${visitedProject.proposedInitiator?.user?.userName}"; 
+	    
 	    var confirmRemoveParticipantText 	= "&{'viewProjectConfirmRemoveParticipant'}";
 	    var confirmAcceptApplicationText 	= "&{'viewProjectConfirmAcceptApplication'}";
 	    var confirmRejectApplicationText 	= "&{'viewProjectConfirmRejectApplication'}";
 	    var confirmLeaveProjectText 		= "&{'viewProjectConfirmLeaveProject'}";
 	    var confirmMakeAdminText 			= "&{'viewProjectconfirMMakeAdmin'}";
 	    var confirmMakeMemberText 			= "&{'viewProjectconfirMMakeMember'}";
+	    var confirmGiveOwnershipText 		= "&{'viewProjectCnfirmGiveOwnership'}";
+	    var confirmCancelGiveOwnershipText 	= "&{'viewProjectConfirmCancelGiveOwnership'}";
+	    var confirmAcceptOwnershipText 		= "&{'viewProjectConfirmAcceptOwnership'}";
+	    var confirmRefuseOwnershipText 		= "&{'viewProjectconfirmRefuseOwnership'}";
 	
 		$(document).ready(function() {
 			init();

@@ -43,5 +43,9 @@ public interface IProjectService {
 
 	public void makeMember(String participant, Project project);
 
+	public void proposeOwnerShip(String participant, Project project);
+
+	public void cancelOwnershipTransfer(String participant, Project project);
+
 	
 }

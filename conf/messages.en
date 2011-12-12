@@ -338,10 +338,17 @@ profileViewLeaveProject=leave
 profileViewMakeAdmin=make admin
 profileViewMakeMember=make member
 profileViewGiveOwnerShip=give ownership
+profileViewCancelGiveOwnerShip=cancel ownership transfer
+profileViewAcceptOwnerShip=accept ownership
+profileViewRefuseOwnerShip=refuse ownership
 viewProjectConfirmRemoveParticipant=Are you sure you want to remove this participant from this project? Any task or asset assigned to him will now be unassigned.
 viewProjectConfirmLeaveProject=Are your sure you want to leave this project? Any task or asset currently assigned to you will now become unassigned
 viewProjectconfirMMakeAdmin=Are you sure you want to grant admin rights to this user on this project?
 viewProjectconfirMMakeMember=Are your sure you want to downgrade the privileges of this user to simple member?
+viewProjectCnfirmGiveOwnership=Are you sure you want to transfer the ownership of this project to this user? Once he will have accepted, he will acquire full control of the project while you will yourself become a simple administrator. You will therefore not be able to undo this action. Are you sure this is what you want to do?
+viewProjectConfirmCancelGiveOwnership=You have previously proposed to this user to take ownership of this project, but he has not accepted yet. If you click 'OK', this will remove the transfer proposal. Are you sure this is what you want to do?
+viewProjectConfirmAcceptOwnership=Are you sure your want to accept full ownership of this project? By doing so to get access to the highest level of control.
+viewProjectconfirmRefuseOwnership=Are you sure your want to refuse the ownership of this project? This action cannot be undone unless the current project owner resubmits a new ownership transfer proposal. Are you sure this is what you want to do?
 
 # edit project page
 projectEditConfirmButton=Update project

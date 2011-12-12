@@ -35,7 +35,8 @@ public interface IProjectDao {
 
 	void movePhotoToFirstPosition(String id, int mainPhotoIndex);
 	
-	 // project participants
+	///////////////////////////
+	// project participants
 
 	void addOneParticipant(String projectId, Participant createdParticipant);
 
@@ -52,6 +53,9 @@ public interface IProjectDao {
 	 * @return a project with only the participants (if any)
 	 */
 	public Project loadProjectParticipants(String projectId);
+
+	void updateOwnerShipProposed(String projectId, String userName, boolean b);
+
 
 
 }

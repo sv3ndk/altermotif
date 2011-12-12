@@ -26,7 +26,14 @@ public class PrivacySettingsPep {
 			return true;
 		} else {
 			// otherwise, he may only desactivate if he is not the owner of a project 
-			return ! profile.isOwnerOfAtLeastOneProject();
+			if ( profile.isOwnerOfAtLeastOneProject()) {
+				return false;
+			}
+			
+			// TODO: do not let the user deactivate if he has received an ownership proposal  
+			
+			return true;
+			
 		}
 		
 	}
