@@ -1048,7 +1048,7 @@ public class UserProfile implements Serializable {
 		}
 		
 		for (Participation participation : getConfirmedProjects()) {
-			if (participation.getRole() == ROLE.admin) {
+			if (participation.getRole() == ROLE.initiator) {
 				return true;
 			}
 		}

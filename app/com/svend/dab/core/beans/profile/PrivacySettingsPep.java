@@ -26,7 +26,7 @@ public class PrivacySettingsPep {
 			return true;
 		} else {
 			// otherwise, he may only desactivate if he is not the owner of a project 
-			return profile.isOwnerOfAtLeastOneProject();
+			return ! profile.isOwnerOfAtLeastOneProject();
 		}
 		
 	}
