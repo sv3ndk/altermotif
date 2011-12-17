@@ -7,6 +7,8 @@ import com.svend.dab.core.beans.projects.Participant.ROLE;
  * @author svend
  * 
  * Project policy enformcement point
+ * 
+ * TODO: optimization here: cache the user role resolution (or inside the proejct itself, rather...)
  *
  */
 public class ProjectPep {
@@ -39,10 +41,16 @@ public class ProjectPep {
 	}
 
 
-	public boolean isAllowedToCancel(String user) {
+	public boolean isAllowedToCancelProject(String user) {
 		if (user == null) {
 			return false;
 		}
+		
+		// the owner may only cancel a projet if there is no other participants
+		if (!project.hasNoOtherActiveParticipantThanTheOwner()) {
+			return false;
+		}
+		
 		ROLE role = project.findRoleOfUser(user);
 		return role == ROLE.initiator;
 	}

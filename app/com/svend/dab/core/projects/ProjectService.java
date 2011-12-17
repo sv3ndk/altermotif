@@ -23,6 +23,7 @@ import com.svend.dab.eda.EventEmitter;
 import com.svend.dab.eda.events.projects.ProjectApplicationAccepted;
 import com.svend.dab.eda.events.projects.ProjectApplicationCancelled;
 import com.svend.dab.eda.events.projects.ProjectApplicationEvent;
+import com.svend.dab.eda.events.projects.ProjectCancelled;
 import com.svend.dab.eda.events.projects.ProjectCreated;
 import com.svend.dab.eda.events.projects.ProjectOwnershipAccepted;
 import com.svend.dab.eda.events.projects.ProjectOwnershipProposed;
@@ -227,8 +228,14 @@ public class ProjectService implements IProjectService {
 		return response;
 
 	}
+	
+	/////////////////////////////////////////////////
+	// project cancellation / terminations
 
-
+	@Override
+	public void cancelProject(Project project) {
+		eventEmitter.emit(new ProjectCancelled(project.getId()));
+	}
 
 
 }

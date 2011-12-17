@@ -3,6 +3,7 @@ package models.altermotif.projects;
 import com.google.common.base.Strings;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.ProjectPep;
+import com.svend.dab.core.beans.projects.Participant.ROLE;
 
 /**
  * @author svend
@@ -35,9 +36,25 @@ public class ProjectVisibility {
 	
 
 	public boolean isCancelProjectLinkVisisble() {
-		return pep.isAllowedToCancel(visitingUserId);
+		if (pep.isAllowedToCancelProject(visitingUserId)) {
+			return true;
+		}
+		
+		// if the user may not cancel the project, maybe he can still see the link (and receive a message saying to first remove users) 
+		// this is a pure UI concept => not present in the PEP but here 
+		ROLE role = project.findRoleOfUser(visitingUserId);
+		return role == ROLE.initiator;
+		
 	}
 
+	/**
+	 * @return if true, clicking on the link actually triggers the cancellation. Otherwise, just a message is displayed
+	 */
+	public boolean isCancelProjectLinkEffective() {
+		return pep.isAllowedToCancelProject(visitingUserId);
+	}
+	
+		
 	public boolean isEndProjectLinkVisisble() {
 		return pep.isAllowedToTerminate(visitingUserId);
 	}

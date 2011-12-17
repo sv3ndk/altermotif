@@ -6,6 +6,8 @@ function init() {
 	// this is present in simpleActions.js
 	initAskAndAct();
 	
+	initToolBoxLinks();
+	
 	insertLangugeName();
 	initPhotoGallery();
 	initApplicationMecanics();
@@ -30,6 +32,28 @@ function insertLangugeName() {
 	$(".languageCell span.langugeLabel").text(allPossibleLanguagesMap[languageCode]);
 }
 
+
+////////////////////////////////////////
+// cancel and terminate projects
+
+
+function initToolBoxLinks() {
+	
+	if (isCancelProjectLinkEffective) {
+		askAndAct_On("#cancelProjectLink", "", confirmCancelProjectText, whenUserConfirmsCancelCancelProject);
+	} else {
+		initClickAndDisplayMessage("#cancelProjectLink", "", cannotCancelProjectExplanationText);
+	}
+}
+
+function whenUserConfirmsCancelCancelProject() {
+	setConfirmationFunction(onConfirmCancelCancelProject);
+}
+
+function onConfirmCancelCancelProject() {
+	$("#hiddenCancelProjectform form input").val(projectId);
+	$("#hiddenCancelProjectform form").submit();
+}
 
 //////////////////////////////////
 // project participantions
@@ -139,7 +163,6 @@ function initViewParticipationMotivationText() {
 //////////////////////////////////////////////////////////////////
 // applications
 	
-var applicantId;
 var applicationDiv;
 
 function initAcceptRejectAppliction() {
@@ -149,13 +172,13 @@ function initAcceptRejectAppliction() {
 }
 
 function whenUserConfirmsAcceptApplication() {
-	applicantId = $(event.target).next().next().next().text();
+	recordActionedParticipantId();
 	setConfirmationFunction(onConfirmAcceptApplication);
 }
 	
 function onConfirmAcceptApplication() {
 	$.post(acceptApplicationToProject(
-			{projectId: projectId, applicant: applicantId}
+			{projectId: projectId, applicant: participantId}
 		), 
 		function(data) {
 			setTimeout(function() {
@@ -167,13 +190,13 @@ function onConfirmAcceptApplication() {
 }
 	
 function whenUserConfirmsRejectApplication() {
-	applicantId = $(event.target).next().next().next().text();
+	recordActionedParticipantId();
 	setConfirmationFunction(onConfirmRejectApplication);
 }	
 				
 function onConfirmRejectApplication() {
 	$.post(rejectApplicationToProject(
-		{projectId: projectId, applicant: applicantId}
+		{projectId: projectId, applicant: participantId}
 		), 
 		function(data) {
 			refreshApplicationsAndPartipants();
@@ -363,7 +386,7 @@ function onRefuseOwnership() {
 	);
 }
 
-// 
+// this is also used to record applicant id (ugly, I know...)
 function recordActionedParticipantId() {
 	participantId = $(event.target).parent().find("span.hidden").text();
 }

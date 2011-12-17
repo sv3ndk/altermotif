@@ -7,6 +7,7 @@ import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Participant;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.Project;
+import com.svend.dab.core.beans.projects.Project.STATUS;
 
 /**
  * @author Svend
@@ -20,6 +21,8 @@ public interface IProjectDao {
 	void save(Project project);
 
 	void updateProjectPDataLinksAndTags(String id, Project project);
+	
+	void updateProjectStatus(String id, STATUS newStatus);
 	
 	// project photos
 
@@ -55,6 +58,7 @@ public interface IProjectDao {
 	public Project loadProjectParticipants(String projectId);
 
 	void updateOwnerShipProposed(String projectId, String userName, boolean b);
+
 
 
 

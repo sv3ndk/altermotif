@@ -12,23 +12,25 @@ import com.svend.dab.core.beans.projects.Participant;
 import com.svend.dab.core.beans.projects.ParticipantList;
 import com.svend.dab.core.beans.projects.ParticpantsIdList;
 import com.svend.dab.core.beans.projects.Project;
+import com.svend.dab.core.beans.projects.Project.STATUS;
 import com.svend.dab.core.beans.projects.ProjectPep;
 
 import controllers.Application;
 import controllers.BeanProvider;
 import controllers.DabController;
+import controllers.profile.ProfileHome;
 
 public class ProjectsView extends DabController {
 
 	private static Logger logger = Logger.getLogger(ProjectsView.class.getName());
+	
+	
 
 	public static void projectsView(String p) {
-
 		Project project = BeanProvider.getProjectService().loadProject(p, true);
-		if (project != null) {
+		if (project != null && project.getStatus() != STATUS.cancelled) {
 			renderArgs.put("visitedProject", project);
 			renderArgs.put("projectVisibility", new ProjectVisibility(new ProjectPep(project), project, getSessionWrapper().getLoggedInUserProfileId()));
-
 			Utils.addAllPossibleLanguageNamesToRenderArgs(getSessionWrapper(), renderArgs);
 			render();
 		} else {
@@ -37,6 +39,42 @@ public class ProjectsView extends DabController {
 		}
 	}
 
+	//////////////////////////////////////////////////////////
+	// project cancellation and termination
+	
+	
+	
+	public static void cancelProject(String projectId) {
+		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
+		if (project != null) {
+			ProjectPep pep = new ProjectPep(project);
+
+			if (pep.isAllowedToCancelProject(getSessionWrapper().getLoggedInUserProfileId())) {
+				BeanProvider.getProjectService().cancelProject(project);
+			} else {
+				logger.log(Level.WARNING, "user trying cancel a proejct but is not allowed to,  this should be impossible, userid is" + getSessionWrapper().getLoggedInUserProfileId()
+						+ ", projectid is " + projectId);
+			}
+		} else {
+			logger.log(Level.WARNING, "user trying to cancel a non existant project : " + projectId + " this should be impossible!");
+		}
+		
+		try {
+			// ugly wait: the cancellation is asynchronous => refreshing the page right away is usually too early: waiting 1 sec greatly increases the chances that the transfer has actually been done 
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+		}
+
+		ProfileHome.profileHome();
+	}
+	
+	
+	
+	/////////////////////////////////////////
+	// project applications
+	
+	
+	
 	/**
 	 * @param projectId
 	 */
@@ -89,7 +127,6 @@ public class ProjectsView extends DabController {
 	public static void doRejectApplicationToProject(String projectId, String applicant) {
 		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
 		if (project != null) {
-
 			ProjectPep pep = new ProjectPep(project);
 
 			if (pep.isAllowedToAcceptOrRejectApplications(getSessionWrapper().getLoggedInUserProfileId())) {

@@ -35,11 +35,15 @@
 	    var determineAddedParticipantsAndApplications 	= #{jsAction @projects.ProjectsView.doDetermineAddedParticipantsAndApplications(':projectId', ':knownParticipantUsernames', ':knownApplicationUsernames') /};
 	    var retrieveUpdatedParticipantContentData 		= #{jsAction @projects.ProjectsView.doRetrieveParticipantContentData(':projectId', ':participant') /};
 	    
+	    var isCancelProjectLinkEffective = ${projectVisibility.isCancelProjectLinkEffective()};
 	    var isApplyLinkVisible = ${projectVisibility.isApplyLinkVisible()};
 	    var isCancelApplicationLinkVisible = ${projectVisibility.isCancelApplicationLinkVisible()};
 	    
 	    var projectId = "${visitedProject.id}"; 
 	    var proposedOwnerId = "${visitedProject.proposedInitiator?.user?.userName}"; 
+	    
+	    var confirmCancelProjectText 			= "&{'viewProjectConfirmCancelProject'}";
+	    var cannotCancelProjectExplanationText 	= "&{'viewProjectCannotCancelProjectExplanation'}";
 	    
 	    var confirmCancelApplicationText 	= "&{'viewProjectConfirmCancelApplication'}";
 	    var confirmRemoveParticipantText 	= "&{'viewProjectConfirmRemoveParticipant'}";
@@ -83,13 +87,16 @@
 	#{if projectVisibility.isToolBoxVisible() }
 		<div id="projectToolBox">
 			<ul>
-				<li>#{if projectVisibility.isEditProjectLinkVisisble() } <a
-					href="@{projects.ProjectsEdit.projectsEdit( visitedProject.id)}"
-					class="dabLink">&{'projectViewEditProjet'}</a> #{/if}
+				<li>
+					#{if projectVisibility.isEditProjectLinkVisisble() } 
+						<a href="@{projects.ProjectsEdit.projectsEdit( visitedProject.id)}" class="dabLink">&{'projectViewEditProjet'}</a> 
+					#{/if}
 				</li>
 	
-				<li>#{if projectVisibility.isCancelProjectLinkVisisble() } <span
-					class="dabLinkDisabled">&{'projectViewCancelProjet'}</span> #{/if}
+				<li>
+					#{if projectVisibility.isCancelProjectLinkVisisble() } 
+						<span id="cancelProjectLink" class="dabLink" >&{'projectViewCancelProjet'}</span> 
+					#{/if}
 				</li>
 	
 				<li>#{if projectVisibility.isEndProjectLinkVisisble() } 
@@ -127,6 +134,12 @@
 
 <div id="hiddenAcceptOwnershipform" style="hidden">
 	#{form @projects.ProjectsView.acceptOwnership()}
+		<input type="hidden" name="projectId" id="projectId"/>
+	#{/form}
+</div>
+
+<div id="hiddenCancelProjectform" style="hidden">
+	#{form @projects.ProjectsView.cancelProject()}
 		<input type="hidden" name="projectId" id="projectId"/>
 	#{/form}
 </div>

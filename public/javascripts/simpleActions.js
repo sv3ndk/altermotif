@@ -10,11 +10,18 @@ function askAndAct_On(clickableJqParentSelector, clickableJqSubSelector, confirm
 		beforeAsking(event);
 		$("#confirmationPopup").dialog("open");		
 	});
+}
 
+function initClickAndDisplayMessage(clickableJqParentSelector, clickableJqSubSelector, messageText) {
+	$(clickableJqParentSelector).on("click", clickableJqSubSelector, function(event) {
+		$("#messagePopup span").text(messageText);
+		$("#messagePopup").dialog("open");		
+	});
 }
 
 function initAskAndAct() {
 	
+	// OK/Cancel dialog => when click OK, we callback the executeConfirmationFunction function otherwise we simply close
 	$("#confirmationPopup").dialog({
 		autoOpen : false,
 		width: 400,
@@ -28,6 +35,20 @@ function initAskAndAct() {
 			click : closeConfirmationDialog
 		}
 		]
+	});
+	
+	// simple popup message displayed to the user
+	$("#messagePopup").dialog({
+		autoOpen : false,
+		width: 400,
+		"buttons" : [ 
+             {
+            	 text : okLabelValue,
+            	 click : function () {
+            		 $("#messagePopup").dialog("close");		
+            	 }
+             }
+           ]
 	});
 
 }

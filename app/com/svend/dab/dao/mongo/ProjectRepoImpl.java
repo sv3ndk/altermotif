@@ -29,6 +29,7 @@ import com.svend.dab.core.beans.projects.Participant;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.Participation;
 import com.svend.dab.core.beans.projects.Project;
+import com.svend.dab.core.beans.projects.Project.STATUS;
 import com.svend.dab.core.beans.projects.ProjectSummary;
 
 /**
@@ -58,6 +59,11 @@ public class ProjectRepoImpl implements IProjectDao {
 	@Override
 	public void save(Project project) {
 		mongoTemplate.save(project);
+	}
+	
+	@Override
+	public void updateProjectStatus(String projectId, STATUS newStatus) {
+		genericUpdateProject(projectId, new Update().set("status", newStatus));
 	}
 
 	@Override
@@ -174,8 +180,5 @@ public class ProjectRepoImpl implements IProjectDao {
 		Query query = query(where("_id").is(projectId));
 		mongoTemplate.updateFirst(query, update, Project.class);
 	}
-
-
-
 	
 }

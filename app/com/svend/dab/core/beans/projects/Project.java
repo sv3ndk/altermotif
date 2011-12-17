@@ -67,6 +67,9 @@ public class Project {
 
 	@Transient
 	private List<Participant> cachedConfirmedParticipants;
+	
+	@Transient
+	private List<Participant> cachedConfirmedActiveParticipants;
 
 	@Transient
 	private List<Participant> cachedUnconfirmedActiveParticipants;
@@ -233,6 +236,13 @@ public class Project {
 
 		return cachedConfirmedParticipants;
 	}
+	
+	public List<Participant> getConfirmedActiveParticipants() {
+		if (cachedConfirmedActiveParticipants == null) {
+			categorizeParticipants();
+		}
+		return cachedConfirmedActiveParticipants;
+	}
 
 	public List<Participant> getUnconfirmedActiveParticipants() {
 		if (cachedUnconfirmedActiveParticipants == null) {
@@ -243,11 +253,15 @@ public class Project {
 
 	protected void categorizeParticipants() {
 		cachedConfirmedParticipants = new LinkedList<Participant>();
+		cachedConfirmedActiveParticipants = new LinkedList<Participant>();
 		cachedUnconfirmedActiveParticipants = new LinkedList<Participant>();
 
 		for (Participant participant : participants) {
 			if (participant.isAccepted()) {
 				cachedConfirmedParticipants.add(participant);
+				if (participant.isAccepted()) {
+					cachedConfirmedActiveParticipants.add(participant);
+				}
 			} else if (participant.getUser().isProfileActive()) {
 				cachedUnconfirmedActiveParticipants.add(participant);
 			}
@@ -301,8 +315,13 @@ public class Project {
 		}
 		
 		return null;
-
 	}
+	
+	
+	public boolean hasNoOtherActiveParticipantThanTheOwner() {
+		return getConfirmedActiveParticipants() == null || getConfirmedActiveParticipants().size() < 2;
+	}
+
 
 
 	// ------------------------------------------------------------------------------
