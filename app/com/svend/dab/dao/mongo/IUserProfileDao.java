@@ -13,6 +13,7 @@ import com.svend.dab.core.beans.profile.UserReference;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.Participation;
+import com.svend.dab.core.beans.projects.Project.STATUS;
 
 public interface IUserProfileDao {
 
@@ -114,6 +115,8 @@ public interface IUserProfileDao {
 	public void markParticipationHasAccepted(String userId, String projectId);
 
 	public void updateProjectRole(String userId, String projectId, ROLE role);
+
+	public void updateProjectStatus(String userName, String projectId, STATUS newStatus);
 
 
 

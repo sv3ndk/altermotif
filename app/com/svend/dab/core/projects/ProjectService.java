@@ -28,6 +28,7 @@ import com.svend.dab.eda.events.projects.ProjectCreated;
 import com.svend.dab.eda.events.projects.ProjectOwnershipAccepted;
 import com.svend.dab.eda.events.projects.ProjectOwnershipProposed;
 import com.svend.dab.eda.events.projects.ProjectParticipantRemoved;
+import com.svend.dab.eda.events.projects.ProjectStatusChanged;
 import com.svend.dab.eda.events.projects.ProjectUpdated;
 import com.svend.dab.eda.events.projects.UserProjectRoleUpdated;
 
@@ -237,5 +238,14 @@ public class ProjectService implements IProjectService {
 		eventEmitter.emit(new ProjectCancelled(project.getId()));
 	}
 
+	@Override
+	public void terminateProject(Project project) {
+		eventEmitter.emit(new ProjectStatusChanged(project.getId(), STATUS.done));
+	}
+
+	@Override
+	public void restartProject(Project project) {
+		eventEmitter.emit(new ProjectStatusChanged(project.getId(), STATUS.started));
+	}
 
 }

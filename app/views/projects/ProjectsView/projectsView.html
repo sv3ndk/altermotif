@@ -44,6 +44,8 @@
 	    
 	    var confirmCancelProjectText 			= "&{'viewProjectConfirmCancelProject'}";
 	    var cannotCancelProjectExplanationText 	= "&{'viewProjectCannotCancelProjectExplanation'}";
+	    var confirmTerminateProjectText 		= "&{'viewProjectConfirmTerminateProject'}";
+	    var confirmRestartProjectText 			= "&{'viewProjectConfirmRestartProject'}";
 	    
 	    var confirmCancelApplicationText 	= "&{'viewProjectConfirmCancelApplication'}";
 	    var confirmRemoveParticipantText 	= "&{'viewProjectConfirmRemoveParticipant'}";
@@ -84,6 +86,7 @@
 	</div>
 
 	#{projects.viewProjectBasicDetails visitedProject:visitedProject, projectVisibility:projectVisibility/} 
+	
 	#{if projectVisibility.isToolBoxVisible() }
 		<div id="projectToolBox">
 			<ul>
@@ -100,7 +103,11 @@
 				</li>
 	
 				<li>#{if projectVisibility.isEndProjectLinkVisisble() } 
-					<span class="dabLinkDisabled">&{'projectViewEndProjet'}</span> 
+						<span id="terminateProjectLink" class="dabLink">&{'projectViewEndProjet'}</span> 
+					#{/if}
+				</li>
+				<li>#{if projectVisibility.isUndoEndProjectLinkVisisble() } 
+						<span id="undoTerminateProjectLink" class="dabLink">&{'projectViewUndoEndProjet'}</span> 
 					#{/if}
 				</li>
 			</ul>
@@ -140,6 +147,18 @@
 
 <div id="hiddenCancelProjectform" style="hidden">
 	#{form @projects.ProjectsView.cancelProject()}
+		<input type="hidden" name="projectId" id="projectId"/>
+	#{/form}
+</div>
+
+<div id="hiddenTerminateProjectform" style="hidden">
+	#{form @projects.ProjectsView.terminateProject()}
+		<input type="hidden" name="projectId" id="projectId"/>
+	#{/form}
+</div>
+
+<div id="hiddenRestartProjectform" style="hidden">
+	#{form @projects.ProjectsView.restartProject()}
 		<input type="hidden" name="projectId" id="projectId"/>
 	#{/form}
 </div>

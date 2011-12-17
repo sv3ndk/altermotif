@@ -47,7 +47,15 @@ public interface IProjectService {
 	public void cancelOwnershipTransfer(String participant, Project project);
 
 	public void confirmOwnershipTransfer(String promotedUsername, Project project);
+	
+	
+	////////////////////////////////////////////
+	// project status
 
 	public void cancelProject(Project project);
+
+	public void terminateProject(Project project);
+
+	public void restartProject(Project project);
 	
 }

@@ -59,9 +59,14 @@ public class ProjectVisibility {
 		return pep.isAllowedToTerminate(visitingUserId);
 	}
 	
+	public boolean isUndoEndProjectLinkVisisble() {
+		return pep.isAllowedToRestartProject(visitingUserId);
+	}
+		
 	
 	public boolean isToolBoxVisible() {
-		return isEditProjectLinkVisisble() || isCancelProjectLinkVisisble() || isEndProjectLinkVisisble();
+		// the toolbox is visible if at least one of its component is visible
+		return isEditProjectLinkVisisble() || isCancelProjectLinkVisisble() || isEndProjectLinkVisisble() || isUndoEndProjectLinkVisisble();
 	}
 	
 	

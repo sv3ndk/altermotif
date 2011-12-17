@@ -33,6 +33,7 @@ import com.svend.dab.core.beans.profile.UserReference;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.Participation;
+import com.svend.dab.core.beans.projects.Project.STATUS;
 
 @Service
 public class UserProfileRepoImpl implements IUserProfileDao {
@@ -110,7 +111,6 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 		genericUpdateUser(username, new Update(). pull("photos", removed));
 	}
 
-
 	@Override
 	public void movePhotoToFirstPosition(String username, int photoIndex) {
 		genericUpdateUser(username, new Update().set("mainPhotoIndex", photoIndex));
@@ -125,8 +125,6 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 	public void removeOnePhotoAndDecrementMainPhotoIndex(String username, Photo removed) {
 		genericUpdateUser(username, new Update(). pull("photos", removed).inc("mainPhotoIndex", -1));
 	}
-	
-	
 
 	@Override
 	public void updateCv(UserProfile userProfile) {
@@ -339,6 +337,14 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 		mongoTemplate.updateFirst(query, update, UserProfile.class);
 	}
 	
+	@Override
+	public void updateProjectStatus(String userName, String projectId, STATUS newStatus) {
+		Query query = query(where("username").is(userName).and("projects.projectSummary.projectId").is(projectId));
+		Update update = new Update().set("projects.$.projectSummary.status", newStatus);
+		mongoTemplate.updateFirst(query, update, UserProfile.class);
+	}
+	
+	
 	// -------------------------------------
 	// -------------------------------------
 
@@ -363,8 +369,6 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 	public void save(UserProfile createdUserProfile) {
 		mongoTemplate.save(createdUserProfile);
 	}
-
-
 
 
 

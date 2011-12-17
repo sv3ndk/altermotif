@@ -306,6 +306,9 @@ projectNewPrivacySettingsOwner=Proje sahibi (ben)
 # view project page
 projectViewEditProjet=Projeyi güncelle
 projectViewEndProjet=Projeyi sonlandır
+viewProjectConfirmTerminateProject=***Are you sure you want to terminate this project? If you click ok, the project will be marked as 'done' and no activity will be possible on it anymore (no new members, no tasks nor assets, no forum discussion). Are you sure this is want you want to do?
+projectViewUndoEndProjet=***Restart project
+viewProjectConfirmRestartProject=***Are you sure you want to restart this project?
 projectViewCancelProjet=Projeyi iptal et
 viewProjectCannotCancelProjectExplanation=***Canceling a project will permanently remove any trace of this project from altermotif. This action in NOT undo-able. If you are sure this is what you want to do, please first remove any member of this project and then click on 'Cancel project' again.
 viewProjectConfirmCancelProject=***Are you sure you want to cancel this project? This will permanently remove any trace of this project from altermotif. This action in NOT undo-able. Are you sure this is what you want to do?

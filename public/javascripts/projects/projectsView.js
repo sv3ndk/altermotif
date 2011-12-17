@@ -38,12 +38,17 @@ function insertLangugeName() {
 
 
 function initToolBoxLinks() {
-	
+
+	// this init is called again any time the list of participants changes => first unbound the previous listener before binding the new one
+	$("#cancelProjectLink").off("click");
 	if (isCancelProjectLinkEffective) {
 		askAndAct_On("#cancelProjectLink", "", confirmCancelProjectText, whenUserConfirmsCancelCancelProject);
 	} else {
 		initClickAndDisplayMessage("#cancelProjectLink", "", cannotCancelProjectExplanationText);
 	}
+	
+	askAndAct_On("#terminateProjectLink", "", confirmTerminateProjectText, whenUserConfirmsTerminateProject);
+	askAndAct_On("#undoTerminateProjectLink", "", confirmRestartProjectText, whenUserConfirmsRestartProject);
 }
 
 function whenUserConfirmsCancelCancelProject() {
@@ -53,6 +58,25 @@ function whenUserConfirmsCancelCancelProject() {
 function onConfirmCancelCancelProject() {
 	$("#hiddenCancelProjectform form input").val(projectId);
 	$("#hiddenCancelProjectform form").submit();
+}
+
+
+function whenUserConfirmsTerminateProject() {
+	setConfirmationFunction(onConfirmTerminateProject);
+}
+
+function onConfirmTerminateProject() {
+	$("#hiddenTerminateProjectform form input").val(projectId);
+	$("#hiddenTerminateProjectform form").submit();
+}
+
+function whenUserConfirmsRestartProject() {
+	setConfirmationFunction(onConfirmRestartProject);
+}
+
+function onConfirmRestartProject() {
+	$("#hiddenRestartProjectform form input").val(projectId);
+	$("#hiddenRestartProjectform form").submit();
 }
 
 //////////////////////////////////
@@ -415,6 +439,8 @@ function refreshRemovedApplicationsAndParticipants(knownParticipantUsernames, kn
 		function(data) {
 			removeObsoletParticipants(data.confirmedParticipants);
 			removeObsoletApplications(data.unconfirmedParticipants);
+			isCancelProjectLinkEffective = data.isCancelProjectLinkEffective;
+			initToolBoxLinks();
 		}
 	);
 }

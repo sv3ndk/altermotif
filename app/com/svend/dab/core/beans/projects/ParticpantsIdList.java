@@ -15,6 +15,9 @@ public class ParticpantsIdList {
 	private List<String> confirmedParticipants = new LinkedList<String>();
 
 	private List<String> unconfirmedParticipants = new LinkedList<String>();
+	
+	private boolean isCancelProjectLinkEffective;
+	
 
 	public void addApplicationUsername(String applicantUsername) {
 		unconfirmedParticipants.add(applicantUsername);
@@ -38,6 +41,14 @@ public class ParticpantsIdList {
 
 	public void setUnconfirmedParticipants(List<String> unconfirmedParticipants) {
 		this.unconfirmedParticipants = unconfirmedParticipants;
+	}
+
+	public boolean isCancelProjectLinkEffective() {
+		return isCancelProjectLinkEffective;
+	}
+
+	public void setCancelProjectLinkEffective(boolean isCancelProjectLinkEffective) {
+		this.isCancelProjectLinkEffective = isCancelProjectLinkEffective;
 	}
 
 }

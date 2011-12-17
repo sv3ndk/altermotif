@@ -24,8 +24,6 @@ public class ProjectsView extends DabController {
 
 	private static Logger logger = Logger.getLogger(ProjectsView.class.getName());
 	
-	
-
 	public static void projectsView(String p) {
 		Project project = BeanProvider.getProjectService().loadProject(p, true);
 		if (project != null && project.getStatus() != STATUS.cancelled) {
@@ -54,9 +52,11 @@ public class ProjectsView extends DabController {
 			} else {
 				logger.log(Level.WARNING, "user trying cancel a proejct but is not allowed to,  this should be impossible, userid is" + getSessionWrapper().getLoggedInUserProfileId()
 						+ ", projectid is " + projectId);
+				Application.index();
 			}
 		} else {
 			logger.log(Level.WARNING, "user trying to cancel a non existant project : " + projectId + " this should be impossible!");
+			Application.index();
 		}
 		
 		try {
@@ -66,6 +66,57 @@ public class ProjectsView extends DabController {
 		}
 
 		ProfileHome.profileHome();
+	}
+	
+	
+	public static void terminateProject(String projectId) {
+		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
+		if (project != null) {
+			ProjectPep pep = new ProjectPep(project);
+			
+			if (pep.isAllowedToTerminate(getSessionWrapper().getLoggedInUserProfileId())) {
+				BeanProvider.getProjectService().terminateProject(project);
+			} else {
+				logger.log(Level.WARNING, "user trying terminate a project but is not allowed to, this should be impossible, userid is" + getSessionWrapper().getLoggedInUserProfileId()
+						+ ", projectid is " + projectId);
+				Application.index();
+			}
+		} else {
+			logger.log(Level.WARNING, "user trying to terminate a non existant project : " + projectId + " this should be impossible!");
+			Application.index();
+		}
+		
+		try {
+			// ugly wait: the cancellation is asynchronous => refreshing the page right away is usually too early: waiting 1 sec greatly increases the chances that the transfer has actually been done 
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+		}
+		projectsView(projectId);
+	}
+
+	public static void restartProject(String projectId) {
+		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
+		if (project != null) {
+			ProjectPep pep = new ProjectPep(project);
+			
+			if (pep.isAllowedToRestartProject(getSessionWrapper().getLoggedInUserProfileId())) {
+				BeanProvider.getProjectService().restartProject(project);
+			} else {
+				logger.log(Level.WARNING, "user trying restart a project but is not allowed to, this should be impossible, userid is" + getSessionWrapper().getLoggedInUserProfileId()
+						+ ", projectid is " + projectId);
+				Application.index();
+			}
+		} else {
+			logger.log(Level.WARNING, "user trying to restart a non existant project : " + projectId + " this should be impossible!");
+			Application.index();
+		}
+		
+		try {
+			// ugly wait: the cancellation is asynchronous => refreshing the page right away is usually too early: waiting 1 sec greatly increases the chances that the transfer has actually been done 
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+		}
+		projectsView(projectId);
 	}
 	
 	
@@ -138,6 +189,7 @@ public class ProjectsView extends DabController {
 		} else {
 			logger.log(Level.WARNING, "user trying to reject application to a non existant project : " + projectId + " this should be impossible!");
 		}
+		
 	}
 
 	/**
@@ -340,6 +392,10 @@ public class ProjectsView extends DabController {
 		Set<String> knownParticipantUsernamesSet = Utils.jsonToSetOfStrings(knownParticipantUsernames);
 		Set<String> knownApplicationUsernamesSet = Utils.jsonToSetOfStrings(knownApplicationUsernames);
 		ParticpantsIdList removedParticipants = BeanProvider.getProjectService().determineRemovedParticipants(projectId, knownParticipantUsernamesSet, knownApplicationUsernamesSet);
+		
+		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
+		removedParticipants.setCancelProjectLinkEffective(new ProjectVisibility(new  ProjectPep(project), project, getSessionWrapper().getLoggedInUserProfileId()).isCancelProjectLinkEffective());
+		
 		renderJSON(removedParticipants);
 	}
 	
@@ -349,6 +405,7 @@ public class ProjectsView extends DabController {
 		ParticipantList addedParticipants = BeanProvider.getProjectService().determineAddedParticipants(projectId, knownParticipantUsernamesSet, knownApplicationUsernamesSet);
 		
 		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
+		
 		
 		renderArgs.put("_projectVisibility", new ProjectVisibility(new ProjectPep(project), project, getSessionWrapper().getLoggedInUserProfileId()));
 		renderArgs.put("_numberOfConfirmedParticipants", project.getNumberOfConfirmedParticipants());

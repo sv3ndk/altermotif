@@ -2,6 +2,7 @@ package com.svend.dab.core.beans.projects;
 
 import com.google.common.base.Strings;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
+import com.svend.dab.core.beans.projects.Project.STATUS;
 
 /**
  * @author svend
@@ -36,6 +37,10 @@ public class ProjectPep {
 			return false;
 		}
 		
+		if (project.getStatus() != STATUS.started) {
+			return false;
+		}
+		
 		ROLE role = project.findRoleOfUser(user);
 		return role == ROLE.initiator;
 	}
@@ -43,6 +48,10 @@ public class ProjectPep {
 
 	public boolean isAllowedToCancelProject(String user) {
 		if (user == null) {
+			return false;
+		}
+		
+		if (project.getStatus() != STATUS.started) {
 			return false;
 		}
 		
@@ -60,9 +69,29 @@ public class ProjectPep {
 		if (user == null) {
 			return false;
 		}
+		
+		if (project.getStatus() != STATUS.started) {
+			return false;
+		}
+		
 		ROLE role = project.findRoleOfUser(user);
 		return role == ROLE.initiator;
 	}
+	
+	
+	public boolean isAllowedToRestartProject(String user) {
+		if (user == null) {
+			return false;
+		}
+		
+		if (project.getStatus() != STATUS.done) {
+			return false;
+		}
+		
+		ROLE role = project.findRoleOfUser(user);
+		return role == ROLE.initiator;
+	}
+
 	
 	// ------------------------------------------
 	// photo gallery
@@ -72,6 +101,11 @@ public class ProjectPep {
 		if (user == null) {
 			return false;
 		}
+		
+		if (project.getStatus() != STATUS.started) {
+			return false;
+		}
+		
 		ROLE role = project.findRoleOfUser(user);
 		return role == ROLE.initiator || role == ROLE.admin;
 	}
@@ -87,6 +121,11 @@ public class ProjectPep {
 		if (user == null) {
 			return false;
 		}
+		
+		if (project.getStatus() != STATUS.started) {
+			return false;
+		}
+		
 		ROLE role = project.findRoleOfUser(user);
 		return role == ROLE.initiator || role == ROLE.admin || role == ROLE.member;
 	}
@@ -99,6 +138,11 @@ public class ProjectPep {
 		if (user == null) {
 			return false;
 		}
+		
+		if (project.getStatus() != STATUS.started) {
+			return false;
+		}
+		
 		ROLE role = project.findRoleOfUser(user);
 		return role == ROLE.initiator || role == ROLE.admin;
 	}
@@ -112,9 +156,12 @@ public class ProjectPep {
 		if (Strings.isNullOrEmpty(userId) || Strings.isNullOrEmpty(rejectedUserId)) {
 			return false;
 		}
+
+		if (project.getStatus() != STATUS.started) {
+			return false;
+		}
 		
 		ROLE roleOfRejected =project.findRoleOfUser(rejectedUserId);
-		
 		if (roleOfRejected == ROLE.initiator) {
 			return false;
 		}
@@ -135,8 +182,11 @@ public class ProjectPep {
 			return false;
 		}
 		
-		ROLE roleOfUpgraded =project.findRoleOfUser(upgradedUser);
+		if (project.getStatus() != STATUS.started) {
+			return false;
+		}
 		
+		ROLE roleOfUpgraded =project.findRoleOfUser(upgradedUser);
 		if (roleOfUpgraded != ROLE.member) {
 			return false;
 		}
@@ -159,6 +209,10 @@ public class ProjectPep {
 
 	public boolean isAllowedToMakeMember(String userId, String downgradedUser) {
 		if (Strings.isNullOrEmpty(userId) || Strings.isNullOrEmpty(downgradedUser)) {
+			return false;
+		}
+		
+		if (project.getStatus() != STATUS.started) {
 			return false;
 		}
 		
@@ -189,6 +243,10 @@ public class ProjectPep {
 			return false;
 		}
 		
+		if (project.getStatus() != STATUS.started) {
+			return false;
+		}
+		
 		// may not give ownership to himself
 		if (upgradedUser .equals(userId)) {
 			return false;
@@ -211,6 +269,10 @@ public class ProjectPep {
 
 	public boolean isAllowedToCancelOwnershipTransfer(String userId, String upgradedUser) {
 		if (Strings.isNullOrEmpty(userId) || Strings.isNullOrEmpty(upgradedUser)) {
+			return false;
+		}
+		
+		if (project.getStatus() != STATUS.started) {
 			return false;
 		}
 		
@@ -237,6 +299,9 @@ public class ProjectPep {
 			return false;
 		}
 		
+		if (project.getStatus() != STATUS.started) {
+			return false;
+		}
 		
 		// may not accept ownership if he currently is inactive user (he should not be able to deactivate his profile anyway, so this should be impossible, but let's be paranoid)
 		Participant participation = project.getParticipant(userId);
@@ -254,8 +319,15 @@ public class ProjectPep {
 	 * @return
 	 */
 	public boolean isAllowedToLeave(String userId) {
+		
+		if (project.getStatus() != STATUS.started) {
+			return false;
+		}
+		
 		// the initiator must forward ownership, he cannot just leave
 		return project.findRoleOfUser(userId) != ROLE.initiator;
 	}
+
+
 
 }
