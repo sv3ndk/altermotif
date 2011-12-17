@@ -48,7 +48,7 @@ public class ProjectApplicationCancelledPropagator implements IEventPropagator<P
 		}
 
 		// in case of event retries, the user could already have been removed => just skipping that step in that case
-		Participant existingParticipant = project.getParticipation(event.getUserId());
+		Participant existingParticipant = project.getParticipant(event.getUserId());
 		if (existingParticipant != null) {
 			
 			// no idea why a simple "remove" does not work in that case...

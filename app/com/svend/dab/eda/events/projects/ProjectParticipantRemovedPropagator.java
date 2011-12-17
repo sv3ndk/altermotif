@@ -44,7 +44,7 @@ public class ProjectParticipantRemovedPropagator implements IEventPropagator<Pro
 		}
 
 		// in case of event retries, the user could already have been moved from participation to projects => just skipping that step in that case
-		Participant existingParticipant = project.getParticipation(event.getUserId());
+		Participant existingParticipant = project.getParticipant(event.getUserId());
 		if (existingParticipant != null) {
 			projetRepo.removeParticipant(event.getProjectId(), event.getUserId());
 		}

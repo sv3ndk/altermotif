@@ -12,8 +12,6 @@ function init() {
 	initParticipantsMecanics();
 	refreshApplyLinkVisibility();
 	
-//	setInterval(refreshApplicationsAndPartipants, 2000);
-	
 }
 
 function initPhotoGallery() {
@@ -33,15 +31,18 @@ function insertLangugeName() {
 }
 
 
-
 //////////////////////////////////
 // project participantions
 
 function initApplicationMecanics() {
-	
+
+	// init cancel application
+	askAndAct_On("#cancelApplicationToProjectLink", "", confirmCancelApplicationText, whenUserConfirmsCancelApplication);
+
 	initViewParticipationMotivationText();
 	initAcceptRejectAppliction();
 	
+	// init apply to project
 	$('#applyToProjectLink').click(function() {
 		$("#confirmApplyToProjectDialog").dialog("open");
 		$("#confirmApplyToProjectDialog textarea").val("");
@@ -77,49 +78,29 @@ function initApplicationMecanics() {
 				$(this).dialog("close");
 			}
 		}
-
 		]
 	});
-	
-	$('#cancelApplicationToProjectLink').click(function() {
-		$("#confirmCancelApplicationToProjectDialog").dialog("open");
-	});
-	
-	$("#confirmCancelApplicationToProjectDialog").dialog({
-		autoOpen : false,
-		width: 400,
-		"buttons" : [ {
-			text : okLabelValue,
-			click : function(event) {
-				
-				$.post(cancelApplicationToProject(
-						{projectId: projectId}
-						), 
-						function(data) {
-							//
-						}
-				);
-				
+}
+
+function whenUserConfirmsCancelApplication() {
+	setConfirmationFunction(onConfirmCancelApplication);
+}
+
+function onConfirmCancelApplication() {
+	$.post(cancelApplicationToProject(
+			{projectId: projectId}
+			), 
+			function(data) {
 				setTimeout(function() {
 					isApplyLinkVisible = true;
 					isCancelApplicationLinkVisible = false;
 					refreshApplyLinkVisibility();
-					$("#confirmCancelApplicationToProjectDialog").dialog("close");
+					closeConfirmationDialog();
 				}, 350);
 			}
-		},
-		
-		{
-			text : cancelLabelValue,
-			click : function() {
-				$(this).dialog("close");
-			}
-		}
-		
-		]
-	});
-	
+	);
 }
+
 	
 function refreshApplyLinkVisibility() {
 	
@@ -357,8 +338,9 @@ function whenUserAcceptsOwnership() {
 }
 
 function onAcceptOwnership() {
-	// this must be a regular form POST: we must refresh the whole page because his rights have changed a lot now 
-	
+	// this must be a regular non-AJAX form POST: we must refresh the whole page because his rights have changed a lot now (and I am lazy...)
+	$("#hiddenAcceptOwnershipform form input").val(projectId);
+	$("#hiddenAcceptOwnershipform form").submit();
 }
 
 
@@ -371,7 +353,7 @@ function whenUserRefusesOwnership() {
 function onRefuseOwnership() {
 	$.post(refuseOwnership(
 			{projectId: projectId, participant:participantId}
-	), 
+		), 
 		function(data) {
 			setTimeout(function() {
 				updateParticipantOneLineContainer(participantId);
@@ -387,13 +369,10 @@ function recordActionedParticipantId() {
 }
 
 
-	
-	/////////////////////////////////////////////
+/////////////////////////////////////////////
 // refreshing the participants and applications
 
-
 function refreshApplicationsAndPartipants() {
-
 	var knownParticipantUsernames = computedKnownParticipantUsernames();
 	var knownApplicationUsernames = computedKnownApplicationUsernames();
 
@@ -408,13 +387,13 @@ function refreshRemovedApplicationsAndParticipants(knownParticipantUsernames, kn
 	appJson = JSON.stringify(knownApplicationUsernames);
 	
 	$.post(determineRemovedParticipantsAndApplications(
-			{projectId: projectId, knownParticipantUsernames: partJson, knownApplicationUsernames: appJson}
-			), 
-			function(data) {
-				removeObsoletParticipants(data.confirmedParticipants);
-				removeObsoletApplications(data.unconfirmedParticipants);
-			}
-		);
+		{projectId: projectId, knownParticipantUsernames: partJson, knownApplicationUsernames: appJson}
+		), 
+		function(data) {
+			removeObsoletParticipants(data.confirmedParticipants);
+			removeObsoletApplications(data.unconfirmedParticipants);
+		}
+	);
 }
 
 function refreshAddedApplicationsAndParticipants(knownParticipantUsernames, knownApplicationUsernames) {
@@ -425,7 +404,6 @@ function refreshAddedApplicationsAndParticipants(knownParticipantUsernames, know
 			addNewParticipantsAndApplications(htmlData);
 		}
 	);
-	
 }
 
 function computedKnownParticipantUsernames() {
@@ -469,12 +447,12 @@ function addNewParticipantsAndApplications(htmlData) {
 	$("#numberOfApplicantsSpan").text($(htmlData).find("#numberOfApplicantsSpan").text());
 	
 	$(htmlData).find("#projectParticipants .oneUserSummary").each(
-			function(index, element){
-				$(element).addClass("hidden");
-				$("#projectParticipants .toggleContainer").append(element);
-				$("#projectParticipants .toggleContainer .oneUserSummary.hidden").slideDown(250);
-			}
-		);
+		function(index, element){
+			$(element).addClass("hidden");
+			$("#projectParticipants .toggleContainer").append(element);
+			$("#projectParticipants .toggleContainer .oneUserSummary.hidden").slideDown(250);
+		}
+	);
 
 	if ($(htmlData).find("#projectApplications") == undefined || $(htmlData).find("#projectApplications").length == 0) {
 		$("#projectApplications").remove();
@@ -489,15 +467,11 @@ function addNewParticipantsAndApplications(htmlData) {
 
 
 function updateParticipantOneLineContainer(participantId) {
-	// oneLinerContentContainer
-	
 	$.post(retrieveUpdatedParticipantContentData(
-			{projectId: projectId, participant:participantId}
-			), 
-			function(htmlData) {
-				$("#participant"+participantId).find(".oneLinerContentContainer").replaceWith($(htmlData).find(".oneLinerContentContainer"));
-			}
-		);
+		{projectId: projectId, participant:participantId}
+		), 
+		function(htmlData) {
+			$("#participant"+participantId).find(".oneLinerContentContainer").replaceWith($(htmlData).find(".oneLinerContentContainer"));
+		}
+	);
 }
-
-

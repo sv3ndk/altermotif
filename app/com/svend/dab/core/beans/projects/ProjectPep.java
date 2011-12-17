@@ -112,7 +112,7 @@ public class ProjectPep {
 		}
 		
 		// cannot simply "remove" an owner ship proposal, the owner has to cancel the transfer of ownership 
-		Participant rejectedParticipant = project.getParticipation(rejectedUserId);
+		Participant rejectedParticipant = project.getParticipant(rejectedUserId);
 		if (rejectedParticipant.isOwnershipProposed()) {
 			return false;
 		}
@@ -134,7 +134,7 @@ public class ProjectPep {
 		}
 
 		// cannot make an inactive member admin
-		Participant participation = project.getParticipation(upgradedUser);
+		Participant participation = project.getParticipant(upgradedUser);
 		if (participation == null || ! participation.getUser().isProfileActive()) {
 			return false;
 		}
@@ -154,7 +154,7 @@ public class ProjectPep {
 			return false;
 		}
 		
-		Participant participation = project.getParticipation(downgradedUser);
+		Participant participation = project.getParticipant(downgradedUser);
 		if (participation == null || ! participation.getUser().isProfileActive()) {
 			return false;
 		}
@@ -187,7 +187,7 @@ public class ProjectPep {
 		}
 		
 		// may not give ownership to an inactive user
-		Participant participation = project.getParticipation(upgradedUser);
+		Participant participation = project.getParticipant(upgradedUser);
 		if (participation == null || ! participation.getUser().isProfileActive()) {
 			return false;
 		}
@@ -212,7 +212,7 @@ public class ProjectPep {
 		}
 		
 		// may only remove it if it has been proposed previously
-		Participant participation = project.getParticipation(upgradedUser);
+		Participant participation = project.getParticipant(upgradedUser);
 		if (!participation.isOwnershipProposed()) {
 			return false;
 		}
@@ -231,7 +231,7 @@ public class ProjectPep {
 		
 		
 		// may not accept ownership if he currently is inactive user (he should not be able to deactivate his profile anyway, so this should be impossible, but let's be paranoid)
-		Participant participation = project.getParticipation(userId);
+		Participant participation = project.getParticipant(userId);
 		if (participation == null || ! participation.getUser().isProfileActive()) {
 			return false;
 		}

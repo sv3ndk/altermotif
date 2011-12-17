@@ -289,7 +289,7 @@ public class Project {
 
 	
 	
-	public Participant getParticipation(String userId) {
+	public Participant getParticipant(String userId) {
 		if (userId == null) {
 			return null;
 		}

@@ -1,24 +1,18 @@
 package controllers.projects;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import models.altermotif.MappedValue;
-import models.altermotif.ResponseNode;
 import models.altermotif.projects.ProjectVisibility;
-import models.altermotif.projects.RemovedParticpantsResponse;
 import web.utils.Utils;
 
 import com.svend.dab.core.beans.projects.Participant;
 import com.svend.dab.core.beans.projects.ParticipantList;
-import com.svend.dab.core.beans.projects.Participation;
+import com.svend.dab.core.beans.projects.ParticpantsIdList;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.ProjectPep;
-import com.svend.dab.core.beans.projects.ParticpantsIdList;
 
 import controllers.Application;
 import controllers.BeanProvider;
@@ -272,6 +266,35 @@ public class ProjectsView extends DabController {
 		}
 		renderJSON(new MappedValue("truc", "much"));
 	}
+	
+	/**
+	 * @param projectId
+	 */
+	public static void acceptOwnership(String projectId) {
+		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
+		if (project != null) {
+			ProjectPep pep = new ProjectPep(project);
+			if (pep.isAllowedToAcceptOrRefuseOwnershipTransfer(getSessionWrapper().getLoggedInUserProfileId())) {
+				BeanProvider.getProjectService().confirmOwnershipTransfer(getSessionWrapper().getLoggedInUserProfileId(), project);
+			} else {
+				logger.log(Level.WARNING, "user trying accept an ownership transfer to participant member but is not allowed to,  this should be impossible, userid is" + getSessionWrapper().getLoggedInUserProfileId()
+						+ ", projectid is " + projectId);
+				Application.index();
+			}
+		} else {
+			logger.log(Level.WARNING, "user trying to accept an ownership transfer to participant member of non existant project : " + projectId + " this should be impossible!");
+			Application.index();
+		}
+		
+		try {
+			// ugly wait: the ownership transfer is asynchronous => refreshing the page right away is usually too early: waiting 1 sec greatly increases the chances that the transfer has actually been done 
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+		}
+		
+		projectsView(projectId);
+	}
+	
 
 	// --------------------------------------------------------
 	// async refresh logic
@@ -284,7 +307,6 @@ public class ProjectsView extends DabController {
 	}
 	
 	public static void doDetermineAddedParticipantsAndApplications(String projectId, String knownParticipantUsernames, String knownApplicationUsernames) {
-		
 		Set<String> knownParticipantUsernamesSet = Utils.jsonToSetOfStrings(knownParticipantUsernames);
 		Set<String> knownApplicationUsernamesSet = Utils.jsonToSetOfStrings(knownApplicationUsernames);
 		ParticipantList addedParticipants = BeanProvider.getProjectService().determineAddedParticipants(projectId, knownParticipantUsernamesSet, knownApplicationUsernamesSet);
@@ -304,12 +326,9 @@ public class ProjectsView extends DabController {
 	
 	
 	public static void doRetrieveParticipantContentData(String projectId, String participant) {
-		
 		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
 		if (project != null) {
-		
-			Participant participantData = project.getParticipation(participant);
-			
+			Participant participantData = project.getParticipant(participant);
 			if (participantData != null) {
 				renderArgs.put("_participant", participantData);
 				renderArgs.put("_projectVisibility", new ProjectVisibility(new ProjectPep(project), project, getSessionWrapper().getLoggedInUserProfileId()));
@@ -318,13 +337,9 @@ public class ProjectsView extends DabController {
 				
 				logger.log(Level.WARNING, "user trying retrieve participant content data of for a particpant which does not belong to the proejct, project id is : " + projectId + " this should be impossible!");
 			}
-			
 		} else {
 			logger.log(Level.WARNING, "user trying retrieve participant content data of non existant project : " + projectId + " this should be impossible!");
 		}
 	}
-	
-	
-	
 
 }

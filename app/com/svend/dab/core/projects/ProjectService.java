@@ -24,6 +24,7 @@ import com.svend.dab.eda.events.projects.ProjectApplicationAccepted;
 import com.svend.dab.eda.events.projects.ProjectApplicationCancelled;
 import com.svend.dab.eda.events.projects.ProjectApplicationEvent;
 import com.svend.dab.eda.events.projects.ProjectCreated;
+import com.svend.dab.eda.events.projects.ProjectOwnershipAccepted;
 import com.svend.dab.eda.events.projects.ProjectOwnershipProposed;
 import com.svend.dab.eda.events.projects.ProjectParticipantRemoved;
 import com.svend.dab.eda.events.projects.ProjectUpdated;
@@ -158,7 +159,15 @@ public class ProjectService implements IProjectService {
 		projectDao.updateOwnerShipProposed(project.getId(), username, false);
 	}
 
-	
+	@Override
+	public void confirmOwnershipTransfer(String promotedUsername, Project project) {
+		if (Strings.isNullOrEmpty(promotedUsername) || project == null) {
+			logger.log(Level.WARNING, "not cancelling an ownership transfer to to a null participant or on a null project");
+			return;
+		}
+		eventEmitter.emit(new ProjectOwnershipAccepted(promotedUsername, project.getInitiator().getUser().getUserName(), project.getId()));
+	}
+
 	
 
 	@Override
@@ -218,6 +227,7 @@ public class ProjectService implements IProjectService {
 		return response;
 
 	}
+
 
 
 

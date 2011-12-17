@@ -208,7 +208,7 @@ uploadCVPleaseWait=Gelieve te wachten totdat de CV is opgeladen
 
 # manage privacy settings screens
 privacySettingsProfileIsActive=Mijn profiel is actief
-privacySettingsMayNotDeactivateExplanation=***You may not deactivate your profile because your are the owner of at least one project. You must transmit this ownership to another member of this project before being able to deactivate your profile.
+privacySettingsMayNotDeactivateExplanation=***You may not deactivate your profile because your are the owner of at least one project or you have received at least one ownership transfer proposal. You must transmit this ownership to another member of this project before being able to deactivate your profile.
 privacySettingsFirstName=Mijn voornaam is zichtbaar voor
 privacySettingsLastName=Mijn achternaam is zichtbaar voor
 privacySettingsNameExplanation=Wanneer zowel mijn voor- als achternaam onzichtbaar zijn, dan zal deze gebruiker enkel uw gebruikersnaam zien:

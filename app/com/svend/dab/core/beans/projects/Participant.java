@@ -15,7 +15,13 @@ import com.svend.dab.core.beans.profile.UserSummary;
 public class Participant {
 
 	public enum ROLE {
-		initiator("projectRoleInitiator"), admin("projectRoleAdmin"), member("projectRoleMember");
+
+		// "initiator" is actually the "owner" (initiator is the old term, we changed to "owner" when we introduced the concept of transfer)
+		initiator("projectRoleInitiator"),
+
+		admin("projectRoleAdmin"),
+
+		member("projectRoleMember");
 
 		private final String label;
 

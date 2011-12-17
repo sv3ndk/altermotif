@@ -13,7 +13,6 @@ import com.svend.dab.core.beans.projects.Project;
  */
 public interface IProjectService {
 	
-	
 	public void createProject(Project createdProject, String creatorId);
 	
 	public Project loadProject(String projectId, boolean generatePhotoLinks);
@@ -47,5 +46,6 @@ public interface IProjectService {
 
 	public void cancelOwnershipTransfer(String participant, Project project);
 
+	public void confirmOwnershipTransfer(String promotedUsername, Project project);
 	
 }

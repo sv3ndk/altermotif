@@ -41,6 +41,7 @@
 	    var projectId = "${visitedProject.id}"; 
 	    var proposedOwnerId = "${visitedProject.proposedInitiator?.user?.userName}"; 
 	    
+	    var confirmCancelApplicationText 	= "&{'viewProjectConfirmCancelApplication'}";
 	    var confirmRemoveParticipantText 	= "&{'viewProjectConfirmRemoveParticipant'}";
 	    var confirmAcceptApplicationText 	= "&{'viewProjectConfirmAcceptApplication'}";
 	    var confirmRejectApplicationText 	= "&{'viewProjectConfirmRejectApplication'}";
@@ -120,11 +121,12 @@
 	<textarea cols="45" rows="7"></textarea>
 </div>
 
-<div id="confirmCancelApplicationToProjectDialog" title="&{'confirmationPopupTitle'}">
-	&{'viewProjectConfirmCancelApplication'}
-</div>
-
 <div id="applicationMotivationPopup" title="&{'applicationMoticationTextPopupTitle'}">
 	<textarea readonly="readonly" rows="7" cols="45" ></textarea>
 </div>
 
+<div id="hiddenAcceptOwnershipform" style="hidden">
+	#{form @projects.ProjectsView.acceptOwnership()}
+		<input type="hidden" name="projectId" id="projectId"/>
+	#{/form}
+</div>

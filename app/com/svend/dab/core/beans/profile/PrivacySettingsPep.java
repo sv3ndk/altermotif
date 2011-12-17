@@ -1,5 +1,10 @@
 package com.svend.dab.core.beans.profile;
 
+import com.svend.dab.core.beans.projects.Participant;
+import com.svend.dab.core.beans.projects.Participation;
+import com.svend.dab.core.beans.projects.Project;
+import com.svend.dab.core.projects.IProjectService;
+
 /**
  * security Policy enforcement point for actions on the Privacy settings of a {@link UserProfile} 
  * 
@@ -9,10 +14,12 @@ package com.svend.dab.core.beans.profile;
 public class PrivacySettingsPep {
 
 	private final UserProfile profile;
+	private final IProjectService projectService;
 
-	public PrivacySettingsPep(UserProfile profile) {
+	public PrivacySettingsPep(UserProfile profile, IProjectService projectService) {
 		super();
 		this.profile = profile;
+		this.projectService = projectService;
 	}
 
 	
@@ -29,8 +36,18 @@ public class PrivacySettingsPep {
 			if ( profile.isOwnerOfAtLeastOneProject()) {
 				return false;
 			}
+
+			// we also have to prevent this user to desactivate his profile if he has received a proposal for ownership
+			for (Participation participation :profile.getProjects()) {
+				Project project = projectService.loadProject(participation.getProjectSummary().getProjectId(), false);
+				if (project != null) {
+					Participant participant = project.getParticipant(profile.getUsername());
+					if (participant != null && participant.isOwnershipProposed()) {
+						return false;
+					}
+				}
+			}
 			
-			// TODO: do not let the user deactivate if he has received an ownership proposal  
 			
 			return true;
 			

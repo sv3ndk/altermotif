@@ -47,7 +47,7 @@ public class ProjectApplicationAcceptedPropagator implements IEventPropagator<Pr
 		}
 
 		// in case of event retries, the user could already have been moved from participation to projects => just skipping that step in that case
-		Participant existingParticipant = project.getParticipation(event.getUserId());
+		Participant existingParticipant = project.getParticipant(event.getUserId());
 		if (existingParticipant != null) {
 			projetRepo.markParticipantAsAccepted(event.getProjectId(), event.getUserId());
 		}

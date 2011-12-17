@@ -207,7 +207,7 @@ uploadCVPleaseWait=Özgeçmiş yüklenirken lütfen bekleyin
 
 # manage privacy settings screens
 privacySettingsProfileIsActive=Profiliniz Aktif
-privacySettingsMayNotDeactivateExplanation=***You may not deactivate your profile because your are the owner of at least one project. You must transmit this ownership to another member of this project before being able to deactivate your profile.
+privacySettingsMayNotDeactivateExplanation=***You may not deactivate your profile because your are the owner of at least one project or you have received at least one ownership transfer proposal. You must transmit this ownership to another member of this project before being able to deactivate your profile.
 privacySettingsFirstName=Adım şu kişilere görünür olsun 
 privacySettingsLastName=Soyadım şu kişilere görünür olsun 
 privacySettingsNameExplanation=Hem isminiz hem soyisminiz gizli olursa, diğer üyeler sadece kullanıcı isminizi görecekler
