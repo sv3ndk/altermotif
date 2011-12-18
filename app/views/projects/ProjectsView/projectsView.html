@@ -116,7 +116,7 @@
 
 
 	<div id="projectBody">
-		#{projects.viewProjectDescription visitedProject:visitedProject/}
+		#{projects.viewProjectDescription visitedProject:visitedProject, projectVisibility:projectVisibility/}
 
 		#{projects.viewProjectParticipantsAndApplications 	confirmedParticipants:visitedProject.confirmedParticipants, 
 															unconfirmedActiveParticipants:visitedProject.unconfirmedActiveParticipants,

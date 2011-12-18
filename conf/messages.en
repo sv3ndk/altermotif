@@ -263,6 +263,16 @@ projectStatusStarted=Started
 projectStatusCancelled=Cancelled
 projectStatusDone=Done
 
+projectThemeEnvironment=environment
+projectThemeDevelopment=development
+projectThemeCulture=culture
+projectThemeScience=science
+projectThemeTravel=travel
+projectThemeSports=sports
+projectThemeSociety=society
+projectThemeOther=other
+projectThemeOtherSubThemeOther=other
+
 # create project page
 projectNewProjectName=Project name
 projectNewProjectGoal=Project goal
@@ -291,6 +301,7 @@ projectNewAddNewLinkTitle=Enter a new link
 projectNewUsefulLinksExplanation=Website addresses that might be useful for the project
 projectNewSelectThemes=Select themes
 projectNewSelectThemesExplanation=By selecting the themes that correspond to the project, you'll make sure the project is displayed to people who are looking for such an opportunity
+projectNewAddOneTheme=add a theme...
 projectNewSelectTags=Project tags
 projectNewAddOneTagLink=add a tag...
 projectNewSelectTagsExplanation=Enter keywords related to the project. Others will be able to  find your project based on these keywords. 

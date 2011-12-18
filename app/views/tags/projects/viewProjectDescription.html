@@ -1,11 +1,13 @@
 <dl class="descriptionList">
-	<dt>
-		&{'viewProjectProject'}:
-	</dt>
-	<dd>
-		<pre>${_visitedProject.pdata.description}</pre>
-	</dd>
 
+	#{if _projectVisibility.isDescriptionVisible() }
+		<dt>
+			&{'viewProjectProject'}:
+		</dt>
+		<dd>
+			<pre>${_visitedProject.pdata.description}</pre>
+		</dd>
+	#{/if}
 
 	<dt>
 		&{'viewProjectReason'}:
@@ -14,19 +16,23 @@
 		<pre>${_visitedProject.pdata.reason}</pre>
 	</dd>
 	
-	<dt>
-		&{'viewProjectStrategy'}:
-	</dt>
-	<dd>
-		<pre>${_visitedProject.pdata.strategy}</pre>
-	</dd>
+	#{if _projectVisibility.isStrategyVisible() }
+		<dt>
+			&{'viewProjectStrategy'}:
+		</dt>
+		<dd>
+			<pre>${_visitedProject.pdata.strategy}</pre>
+		</dd>
+	#{/if}
 
-	<dt>
-		&{'viewProjectRewards'}:
-	</dt>
-	<dd>
-		<pre>${_visitedProject.pdata.offer}</pre>
-	</dd>
+	#{if _projectVisibility.isOfferVisible() }
+		<dt>
+			&{'viewProjectRewards'}:
+		</dt>
+		<dd>
+			<pre>${_visitedProject.pdata.offer}</pre>
+		</dd>
+	#{/if}
 
 	<dt>
 		&{'viewProjectLinks'}:
@@ -39,6 +45,3 @@
 			</ul>
 		#{/list}
 	</dd>
-	
-	
-</dl>

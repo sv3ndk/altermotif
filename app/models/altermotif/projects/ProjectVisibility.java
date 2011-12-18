@@ -81,6 +81,21 @@ public class ProjectVisibility {
 		return pep.isAllowedToEditPhotoGallery(visitingUserId);
 	}
 	
+	//////////////////////////////////////////
+	// project description (description, strategy, offer)
+	
+	public boolean isDescriptionVisible() {
+		return pep.isAllowedToSeeDecription(visitingUserId);
+	}
+	
+	public boolean isStrategyVisible() {
+		return pep.isAllowedToSeeStrategy(visitingUserId);
+	}
+	
+	public boolean isOfferVisible() {
+		return pep.isAllowedToSeeOffer(visitingUserId);
+	}
+	
 	//////////////////////////////////
 	// applications
 	

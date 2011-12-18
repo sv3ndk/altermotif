@@ -291,6 +291,7 @@ projectNewAddNewLinkTitle=Yeni link
 projectNewUsefulLinksExplanation=Proje için faydalı olabilecek internet siteleri
 projectNewSelectThemes=Konu seçin
 projectNewSelectThemesExplanation=Projenizin konusunu doğru seçerek, projenizin aynı konuda çalışmak isteyen insanlar tarafından kolayca bulunmasını sağlayın.
+projectNewAddOneTheme=***add a theme...
 projectNewSelectTags=Proje etiketleri
 projectNewAddOneTagLink=Etiket ekleyin
 projectNewSelectTagsExplanation=Projenizle ilgili anahtar kelimeler girin. Diğer kullanıcılar projenize daha kolay ulaşabilirler. 

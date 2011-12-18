@@ -291,6 +291,7 @@ projectNewSelectThemes=***Select themes
 projectNewUsefulLinksExplanation=Des addresses des sites web qui peuvent être utile pour le projet
 projectNewSelectThemes=Choisissez des thèmes
 projectNewSelectThemesExplanation=En choisissant des thèmes correspondant au projet, vous garantisserez que le projet sera montré aux utilisateurs qui cherchent une telle opportunité
+projectNewAddOneTheme=***add a theme...
 projectNewSelectTags=Etiquettes du projet
 projectNewAddOneTagLink=***add a tag...
 projectNewSelectTagsExplanation=Entrez des mots clés liés au projet. D'autres utilisateurs pourront trouver votre projet à base de ces mots clés.

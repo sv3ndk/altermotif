@@ -10,8 +10,6 @@
 		</td>
 		
 		<td class="formMidleColumn">
-		
-		
 			#{if _rows == null}
 				#{if _disabled }
 					<input name="${_inputName}"  value="${_inputValue == null ? flash[_inputName] : _inputValue}" size="${_cols}" disabled="disabled" id="${_inputId}"/>
@@ -19,12 +17,11 @@
 				#{if !_disabled }
 					<input name="${_inputName}"  value="${_inputValue == null ? flash[_inputName] : _inputValue}" size="${_cols}" id="${_inputId}"/>
 				#{/if}
-				
 			#{/if}
+			
 			#{if _rows != null}
 				<textarea name="${_inputName}" rows="${_rows}" cols="${_cols}">${_inputValue == null ? flash[_inputName] : _inputValue}</textarea>
 			#{/if}
-			
 			
 			#{if _explanation != null}
 				<br />

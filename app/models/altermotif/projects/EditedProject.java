@@ -1,12 +1,9 @@
 package models.altermotif.projects;
 
-import java.io.IOException;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.cloudfoundry.org.codehaus.jackson.JsonGenerationException;
-import org.cloudfoundry.org.codehaus.jackson.map.JsonMappingException;
 import org.cloudfoundry.org.codehaus.jackson.map.ObjectMapper;
 
 import web.utils.Utils;
@@ -24,6 +21,8 @@ public class EditedProject {
 	private String allLinksJson;
 	
 	private String allTagsJson;
+
+	private String allThemesJson;
 
 	private EditedProjectData pdata;
 	
@@ -118,6 +117,14 @@ public class EditedProject {
 
 	public void setPdata(EditedProjectData pdata) {
 		this.pdata = pdata;
+	}
+
+	public String getAllThemesJson() {
+		return allThemesJson;
+	}
+
+	public void setAllThemesJson(String allThemesJson) {
+		this.allThemesJson = allThemesJson;
 	}
 
 	

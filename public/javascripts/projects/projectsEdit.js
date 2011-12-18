@@ -1,19 +1,16 @@
-var allLocations;
-var allLinks;
-var allTags;
+var allLocations ;
+var allLinks ;
+var allTags ;
+var allThemes ;
 
 function init() {
 	
 	initLocationLogic();
-	
 	registerDatePicker();
-	
 	initAddLinkLogic();
-	
 	initAddTagLogic();
-	
+	initAddThemeLogic();
 	setupSetLanguageAutoComplete();
-	
 	initSubmitCancelButtons();
 }
 
@@ -25,8 +22,8 @@ function init() {
 function initLocationLogic() {
 	
 	allLocations = parseJsonStringIntoObject("#hiddenAllLocationJson");
-	for ( var oneKey in allLocations) {
-		graphicalAddOneLocation(allLocations[oneKey], true);
+	for (var i = 0; i < allLocations.length; i++) {
+		graphicalAddOneLocation(allLocations[i], true);
 	}
 	
 	// this init is present in the dabGeocoder.js file
@@ -100,15 +97,15 @@ function addOneLocation () {
 }
 
 function graphicalAddOneLocation (oneLanguge, immediate) {
-	var newLocationRow = $("#hiddenLocationTemplate").clone().removeAttr("id");
-	newLocationRow.find(".projectLocationText").text(oneLanguge.location);
-	$("#locationGroup").append(newLocationRow);
-	
-	if (immediate) {
-		$("#locationGroup li:last").show(0);
-	} else {
-		$("#locationGroup li:last").show(250);
-	}
+		var newLocationRow = $("#hiddenLocationTemplate").clone().removeAttr("id");
+		newLocationRow.find(".projectLocationText").text(oneLanguge.location);
+		$("#locationGroup").append(newLocationRow);
+		
+		if (immediate) {
+			$("#locationGroup li:last").show(0);
+		} else {
+			$("#locationGroup li:last").show(250);
+		}
 }
 
 
@@ -125,12 +122,7 @@ function registerDatePicker() {
 		yearRange : '-0:+100',
 		showAnim : "blind"
 	});
-
-//	$("#editProjectForm\\:projectNewDueDate\\:inputField").datepicker("setDate",
-//			$("#editProjectForm\\:projectNewDueDate\\:inputField").val());
-
 }
-
 
 
 ///////////////////////////////////////////////////////////////
@@ -215,6 +207,73 @@ function graphicalAddOneLink(addedLink, immediate) {
 
 
 
+////////////////////////////////////////////////////////////////
+// add a theme logic
+
+function initAddThemeLogic() {
+	
+	allThemes = parseJsonStringIntoObject("#hiddenAllThemesJson");
+	
+	$("#addThemeLink").click(function() {
+		switchThemeMode("enteringNewTheme");
+	});
+	
+	$("#addThemeCancelButton").click(function() {
+		switchThemeMode("normal");
+	});
+	
+	$("#addThemeSecondButton").click(function() {
+		addOneTheme();
+		switchThemeMode("normal");
+	});
+
+}
+
+function switchThemeMode(mode) {
+	if (mode == "normal") {
+		$("#themeInputCommand").hide();
+		$("#addThemeLink").toggle(500);
+		
+	} else {
+		$("#addThemeLink").hide();
+		$("#themeInputCommand").toggle(250);
+	}
+}
+
+
+function addOneTheme() {
+	var addedTheme = {
+			theme: $("#themeSelector").val(),
+			subtheme: $("#subThemeSelector").val() 
+	};
+	
+	allThemes.push(addedTheme);
+	$("#hiddenAllThemesJson").val(JSON.stringify(allThemes));
+	graphicalAddOneTheme(addedTheme, true);
+}
+
+function graphicalAddOneTheme(addedTheme, immediate) {
+	
+	// TODO: use translations here
+	var addedThemeText = addedTheme.theme;
+	if (addedTheme.subtheme != undefined && addedTheme.subtheme != "" && addedTheme.subtheme != "other") {
+		addedThemeText += " (" + addedTheme.subtheme + ")"
+	}
+	
+	
+	var newTagRow = $("#hiddenThemeTemplate").clone().removeAttr("id");
+	newTagRow.find("span").text(addedThemeText);
+	$("#themesGroup").append(newTagRow);
+	
+	if (immediate) {
+		$("#themesGroup li:last").show(0);
+	} else {
+		$("#themesGroup li:last").show(250);
+	}
+
+}
+
+
 
 ///////////////////////////////////////////////////////////////
 // add tag logic
@@ -262,7 +321,6 @@ function initAddTagLogic() {
 }
 
 function switchTagMode(mode) {
-
 	if (mode == "normal") {
 		$("#tagInputCommand").hide();
 		$("#addTagLink").toggle(500);
@@ -285,9 +343,7 @@ function addOneTag() {
 }
 
 
-
 function graphicalAddOneTag(addedTag, immediate) {
-	
 	var newTagRow = $("#hiddenTagTemplate").clone().removeAttr("id");
 	newTagRow.find("span").text(addedTag);
 	$("#tagGroup").append(newTagRow);
@@ -337,7 +393,8 @@ function parseJsonStringIntoObject(jqSelector) {
 
 	var allLanguageJson = $(jqSelector).val();
 	if (allLanguageJson != null && allLanguageJson != "" && allLanguageJson != "null")  {
-		return JSON.parse(allLanguageJson);
+		var parsed = JSON.parse(allLanguageJson);
+		return parsed;
 	} else {
 		return [];
 	}

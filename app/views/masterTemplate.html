@@ -11,40 +11,28 @@
 
 <meta charset="${_response_encoding}">
 
-<link type="text/css" rel="stylesheet"
-	href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" />
+<link type="text/css" rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" />
 
-
-<link rel="stylesheet" media="screen"
-	href="@{'/public/stylesheets/dab.css'}">
-
-<link rel="stylesheet" media="screen"
-	href="@{'/public/stylesheets/nondab/jquery/jquery.dropdown.style.css'}" />
-<link rel="stylesheet" media="screen"
-	href="@{'/public/stylesheets/nondab/jquery/jquery.dropdown.style.ie.css'}" />
-<link rel="stylesheet" media="screen"
-	href="@{'/public/stylesheets/nondab/jquery/ui.notify.css'}" />
+<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/dab.css'}">
+<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/nondab/jquery/jquery.dropdown.style.css'}" />
+<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/nondab/jquery/jquery.dropdown.style.ie.css'}" />
+<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/nondab/jquery/ui.notify.css'}" />
 
 #{get 'moreStyles' /}
 
 <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
 
 <!-- getting the jquery online => should be faster to load for visitor who already have jquery in cache -->
-<script type="text/javascript"
-	src="http://code.jquery.com/jquery-1.7.min.js"></script>
-<script type="text/javascript"
-	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
 
-<script src="@{'/public/javascripts/nondab/jquery/jquery.notify.js'}" type="text/javascript"
-	charset="${_response_encoding}"></script>
-	
-<script src="@{'/public/javascripts/dab.js'}" type="text/javascript"
-	charset="${_response_encoding}"></script>
+<script src="@{'/public/javascripts/nondab/jquery/jquery.notify.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+<script src="@{'/public/javascripts/dab.js'}" type="text/javascript" charset="${_response_encoding}"></script>
 
  <script  type="text/javascript">
- 
-	 var okLabelValue = "&{'OkButton'}";
-	 var cancelLabelValue = "&{'CancelButton'}";
+
+ 	var okLabelValue = "&{'OkButton'}";
+	var cancelLabelValue = "&{'CancelButton'}";
  
 	$(document).ready(function() {
 		var updateLanguageAction = #{jsAction @Application.udpateLanguage(':selection') /};

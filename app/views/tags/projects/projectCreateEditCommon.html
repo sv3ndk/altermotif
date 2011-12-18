@@ -126,7 +126,7 @@
 
 			<ul>
 				<li class="hidden" id="linkInputCommand">
-					<input id="addLinkInput" class="rightspaced" size="65"> </input>
+					<input id="addLinkInput" class="rightspaced" size="65" />
 					<span  id="addLinkSecondButton" class="dabLink rightspaced" >&{'add'}</span>
 					<span  id="addLinkCancelButton" class="dabLink" >&{'CancelButton'}</span>
 				</li>
@@ -139,19 +139,52 @@
 </tr>
 
 
-#{dab.inputText 
-	label:messages.get('projectNewSelectThemes'),
-	required: false,
-	inputName: "todo",
-	inputValue: "(TODO...)",
-	explanation: messages.get('projectNewSelectThemesExplanation'),
-	cols: 35,
-	disabled: true
-/}
-
-
 <tr>
-	<td class="formlabel"><label>&{'projectNewSelectTags'}: </label></td>
+	<td class="formlabel"><label>&{'projectNewSelectThemes'}: </label></td>
+	<td colspan="2">
+		<div>
+			<ul id="themesGroup">
+				<li id="hiddenThemeTemplate" class="hidden"><span ></span> <img id="trashImg" src="@{'/public/images/trash.png'}"  class="deleteImageLink"></img></li>
+			</ul>
+			
+			<input id="hiddenAllThemesJson" name="editedProject.allThemesJson" type="hidden" value="${_editedProject == null ? flash['editedProject.allThemesJson'] : _editedProject.allThemesJson  }"/>
+			
+			<ul>
+				<li class="hidden" id="themeInputCommand">
+				
+					<select id="themeSelector" class="rightspaced">
+						<option value="environment">&{'projectThemeEnvironment'}</option>
+						<option value="development">&{'projectThemeDevelopment'}</option>
+						<option value="culture">&{'projectThemeCulture'}</option>
+						<option value="science">&{'projectThemeScience'}</option>
+						<option value="travel">&{'projectThemeTravel'}</option>
+						<option value="sports">&{'projectThemeSports'}</option>
+						<option value="society">&{'projectThemeSociety'}</option>
+						<option value="other">&{'projectThemeOther'}</option>
+					</select>
+				
+					<select id="subThemeSelector" class="rightspaced">
+						<option value="other">&{'projectThemeOtherSubThemeOther'}</option>
+					</select>
+				
+					<span  id="addThemeSecondButton" class="dabLink rightspaced" >&{'add'}</span>
+					<span  id="addThemeCancelButton" class="dabLink" >&{'CancelButton'}</span>
+				</li>
+				<li>
+					<span id="addThemeLink" class="dabLink" >&{'projectNewAddOneTheme'}</span>
+					<br />
+					<span class="formFieldExplanation">&{'projectNewSelectThemesExplanation'}</span>
+				</li>
+			</ul>
+			
+			
+		</div>
+	</td>
+<tr>
+
+
+
+<td class="formlabel"><label>&{'projectNewSelectTags'}: </label></td>
 	<td colspan="2">
 		<div>
 			<ul id="tagGroup">

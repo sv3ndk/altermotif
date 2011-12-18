@@ -2,6 +2,7 @@ package com.svend.dab.core.beans.projects;
 
 import com.google.common.base.Strings;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
+import com.svend.dab.core.beans.projects.Project.PROJECT_VISIBILITY;
 import com.svend.dab.core.beans.projects.Project.STATUS;
 
 /**
@@ -111,6 +112,26 @@ public class ProjectPep {
 	}
 
 	
+	
+	
+	//////////////////////////////////////////
+	// project description (description, strategy, offer)
+	
+
+	public boolean isAllowedToSeeDecription(String visitingUserId) {
+		return allowsReadAccessTo(project.getPdata().getDescriptionVisibility(), visitingUserId);
+	}
+
+	public boolean isAllowedToSeeStrategy(String visitingUserId) {
+		return allowsReadAccessTo(project.getPdata().getStrategyVisibility(), visitingUserId);
+	}
+
+	public boolean isAllowedToSeeOffer(String visitingUserId) {
+		return allowsReadAccessTo(project.getPdata().getOfferVisibility(), visitingUserId);
+	}
+	
+	
+	//////////////////////////////////////////
 	// applications
 
 	/**
@@ -327,7 +348,35 @@ public class ProjectPep {
 		// the initiator must forward ownership, he cannot just leave
 		return project.findRoleOfUser(userId) != ROLE.initiator;
 	}
+	
 
+	
+	///////////////////////////////////////////////
+	//
+	
+	protected boolean allowsReadAccessTo(PROJECT_VISIBILITY visibility, String visitingUserId) {
+		
+		ROLE role = project.findRoleOfUser(visitingUserId);
+
+		switch (visibility) {
+		case everybody:
+			return true;
+
+		case loggedin:
+			return visitingUserId != null;
+
+		case members:
+			return role == ROLE.member || role == ROLE.admin || role == ROLE.initiator;
+
+		case admins:
+			return role == ROLE.admin || role == ROLE.initiator;
+
+		case owner:
+			return  role == ROLE.initiator;
+		}
+		
+		return false;
+	}
 
 
 }

@@ -294,6 +294,7 @@ projectNewUsefulLinks=Nuttige linken
 projectNewUsefulLinksExplanation=Website adressen die nuttig kunnen zijn voor het project
 projectNewSelectThemes=Selecteer thema's
 projectNewSelectThemesExplanation=Door de thema's te selecteren die passen bij het project, zorgt u ervoor dat het project getoond wordt aan de gebruikers die op zoek zijn naar een dergelijke opportuniteit
+projectNewAddOneTheme=***add a theme...
 projectNewSelectTags=Projectmarkeringen
 projectNewAddOneTagLink=Een markering toevoegen
 projectNewSelectTagsExplanation=Plaats kernwoorden die gerelateerd zijn aan het project. Anderen zullen uw project kunnen vinden op basis van deze kernwoorden.

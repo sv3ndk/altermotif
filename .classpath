@@ -33,7 +33,6 @@
 	<classpathentry kind="lib" path="lib/stax-api-1.0-2.jar"/>
 	<classpathentry kind="lib" path="lib/stax-api-1.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/validation-api-1.0.0.GA.jar"/>
-	<classpathentry kind="var" path="PLAY"/>
 	<classpathentry kind="var" path="PLAY/framework/lib/activation-1.1.1.jar"/>
 	<classpathentry kind="var" path="PLAY/framework/lib/antlr-2.7.6.jar"/>
 	<classpathentry kind="var" path="PLAY/framework/lib/asm-all-3.3.1.jar"/>
