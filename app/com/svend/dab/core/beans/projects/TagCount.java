@@ -11,7 +11,7 @@ public class TagCount {
 	@Id
 	private String tag;
 
-	private int count;
+	private int value;
 
 	public String getTag() {
 		return tag;
@@ -21,12 +21,12 @@ public class TagCount {
 		this.tag = tag;
 	}
 
-	public int getCount() {
-		return count;
+	public int getValue() {
+		return value;
 	}
 
-	public void setCount(int count) {
-		this.count = count;
+	public void setValue(int count) {
+		this.value = count;
 	}
 
 }

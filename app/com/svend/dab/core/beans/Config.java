@@ -1,9 +1,7 @@
 package com.svend.dab.core.beans;
 
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import models.altermotif.projects.theme.SubTheme;
 import models.altermotif.projects.theme.Theme;
@@ -25,6 +23,8 @@ public class Config {
 	private long maxUploadedPhotoSizeInBytes = 5l * 1024l * 1024;
 
 	private long maxUploadedCVSizeInBytes = 3l * 1024 * 1024;
+	
+	private int maxNumberOfDisplayedProjectTag = 35;
 
 	// some pages polls for boolean values to the server to know if some data is outdate (and if so, refresh whatever is approapriate). This is the period, in
 	// millis, of the polling
@@ -163,6 +163,10 @@ public class Config {
 
 	public List<Theme> getProjectThemes() {
 		return projectThemes;
+	}
+
+	public int getMaxNumberOfDisplayedProjectTags() {
+		return maxNumberOfDisplayedProjectTag;
 	}
 
 }

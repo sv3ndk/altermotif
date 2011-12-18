@@ -20,6 +20,7 @@ GET     /projects/edit			                projects.ProjectsEdit.projectsEdit
 GET     /projects/editphotos	                projects.ProjectsEditPhotos.projectsEditPhotos
 GET     /projects/view			                projects.ProjectsView.projectsView
 GET     /projects/search		                projects.ProjectsSearch.projectsSearch
+GET     /projects/findprojects	                projects.ProjectsResults.projectsResults
 
 GET     /messages/new			                messages.MessagesNew.messagesNew
 GET     /messages/new/to		                messages.MessagesNew.messagesNewTo

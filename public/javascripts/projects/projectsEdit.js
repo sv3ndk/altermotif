@@ -1,15 +1,16 @@
 var allLocations ;
 var allLinks ;
-var allTags ;
-var allThemes ;
 
 function init() {
 	
 	initLocationLogic();
 	registerDatePicker();
+
 	initAddLinkLogic();
-	initAddTagLogic();
-	initAddThemeLogic();
+	
+	initTagLogic();
+	initThemeLogic();
+	
 	setupSetLanguageAutoComplete();
 	initSubmitCancelButtons();
 }
@@ -97,15 +98,15 @@ function addOneLocation () {
 }
 
 function graphicalAddOneLocation (oneLanguge, immediate) {
-		var newLocationRow = $("#hiddenLocationTemplate").clone().removeAttr("id");
-		newLocationRow.find(".projectLocationText").text(oneLanguge.location);
-		$("#locationGroup").append(newLocationRow);
-		
-		if (immediate) {
-			$("#locationGroup li:last").show(0);
-		} else {
-			$("#locationGroup li:last").show(250);
-		}
+	var newLocationRow = $("#hiddenLocationTemplate").clone().removeAttr("id");
+	newLocationRow.find(".projectLocationText").text(oneLanguge.location);
+	$("#locationGroup").append(newLocationRow);
+	
+	if (immediate) {
+		$("#locationGroup li:last").show(0);
+	} else {
+		$("#locationGroup li:last").show(250);
+	}
 }
 
 
@@ -190,7 +191,6 @@ function addOneLink() {
 		$("#hiddenAllLinksJson").val(JSON.stringify(allLinks));
 		graphicalAddOneLink(addedLink, false);
 	}
-	
 }
 
 function graphicalAddOneLink(addedLink, immediate) {
@@ -210,221 +210,30 @@ function graphicalAddOneLink(addedLink, immediate) {
 ////////////////////////////////////////////////////////////////
 // add a theme logic
 
-function initAddThemeLogic() {
-	
-	allThemes = parseJsonStringIntoObject("#hiddenAllThemesJson");
-	for (var i = 0 ; i < allThemes.length; i++) {
-		graphicalAddOneTheme(allThemes[i], true)
-	}
-	
-	updateSecondThemeDropDown();
-	
-	$("#addThemeLink").click(function() {
-		switchThemeMode("enteringNewTheme");
-	});
-	
-	$("#addThemeCancelButton").click(function() {
-		switchThemeMode("normal");
-	});
-	
-	$("#addThemeSecondButton").click(function() {
-		addOneTheme();
-		switchThemeMode("normal");
-	});
-	
-	$("#themeSelector").on("change", updateSecondThemeDropDown);
-	
-	$("#themesGroup").on("click", "li img.deleteImageLink", removeOneTheme);
-
+function initThemeLogic() {
+	// this is the init function defined in projectThemess.js
+	initAddThemeLogic(parseJsonStringIntoObject("#hiddenAllThemesJson"), updateAllThemesHiddenForm);
 }
 
-function switchThemeMode(mode) {
-	if (mode == "normal") {
-		$("#themeInputCommand").hide();
-		$("#addThemeLink").toggle(500);
-		
-	} else {
-		$("#addThemeLink").hide();
-		$("#themeInputCommand").toggle(250);
-	}
-}
-
-
-// update the content of the sub-theme drop down according to the current conent of the theme dropdown
-function updateSecondThemeDropDown() {
-	
-	$("#subThemeSelector option").remove();
-	
-	var currentTheme = $("#themeSelector").val();
-	var themeDef = resolveThemeDef(currentTheme);
-	
-	if (themeDef != undefined) {
-		for (var i = 0 ; i < themeDef.subThemes.length; i++) {
-			var oneOption = $("<option />");
-			oneOption.attr("value", themeDef.subThemes[i].id);
-			oneOption.text(themeDef.subThemes[i].label);
-			$("#subThemeSelector").append(oneOption);
-		}
-	}
-}
-
-function resolveThemeDef(themeId) {
-	for (var i = 0 ; i < allPossibleThemes.length; i++) {
-		if (allPossibleThemes[i].id == themeId) {
-			return allPossibleThemes[i];
-		}
-	}
-}
-
-function resolveSubThemeDef(subThemeId, themeDef) {
-	for (var i = 0 ; i < themeDef.subThemes.length; i++) {
-		if (themeDef.subThemes[i].id == subThemeId) {
-			return themeDef.subThemes[i];
-		}
-	}
-}
-
-
-function addOneTheme() {
-	
-	var themeId = $("#themeSelector").val();
-	var subThemeId = $("#subThemeSelector").val();
-	
-	var addedSelectedTheme = {
-			themeId: themeId,
-			subThemeId: subThemeId 
-	};
-	
-	allThemes.push(addedSelectedTheme);
-	$("#hiddenAllThemesJson").val(JSON.stringify(allThemes));
-	graphicalAddOneTheme(addedSelectedTheme, false);
-}
-
-function graphicalAddOneTheme(selectedTheme, immediate) {
-	
-	var themeDef = resolveThemeDef(selectedTheme.themeId);
-	var subThemDef = resolveSubThemeDef(selectedTheme.subThemeId, themeDef);
-	
-	// TODO: use translations here
-	var addedThemeText = themeDef.label;
-	if (subThemDef != undefined && subThemDef.id != "other") {
-		addedThemeText += " (" + subThemDef.label + ")"
-	}
-	
-	var newThemeRow = $("#hiddenThemeTemplate").clone().removeAttr("id");
-	newThemeRow.find("span").text(addedThemeText);
-	
-	newThemeRow.data(selectedTheme);
-	
-	$("#themesGroup").append(newThemeRow);
-	
-	if (immediate) {
-		$("#themesGroup li:last").show(0);
-	} else {
-		$("#themesGroup li:last").show(250);
-	}
-}
-
-
-function removeOneTheme(event) {
-	
-	var themeRow = $(event.target).parent();
-	
-	var removedSelectedTheme = themeRow.data();
-	for (var removedIndex = 0 ; removedIndex < allThemes.length; removedIndex++) {
-		var oneTheme = allThemes[removedIndex];
-		if (oneTheme.themeId==removedSelectedTheme.themeId && oneTheme.subThemeId==removedSelectedTheme.subThemeId) {
-			allThemes.splice(removedIndex, 1);
-			$("#hiddenAllThemesJson").val(JSON.stringify(allThemes));
-		}
-	}
-	
-	themeRow.remove();
+//this is called back from projectThemes.js any time the list of chosen themes changes
+function updateAllThemesHiddenForm(newAllThemesValue) {
+	$("#hiddenAllThemesJson").val(JSON.stringify(newAllThemesValue));
 }
 
 
 ///////////////////////////////////////////////////////////////
 // add tag logic
 
-function initAddTagLogic() {
-	
-	allTags = parseJsonStringIntoObject("#hiddenAllTagsJson");
-	for ( var oneKey in allTags) {
-		graphicalAddOneTag(allTags[oneKey], true);
-	}
 
-
-	$("#addTagLink").click(function() {
-		switchTagMode("enteringTag");
-	});
-
-	$("#addTagCancelButton").click(function() {
-		switchTagMode("normal");
-	});
-	
-	$("#addTagSecondButton").click(function() {
-		addOneTag();
-		switchTagMode("normal");
-	});
-	
-	
-	// click on the delete icon
-	$("#tagGroup").on("click", "img.deleteImageLink", function(event){
-		var removedTagValue = $(event.target).prev().text();
-		
-		var removedIndex = 0;
-		for (var oneKey in allTags) {
-			if (allTags[oneKey] == removedTagValue) {
-				break;
-			}
-			removedIndex ++;
-		}
-
-		allTags.splice(removedIndex, 1);
-		$("#hiddenAllTagsJson").val(JSON.stringify(allTags));
-		$(event.target).parent().remove();
-	});
-
-	
+function initTagLogic() {
+	// this is the init function defined in projectTags.js
+	initAddTagLogic(parseJsonStringIntoObject("#hiddenAllTagsJson"), updateAllTagsHiddenForm);
 }
 
-function switchTagMode(mode) {
-	if (mode == "normal") {
-		$("#tagInputCommand").hide();
-		$("#addTagLink").toggle(500);
-		
-	} else {
-		$("#addTagLink").hide();
-		$("#tagInputCommand").toggle(250);
-		$("#addTagInput").val("").focus();
-	}
+//this is called back from projectTags.js any time the list of selected tags changes
+function updateAllTagsHiddenForm(newAllTagValue) {
+	$("#hiddenAllTagsJson").val(JSON.stringify(newAllTagValue));
 }
-
-function addOneTag() {
-	var addedTag = $("#addTagInput").val();
-	
-	if (addedTag != null && addedTag != "") {
-		allTags.push(addedTag);
-		$("#hiddenAllTagsJson").val(JSON.stringify(allTags));
-		graphicalAddOneTag(addedTag, false);
-	}
-}
-
-
-function graphicalAddOneTag(addedTag, immediate) {
-	var newTagRow = $("#hiddenTagTemplate").clone().removeAttr("id");
-	newTagRow.find("span").text(addedTag);
-	$("#tagGroup").append(newTagRow);
-	
-	if (immediate) {
-		$("#tagGroup li:last").show(0);
-	} else {
-		$("#tagGroup li:last").show(250);
-	}
-}
-
-
-
 
 ///////////////////////////////////////////////////////////
 
@@ -450,7 +259,6 @@ function initSubmitCancelButtons() {
 	$("#cancelProfileButton").click(function() {
 		$("#cancelEditionContainer form").submit();
 	});
-	
 }
 
 
@@ -465,6 +273,5 @@ function parseJsonStringIntoObject(jqSelector) {
 		return parsed;
 	} else {
 		return [];
-	}
-	
+	}	
 }

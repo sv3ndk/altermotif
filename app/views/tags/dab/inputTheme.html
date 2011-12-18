@@ -1,0 +1,49 @@
+*{ visual part of the mechanics for editing thmes (with buttons appearing/disapearing as the user interracts...) , including the two auto-adapting drop boxes  }*
+
+<script>
+
+*{ Building a javascript object from the java object + resolving translation of labels}*
+var allPossibleThemes = [
+		#{list items:_allThemes, as:'oneTheme'}
+			{   id: "${oneTheme.id}",
+				label: "&{oneTheme.label}",
+				subThemes: [
+	    			#{list items:oneTheme.subThemes, as:'oneSubTheme'}
+    					{ id: "${oneSubTheme.id}",
+    					  label: "&{oneSubTheme.label}"
+    					},
+	    			#{/list }
+				]
+			},
+		#{/list }
+];
+</script>
+
+<ul id="themesGroup">
+	<li id="hiddenThemeTemplate" class="hidden"><span ></span> <img id="trashImg" src="@{'/public/images/trash.png'}"  class="deleteImageLink"/></li>
+</ul>
+
+<ul>
+	<li class="hidden" id="themeInputCommand">
+	
+		<select id="themeSelector" class="rightspaced">
+			#{list items:_allThemes, as:'oneTheme'}
+				<option value="${oneTheme.id}">&{oneTheme.label}</option>
+			#{/list}
+		</select>
+	
+		<select id="subThemeSelector" class="rightspaced">
+		</select>
+	
+		<span  id="addThemeSecondButton" class="dabLink rightspaced" >&{'add'}</span>
+		<span  id="addThemeCancelButton" class="dabLink" >&{'CancelButton'}</span>
+	</li>
+	
+	<li>
+		<span id="addThemeLink" class="dabLink" >&{'projectNewAddOneTheme'}</span>
+		#{if _isExplanationVisible}
+			<br />
+			<span class="formFieldExplanation">&{'projectNewSelectThemesExplanation'}</span>
+		#{/if}
+	</li>
+</ul>

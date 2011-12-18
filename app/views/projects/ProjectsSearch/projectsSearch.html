@@ -1,3 +1,73 @@
 #{extends 'masterTemplate.html' /}
 
-project search
+#{set 'moreStyles'}
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/tagcloud.css'}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/projects/projectsSearch.css'}" />
+#{/set}
+
+#{set 'moreScripts'}
+
+    <script src="@{'/public/javascripts/projects/projectsSearch.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+    <script src="@{'/public/javascripts/projects/projectsThemes.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+    <script src="@{'/public/javascripts/projects/projectsTags.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+    	
+    <script type="text/javascript">
+		$(document).ready(function() {
+			init();
+		})
+	</script>
+
+
+#{/set}
+
+<div id="projectSearchContainer">
+	
+	#{form @projects.ProjectsResults.projectsResults()}
+		<table>
+			<tbody>
+				<tr>
+					<td class="formlabel">&{'projectSearchKeyWords'}:</td>
+					<td><input type="text" size="60"/ name="r.term"></td>
+					<td><input type="submit" value="GO"/></td>
+				</tr>
+				<tr>
+					<td class="formlabel">&{'projectSearchCategories'}:</td>
+					<td>
+						<div>
+							#{dab.inputTheme allThemes:allThemes, isExplanationVisible:false /}
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="formlabel">&{'projectSearchTags'}:</td>
+					
+					<td>
+						<div>
+							#{dab.inputTag /}
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<div id="hiddenTagInputs" class="hidden">
+		
+		</div>
+		
+		<input id="hiddenAllThemesJson" name="r.themes" type="hidden" />
+	
+	#{/form }
+	
+	<div id="tagCloudExplanation">
+		<span >&{'projectSearchChooseTagsFromCloud'}</span>
+	</div>
+	
+	<div id="projectTagContainer" class="tagCloud" >
+		<ul>
+			#{list items:popularTags, as:'oneTag'}
+				<li class="tag${oneTag.rank}"><a href="#">${oneTag.tag}</a></li> 
+			#{/list}
+		</ul>
+	</div>
+
+</div>

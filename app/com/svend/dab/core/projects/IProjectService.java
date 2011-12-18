@@ -1,12 +1,14 @@
 package com.svend.dab.core.projects;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 import com.svend.dab.core.beans.projects.ParticipantList;
 import com.svend.dab.core.beans.projects.ParticpantsIdList;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.ProjectData;
+import com.svend.dab.core.beans.projects.RankedTag;
 
 /**
  * @author Svend
@@ -63,5 +65,11 @@ public interface IProjectService {
 	public void terminateProject(Project project);
 
 	public void restartProject(Project project);
+	
+	/////////////////////////////////////////////
+	// popular project tags
+	
+	public List<RankedTag> getPopularTags();
+	
 	
 }

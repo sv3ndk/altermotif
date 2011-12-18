@@ -1,7 +1,5 @@
 package controllers.projects;
 
-import java.util.logging.Logger;
-
 import models.altermotif.projects.EditedProject;
 import play.data.validation.Validation;
 import web.utils.Utils;
@@ -15,11 +13,9 @@ import controllers.validators.DabValidators;
 
 public class ProjectsNew extends DabLoggedController {
 
-	private static Logger logger = Logger.getLogger(ProjectsNew.class.getName());
-
 	public static void projectsNew() {
-
 		Utils.addAllPossibleLanguageNamesToRenderArgs(getSessionWrapper(), renderArgs);
+		Utils.addProjectThemesToRenderArgs(getSessionWrapper(), renderArgs);
 		render();
 	}
 

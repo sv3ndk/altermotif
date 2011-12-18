@@ -2,6 +2,8 @@ package com.svend.dab.core.projects;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -16,8 +18,11 @@ import com.svend.dab.core.beans.projects.Participant;
 import com.svend.dab.core.beans.projects.ParticipantList;
 import com.svend.dab.core.beans.projects.ParticpantsIdList;
 import com.svend.dab.core.beans.projects.Project;
+import com.svend.dab.core.beans.projects.TagCount;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.Project.STATUS;
+import com.svend.dab.core.beans.projects.RankedTag;
+import com.svend.dab.core.dao.ITagCountDao;
 import com.svend.dab.dao.mongo.IProjectDao;
 import com.svend.dab.eda.EventEmitter;
 import com.svend.dab.eda.events.projects.ProjectApplicationAccepted;
@@ -42,6 +47,9 @@ public class ProjectService implements IProjectService {
 
 	@Autowired
 	private IProjectDao projectDao;
+
+	@Autowired
+	private ITagCountDao tagCountDao;
 
 	@Autowired
 	private Config config;
@@ -225,9 +233,48 @@ public class ProjectService implements IProjectService {
 			}
 
 		}
-
 		return response;
+	}
+	
+	/////////////////////////////////////////////
+	// popular project tags
 
+	
+	@Override
+	public List<RankedTag> getPopularTags() {
+		
+		List<RankedTag> tags = new LinkedList<RankedTag>();
+		
+		List<TagCount> rawTags= tagCountDao.getMostPopularTags(config.getMaxNumberOfDisplayedProjectTags());
+		
+		if (rawTags != null && !rawTags.isEmpty()) {
+			
+			if (rawTags.size() == 1) {
+				tags.add(new RankedTag(rawTags.get(0).getTag(), 0));
+			} else {
+				int highestFreq = rawTags.get(0).getValue();
+				int lowestFreq = rawTags.get(rawTags.size()-1).getValue();
+				
+				float rankStep = (highestFreq - lowestFreq) / 5;
+				
+				for (TagCount rawTag : rawTags) {
+					if (rawTag.getValue() > lowestFreq + 4*rankStep) {
+						tags.add(new RankedTag(rawTag.getTag(), 0));
+					} else if (rawTag.getValue() > lowestFreq + 3*rankStep) {
+						tags.add(new RankedTag(rawTag.getTag(), 1));
+					} else if (rawTag.getValue() > lowestFreq + 2*rankStep) {
+						tags.add(new RankedTag(rawTag.getTag(), 2));
+					} else if (rawTag.getValue() > lowestFreq + rankStep) {
+						tags.add(new RankedTag(rawTag.getTag(), 3));
+					} else {
+						tags.add(new RankedTag(rawTag.getTag(), 4));
+					} 
+				}
+			}
+			
+		}
+		
+		return tags;
 	}
 	
 	/////////////////////////////////////////////////
@@ -247,5 +294,6 @@ public class ProjectService implements IProjectService {
 	public void restartProject(Project project) {
 		eventEmitter.emit(new ProjectStatusChanged(project.getId(), STATUS.started));
 	}
+
 
 }

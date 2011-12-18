@@ -185,7 +185,7 @@ public class ProjectRepoImpl implements IProjectDao {
 	
 	@Override
 	public void launchCountProjectTagsJob() {
-		mongoTemplate.mapReduce("project", "classpath:com/svend/dab/dao/mongo/mapreduce/countTagsMap.js", "classpath:com/svend/dab/dao/mongo/mapreduce/countTagsReduce.js", options().outputCollection("tagcount"), TagCount.class);
+		mongoTemplate.mapReduce("project", "classpath:com/svend/dab/dao/mongo/mapreduce/countTagsMap.js", "classpath:com/svend/dab/dao/mongo/mapreduce/countTagsReduce.js", options().outputCollection("tagCount"), TagCount.class);
 	}
 
 	// --------------------------------
