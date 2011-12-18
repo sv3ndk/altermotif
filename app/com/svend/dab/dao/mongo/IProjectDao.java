@@ -60,8 +60,11 @@ public interface IProjectDao {
 	public Project loadProjectParticipants(String projectId);
 
 	void updateOwnerShipProposed(String projectId, String userName, boolean b);
-
-
+	
+	////////////////////////////////////
+	// tags
+	
+	public void launchCountProjectTagsJob();
 
 
 }

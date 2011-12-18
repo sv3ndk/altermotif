@@ -10,6 +10,7 @@ import com.svend.dab.core.UserProfileService;
 import com.svend.dab.core.beans.Config;
 import com.svend.dab.core.projects.IProjectPhotoService;
 import com.svend.dab.core.projects.IProjectService;
+import com.svend.dab.dao.mongo.IProjectDao;
 import com.svend.dab.eda.errorhandling.NonFailingJsonMessageConverter;
 import com.svend.dab.web.upload.IUploadProcessor;
 
@@ -42,6 +43,10 @@ public class BeanProvider {
 	
 	public static IProjectService  getProjectService() {
 		return (IProjectService) Spring.getBeanOfType(IProjectService.class);
+	}
+
+	public static IProjectDao  getProjectDao() {
+		return (IProjectDao) Spring.getBeanOfType(IProjectDao.class);
 	}
 	
 	public static IProjectPhotoService  getProjectPhotoService() {

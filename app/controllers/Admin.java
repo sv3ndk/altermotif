@@ -11,4 +11,9 @@ public class Admin extends DabLoggedController {
 		admin();
 	}
 
+	public static void doLaunchCountTagsJob() {
+		BeanProvider.getProjectDao().launchCountProjectTagsJob();
+		admin();
+	}
+
 }

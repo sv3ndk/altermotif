@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.svend.dab.dao.mongo;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
@@ -17,6 +14,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
+import static org.springframework.data.mongodb.core.mapreduce.MapReduceOptions.options;
+
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoException;
@@ -24,6 +23,7 @@ import com.mongodb.WriteResult;
 import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Participant;
+import com.svend.dab.core.beans.projects.TagCount;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.Project.STATUS;
@@ -180,6 +180,14 @@ public class ProjectRepoImpl implements IProjectDao {
 		mongoTemplate.updateFirst(query, update, Project.class);
 	}
 	
+	//////////////////////////////////////////////////////////
+	// tags
+	
+	@Override
+	public void launchCountProjectTagsJob() {
+		mongoTemplate.mapReduce("project", "classpath:com/svend/dab/dao/mongo/mapreduce/countTagsMap.js", "classpath:com/svend/dab/dao/mongo/mapreduce/countTagsReduce.js", options().outputCollection("tagcount"), TagCount.class);
+	}
+
 	// --------------------------------
 	//
 
@@ -187,5 +195,4 @@ public class ProjectRepoImpl implements IProjectDao {
 		Query query = query(where("_id").is(projectId));
 		mongoTemplate.updateFirst(query, update, Project.class);
 	}
-	
 }
