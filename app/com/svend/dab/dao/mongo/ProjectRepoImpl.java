@@ -23,6 +23,7 @@ import com.mongodb.WriteResult;
 import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Participant;
+import com.svend.dab.core.beans.projects.ProjectSearchRequest;
 import com.svend.dab.core.beans.projects.TagCount;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.Project;
@@ -62,6 +63,14 @@ public class ProjectRepoImpl implements IProjectDao {
 	public void updateProjectStatus(String projectId, STATUS newStatus) {
 		genericUpdateProject(projectId, new Update().set("status", newStatus));
 	}
+	
+	
+	@Override
+	public List<Project> loadProject(ProjectSearchRequest request) {
+		// TODO 
+		return mongoTemplate.find(new Query(), Project.class);
+	}
+
 
 	@Override
 	public void updateProjectPDataAndLinksAndTagsAndThemes(String projectId, Project project) {
@@ -195,4 +204,5 @@ public class ProjectRepoImpl implements IProjectDao {
 		Query query = query(where("_id").is(projectId));
 		mongoTemplate.updateFirst(query, update, Project.class);
 	}
+
 }

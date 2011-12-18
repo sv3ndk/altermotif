@@ -25,7 +25,7 @@
 		<span class="toggleLink dabLink">&{'yourProjects'} (${visitedUserProfile.numberOfConfirmedProjects})...</span>
 		<div class="toggleContainer" style="display: none">
 			 #{list items:visitedUserProfile.confirmedProjects, as:'oneProject'}
-					#{projectSummary participation: oneProject /}
+				#{projectParticipation participation: oneProject /}
 			 #{/list}
 		</div>
 		
@@ -98,7 +98,7 @@
 				<span class="toggleLink dabLink">&{'yourApplications'} (${visitedUserProfile.numberOfApplications})...</span>
 				<div id="applicationsDetails" class="toggleContainer">
 					 #{list items:visitedUserProfile.applications, as:'oneProject'}
-					 	#{projectSummary participation: oneProject /}
+					 	#{projectParticipation participation: oneProject /}
 					 #{/list}
 				</div>
 			</div>

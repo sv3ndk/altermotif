@@ -8,6 +8,7 @@ import com.svend.dab.core.beans.projects.Participant;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.Project.STATUS;
+import com.svend.dab.core.beans.projects.ProjectSearchRequest;
 
 /**
  * @author Svend
@@ -25,6 +26,9 @@ public interface IProjectDao {
 	void updateProjectPDataAndLinksAndTagsAndThemes(String id, Project project);
 	
 	void updateProjectStatus(String id, STATUS newStatus);
+	
+	List<Project> loadProject(ProjectSearchRequest request);
+
 	
 	// project photos
 
@@ -65,6 +69,7 @@ public interface IProjectDao {
 	// tags
 	
 	public void launchCountProjectTagsJob();
+
 
 
 }

@@ -416,6 +416,15 @@ viewProjectconfirmRefuseOwnership=***Are you sure your want to refuse the owners
 projectEditConfirmButton=***Update project
 projectEditEditPhotos=***Edit photos...
 
-
 #project photos page
 projectPhotosSetAsMainPhoto=***Set as main project photo
+
+# project search page
+projectSearchKeyWords=***any project with these keywords
+projectSearchCategories=***in any of these categories
+projectSearchTags=***and with any of these tags
+projectSearchChooseTagsFromCloud=***Click on these popular tags to include them in the search:
+
+# project search results page
+projectSearchResultTitle=***Search results
+projectSearchResultBackToSearchPage=***back to search page

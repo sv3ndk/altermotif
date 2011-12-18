@@ -18,6 +18,8 @@ import com.svend.dab.core.beans.projects.Participant;
 import com.svend.dab.core.beans.projects.ParticipantList;
 import com.svend.dab.core.beans.projects.ParticpantsIdList;
 import com.svend.dab.core.beans.projects.Project;
+import com.svend.dab.core.beans.projects.ProjectSearchRequest;
+import com.svend.dab.core.beans.projects.ProjectSummary;
 import com.svend.dab.core.beans.projects.TagCount;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.Project.STATUS;
@@ -84,6 +86,27 @@ public class ProjectService implements IProjectService {
 
 		return prj;
 	}
+	
+	
+	@Override
+	public List<ProjectSummary> searchForProjects(ProjectSearchRequest request) {
+		
+		List<ProjectSummary> result = new LinkedList<ProjectSummary>();
+		
+		// these projects are incomplete because the query only loads enough data in order to fill in a summary
+		List<Project> incompleteProjects = projectDao.loadProject(request);
+		
+		
+		if (incompleteProjects != null) {
+			for (Project project :incompleteProjects) {
+				result.add(new ProjectSummary(project));
+			}
+			
+		}
+		
+		return result;
+	}
+
 
 	// //////////////////////////////////////////////////
 	// project applications
@@ -294,6 +317,7 @@ public class ProjectService implements IProjectService {
 	public void restartProject(Project project) {
 		eventEmitter.emit(new ProjectStatusChanged(project.getId(), STATUS.started));
 	}
+
 
 
 }

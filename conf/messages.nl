@@ -420,3 +420,14 @@ projectEditEditPhotos=Foto's wijzigen...
 
 #project photos page
 projectPhotosSetAsMainPhoto=Instellen als standaard projectfoto
+
+
+# project search page
+projectSearchKeyWords=***any project with these keywords
+projectSearchCategories=***in any of these categories
+projectSearchTags=***and with any of these tags
+projectSearchChooseTagsFromCloud=***Click on these popular tags to include them in the search:
+
+# project search results page
+projectSearchResultTitle=***Search results
+projectSearchResultBackToSearchPage=***back to search page
