@@ -20,7 +20,9 @@ public interface IProjectDao {
 
 	void save(Project project);
 
-	void updateProjectPDataLinksAndTags(String id, Project project);
+	// this is getting less and less atomic...
+	// TODO: clean this up...
+	void updateProjectPDataAndLinksAndTagsAndThemes(String id, Project project);
 	
 	void updateProjectStatus(String id, STATUS newStatus);
 	

@@ -1,22 +1,15 @@
 package models.altermotif.projects;
 
 import java.util.Set;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.cloudfoundry.org.codehaus.jackson.map.ObjectMapper;
 
 import web.utils.Utils;
 
 import com.svend.dab.core.beans.projects.Project;
+import com.svend.dab.core.beans.projects.SelectedTheme;
 
 
 public class EditedProject {
-	
-	private static Logger logger = Logger.getLogger(EditedProject.class.getName());
-	
-	ObjectMapper mapper = new ObjectMapper();
-
 	
 	private String allLinksJson;
 	
@@ -29,8 +22,7 @@ public class EditedProject {
 	//
 	private Set<String> cachedParsedLinks;
 	private Set<String> cachedParsedTags;
-	
-	
+	private Set<SelectedTheme> cachedParsedThemes;
 	
 	
 	public EditedProject() {
@@ -39,12 +31,9 @@ public class EditedProject {
 
 	public EditedProject(Project project, String userLanguage) {
 		pdata = new EditedProjectData(project.getPdata(), userLanguage);
-		try {
-			allTagsJson = mapper.writeValueAsString(project.getTags());
-			setAllLinks(project.getLinks());
-		} catch (Exception e) {
-			logger.log(Level.WARNING, "could not marsal to json => falling back to empty json string provided to the gui" , e); 
-		} 
+		allTagsJson = Utils.objectToJsonString(project.getTags());
+		allThemesJson = Utils.objectToJsonString(project.getThemes());
+		setAllLinks(project.getLinks());
 	}
 
 	public Set<String> getparsedLinks() {
@@ -69,12 +58,23 @@ public class EditedProject {
 		return cachedParsedTags;
 	}
 	
+	public Set<SelectedTheme> getparsedThemes() {
+		if (cachedParsedThemes == null) {
+			synchronized (this) {
+				if (cachedParsedThemes == null) {
+					cachedParsedThemes = Utils.jsonToSetOfStuf(allThemesJson, SelectedTheme[].class);
+				}
+			}
+		}
+		return cachedParsedThemes;
+	}
 	
 	
 	public void applyToProject(Project project, String userLanguage) {
 		if (project != null) {
 			project.setLinks(getparsedLinks());
 			project.setTags(getparsedTags());
+			project.setThemes(getparsedThemes());
 			
 			if (pdata != null) {
 				pdata.applyToProjectData(project.getPdata(), userLanguage);
@@ -84,14 +84,10 @@ public class EditedProject {
 
 	// final because called from constructor
 	public final  void setAllLinks(Set<String> updatedSites) {
-		try {
-			synchronized (this) {
-				allLinksJson = mapper.writeValueAsString(updatedSites);
-				cachedParsedLinks = updatedSites;
-			}
-		} catch (Exception e) {
-			logger.log(Level.WARNING, "could not marsal to json => falling back to empty json string provided to the gui" , e); 
-		} 
+		synchronized (this) {
+			allLinksJson = Utils.objectToJsonString(updatedSites);
+			cachedParsedLinks = updatedSites;
+		}
 	}
 	
 

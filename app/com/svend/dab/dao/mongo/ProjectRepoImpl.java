@@ -6,7 +6,6 @@ package com.svend.dab.dao.mongo;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.mongodb.core.CollectionCallback;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
@@ -27,10 +25,9 @@ import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Participant;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
-import com.svend.dab.core.beans.projects.Participation;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.Project.STATUS;
-import com.svend.dab.core.beans.projects.ProjectSummary;
+import com.svend.dab.core.beans.projects.SelectedTheme;
 
 /**
  * @author Svend
@@ -67,16 +64,26 @@ public class ProjectRepoImpl implements IProjectDao {
 	}
 
 	@Override
-	public void updateProjectPDataLinksAndTags(String projectId, Project project) {
+	public void updateProjectPDataAndLinksAndTagsAndThemes(String projectId, Project project) {
 		Query query = query(where("_id").is(projectId));
 		
 		// for some reason, Mongo prefers list to set (and I happen to prefer set to lists...)
 		List<String> links =new LinkedList<String>();
-		links.addAll(project.getLinks());
-		List<String> tags =new LinkedList<String>();
-		tags.addAll(project.getTags());
+		if (project.getLinks() != null) {
+			links.addAll(project.getLinks());
+		}
 		
-		Update update = new Update().set("pdata", project.getPdata()).set("links", links).set("tags", tags);
+		List<String> tags =new LinkedList<String>();
+		if (project.getTags() != null) {
+			tags.addAll(project.getTags());
+		}
+		
+		List<SelectedTheme> themes =new LinkedList<SelectedTheme>();
+		if (project.getThemes() != null) {
+			themes.addAll(project.getThemes());
+		}
+		
+		Update update = new Update().set("pdata", project.getPdata()).set("links", links).set("tags", tags).set("themes", themes);
 		mongoTemplate.updateFirst(query, update, Project.class);
 	}
 

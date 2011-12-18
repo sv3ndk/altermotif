@@ -6,6 +6,7 @@ import java.util.Set;
 import com.svend.dab.core.beans.projects.ParticipantList;
 import com.svend.dab.core.beans.projects.ParticpantsIdList;
 import com.svend.dab.core.beans.projects.Project;
+import com.svend.dab.core.beans.projects.ProjectData;
 
 /**
  * @author Svend
@@ -17,8 +18,13 @@ public interface IProjectService {
 	
 	public Project loadProject(String projectId, boolean generatePhotoLinks);
 
-	@Deprecated
-	public void updateProject(Project updated);
+	
+	/**
+	 * Triggers an update of the project {@link ProjectData}, links and tags (not the whole project)
+	 * 
+	 * @param updated
+	 */
+	public void updateProjectCore(Project updated);
 
 	////////////////////////////////////////////////////
 	// project applications

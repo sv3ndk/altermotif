@@ -55,7 +55,7 @@ public class ProjectService implements IProjectService {
 	}
 
 	@Override
-	public void updateProject(Project updated) {
+	public void updateProjectCore(Project updated) {
 		eventEmitter.emit(new ProjectUpdated(updated));
 	}
 

@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import org.springframework.data.annotation.Transient;
 
@@ -53,6 +52,8 @@ public class Project {
 	private Set<String> links;
 
 	private Set<String> tags;
+	
+	private Set<SelectedTheme> themes;
 
 	private STATUS status;
 
@@ -84,11 +85,6 @@ public class Project {
 
 	@Transient
 	private String noAssets = "(todo...)";
-
-	@Transient
-	private String noThemes = "(todo...)";
-
-	private static Logger logger = Logger.getLogger(Project.class.getName());
 
 	// --------------------
 	//
@@ -372,14 +368,6 @@ public class Project {
 		this.noAssets = noAssets;
 	}
 
-	public String getNoThemes() {
-		return noThemes;
-	}
-
-	public void setNoThemes(String noThemes) {
-		this.noThemes = noThemes;
-	}
-
 	public String getId() {
 		return id;
 	}
@@ -434,6 +422,14 @@ public class Project {
 
 	public void setMainPhotoIndex(int mainPhotoIndex) {
 		this.mainPhotoIndex = mainPhotoIndex;
+	}
+
+	public Set<SelectedTheme> getThemes() {
+		return themes;
+	}
+
+	public void setThemes(Set<SelectedTheme> themes) {
+		this.themes = themes;
 	}
 
 }

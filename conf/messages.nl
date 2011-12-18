@@ -265,6 +265,61 @@ projectStatusStarted=Gestart
 projectStatusCancelled=Geannuleerd
 projectStatusDone=Afgelopen
 
+# project themes and sub-themes
+projectThemeEnvironment=***environment
+projectThemeEnvironmentSubThemeProtecting=***protecting
+projectThemeEnvironmentSubThemeRecycling=***recycling
+projectThemeEnvironmentSubThemeSensitizing=***sensitizing
+projectThemeEnvironmentSubThemeCleaning=***cleaning
+projectThemeEnvironmentSubThemeAgriculture=***agriculture
+projectThemeEnvironmentSubThemeOther=***other
+
+projectThemeDevelopment=***development
+projectThemeDevelopmentSubThemeCharity=***Charity
+projectThemeDevelopmentSubThemeDevAtHome=***Development at home
+projectThemeDevelopmentSubThemeDevAbroad=***Development abroad
+projectThemeDevelopmentSubThemeSensitizing=***Sensitizing
+projectThemeDevelopmentSubThemeFairTrade=***Fair trade
+projectThemeDevelopmentSubThemeOther=***Other
+
+projectThemeCulture=***culture
+projectThemeCultureSubThemeArts=***arts
+projectThemeCultureSubThemeJournalism=***Journalism
+projectThemeCultureSubThemeEducation=***Education
+projectThemeCultureSubThemeOther=***Other
+
+projectThemeScience=***science
+projectThemeScienceSubThemeEducation=***Education
+projectThemeScienceSubThemeResearch=***Research
+projectThemeScienceSubThemeTechnology=***Technology
+projectThemeScienceSubThemeOther=***Other
+
+projectThemeTravel=***travel
+projectThemeTravelSubThemeIntExchange=***International exchange
+projectThemeTravelSubThemeTravellingInGroup=***Travelling in group
+projectThemeTravelSubThemeExploration=***Exploration
+projectThemeTravelSubThemeOther=***Other
+
+projectThemeSports=***sports
+projectThemeSportsSubThemeTeamBuilding=***Team building
+projectThemeSportsSubThemeEvent=***Sporting events
+projectThemeSportsSubThemeCapacity=***Capacity building
+projectThemeSportsSubThemePromotion=***Promotion
+projectThemeSportsSubThemeOther=***Other
+
+projectThemeSociety=***society
+projectThemeSocietySubThemeUrbanism=***Urbanism
+projectThemeSocietySubThemeFeminism=***Feminism
+projectThemeSocietySubThemeDrugs=***Drugs
+projectThemeSocietySubThemeEntertainment=***Entertainment
+projectThemeSocietySubThemeOther=***Other
+
+projectThemeOther=***other
+projectThemeOtherSubThemeReligion=***Religion
+projectThemeOtherSubThemeEmployment=***Employment
+projectThemeOtherSubThemeOther=***other
+
+
 # create project page
 projectNewProjectName=Projectnaam
 projectNewProjectGoal=Doel van het project

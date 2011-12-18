@@ -3,10 +3,8 @@ package controllers.projects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import play.data.validation.Validation;
-
 import models.altermotif.projects.EditedProject;
-
+import play.data.validation.Validation;
 import web.utils.Utils;
 
 import com.svend.dab.core.beans.projects.Project;
@@ -38,14 +36,13 @@ public class ProjectsEdit extends DabLoggedController{
 				renderArgs.put("editedProjectName", project.getPdata().getName());
 				renderArgs.put("editedProjectGoal", project.getPdata().getGoal());
 				
-				logger.log(Level.INFO, "name " + project.getPdata().getName());
-				
-				
 				if (!flash.contains(FLASH_SKIP_LOADING_PROFILE)) {
 					renderArgs.put("editedProject", new EditedProject(project, getSessionWrapper().getSelectedLg()));
 				}
 				
 				Utils.addAllPossibleLanguageNamesToRenderArgs(getSessionWrapper(), renderArgs);
+				Utils.addProjectThemesToRenderArgs(getSessionWrapper(), renderArgs);
+				
 				flash.put(FLASH_PROJECT_ID, p);
 				render();
 			} else {
@@ -57,9 +54,6 @@ public class ProjectsEdit extends DabLoggedController{
 			logger.log(Level.WARNING, "could not find project => redirecting to application home");
 			Application.index();
 		}
-		
-		
-		
 	}
 	
 	
@@ -84,7 +78,7 @@ public class ProjectsEdit extends DabLoggedController{
 				logger.log(Level.WARNING, "could not retrieve updated project in DB => not updating anything");
 			} else {
 				editedProject.applyToProject(updated, getSessionWrapper().getSelectedLg());
-				BeanProvider.getProjectService().updateProject(updated);
+				BeanProvider.getProjectService().updateProjectCore(updated);
 			}
 			ProfileHome.profileHome();
 		}

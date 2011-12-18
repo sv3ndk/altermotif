@@ -1,3 +1,22 @@
+<script>
+*{ Building a javascript object from the java object + resolving translation of labels}*
+var allPossibleThemes = [
+		#{list items:_allThemes, as:'oneTheme'}
+			{   id: "${oneTheme.id}",
+				label: "&{oneTheme.label}",
+				subThemes: [
+	    			#{list items:oneTheme.subThemes, as:'oneSubTheme'}
+    					{ id: "${oneSubTheme.id}",
+    					  label: "&{oneSubTheme.label}"
+    					},
+	    			#{/list }
+				]
+			},
+		#{/list }
+];
+</script>
+
+
 <tr>
 	<td class="formlabel"><label>&{'projectNewProjectLocations'}*: </label></td>
 	<td colspan="2">
@@ -144,7 +163,7 @@
 	<td colspan="2">
 		<div>
 			<ul id="themesGroup">
-				<li id="hiddenThemeTemplate" class="hidden"><span ></span> <img id="trashImg" src="@{'/public/images/trash.png'}"  class="deleteImageLink"></img></li>
+				<li id="hiddenThemeTemplate" class="hidden"><span ></span> <img id="trashImg" src="@{'/public/images/trash.png'}"  class="deleteImageLink"/></li>
 			</ul>
 			
 			<input id="hiddenAllThemesJson" name="editedProject.allThemesJson" type="hidden" value="${_editedProject == null ? flash['editedProject.allThemesJson'] : _editedProject.allThemesJson  }"/>
@@ -153,18 +172,12 @@
 				<li class="hidden" id="themeInputCommand">
 				
 					<select id="themeSelector" class="rightspaced">
-						<option value="environment">&{'projectThemeEnvironment'}</option>
-						<option value="development">&{'projectThemeDevelopment'}</option>
-						<option value="culture">&{'projectThemeCulture'}</option>
-						<option value="science">&{'projectThemeScience'}</option>
-						<option value="travel">&{'projectThemeTravel'}</option>
-						<option value="sports">&{'projectThemeSports'}</option>
-						<option value="society">&{'projectThemeSociety'}</option>
-						<option value="other">&{'projectThemeOther'}</option>
+		    			#{list items:_allThemes, as:'oneTheme'}
+							<option value="${oneTheme.id}">&{oneTheme.label}</option>
+						#{/list}
 					</select>
 				
 					<select id="subThemeSelector" class="rightspaced">
-						<option value="other">&{'projectThemeOtherSubThemeOther'}</option>
 					</select>
 				
 					<span  id="addThemeSecondButton" class="dabLink rightspaced" >&{'add'}</span>

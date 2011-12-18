@@ -28,7 +28,7 @@ import controllers.BeanProvider;
 public class Utils {
 
 	private static Logger logger = Logger.getLogger(Utils.class.getName());
-
+	
 	// both these contain the same thing, but the second is more practicel fro use in the back end (the first one is for the from end)
 	private static HashMap<String, List<MappedValue>> allPossibleLanguageNames = null;
 	
@@ -38,6 +38,7 @@ public class Utils {
 	
 	private static ObjectMapper jsonMapper = new ObjectMapper();
 
+	// do not use this directly: use the getter instead (lazy init..)
 	private static Config config;
 	
 
@@ -62,12 +63,9 @@ public class Utils {
 	
 	
 	public static void addAllPossibleLanguageNamesToRenderArgs(SessionWrapper sessionWrapper, RenderArgs renderArgs) {
-		
-		ObjectMapper mapper = new ObjectMapper();
 		List<MappedValue> allPossibleLanguageNames = Utils.getAllPossibleLanguageNames(sessionWrapper.getSelectedLg());
-		
 		try {
-			renderArgs.put("allPossibleLanguageNames", mapper.writeValueAsString(allPossibleLanguageNames));
+			renderArgs.put("allPossibleLanguageNames", jsonMapper.writeValueAsString(allPossibleLanguageNames));
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "Could not put allPossibleLanguageNames in model", e);
 		}
@@ -156,6 +154,16 @@ public class Utils {
 		}
 	}
 
+
+	//////////////////////////////////////
+	// project themes
+	
+	
+	public static void addProjectThemesToRenderArgs(SessionWrapper sessionWrapper, RenderArgs renderArgs) {
+		renderArgs.put("allThemes", getConfig().getProjectThemes());
+	}
+
+	
 	
 	// ...-------------------
 	// JSON stuff
@@ -178,8 +186,6 @@ public class Utils {
 		
 		if (!Strings.isNullOrEmpty(jsonString)) {
 			try {
-				ObjectMapper jsonMapper = new ObjectMapper();
-				
 				for (K stuff : jsonMapper.readValue(jsonString, classType)) {
 					result.add(stuff);
 				}
@@ -187,17 +193,25 @@ public class Utils {
 				logger.log(Level.WARNING, "Could not transform inconming json string values into set of stuff => returnin empty set instead", e);
 			}
 		}
-
 		return result;
 	}
 	
-
 	
+	public static String objectToJsonString(Object any) {
+		if (any == null) {
+			return "";
+		} else {
+			try {
+				return jsonMapper.writeValueAsString(any);
+			} catch (Exception e) {
+				logger.log(Level.WARNING, "Could not convert object to jSON string => considering empty string instead. This will lead to data loss...");
+				return "";
+			}
+		}
+	}
 	
 	
 	//////////////////////////////////
-	
-	
 	public static String formatDate(Date date) {
 		
 		if (date == null) {
@@ -260,12 +274,7 @@ public class Utils {
 		}
 		
 		return config;
-		
 	}
-
-
-
-
 
 
 

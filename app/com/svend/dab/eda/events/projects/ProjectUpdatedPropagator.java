@@ -15,7 +15,7 @@ public class ProjectUpdatedPropagator implements IEventPropagator<ProjectUpdated
 
 	@Override
 	public void propagate(ProjectUpdated event) throws DabException {
-		projetRepo.updateProjectPDataLinksAndTags(event.getUpdatedProject().getId(), event.getUpdatedProject());
+		projetRepo.updateProjectPDataAndLinksAndTagsAndThemes(event.getUpdatedProject().getId(), event.getUpdatedProject());
 	}
 
 	public void setProjetRepo(IProjectDao projetRepo) {

@@ -213,6 +213,11 @@ function graphicalAddOneLink(addedLink, immediate) {
 function initAddThemeLogic() {
 	
 	allThemes = parseJsonStringIntoObject("#hiddenAllThemesJson");
+	for (var i = 0 ; i < allThemes.length; i++) {
+		graphicalAddOneTheme(allThemes[i], true)
+	}
+	
+	updateSecondThemeDropDown();
 	
 	$("#addThemeLink").click(function() {
 		switchThemeMode("enteringNewTheme");
@@ -226,6 +231,10 @@ function initAddThemeLogic() {
 		addOneTheme();
 		switchThemeMode("normal");
 	});
+	
+	$("#themeSelector").on("change", updateSecondThemeDropDown);
+	
+	$("#themesGroup").on("click", "li img.deleteImageLink", removeOneTheme);
 
 }
 
@@ -241,38 +250,97 @@ function switchThemeMode(mode) {
 }
 
 
-function addOneTheme() {
-	var addedTheme = {
-			theme: $("#themeSelector").val(),
-			subtheme: $("#subThemeSelector").val() 
-	};
+// update the content of the sub-theme drop down according to the current conent of the theme dropdown
+function updateSecondThemeDropDown() {
 	
-	allThemes.push(addedTheme);
-	$("#hiddenAllThemesJson").val(JSON.stringify(allThemes));
-	graphicalAddOneTheme(addedTheme, true);
+	$("#subThemeSelector option").remove();
+	
+	var currentTheme = $("#themeSelector").val();
+	var themeDef = resolveThemeDef(currentTheme);
+	
+	if (themeDef != undefined) {
+		for (var i = 0 ; i < themeDef.subThemes.length; i++) {
+			var oneOption = $("<option />");
+			oneOption.attr("value", themeDef.subThemes[i].id);
+			oneOption.text(themeDef.subThemes[i].label);
+			$("#subThemeSelector").append(oneOption);
+		}
+	}
 }
 
-function graphicalAddOneTheme(addedTheme, immediate) {
+function resolveThemeDef(themeId) {
+	for (var i = 0 ; i < allPossibleThemes.length; i++) {
+		if (allPossibleThemes[i].id == themeId) {
+			return allPossibleThemes[i];
+		}
+	}
+}
+
+function resolveSubThemeDef(subThemeId, themeDef) {
+	for (var i = 0 ; i < themeDef.subThemes.length; i++) {
+		if (themeDef.subThemes[i].id == subThemeId) {
+			return themeDef.subThemes[i];
+		}
+	}
+}
+
+
+function addOneTheme() {
+	
+	var themeId = $("#themeSelector").val();
+	var subThemeId = $("#subThemeSelector").val();
+	
+	var addedSelectedTheme = {
+			themeId: themeId,
+			subThemeId: subThemeId 
+	};
+	
+	allThemes.push(addedSelectedTheme);
+	$("#hiddenAllThemesJson").val(JSON.stringify(allThemes));
+	graphicalAddOneTheme(addedSelectedTheme, false);
+}
+
+function graphicalAddOneTheme(selectedTheme, immediate) {
+	
+	var themeDef = resolveThemeDef(selectedTheme.themeId);
+	var subThemDef = resolveSubThemeDef(selectedTheme.subThemeId, themeDef);
 	
 	// TODO: use translations here
-	var addedThemeText = addedTheme.theme;
-	if (addedTheme.subtheme != undefined && addedTheme.subtheme != "" && addedTheme.subtheme != "other") {
-		addedThemeText += " (" + addedTheme.subtheme + ")"
+	var addedThemeText = themeDef.label;
+	if (subThemDef != undefined && subThemDef.id != "other") {
+		addedThemeText += " (" + subThemDef.label + ")"
 	}
 	
+	var newThemeRow = $("#hiddenThemeTemplate").clone().removeAttr("id");
+	newThemeRow.find("span").text(addedThemeText);
 	
-	var newTagRow = $("#hiddenThemeTemplate").clone().removeAttr("id");
-	newTagRow.find("span").text(addedThemeText);
-	$("#themesGroup").append(newTagRow);
+	newThemeRow.data(selectedTheme);
+	
+	$("#themesGroup").append(newThemeRow);
 	
 	if (immediate) {
 		$("#themesGroup li:last").show(0);
 	} else {
 		$("#themesGroup li:last").show(250);
 	}
-
 }
 
+
+function removeOneTheme(event) {
+	
+	var themeRow = $(event.target).parent();
+	
+	var removedSelectedTheme = themeRow.data();
+	for (var removedIndex = 0 ; removedIndex < allThemes.length; removedIndex++) {
+		var oneTheme = allThemes[removedIndex];
+		if (oneTheme.themeId==removedSelectedTheme.themeId && oneTheme.subThemeId==removedSelectedTheme.subThemeId) {
+			allThemes.splice(removedIndex, 1);
+			$("#hiddenAllThemesJson").val(JSON.stringify(allThemes));
+		}
+	}
+	
+	themeRow.remove();
+}
 
 
 ///////////////////////////////////////////////////////////////
@@ -400,5 +468,3 @@ function parseJsonStringIntoObject(jqSelector) {
 	}
 	
 }
-
-
