@@ -6,6 +6,9 @@ import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.projects.Project.STATUS;
 
 /**
+ * The {@link ProjectSummary} is what is propated into the profile of the project members
+ * 
+ * 
  * @author Svend
  *
  */

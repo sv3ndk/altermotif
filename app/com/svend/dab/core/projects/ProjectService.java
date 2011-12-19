@@ -15,15 +15,15 @@ import org.springframework.stereotype.Component;
 import com.google.common.base.Strings;
 import com.svend.dab.core.beans.Config;
 import com.svend.dab.core.beans.projects.Participant;
+import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.ParticipantList;
 import com.svend.dab.core.beans.projects.ParticpantsIdList;
 import com.svend.dab.core.beans.projects.Project;
-import com.svend.dab.core.beans.projects.ProjectSearchRequest;
-import com.svend.dab.core.beans.projects.ProjectSummary;
-import com.svend.dab.core.beans.projects.TagCount;
-import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.Project.STATUS;
+import com.svend.dab.core.beans.projects.ProjectOverview;
+import com.svend.dab.core.beans.projects.ProjectSearchRequest;
 import com.svend.dab.core.beans.projects.RankedTag;
+import com.svend.dab.core.beans.projects.TagCount;
 import com.svend.dab.core.dao.ITagCountDao;
 import com.svend.dab.dao.mongo.IProjectDao;
 import com.svend.dab.eda.EventEmitter;
@@ -89,22 +89,19 @@ public class ProjectService implements IProjectService {
 	
 	
 	@Override
-	public List<ProjectSummary> searchForProjects(ProjectSearchRequest request) {
+	public List<ProjectOverview> searchForProjects(ProjectSearchRequest request) {
 		
-		List<ProjectSummary> result = new LinkedList<ProjectSummary>();
+		List<ProjectOverview> projectOverview = projectDao.searchProjects(request);
 		
-		// these projects are incomplete because the query only loads enough data in order to fill in a summary
-		List<Project> incompleteProjects = projectDao.loadProject(request);
-		
-		
-		if (incompleteProjects != null) {
-			for (Project project :incompleteProjects) {
-				result.add(new ProjectSummary(project));
+		if (projectOverview != null) {
+			Date expirationdate = new Date();
+			expirationdate.setTime(expirationdate.getTime() + config.getCvExpirationDelayInMillis());
+			for (ProjectOverview overview :projectOverview) {
+				overview.generatePhotoLinks(expirationdate);
 			}
-			
 		}
 		
-		return result;
+		return projectOverview;
 	}
 
 

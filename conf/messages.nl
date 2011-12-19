@@ -372,6 +372,7 @@ projectViewCancelProjet=***Cancel project
 viewProjectCannotCancelProjectExplanation=***Canceling a project will permanently remove any trace of this project from altermotif. This action in NOT undo-able. If you are sure this is what you want to do, please first remove any member of this project and then click on 'Cancel project' again.
 viewProjectConfirmCancelProject=***Are you sure you want to cancel this project? This will permanently remove any trace of this project from altermotif. This action in NOT undo-able. Are you sure this is what you want to do?
 viewProjectGoal=Doel
+viewProjectNumberOfParticipants=***Number of participants
 viewProjectLocation=Locatie(s)
 viewProjectCommunicationIn=Communicatie in
 viewProjectCreatedOn=Gecreëerd op

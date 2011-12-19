@@ -5,6 +5,7 @@ import java.util.List;
 import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Participant;
+import com.svend.dab.core.beans.projects.ProjectOverview;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.Project.STATUS;
@@ -27,7 +28,7 @@ public interface IProjectDao {
 	
 	void updateProjectStatus(String id, STATUS newStatus);
 	
-	List<Project> loadProject(ProjectSearchRequest request);
+	List<ProjectOverview> searchProjects(ProjectSearchRequest request);
 
 	
 	// project photos

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.mongodb.core.CollectionCallback;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,7 @@ import com.mongodb.WriteResult;
 import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Participant;
+import com.svend.dab.core.beans.projects.ProjectOverview;
 import com.svend.dab.core.beans.projects.ProjectSearchRequest;
 import com.svend.dab.core.beans.projects.TagCount;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
@@ -66,9 +68,26 @@ public class ProjectRepoImpl implements IProjectDao {
 	
 	
 	@Override
-	public List<Project> loadProject(ProjectSearchRequest request) {
-		// TODO 
-		return mongoTemplate.find(new Query(), Project.class);
+	public List<ProjectOverview> searchProjects(ProjectSearchRequest request) {
+
+		List<ProjectOverview> response = new LinkedList<ProjectOverview>();
+
+		Criteria criteria = where("status").ne("cancelled");
+		
+		if (request.getTags() != null && !request.getTags().isEmpty()) {
+			criteria.and("tags").all(request.getTags().toArray());
+		}
+		
+		Query query = query(criteria);
+		
+		List<Project> projects = mongoTemplate.find(query, Project.class);
+		if (projects != null) {
+			for (Project project : projects) {
+				response.add(new ProjectOverview(project));
+			}
+		}
+		
+		return response;
 	}
 
 

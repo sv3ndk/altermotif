@@ -343,3 +343,16 @@ fieldset legend {
 .descriptionList dd li {
 	margin-left: 15px;
 }
+
+
+
+.oneProjectOverviewLine{
+	border: 1px solid;
+	width: 600px;
+	margin: 10px;
+	padding: 10px;
+}
+
+.oneProjectOverviewLine td {
+	padding: 5px 10px;
+}
