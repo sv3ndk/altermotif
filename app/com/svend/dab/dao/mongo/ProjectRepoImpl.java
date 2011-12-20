@@ -5,6 +5,7 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -55,6 +56,13 @@ public class ProjectRepoImpl implements IProjectDao {
 	public Project findOne(String projectId) {
 		return mongoTemplate.findOne(query(where("_id").is(projectId)), Project.class);
 	}
+	
+	
+	@Override
+	public List<Project> loadAllProjects(Set<String> allIds) {
+		return mongoTemplate.find(query(where("_id").in(allIds)), Project.class);
+	}
+
 
 	@Override
 	public void save(Project project) {
@@ -223,5 +231,6 @@ public class ProjectRepoImpl implements IProjectDao {
 		Query query = query(where("_id").is(projectId));
 		mongoTemplate.updateFirst(query, update, Project.class);
 	}
+
 
 }

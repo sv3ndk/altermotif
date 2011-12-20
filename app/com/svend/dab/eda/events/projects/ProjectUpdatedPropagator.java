@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.svend.dab.core.beans.DabException;
+import com.svend.dab.core.projects.IProjectFTSService;
 import com.svend.dab.dao.mongo.IProjectDao;
 import com.svend.dab.eda.IEventPropagator;
 
@@ -12,10 +13,16 @@ public class ProjectUpdatedPropagator implements IEventPropagator<ProjectUpdated
 
 	@Autowired
 	private IProjectDao projetRepo;
+	
+	@Autowired
+	private IProjectFTSService projectFTSService;
+
 
 	@Override
 	public void propagate(ProjectUpdated event) throws DabException {
 		projetRepo.updateProjectPDataAndLinksAndTagsAndThemes(event.getUpdatedProject().getId(), event.getUpdatedProject());
+		
+		projectFTSService.updateProjetIndex(event.getUpdatedProject().getId());
 	}
 
 	public void setProjetRepo(IProjectDao projetRepo) {

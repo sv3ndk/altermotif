@@ -11,7 +11,9 @@ import controllers.DabController;
 public class ProjectsResults extends DabController {
 
 	public static void projectsResults(WebSearchRequest r) {
-		renderArgs.put("projectsOverviews", BeanProvider.getProjectService().searchForProjects(r.toBackendRequest()));
+		
+		
+		renderArgs.put("projectsOverviews", BeanProvider.getProjectFullTextSearchService().searchForProjects(r.toBackendRequest()));
 		render();
 	}
 

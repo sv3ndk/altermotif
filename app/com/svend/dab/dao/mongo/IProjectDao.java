@@ -1,14 +1,15 @@
 package com.svend.dab.dao.mongo;
 
 import java.util.List;
+import java.util.Set;
 
 import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Participant;
-import com.svend.dab.core.beans.projects.ProjectOverview;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.Project.STATUS;
+import com.svend.dab.core.beans.projects.ProjectOverview;
 import com.svend.dab.core.beans.projects.ProjectSearchRequest;
 
 /**
@@ -19,6 +20,9 @@ public interface IProjectDao {
 	void updateProjectParticipation(String projectId, UserSummary updatedSummary);
 
 	Project findOne(String projectId);
+	
+	List<Project> loadAllProjects(Set<String> allIds);
+
 
 	void save(Project project);
 
@@ -70,6 +74,7 @@ public interface IProjectDao {
 	// tags
 	
 	public void launchCountProjectTagsJob();
+
 
 
 

@@ -8,6 +8,7 @@ import com.svend.dab.core.IProfilePhotoService;
 import com.svend.dab.core.IUserProfileService;
 import com.svend.dab.core.UserProfileService;
 import com.svend.dab.core.beans.Config;
+import com.svend.dab.core.projects.IProjectFTSService;
 import com.svend.dab.core.projects.IProjectPhotoService;
 import com.svend.dab.core.projects.IProjectService;
 import com.svend.dab.dao.mongo.IProjectDao;
@@ -43,6 +44,10 @@ public class BeanProvider {
 	
 	public static IProjectService  getProjectService() {
 		return (IProjectService) Spring.getBeanOfType(IProjectService.class);
+	}
+
+	public static IProjectFTSService  getProjectFullTextSearchService() {
+		return (IProjectFTSService) Spring.getBeanOfType(IProjectFTSService.class);
 	}
 
 	public static IProjectDao  getProjectDao() {

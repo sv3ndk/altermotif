@@ -22,8 +22,6 @@ import com.svend.dab.core.beans.projects.ParticipantList;
 import com.svend.dab.core.beans.projects.ParticpantsIdList;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.Project.STATUS;
-import com.svend.dab.core.beans.projects.ProjectOverview;
-import com.svend.dab.core.beans.projects.ProjectSearchRequest;
 import com.svend.dab.core.beans.projects.RankedTag;
 import com.svend.dab.core.beans.projects.TagCount;
 import com.svend.dab.core.dao.ITagCountDao;
@@ -57,6 +55,9 @@ public class ProjectService implements IProjectService {
 
 	@Autowired
 	private Config config;
+	
+	// -------------------
+	//
 
 	@Override
 	public void createProject(Project createdProject, String creatorId) {
@@ -90,21 +91,6 @@ public class ProjectService implements IProjectService {
 	}
 	
 	
-	@Override
-	public List<ProjectOverview> searchForProjects(ProjectSearchRequest request) {
-		
-		List<ProjectOverview> projectOverview = projectDao.searchProjects(request);
-		
-		if (projectOverview != null) {
-			Date expirationdate = new Date();
-			expirationdate.setTime(expirationdate.getTime() + config.getCvExpirationDelayInMillis());
-			for (ProjectOverview overview :projectOverview) {
-				overview.generatePhotoLinks(expirationdate);
-			}
-		}
-		
-		return projectOverview;
-	}
 
 
 	// //////////////////////////////////////////////////
@@ -293,11 +279,10 @@ public class ProjectService implements IProjectService {
 					} 
 				}
 			}
-			
 		}
 		
-		
 		Collections.sort(tags, new Comparator<RankedTag>() {
+			
 			@Override
 			public int compare(RankedTag tag1, RankedTag tag2) {
 				

@@ -9,9 +9,6 @@ import com.svend.dab.core.beans.projects.ParticipantList;
 import com.svend.dab.core.beans.projects.ParticpantsIdList;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.ProjectData;
-import com.svend.dab.core.beans.projects.ProjectOverview;
-import com.svend.dab.core.beans.projects.ProjectSearchRequest;
-import com.svend.dab.core.beans.projects.ProjectSummary;
 import com.svend.dab.core.beans.projects.RankedTag;
 
 /**
@@ -23,8 +20,6 @@ public interface IProjectService {
 	public void createProject(Project createdProject, String creatorId);
 	
 	public Project loadProject(String projectId, boolean generatePhotoLinks);
-
-	public List<ProjectOverview> searchForProjects(ProjectSearchRequest request);
 
 	
 	/**
