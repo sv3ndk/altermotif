@@ -257,6 +257,17 @@ public class Utils {
 		}
 	}
 	
+	public static void waitABit() {
+		
+		try {
+			Thread.sleep(config.getHowLongIsABitInMillis());
+		} catch (Exception e) {
+			logger.log(Level.WARNING, "interrupted while waiting", e);
+		}
+	}
+	
+	
+	
 	// ----------------------------------
 	// ----------------------------------
 
@@ -268,17 +279,12 @@ public class Utils {
 			synchronized (Utils.class) {
 				if (config == null) {
 					config = BeanProvider.getConfig();
-					
 				}
 			}
 		}
 		
 		return config;
 	}
-
-
-
-
 
 
 }

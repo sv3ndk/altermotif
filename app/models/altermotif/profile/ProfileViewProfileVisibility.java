@@ -3,6 +3,7 @@ package models.altermotif.profile;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.common.base.Strings;
 import com.svend.dab.core.beans.profile.UserProfile;
 
 import models.altermotif.AbstractRenderableModel;
@@ -65,6 +66,10 @@ public class ProfileViewProfileVisibility extends AbstractRenderableModel{
 
 	public boolean isMayContactThisUser() {
 		return userSession.isLoggedIn() && ! isVisitingHisOwnProfile();
+	}
+	
+	public boolean isWebsiteVisible() {
+		return ! Strings.isNullOrEmpty(visitedUserProfile.getPdata().getWebsite()) && ! "".equals(visitedUserProfile.getPdata().getWebsite().trim());
 	}
 	
 	// -----------------------------------------

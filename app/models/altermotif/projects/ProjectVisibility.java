@@ -109,17 +109,11 @@ public class ProjectVisibility {
 	
 	
 	public boolean isApplyLinkVisible() {
-		if (visitingUserId == null) {
-			return false;
-		}
-		return ! project.isUserAlreadyMember(visitingUserId) && ! project.isUserApplying(visitingUserId);
+		return pep.isAllowedToApply(visitingUserId);
 	}
 	
 	public boolean isCancelApplicationLinkVisible() {
-		if (visitingUserId == null) {
-			return false;
-		}
-		return project.isUserApplying(visitingUserId);
+		return pep.isAllowedToCancelApplication(visitingUserId);
 	}
 	
 	public boolean isDeleteParticipantLinkVisible(String rejectedUserId) {
@@ -147,12 +141,12 @@ public class ProjectVisibility {
 	}
 
 	public boolean isAcceptOwnershipLinkVisible(String upgradedUser) {
-		// we only display this link in the container showing this user (this is not a PEP related decision, this is just  a graphical decision)
+		// we only display this link in the container showing this user (this is not a PEP related decision, this is just  a display concept)
 		return upgradedUser != null && upgradedUser.equals(visitingUserId) && pep.isAllowedToAcceptOrRefuseOwnershipTransfer(visitingUserId);
 	}
 	
 	public boolean isRefuseOwnershipLinkVisible(String upgradedUser) {
-		// we only display this link in the container showing this user (this is not a PEP related decision, this is just  a graphical decision)
+		// we only display this link in the container showing this user (this is not a PEP related decision, this is just  a display concept)
 		return upgradedUser != null && upgradedUser.equals(visitingUserId) && pep.isAllowedToAcceptOrRefuseOwnershipTransfer(visitingUserId);
 	}
 

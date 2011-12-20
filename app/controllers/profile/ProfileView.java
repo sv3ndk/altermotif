@@ -13,6 +13,7 @@ import com.svend.dab.core.beans.profile.Contact;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserReference;
 
+import controllers.Application;
 import controllers.BeanProvider;
 import controllers.DabController;
 
@@ -28,7 +29,7 @@ public class ProfileView extends DabController {
 		// all links to this profile should be disabled anyway. If a use still lands on this page, we redirect him to his own home page
 		// (although an inactive user CAN see his own profile...) 
 		if (visitedUserProfile == null || (!visitedUserProfile.getPrivacySettings().isProfileActive() && !visibility.isVisitingHisOwnProfile())) {
-			ProfileHome.profileHome();
+			Application.index();
 		}
 
 		renderArgs.put("visitedUserProfile", visitedUserProfile);

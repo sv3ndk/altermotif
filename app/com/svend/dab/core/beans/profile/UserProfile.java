@@ -17,8 +17,6 @@ import com.svend.dab.core.beans.profile.PrivacySettings.VISIBILITY;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.Participation;
 
-import controllers.Application;
-
 /**
  * @author Svend
  * 

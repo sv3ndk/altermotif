@@ -1,6 +1,8 @@
 package com.svend.dab.core.projects;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -293,6 +295,27 @@ public class ProjectService implements IProjectService {
 			}
 			
 		}
+		
+		
+		Collections.sort(tags, new Comparator<RankedTag>() {
+			@Override
+			public int compare(RankedTag tag1, RankedTag tag2) {
+				
+				if ((tag1 == null || tag1.getTag() == null) && (tag2 == null || tag2.getTag() == null)) {
+					return 0;
+				}
+				
+				if (tag1 == null || tag1.getTag() == null) {
+					return -1;
+				}
+				
+				if (tag2 == null || tag2.getTag() == null) {
+					return 1;
+				}
+				
+				return tag1.getTag().compareTo(tag2.getTag());
+			}});
+		
 		
 		return tags;
 	}

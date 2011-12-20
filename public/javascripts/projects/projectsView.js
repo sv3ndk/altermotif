@@ -195,8 +195,8 @@ function initAcceptRejectAppliction() {
 	askAndAct_On("#projectApplications", "span.rejectApplication", confirmRejectApplicationText, whenUserConfirmsRejectApplication);
 }
 
-function whenUserConfirmsAcceptApplication() {
-	recordActionedParticipantId();
+function whenUserConfirmsAcceptApplication(event) {
+	recordActionedParticipantId(event);
 	setConfirmationFunction(onConfirmAcceptApplication);
 }
 	
@@ -213,8 +213,8 @@ function onConfirmAcceptApplication() {
 	);
 }
 	
-function whenUserConfirmsRejectApplication() {
-	recordActionedParticipantId();
+function whenUserConfirmsRejectApplication(event) {
+	recordActionedParticipantId(event);
 	setConfirmationFunction(onConfirmRejectApplication);
 }	
 				
@@ -248,7 +248,7 @@ function initParticipantsMecanics() {
 
 // remove participant
 function whenUserConfirmsRemoveParticipant(event) {
-	recordActionedParticipantId();
+	recordActionedParticipantId(event);
 	setConfirmationFunction(onConfirmRemoveParticipant);
 }
 
@@ -267,7 +267,7 @@ function onConfirmRemoveParticipant() {
 
 
 // leave project
-function whenUserConfirmsLeavesProject() {
+function whenUserConfirmsLeavesProject(event) {
 	setConfirmationFunction(onConfirmLeaveProject);
 }
 
@@ -290,8 +290,8 @@ function onConfirmLeaveProject() {
 }
 
 //make admin 
-function whenUserConfirmsMakeAdmin() {
-	recordActionedParticipantId();
+function whenUserConfirmsMakeAdmin(event) {
+	recordActionedParticipantId(event);
 	setConfirmationFunction(onConfirmMakeAdmin);
 }
 
@@ -311,8 +311,8 @@ function onConfirmMakeAdmin() {
 
 
 // make member
-function whenUserConfirmsMakeMember() {
-	recordActionedParticipantId();
+function whenUserConfirmsMakeMember(event) {
+	recordActionedParticipantId(event);
 	setConfirmationFunction(onConfirmMakeMember);
 }
 
@@ -331,8 +331,8 @@ function onConfirmMakeMember() {
 }
 
 // transfer ownership
-function whenUserConfirmsGiveOwnership() {
-	recordActionedParticipantId();
+function whenUserConfirmsGiveOwnership(event) {
+	recordActionedParticipantId(event);
 	setConfirmationFunction(onConfirmGiveOwnership);
 }
 
@@ -359,8 +359,8 @@ function onConfirmGiveOwnership() {
 
 
 // cancel transfer ownnership
-function whenUserConfirmsCancelGiveOwnership() {
-	recordActionedParticipantId();
+function whenUserConfirmsCancelGiveOwnership(event) {
+	recordActionedParticipantId(event);
 	setConfirmationFunction(onConfirmCancelGiveOwnership);
 }
 
@@ -379,8 +379,8 @@ function onConfirmCancelGiveOwnership() {
 
 // accept/refuse ownership transfer
 
-function whenUserAcceptsOwnership() {
-	recordActionedParticipantId();
+function whenUserAcceptsOwnership(event) {
+	recordActionedParticipantId(event);
 	setConfirmationFunction(onAcceptOwnership);
 }
 
@@ -391,8 +391,8 @@ function onAcceptOwnership() {
 }
 
 
-function whenUserRefusesOwnership() {
-	recordActionedParticipantId();
+function whenUserRefusesOwnership(event) {
+	recordActionedParticipantId(event);
 	setConfirmationFunction(onRefuseOwnership);
 }
 
@@ -411,7 +411,7 @@ function onRefuseOwnership() {
 }
 
 // this is also used to record applicant id (ugly, I know...)
-function recordActionedParticipantId() {
+function recordActionedParticipantId(event) {
 	participantId = $(event.target).parent().find("span.hidden").text();
 }
 

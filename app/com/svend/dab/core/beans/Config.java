@@ -30,6 +30,8 @@ public class Config {
 	// millis, of the polling
 	private long freshnessPollingPeriodMillis = 5000;
 	
+	private long howLongIsABitInMillis = 750; 
+	
 	private List<Theme> projectThemes = new LinkedList<Theme>();
 	
 	
@@ -39,6 +41,7 @@ public class Config {
 	public Config() {
 		
 		Theme environment = new Theme("environment", "projectThemeEnvironment");
+		
 		environment.addSubTheme(new SubTheme("protecting", "projectThemeEnvironmentSubThemeProtecting"));
 		environment.addSubTheme(new SubTheme("recycling", "projectThemeEnvironmentSubThemeRecycling"));
 		environment.addSubTheme(new SubTheme("sensitizing", "projectThemeEnvironmentSubThemeSensitizing"));
@@ -167,6 +170,10 @@ public class Config {
 
 	public int getMaxNumberOfDisplayedProjectTags() {
 		return maxNumberOfDisplayedProjectTag;
+	}
+
+	public long getHowLongIsABitInMillis() {
+		return howLongIsABitInMillis;
 	}
 
 }

@@ -1,9 +1,12 @@
 package com.svend.dab.core.beans.projects;
 
 import com.google.common.base.Strings;
+import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.Project.PROJECT_VISIBILITY;
 import com.svend.dab.core.beans.projects.Project.STATUS;
+
+import controllers.BeanProvider;
 
 /**
  * @author svend
@@ -17,11 +20,57 @@ public class ProjectPep {
 	
 	private final Project project;
 	
-
 	public ProjectPep(Project project) {
 		super();
 		this.project = project;
 	}
+	
+	////////////////////////////////////////////
+	// project applications
+	
+	
+	public boolean isAllowedToApply(String visitingUserId) {
+		if (visitingUserId == null) {
+			return false;
+		}
+
+		if (project.isUserAlreadyMember(visitingUserId) || project.isUserApplying(visitingUserId)) {
+			return false;
+		}
+		
+		// TODO: optimization: cache the profile here instead of loading it each time...
+		// + do not load the whole profile (just the boolean is enough...)
+		UserProfile profile = BeanProvider.getUserProfileService().loadUserProfile(visitingUserId, false);
+		
+		if (profile == null || !profile.getPrivacySettings().isProfileActive()) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public boolean isAllowedToCancelApplication(String visitingUserId) {
+		if (visitingUserId == null) {
+			return false;
+		}
+		
+		if (! project.isUserApplying(visitingUserId)) {
+			return false;
+		}
+		
+		// TODO: optimization: cache the profile here instead of loading it each time...
+		// + do not load the whole profile (just the boolean is enough...)
+		UserProfile profile = BeanProvider.getUserProfileService().loadUserProfile(visitingUserId, false);
+		
+		if (profile == null || !profile.getPrivacySettings().isProfileActive()) {
+			return false;
+		}
+		
+		return true;
+		
+	}
+
+
 	
 	
 	// -----------------------------------------------
@@ -377,6 +426,11 @@ public class ProjectPep {
 		
 		return false;
 	}
+
+
+
+
+
 
 
 }
