@@ -13,6 +13,7 @@ import com.google.common.base.Strings;
 import com.svend.dab.core.beans.Location;
 import com.svend.dab.core.beans.projects.Project.PROJECT_VISIBILITY;
 import com.svend.dab.core.beans.projects.ProjectData;
+import com.svend.dab.core.beans.projects.ProjectPep;
 
 /**
  * @author svend
@@ -104,8 +105,10 @@ public class EditedProjectData {
 
 	/**
 	 * @param pdata
+	 * @param pep 
+	 * @param username 
 	 */
-	public void applyToProjectData(ProjectData pdata, String userLanguage) {
+	public void applyToProjectData(ProjectData pdata, String userLanguage, ProjectPep pep, String username) {
 		if (pdata != null) {
 			
 			// typically null when editing a project (as opposed to creating one) => in that case, we do not want to overwrite the old that with those nulls
@@ -119,14 +122,22 @@ public class EditedProjectData {
 			
 			pdata.setDescription(description);
 			pdata.setDescriptionVisibility(descriptionVisibility);
-			pdata.setReason(reason);
+			
 			pdata.setStrategy(strategy);
 			pdata.setStrategyVisibility(strategyVisibility);
-			pdata.setOffer(offer);
-			pdata.setOfferVisibility(offerVisibility);
 			pdata.setDueDate(Utils.convertStringToDate(dueDateStr));
 			pdata.setLanguage(Utils.resolveCodeOfLanguage(language, userLanguage));
 			pdata.setLocations(getParsedJsonLocations());
+			
+			if (pep.isAllowedToEditProjectReason(username)) {
+				pdata.setReason(reason);
+			}
+
+			if (pep.isAllowedToEditProjectReason(username)) {
+				pdata.setOffer(offer);
+				pdata.setOfferVisibility(offerVisibility);
+			}
+			
 		}
 	}
 

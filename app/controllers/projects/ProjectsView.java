@@ -5,7 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import models.altermotif.MappedValue;
-import models.altermotif.projects.ProjectVisibility;
+import models.altermotif.projects.ProjectViewVisibility;
 import web.utils.Utils;
 
 import com.svend.dab.core.beans.projects.Participant;
@@ -28,7 +28,7 @@ public class ProjectsView extends DabController {
 		Project project = BeanProvider.getProjectService().loadProject(p, true);
 		if (project != null && project.getStatus() != STATUS.cancelled) {
 			renderArgs.put("visitedProject", project);
-			renderArgs.put("projectVisibility", new ProjectVisibility(new ProjectPep(project), project, getSessionWrapper().getLoggedInUserProfileId()));
+			renderArgs.put("projectVisibility", new ProjectViewVisibility(new ProjectPep(project), project, getSessionWrapper().getLoggedInUserProfileId()));
 			Utils.addAllPossibleLanguageNamesToRenderArgs(getSessionWrapper(), renderArgs);
 			render();
 		} else {
@@ -394,7 +394,7 @@ public class ProjectsView extends DabController {
 		ParticpantsIdList removedParticipants = BeanProvider.getProjectService().determineRemovedParticipants(projectId, knownParticipantUsernamesSet, knownApplicationUsernamesSet);
 		
 		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
-		removedParticipants.setCancelProjectLinkEffective(new ProjectVisibility(new  ProjectPep(project), project, getSessionWrapper().getLoggedInUserProfileId()).isCancelProjectLinkEffective());
+		removedParticipants.setCancelProjectLinkEffective(new ProjectViewVisibility(new  ProjectPep(project), project, getSessionWrapper().getLoggedInUserProfileId()).isCancelProjectLinkEffective());
 		
 		renderJSON(removedParticipants);
 	}
@@ -407,7 +407,7 @@ public class ProjectsView extends DabController {
 		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
 		
 		
-		renderArgs.put("_projectVisibility", new ProjectVisibility(new ProjectPep(project), project, getSessionWrapper().getLoggedInUserProfileId()));
+		renderArgs.put("_projectVisibility", new ProjectViewVisibility(new ProjectPep(project), project, getSessionWrapper().getLoggedInUserProfileId()));
 		renderArgs.put("_numberOfConfirmedParticipants", project.getNumberOfConfirmedParticipants());
 		renderArgs.put("_numberOfApplications", project.getNumberOfApplications());
 		
@@ -425,7 +425,7 @@ public class ProjectsView extends DabController {
 			Participant participantData = project.getParticipant(participant);
 			if (participantData != null) {
 				renderArgs.put("_participant", participantData);
-				renderArgs.put("_projectVisibility", new ProjectVisibility(new ProjectPep(project), project, getSessionWrapper().getLoggedInUserProfileId()));
+				renderArgs.put("_projectVisibility", new ProjectViewVisibility(new ProjectPep(project), project, getSessionWrapper().getLoggedInUserProfileId()));
 				renderTemplate("tags/projects/participant.html");
 			} else {
 				

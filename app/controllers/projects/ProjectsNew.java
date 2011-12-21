@@ -1,9 +1,11 @@
 package controllers.projects;
 
 import models.altermotif.projects.EditedProject;
+import models.altermotif.projects.ProjectEditVisibility;
 import play.data.validation.Validation;
 import web.utils.Utils;
 
+import com.svend.dab.core.beans.projects.CreatedProjectPep;
 import com.svend.dab.core.beans.projects.Project;
 
 import controllers.BeanProvider;
@@ -16,6 +18,9 @@ public class ProjectsNew extends DabLoggedController {
 	public static void projectsNew() {
 		Utils.addAllPossibleLanguageNamesToRenderArgs(getSessionWrapper(), renderArgs);
 		Utils.addProjectThemesToRenderArgs(getSessionWrapper(), renderArgs);
+		
+		renderArgs.put("projectEditVisibility", new ProjectEditVisibility(new CreatedProjectPep(), getSessionWrapper().getLoggedInUserProfileId()));
+
 		render();
 	}
 
@@ -29,7 +34,7 @@ public class ProjectsNew extends DabLoggedController {
 			projectsNew();
 		} else {
 			Project createdProject = new Project(); 
-			editedProject.applyToProject(createdProject, getSessionWrapper().getSelectedLg());
+			editedProject.applyToProject(createdProject, getSessionWrapper().getSelectedLg(), new CreatedProjectPep(), getSessionWrapper().getLoggedInUserProfileId());
 			BeanProvider.getProjectService().createProject(createdProject, getSessionWrapper().getLoggedInUserProfileId());
 			ProfileHome.profileHome();
 		}

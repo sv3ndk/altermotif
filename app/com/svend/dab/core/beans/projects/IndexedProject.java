@@ -23,7 +23,8 @@ public class IndexedProject {
 	
 
 	public void addTerm(String term) {
-		if (!Strings.isNullOrEmpty(term)) {
+		// skipping empty or too short terms
+		if (!Strings.isNullOrEmpty(term) && term.length() > 2) {
 			terms.add(term);
 		}
 	}

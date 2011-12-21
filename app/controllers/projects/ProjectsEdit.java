@@ -4,6 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import models.altermotif.projects.EditedProject;
+import models.altermotif.projects.ProjectEditVisibility;
 import play.data.validation.Validation;
 import web.utils.Utils;
 
@@ -35,6 +36,7 @@ public class ProjectsEdit extends DabLoggedController{
 			if (pep.isAllowedToEditAtLeastPartially(getSessionWrapper().getLoggedInUserProfileId())) {
 				renderArgs.put("editedProjectName", project.getPdata().getName());
 				renderArgs.put("editedProjectGoal", project.getPdata().getGoal());
+				renderArgs.put("projectEditVisibility", new ProjectEditVisibility(new ProjectPep(project), getSessionWrapper().getLoggedInUserProfileId()));
 				
 				if (!flash.contains(FLASH_SKIP_LOADING_PROFILE)) {
 					renderArgs.put("editedProject", new EditedProject(project, getSessionWrapper().getSelectedLg()));
@@ -77,8 +79,18 @@ public class ProjectsEdit extends DabLoggedController{
 			if (updated == null) {
 				logger.log(Level.WARNING, "could not retrieve updated project in DB => not updating anything");
 			} else {
-				editedProject.applyToProject(updated, getSessionWrapper().getSelectedLg());
-				BeanProvider.getProjectService().updateProjectCore(updated);
+				
+				ProjectPep pep = new ProjectPep(updated);
+				
+				if (pep.isAllowedToEditAtLeastPartially(getSessionWrapper().getLoggedInUserProfileId())) {
+					
+					editedProject.applyToProject(updated, getSessionWrapper().getSelectedLg(), pep, getSessionWrapper().getLoggedInUserProfileId());
+					BeanProvider.getProjectService().updateProjectCore(updated);
+					
+				} else {
+					logger.log(Level.WARNING, "user is trying to update a project but is not allowed to! user is " + getSessionWrapper().getLoggedInUserProfileId() + ", project id is " + updated.getId());
+				}
+
 			}
 			ProfileHome.profileHome();
 		}

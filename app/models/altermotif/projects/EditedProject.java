@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import web.utils.Utils;
 
 import com.svend.dab.core.beans.projects.Project;
+import com.svend.dab.core.beans.projects.ProjectPep;
 import com.svend.dab.core.beans.projects.SelectedTheme;
 
 
@@ -70,14 +71,20 @@ public class EditedProject {
 	}
 	
 	
-	public void applyToProject(Project project, String userLanguage) {
+	public void applyToProject(Project project, String userLanguage, ProjectPep pep, String username) {
 		if (project != null) {
+			
 			project.setLinks(getparsedLinks());
-			project.setTags(getparsedTags());
-			project.setThemes(getparsedThemes());
+			
+			if (pep.isAllowedToEditProjectTags(username)) {
+				project.setTags(getparsedTags());
+			}
+			if (pep.isAllowedToEditProjectThemes(username)) {
+				project.setThemes(getparsedThemes());
+			}
 			
 			if (pdata != null) {
-				pdata.applyToProjectData(project.getPdata(), userLanguage);
+				pdata.applyToProjectData(project.getPdata(), userLanguage, pep, username);
 			}
 		}
 	}

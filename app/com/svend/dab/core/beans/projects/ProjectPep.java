@@ -29,7 +29,7 @@ public class ProjectPep {
 	// project applications
 	
 	
-	public boolean isAllowedToApply(String visitingUserId) {
+	public boolean isAllowedToApplyToProject(String visitingUserId) {
 		if (visitingUserId == null) {
 			return false;
 		}
@@ -92,9 +92,52 @@ public class ProjectPep {
 		}
 		
 		ROLE role = project.findRoleOfUser(user);
-		return role == ROLE.initiator;
+		
+		// admin may update some parts of the project
+		// owner may update any part
+		return role == ROLE.initiator || role == ROLE.admin;
+	}
+	
+	
+	public boolean isAllowedToEditProjectOffer(String user) {
+		if (!isAllowedToEditAtLeastPartially(user)) {
+			return false;
+		}
+		ROLE role = project.findRoleOfUser(user);
+		return role ==  ROLE.initiator;
 	}
 
+	
+	public boolean isAllowedToEditProjectReason(String user) {
+		if (!isAllowedToEditAtLeastPartially(user)) {
+			return false;
+		}
+		ROLE role = project.findRoleOfUser(user);
+		return role ==  ROLE.initiator;
+	}
+	
+	
+	public boolean isAllowedToEditProjectTags(String user) {
+		if (!isAllowedToEditAtLeastPartially(user)) {
+			return false;
+		}
+		ROLE role = project.findRoleOfUser(user);
+		return role ==  ROLE.initiator;
+	}
+	
+	public boolean isAllowedToEditProjectThemes(String user) {
+		if (!isAllowedToEditAtLeastPartially(user)) {
+			return false;
+		}
+		ROLE role = project.findRoleOfUser(user);
+		return role ==  ROLE.initiator;
+	}
+
+	
+	////////////////////////////////
+	// project life cylce
+
+	
 
 	public boolean isAllowedToCancelProject(String user) {
 		if (user == null) {
@@ -426,11 +469,5 @@ public class ProjectPep {
 		
 		return false;
 	}
-
-
-
-
-
-
 
 }

@@ -47,15 +47,25 @@
 	rows: 4
 /}
 
-#{dab.inputText 
-	label:messages.get('projectNewReason'),
-	required: false,
-	inputName: "editedProject.pdata.reason",
-	inputValue: _editedProject?.pdata?.reason,
-	explanation: messages.get('projectNewReasonExplanation'),
-	cols: 65,
-	rows: 4
-/}
+#{if _projectEditVisibility.editReasonVisible}
+
+	#{dab.inputText 
+		label:messages.get('projectNewReason'),
+		required: false,
+		inputName: "editedProject.pdata.reason",
+		inputValue: _editedProject?.pdata?.reason,
+		explanation: messages.get('projectNewReasonExplanation'),
+		cols: 65,
+		rows: 4
+	/}
+#{/if}	
+#{else}
+	<tr>
+		<td class="formlabel"><label >&{'projectNewReason'}: </label></td>
+		<td><pre>${_editedProject.pdata.reason}</pre></td>
+	</tr>
+#{/else}
+	
 
 #{dab.inputText 
 	label:messages.get('projectNewStrategy'),
@@ -69,17 +79,29 @@
 	rows: 4
 /}
 
-#{dab.inputText 
-	label:messages.get('projectNewOffer'),
-	required: false,
-	inputName: "editedProject.pdata.offer",
-	inputValue: _editedProject?.pdata?.offer,
-	visibilityName: "editedProject.pdata.offerVisibility",
-	visibilityValue: _editedProject?.pdata?.offerVisibility,
-	explanation: messages.get('projectNewOfferExplanation'),
-	cols: 65,
-	rows: 4
-/}
+
+
+#{if _projectEditVisibility.editOfferVisible}
+
+	#{dab.inputText 
+		label:messages.get('projectNewOffer'),
+		required: false,
+		inputName: "editedProject.pdata.offer",
+		inputValue: _editedProject?.pdata?.offer,
+		visibilityName: "editedProject.pdata.offerVisibility",
+		visibilityValue: _editedProject?.pdata?.offerVisibility,
+		explanation: messages.get('projectNewOfferExplanation'),
+		cols: 65,
+		rows: 4
+	/}
+
+#{/if}
+#{else}
+	<tr>
+		<td class="formlabel"><label >&{'projectNewOffer'}: </label></td>
+		<td><pre>${_editedProject.pdata.offer}</pre></td>
+	</tr>
+#{/else}
 
 
 #{dab.inputText 
@@ -119,10 +141,13 @@
 	<td colspan="2">
 		<div>
 			<ul id="linksGroup">
-				<li id="hiddenLinkTemplate" class="hidden"><span class="dabLinkDisabled"></span> <img id="trashImg" src="@{'/public/images/trash.png'}"  class="deleteImageLink"></img></li>
+				<li id="hiddenLinkTemplate" class="hidden"><span class="dabLinkDisabled"></span> 
+						<img id="trashImg" src="@{'/public/images/trash.png'}"  class="deleteImageLink"/>
+				</li>
 			</ul>
 			
 			<input id="hiddenAllLinksJson" name="editedProject.allLinksJson" type="hidden" value="${_editedProject == null ? flash['editedProject.allLinksJson'] : _editedProject.allLinksJson}"/>
+			
 
 			<ul>
 				<li class="hidden" id="linkInputCommand">
@@ -134,6 +159,7 @@
 					<span id="addLinkLink" class="dabLink" >&{'projectNewAddOneUsefullLink'}</span>
 				</li>
 			</ul>
+			
 		</div>
 	</td>
 </tr>
@@ -144,7 +170,7 @@
 	<td colspan="2">
 		<div>
 			<input id="hiddenAllThemesJson" name="editedProject.allThemesJson" type="hidden" value="${_editedProject == null ? flash['editedProject.allThemesJson'] : _editedProject.allThemesJson  }"/>
-			#{dab.inputTheme allThemes:_allThemes, isExplanationVisible:true /}
+			#{dab.inputTheme allThemes:_allThemes, readOnly:!_projectEditVisibility.editThemesVisible, isExplanationVisible:true /}
 		</div>
 	</td>
 <tr>
@@ -155,7 +181,7 @@
 	<td colspan="2">
 		<div>
 			<input id="hiddenAllTagsJson" name="editedProject.allTagsJson" type="hidden" value="${_editedProject == null ? flash['editedProject.allTagsJson'] : _editedProject.allTagsJson  }"/>
-			#{dab.inputTag /}
+			#{dab.inputTag readOnly:!_projectEditVisibility.editTagsVisible /}
 		</div>
 	</td>
 </tr>

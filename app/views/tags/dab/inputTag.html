@@ -1,9 +1,14 @@
 *{ visual part of the mechanics for editing tags (with buttons appearing/disapearing as the user interracts...)   }*
 
 <ul id="tagGroup">
-	<li id="hiddenTagTemplate" class="hidden"><span ></span> <img id="trashImg" src="@{'/public/images/trash.png'}"  class="deleteImageLink" /></li>
+	<li id="hiddenTagTemplate" class="hidden"><span ></span>
+	#{if ! _readOnly}
+	 	<img id="trashImg" src="@{'/public/images/trash.png'}"  class="deleteImageLink" />
+	 #{/if}
+	 </li>
 </ul>
 
+#{if ! _readOnly}
 <ul>
 	<li class="hidden" id="tagInputCommand">
 		<input id="addTagInput" class="rightspaced" size="15"> </input>
@@ -14,3 +19,4 @@
 		<span id="addTagLink" class="dabLink" >&{'projectNewAddOneTagLink'}</span>
 	</li>
 </ul>
+ #{/if}

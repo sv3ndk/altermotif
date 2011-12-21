@@ -20,30 +20,36 @@ var allPossibleThemes = [
 </script>
 
 <ul id="themesGroup">
-	<li id="hiddenThemeTemplate" class="hidden"><span ></span> <img id="trashImg" src="@{'/public/images/trash.png'}"  class="deleteImageLink"/></li>
+	<li id="hiddenThemeTemplate" class="hidden"><span ></span> 
+	#{if ! _readOnly}
+		<img id="trashImg" src="@{'/public/images/trash.png'}"  class="deleteImageLink"/>
+	#{/if}	
+	</li>
 </ul>
 
-<ul>
-	<li class="hidden" id="themeInputCommand">
-	
-		<select id="themeSelector" class="rightspaced">
-			#{list items:_allThemes, as:'oneTheme'}
-				<option value="${oneTheme.id}">&{oneTheme.label}</option>
-			#{/list}
-		</select>
-	
-		<select id="subThemeSelector" class="rightspaced">
-		</select>
-	
-		<span  id="addThemeSecondButton" class="dabLink rightspaced" >&{'add'}</span>
-		<span  id="addThemeCancelButton" class="dabLink" >&{'CancelButton'}</span>
-	</li>
-	
-	<li>
-		<span id="addThemeLink" class="dabLink" >&{'projectNewAddOneTheme'}</span>
-		#{if _isExplanationVisible}
-			<br />
-			<span class="formFieldExplanation">&{'projectNewSelectThemesExplanation'}</span>
-		#{/if}
-	</li>
-</ul>
+#{if ! _readOnly}
+	<ul>
+		<li class="hidden" id="themeInputCommand">
+		
+			<select id="themeSelector" class="rightspaced">
+				#{list items:_allThemes, as:'oneTheme'}
+					<option value="${oneTheme.id}">&{oneTheme.label}</option>
+				#{/list}
+			</select>
+		
+			<select id="subThemeSelector" class="rightspaced">
+			</select>
+		
+			<span  id="addThemeSecondButton" class="dabLink rightspaced" >&{'add'}</span>
+			<span  id="addThemeCancelButton" class="dabLink" >&{'CancelButton'}</span>
+		</li>
+		
+		<li>
+			<span id="addThemeLink" class="dabLink" >&{'projectNewAddOneTheme'}</span>
+			#{if _isExplanationVisible}
+				<br />
+				<span class="formFieldExplanation">&{'projectNewSelectThemesExplanation'}</span>
+			#{/if}
+		</li>
+	</ul>
+#{/if}

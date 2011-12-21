@@ -1,47 +1,47 @@
 <dl class="descriptionList">
 
-	#{if _projectVisibility.isDescriptionVisible() }
-		<dt>
-			&{'viewProjectProject'}:
-		</dt>
-		<dd>
-			<pre>${_visitedProject.pdata.description}</pre>
-		</dd>
-	#{/if}
-
+#{if _projectVisibility.isDescriptionVisible() }
 	<dt>
-		&{'viewProjectReason'}:
+		&{'viewProjectProject'}:
 	</dt>
 	<dd>
-		<pre>${_visitedProject.pdata.reason}</pre>
+		<pre>${_visitedProject.pdata.description}</pre>
 	</dd>
-	
-	#{if _projectVisibility.isStrategyVisible() }
-		<dt>
-			&{'viewProjectStrategy'}:
-		</dt>
-		<dd>
-			<pre>${_visitedProject.pdata.strategy}</pre>
-		</dd>
-	#{/if}
+#{/if}
 
-	#{if _projectVisibility.isOfferVisible() }
-		<dt>
-			&{'viewProjectRewards'}:
-		</dt>
-		<dd>
-			<pre>${_visitedProject.pdata.offer}</pre>
-		</dd>
-	#{/if}
+<dt>
+	&{'viewProjectReason'}:
+</dt>
+<dd>
+	<pre>${_visitedProject.pdata.reason}</pre>
+</dd>
 
+#{if _projectVisibility.isStrategyVisible() }
 	<dt>
-		&{'viewProjectLinks'}:
+		&{'viewProjectStrategy'}:
 	</dt>
 	<dd>
-		#{list items:_visitedProject.links, as: 'oneLink'}
-			<ul>
-				<li><a href="${oneLink}" class="dabLink">${oneLink}</a>
-				</li>
-			</ul>
-		#{/list}
+		<pre>${_visitedProject.pdata.strategy}</pre>
 	</dd>
+#{/if}
+
+#{if _projectVisibility.isOfferVisible() }
+	<dt>
+		&{'viewProjectRewards'}:
+	</dt>
+	<dd>
+		<pre>${_visitedProject.pdata.offer}</pre>
+	</dd>
+#{/if}
+
+<dt>
+	&{'viewProjectLinks'}:
+</dt>
+<dd>
+	#{list items:_visitedProject.links, as: 'oneLink'}
+		<ul>
+			<li><a href="${oneLink}" class="dabLink">${oneLink}</a>
+			</li>
+		</ul>
+	#{/list}
+</dd>

@@ -73,6 +73,11 @@ public class IndexedProjectDao implements IIndexedProjectDao {
 			}
 		}
 
+		if (criterias.isEmpty()) {
+			// if no search criteria: just refusing to search!
+			return new LinkedList<IndexedProject>();
+		}
+		
 		Query theQuery = query(new Criteria().orOperator(criterias.toArray(new Criteria[] {})));
 		return mongoTemplate.find(theQuery, IndexedProject.class);
 	}

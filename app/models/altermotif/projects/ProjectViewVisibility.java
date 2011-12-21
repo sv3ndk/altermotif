@@ -9,7 +9,7 @@ import com.svend.dab.core.beans.projects.Participant.ROLE;
  * @author svend
  *
  */
-public class ProjectVisibility {
+public class ProjectViewVisibility {
 	
 	private final ProjectPep pep;
 	
@@ -19,7 +19,7 @@ public class ProjectVisibility {
 	private final Project project;
 	
 	
-	public ProjectVisibility(ProjectPep pep, Project project, String visitingUserId) {
+	public ProjectViewVisibility(ProjectPep pep, Project project, String visitingUserId) {
 		super();
 		this.pep = pep;
 		this.project = project;
@@ -33,6 +33,7 @@ public class ProjectVisibility {
 	public boolean isEditProjectLinkVisisble() {
 		return pep.isAllowedToEditAtLeastPartially(visitingUserId);
 	}
+	
 	
 
 	public boolean isCancelProjectLinkVisisble() {
@@ -53,7 +54,6 @@ public class ProjectVisibility {
 	public boolean isCancelProjectLinkEffective() {
 		return pep.isAllowedToCancelProject(visitingUserId);
 	}
-	
 		
 	public boolean isEndProjectLinkVisisble() {
 		return pep.isAllowedToTerminate(visitingUserId);
@@ -109,7 +109,7 @@ public class ProjectVisibility {
 	
 	
 	public boolean isApplyLinkVisible() {
-		return pep.isAllowedToApply(visitingUserId);
+		return pep.isAllowedToApplyToProject(visitingUserId);
 	}
 	
 	public boolean isCancelApplicationLinkVisible() {
