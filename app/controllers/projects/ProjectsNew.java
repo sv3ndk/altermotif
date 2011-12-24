@@ -18,9 +18,7 @@ public class ProjectsNew extends DabLoggedController {
 	public static void projectsNew() {
 		Utils.addAllPossibleLanguageNamesToRenderArgs(getSessionWrapper(), renderArgs);
 		Utils.addProjectThemesToRenderArgs(getSessionWrapper(), renderArgs);
-		
 		renderArgs.put("projectEditVisibility", new ProjectEditVisibility(new CreatedProjectPep(), getSessionWrapper().getLoggedInUserProfileId()));
-
 		render();
 	}
 
@@ -36,9 +34,9 @@ public class ProjectsNew extends DabLoggedController {
 			Project createdProject = new Project(); 
 			editedProject.applyToProject(createdProject, getSessionWrapper().getSelectedLg(), new CreatedProjectPep(), getSessionWrapper().getLoggedInUserProfileId());
 			BeanProvider.getProjectService().createProject(createdProject, getSessionWrapper().getLoggedInUserProfileId());
+			Utils.waitABit();
 			ProfileHome.profileHome();
 		}
-
 	}
 
 }

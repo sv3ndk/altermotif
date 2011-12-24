@@ -1,6 +1,8 @@
 package com.svend.dab.core.beans.projects;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -10,7 +12,9 @@ import org.springframework.data.annotation.Transient;
 import com.svend.dab.core.beans.PhotoPack;
 import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.profile.UserProfile;
+import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
+import com.svend.dab.core.beans.projects.Task.TASK_STATUS;
 
 /**
  * @author Svend
@@ -56,6 +60,8 @@ public class Project {
 	private Set<SelectedTheme> themes;
 
 	private STATUS status;
+	
+	private Set<Task> tasks;
 
 	// ///////////////////////////
 	// cachedData
@@ -73,12 +79,19 @@ public class Project {
 	private List<Participant> cachedConfirmedActiveParticipants;
 
 	@Transient
+	private List<UserSummary> cachedConfirmedActiveParticipantsSummaries;
+
+	@Transient
 	private List<Participant> cachedUnconfirmedActiveParticipants;
 
 	// arrays of 20 links to the photos of the user (no matter how many actually present in DB)
 	@Transient
 	private PhotoPack cachedPhotosPack20;
 
+	@Transient
+	// just to make sure we do not resolve the user roles everytime 
+	private HashMap<String, ROLE> cachedUserRoles = new HashMap<String, Participant.ROLE>();
+	
 	// TODO
 	@Transient
 	private String noTasks = "(todo...)";
@@ -202,9 +215,14 @@ public class Project {
 		if (user == null) {
 			return null;
 		}
+		
+		if (cachedUserRoles.containsKey(user)) {
+			return cachedUserRoles.get(user);
+		}
 
 		for (Participant participant : getConfirmedParticipants()) {
 			if (user.equals(participant.getUser().getUserName())) {
+				cachedUserRoles.put(user, participant.getRole());
 				return participant.getRole();
 			}
 		}
@@ -239,6 +257,14 @@ public class Project {
 		}
 		return cachedConfirmedActiveParticipants;
 	}
+	
+	public List<UserSummary> getConfirmedActiveParticipantsSummaries() {
+		if (cachedConfirmedActiveParticipants == null) {
+			categorizeParticipants();
+		}
+		return cachedConfirmedActiveParticipantsSummaries;
+	}
+
 
 	public List<Participant> getUnconfirmedActiveParticipants() {
 		if (cachedUnconfirmedActiveParticipants == null) {
@@ -251,12 +277,14 @@ public class Project {
 		cachedConfirmedParticipants = new LinkedList<Participant>();
 		cachedConfirmedActiveParticipants = new LinkedList<Participant>();
 		cachedUnconfirmedActiveParticipants = new LinkedList<Participant>();
+		cachedConfirmedActiveParticipantsSummaries = new LinkedList<UserSummary>();
 
 		for (Participant participant : participants) {
 			if (participant.isAccepted()) {
 				cachedConfirmedParticipants.add(participant);
 				if (participant.isAccepted()) {
 					cachedConfirmedActiveParticipants.add(participant);
+					cachedConfirmedActiveParticipantsSummaries.add(participant.getUser());
 				}
 			} else if (participant.getUser().isProfileActive()) {
 				cachedUnconfirmedActiveParticipants.add(participant);
@@ -431,5 +459,36 @@ public class Project {
 	public void setThemes(Set<SelectedTheme> themes) {
 		this.themes = themes;
 	}
+
+	public Set<Task> getTasks() {
+		
+		tasks = new HashSet<Task>();
+		Task fakeTask = new Task();
+		fakeTask.setDueDate(new Date());
+		fakeTask.setName("do this do that");
+		fakeTask.setStatus(TASK_STATUS.done);
+
+		fakeTask.setAssignees(new LinkedList<UserSummary>());
+
+		UserSummary sum = new UserSummary();
+		sum.setUserName("svend");
+		sum.setProfileActive(true);
+		fakeTask.getAssignees().add(sum);
+
+		UserSummary sum2 = new UserSummary();
+		sum2.setUserName("toto");
+		sum2.setProfileActive(true);
+		fakeTask.getAssignees().add(sum2);
+		
+		fakeTask.setId("1");
+		tasks.add(fakeTask);
+		
+		return tasks;
+	}
+
+	public void setTasks(Set<Task> tasks) {
+		this.tasks = tasks;
+	}
+
 
 }

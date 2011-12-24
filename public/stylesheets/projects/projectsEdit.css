@@ -27,3 +27,9 @@
 .editProjectBottomButton {
 	margin: 10px 0px 20px 50px;
 }
+
+
+/* task edition */
+#editProjectTasksContainer {
+	border: 1px solid;
+}

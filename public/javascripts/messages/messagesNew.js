@@ -5,7 +5,9 @@ var numberOfActiveContactsValue;
 function init() {
 	updateChooseContactLinkState();
 	initchooseMessageRecipientPopup();
-
+	
+	// this is in usersPopupList.js
+	initUsersPopupList(whenTheRecipientIsChosen);
 }
 
 function initchooseMessageRecipientPopup() {
@@ -16,35 +18,9 @@ function initchooseMessageRecipientPopup() {
 
 	$("#choooseFromMyContactsLink").click(function() {
 		if ($("#choooseFromMyContactsLink").hasClass("dabLinkLSpaced")) {
-			$("#chooseFromMyContactsPopup").dialog("open");
+			openUsersPopupList();
 		}
 	});
-
-	if (numberOfActiveContactsValue == 0) {
-		popupHeight = 150;
-	} else if (numberOfActiveContactsValue < 4) {
-		popupHeight = 50 + numberOfActiveContactsValue * 100;
-	} else {
-		popupHeight = 435;
-	}
-
-	$("#chooseFromMyContactsPopup").dialog({
-		autoOpen : false,
-		width : 550,
-		height : popupHeight,
-		modal : true
-	});
-
-	$(".oneContactPopupLine").click(function(event) {
-		var username = $(event.target).find(".contactUserName").text();
-		if (username == null || username == "") {
-			username = $(event.target).parent().find(".contactUserName").text();
-		}
-		$("#messagesTo").val(username);
-		updateChooseContactLinkState();
-		$("#chooseFromMyContactsPopup").dialog("close");
-	});
-
 }
 
 function updateChooseContactLinkState() {
@@ -55,4 +31,12 @@ function updateChooseContactLinkState() {
 		$("#choooseFromMyContactsLink").removeClass("dabLinkLSpaced");
 		$("#choooseFromMyContactsLink").addClass("dabLinkLSpacedDisabled");
 	}
+}
+
+
+// this is called back from the user popup list handler, after the user has chosen a contact (see usersPopupList.js)
+function whenTheRecipientIsChosen(username) {
+	$("#messagesTo").val(username);
+	updateChooseContactLinkState();
+	closeUsersPopupList();
 }

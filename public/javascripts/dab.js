@@ -8,6 +8,8 @@ function initMasterLayout(updateLanguageAction) {
 
 	initChangeLanguageLogic(updateLanguageAction);
 	
+	// this is present in simpleActions.js
+	initAskAndAct();
 	
 	$("#topDropDownMenu ul li").hover(function() {
 

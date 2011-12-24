@@ -5,6 +5,7 @@ import java.util.Set;
 
 import web.utils.Utils;
 
+import com.google.common.base.Strings;
 import com.svend.dab.core.beans.projects.ProjectSearchRequest;
 import com.svend.dab.core.beans.projects.SelectedTheme;
 
@@ -41,10 +42,16 @@ public class WebSearchRequest {
 			request.getThemes().addAll(themeSet);
 		}
 		
-		
 		return request;
 	}
 
+	
+	public boolean isEmpty() {
+		return Strings.isNullOrEmpty(term) && Strings.isNullOrEmpty(themes) && (tag == null || tag.length == 0);  
+	}
+
+	//---------------------------------------
+	
 	
 	
 	public String getTerm() {
@@ -70,6 +77,9 @@ public class WebSearchRequest {
 	public void setThemes(String themes) {
 		this.themes = themes;
 	}
+
+
+
 
 	
 	

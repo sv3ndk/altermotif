@@ -76,6 +76,9 @@ public class UserProfile implements Serializable {
 	@Transient
 	private List<OwnerAwareContact> myActiveContacts;
 
+	@Transient
+	private List<UserSummary> myActiveContactsSummaries;
+
 	// arrays of 20 links to the photos of the user (no matter how many actually present in DB)
 	@Transient
 	private PhotoPack cachedPhotosPack20;
@@ -974,6 +977,18 @@ public class UserProfile implements Serializable {
 		return myActiveContacts;
 	}
 
+	public List<UserSummary> getMyActiveContactsSummaries() {
+		
+		if (myActiveContactsSummaries == null) {
+			myActiveContactsSummaries = new LinkedList<UserSummary>();
+			for (OwnerAwareContact contact : getMyActiveContacts()) {
+				myActiveContactsSummaries.add(contact.getOtherUser());
+			}
+		}
+		
+		return myActiveContactsSummaries;
+		
+	}
 	/**
 	 * @return
 	 */

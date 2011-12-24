@@ -13,6 +13,11 @@ function init() {
 	
 	setupSetLanguageAutoComplete();
 	initSubmitCancelButtons();
+	
+	// this is present in projectEditTasks.js
+	initEditTasks();
+	
+
 }
 
 

@@ -415,13 +415,24 @@ viewProjectConfirmCancelGiveOwnership=***You have previously proposed to this us
 viewProjectConfirmAcceptOwnership=***Are you sure your want to accept full ownership of this project? By doing so to get access to the highest level of control.
 viewProjectconfirmRefuseOwnership=***Are you sure your want to refuse the ownership of this project? This action cannot be undone unless the current project owner resubmits a new ownership transfer proposal. Are you sure this is what you want to do?
 
+projectTaskTodo=***to do
+projectTaskDone=***done
+projectTaskEditionTableTasks=***Required tasks
+projectTaskEditionTableStatus=***Status
+projectTaskEditionTableAssignedTo=***AssignedTo
+projectTaskEditionTableDueDate=***Due date
+projectTaskEditionTableAddTask=***Ask task
+projectTaskEditionTableConfirmRemoveUser=***Are you sure you want to unasign this task from this user?
+projectTaskEditionTableAddAssignee=***add assignee...
+projectTaskEditionTableChooseAssigneePopupTitle=***Select the assignee 
+
+
 # edit project page
 projectEditConfirmButton=Project actualiseren
 projectEditEditPhotos=Foto's wijzigen...
 
 #project photos page
 projectPhotosSetAsMainPhoto=Instellen als standaard projectfoto
-
 
 # project search page
 projectSearchKeyWords=***any project with these keywords

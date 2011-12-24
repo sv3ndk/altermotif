@@ -1,19 +1,14 @@
 #{extends 'masterTemplate.html' /}
 
-
 #{set 'moreStyles'}
     <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/messages.css'}" />
 #{/set}
 
-
 #{set 'moreScripts'}
-    <script src="@{'/public/javascripts/messages/messagesNew.js'}" type="text/javascript"
-    	charset="${_response_encoding}"></script>
+    <script src="@{'/public/javascripts/usersPopupList.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+    <script src="@{'/public/javascripts/messages/messagesNew.js'}" type="text/javascript" charset="${_response_encoding}"></script>
     	
     <script type="text/javascript">
-    
-    	var numberOfActiveContactsValue = "${loggedinUserProfile.numberOfActiveContacts}";
-		
 		$(document).ready(function() {
 			init();
 		})
@@ -23,17 +18,14 @@
 
 <div id="messagesContainer" class="messagesMainContainer">
 
-
 	<div class="messagesNewError">
 		<ul>
 			<li><div class="errorMessage">#{error 'writtenMessage.toUserName' /}</div></li>
 			<li><div class="errorMessage">#{error 'writtenMessage.messageContent' /}</div></li>
-		
 		</ul>
 	</div>
 
 	<div class="messagesNewError">
-		
 		<span class="errorMessage"></span>
 	</div>
 
@@ -69,9 +61,6 @@
 		<textarea rows="10" class="messagesNewTextArea" name="writtenMessage.messageContent" >${flash['writtenMessage.messageContent']}</textarea>
 	#{/form}
 	
-	
-	#{messages.contactList popupTitle:messages.get('profileMessagesChooseFromMyContactsPopupTitle'), contacts:loggedinUserProfile.myActiveContacts /}
-	
-		
+	#{dab.usersPopupList popupTitle:messages.get('profileMessagesChooseFromMyContactsPopupTitle'), users:loggedinUserProfile.myActiveContactsSummaries /}
 
 </div>

@@ -1,0 +1,65 @@
+<script type="text/javascript">
+
+	var getTaskList = #{jsAction @projects.ProjectsTasksAndAssets.doGetTaskList(':projectId') /};
+	
+	var localizedTaskStatus = function(name, localizedName) {
+		this.name = name,
+		this.localizedName = localizedName
+	}
+
+	
+	// mapping between the task status and the localized name of this status
+	var taskStatusLabels = [
+	          new localizedTaskStatus('todo', "&{'projectTaskTodo'}"),           
+	          new localizedTaskStatus('done', "&{'projectTaskDone'}")           
+          ];
+	
+	var confirmRemoveUserFromTask = "&{'projectTaskEditionTableConfirmRemoveUser'}";
+	var choseTaskAssigneePopupTitle = "&{'projectTaskEditionTableChooseAssigneePopupTitle'}";
+	
+</script>
+
+<div id="editProjectTasksContainer">
+
+	<table id="projectTaskTable">
+		<thead>
+			<tr>
+				<th></th>
+				<th>&{'projectTaskEditionTableTasks'}</th>
+				<th>&{'projectTaskEditionTableStatus'}</th>
+				<th>&{'projectTaskEditionTableAssignedTo'}</th>
+				<th>&{'projectTaskEditionTableDueDate'}</th>
+			</tr>
+		</thead>
+
+		<tbody data-bind="foreach: projectTasks">
+			<tr>
+				<td><input type="checkbox" />
+				<td><span class="hidden hiddenTaskId" data-bind="text: id"></span><span data-bind="text: name"></span></td>
+				<td>
+					<select data-bind="options: $parent.allTaskStatus, value: status, optionsValue: 'name', optionText: 'localizedName'" ></select>
+				</td>
+				<td>
+					<ul data-bind="template : {foreach: assignees, beforeRemove: removeTaskAssigneeElement, afterAdd: addTaskAssigneeElement}">
+						<li><span data-bind="text: userName" class="taskUserName"></span> <img id="trashImg" src="@{'/public/images/trash.png'}"  class="deleteImageLink" /></li>
+					</ul>
+					<br />
+					<span class="dabLink addTaskAssigneeLink">&{'projectTaskEditionTableAddAssignee'}</span>
+				</td>
+				
+				<td>
+					<input type="text" size="6" class="dueDateInput" data-bind="value: dueDateStr" ></input>
+				</td>
+			</tr>
+		</tbody>			
+			
+		<tr>
+			<td />
+			<td><span class="dabLink" id="addProjectTaskLink">&{'projectTaskEditionTableAddTask'}</span>
+			<td colspan="3"/>
+		</tr>
+	</table>
+	
+	#{dab.usersPopupList popupTitle:messages.get('projectTaskEditionTableChooseAssigneePopupTitle'), users:_confirmedActiveParticipants /}
+	
+</div>

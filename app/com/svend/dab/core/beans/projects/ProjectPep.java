@@ -116,7 +116,6 @@ public class ProjectPep {
 		return role ==  ROLE.initiator;
 	}
 	
-	
 	public boolean isAllowedToEditProjectTags(String user) {
 		if (!isAllowedToEditAtLeastPartially(user)) {
 			return false;
@@ -132,11 +131,21 @@ public class ProjectPep {
 		ROLE role = project.findRoleOfUser(user);
 		return role ==  ROLE.initiator;
 	}
-
+	
+	
+	///////////////////////////////////////
+	// projects tasks and assets
+	
+	public boolean isAllowedToEditProjectTasks(String user) {
+		if (!isAllowedToEditAtLeastPartially(user)) {
+			return false;
+		}
+		ROLE role = project.findRoleOfUser(user);
+		return role == ROLE.initiator || role == ROLE.admin;
+	}
 	
 	////////////////////////////////
 	// project life cylce
-
 	
 
 	public boolean isAllowedToCancelProject(String user) {

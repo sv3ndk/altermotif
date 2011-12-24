@@ -22,8 +22,6 @@ import controllers.BeanProvider;
  */
 public class CreatedProfile {
 	
-	final static String DATE_FORMAT = BeanProvider.getConfig().getDateDisplayFormat();
-	
 	private static Logger logger = Logger.getLogger(CreatedProfile.class.getName());
 
 	@Required
@@ -72,16 +70,12 @@ public class CreatedProfile {
 	// ----------------------------
 
 	public void applyDateOfBirth(Date date) {
-		if (date != null) {
-			dateOfBirthStr = new SimpleDateFormat(DATE_FORMAT).format(date);
-		}
+		dateOfBirthStr = Utils.formatDate(date); 
 	}
 	
 	public Date getDateOfBirth() throws ParseException {
 		return Utils.convertStringToDate(getDateOfBirthStr());
 	}
-
-	
 	
 	public boolean arePasswordEquals() {
 		if (firstpassword == null) {
@@ -113,13 +107,10 @@ public class CreatedProfile {
 		try {
 			pdata.setDateOfBirth(getDateOfBirth());
 		} catch (ParseException e) {
-			// TODO log here (this should be impossible anywqy..)
+			// (this should be impossible anywqy..)
 			logger.log(Level.WARNING, "could not convert dateOfBirthStr to date", e);
 		}
-		
 	}
-
-	
 
 	// ----------------------------
 
@@ -178,8 +169,5 @@ public class CreatedProfile {
 	public void setDateOfBirthStr(String dateOfBirthStr) {
 		this.dateOfBirthStr = dateOfBirthStr;
 	}
-
-
-	
 
 }

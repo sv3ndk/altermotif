@@ -34,5 +34,9 @@ public class ProjectEditVisibility {
 	public boolean isEditThemesVisible() {
 		return pep.isAllowedToEditProjectThemes(visitingUserId);
 	}
+	
+	public boolean isEditTasksVisible() {
+		return pep.isAllowedToEditProjectTasks(visitingUserId);
+	}
 
 }

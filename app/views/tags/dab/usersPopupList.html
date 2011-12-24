@@ -1,0 +1,10 @@
+<div id="usersPopupList" title="&{_popupTitle}" >
+	#{list items:_users, as:'oneUser'}
+		<div class="oneContactPopupLine" >
+			<img src="${oneUser.mainPhotoThumbLink != null ? oneUser.mainPhotoThumbLink : '/public/images/defaultProfileThumb.jpg'}" class="oneLinerThumb"></img>
+			<span class="contactUserName">${oneUser.userName}</span>
+			<br />
+			<span >${oneUser?.location}</span>
+		</div>
+	#{/list }
+</div>

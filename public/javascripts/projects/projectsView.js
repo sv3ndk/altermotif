@@ -2,9 +2,6 @@ function init() {
 
 	// this is present in languages.js
 	initAllPossibleLanguagesMap();
-
-	// this is present in simpleActions.js
-	initAskAndAct();
 	
 	initToolBoxLinks();
 	

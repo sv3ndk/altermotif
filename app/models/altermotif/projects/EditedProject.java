@@ -1,16 +1,19 @@
 package models.altermotif.projects;
 
+import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import web.utils.Utils;
 
+import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.ProjectPep;
 import com.svend.dab.core.beans.projects.SelectedTheme;
 
 
 public class EditedProject {
+	
+	private String id;
 	
 	private String allLinksJson;
 	
@@ -26,15 +29,19 @@ public class EditedProject {
 	private Set<SelectedTheme> cachedParsedThemes;
 	
 	
+	private List<UserSummary> confirmedActiveParticipants;
+	
 	public EditedProject() {
 		super();
 	}
 
 	public EditedProject(Project project, String userLanguage) {
 		pdata = new EditedProjectData(project.getPdata(), userLanguage);
+		confirmedActiveParticipants = project.getConfirmedActiveParticipantsSummaries();
 		allTagsJson = Utils.objectToJsonString(project.getTags());
 		allThemesJson = Utils.objectToJsonString(project.getThemes());
 		setAllLinks(project.getLinks());
+		id = project.getId();
 	}
 
 	public Set<String> getparsedLinks() {
@@ -128,6 +135,14 @@ public class EditedProject {
 
 	public void setAllThemesJson(String allThemesJson) {
 		this.allThemesJson = allThemesJson;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public List<UserSummary> getConfirmedActiveParticipants() {
+		return confirmedActiveParticipants;
 	}
 
 	

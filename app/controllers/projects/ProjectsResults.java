@@ -12,9 +12,14 @@ public class ProjectsResults extends DabController {
 
 	public static void projectsResults(WebSearchRequest r) {
 		
+		if (r == null || r.isEmpty()) {
+			// refusing to search based on empty criterias
+			ProjectsSearch.projectsSearch();
+		} else {
+			renderArgs.put("projectsOverviews", BeanProvider.getProjectFullTextSearchService().searchForProjects(r.toBackendRequest()));
+			render();
+		}
 		
-		renderArgs.put("projectsOverviews", BeanProvider.getProjectFullTextSearchService().searchForProjects(r.toBackendRequest()));
-		render();
 	}
 
 }
