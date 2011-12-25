@@ -26,7 +26,7 @@
 
 <div class="pageContainer">
 
-	<div id="projectNewContainer">
+	<div id="projectNewContainer" class="projectEditionFormContainer">
 		#{form @projects.ProjectsNew.doCreateProject() }
 			<table id="editProjectTable">
 			
@@ -50,7 +50,7 @@
 				<tr>
 					<td></td>
 					<td>
-						<input type="submit" value="&{'projectNewStartProjectButton'}" />
+						<input id="editProfileButton" type="button" value="&{'projectNewStartProjectButton'}" />
 					</td>
 				</tr>
 			</table>
@@ -58,7 +58,6 @@
 		#{/form }
 	</div>
 
-	<!--  hidden non submitted data: after a successful geodecoding, the latitude and longitude land temporarily here (and are directly post-processed by the call back mechanism) -->
 </div>
 
 

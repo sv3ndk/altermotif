@@ -52,7 +52,7 @@ function initAddTagLogic(allTagsInitValue, callback) {
 		allTags.splice(removedIndex, 1);
 		
 		// calls back the "main" script to notify the update
-		modelUpdatedCallback(allTags);
+		tagModelUpdatedCallback(allTags);
 		$(event.target).parent().remove();
 	});
 

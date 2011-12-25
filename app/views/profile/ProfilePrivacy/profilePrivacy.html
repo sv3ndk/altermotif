@@ -36,7 +36,8 @@
 										<input type="checkbox" name="settings.profileActive" class="profileActiveCheckbx" ${editedPrivacy.profileActive ? 'checked' : ''} />
 									#{/if}
 									#{if ! privacyPep.isAllowedToUpdateProfileActiveStatus()}
-										<input type="checkbox" name="settings.profileActive" class="profileActiveCheckbx" ${editedPrivacy.profileActive ? 'checked' : ''} disabled="disabled"/>
+										<input type="checkbox"  class="profileActiveCheckbx" ${editedPrivacy.profileActive ? 'checked' : ''} disabled="disabled"/>
+										<input type="checkbox" name="settings.profileActive" class="hidden" ${editedPrivacy.profileActive ? 'checked' : ''} />
 										<br />
 										<span class="formFieldExplanation">&{'privacySettingsMayNotDeactivateExplanation'}</span>
 									#{/if}

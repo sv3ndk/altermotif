@@ -4,7 +4,6 @@
     <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/projects/projectsEdit.css'}" />
 #{/set}
 
-
 #{set 'moreScripts'}
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
     <script src="@{'/public/javascripts/dabGeocoder.js'}" type="text/javascript" charset="${_response_encoding}"></script>
@@ -29,34 +28,33 @@
 
 <div class="pageContainer">
 
-	<div id="projectNewContainer">
+	<div id="projectNewContainer" class="projectEditionFormContainer">
 		#{form @projects.ProjectsEdit.doEditProject() }
 			<table id="editProjectTable">
-					
-						<tr>
-							<td class="formlabel"><label >&{'projectNewProjectName'}: </label></td>
-							<td>${editedProjectName}</td>
-						</tr>
-		
-						<tr>
-							<td class="formlabel"><label>&{'projectNewProjectGoal'}: </label></td>
-							<td>${editedProjectGoal}</td>
-						</tr>
-		
-						#{projects.projectCreateEditCommon editedProject:editedProject, projectEditVisibility:projectEditVisibility, allThemes:allThemes  /}
+				<tr>
+					<td class="formlabel"><label >&{'projectNewProjectName'}: </label></td>
+					<td>${editedProjectName}</td>
+				</tr>
+
+				<tr>
+					<td class="formlabel"><label>&{'projectNewProjectGoal'}: </label></td>
+					<td>${editedProjectGoal}</td>
+				</tr>
+
+				#{projects.projectCreateEditCommon editedProject:editedProject, projectEditVisibility:projectEditVisibility, allThemes:allThemes  /}
 						
 			</table>
 		#{/form }
 		
 		<div>
-			<input id="editProfileButton" type="submit"  value=" &{'projectEditConfirmButton'} " class="editProjectBottomButton"/>
-			<input id="cancelProfileButton" type="submit"  value=" &{'profileCancelChanges'} " class="editProjectBottomButton"/>
+			<input id="editProfileButton" type="button" value=" &{'projectEditConfirmButton'} " class="editProjectBottomButton"/>
+			<input id="cancelProfileButton" type="button" value=" &{'profileCancelChanges'} " class="editProjectBottomButton"/>
 		</div>
 		
 	</div>
 	
 	<div id="cancelEditionContainer">
-		#{form @Application.index()}
-		#{/form}
+		#{form @Application.index() }
+		#{/form }
 	</div>
 </div>

@@ -42,11 +42,14 @@ public class EditedProfile extends CreatedProfile {
 	@Required(message="atLeastOneLanguage")
 	private String languagesJson;
 	
+	// this is always empty when sent from server to browser (actual list of tasks are retrieved thanks to async ajax call)
+	// when this is sent back from browser to server, this only contains the new or updated tasks (in order to avoid clashes if several admins update simultaneously)
+	private String updatedTasksJson;
+	
 	// translated version of the json thing
 	private List<Language> cachedLanguages;
-	
-	
 
+	
 	public EditedProfile(UserProfile profile) {
 		super(profile);
 
@@ -216,6 +219,18 @@ public class EditedProfile extends CreatedProfile {
 
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+
+
+
+	public String getUpdatedTasksJson() {
+		return updatedTasksJson;
+	}
+
+
+
+	public void setUpdatedTasksJson(String updatedTasksJson) {
+		this.updatedTasksJson = updatedTasksJson;
 	}
 
 }

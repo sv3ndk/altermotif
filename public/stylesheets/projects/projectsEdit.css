@@ -33,3 +33,25 @@
 #editProjectTasksContainer {
 	border: 1px solid;
 }
+
+
+#projectTaskTable  {
+	border-spacing: 0px;
+	border-collapse: collapse;
+	width: 100%;
+	
+}
+
+
+#projectTaskTable thead {
+	background-color: #DFDFDF;	
+}
+
+
+#projectTaskTable tr:hover {
+	background-color: #EFEFEF;
+}
+
+#projectTaskTable tr.bottomRow {
+	background-color: #DFDFDF;	
+}

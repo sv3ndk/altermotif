@@ -27,7 +27,9 @@ function init(oklabel, cancelLabel, warningUnsavedChangesText) {
 	
 	warningUnsavedChangesTextValue = warningUnsavedChangesText;
 
-	registerDatePicker();
+	// this is present in dab.js
+	makeInputDatePicker("#dateOfBirth", '-130:+0');
+	
 	initLanguageMechanics();
 
 	initUncleanNavigationAwayWarning();
@@ -206,17 +208,6 @@ function isThisLanguageAlreadyChosen(someCode) {
 	}
 	return false;
 	
-}
-
-
-function registerDatePicker() {
-	$("#dateOfBirth").datepicker({
-		changeMonth : true,
-		changeYear : true,
-		dateFormat : "dd/mm/yy",
-		yearRange : '-130:+0',
-		showAnim : "blind"
-	});
 }
 
 function scrollup() {

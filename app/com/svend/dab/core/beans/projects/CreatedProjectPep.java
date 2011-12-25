@@ -28,7 +28,11 @@ public class CreatedProjectPep extends ProjectPep {
 	@Override
 	public boolean isAllowedToEditProjectThemes(String user) {
 		return true;
+	}
 
+	@Override
+	public boolean isAllowedToEditProjectTasks(String user) {
+		return true;
 	}
 
 	@Override

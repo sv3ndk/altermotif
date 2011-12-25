@@ -1,13 +1,12 @@
 package models.altermotif.profile;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.google.common.base.Strings;
-import com.svend.dab.core.beans.profile.UserProfile;
 
 import models.altermotif.AbstractRenderableModel;
 import models.altermotif.SessionWrapper;
+
+import com.google.common.base.Strings;
+import com.svend.dab.core.beans.profile.UserProfile;
 
 public class ProfileViewProfileVisibility extends AbstractRenderableModel{
 	
@@ -46,6 +45,10 @@ public class ProfileViewProfileVisibility extends AbstractRenderableModel{
 	public boolean isAgeVisible() {
 		return isVisitingHisOwnProfile() || visitedUserProfile.isAgeVisibleTo(userSession.getLoggedInUserProfileId());
 	}
+
+	public boolean isCityVisible() {
+		return !Strings.isNullOrEmpty(visitedUserProfile.getPdata().getLocation());
+	}
 	
 	public boolean isUserPhotoGalleryVisible() {
 		return visitedUserProfile.hasMoreThanOnePhoto() && (isVisitingHisOwnProfile() || visitedUserProfile.isPhotoGalleryVisibleTo(userSession.getLoggedInUserProfileId()));
@@ -71,6 +74,24 @@ public class ProfileViewProfileVisibility extends AbstractRenderableModel{
 	public boolean isWebsiteVisible() {
 		return ! Strings.isNullOrEmpty(visitedUserProfile.getPdata().getWebsite()) && ! "".equals(visitedUserProfile.getPdata().getWebsite().trim());
 	}
+	
+	
+	public boolean isPersonalObjectivesVisible() {
+		return ! Strings.isNullOrEmpty(visitedUserProfile.getPdata().getPersonalObjective());
+	}
+
+	public boolean isPersonalDescriptionVisible() {
+		return ! Strings.isNullOrEmpty(visitedUserProfile.getPdata().getPersonalDescription());
+	}
+	
+	public boolean isPersonalPhilosophyVisible() {
+		return ! Strings.isNullOrEmpty(visitedUserProfile.getPdata().getPersonalPhilosophy());
+	}
+	
+	public boolean isPersonalAssetsVisible() {
+		return ! Strings.isNullOrEmpty(visitedUserProfile.getPdata().getPersonalAssets());
+	}
+	
 	
 	// -----------------------------------------
 	// references visibility

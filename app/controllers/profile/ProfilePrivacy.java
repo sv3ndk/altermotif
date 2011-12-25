@@ -1,17 +1,12 @@
 package controllers.profile;
 
 import java.util.logging.Level;
-import static controllers.profile.ProfileEdit.EDITED_PROFILE_RENDERARG_NAME;
 import java.util.logging.Logger;
-
-import models.altermotif.profile.EditedProfile;
 
 import com.svend.dab.core.beans.profile.PrivacySettings;
 import com.svend.dab.core.beans.profile.PrivacySettingsPep;
 import com.svend.dab.core.beans.profile.UserProfile;
-import com.svend.dab.core.projects.ProjectService;
 
-import controllers.Application;
 import controllers.BeanProvider;
 import controllers.DabLoggedController;
 

@@ -4,10 +4,7 @@ var allLinks ;
 function init() {
 	
 	initLocationLogic();
-	registerDatePicker();
-
 	initAddLinkLogic();
-	
 	initTagLogic();
 	initThemeLogic();
 	
@@ -16,8 +13,9 @@ function init() {
 	
 	// this is present in projectEditTasks.js
 	initEditTasks();
-	
 
+	// this is present in dab.js
+	makeInputDatePicker("#projectNewDueDate", '-0:+100');
 }
 
 
@@ -74,7 +72,6 @@ function switchLocationMode(mode) {
 		$("#locationInputCommand1, #locationInputCommand2").hide();
 		$("#addLocationLink").toggle(500);
 		$("#addLocationInput").val('');
-		
 	} else {
 		$("#addLocationLink").hide();
 		$("#locationInputCommand1, #locationInputCommand2").toggle(250);
@@ -113,23 +110,6 @@ function graphicalAddOneLocation (oneLanguge, immediate) {
 		$("#locationGroup li:last").show(250);
 	}
 }
-
-
-
-///////////////////////////////////////////////
-
-
-function registerDatePicker() {
-
-	$("#projectNewDueDate").datepicker({
-		changeMonth : true,
-		changeYear : true,
-		dateFormat : "dd/mm/yy",
-		yearRange : '-0:+100',
-		showAnim : "blind"
-	});
-}
-
 
 ///////////////////////////////////////////////////////////////
 // add/remove link logic
@@ -257,7 +237,10 @@ function setupSetLanguageAutoComplete() {
 function initSubmitCancelButtons() {
 	
 	$("#editProfileButton").click(function() {
-		$("#projectNewContainer form").submit();
+		
+		// this is present in ProjectEditTasks.js
+		updateSubmittedTasks();
+		$("div.projectEditionFormContainer form").submit();
 	});
 
 	

@@ -461,28 +461,6 @@ public class Project {
 	}
 
 	public Set<Task> getTasks() {
-		
-		tasks = new HashSet<Task>();
-		Task fakeTask = new Task();
-		fakeTask.setDueDate(new Date());
-		fakeTask.setName("do this do that");
-		fakeTask.setStatus(TASK_STATUS.done);
-
-		fakeTask.setAssignees(new LinkedList<UserSummary>());
-
-		UserSummary sum = new UserSummary();
-		sum.setUserName("svend");
-		sum.setProfileActive(true);
-		fakeTask.getAssignees().add(sum);
-
-		UserSummary sum2 = new UserSummary();
-		sum2.setUserName("toto");
-		sum2.setProfileActive(true);
-		fakeTask.getAssignees().add(sum2);
-		
-		fakeTask.setId("1");
-		tasks.add(fakeTask);
-		
 		return tasks;
 	}
 

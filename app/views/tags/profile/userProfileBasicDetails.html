@@ -21,10 +21,12 @@
 		#{/if}
 
 
+		#{if _profileVisibility.cityVisible}
 		<tr>
 			<td><label>&{'profileCity'}</label></td>
 			<td>${_visitedUserProfile.pdata.location}</td>
 		</tr>
+		#{/if}
 		
 		#{list items:_visitedUserProfile.pdata.languages, as:'oneLg'}
 			<tr>

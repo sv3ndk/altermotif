@@ -3,8 +3,7 @@ var onClickOnChosenUserCallback;
 function initUsersPopupList(callback) {
 	
 	onClickOnChosenUserCallback = callback;
-	
-	popupHeight = computePopupHeight($("#usersPopupList div.oneContactPopupLine").length);
+	popupHeight = computePopupHeight(countTotalNumberOfPopupUser());
 	
 	$("#usersPopupList").dialog({
 		autoOpen : false,
@@ -23,7 +22,10 @@ function initUsersPopupList(callback) {
 		// calling back the script on the main page in order to do whatever is necessary when a user is selected
 		onClickOnChosenUserCallback(username);
 	});
+}
 
+function countTotalNumberOfPopupUser() {
+	return $("#usersPopupList").find("div.oneContactPopupLine").length;
 }
 
 function computePopupHeight(numberOfUsersInPopupList) {

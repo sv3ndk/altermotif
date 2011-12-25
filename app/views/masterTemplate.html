@@ -158,7 +158,9 @@
 	 #{doLayout /}	
 	
 	<div id="bottomLinksContainer">
-		<a href="@{Application.aboutUs()}" class="dabLink">&{'homePageAboutUs'}</a>
+		#{if isAboutUsLinkVisible}
+			<a href="@{Application.aboutUs()}" class="dabLink">&{'homePageAboutUs'}</a>
+		#{/if}
 		<a href="#" class="dabLinkDisabled">&{'homePageRules'}</a>
 		<a href="#" class="dabLinkDisabled">&{'homePageDisclaimer'}</a>
 		<a href="#" class="dabLinkDisabled">&{'homePagePrivacy'}</a>
@@ -172,8 +174,6 @@
 <div id="messagePopup" title="">
 	<span></span>
 </div>
-
-
 
 </body>
 </html>

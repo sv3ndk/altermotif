@@ -53,8 +53,23 @@ function registerToggleDabLinks() {
 }
 
 
-// common js validation method
+///////////////////////////////////
+// common js validation methods
+
 function dabValidateURL(textval) {
 	  var urlregex = new RegExp("^(http:\/\/www.|https:\/\/www.|www.){1}([0-9A-Za-z]+\.)");
 	  return urlregex.test(textval);
-	}
+}
+
+
+// associate a jquery datepicker to any element matching this jqSelector
+function makeInputDatePicker(jqSelector, yearRange) {
+	$(jqSelector).datepicker({
+		changeMonth : true,
+		changeYear : true,
+		dateFormat : "dd/mm/yy",
+		yearRange : yearRange,
+		showAnim : "blind"
+	});
+}
+
