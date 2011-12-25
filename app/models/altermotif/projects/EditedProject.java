@@ -9,24 +9,28 @@ import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.ProjectPep;
 import com.svend.dab.core.beans.projects.SelectedTheme;
+import com.svend.dab.core.beans.projects.Task;
 
 
 public class EditedProject {
 	
 	private String id;
-	
 	private String allLinksJson;
-	
 	private String allTagsJson;
-
 	private String allThemesJson;
 
+	// this is always empty when sent from server to browser (actual list of tasks are retrieved thanks to async ajax call)
+	// when this is sent back from browser to server, this only contains the new or updated tasks (in order to avoid clashes if several admins update simultaneously)
+	private String updatedTasksJson;
+	
+	
 	private EditedProjectData pdata;
 	
 	//
 	private Set<String> cachedParsedLinks;
 	private Set<String> cachedParsedTags;
 	private Set<SelectedTheme> cachedParsedThemes;
+	private Set<Task> cachedParsedTasks;
 	
 	
 	private List<UserSummary> confirmedActiveParticipants;
@@ -75,6 +79,18 @@ public class EditedProject {
 			}
 		}
 		return cachedParsedThemes;
+	}
+	
+	public Set<Task> getParsedTasks() {
+		if (cachedParsedTasks == null) {
+			synchronized (this) {
+				if (cachedParsedTasks == null) {
+					cachedParsedTasks = Utils.jsonToSetOfStuf(updatedTasksJson, Task[].class);
+				}
+			}
+		}
+		return cachedParsedTasks;
+		
 	}
 	
 	
@@ -143,6 +159,14 @@ public class EditedProject {
 
 	public List<UserSummary> getConfirmedActiveParticipants() {
 		return confirmedActiveParticipants;
+	}
+
+	public String getUpdatedTasksJson() {
+		return updatedTasksJson;
+	}
+
+	public void setUpdatedTasksJson(String updatedTasksJson) {
+		this.updatedTasksJson = updatedTasksJson;
 	}
 
 	

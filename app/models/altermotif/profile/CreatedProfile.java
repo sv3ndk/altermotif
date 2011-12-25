@@ -1,7 +1,6 @@
 package models.altermotif.profile;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,8 +12,6 @@ import web.utils.Utils;
 
 import com.svend.dab.core.beans.profile.PersonalData;
 import com.svend.dab.core.beans.profile.UserProfile;
-
-import controllers.BeanProvider;
 
 /**
  * @author Svend

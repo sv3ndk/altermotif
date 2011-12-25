@@ -89,4 +89,9 @@ public class Task {
 		return dueDateStr;
 	}
 
+	public void setDueDateStr(String dueDateStr) {
+		this.dueDateStr = dueDateStr;
+		this.dueDate = Utils.convertStringToDate(dueDateStr);
+	}
+
 }

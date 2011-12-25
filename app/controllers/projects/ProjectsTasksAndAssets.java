@@ -13,20 +13,16 @@ public class ProjectsTasksAndAssets extends DabLoggedController {
 
 	private static Logger logger = Logger.getLogger(ProjectsTasksAndAssets.class.getName());
 	
-	
-	
-	
 	public static void doGetTaskList(String projectId) {
 		
 		Project project = BeanProvider.getProjectService().loadProject(projectId, true);
 		if (project != null && project.getStatus() != STATUS.cancelled) {
+			// have to keep the flash otherwise the project id is lost in the project edit controller
+			flash.keep();
 			renderJSON(project.getTasks());
 		} else {
 			logger.log(Level.WARNING, "could not find project => returning an empty json array instead of a task list");
 			// TODO
 		}
-		
 	}
-	
-	
 }

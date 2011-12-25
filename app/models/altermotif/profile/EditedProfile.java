@@ -19,7 +19,7 @@ import com.svend.dab.core.beans.profile.UserProfile;
  * 
  */
 public class EditedProfile extends CreatedProfile {
-	
+
 	private static Logger logger = Logger.getLogger(EditedProfile.class.getName());
 
 	@Required
@@ -35,21 +35,15 @@ public class EditedProfile extends CreatedProfile {
 	private String personalAssets;
 
 	private String website;
-	
+
 	private String gender;
-	
-	
-	@Required(message="atLeastOneLanguage")
+
+	@Required(message = "atLeastOneLanguage")
 	private String languagesJson;
-	
-	// this is always empty when sent from server to browser (actual list of tasks are retrieved thanks to async ajax call)
-	// when this is sent back from browser to server, this only contains the new or updated tasks (in order to avoid clashes if several admins update simultaneously)
-	private String updatedTasksJson;
-	
+
 	// translated version of the json thing
 	private List<Language> cachedLanguages;
 
-	
 	public EditedProfile(UserProfile profile) {
 		super(profile);
 
@@ -64,56 +58,53 @@ public class EditedProfile extends CreatedProfile {
 		setGender(profile.getPdata().getGender());
 
 		setWebsite(profile.getPdata().getWebsite());
-		
+
 		List<Language> mappedLanguages = new LinkedList<Language>();
 		if (profile.getPdata().getLanguages() != null) {
 			for (Language language : profile.getPdata().getLanguages()) {
 				mappedLanguages.add(language);
 			}
 		}
-		
+
 		ObjectMapper jsonMapper = new ObjectMapper();
 		try {
 			languagesJson = jsonMapper.writeValueAsString(mappedLanguages);
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "Could not marshall languages to a json String", e);
 		}
-		
+
 	}
-	
-	
-	
+
 	@Override
 	public void applyToPData(PersonalData pdata) {
-		
+
 		super.applyToPData(pdata);
-		
+
 		pdata.setLocation(location);
 		pdata.setLocationLat(locationLat);
 		pdata.setLocationLong(locationLong);
-		
+
 		pdata.setPersonalObjective(personalObjective);
 		pdata.setPersonalDescription(personalDescription);
 		pdata.setPersonalPhilosophy(personalPhilosophy);
 		pdata.setPersonalAssets(personalAssets);
-		
+
 		pdata.setWebsite(website);
-		
+
 		// values should always be valid, unless if there is client side hacking => silently falling back to "U" in such case
 		if ("F".equals(gender) || "M".equals(gender) || "U".equals(gender)) {
 			pdata.setGender(gender);
 		} else {
 			pdata.setGender("U");
 		}
-		
+
 		pdata.setLanguages(parseJsonLanguages());
-		
+
 	}
-	
 
 	public List<Language> parseJsonLanguages() {
 		if (cachedLanguages == null) {
-			synchronized(this) {
+			synchronized (this) {
 				if (cachedLanguages == null) {
 					try {
 						ObjectMapper jsonMapper = new ObjectMapper();
@@ -121,21 +112,16 @@ public class EditedProfile extends CreatedProfile {
 					} catch (Exception e) {
 						logger.log(Level.WARNING, "Could not transform inconming json language values into list of languges => keeping old value", e);
 					}
-					
+
 				}
 			}
 		}
-		
-		
+
 		return cachedLanguages;
 	}
-	
-	
+
 	// ---------------------------------
 	// ---------------------------------
-	
-	
-	
 
 	public String getLocation() {
 		return location;
@@ -209,28 +195,12 @@ public class EditedProfile extends CreatedProfile {
 		this.languagesJson = languagesJson;
 	}
 
-
-
 	public String getGender() {
 		return gender;
 	}
 
-
-
 	public void setGender(String gender) {
 		this.gender = gender;
-	}
-
-
-
-	public String getUpdatedTasksJson() {
-		return updatedTasksJson;
-	}
-
-
-
-	public void setUpdatedTasksJson(String updatedTasksJson) {
-		this.updatedTasksJson = updatedTasksJson;
 	}
 
 }

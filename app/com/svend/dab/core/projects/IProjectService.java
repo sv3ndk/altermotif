@@ -10,6 +10,7 @@ import com.svend.dab.core.beans.projects.ParticpantsIdList;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.ProjectData;
 import com.svend.dab.core.beans.projects.RankedTag;
+import com.svend.dab.core.beans.projects.Task;
 
 /**
  * @author Svend
@@ -26,8 +27,9 @@ public interface IProjectService {
 	 * Triggers an update of the project {@link ProjectData}, links and tags (not the whole project)
 	 * 
 	 * @param updated
+	 * @param updatedTasks 
 	 */
-	public void updateProjectCore(Project updated);
+	public void updateProjectCore(Project updated, Set<Task> updatedTasks);
 
 	////////////////////////////////////////////////////
 	// project applications

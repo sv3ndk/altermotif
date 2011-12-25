@@ -21,6 +21,7 @@ import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.ParticipantList;
 import com.svend.dab.core.beans.projects.ParticpantsIdList;
 import com.svend.dab.core.beans.projects.Project;
+import com.svend.dab.core.beans.projects.Task;
 import com.svend.dab.core.beans.projects.Project.STATUS;
 import com.svend.dab.core.beans.projects.RankedTag;
 import com.svend.dab.core.beans.projects.TagCount;
@@ -68,8 +69,8 @@ public class ProjectService implements IProjectService {
 	}
 
 	@Override
-	public void updateProjectCore(Project updated) {
-		eventEmitter.emit(new ProjectUpdated(updated));
+	public void updateProjectCore(Project updated, Set<Task> updatedTasks) {
+		eventEmitter.emit(new ProjectUpdated(updated, updatedTasks));
 	}
 
 	@Override
