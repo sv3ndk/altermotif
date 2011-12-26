@@ -131,7 +131,7 @@ function initUserTaskAssignementMechanics() {
 	// this is defined in simpleActions.js
 	askAndAct_On("#projectTaskTable", "img.removeUserLink", confirmRemoveUserFromTask, beforeUserConfirmsRemoveUserFromTask);
 	
-	$("#projectTaskTable").on("click", ".addTaskAssigneeLink", function() {
+	$("#projectTaskTable").on("click", ".addTaskAssigneeLink", function(event) {
 		clickedTaskId = $(event.target).parent().parent().find(".hiddenTaskId").text();
 		openFilteredUsersPopupList(getListOfAssigneesForTask(clickedTaskId), choseTaskAssigneePopupTitle);
 	});
