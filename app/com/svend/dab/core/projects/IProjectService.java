@@ -28,8 +28,9 @@ public interface IProjectService {
 	 * 
 	 * @param updated
 	 * @param updatedTasks 
+	 * @param removedTasksIds 
 	 */
-	public void updateProjectCore(Project updated, Set<Task> updatedTasks);
+	public void updateProjectCore(Project updated, Set<Task> updatedTasks, Set<String> removedTasksIds);
 
 	////////////////////////////////////////////////////
 	// project applications

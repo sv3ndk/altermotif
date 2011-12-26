@@ -123,10 +123,10 @@ public class UserSummary implements Serializable {
 		return isProfileActive;
 	}
 
+
 	public void setProfileActive(boolean isProfileActive) {
 		this.isProfileActive = isProfileActive;
 	}
-
 
 
 }

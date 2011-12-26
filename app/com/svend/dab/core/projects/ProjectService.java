@@ -69,8 +69,20 @@ public class ProjectService implements IProjectService {
 	}
 
 	@Override
-	public void updateProjectCore(Project updated, Set<Task> updatedTasks) {
-		eventEmitter.emit(new ProjectUpdated(updated, updatedTasks));
+	public void updateProjectCore(Project updated, Set<Task> updatedTasks, Set<String> removedTasksIds) {
+
+		// any id starting with "new" has been created by the browser for any new Task
+		// replacing here with a cleaner id, more "unique"
+		if (updatedTasks != null) {
+			for (Task task: updatedTasks) {
+				if (Strings.isNullOrEmpty(task.getId()) || task.getId().startsWith("new") ) {
+					task.setId(UUID.randomUUID().toString());
+				}
+				task.applyAssigneeSummraiesToAssigneeUsernames();
+			}
+		}
+		
+		eventEmitter.emit(new ProjectUpdated(updated, updatedTasks, removedTasksIds));
 	}
 
 	@Override
@@ -81,18 +93,18 @@ public class ProjectService implements IProjectService {
 		}
 
 		Project prj = projectDao.findOne(projectId);
-
-		if (prj != null && generatePhotoLinks) {
-			Date expirationdate = new Date();
-			expirationdate.setTime(expirationdate.getTime() + config.getCvExpirationDelayInMillis());
-			prj.generatePhotoLinks(expirationdate);
+		
+		if (prj != null) {
+			prj.prepareTasksUsersummary();
+			if (generatePhotoLinks) {
+				Date expirationdate = new Date();
+				expirationdate.setTime(expirationdate.getTime() + config.getCvExpirationDelayInMillis());
+				prj.generatePhotoLinks(expirationdate);
+			}
 		}
 
 		return prj;
 	}
-	
-	
-
 
 	// //////////////////////////////////////////////////
 	// project applications

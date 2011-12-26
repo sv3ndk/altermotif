@@ -190,7 +190,7 @@ public class Utils {
 					result.add(stuff);
 				}
 			} catch (Exception e) {
-				logger.log(Level.WARNING, "Could not transform inconming json string values into set of stuff => returnin empty set instead", e);
+				logger.log(Level.WARNING, "Could not transform inconming json string values into set of stuff => returnin empty set instead. Original string was: " + jsonString, e);
 			}
 		}
 		return result;

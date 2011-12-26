@@ -11,6 +11,7 @@ import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.Project.STATUS;
 import com.svend.dab.core.beans.projects.ProjectOverview;
 import com.svend.dab.core.beans.projects.ProjectSearchRequest;
+import com.svend.dab.core.beans.projects.Task;
 
 /**
  * @author Svend
@@ -74,6 +75,13 @@ public interface IProjectDao {
 	// tags
 	
 	public void launchCountProjectTagsJob();
+
+	////////////////////////////////////
+	// tasks
+	
+	void addOrUpdateProjectTasks(String id, Task newOrUpdatedTask);
+
+	void removeTaskFromProject(String id, String removedTasksId);
 
 
 

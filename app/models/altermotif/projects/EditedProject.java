@@ -23,6 +23,7 @@ public class EditedProject {
 	// when this is sent back from browser to server, this only contains the new or updated tasks (in order to avoid clashes if several admins update simultaneously)
 	private String updatedTasksJson;
 	
+	private String removedTasksIdJson;
 	
 	private EditedProjectData pdata;
 	
@@ -31,6 +32,7 @@ public class EditedProject {
 	private Set<String> cachedParsedTags;
 	private Set<SelectedTheme> cachedParsedThemes;
 	private Set<Task> cachedParsedTasks;
+	private Set<String> cachedParsedRemovedTasksIds;
 	
 	
 	private List<UserSummary> confirmedActiveParticipants;
@@ -90,9 +92,18 @@ public class EditedProject {
 			}
 		}
 		return cachedParsedTasks;
-		
 	}
 	
+	public Set<String> getParsedRemovedTasksIds() {
+		if (cachedParsedRemovedTasksIds == null) {
+			synchronized (this) {
+				if (cachedParsedRemovedTasksIds == null) {
+					cachedParsedRemovedTasksIds = Utils.jsonToSetOfStuf(removedTasksIdJson, String[].class);
+				}
+			}
+		}
+		return cachedParsedRemovedTasksIds;
+	}
 	
 	public void applyToProject(Project project, String userLanguage, ProjectPep pep, String username) {
 		if (project != null) {
@@ -167,6 +178,14 @@ public class EditedProject {
 
 	public void setUpdatedTasksJson(String updatedTasksJson) {
 		this.updatedTasksJson = updatedTasksJson;
+	}
+
+	public String getRemovedTasksIdJson() {
+		return removedTasksIdJson;
+	}
+
+	public void setRemovedTasksIdJson(String removedTasksIdJson) {
+		this.removedTasksIdJson = removedTasksIdJson;
 	}
 
 	

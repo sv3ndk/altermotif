@@ -87,7 +87,7 @@ public class ProjectsEdit extends DabLoggedController{
 				if (pep.isAllowedToEditAtLeastPartially(getSessionWrapper().getLoggedInUserProfileId())) {
 					
 					editedProject.applyToProject(updated, getSessionWrapper().getSelectedLg(), pep, getSessionWrapper().getLoggedInUserProfileId());
-					BeanProvider.getProjectService().updateProjectCore(updated, editedProject.getParsedTasks());
+					BeanProvider.getProjectService().updateProjectCore(updated, editedProject.getParsedTasks(), editedProject.getParsedRemovedTasksIds());
 					
 				} else {
 					logger.log(Level.WARNING, "user is trying to update a project but is not allowed to! user is " + getSessionWrapper().getLoggedInUserProfileId() + ", project id is " + updated.getId());

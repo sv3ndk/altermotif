@@ -11,18 +11,21 @@ import com.svend.dab.eda.IEventPropagatorsContainer;
 public class ProjectUpdated extends Event {
 
 	private Project updatedProject;
-	
+
 	private Set<Task> updatedTasks;
+
+	private Set<String> removedTasksIds;
 
 	@Override
 	public IEventPropagator selectEventProcessor(IEventPropagatorsContainer container) {
 		return container.getPropagatorByName("projectUpdatedPropagator");
 	}
 
-	public ProjectUpdated(Project updated, Set<Task> updatedTasks) {
+	public ProjectUpdated(Project updated, Set<Task> updatedTasks, Set<String> removedTasksIds) {
 		super();
 		this.updatedProject = updated;
 		this.updatedTasks = updatedTasks;
+		this.removedTasksIds = removedTasksIds;
 	}
 
 	public Project getUpdatedProject() {
@@ -31,6 +34,22 @@ public class ProjectUpdated extends Event {
 
 	public void setUpdatedProject(Project createdProject) {
 		this.updatedProject = createdProject;
+	}
+
+	public Set<Task> getUpdatedTasks() {
+		return updatedTasks;
+	}
+
+	public void setUpdatedTasks(Set<Task> updatedTasks) {
+		this.updatedTasks = updatedTasks;
+	}
+
+	public Set<String> getRemovedTasksIds() {
+		return removedTasksIds;
+	}
+
+	public void setRemovedTasksIds(Set<String> removedTasksIds) {
+		this.removedTasksIds = removedTasksIds;
 	}
 
 }

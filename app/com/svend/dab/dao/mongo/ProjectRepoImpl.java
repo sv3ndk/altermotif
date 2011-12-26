@@ -32,6 +32,7 @@ import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.Project.STATUS;
 import com.svend.dab.core.beans.projects.SelectedTheme;
+import com.svend.dab.core.beans.projects.Task;
 
 /**
  * @author Svend
@@ -122,6 +123,10 @@ public class ProjectRepoImpl implements IProjectDao {
 		Update update = new Update().set("pdata", project.getPdata()).set("links", links).set("tags", tags).set("themes", themes);
 		mongoTemplate.updateFirst(query, update, Project.class);
 	}
+	
+	
+	
+	
 
 	@Override
 	public void addOnePhoto(String id, Photo newPhoto) {
@@ -224,6 +229,41 @@ public class ProjectRepoImpl implements IProjectDao {
 		mongoTemplate.mapReduce("project", "classpath:com/svend/dab/dao/mongo/mapreduce/countTagsMap.js", "classpath:com/svend/dab/dao/mongo/mapreduce/countTagsReduce.js", options().outputCollection("tagCount"), TagCount.class);
 	}
 
+	////////////////////////////////////
+	// tasks
+	
+	@Override
+	public void addOrUpdateProjectTasks(String projectId, Task newOrUpdatedTask) {
+		
+		// upsert this tasks: this just does nothing if the task already exists
+		Query upsertQuery = query(where("_id").is(projectId).and("tasks._id").ne(newOrUpdatedTask.getId()));
+		Update upsertUpdate = new Update().addToSet("tasks", newOrUpdatedTask);
+		WriteResult upsertWriteResult = mongoTemplate.updateFirst(upsertQuery, upsertUpdate, Project.class);
+		
+		// updates the existing task (this is useless in case of insert, which is ok, the point is to make any update idempotent...)
+		Query updateQuery = query(where("_id").is(projectId).and("tasks._id").is(newOrUpdatedTask.getId()));
+		Update updateUpdate = new Update().set("tasks.$", newOrUpdatedTask);
+		WriteResult updateWriteResult = mongoTemplate.updateFirst(updateQuery, updateUpdate, Project.class);
+		
+	}
+	
+	@Override
+	public void removeTaskFromProject(final String projectId, final String removedTasksId) {
+	
+		// db.project.update({'_id':'21bf4b86cbe943eda6ec9e305c840199'},{'$pull': {'tasks': {'_id':'8c1e701c-e1c5-48ff-a375-46480e33fd4c'}}})
+		
+		mongoTemplate.execute("project", new CollectionCallback<WriteResult>() {
+			@Override
+			public WriteResult doInCollection(DBCollection collection) throws MongoException, DataAccessException {
+				BasicDBObject queryDbo = new BasicDBObject("_id", projectId);
+				BasicDBObject pullDbo = new BasicDBObject("$pull", new BasicDBObject("tasks", new BasicDBObject("_id", removedTasksId)));
+				return collection.update(queryDbo, pullDbo);
+			}
+		});
+
+	}
+	
+	
 	// --------------------------------
 	//
 
@@ -231,6 +271,9 @@ public class ProjectRepoImpl implements IProjectDao {
 		Query query = query(where("_id").is(projectId));
 		mongoTemplate.updateFirst(query, update, Project.class);
 	}
+
+
+	
 
 
 }

@@ -1,6 +1,7 @@
 var clickedTaskId;
 var removedUserId_FromTask;
 var lastCreatedTaskId = 0;
+var listOfRemovedTasksIds = [];
 
 // initialization (called from the main js file for this page)
 function initEditTasks() {
@@ -269,7 +270,9 @@ function afterUserConfirmsRemoveTaskFromProject() {
 		}
 	});
 	
-	editTasksModel.projectTasks.remove(removedTask);	
+	editTasksModel.projectTasks.remove(removedTask);
+	listOfRemovedTasksIds.push(clickedTaskId);
+	
 	closeConfirmationDialog();
 }
 
@@ -282,10 +285,18 @@ function updateSubmittedTasks() {
 	var submittedTasks = [];
 	$(editTasksModel.projectTasks()).each(function(index, task) {
 		if (task.isModified) {
+			$(task.assignees()).each(function(index, assignee) {
+				// we have some issues unmarshalling those on server side, and we do not use them anyway...
+				delete assignee.isProfileActive;
+				delete assignee.mainPhoto;
+				delete assignee.location;
+			});
+			
 			submittedTasks.push(new staticTask(task.id, task.name, task.status(), task.dueDateStr(), task.assignees()));
 		}
 	});
 	
 	$("#hiddenUpdatedTasksJson").val(JSON.stringify(submittedTasks));
+	$("#hiddenRemovedTasksIdJson").val(JSON.stringify(listOfRemovedTasksIds));
 	
 }

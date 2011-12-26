@@ -292,6 +292,36 @@ public class Project {
 		}
 	}
 
+	
+	public Participant getConfirmedActiveParticipant(String userId) {
+		if (userId == null) {
+			return null;
+		}
+		
+		for (Participant participant : getConfirmedActiveParticipants()) {
+			if (userId.equals(participant.getUser().getUserName())) {
+				return participant;
+			}
+		}
+		return null;
+	}
+	
+	public Participant getParticipant(String userId) {
+		if (userId == null) {
+			return null;
+		}
+		
+		for (Participant participant : participants) {
+			if (userId.equals(participant.getUser().getUserName())) {
+				return participant;
+			}
+		}
+		
+		return null;
+	}
+
+	
+	
 	/**
 	 * @param userId
 	 * @return true if this user is already part of this project or has applied for it
@@ -327,19 +357,6 @@ public class Project {
 
 	
 	
-	public Participant getParticipant(String userId) {
-		if (userId == null) {
-			return null;
-		}
-		
-		for (Participant participant : participants) {
-			if (userId.equals(participant.getUser().getUserName())) {
-				return participant;
-			}
-		}
-		
-		return null;
-	}
 	
 	
 	public boolean hasNoOtherActiveParticipantThanTheOwner() {
@@ -351,13 +368,11 @@ public class Project {
 	// ------------------------------------------------------------------------------
 	//
 	public void generatePhotoLinks(Date expirationdate) {
-		
 		if (photos != null) {
 			for (Photo photo : photos) {
 				photo.generatePresignedLinks(expirationdate, true, true);
 			}
 		}
-		
 		
 		if (participants != null) {
 			for (Participant participant : participants) {
@@ -366,6 +381,18 @@ public class Project {
 		}
 	}
 	
+	
+	public void prepareTasksUsersummary() {
+		if (tasks != null) {
+			for (Task task : tasks) {
+				task.computeAssigneeSummaries(this);
+				task.getDueDateStr();
+			}
+		}
+	}
+	
+	// ------------------------------------------------------------------------------
+	//
 
 	public ProjectData getPdata() {
 		return pdata;
