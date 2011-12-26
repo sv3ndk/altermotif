@@ -27,6 +27,8 @@ public class ProjectViewVisibility {
 	}
 
 	
+	
+	
 	//////////////////////////
 	// toolbox visibility
 	
@@ -84,16 +86,41 @@ public class ProjectViewVisibility {
 	//////////////////////////////////////////
 	// project description (description, strategy, offer)
 	
+	public boolean isDueDateVisible() {
+		return project.getPdata().getDueDate() != null;
+	}
+	
 	public boolean isDescriptionVisible() {
-		return pep.isAllowedToSeeDecription(visitingUserId);
+		
+		if (Strings.isNullOrEmpty(project.getPdata().getDescription())) {
+			return false;
+		} else {
+			return pep.isAllowedToSeeDecription(visitingUserId);
+		}
+	}
+	
+	public boolean isReasonVisible() {
+		return ! Strings.isNullOrEmpty(project.getPdata().getReason());
 	}
 	
 	public boolean isStrategyVisible() {
-		return pep.isAllowedToSeeStrategy(visitingUserId);
+		if (Strings.isNullOrEmpty(project.getPdata().getStrategy())) {
+			return false;
+		} else {
+			return pep.isAllowedToSeeStrategy(visitingUserId);
+		}
 	}
 	
 	public boolean isOfferVisible() {
-		return pep.isAllowedToSeeOffer(visitingUserId);
+		if (Strings.isNullOrEmpty(project.getPdata().getOffer())) {
+			return false;
+		} else {
+			return pep.isAllowedToSeeOffer(visitingUserId);
+		}
+	}
+	
+	public boolean isLinksVisible() {
+		return project.getLinks() != null && !project.getLinks().isEmpty();
 	}
 	
 	//////////////////////////////////

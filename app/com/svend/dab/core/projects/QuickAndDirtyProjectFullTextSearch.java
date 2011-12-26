@@ -56,7 +56,7 @@ public class QuickAndDirtyProjectFullTextSearch implements IProjectFTSService {
 
 		if (!immediate) {
 			// increasing the chances to actually catch the updated data in db (you know, eventual consistency thingy...)
-			// ...I said this was ugly....
+			// ...I said this class was quick and dirty....
 			Utils.waitABit();
 		}
 

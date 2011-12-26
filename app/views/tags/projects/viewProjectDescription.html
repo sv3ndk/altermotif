@@ -9,12 +9,14 @@
 	</dd>
 #{/if}
 
+#{if _projectVisibility.isReasonVisible() }
 <dt>
 	&{'viewProjectReason'}:
 </dt>
 <dd>
 	<pre>${_visitedProject.pdata.reason}</pre>
 </dd>
+#{/if}
 
 #{if _projectVisibility.isStrategyVisible() }
 	<dt>
@@ -34,6 +36,7 @@
 	</dd>
 #{/if}
 
+#{if _projectVisibility.isLinksVisible() }
 <dt>
 	&{'viewProjectLinks'}:
 </dt>
@@ -45,3 +48,4 @@
 		</ul>
 	#{/list}
 </dd>
+#{/if}

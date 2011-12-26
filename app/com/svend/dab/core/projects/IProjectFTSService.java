@@ -16,9 +16,6 @@ public interface IProjectFTSService {
 	
 	public void updateProjetIndex(String projectId, boolean immediate);
 	
-
 	public List<ProjectOverview> searchForProjects(ProjectSearchRequest request);
-	
-	
 
 }

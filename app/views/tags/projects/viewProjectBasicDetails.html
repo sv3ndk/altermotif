@@ -31,6 +31,7 @@
 				<td>${_visitedProject.pdata.creationDate.format(controllers.BeanProvider.config.dateDisplayFormat)} </td>
 			</tr>
 			
+			#{if _projectVisibility.dueDateVisible}
 			<tr>
 				<td><label>&{'viewProjectDueDate'}: </label></td>
 				<td>
@@ -39,6 +40,7 @@
 						#{/if}
 				</td>
 			</tr>
+			#{/if}
 			
 			<tr>
 				<td><label>&{'projectStatus'}: </label></td>
