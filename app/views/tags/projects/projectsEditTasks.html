@@ -11,7 +11,8 @@
 	var taskStatusLabels = [
 	          new localizedTaskStatus('todo', "&{'projectTaskTodo'}"),           
 	          new localizedTaskStatus('done', "&{'projectTaskDone'}")           
-          ];
+         ];
+
 	
 	var confirmRemoveUserFromTask = "&{'projectTaskEditionTableConfirmRemoveUser'}";
 	var confirmRemoveProjectTaskText = "&{'projectTaskEditionTableConfirmRemoveTask'}";
@@ -25,7 +26,7 @@
 	<input type="hidden" id="hiddenUpdatedTasksJson" name="editedProject.updatedTasksJson"/>
 	<input type="hidden" id="hiddenRemovedTasksIdJson" name="editedProject.removedTasksIdJson"/>
 
-	<table id="projectTaskTable">
+	<table id="projectTaskTable" >
 		<thead>
 			<tr>
 				<th></th>

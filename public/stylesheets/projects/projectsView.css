@@ -36,7 +36,25 @@
 }
 
 #projectParticipants {
-	margin-top: 30px;
-	
+	margin-top: 30px;	
 }
 
+#projectTaskListTable  {
+	border-spacing: 0px;
+	border-collapse: collapse;
+	border: solid 1px;
+	width: 100%;	
+}
+
+
+#projectTaskListTable thead {
+	background-color: #DFDFDF;		
+}
+
+#projectTaskListTable thead tr:hover{
+	background-color: #DFDFDF;		
+}
+
+#projectTaskListTable tr:hover {
+	background-color: #EFEFEF;
+}

@@ -42,6 +42,7 @@ public class Task {
 
 	private List<String> assigneeNames;
 
+	@Transient
 	private List<UserSummary> assignees;
 
 	private Date dueDate;
@@ -65,6 +66,7 @@ public class Task {
 
 		assignees = new LinkedList<UserSummary>();
 
+		
 		if (assigneeNames != null) {
 			for (String username : assigneeNames) {
 				Participant assigneeParticipant = parentProject.getConfirmedActiveParticipant(username);

@@ -411,6 +411,7 @@ viewProjectCnfirmGiveOwnership=Are you sure you want to transfer the ownership o
 viewProjectConfirmCancelGiveOwnership=You have previously proposed to this user to take ownership of this project, but he has not accepted yet. If you click 'OK', this will remove the transfer proposal. Are you sure this is what you want to do?
 viewProjectConfirmAcceptOwnership=Are you sure your want to accept full ownership of this project? By doing so to get access to the highest level of control.
 viewProjectconfirmRefuseOwnership=Are you sure your want to refuse the ownership of this project? This action cannot be undone unless the current project owner resubmits a new ownership transfer proposal. Are you sure this is what you want to do?
+viewProjectTasks=Tasks
 
 projectTaskTodo=to do
 projectTaskDone=done

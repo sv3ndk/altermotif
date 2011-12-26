@@ -96,6 +96,7 @@ public class ProjectService implements IProjectService {
 		
 		if (prj != null) {
 			prj.prepareTasksUsersummary();
+			
 			if (generatePhotoLinks) {
 				Date expirationdate = new Date();
 				expirationdate.setTime(expirationdate.getTime() + config.getCvExpirationDelayInMillis());
