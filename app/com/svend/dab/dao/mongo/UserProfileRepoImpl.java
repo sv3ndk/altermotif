@@ -57,11 +57,8 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 			}
 		}
 		return names;
-		
 	}
 
-	
-	
 	@Override
 	public List<UserProfile> retrieveUserProfilesByIds(List<String> ids) {
 

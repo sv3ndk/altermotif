@@ -1,13 +1,25 @@
 #{extends 'masterTemplate.html' /}
 
 
+<ul>
 
-#{form @Admin.doUpdateCreationDateOfAllProjectSummaries()}
-	<input type="submit" value="update all project summaries"></input>
-#{/form }
+	<li>
+	#{form @Admin.doUpdateCreationDateOfAllProjectSummaries()}
+		<input type="submit" value="update all project summaries"></input>
+	#{/form }
+	</li>
+	
+	<li>
+	#{form @Admin.doLaunchCountTagsJob()}
+		<input type="submit" value="launch count tags map/reduce job"></input>
+	#{/form }
+	</li>
+	
+	<li>
+	#{form @Admin.doIndexAllProjects()}
+		<input type="submit" value="index all projects"></input>
+	#{/form }
+	</li>
 
-#{form @Admin.doLaunchCountTagsJob()}
-	<input type="submit" value="launch count tags map/reduce job"></input>
-#{/form }
 
-
+</ul>

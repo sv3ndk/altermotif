@@ -24,6 +24,8 @@ public interface IProjectDao {
 	
 	List<Project> loadAllProjects(Set<String> allIds);
 
+	Set<String> getAllProjectIds();
+
 
 	void save(Project project);
 
@@ -82,6 +84,7 @@ public interface IProjectDao {
 	void addOrUpdateProjectTasks(String id, Task newOrUpdatedTask);
 
 	void removeTaskFromProject(String id, String removedTasksId);
+
 
 
 

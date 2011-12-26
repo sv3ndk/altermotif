@@ -18,7 +18,6 @@ public class ProjectUpdatedPropagator implements IEventPropagator<ProjectUpdated
 	@Autowired
 	private IProjectFTSService projectFTSService;
 
-
 	@Override
 	public void propagate(ProjectUpdated event) throws DabException {
 		projetRepo.updateProjectPDataAndLinksAndTagsAndThemes(event.getUpdatedProject().getId(), event.getUpdatedProject());
@@ -35,7 +34,7 @@ public class ProjectUpdatedPropagator implements IEventPropagator<ProjectUpdated
 			}
 		}
 		
-		projectFTSService.updateProjetIndex(event.getUpdatedProject().getId());
+		projectFTSService.updateProjetIndex(event.getUpdatedProject().getId(), false);
 	}
 
 	public void setProjetRepo(IProjectDao projetRepo) {

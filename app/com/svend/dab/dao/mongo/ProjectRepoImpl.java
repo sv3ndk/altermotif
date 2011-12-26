@@ -3,6 +3,7 @@ package com.svend.dab.dao.mongo;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -23,6 +24,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.MongoException;
 import com.mongodb.WriteResult;
 import com.svend.dab.core.beans.profile.Photo;
+import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Participant;
 import com.svend.dab.core.beans.projects.ProjectOverview;
@@ -64,6 +66,22 @@ public class ProjectRepoImpl implements IProjectDao {
 		return mongoTemplate.find(query(where("_id").in(allIds)), Project.class);
 	}
 
+	@Override
+	public Set<String> getAllProjectIds() {
+		Query query = query(where("_id").exists(true));
+		query.fields().include("_id");
+		List<Project> list =  mongoTemplate.find(query, Project.class);
+		Set<String > ids = new HashSet<String>();
+		
+		if (list != null) {
+			for (Project profile : list) {
+				ids.add(profile.getId());
+			}
+		}
+		return ids;
+	}
+
+	
 
 	@Override
 	public void save(Project project) {
@@ -272,8 +290,6 @@ public class ProjectRepoImpl implements IProjectDao {
 		mongoTemplate.updateFirst(query, update, Project.class);
 	}
 
-
-	
 
 
 }

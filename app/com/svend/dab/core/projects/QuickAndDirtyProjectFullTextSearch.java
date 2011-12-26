@@ -51,12 +51,14 @@ public class QuickAndDirtyProjectFullTextSearch implements IProjectFTSService {
 	
 	
 	@Override
-	public void updateProjetIndex(String projectId) {
+	public void updateProjetIndex(String projectId, boolean immediate) {
 		
 
-		// increasing the chances to actually catch the updated data in db (you know, eventual consistency thingy...)
-		// ...I said this was ugly....
-		Utils.waitABit();
+		if (!immediate) {
+			// increasing the chances to actually catch the updated data in db (you know, eventual consistency thingy...)
+			// ...I said this was ugly....
+			Utils.waitABit();
+		}
 
 		Project project = projectDao.findOne(projectId);
 		

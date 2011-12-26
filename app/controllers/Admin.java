@@ -15,5 +15,11 @@ public class Admin extends DabLoggedController {
 		BeanProvider.getProjectDao().launchCountProjectTagsJob();
 		admin();
 	}
+	
+	public static void doIndexAllProjects() {
+		BeanProvider.getAdminService().indexAllProjects();
+		admin();
+		
+	}
 
 }

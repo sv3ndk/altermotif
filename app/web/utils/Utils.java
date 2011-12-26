@@ -260,7 +260,7 @@ public class Utils {
 	public static void waitABit() {
 		
 		try {
-			Thread.sleep(config.getHowLongIsABitInMillis());
+			Thread.sleep(getConfig().getHowLongIsABitInMillis());
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "interrupted while waiting", e);
 		}

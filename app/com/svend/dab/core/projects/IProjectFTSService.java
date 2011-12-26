@@ -14,7 +14,7 @@ import com.svend.dab.core.beans.projects.ProjectSearchRequest;
  */
 public interface IProjectFTSService {
 	
-	public void updateProjetIndex(String projectId);
+	public void updateProjetIndex(String projectId, boolean immediate);
 	
 
 	public List<ProjectOverview> searchForProjects(ProjectSearchRequest request);

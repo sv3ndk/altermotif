@@ -46,7 +46,7 @@ public class ProjectCreatedPropagator implements IEventPropagator<ProjectCreated
 		projetRepo.save(project);
 		userProfileRepo.addProjectParticipation(creatorProfile, new Participation(project, ROLE.initiator, true));
 		
-		projectFTSService.updateProjetIndex(event.getCreatedProject().getId());
+		projectFTSService.updateProjetIndex(event.getCreatedProject().getId(), false);
 		
 	}
 }
