@@ -29,7 +29,11 @@
 						#{/list}
 						</ul>
 					</td>
-					<td>${oneTask.dueDate.format(controllers.BeanProvider.config.dateDisplayFormat)}</td>
+					<td>
+					#{if oneTask.dueDate }
+						${oneTask.dueDate.format(controllers.BeanProvider.config.dateDisplayFormat)}
+					#{/if}						
+					</td>
 				</tr>
 			#{/list}
 						

@@ -152,11 +152,9 @@
 		</constructor-arg>
 	</bean>
  	 -->
- 
 
  	<mongo:repositories base-package="com.svend.dab.dao.mongo" >
  	</mongo:repositories>
-
 
 <!-- 
 	
