@@ -10,7 +10,7 @@ function init() {
 function initTagMechanics() {
 
 	// when clicking on the tag cloud
-	$("#projectTagContainer a").click(function() {
+	$("#projectTagContainer a").click(function(event) {
 
 		// this is defined in projectsTags, it should update the model, then call us back for updating here again 
 		doAddOneTag($(event.target).text());

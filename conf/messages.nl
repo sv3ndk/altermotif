@@ -422,6 +422,7 @@ projectTaskEditionTableTasks=***Required tasks
 projectTaskEditionTableStatus=***Status
 projectTaskEditionTableAssignedTo=***AssignedTo
 projectTaskEditionTableDueDate=***Due date
+projectTaskEditionTableDescription=***Description
 projectTaskEditionTableAddTask=***Ask task
 projectTaskEditionTableConfirmRemoveTask=***Are you sure you want to remove this task from this project?
 projectTaskEditionTableConfirmRemoveUser=***Are you sure you want to unasign this task from this user?
@@ -429,6 +430,8 @@ projectTaskEditionTableAddAssignee=***add assignee...
 projectTaskEditionTableChooseAssigneePopupTitle=***Select the assignee 
 projectTaskEditionTableNewTaskPopupTitle=***New project task 
 
+projectAssetEditionTableAddAsset=***Add asset
+projectAssetEditionTableConfirmRemoveAsset=***Are you sure you want to remove this asset from this project?
 
 # edit project page
 projectEditConfirmButton=Project actualiseren

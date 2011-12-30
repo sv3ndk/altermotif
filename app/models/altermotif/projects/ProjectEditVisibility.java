@@ -39,4 +39,8 @@ public class ProjectEditVisibility {
 		return pep.isAllowedToEditProjectTasks(visitingUserId);
 	}
 
+	public boolean isEditAssetsVisible() {
+		return pep.isAllowedToEditProjectAssets(visitingUserId);
+	}
+
 }

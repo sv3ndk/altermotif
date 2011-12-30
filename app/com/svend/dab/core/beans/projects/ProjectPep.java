@@ -144,6 +144,16 @@ public class ProjectPep {
 		return role == ROLE.initiator || role == ROLE.admin;
 	}
 	
+	
+	public boolean isAllowedToEditProjectAssets(String user) {
+		if (!isAllowedToEditAtLeastPartially(user)) {
+			return false;
+		}
+		ROLE role = project.findRoleOfUser(user);
+		return role == ROLE.initiator || role == ROLE.admin;
+	}
+
+	
 	////////////////////////////////
 	// project life cylce
 	
@@ -478,5 +488,6 @@ public class ProjectPep {
 		
 		return false;
 	}
+
 
 }

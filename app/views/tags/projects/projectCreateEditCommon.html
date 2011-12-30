@@ -106,7 +106,7 @@
 	<td class="formLeftColumn">
 		&{'projectNewRequiredTasks'}:
 	</td>
-	<td>
+	<td >
 		#{if _projectEditVisibility.editTasksVisible}
 			#{projects.projectsEditTasks confirmedActiveParticipants:_editedProject?.confirmedActiveParticipants /}
 			<br />
@@ -118,16 +118,21 @@
 	</td>
 </tr>
 
-
-#{dab.inputText 
-	label:messages.get('projectNewRequiredAssets'),
-	required: false,
-	inputName: "todo",
-	inputValue: "(TODO...)",
-	explanation: messages.get('projectNewRequiredAssetsExplanation'),
-	cols: 35,
-	disabled: true
-/}
+<tr>
+	<td class="formLeftColumn">
+		&{'projectNewRequiredAssets'}:
+	</td>
+	<td colspan="2">
+		#{if _projectEditVisibility.editAssetsVisible}
+			#{projects.projectsEditAssets confirmedActiveParticipants:_editedProject?.confirmedActiveParticipants /}
+			<br />
+			<span class="formFieldExplanation">&{'projectNewRequiredAssetsExplanation'}</span>
+		#{/if}
+		#{else}
+		
+		#{/else}
+	</td>
+</tr>
 
 
 #{dab.inputText

@@ -1,5 +1,10 @@
 // utility methods in order to display a confirmation method to the user and then to execution some method
 
+
+////////////////
+// DEPRECATED, use dab.confirm.
+/////////////////
+
 var onConfirmationFunction;
 
 // "on" version of the ask and act: uses the "on" mechanism of jquery (instead of a click handler on a single click target)
