@@ -3,9 +3,9 @@ package com.svend.dab.core.beans.profile;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -46,7 +46,7 @@ public class PersonalData implements Serializable{
 	private String email;
 	private String gender = "U";
 	private Date dateOfBirth;
-	private List<Language> languages;
+	private Set<Language> languages;
 	private String website;
 
 	private String locationLat;
@@ -80,7 +80,7 @@ public class PersonalData implements Serializable{
 	
 	
 	public PersonalData(String location, String password, String firstName, String lastName, String email,
-			String gender, Date dateOfBirth, List<Language> languages, String website, String locationLat, String locationLong, String personalObjective,
+			String gender, Date dateOfBirth, Set<Language> languages, String website, String locationLat, String locationLong, String personalObjective,
 			String personalDescription, String personalPhilosophy, String personalAssets) {
 		super();
 		this.location = location;
@@ -98,7 +98,7 @@ public class PersonalData implements Serializable{
 		this.personalAssets = personalAssets;
 		
 		
-		this.languages = new LinkedList<Language>();
+		this.languages = new HashSet<Language>();
 		if (languages != null) {
 			for (Language lg : languages) {
 				this.languages.add(new Language(lg));
@@ -193,7 +193,7 @@ public class PersonalData implements Serializable{
 
 		donotadd: if (addedLanguageCode != null) {
 			if (languages == null) {
-				languages = new LinkedList<Language>();
+				languages = new HashSet<Language>();
 			}
 
 			for (Language existingLg : languages) {
@@ -298,11 +298,11 @@ public class PersonalData implements Serializable{
 		recomputeAge();
 	}
 
-	public List<Language> getLanguages() {
+	public Set<Language> getLanguages() {
 		return languages;
 	}
 
-	public void setLanguages(List<Language> languages) {
+	public void setLanguages(Set<Language> languages) {
 		this.languages = languages;
 	}
 

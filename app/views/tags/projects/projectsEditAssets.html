@@ -1,0 +1,54 @@
+<script type="text/javascript">
+
+	var confirmRemoveProjectAssetText = "&{'projectAssetEditionTableConfirmRemoveAsset'}";
+	var chooseAssetAssigneePopupTitle = "&{'projectTaskEditionTableChooseAssigneePopupTitle'}";
+
+		
+</script>
+		
+<div id="editProjectAssetsContainer" class="taskAssetContainer">
+	<table class="projectTaskAssestsTable">
+		<thead>
+			<tr>
+				<th></th>
+				<th>&{'projectTaskEditionTableTasks'}</th>
+				<th>&{'projectTaskEditionTableStatus'}</th>
+				<th>&{'projectTaskEditionTableAssignedTo'}</th>
+				<th>&{'projectTaskEditionTableDueDate'}</th>
+				<th>&{'projectTaskEditionTableDescription'}</th>
+			</tr>
+		</thead>
+		
+		<tbody data-bind="foreach: assets">
+			<tr>
+				<td><img id="trashImg" src="@{'/public/images/trash.png'}"  class="deleteImageLink deleteTaskLink" /></td>
+				<td><span class="hidden hiddenAssetId" data-bind="text: id"></span><input data-bind="value: name"></input></td>
+				<td>
+				
+				</td>
+				<td>
+					<ul data-bind="template : {foreach: assignees, beforeRemove: beforeRemoveAssignee, afterAdd: afterAddAssignee}">
+						<li><span data-bind="text: userName" class="taskUserName"></span> <img id="trashImg" src="@{'/public/images/trash.png'}"  class="deleteImageLink removeUserLink" /></li>
+					</ul>
+					<br />
+					<span class="dabLink addAssetAssigneeLink"  data-bind="visible: isAddAssigneeVisible">&{'projectTaskEditionTableAddAssignee'}</span>
+				</td>
+				
+				<td >
+					<input type="text" size="6" class="dueDateInput" data-bind="value: dueDateStr" ></input>
+				</td>
+				
+				<td >
+					<input type="text" size="35" data-bind="value: description" ></input>
+				</td>
+			</tr>
+		</tbody>			
+		
+		<tr class="bottomRow">
+			<td />
+			<td><span class="dabLink" id="addProjectAssetLink">&{'projectAssetEditionTableAddAsset'}</span>
+			<td colspan="4"/>
+		</tr>
+	</table>
+</div>
+

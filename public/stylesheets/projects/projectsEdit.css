@@ -30,27 +30,27 @@
 
 
 /* task edition */
-#editProjectTasksContainer {
+.taskAssetContainer {
 	border: 1px solid;
 }
 
 
-#projectTaskTable  {
+.projectTaskAssestsTable  {
 	border-spacing: 0px;
 	border-collapse: collapse;
 	width: 100%;	
 }
 
 
-#projectTaskTable thead {
+.projectTaskAssestsTable thead {
 	background-color: #DFDFDF;	
 }
 
 
-#projectTaskTable tr:hover {
+.projectTaskAssestsTable tr:hover {
 	background-color: #EFEFEF;
 }
 
-#projectTaskTable tr.bottomRow {
+.projectTaskAssestsTable tr.bottomRow {
 	background-color: #DFDFDF;	
 }

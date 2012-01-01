@@ -1,20 +1,5 @@
 package web.rabbit;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.ObjectMapper.DefaultTyping;
-import org.codehaus.jackson.type.TypeReference;
-import org.springframework.amqp.core.Message;
-
-import com.svend.dab.eda.Event;
-import com.svend.dab.eda.errorhandling.NonFailingJsonMessageConverter;
-
-import controllers.BeanProvider;
-
-import play.jobs.OnApplicationStart;
-//import play.modules.rabbitmq.consumer.RabbitMQConsumer;
 
 //@OnApplicationStart(async=true)
 public class PlayEventConsumer 

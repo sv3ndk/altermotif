@@ -10,7 +10,7 @@ function initEditTasks() {
 	editTasksModel.allTaskStatus = taskStatusLabels;
 	
 	// preparing knockout modelView
-	ko.applyBindings(editTasksModel);
+	ko.applyBindings(editTasksModel, $("#editProjectTasksContainer")[0]);
 	updateProjectTasksTable();
 	
 	initAddRemoveTaskMechanics();

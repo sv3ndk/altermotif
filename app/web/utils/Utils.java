@@ -13,10 +13,11 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.codehaus.jackson.map.ObjectMapper;
+
 import models.altermotif.MappedValue;
 import models.altermotif.SessionWrapper;
 
-import org.cloudfoundry.org.codehaus.jackson.map.ObjectMapper;
 
 import play.mvc.Scope.RenderArgs;
 

@@ -3,7 +3,6 @@ package com.svend.dab.eda.errorhandling;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.support.converter.JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConversionException;

@@ -1,5 +1,6 @@
 eclipse/classes/
 precompiled/
 tmp/
-+.class
-
+*.class
+*.jar
+modules/

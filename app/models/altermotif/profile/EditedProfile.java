@@ -3,12 +3,13 @@ package models.altermotif.profile;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.cloudfoundry.org.codehaus.jackson.map.ObjectMapper;
 
 import play.data.validation.Required;
+import web.utils.Utils;
 
 import com.svend.dab.core.beans.profile.Language;
 import com.svend.dab.core.beans.profile.PersonalData;
@@ -42,7 +43,7 @@ public class EditedProfile extends CreatedProfile {
 	private String languagesJson;
 
 	// translated version of the json thing
-	private List<Language> cachedLanguages;
+	private Set<Language> cachedLanguages;
 
 	public EditedProfile(UserProfile profile) {
 		super(profile);
@@ -66,9 +67,8 @@ public class EditedProfile extends CreatedProfile {
 			}
 		}
 
-		ObjectMapper jsonMapper = new ObjectMapper();
 		try {
-			languagesJson = jsonMapper.writeValueAsString(mappedLanguages);
+			languagesJson = Utils.objectToJsonString(mappedLanguages);
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "Could not marshall languages to a json String", e);
 		}
@@ -102,13 +102,12 @@ public class EditedProfile extends CreatedProfile {
 
 	}
 
-	public List<Language> parseJsonLanguages() {
+	public Set<Language> parseJsonLanguages() {
 		if (cachedLanguages == null) {
 			synchronized (this) {
 				if (cachedLanguages == null) {
 					try {
-						ObjectMapper jsonMapper = new ObjectMapper();
-						cachedLanguages = Arrays.asList(jsonMapper.readValue(languagesJson, Language[].class));
+						cachedLanguages = Utils.jsonToSetOfStuf(languagesJson, Language[].class);
 					} catch (Exception e) {
 						logger.log(Level.WARNING, "Could not transform inconming json language values into list of languges => keeping old value", e);
 					}

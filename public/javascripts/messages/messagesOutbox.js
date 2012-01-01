@@ -124,8 +124,8 @@ function updateDisplayedMessage(eventTarget) {
 		$('#messageDetailSubject').text(message.subject);
 		$('#messageDetailDate').text(message.creationDate);
 		
-		$('#messageDetailTo').text(message.fromUser.userName);
-		$('#messageDetailTo').attr("href", "/profile/public?vuser=" + message.fromUser.userName);
+		$('#messageDetailTo').text(message.toUser.userName);
+		$('#messageDetailTo').attr("href", "/profile/public?vuser=" + message.toUser.userName);
 
 		if (!messageReactionEnabled) {
 			$('#forwardLink').removeClass("messagesReactionLinkDisabled").addClass("messagesReactionLinkEnabled");

@@ -1,5 +1,36 @@
-//javascrip common to all pages (top menu)
+// js code common to all pages 
 
+///////////////////////////////////////
+// main db library
+
+
+var dabUtils =  {
+	
+	// associate a jquery datepicker to any element matching this jqSelector
+	makeInputDatePicker : function (jqSelector, yearRange) {
+		$(jqSelector).datepicker({
+			changeMonth : true,
+			changeYear : true,
+			dateFormat : "dd/mm/yy",
+			yearRange : yearRange,
+			showAnim : "blind"
+		});
+	}
+	
+	
+}
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////
+// master menu init
 var timeout = 500;
 var closetimer = 0;
 var ddmenuitem = 0;

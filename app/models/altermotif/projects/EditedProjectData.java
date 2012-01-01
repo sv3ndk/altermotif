@@ -4,8 +4,6 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.cloudfoundry.org.codehaus.jackson.map.ObjectMapper;
-
 import play.data.validation.Required;
 import web.utils.Utils;
 
@@ -76,9 +74,8 @@ public class EditedProjectData {
 			dueDateStr = Utils.formatDate(pdata.getDueDate());
 			language = Utils.resolveLanguageOfCode(pdata.getLanguage(), userLanguage); 
 					
-			ObjectMapper mapper = new ObjectMapper();
 			try {
-				allLocationJson = mapper.writeValueAsString(pdata.getLocations());
+				allLocationJson = Utils.objectToJsonString(pdata.getLocations());
 			} catch (Exception e) {
 				logger.log(Level.WARNING, "could not marsal to json => falling back to empty json string provided to the gui" , e); 
 			} 

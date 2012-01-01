@@ -13,7 +13,7 @@ public class CreatedProjectPep extends ProjectPep {
 		super(null);
 	}
 
-	// /
+	//////////////////////////////////
 
 	@Override
 	public boolean isAllowedToEditProjectOffer(String user) {
@@ -32,6 +32,11 @@ public class CreatedProjectPep extends ProjectPep {
 
 	@Override
 	public boolean isAllowedToEditProjectTasks(String user) {
+		return true;
+	}
+
+	@Override
+	public boolean isAllowedToEditProjectAssets(String user) {
 		return true;
 	}
 

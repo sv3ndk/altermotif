@@ -2,7 +2,8 @@ package com.svend.dab.eda.events.contacts;
 
 import java.util.Date;
 
-import com.sun.istack.NotNull;
+import javax.validation.constraints.NotNull;
+
 import com.svend.dab.eda.Event;
 import com.svend.dab.eda.IEventPropagator;
 import com.svend.dab.eda.IEventPropagatorsContainer;

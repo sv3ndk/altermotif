@@ -3,3 +3,28 @@
 require:
     - play
     - play -> spring 1.0.2
+
+    - com.google.guava -> guava 10.0.1
+    - com.amazonaws -> aws-java-sdk 1.1.9
+    - org.codehaus.jackson -> jackson-mapper-asl 1.9.3
+    
+    - org.springframework -> spring-context 3.1.0.RELEASE 
+    - org.springframework.data -> spring-data-mongodb 1.0.0.RC1 
+    - org.springframework.amqp -> spring-rabbit 1.0.0.RELEASE
+    
+    - org.hibernate -> hibernate-validator 4.2.0.Final
+    
+    
+repositories:
+    
+    - spring-milestone:
+        type: iBiblio
+        root: "http://maven.springframework.org/milestone"
+        contains:
+            - org.springframework.data -> *
+
+    - jboss:
+        type: iBiblio
+        root: "http://repository.jboss.org/nexus/content/groups/public-jboss/"
+        contains:
+            - org.hibernate -> *
