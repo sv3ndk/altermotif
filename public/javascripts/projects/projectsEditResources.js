@@ -51,7 +51,6 @@ function ViewProjectResource (staticResource, isNew, maxNumAssignees, defaultNam
 			this.isAddAssigneeVisible(this.mayAddMoreAssignee());
 		}
 	};
-	
 
 	this.mayAddMoreAssignee = function() {
 		if (this.maxNumberOfAssignees < 1) {
@@ -89,6 +88,8 @@ function ViewProjectResource (staticResource, isNew, maxNumAssignees, defaultNam
 		updatedDetector.updatedTask.isModified = true;
 	});
 	
+
+	
 	// animation callback when removing a assignee from a task
 	this.beforeRemoveAssignee = commonKOStuff.genericBeforeRemoveElement;
 
@@ -122,6 +123,7 @@ var commonKOStuff = {
 			$(elem).slideUp(function() { $(elem).remove(); }); 
 		}
 	},
+	
 	
 	genericAfterAddElement: function t(elem) {
 		if (elem.nodeType === 1) {

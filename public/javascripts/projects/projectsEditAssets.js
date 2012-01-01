@@ -108,7 +108,7 @@ function EditAssetViewModel() {
 	this.getAsset = function (assetId) {
 		return _.find(this.assets(), function (asset) { return asset.id == assetId} );
 	};
-	
+
 	///////////////////////////
 	// internal methods
 	
