@@ -37,7 +37,7 @@
 				<td><img id="trashImg" src="@{'/public/images/trash.png'}"  class="deleteImageLink deleteTaskLink" /></td>
 				<td><span class="hidden hiddenTaskId" data-bind="text: id"></span><input data-bind="value: name"></input></td>
 				<td>
-					<select data-bind="options: $parent.allTaskStatus, value: status, optionsValue: 'name', optionText: 'localizedName'" ></select>
+					<select data-bind="options: taskStatusLabels, value: status, optionsValue: 'name', optionText: 'localizedName'" ></select>
 				</td>
 				<td>
 					<ul data-bind="template : {foreach: assignees, beforeRemove: beforeRemoveAssignee, afterAdd: afterAddAssignee}">
