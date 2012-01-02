@@ -51,6 +51,8 @@ public class Task {
 	private String dueDateStr;
 
 	private TASK_STATUS status;
+	
+	private String description;
 
 	// ////////////////////////////
 	//
@@ -157,6 +159,22 @@ public class Task {
 
 	public void setAssigneeNames(List<String> assigneeNames) {
 		this.assigneeNames = assigneeNames;
+	}
+
+	public static Logger getLogger() {
+		return logger;
+	}
+
+	public static void setLogger(Logger logger) {
+		Task.logger = logger;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

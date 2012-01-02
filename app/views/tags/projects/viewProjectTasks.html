@@ -9,7 +9,8 @@
 						<th>&{'projectTaskEditionTableTasks'}</th>
 						<th>&{'projectTaskEditionTableStatus'}</th>
 						<th>&{'projectTaskEditionTableAssignedTo'}</th>
-						<th>&{'projectTaskEditionTableDueDate'}</th>
+						<th>&{'projectTaskEditionTableDueDate'}</th>						
+						<th>&{'projectTaskEditionTableDescription'}</th>
 					</tr>
 				</thead>
 			#{/if}
@@ -21,7 +22,6 @@
 					<td>&{oneTask.status.label}</td>
 					<td>
 						<ul>
-						
 						#{list items:oneTask.assignees, as:'oneAssignee'}
 							<li>
 								<a href="@{profile.ProfileView.profileView( oneAssignee.userName )}" class="dabLink">${oneAssignee.userName}</a>
@@ -34,6 +34,7 @@
 						${oneTask.dueDate.format(controllers.BeanProvider.config.dateDisplayFormat)}
 					#{/if}						
 					</td>
+					<td>${oneTask.description}</td>
 				</tr>
 			#{/list}
 						

@@ -11,9 +11,6 @@ function init() {
 	setupSetLanguageAutoComplete();
 	initSubmitCancelButtons();
 	
-	// this is present in projectEditTasks.js
-	initEditTasks();
-
 	// this is present in dab.js
 	makeInputDatePicker("#projectNewDueDate", '-0:+100');
 }
@@ -242,8 +239,12 @@ function initSubmitCancelButtons() {
 			// this controller is in projectsEditAssets.js
 			editAssetCtrl.updateSubmittedAssets();
 		}
+
+		if (editTasksCtrl != undefined) {
+			// this controller is in projectsEditTasks.js
+			editTasksCtrl.updateSubmittedTasks();
+		}
 		
-		updateSubmittedTasks();
 		$("div.projectEditionFormContainer form").submit();
 	});
 

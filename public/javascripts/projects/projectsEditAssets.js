@@ -15,6 +15,7 @@ function EditAssetController() {
 	// ///////////
 	// members
 	this.koModel = new EditAssetViewModel();
+	this.listOfRemovedAssetIds = [];
 	this.clickedAssetId;
 	this.userListPopup;
 
@@ -66,7 +67,8 @@ function EditAssetController() {
 			.value();
 		
 		$("#hiddenUpdatedAssetsJson").val(JSON.stringify(submittedAssets));
-		
+		$("#hiddenRemovedAssetsIdJson").val(JSON.stringify(this.listOfRemovedAssetIds));
+
 	}
 	
 	// ///////////
@@ -78,6 +80,7 @@ function EditAssetController() {
 
 	this.afterUserConfirmsRemoveAsset = function(self, event) {
 		self.koModel.removeAsset(self.clickedAssetId);
+		self.listOfRemovedAssetIds.push(self.clickedAssetId);
 	};
 
 	this.afterUserSelectsAssignee = function(self, username) {

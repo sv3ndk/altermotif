@@ -18,19 +18,23 @@ var Confirm =  {
 		this.beforeAskingFunction = beforeAsking;
 		this.onConfirmationFunction = onConfirmation;
 		
+		this.myHtmlDialog; 
+		
 		////////////////////
 		// init
 		this.init = function () {
 			
 			var self = this;
 			
+			this.myHtmlDialog = $("#confirmationPopup").clone();
+			
 			// first action: click on the trigger link
 			$(self.clickableJqParentSelector).on("click", self.clickableJqSubSelector, function(event) {
-				$("#confirmationPopup span").text(self.confirmationText);
+				self.myHtmlDialog.find("span").text(self.confirmationText);
 				if (self.beforeAskingFunction != undefined) {
-					self.beforeAskingFunction(callerObj, event);
+					self.beforeAskingFunction(self.callerObj, event);
 				}
-				$("#confirmationPopup").dialog("open");		
+				self.myHtmlDialog.dialog("open");		
 			});
 	
 			this.initDialogConstruction(this);
@@ -40,20 +44,22 @@ var Confirm =  {
 		////////////////////////////
 		this.initDialogConstruction = function (self) {
 			// OK/Cancel dialog => when click OK, we callback the executeConfirmationFunction function otherwise we simply close
-			$("#confirmationPopup").dialog({
+			self.myHtmlDialog.dialog({
 				autoOpen : false,
 				width: 400,
 				"buttons" : [ 
 				{
 					text : okLabelValue,
 					click : function(event){
-						self.onConfirmationFunction(callerObj, event);
+						self.onConfirmationFunction(self.callerObj, event);
 						self.closeDialog();
 					}
 				},
 				{
 					text : cancelLabelValue,
-					click : self.closeDialog
+					click : function () {
+						self.closeDialog();
+					}
 				}
 				]
 			});
@@ -76,7 +82,7 @@ var Confirm =  {
 		
 		////////////////////////////
 		this.closeDialog = function() {
-			$("#confirmationPopup").dialog("close");		
+			this.myHtmlDialog.dialog("close");		
 		}	
 	}
 

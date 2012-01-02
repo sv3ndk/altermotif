@@ -27,6 +27,7 @@ function ViewProjectResource(staticResource, isNew, maxNumAssignees, defaultName
 
 	this.init = function() {
 		var self = this;
+		this.isAddAssigneeVisible(this.mayAddMoreAssignee());
 
 		// mechanism to prevent any empty resource name
 		this.name.subscribe(function(updatedName) {

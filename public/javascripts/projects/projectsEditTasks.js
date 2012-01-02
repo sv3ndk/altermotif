@@ -1,302 +1,161 @@
-var clickedTaskId;
-var removedUserId_FromTask;
-var lastCreatedTaskId = 0;
-var listOfRemovedTasksIds = [];
+var editTasksCtrl;
 
-// initialization (called from the main js file for this page)
-function initEditTasks() {
+$(document).ready(function() {
+	editTasksCtrl = new EditTaskController();
+	editTasksCtrl.init();
+	editTasksCtrl.updateProjectTasksTable();
+})
 
-	// putting in the model the translated data 
-	editTasksModel.allTaskStatus = taskStatusLabels;
-	
-	// preparing knockout modelView
-	ko.applyBindings(editTasksModel, $("#editProjectTasksContainer")[0]);
-	updateProjectTasksTable();
-	
-	initAddRemoveTaskMechanics();
-	initUserTaskAssignementMechanics();
-	
-	// this is in usersPopupList.js
-	initUsersPopupList(whenAnAssigneetIsChosen);
-}
+// ////////////////////////
+// EditAssetController class
+// ////////////////////////
 
-////////////////////////////////////////
-// building the view model
+function EditTaskController() {
 
+	// ///////////
+	// members
+	this.koModel = new EditTaskViewModel();
+	this.listOfRemovedTasksIds = [];
+	this.clickedTaskId;
+	this.userListPopup;
 
-//View model used to back the whole task table
-var editTasksModel = {
-	allTaskStatus : [],
-	projectTasks : ko.observableArray()
-};
+	// ///////////
+	// public API
 
+	this.init = function() {
+		var self = this;
 
-// gathers data from server and updates task table accordingly
-function updateProjectTasksTable() {
-	if (typeof projectId != "undefined") {
-		// in case of project creation, projectId is still undefined, and there is no point going to the server
-		$.post(getProjectTasksList({projectId: projectId}), whenUpdatedTasksAreReceivedFromServer);
-	}
-}
+		// knockout bindings
+		ko.applyBindings(this.koModel, $("#editProjectTasksContainer")[0]);
 
-function whenUpdatedTasksAreReceivedFromServer(data) {
-	$(data).each(function (index, serverSideTask) {
-		editTasksModel.projectTasks.push(new viewTasks(serverSideTask, false));
-	});
-	
-	// this is present in dab.js
-	makeInputDatePicker("#projectTaskTable input.dueDateInput", '-0:+100');
-}
+		// click on add task
+		$("#addProjectTaskLink").click(function() {
+			self.koModel.addEmptyTask();
+		});
 
+		// click on remove task
+		new Confirm.AskAndProceed(this, "#editProjectTasksContainer", "img.deleteTaskLink", confirmRemoveProjectTaskText, this.onClickOnDeleteTask,
+				this.afterUserConfirmsRemoveTask).init();
 
-function determineIfAddAssigneeLinkIsVisibleForThoseAssignees(assigneesArray) {
-	var numberOfProjectMemebers = countTotalNumberOfPopupUser();
-	
-	if (numberOfProjectMemebers < 1) {
-		return false; 
-	} else {
-		if (assigneesArray == undefined) {
-			return true; 
-		} else {
-			return assigneesArray.length < numberOfProjectMemebers; 
-		}
-	}	
-}
+		// click "add assignee"
+		this.userListPopup = new UserListPopup(this, choseTaskAssigneePopupTitle, this.afterUserSelectsAssignee);
+		this.userListPopup.init();
+		this.koModel.maxNumOfAssigneePerTask = this.userListPopup.countTotalNumberOfPopupUser();
+		$("#editProjectTasksContainer").on("click", ".addTaskAssigneeLink", function(event) {
+			self.clickedTaskId = $(event.target).parent().parent().find(".hiddenTaskId").text();
+			var excludedUsernames = self.koModel.getTask(self.clickedTaskId).getListOfAssigneesNames();
+			self.userListPopup.openFiltered(excludedUsernames);
+		});
+	};
 
-
-
-//Observable version of the task, will necessary binding related to Knockout
-var viewTasks = function (serverSideTask, isNew) {
-	this.id =  serverSideTask.id;
-	this.name = serverSideTask.name;
-	this.status = ko.observable(serverSideTask.status);
-	this.dueDateStr = ko.observable(serverSideTask.dueDateStr);
-	this.isAddAssigneeVisible = ko.observable(determineIfAddAssigneeLinkIsVisibleForThoseAssignees(serverSideTask.assignees));
-	this.assignees = ko.observableArray(serverSideTask.assignees);
-
-	// mechanism to flag any new or updated task (so we know what to submit back to the server)
-	this.isModified = isNew;
-	this.modificationDetector = ko.computed(function() {
-		return {
-			updatedTask: this,
-			// we do not care of the value of this sensor itself, we just need it to depend on all updatable fields so an event is fired for any update
-			sensor: this.status() + this.dueDateStr() +  this.assignees().length
-		};
-	}, this);
-	this.modificationDetector.subscribe(function(updatedDetector) {
-		updatedDetector.updatedTask.isModified = true;
-	});
-	
-	// animation callback when removing a assignee from a task
-	this.beforeRemoveAssignee = genericBeforeRemoveElement;
-
-	// animation callback when removing a assignee from a task
-	this.afterAddAssignee = genericAfterAddElement;
-}
-
-// "static" version of the task, as transmitted to and from server in JSON format (i.e. this is pure static data)
-var staticTask = function (id, name, status, dueDateStr, assignees) {
-	this.id = id;
-	this.name = name;
-	this.status = status;
-	this.dueDateStr = dueDateStr;
-	this.assignees = assignees;
-}
-
-
-function getNextCreatedTaskIndex() {
-	lastCreatedTaskId ++;
-	return "new" + lastCreatedTaskId; 
-}
-
-
-function genericBeforeRemoveElement (elem) {
-	if (elem.nodeType === 1) {
-		$(elem).slideUp(function() { $(elem).remove(); }); 
-	}
-}
-
-
-function genericAfterAddElement(elem) {
-	if (elem.nodeType === 1) {
-		$(elem).hide().slideDown(); 
-	}
-}
-
-///////////////////////////////////////////////
-// assignment of this task to one or more users
-
-function initUserTaskAssignementMechanics() {
-	
-	// this is defined in simpleActions.js
-	askAndAct_On("#projectTaskTable", "img.removeUserLink", confirmRemoveUserFromTask, beforeUserConfirmsRemoveUserFromTask);
-	
-	$("#projectTaskTable").on("click", ".addTaskAssigneeLink", function(event) {
-		clickedTaskId = $(event.target).parent().parent().find(".hiddenTaskId").text();
-		openFilteredUsersPopupList(getListOfAssigneesForTask(clickedTaskId), choseTaskAssigneePopupTitle);
-	});
-
-}
-
-function beforeUserConfirmsRemoveUserFromTask(event) {
-	clickedTaskId = $(event.target).parent().parent().parent().parent().find(".hiddenTaskId").text();
-	removedUserId_FromTask = $(event.target).parent().find("span.taskUserName").text();
-	setConfirmationFunction(afterUserConfirmsRemoveUserFromTask);
-}
-
-function afterUserConfirmsRemoveUserFromTask() {
-	
-	// updates the KO model: remove this user from the observable list
-	$(editTasksModel.projectTasks()).each(function(index, task) {
-		if (task.id == clickedTaskId) {
-			var removedUser;
-			$(task.assignees()).each(function(index, assignee) {
-				if (assignee.userName == removedUserId_FromTask) {
-					removedUser = assignee;
-				}
-			});
-			task.assignees.remove(removedUser);
-			task.isAddAssigneeVisible(determineIfAddAssigneeLinkIsVisibleForThoseAssignees(task.assignees()));
-		}
-	});
-	
-	closeConfirmationDialog();
-}
-
-
-
-
-//this is called back from the user popup list handler, after the user has chosen a contact (see usersPopupList.js)
-function whenAnAssigneetIsChosen(addedUserName) {
-
-	// updates the KO model: adds this user into the observable list, if he is not yet present
-	$(editTasksModel.projectTasks()).each(function(index, task) {
-		if (task.id == clickedTaskId) {
-			var userAlreadyExists = false;
-
-			$(task.assignees()).each(function(index, assignee) {
-				if (assignee.userName == addedUserName) {
-					userAlreadyExists = true;
-				}
-			});
-			
-			if (!userAlreadyExists) {
-				task.assignees.push({
-					userName: addedUserName
-				});
-				task.isAddAssigneeVisible(determineIfAddAssigneeLinkIsVisibleForThoseAssignees(task.assignees()));
-			}
-		}
-	});
-	
-	closeFilteredUsersPopupList();
-}
-
-
-
-function getListOfAssigneesForTask(clickedTaskId) {
-	var allUsernames = [];
-	$(editTasksModel.projectTasks()).each(function(index, task) {
-		if (task.id == clickedTaskId) {
-			$(task.assignees()).each(function(index, task) {
-				allUsernames.push(task.userName);				
-			});
-		}
-	});
-	return allUsernames;
-}
-
-
-///////////////////////////////////////
-// add/remove task
-
-function initAddRemoveTaskMechanics() {
-	
-	// this is defined in simpleActions.js
-	askAndAct_On("#projectTaskTable", "img.deleteTaskLink", confirmRemoveProjectTaskText, beforeUserConfirmsRemoveTaskFromProject);
-	
-	$("#addProjectTaskLink").click(function() {
-		$("#addProjectTaskPopup input.inputDescription").val(""); 
-		$("#addProjectTaskPopup input.inputDate").val(""); 
-		$("#addProjectTaskPopup").dialog("open");
-	});
-
-	$("#addProjectTaskPopup").dialog({
-		autoOpen : false,
-		width: 400,
-		"buttons" : [ {
-			text : okLabelValue,
-			click : function(event) {
-				
-				var taskName = $("#addProjectTaskPopup input.inputDescription").val(); 
-				var taskDate = $("#addProjectTaskPopup input.inputDate").val(); 
-				
-				if (taskName != "" && taskName != undefined) {
-					sTask = new staticTask(getNextCreatedTaskIndex(), taskName, "todo", taskDate, []);
-					editTasksModel.projectTasks.push(new viewTasks(sTask, true));
-					
-					$(this).dialog("close");
-					makeInputDatePicker("#projectTaskTable input.dueDateInput", '-0:+100');
-				}
-			}
-		},
-
-		{
-			text : cancelLabelValue,
-			click : function() {
-				$(this).dialog("close");
-			}
-		}
-		]
-	});
-
-	// this is present in dab.js
-	makeInputDatePicker("#addProjectTaskPopup input.inputDate", '-0:+100');
-}
-
-
-function beforeUserConfirmsRemoveTaskFromProject() {
-	clickedTaskId = $(event.target).parent().parent().find(".hiddenTaskId").text();
-	setConfirmationFunction(afterUserConfirmsRemoveTaskFromProject);
-}
-
-
-function afterUserConfirmsRemoveTaskFromProject() {
-
-	var removedTask;
-	$(editTasksModel.projectTasks()).each(function(index, task) {
-		if (task.id == clickedTaskId) {
-			removedTask = task;
-		}
-	});
-	
-	editTasksModel.projectTasks.remove(removedTask);
-	listOfRemovedTasksIds.push(clickedTaskId);
-	
-	closeConfirmationDialog();
-}
-
-
-//////////////////////////////////////////////////
-// this is called by the listener on the submit button on the edition form, just before actually submitting the form
-
-function updateSubmittedTasks() {
-	
-	var submittedTasks = [];
-	$(editTasksModel.projectTasks()).each(function(index, task) {
-		if (task.isModified) {
-			$(task.assignees()).each(function(index, assignee) {
-				// we have some issues unmarshalling those on server side, and we do not use them anyway...
+	// this is typically called from proejctEdit.js, when the user clicks on "submit", just before actually submitting data back to the server
+	this.updateSubmittedTasks = function () {
+		
+		var removeNotSubmittedData = function () {
+			_.each(this.assignees(), function(assignee) {
 				delete assignee.isProfileActive;
 				delete assignee.mainPhoto;
 				delete assignee.location;
 			});
-			
-			submittedTasks.push(new staticTask(task.id, task.name, task.status(), task.dueDateStr(), task.assignees()));
+			return this;
+		};
+		
+		var submittedTasks = _(this.koModel.tasks()).chain()
+			.filter(function (task) {return task.isModified})
+			.invoke(removeNotSubmittedData)
+			.map(function (task) { return new StaticResource(task.id, task.name(), task.status(), task.dueDateStr(), task.assignees(), task.description())})
+			.value();
+		
+		$("#hiddenUpdatedTasksJson").val(JSON.stringify(submittedTasks));
+		$("#hiddenRemovedTasksIdJson").val(JSON.stringify(this.listOfRemovedTasksIds));
+
+	}
+	
+	// ///////////
+	// internal methods
+
+	this.onClickOnDeleteTask = function(self, event) {
+		self.clickedTaskId = $(event.target).parent().parent().find(".hiddenTaskId").text();
+	};
+
+	this.afterUserConfirmsRemoveTask = function(self, event) {
+		self.koModel.removeTask(self.clickedTaskId);
+		self.listOfRemovedTasksIds.push(self.clickedTaskId);
+	};
+
+	this.afterUserSelectsAssignee = function(self, username) {
+		self.koModel.addAssignee(self.clickedTaskId, username);
+	};
+
+	this.updateProjectTasksTable = function() {
+		var self = this;
+
+		if (typeof projectId != "undefined") {
+			// in case of project creation, projectId is still undefined, and there is no point going to the server
+			$.post(getProjectTasksList({
+				projectId : projectId
+			}), function (listOfTasksJson) {
+				if (listOfTasksJson != undefined) {
+					_.each(listOfTasksJson, function(task) {
+						self.koModel.addStaticTask(task, false);
+					});
+				}
+				
+			});
 		}
-	});
-	
-	$("#hiddenUpdatedTasksJson").val(JSON.stringify(submittedTasks));
-	$("#hiddenRemovedTasksIdJson").val(JSON.stringify(listOfRemovedTasksIds));
-	
+	};
+
+}
+
+// //////////////////////////////////
+// EditAssetViewModel controller
+// KO root ModelView instance for this page
+// //////////////////////////////////
+
+function EditTaskViewModel() {
+
+	// ///////////////////////
+	// members
+	this.tasks = ko.observableArray();
+	this.lastCreatedTaskId = 0;
+	this.maxNumOfAssigneePerTask;
+
+	// ///////////////////////
+	// public API
+
+	this.addEmptyTask = function() {
+		this.addStaticTask(new StaticResource(this.getNextCreatedTaskIndex(), "", "todo", "", []), true);
+	};
+
+	this.addStaticTask = function(staticTask, isNew) {
+		this.addTask(new ViewProjectResource(staticTask, isNew, this.maxNumOfAssigneePerTask, "default task name").init());
+	};
+
+	this.addTask = function(dynamicTask) {
+		this.tasks.push(dynamicTask);
+		dabUtils.makeInputDatePicker("#editProjectTasksContainer input.dueDateInput", '-0:+100');
+	};
+
+	this.removeTask = function(taskId) {
+		this.tasks.remove(this.getTask(taskId));
+	};
+
+	this.addAssignee = function(taskId, username) {
+		this.getTask(taskId).addAssignee(username);
+	};
+
+	this.getTask = function(taskId) {
+		return _.find(this.tasks(), function(task) {
+			return task.id == taskId
+		});
+	};
+
+	// /////////////////////////
+	// internal methods
+
+	this.getNextCreatedTaskIndex = function() {
+		this.lastCreatedTaskId++;
+		return "new" + this.lastCreatedTaskId;
+	};
+
 }
