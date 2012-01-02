@@ -35,7 +35,7 @@ var editTasksModel = {
 function updateProjectTasksTable() {
 	if (typeof projectId != "undefined") {
 		// in case of project creation, projectId is still undefined, and there is no point going to the server
-		$.post(getTaskList({projectId: projectId}), whenUpdatedTasksAreReceivedFromServer);
+		$.post(getProjectTasksList({projectId: projectId}), whenUpdatedTasksAreReceivedFromServer);
 	}
 }
 

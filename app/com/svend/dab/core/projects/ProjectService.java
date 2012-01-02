@@ -11,6 +11,7 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.jruby.parser.ReOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,7 @@ import com.google.common.base.Strings;
 import com.svend.dab.core.beans.Config;
 import com.svend.dab.core.beans.projects.Participant;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
+import com.svend.dab.core.beans.projects.Asset;
 import com.svend.dab.core.beans.projects.ParticipantList;
 import com.svend.dab.core.beans.projects.ParticpantsIdList;
 import com.svend.dab.core.beans.projects.Project;
@@ -69,7 +71,7 @@ public class ProjectService implements IProjectService {
 	}
 
 	@Override
-	public void updateProjectCore(Project updated, Set<Task> updatedTasks, Set<String> removedTasksIds) {
+	public void updateProjectCore(Project updated, Set<Task> updatedTasks, Set<String> removedTasksIds, Set<Asset> updatedAssets, Set<String> removedAssetsIds) {
 
 		// any id starting with "new" has been created by the browser for any new Task
 		// replacing here with a cleaner id, more "unique"
@@ -81,8 +83,17 @@ public class ProjectService implements IProjectService {
 				task.applyAssigneeSummraiesToAssigneeUsernames();
 			}
 		}
+
+		if (updatedAssets != null) {
+			for (Asset asset: updatedAssets) {
+				if (Strings.isNullOrEmpty(asset.getId()) || asset.getId().startsWith("new") ) {
+					asset.setId(UUID.randomUUID().toString());
+				}
+				asset.applyAssigneeSummraiesToAssigneeUsernames();
+			}
+		}
 		
-		eventEmitter.emit(new ProjectUpdated(updated, updatedTasks, removedTasksIds));
+		eventEmitter.emit(new ProjectUpdated(updated, updatedTasks, removedTasksIds, updatedAssets, removedAssetsIds));
 	}
 
 	@Override
@@ -95,7 +106,7 @@ public class ProjectService implements IProjectService {
 		Project prj = projectDao.findOne(projectId);
 		
 		if (prj != null) {
-			prj.prepareTasksUsersummary();
+			prj.prepareTasksAndAssetsUsersummary();
 			
 			if (generatePhotoLinks) {
 				Date expirationdate = new Date();

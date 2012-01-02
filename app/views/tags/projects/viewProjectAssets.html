@@ -1,0 +1,48 @@
+<div>
+	<span class="toggleLink dabLink">&{'viewProjectAssets'} (${_assetList ? _assetList.size() : '0'}) </span>
+	<div class="toggleContainer">
+		<table id="projectTaskListTable">
+		
+			#{if _assetList}
+				<thead >
+					<tr>
+						<th>&{'projectTaskEditionTableAssets'}</th>
+						<th>&{'projectTaskEditionTableStatus'}</th>
+						<th>&{'projectTaskEditionTableAssignedTo'}</th>
+						<th>&{'projectTaskEditionTableDueDate'}</th>
+						<th>&{'projectTaskEditionTableDescription'}</th>
+					</tr>
+				</thead>
+		
+				<tbody>
+				#{list items:_assetList, as:'oneAsset'}
+					<tr>
+						<td>${oneAsset.name}</td>
+						<td>&{oneAsset.status.label}</td>
+						<td>
+							<ul>
+							
+							#{list items:oneAsset.assignees, as:'oneAssignee'}
+								<li>
+									<a href="@{profile.ProfileView.profileView( oneAssignee.userName )}" class="dabLink">${oneAssignee.userName}</a>
+								</li>
+							#{/list}
+							</ul>
+						</td>
+						<td>
+						#{if oneAsset.dueDate }
+							${oneAsset.dueDate.format(controllers.BeanProvider.config.dateDisplayFormat)}
+						#{/if}						
+						</td>
+						<td>${oneAsset.description}</td>
+					</tr>
+				#{/list}
+						
+			</tbody>
+			#{/if}
+		</table>
+	</div>
+</div>
+
+
+

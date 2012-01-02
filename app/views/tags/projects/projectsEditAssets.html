@@ -1,12 +1,24 @@
 <script type="text/javascript">
 
+	var getProjectAssetsList = #{jsAction @projects.ProjectsTasksAndAssets.doGetAssetsList(':projectId') /};
+
 	var confirmRemoveProjectAssetText = "&{'projectAssetEditionTableConfirmRemoveAsset'}";
 	var chooseAssetAssigneePopupTitle = "&{'projectTaskEditionTableChooseAssigneePopupTitle'}";
-
+	
+	// mapping between the asset status and the localized name of this status
+	var assetStatusLabels = [
+	          new dabUtils.LocalizedTaskStatus('available', "&{'projectAssetAvailable'}"),           
+	          new dabUtils.LocalizedTaskStatus('missing', "&{'projectAssetMissing'}")           
+         ];
 		
 </script>
 		
 <div id="editProjectAssetsContainer" class="taskAssetContainer">
+
+	*{ assets actually submitted back to the server (only new or updated). This is set just before submitting the form  }* 
+	<input type="hidden" id="hiddenUpdatedAssetsJson" name="editedProject.updatedAssetsJson"/>
+	<input type="hidden" id="hiddenRemovedAssetsIdJson" name="editedProject.removedAssetsIdJson"/>
+
 	<table class="projectTaskAssestsTable">
 		<thead>
 			<tr>
@@ -24,7 +36,7 @@
 				<td><img id="trashImg" src="@{'/public/images/trash.png'}"  class="deleteImageLink deleteTaskLink" /></td>
 				<td><span class="hidden hiddenAssetId" data-bind="text: id"></span><input data-bind="value: name"></input></td>
 				<td>
-				
+					<select data-bind="options: assetStatusLabels, value: status, optionsValue: 'name', optionText: 'localizedName'" ></select>
 				</td>
 				<td>
 					<ul data-bind="template : {foreach: assignees, beforeRemove: beforeRemoveAssignee, afterAdd: afterAddAssignee}">

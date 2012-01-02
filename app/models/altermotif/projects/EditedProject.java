@@ -6,6 +6,7 @@ import java.util.Set;
 import web.utils.Utils;
 
 import com.svend.dab.core.beans.profile.UserSummary;
+import com.svend.dab.core.beans.projects.Asset;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.ProjectPep;
 import com.svend.dab.core.beans.projects.SelectedTheme;
@@ -22,8 +23,10 @@ public class EditedProject {
 	// this is always empty when sent from server to browser (actual list of tasks are retrieved thanks to async ajax call)
 	// when this is sent back from browser to server, this only contains the new or updated tasks (in order to avoid clashes if several admins update simultaneously)
 	private String updatedTasksJson;
-	
 	private String removedTasksIdJson;
+	
+	private String updatedAssetsJson;
+	private String removedAssetsIdJson;
 	
 	private EditedProjectData pdata;
 	
@@ -33,6 +36,8 @@ public class EditedProject {
 	private Set<SelectedTheme> cachedParsedThemes;
 	private Set<Task> cachedParsedTasks;
 	private Set<String> cachedParsedRemovedTasksIds;
+	private Set<Asset> cachedParsedAssets;
+	private Set<String> cachedParsedRemovedAssetsIds;
 	
 	
 	private List<UserSummary> confirmedActiveParticipants;
@@ -93,6 +98,7 @@ public class EditedProject {
 		}
 		return cachedParsedTasks;
 	}
+
 	
 	public Set<String> getParsedRemovedTasksIds() {
 		if (cachedParsedRemovedTasksIds == null) {
@@ -104,6 +110,29 @@ public class EditedProject {
 		}
 		return cachedParsedRemovedTasksIds;
 	}
+
+	public Set<Asset> getParsedAssets() {
+		if (cachedParsedAssets == null) {
+			synchronized (this) {
+				if (cachedParsedAssets == null) {
+					cachedParsedAssets = Utils.jsonToSetOfStuf(updatedAssetsJson, Asset[].class);
+				}
+			}
+		}
+		return cachedParsedAssets;
+	}
+	
+	public Set<String> getParsedRemovedAssetsIds() {
+		if (cachedParsedRemovedAssetsIds == null) {
+			synchronized (this) {
+				if (cachedParsedRemovedAssetsIds == null) {
+					cachedParsedRemovedAssetsIds = Utils.jsonToSetOfStuf(removedAssetsIdJson, String[].class);
+				}
+			}
+		}
+		return cachedParsedRemovedAssetsIds;
+	}
+	
 	
 	public void applyToProject(Project project, String userLanguage, ProjectPep pep, String username) {
 		if (project != null) {
@@ -186,6 +215,22 @@ public class EditedProject {
 
 	public void setRemovedTasksIdJson(String removedTasksIdJson) {
 		this.removedTasksIdJson = removedTasksIdJson;
+	}
+
+	public String getRemovedAssetsIdJson() {
+		return removedAssetsIdJson;
+	}
+
+	public void setRemovedAssetsIdJson(String removedAssetsIdJson) {
+		this.removedAssetsIdJson = removedAssetsIdJson;
+	}
+
+	public String getUpdatedAssetsJson() {
+		return updatedAssetsJson;
+	}
+
+	public void setUpdatedAssetsJson(String updatedAssetsJson) {
+		this.updatedAssetsJson = updatedAssetsJson;
 	}
 
 	

@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import com.svend.dab.core.beans.projects.Asset;
 import com.svend.dab.core.beans.projects.ParticipantList;
 import com.svend.dab.core.beans.projects.ParticpantsIdList;
 import com.svend.dab.core.beans.projects.Project;
@@ -29,8 +30,10 @@ public interface IProjectService {
 	 * @param updated
 	 * @param updatedTasks 
 	 * @param removedTasksIds 
+	 * @param removedAssetsIds 
+	 * @param updatedAssets 
 	 */
-	public void updateProjectCore(Project updated, Set<Task> updatedTasks, Set<String> removedTasksIds);
+	public void updateProjectCore(Project updated, Set<Task> updatedTasks, Set<String> removedTasksIds, Set<Asset> updatedAssets, Set<String> removedAssetsIds);
 
 	////////////////////////////////////////////////////
 	// project applications

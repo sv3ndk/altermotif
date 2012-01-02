@@ -237,8 +237,12 @@ function setupSetLanguageAutoComplete() {
 function initSubmitCancelButtons() {
 	
 	$("#editProfileButton").click(function() {
+
+		if (editAssetCtrl != undefined) {
+			// this controller is in projectsEditAssets.js
+			editAssetCtrl.updateSubmittedAssets();
+		}
 		
-		// this is present in ProjectEditTasks.js
 		updateSubmittedTasks();
 		$("div.projectEditionFormContainer form").submit();
 	});

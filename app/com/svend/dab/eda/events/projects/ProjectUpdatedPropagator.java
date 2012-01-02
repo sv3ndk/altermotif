@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.svend.dab.core.beans.DabException;
+import com.svend.dab.core.beans.projects.Asset;
 import com.svend.dab.core.beans.projects.Task;
 import com.svend.dab.core.projects.IProjectFTSService;
 import com.svend.dab.dao.mongo.IProjectDao;
@@ -31,6 +32,18 @@ public class ProjectUpdatedPropagator implements IEventPropagator<ProjectUpdated
 		if (event.getRemovedTasksIds() != null) {
 			for (String removedTasksId : event.getRemovedTasksIds()) {
 				projetRepo.removeTaskFromProject(event.getUpdatedProject().getId(), removedTasksId);
+			}
+		}
+
+		if (event.getUpdatedAssets() != null) {
+			for (Asset newOrUpdatedAsset : event.getUpdatedAssets()) {
+				projetRepo.addOrUpdateProjectAsset(event.getUpdatedProject().getId(), newOrUpdatedAsset);
+			}
+		}
+		
+		if (event.getRemovedAssetsIds() != null) {
+			for (String removedAssetId : event.getRemovedAssetsIds()) {
+				projetRepo.removeAssetFromProject(event.getUpdatedProject().getId(), removedAssetId);
 			}
 		}
 		

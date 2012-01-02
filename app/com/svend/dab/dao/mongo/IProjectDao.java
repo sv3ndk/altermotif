@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.profile.UserSummary;
+import com.svend.dab.core.beans.projects.Asset;
 import com.svend.dab.core.beans.projects.Participant;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.Project;
@@ -79,11 +80,15 @@ public interface IProjectDao {
 	public void launchCountProjectTagsJob();
 
 	////////////////////////////////////
-	// tasks
+	// tasks and assets
 	
 	void addOrUpdateProjectTasks(String id, Task newOrUpdatedTask);
 
 	void removeTaskFromProject(String id, String removedTasksId);
+
+	void addOrUpdateProjectAsset(String id, Asset newOrUpdatedAsset);
+
+	void removeAssetFromProject(String id, String removedAssetId);
 
 
 

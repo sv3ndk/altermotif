@@ -412,6 +412,7 @@ viewProjectConfirmCancelGiveOwnership=You have previously proposed to this user 
 viewProjectConfirmAcceptOwnership=Are you sure your want to accept full ownership of this project? By doing so to get access to the highest level of control.
 viewProjectconfirmRefuseOwnership=Are you sure your want to refuse the ownership of this project? This action cannot be undone unless the current project owner resubmits a new ownership transfer proposal. Are you sure this is what you want to do?
 viewProjectTasks=Tasks
+viewProjectAssets=Assets
 
 projectTaskTodo=to do
 projectTaskDone=done
@@ -428,7 +429,11 @@ projectTaskEditionTableChooseAssigneePopupTitle=Select the assignee
 projectTaskEditionTableNewTaskPopupTitle=New project task
 
 projectAssetEditionTableAddAsset=Add asset
+projectTaskEditionTableAssets=Required assets
 projectAssetEditionTableConfirmRemoveAsset=Are you sure you want to remove this asset from this project?
+projectAssetAvailable=available
+projectAssetMissing=missing
+
 
 # edit project page
 projectEditConfirmButton=Update project

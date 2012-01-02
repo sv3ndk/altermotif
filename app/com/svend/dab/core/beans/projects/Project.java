@@ -62,6 +62,7 @@ public class Project {
 	private STATUS status;
 	
 	private Set<Task> tasks;
+	private Set<Asset> assets;
 
 	// ///////////////////////////
 	// cachedData
@@ -382,11 +383,17 @@ public class Project {
 	}
 	
 	
-	public void prepareTasksUsersummary() {
+	public void prepareTasksAndAssetsUsersummary() {
 		if (tasks != null) {
 			for (Task task : tasks) {
 				task.computeAssigneeSummaries(this);
 				task.getDueDateStr();
+			}
+		}
+		if (assets != null) {
+			for (Asset asset : assets) {
+				asset.computeAssigneeSummaries(this);
+				asset.getDueDateStr();
 			}
 		}
 	}
@@ -493,6 +500,15 @@ public class Project {
 
 	public void setTasks(Set<Task> tasks) {
 		this.tasks = tasks;
+	}
+
+	public Set<Asset> getAssets() {
+		
+		return assets;
+	}
+
+	public void setAssets(Set<Asset> assets) {
+		this.assets = assets;
 	}
 
 

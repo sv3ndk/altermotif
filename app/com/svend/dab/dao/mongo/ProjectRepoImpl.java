@@ -26,6 +26,7 @@ import com.mongodb.WriteResult;
 import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserSummary;
+import com.svend.dab.core.beans.projects.Asset;
 import com.svend.dab.core.beans.projects.Participant;
 import com.svend.dab.core.beans.projects.ProjectOverview;
 import com.svend.dab.core.beans.projects.ProjectSearchRequest;
@@ -252,7 +253,6 @@ public class ProjectRepoImpl implements IProjectDao {
 	
 	@Override
 	public void addOrUpdateProjectTasks(String projectId, Task newOrUpdatedTask) {
-		
 		// upsert this tasks: this just does nothing if the task already exists
 		Query upsertQuery = query(where("_id").is(projectId).and("tasks._id").ne(newOrUpdatedTask.getId()));
 		Update upsertUpdate = new Update().addToSet("tasks", newOrUpdatedTask);
@@ -278,9 +278,32 @@ public class ProjectRepoImpl implements IProjectDao {
 				return collection.update(queryDbo, pullDbo);
 			}
 		});
-
 	}
-	
+
+	public void addOrUpdateProjectAsset(String projectId, Asset newOrUpdatedAsset) {
+		// upsert this tasks: this just does nothing if the asset already exists
+		Query upsertQuery = query(where("_id").is(projectId).and("assets._id").ne(newOrUpdatedAsset.getId()));
+		Update upsertUpdate = new Update().addToSet("assets", newOrUpdatedAsset);
+		WriteResult upsertWriteResult = mongoTemplate.updateFirst(upsertQuery, upsertUpdate, Project.class);
+		
+		// updates the existing asset (this is useless in case of insert, which is ok, the point is to make any update idempotent...)
+		Query updateQuery = query(where("_id").is(projectId).and("assets._id").is(newOrUpdatedAsset.getId()));
+		Update updateUpdate = new Update().set("assets.$", newOrUpdatedAsset);
+		WriteResult updateWriteResult = mongoTemplate.updateFirst(updateQuery, updateUpdate, Project.class);
+		
+	}
+
+	@Override
+	public void removeAssetFromProject(final String projectId, final String removedAssetId) {
+		mongoTemplate.execute("project", new CollectionCallback<WriteResult>() {
+			@Override
+			public WriteResult doInCollection(DBCollection collection) throws MongoException, DataAccessException {
+				BasicDBObject queryDbo = new BasicDBObject("_id", projectId);
+				BasicDBObject pullDbo = new BasicDBObject("$pull", new BasicDBObject("assets", new BasicDBObject("_id", removedAssetId)));
+				return collection.update(queryDbo, pullDbo);
+			}
+		});
+	}
 	
 	// --------------------------------
 	//
@@ -289,6 +312,7 @@ public class ProjectRepoImpl implements IProjectDao {
 		Query query = query(where("_id").is(projectId));
 		mongoTemplate.updateFirst(query, update, Project.class);
 	}
+
 
 
 

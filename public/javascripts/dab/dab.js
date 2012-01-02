@@ -15,13 +15,16 @@ var dabUtils =  {
 			yearRange : yearRange,
 			showAnim : "blind"
 		});
+	},
+	
+	
+	// simple constructor to contain a translated value: name is the key and localizedName is the equivalent in the language of the current user
+	LocalizedTaskStatus : function(name, localizedName) {
+		this.name = name,
+		this.localizedName = localizedName
 	}
 	
-	
 }
-
-
-
 
 
 

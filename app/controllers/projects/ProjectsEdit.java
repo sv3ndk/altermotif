@@ -1,6 +1,5 @@
 package controllers.projects;
 
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -11,7 +10,6 @@ import web.utils.Utils;
 
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.ProjectPep;
-import com.svend.dab.core.beans.projects.Task;
 
 import controllers.Application;
 import controllers.BeanProvider;
@@ -55,7 +53,7 @@ public class ProjectsEdit extends DabLoggedController{
 			}
 			
 		} else {
-			logger.log(Level.WARNING, "could not find project => redirecting to application home");
+			logger.log(Level.WARNING, "could not find project with id ==" + p  + "> redirecting to application home");
 			Application.index();
 		}
 	}
@@ -79,7 +77,7 @@ public class ProjectsEdit extends DabLoggedController{
 			Project updated = BeanProvider.getProjectService().loadProject(flash.get(FLASH_PROJECT_ID), false);
 			
 			if (updated == null) {
-				logger.log(Level.WARNING, "could not retrieve updated project in DB => not updating anything");
+				logger.log(Level.WARNING, "could not retrieve updated project in DB with id == " + flash.get(FLASH_PROJECT_ID) + " => not updating anything");
 			} else {
 				
 				ProjectPep pep = new ProjectPep(updated);
@@ -87,7 +85,7 @@ public class ProjectsEdit extends DabLoggedController{
 				if (pep.isAllowedToEditAtLeastPartially(getSessionWrapper().getLoggedInUserProfileId())) {
 					
 					editedProject.applyToProject(updated, getSessionWrapper().getSelectedLg(), pep, getSessionWrapper().getLoggedInUserProfileId());
-					BeanProvider.getProjectService().updateProjectCore(updated, editedProject.getParsedTasks(), editedProject.getParsedRemovedTasksIds());
+					BeanProvider.getProjectService().updateProjectCore(updated, editedProject.getParsedTasks(), editedProject.getParsedRemovedTasksIds(), editedProject.getParsedAssets(), editedProject.getParsedRemovedAssetsIds());
 					
 				} else {
 					logger.log(Level.WARNING, "user is trying to update a project but is not allowed to! user is " + getSessionWrapper().getLoggedInUserProfileId() + ", project id is " + updated.getId());

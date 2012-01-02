@@ -1,6 +1,6 @@
 <script type="text/javascript">
 
-	var getTaskList = #{jsAction @projects.ProjectsTasksAndAssets.doGetTaskList(':projectId') /};
+	var getProjectTasksList = #{jsAction @projects.ProjectsTasksAndAssets.doGetTaskList(':projectId') /};
 	
 	var localizedTaskStatus = function(name, localizedName) {
 		this.name = name,
