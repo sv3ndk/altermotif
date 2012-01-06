@@ -343,8 +343,6 @@ projectNewConfirmRemoveLinkPopupMessage=Êtes vous certain de vouloir effacer ce
 projectNewAddNewLinkTitle=Ajouter un nouveau lien
 projectNewUsefulLinksExplanation=Adresses des sites web qui peuvent être utile pour ce projet
 projectNewSelectThemes=Choisissez des thèmes
-projectNewUsefulLinksExplanation=Adresses des sites web qui peuvent être utile pour le projet
-projectNewSelectThemes=Choisissez des thèmes
 projectNewSelectThemesExplanation=En choisissant des thèmes correspondant au projet, vous garantisserez que le projet sera montré aux utilisateurs qui cherchent une telle opportunité
 projectNewAddOneTheme=Ajouter un thème
 projectNewSelectTags=Etiquettes du projet
@@ -445,8 +443,12 @@ projectPhotosSetAsMainPhoto=Choisir comme photo principale du projet
 # project search page
 projectSearchKeyWords=chaque projet avec ces mots clés
 projectSearchCategories=dans une de ces catégories
-projectSearchTags=et avec une de ces étiquettes
-projectSearchChooseTagsFromCloud=cliquez sur ces étiquettes populaires afin de les inclure dans votre recherche:
+projectSearchSimpleModeExplanation=***Select one category or click on a tag for direct access to the corresponding result
+projectSearchSimpleModeExplanation_GotoAdvancedMode=***Or click here to switch to
+projectSearchSimpleModeExplanation_GotoAdvancedMode_Link=***advanced search mode
+projectSearchAdvancedModeExplanation_GotoSimpleMode=***Go back to
+projectSearchAdvancedModeExplanation_GotoSimpleMode_Link=***direct search mode
+
 
 # project search results page
 projectSearchResultTitle=résultats de la recherche

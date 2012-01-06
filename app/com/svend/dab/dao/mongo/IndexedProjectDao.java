@@ -65,12 +65,11 @@ public class IndexedProjectDao implements IIndexedProjectDao {
  		
 
 		if (request.getThemes() != null && !request.getThemes().isEmpty()) {
-			
 			List<String> themesWithSubTheme = new LinkedList<String>();
-			
 			for (SelectedTheme st : request.getThemes()) {
 				themesWithSubTheme.add(st.getThemeId() + "_" + st.getSubThemeId());
 			}
+			criterias.add(where("themesWithSubTheme").all(themesWithSubTheme.toArray()));
 		}
 
 		if (criterias.isEmpty()) {

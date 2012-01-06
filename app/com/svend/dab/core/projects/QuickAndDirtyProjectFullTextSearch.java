@@ -108,6 +108,7 @@ public class QuickAndDirtyProjectFullTextSearch implements IProjectFTSService {
 		
 		List<IndexedProject> ips = indexedProjectDao.searchForProjects(request);
 		
+		
 		Set<String> allIds = new HashSet<String>();
 		
 		for (IndexedProject ip : ips) {

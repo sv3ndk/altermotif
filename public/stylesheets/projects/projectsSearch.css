@@ -1,4 +1,18 @@
 
+
+#projectCategorieListOfDropboxes div {
+	padding-right: 20px;
+	float: left;
+}
+
+#projectTagContainer {
+	margin-left: 500px;
+	width: 400px;
+	clear: left;
+	padding: 30px;	
+}
+
+
 #projectSearchContainer {
 	margin-left: 300px;
 	margin-top: 75px;
@@ -17,8 +31,3 @@
 	
 }
 
-
-#projectTagContainer {
-	margin-left: 500px;
-	width: 400px;	
-}

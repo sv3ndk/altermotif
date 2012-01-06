@@ -446,8 +446,11 @@ projectPhotosSetAsMainPhoto=Proje resmi
 # project search page
 projectSearchKeyWords=bu anahtar kelimeleri içeren tüm projeler
 projectSearchCategories=bu kategorilerin herhangi biri
-projectSearchTags=bu etiketlerin herhangi biri
-projectSearchChooseTagsFromCloud=Etiket bulutundan populer olanları seçin ve aramanıza dahil edin:
+projectSearchSimpleModeExplanation=***Select one category or click on a tag for direct access to the corresponding result
+projectSearchSimpleModeExplanation_GotoAdvancedMode=***Or click here to switch to
+projectSearchSimpleModeExplanation_GotoAdvancedMode_Link=***advanced search mode
+projectSearchAdvancedModeExplanation_GotoSimpleMode=***Go back to
+projectSearchAdvancedModeExplanation_GotoSimpleMode_Link=***direct search mode
 
 # project search results page
 projectSearchResultTitle=Arama Sonuçları

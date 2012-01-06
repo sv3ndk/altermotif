@@ -41,7 +41,6 @@ public class Config {
 	public Config() {
 		
 		Theme environment = new Theme("environment", "projectThemeEnvironment");
-		
 		environment.addSubTheme(new SubTheme("protecting", "projectThemeEnvironmentSubThemeProtecting"));
 		environment.addSubTheme(new SubTheme("recycling", "projectThemeEnvironmentSubThemeRecycling"));
 		environment.addSubTheme(new SubTheme("sensitizing", "projectThemeEnvironmentSubThemeSensitizing"));

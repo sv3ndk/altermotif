@@ -186,6 +186,7 @@ public class Utils {
 		HashSet<K> result = new HashSet<K>();
 		
 		if (!Strings.isNullOrEmpty(jsonString)) {
+			
 			try {
 				for (K stuff : jsonMapper.readValue(jsonString, classType)) {
 					result.add(stuff);

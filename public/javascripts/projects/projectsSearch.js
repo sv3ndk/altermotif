@@ -1,64 +1,151 @@
-function init() {
-	initTagMechanics();
-	initThemeLogic();
-}
+///////////////////////////////////////
+var projetSearchRoot;
+
+$(document).ready(function() {
+	projetSearchRoot = new ProjectSearchRoot();
+	projetSearchRoot.init();
+});
 
 
-/////////////////////////////////////////
-// tags
-
-function initTagMechanics() {
-
-	// when clicking on the tag cloud
-	$("#projectTagContainer a").click(function(event) {
-
-		// this is defined in projectsTags, it should update the model, then call us back for updating here again 
-		doAddOneTag($(event.target).text());
-	});
+var ProjectSearchRoot = function() {
 	
-
-	// when clicking on the "add tag" link
-	initAddTagLogic(undefined, updateAllTags);
-}
-
-function updateAllTags(newAllTagsValue) {
+	// sub-controllers
+	this.modeSwitcher = new ProjectModeSwitchController();
+	this.simpleSearchController = new ProjectSearchSimpleSearchController();
+	this.advancedSearchController = new ProjectSearchAdvancedSearchController();
 	
-	$(newAllTagsValue).each(function() {
-		addOneTagInput(this);
-	});
+	///////////////////////
+	// public API
 	
-}
+	this.init = function () {
+		this.modeSwitcher.init();
+		this.simpleSearchController.init();
+		this.advancedSearchController.init();
+	};
+	
+};
 
 
-function addOneTagInput(addedTag) {
 
-	if (addedTag != undefined && addedTag != "") {
-		var thisTagIsAlreadyPresent = false;
-		$("#hiddenTagInputs input").each(function(index, value) {
-			if ($(value).val() == addedTag) {
-				thisTagIsAlreadyPresent = true;
-			}
-			
+
+///////////////////////////////////
+// Controller for switching mode
+
+
+var ProjectModeSwitchController = function() {
+	
+	this.isSimpleMode = true;
+	
+	///////////////////////
+	// public API
+	
+	this.init = function () {
+		var self = this;
+		$("#projectSearchSwitchToAdvancedModeLink").click(function(event) {
+			self.switchMode(false);
+		});
+
+		$("#projectSearchSwitchToSimpleModeLink").click(function(event) {
+			self.switchMode(true);
 		});
 		
-		if (!thisTagIsAlreadyPresent) {
-			var addedTagInput = $("<input type='hidden' name='r.tag'/>");
-			addedTagInput.val(addedTag);
-			$("#hiddenTagInputs").append(addedTagInput);
+	};
+	
+	this.switchMode = function (newMode) {
+		this.isSimpleMode = newMode;
+		if (this.isSimpleMode) {
+			$("#projectSearch_modeAdvanced").hide(250);
+			$("#projectSearch_modeSimple").show(250);
+		} else {
+			$("#projectSearch_modeSimple").hide(250);
+			$("#projectSearch_modeAdvanced").show(250);
 		}
-	}
+	};
+	
+};
+
+
+
+///////////////////////////////////
+// Controller for the simple search mode
+var ProjectSearchSimpleSearchController = function () {
+	
+	// "empty" URL of the search page (stil have to add parameters)
+	this.searchPageLocation;
+	
+	this.init = function () {
+		var self = this;
+		
+		this.searchPageLocation = $("#hiddenLinkToEmptySearch").attr("href");
+		
+		// click on a tag in the tag cloud
+		$("#projectTagContainer").on("click", "a", function(event) { self.searchProjectByTags(self, $(event.target).text()); });
+		
+		// selection of a category:
+		$("#projectCategorieListOfDropboxes").on("change", function(event) {self.searchProjectByTheme(self, $(event.target).val()); });
+		
+	};
+	
+	this.searchProjectByTags = function(self, clickedTag) {
+		if (clickedTag != undefined && clickedTag != "") {
+			window.location = self.searchPageLocation + "?r.tag=" + clickedTag;
+		}
+	};
+	
+	this.searchProjectByTheme = function(self, clickedThemeValue) {
+		if (clickedThemeValue != undefined && clickedThemeValue != "") {
+			window.location = self.searchPageLocation + "?r.themes=" + clickedThemeValue; 
+		}
+	};
 }
 
 
-/////////////////////////////////////////////////////
-// 
 
-function initThemeLogic() {
-	// this is the init function defined in projectThemess.js
-	initAddThemeLogic(undefined, updateAllThemesHiddenForm);
+///////////////////////////////////
+// Controller for the  advanced search mode
+
+
+var ProjectSearchAdvancedSearchController = function () {
+	
+	this.isGoButtonActive = ko.observable(false);
+	
+	///////////////
+	// public API
+	
+	this.init = function () {
+		
+		self = this;
+		
+		// this is the init function defined in projectThemess.js
+		initAddThemeLogic(undefined, function(newAllThemesValue) { self.updateAllThemesHiddenForm(self, newAllThemesValue); });
+		
+		ko.applyBindings(this, $("#projectSearch_modeAdvanced")[0]);
+		
+		$("#projectAdvancedSearchInputText").on("change", function() { self.updateGoButtonState(); });
+		
+	};
+	
+	//this is called back from projectThemes.js any time the list of chosen themes changes
+	this.updateAllThemesHiddenForm = function(self, newAllThemesValue) {
+		$("#hiddenAllThemesJson").val(JSON.stringify(newAllThemesValue));
+		self.updateGoButtonState();
+	};
+	
+	
+	//////////////////
+	// internal methods
+	
+	this.updateGoButtonState = function() {
+		var currentInput = $("#projectAdvancedSearchInputText").val();
+		if (currentInput == undefined || currentInput == "") {
+			var currentChosenProjectThemes = $("#hiddenAllThemesJson").val();
+			this.isGoButtonActive(! (currentChosenProjectThemes == undefined || currentChosenProjectThemes == ""  || currentChosenProjectThemes == "[]"));
+		} else {
+			this.isGoButtonActive(true);
+		}
+	};
+	
 }
 
-//this is called back from projectThemes.js any time the list of chosen themes changes
-function updateAllThemesHiddenForm(newAllThemesValue) {
-	$("#hiddenAllThemesJson").val(JSON.stringify(newAllThemesValue));
-}
+
+

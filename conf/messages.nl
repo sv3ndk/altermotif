@@ -447,8 +447,11 @@ projectPhotosSetAsMainPhoto=Instellen als standaard projectfoto
 # project search page
 projectSearchKeyWords=***any project with these keywords
 projectSearchCategories=***in any of these categories
-projectSearchTags=***and with any of these tags
-projectSearchChooseTagsFromCloud=***Click on these popular tags to include them in the search:
+projectSearchSimpleModeExplanation=***Select one category or click on a tag for direct access to the corresponding result
+projectSearchSimpleModeExplanation_GotoAdvancedMode=***Or click here to switch to
+projectSearchSimpleModeExplanation_GotoAdvancedMode_Link=***advanced search mode
+projectSearchAdvancedModeExplanation_GotoSimpleMode=***Go back to
+projectSearchAdvancedModeExplanation_GotoSimpleMode_Link=***direct search mode
 
 # project search results page
 projectSearchResultTitle=***Search results
