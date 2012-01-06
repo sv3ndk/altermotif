@@ -3,12 +3,12 @@ english=English
 french=Français
 dutch=Nederlands
 turkish=Türkçe
-donate=AlterMotif'e Destek Olun
+donate=Bağış Yapın
 signIn=Oturum Açın  
 orText=veya 
 register=Kaydolun 
 forFreeOfCourse=(Tabii ki Ücretsiz!)
-loggedInAs=current user
+loggedInAs=Şu anki kullanıcı
 logout=Çıkış
 confirmationPopupTitle=Onay
 OkButton=Tamam
@@ -20,24 +20,24 @@ aboutUsPart3=AlterMotif, kendini sürekli yenileyen, hiç sona ermeyen bir proje
 
 
 # error messages
-errorValueRequired=Bu alan boş olamaz
-passwordMayNotBeEmpty=Şifre boş olamaz
+errorValueRequired=Bu alan boş olmamalı
+passwordMayNotBeEmpty=Şifre boş olmamalı
 passwordMustBeIdentical=Girdiğiniz şifreler aynı değil!
-errorUsernameFormat=Kullanıcı adı sadece küçük harf ve sayılardan oluşabilir
-errorLocaltionMissingOrKnown=Bilinmeyen veya listede olmayan yer
+errorUsernameFormat=Kullanıcı adınız küçük harf ve sayılardan oluşmalı
+errorLocaltionMissingOrKnown=Böyle bir yer yok veya biz bilmiyoruz. Tekrar deneyin
 atLeastOneLanguage=En azından bir dil seçmelisiniz
 userAlreadyExist=Bu kullanıcı adı bir başkası tarafından alınmış!
 incorrectEmailFormat=E-Posta adresi uygun formatta değil!
-missingNewMessageRecipient=Lütfen alıcı giriniz
-missingNewMessageSubject=Mesajın konusu boş olamaz
-missingNewMessageContent=Yeni mesaj boş olamaz
+missingNewMessageRecipient=Lütfen alıcı girin
+missingNewMessageSubject=Mesajın konusu boş olmamalı
+missingNewMessageContent=Yeni mesaj boş olmamalı
 newMessageUnknownRecipient=Bilinmeyen alıcı 
 errorIncorrectDate=İstenen tarih formatı GG AAA YYYY
 uploadGenericError=Bilgi yüklenirken hata oluştu
 uploadedFileTooBigError=Yüklemek istediğiniz dosya çok büyük 
 profileUploadCvNotAPdf=Hata: Özgeçmiş PDF formatında olmalı
 profileUploadPhotoNotAnImage=Yüklemeye çalıştığınız dosya resim dosyası değil
-illegalHttpAddressFormat=***Link format incorrect
+illegalHttpAddressFormat=Girdiğiniz bağlantını formatında bir sorun var
 
 
 # note: this message is not displayed by Firefox: they actually refuse to do that because some website exploit this against their users, see here:https://bugzilla.mozilla.org/show_bug.cgi?id=578828 
@@ -63,10 +63,10 @@ homePageDisclaimer=Kullanım Kuralları
 homePagePrivacy=Gizlilik Politikası
 homePageContacts=İletişim
 homePageAboutUs=Hakkımızda
-youDoNotHaveUnreadMessages=Yeni ileti yok
-homeYouHavePendingInvitationNotificationPart1=Bekleyen bağlantı teklifiniz var. Kabul veya reddetmek için
+youDoNotHaveUnreadMessages=Okunmamış mesajınız yok
+homeYouHavePendingInvitationNotificationPart1=Bekleyen bağlantı teklifiniz var.
 homeYouHavePendingInvitationNotificationLinkName=profil sayfanıza gidin
-homeYouHavePendingInvitationNotificationPart2=***in order to accept or reject them.
+homeYouHavePendingInvitationNotificationPart2=Kabul veya reddetmek için
 
 
 # sign-in and login sreen:
@@ -207,7 +207,7 @@ uploadCVPleaseWait=Özgeçmiş yüklenirken lütfen bekleyin
 
 # manage privacy settings screens
 privacySettingsProfileIsActive=Profiliniz Aktif
-privacySettingsMayNotDeactivateExplanation=***You may not deactivate your profile because your are the owner of at least one project or you have received at least one ownership transfer proposal. You must transmit this ownership to another member of this project before being able to deactivate your profile.
+privacySettingsMayNotDeactivateExplanation=Şu anda en az bir projenin sahibi durumundasınız veya birisi size proje sahibi olmanız için teklifte bulunmuş: bu yüzden profilinizi donduramazsınız. Bunun için önce sorumluluklarınızı aynı projede yeralan başka katılımcılara aktarmanız gerekiyor.
 privacySettingsFirstName=Adım şu kişilere görünür olsun 
 privacySettingsLastName=Soyadım şu kişilere görünür olsun 
 privacySettingsNameExplanation=Hem isminiz hem soyisminiz gizli olursa, diğer üyeler sadece kullanıcı isminizi görecekler
@@ -265,58 +265,58 @@ projectStatusDone=Tamamlandı
 
 
 # project themes and sub-themes
-projectThemeEnvironment=***environment
-projectThemeEnvironmentSubThemeProtecting=***protecting
-projectThemeEnvironmentSubThemeRecycling=***recycling
-projectThemeEnvironmentSubThemeSensitizing=***sensitizing
-projectThemeEnvironmentSubThemeCleaning=***cleaning
-projectThemeEnvironmentSubThemeAgriculture=***agriculture
-projectThemeEnvironmentSubThemeOther=***other
+projectThemeEnvironment=Çevre
+projectThemeEnvironmentSubThemeProtecting=Koruma
+projectThemeEnvironmentSubThemeRecycling=Dönüşüm
+projectThemeEnvironmentSubThemeSensitizing=Bilinçlendirme
+projectThemeEnvironmentSubThemeCleaning=Temizlik
+projectThemeEnvironmentSubThemeAgriculture=Tarım
+projectThemeEnvironmentSubThemeOther=Diğer
 
-projectThemeDevelopment=***development
-projectThemeDevelopmentSubThemeCharity=***Charity
-projectThemeDevelopmentSubThemeDevAtHome=***Development at home
-projectThemeDevelopmentSubThemeDevAbroad=***Development abroad
-projectThemeDevelopmentSubThemeSensitizing=***Sensitizing
-projectThemeDevelopmentSubThemeFairTrade=***Fair trade
-projectThemeDevelopmentSubThemeOther=***Other
+projectThemeDevelopment=Kalkınma
+projectThemeDevelopmentSubThemeCharity=Yardım İşleri
+projectThemeDevelopmentSubThemeDevAtHome=Ulusal Kalkınma
+projectThemeDevelopmentSubThemeDevAbroad=Başka Ülkeler
+projectThemeDevelopmentSubThemeSensitizing=Bilinçlendirme
+projectThemeDevelopmentSubThemeFairTrade=İyi Ticaret?
+projectThemeDevelopmentSubThemeOther=Diğer
 
-projectThemeCulture=***culture
-projectThemeCultureSubThemeArts=***arts
-projectThemeCultureSubThemeJournalism=***Journalism
-projectThemeCultureSubThemeEducation=***Education
-projectThemeCultureSubThemeOther=***Other
+projectThemeCulture=Kültür
+projectThemeCultureSubThemeArts=Sanat
+projectThemeCultureSubThemeJournalism=Yazılı Basın
+projectThemeCultureSubThemeEducation=Eğitim
+projectThemeCultureSubThemeOther=Diğer
 
-projectThemeScience=***science
-projectThemeScienceSubThemeEducation=***Education
-projectThemeScienceSubThemeResearch=***Research
-projectThemeScienceSubThemeTechnology=***Technology
-projectThemeScienceSubThemeOther=***Other
+projectThemeScience=Bilim
+projectThemeScienceSubThemeEducation=Eğitim
+projectThemeScienceSubThemeResearch=Araştırma
+projectThemeScienceSubThemeTechnology=Teknoloji
+projectThemeScienceSubThemeOther=Diğer
 
-projectThemeTravel=***travel
-projectThemeTravelSubThemeIntExchange=***International exchange
-projectThemeTravelSubThemeTravellingInGroup=***Travelling in group
-projectThemeTravelSubThemeExploration=***Exploration
-projectThemeTravelSubThemeOther=***Other
+projectThemeTravel=Seyahat
+projectThemeTravelSubThemeIntExchange=Uluslararası Paylaşım/Yer Değiştirme
+projectThemeTravelSubThemeTravellingInGroup=Grup Seyahatleri
+projectThemeTravelSubThemeExploration=Keşif
+projectThemeTravelSubThemeOther=Diğer
 
-projectThemeSports=***sports
-projectThemeSportsSubThemeTeamBuilding=***Team building
-projectThemeSportsSubThemeEvent=***Sporting events
-projectThemeSportsSubThemeCapacity=***Capacity building
-projectThemeSportsSubThemePromotion=***Promotion
-projectThemeSportsSubThemeOther=***Other
+projectThemeSports=Spor
+projectThemeSportsSubThemeTeamBuilding=Takım Kurma
+projectThemeSportsSubThemeEvent=Spor Etkinlikleri
+projectThemeSportsSubThemeCapacity=Kapasite Oluşturma
+projectThemeSportsSubThemePromotion=Tanıtım
+projectThemeSportsSubThemeOther=Diğer
 
-projectThemeSociety=***society
-projectThemeSocietySubThemeUrbanism=***Urbanism
-projectThemeSocietySubThemeFeminism=***Feminism
-projectThemeSocietySubThemeDrugs=***Drugs
-projectThemeSocietySubThemeEntertainment=***Entertainment
-projectThemeSocietySubThemeOther=***Other
+projectThemeSociety=Toplum
+projectThemeSocietySubThemeUrbanism=Şehircilik
+projectThemeSocietySubThemeFeminism=Kadın Hakları/Feminizm
+projectThemeSocietySubThemeDrugs=Uyuşturucu Karşıtı
+projectThemeSocietySubThemeEntertainment=Eğlence
+projectThemeSocietySubThemeOther=Diğer
 
-projectThemeOther=***other
-projectThemeOtherSubThemeReligion=***Religion
-projectThemeOtherSubThemeEmployment=***Employment
-projectThemeOtherSubThemeOther=***other
+projectThemeOther=Diğer
+projectThemeOtherSubThemeReligion=Din
+projectThemeOtherSubThemeEmployment=İstihdam Yaratma 
+projectThemeOtherSubThemeOther=Diğer
 
 
 # create project page
@@ -347,7 +347,7 @@ projectNewAddNewLinkTitle=Yeni link
 projectNewUsefulLinksExplanation=Proje için faydalı olabilecek internet siteleri
 projectNewSelectThemes=Konu seçin
 projectNewSelectThemesExplanation=Projenizin konusunu doğru seçerek, projenizin aynı konuda çalışmak isteyen insanlar tarafından kolayca bulunmasını sağlayın.
-projectNewAddOneTheme=***add a theme...
+projectNewAddOneTheme=Bir konu şeçin
 projectNewSelectTags=Proje etiketleri
 projectNewAddOneTagLink=Etiket ekleyin
 projectNewSelectTagsExplanation=Projenizle ilgili anahtar kelimeler girin. Diğer kullanıcılar projenize daha kolay ulaşabilirler. 
@@ -356,24 +356,24 @@ projectNewSelectLanguageExplanation=Proje'nin iletişim dilini belirleyin
 
 projectNewStartProjectButton=Projeyi Başlat 
 
-projectNewPrivacySettingsMembers=Proje Üyeleri
-projectNewPrivacySettingsAdmin=Proje Yöneticileri
-projectNewPrivacySettingsOwner=Proje sahibi (ben)
+projectNewPrivacySettingsMembers=Proje üyeleri
+projectNewPrivacySettingsAdmin=Proje yöneticileri
+projectNewPrivacySettingsOwner=Proje lideri (ben)
 
 # view project page
 projectViewEditProjet=Projeyi güncelle
 projectViewEndProjet=Projeyi sonlandır
-viewProjectConfirmTerminateProject=***Are you sure you want to terminate this project? If you click ok, the project will be marked as 'done' and no activity will be possible on it anymore (no new members, no tasks nor assets, no forum discussion). Are you sure this is want you want to do?
-projectViewUndoEndProjet=***Restart project
-viewProjectConfirmRestartProject=***Are you sure you want to restart this project?
+viewProjectConfirmTerminateProject=Bu projeyi sonlardırmak istediğine emin misin? Tamam'ı seçersen proje tamamlanmış olarak görünecek ve üzerinde değişiklik yapmak mümkün olmayacak (yeni üyeler, yeni görevler, tartışma forumları eklenemeyecek).
+projectViewUndoEndProjet=Projeyi yeniden başlat
+viewProjectConfirmRestartProject=Bu projeyi yeniden başlatmak istediğine emin misin?
 projectViewCancelProjet=Projeyi iptal et
-viewProjectCannotCancelProjectExplanation=***Canceling a project will permanently remove any trace of this project from altermotif. This action in NOT undo-able. If you are sure this is what you want to do, please first remove any member of this project and then click on 'Cancel project' again.
-viewProjectConfirmCancelProject=***Are you sure you want to cancel this project? This will permanently remove any trace of this project from altermotif. This action in NOT undo-able. Are you sure this is what you want to do?
+viewProjectCannotCancelProjectExplanation=Projeyi iptal edersen, proje ile ilgili her türlü bilgi AlterMotif sayfasından silinecek. Bunu geri alman da mümkün olmayacak. Eğer projeyi iptal etmek istediğine eminsen, lütfen önce proje yeralan tüm katılımcıları sil ve sonra yeniden projeyi iptal et butonuna tıkla.
+viewProjectConfirmCancelProject=Projeyi iptal etmek istediğine emin misin? Bu proye ile ilgili tüm bilgiler silinecek.
 viewProjectGoal=Amaç
-viewProjectNumberOfParticipants=***Number of participants
+viewProjectNumberOfParticipants=Katılımcı Sayısı
 viewProjectLocation=Mekan(lar)
 viewProjectCommunicationIn=İletişim dili
-viewProjectCreatedOn=Tarihinde Yaratıldı
+viewProjectCreatedOn=Şu tarihte yaratıldı
 viewProjectDueDate=Bitiş Tarihi
 viewProjectInitiator=Proje Sahibi
 viewProjectProject=Proje
@@ -384,26 +384,26 @@ viewProjectLinks=Faydalı linkler
 viewProjectParticipants=Katılımcılar
 viewProjectApplications=Uygulamalar
 viewProjectApply=Aday ol
-viewProjectYouHaveAlreadyApplied=Bu projeye zaten aday oldunuz
+viewProjectYouHaveAlreadyApplied=Bu projeye zaten başvuru yapmışsın
 viewProjectCancelApplicationLink=Başvuruyu iptal et
-viewProjectApplyConfirmationText=Bu projeye neden katılmak istediğinizi ve projeye nasıl katkıda bulunabileceğinizi açıklayın.(bu proje için neler yapabilirsiniz?). Bu açıklamalar başvurunuzun ciddiye alınmasına yardımcı olur.
+viewProjectApplyConfirmationText=Bu projeye neden katılmak istediğini ve projeye nasıl katkıda bulunabileceğini açıklayabilirsin.(bu proje için neler yapabilirsin?). Bu açıklamalar başvurunun ciddiye alınmasına yardımcı olur.
 viewProjectApply=Aday ol
-viewProjectConfirmApply=Bu projeye neden katılmak istediğinizi proje yöneticilerine kısaca açıklayın
-viewProjectConfirmCancelApplication=Başvurunuzu iptal etmek istediğinize emin misiniz?
+viewProjectConfirmApply=Bu projeye neden katılmak istediğini proje yöneticilerine kısaca açıkla
+viewProjectConfirmCancelApplication=Başvurunu iptal etmek istediğine emin misin?
 viewProjectViewApplicationText=Başvuru önizleme
 viewProjectViewAcceptContactRequest=Kabul et
 viewProjectViewRejectContactRequest=Reddet
 applicationMoticationTextPopupTitle=Motivasyon mektubu
-viewProjectConfirmRejectApplication=Bu başvuruyu reddetmek istediğinize emin misiniz?
-viewProjectConfirmAcceptApplication=***Are you sure you want to accept this participation application?
-profileViewRemoveParticipant=***remove
-profileViewLeaveProject=***leave
-profileViewMakeAdmin=***make admin
-profileViewMakeMember***=make member
-profileViewGiveOwnerShip=***give ownership
-profileViewCancelGiveOwnerShip=***cancel ownership transfer
-profileViewAcceptOwnerShip=***accept ownership
-profileViewRefuseOwnerShip=***refuse ownership
+viewProjectConfirmRejectApplication=Bu başvuruyu reddetmek istediğine emin misin?
+viewProjectConfirmAcceptApplication=Bu başvuruyu kabul etmek istediğine emin misin?
+profileViewRemoveParticipant=Kaldır
+profileViewLeaveProject=Projeyi terket
+profileViewMakeAdmin=Proje yönetici yap
+profileViewMakeMember=Proje üyesi yap
+profileViewGiveOwnerShip=Liderlik ver
+profileViewCancelGiveOwnerShip=Liderlik verme işlemini iptal et
+profileViewAcceptOwnerShip=Liderliği kabul et
+profileViewRefuseOwnerShip=Liderliği reddet
 viewProjectConfirmRemoveParticipant=***Are you sure you want to remove this participant from this project? Any task or asset assigned to him will now be unassigned.
 viewProjectConfirmLeaveProject=***Are your sure you want to leave this project? Any task or asset currently assigned to you will now become unassigned
 viewProjectconfirMMakeAdmin=***Are you sure you want to grant admin rights to this user on this project? 
@@ -415,19 +415,19 @@ viewProjectconfirmRefuseOwnership=***Are you sure your want to refuse the owners
 viewProjectTasks=***Tasks
 viewProjectAssets=***Assets
 
-projectTaskTodo=***to do
-projectTaskDone=***done
-projectTaskEditionTableTasks=***Required tasks
-projectTaskEditionTableStatus=***Status
-projectTaskEditionTableAssignedTo=***AssignedTo
-projectTaskEditionTableDueDate=***Due date
-projectTaskEditionTableDescription=***Description
-projectTaskEditionTableAddTask=***Add task
-projectTaskEditionTableConfirmRemoveTask=***Are you sure you want to remove this task from this project?
-projectTaskEditionTableConfirmRemoveUser=***Are you sure you want to unasign this task from this user?
+projectTaskTodo=Yapılacaklar
+projectTaskDone=Biten görevler
+projectTaskEditionTableTasks=Yapılması gerekenler
+projectTaskEditionTableStatus=Durum
+projectTaskEditionTableAssignedTo=Şu kişiye verildi
+projectTaskEditionTableDueDate=Bitiş tarihi
+projectTaskEditionTableDescription=Tanım
+projectTaskEditionTableAddTask=Görev ekle
+projectTaskEditionTableConfirmRemoveTask=Bu görevi projeden silmek istediğine emin misin?
+projectTaskEditionTableConfirmRemoveUser=Bu görevi bu kullanıcıdan almak istediğine emin misin?
 projectTaskEditionTableAddAssignee=***add assignee...
 projectTaskEditionTableChooseAssigneePopupTitle=***Select the assignee
-projectTaskEditionTableNewTaskPopupTitle=***New project task 
+projectTaskEditionTableNewTaskPopupTitle=Yeni görev 
  
 projectAssetEditionTableAddAsset=***Add asset
 projectTaskEditionTableAssets=***Required assets
@@ -444,11 +444,11 @@ projectPhotosSetAsMainPhoto=Proje resmi
 
 
 # project search page
-projectSearchKeyWords=***any project with these keywords
-projectSearchCategories=***in any of these categories
-projectSearchTags=***and with any of these tags
-projectSearchChooseTagsFromCloud=***Click on these popular tags to include them in the search:
+projectSearchKeyWords=bu anahtar kelimeleri içeren tüm projeler
+projectSearchCategories=bu kategorilerin herhangi biri
+projectSearchTags=bu etiketlerin herhangi biri
+projectSearchChooseTagsFromCloud=Etiket bulutundan populer olanları seçin ve aramanıza dahil edin:
 
 # project search results page
-projectSearchResultTitle=***Search results
-projectSearchResultBackToSearchPage=***back to search page
+projectSearchResultTitle=Arama Sonuçları
+projectSearchResultBackToSearchPage=Arama sayfasına geri dön
