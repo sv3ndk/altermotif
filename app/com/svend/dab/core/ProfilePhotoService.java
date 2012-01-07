@@ -105,23 +105,24 @@ public class ProfilePhotoService implements IProfilePhotoService {
 			Photo removed = profile.getPhoto(deletedPhotoIdx);
 			if (removed == null) {
 				logger.log(Level.WARNING, "It seems the profile refused to remove photo with index == " + deletedPhotoIdx + " => not propagating any event");
-			}
-
-			if (profile.getMainPhotoIndex() < deletedPhotoIdx) {
-				userProfileRepo.removeOnePhoto(profile.getUsername(), removed);
-			} else if (profile.getMainPhotoIndex() == deletedPhotoIdx) {
-				userProfileRepo.removeOnePhotoAndResetMainPhotoIndex(profile.getUsername(), removed);
-				profile.setMainPhotoIndex(0);
-				emitter.emit(new UserSummaryUpdated(new UserSummary(profile)));
 			} else {
-				userProfileRepo.removeOnePhotoAndDecrementMainPhotoIndex(profile.getUsername(), removed);
-			}
-
-			// actual removal of the file from s3 is done asynchronously, in order to improve gui response time
-			try {
-				emitter.emit(new BinaryNoLongerRequiredEvent(removed.getNormalPhotoLink()));
-			} catch (DabException e) {
-				logger.log(Level.WARNING, "Could not emit event for removing one photo of profile " + profile.getUsername() + " => this might lead to dead space in s3 storage", e);
+				
+				if (profile.getMainPhotoIndex() < deletedPhotoIdx) {
+					userProfileRepo.removeOnePhoto(profile.getUsername(), removed);
+				} else if (profile.getMainPhotoIndex() == deletedPhotoIdx) {
+					userProfileRepo.removeOnePhotoAndResetMainPhotoIndex(profile.getUsername(), removed);
+					profile.setMainPhotoIndex(0);
+					emitter.emit(new UserSummaryUpdated(new UserSummary(profile)));
+				} else {
+					userProfileRepo.removeOnePhotoAndDecrementMainPhotoIndex(profile.getUsername(), removed);
+				}
+	
+				// actual removal of the file from s3 is done asynchronously, in order to improve gui response time
+				try {
+					emitter.emit(new BinaryNoLongerRequiredEvent(removed.getNormalPhotoLink()));
+				} catch (DabException e) {
+					logger.log(Level.WARNING, "Could not emit event for removing one photo of profile " + profile.getUsername() + " => this might lead to dead space in s3 storage", e);
+				}
 			}
 		}
 	}
