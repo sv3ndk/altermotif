@@ -64,19 +64,19 @@ var Confirm =  {
 				]
 			});
 			
-			// simple popup message displayed to the user
-			$("#messagePopup").dialog({
-				autoOpen : false,
-				width: 400,
-				"buttons" : [ 
-		             {
-		            	 text : okLabelValue,
-		            	 click : function () {
-		            		 $("#messagePopup").dialog("close");		
-		            	 }
-		             }
-		           ]
-			});
+//			// simple popup message displayed to the user
+//			$("#messagePopup").dialog({
+//				autoOpen : false,
+//				width: 400,
+//				"buttons" : [ 
+//		             {
+//		            	 text : okLabelValue,
+//		            	 click : function () {
+//		            		 $("#messagePopup").dialog("close");		
+//		            	 }
+//		             }
+//		           ]
+//			});
 			
 		};
 		

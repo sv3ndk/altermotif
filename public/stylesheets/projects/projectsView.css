@@ -58,3 +58,16 @@
 #projectTaskListTable tr:hover {
 	background-color: #EFEFEF;
 }
+
+/* *****************************
+* project forum
+******************************* */
+
+#projectForumTopButton {
+	float: right;
+}
+
+#threadContainer {
+	border: thin solid;
+	
+}

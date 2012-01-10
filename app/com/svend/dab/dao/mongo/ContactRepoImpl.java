@@ -1,6 +1,7 @@
 package com.svend.dab.dao.mongo;
 
 import static org.springframework.data.mongodb.core.query.Criteria.where;
+
 import static org.springframework.data.mongodb.core.query.Query.query;
 
 import java.util.LinkedList;

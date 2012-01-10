@@ -1,5 +1,7 @@
 package controllers.projects;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -8,6 +10,7 @@ import models.altermotif.MappedValue;
 import models.altermotif.projects.ProjectViewVisibility;
 import web.utils.Utils;
 
+import com.svend.dab.core.beans.projects.ForumPost;
 import com.svend.dab.core.beans.projects.Participant;
 import com.svend.dab.core.beans.projects.ParticipantList;
 import com.svend.dab.core.beans.projects.ParticpantsIdList;
@@ -29,6 +32,7 @@ public class ProjectsView extends DabController {
 		if (project != null && project.getStatus() != STATUS.cancelled) {
 			renderArgs.put("visitedProject", project);
 			renderArgs.put("projectVisibility", new ProjectViewVisibility(new ProjectPep(project), project, getSessionWrapper().getLoggedInUserProfileId()));
+			renderArgs.put("allThreads", BeanProvider.getProjectForumThreadDao().loadProjectForumThreads(p));
 			Utils.addAllPossibleLanguageNamesToRenderArgs(getSessionWrapper(), renderArgs);
 			render();
 		} else {
@@ -435,5 +439,31 @@ public class ProjectsView extends DabController {
 			logger.log(Level.WARNING, "user trying retrieve participant content data of non existant project : " + projectId + " this should be impossible!");
 		}
 	}
+	
+	/////////////////////////////////////////
+	// project forum
+	
+	/**
+	 * @param projectId
+	 * @param threadTitle
+	 */
+	public static void doAddThread(String projectId, String threadTitle) {
+		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
+		if (project != null) {
+			BeanProvider.getProjectService().createdNewForumThread(projectId, threadTitle);
+			projectsView(projectId);
+		} else {
+			logger.log(Level.WARNING, "user trying to add a thread to a non existant project : " + projectId + " this should be impossible!");
+		}
+	}
+	
+	/**
+	 * @param threadId
+	 */
+	public static void doRetrieveForumPosts(String threadId) {
+		List<ForumPost> posts = BeanProvider.getForumPostDao().getPosts(threadId);
+		renderJSON(posts);
+	}
+
 
 }

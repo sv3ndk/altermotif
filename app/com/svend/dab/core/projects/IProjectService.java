@@ -78,5 +78,11 @@ public interface IProjectService {
 	
 	public List<RankedTag> getPopularTags();
 	
+	/////////////////////////////////////////////
+	// project forum
+	
+	public void createdNewForumThread(String projectId, String threadTitle);
+
+	
 	
 }

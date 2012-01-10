@@ -63,9 +63,11 @@ public class Project {
 	
 	private Set<Task> tasks;
 	private Set<Asset> assets;
+	
 
 	// ///////////////////////////
 	// cachedData
+
 
 	@Transient
 	private Participant cachedInitiator;

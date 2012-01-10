@@ -11,22 +11,23 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.jruby.parser.ReOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.Strings;
 import com.svend.dab.core.beans.Config;
+import com.svend.dab.core.beans.projects.Asset;
+import com.svend.dab.core.beans.projects.ForumThread;
 import com.svend.dab.core.beans.projects.Participant;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
-import com.svend.dab.core.beans.projects.Asset;
 import com.svend.dab.core.beans.projects.ParticipantList;
 import com.svend.dab.core.beans.projects.ParticpantsIdList;
 import com.svend.dab.core.beans.projects.Project;
-import com.svend.dab.core.beans.projects.Task;
 import com.svend.dab.core.beans.projects.Project.STATUS;
 import com.svend.dab.core.beans.projects.RankedTag;
 import com.svend.dab.core.beans.projects.TagCount;
+import com.svend.dab.core.beans.projects.Task;
+import com.svend.dab.core.dao.IForumThreadDao;
 import com.svend.dab.core.dao.ITagCountDao;
 import com.svend.dab.dao.mongo.IProjectDao;
 import com.svend.dab.eda.EventEmitter;
@@ -56,6 +57,9 @@ public class ProjectService implements IProjectService {
 	@Autowired
 	private ITagCountDao tagCountDao;
 
+	@Autowired
+	private IForumThreadDao forumThreadDao; 
+	
 	@Autowired
 	private Config config;
 	
@@ -349,5 +353,13 @@ public class ProjectService implements IProjectService {
 	}
 
 
+	
+	/////////////////////////////////////////////
+	// project forum
+
+	@Override
+	public void createdNewForumThread(String projectId, String threadTitle) {
+		forumThreadDao.createNewThread(new ForumThread(projectId, threadTitle, new Date(), 0));
+	}
 
 }

@@ -409,8 +409,14 @@ viewProjectCnfirmGiveOwnership=Êtes vous certain de vouloir transférer la posi
 viewProjectConfirmCancelGiveOwnership=Vous avez proposé à ce participant de reprendra la position du leader de ce projet, mais il n'a pas encore accepté. Si vous cliquez sur 'OK', cette proposition sera retiré. Est-ce bien ce que vous désirez?
 viewProjectConfirmAcceptOwnership=Êtes-vous certain de vouloir reprendre la position du leader de ce projet? Ainsi, vous aurez accès au plus haut niveau de contrôle.
 viewProjectconfirmRefuseOwnership=Êtes vous certain de vouloir refuser la position du leader de ce projet? Cette action ne pourra pas être défaite à moins que le leader vous renvoi cette demande. Est-ce bien ce que vous désirez?
-viewProjectTasks=Tâches
+viewProjectTasks=Tâches  
 viewProjectAssets=Moyens
+
+viewProjectForum=***Forum
+viewProjectForumAddThread=***Add a new thread
+viewProjectForumAddThreadPopupTitle=***New thread name
+viewProjectForumCreationDate=***creation date
+viewProjectForumPosts=***posts
 
 
 projectTaskTodo=à faire

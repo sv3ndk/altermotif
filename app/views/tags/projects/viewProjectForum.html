@@ -1,0 +1,41 @@
+<script type="text/javascript">
+
+	var getAllPosts = #{jsAction @projects.ProjectsView.doRetrieveForumPosts(':threadId') /};
+
+</script>
+
+<div id="projectForum">
+
+	<span class="toggleLink dabLink">&{'viewProjectForum'}) </span>
+	<div class="toggleContainer">
+	
+		<div id="projectForumTopButton">
+			<span id="viewProjectForumAddThreadLink" class="dabLink">&{'viewProjectForumAddThread'}</span>
+		</div>
+		
+		<div id="threadContainer">
+			#{list items:_allThreads, as:"thread"}
+				<div>
+					<span class="dabLink">${thread.title}</span>
+					<span class="hidden">${thread.id}</span>
+					<span> &{'viewProjectForumCreationDate'}: </span>
+					<span>${thread.creationDate.format(controllers.BeanProvider.config.dateDisplayFormat)}</span>
+					<span> - ${thread.numberOfPosts} </span>
+					<span>&{'viewProjectForumPosts'} </span>
+				</div>
+			#{/list}
+		</div>
+	</div>
+</div>
+
+<div id="addNewThreadCreationPopup" title="&{'viewProjectForumAddThreadPopupTitle'}">
+	<input type="text" size="20"/>
+</div>
+
+
+<div id="addNewThreadHiddenForm" class="hidden">
+	{#form @projects.ProjectsView.doAddThread}
+		<input type="hidden" name="projectId" id="addNewThreadHiddenFormProjectId"></input>
+		<input type="hidden" name="threadTitle" id="addNewThreadHiddenFormThreadTitle"></input>
+	{/#form}
+</div>

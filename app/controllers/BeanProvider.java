@@ -8,6 +8,8 @@ import com.svend.dab.core.IProfilePhotoService;
 import com.svend.dab.core.IUserProfileService;
 import com.svend.dab.core.UserProfileService;
 import com.svend.dab.core.beans.Config;
+import com.svend.dab.core.dao.IForumPostDao;
+import com.svend.dab.core.dao.IForumThreadDao;
 import com.svend.dab.core.projects.IProjectFTSService;
 import com.svend.dab.core.projects.IProjectPhotoService;
 import com.svend.dab.core.projects.IProjectService;
@@ -46,6 +48,10 @@ public class BeanProvider {
 		return (IProjectService) Spring.getBeanOfType(IProjectService.class);
 	}
 
+	public static IForumThreadDao  getProjectForumThreadDao() {
+		return (IForumThreadDao) Spring.getBeanOfType(IForumThreadDao.class);
+	}
+
 	public static IProjectFTSService  getProjectFullTextSearchService() {
 		return (IProjectFTSService) Spring.getBeanOfType(IProjectFTSService.class);
 	}
@@ -60,6 +66,11 @@ public class BeanProvider {
 
 	public static AdminService getAdminService() {
 		return (AdminService) Spring.getBeanOfType(AdminService.class);
+	}
+
+	public static IForumPostDao getForumPostDao() {
+		return (IForumPostDao) Spring.getBeanOfType(IForumPostDao.class);
+		
 	}
 
 }

@@ -417,6 +417,12 @@ viewProjectconfirmRefuseOwnership=***Are you sure your want to refuse the owners
 viewProjectTasks=***Tasks
 viewProjectAssets=***Assets
 
+viewProjectForum=***Forum
+viewProjectForumAddThread=***Add a new thread
+viewProjectForumAddThreadPopupTitle=***New thread name
+viewProjectForumCreationDate=***creation date
+viewProjectForumPosts=***posts
+
 projectTaskTodo=***to do
 projectTaskDone=***done
 projectTaskEditionTableTasks=***Required tasks
