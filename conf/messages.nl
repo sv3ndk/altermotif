@@ -420,8 +420,13 @@ viewProjectAssets=***Assets
 viewProjectForum=***Forum
 viewProjectForumAddThread=***Add a new thread
 viewProjectForumAddThreadPopupTitle=***New thread name
+viewProjectForumAddThreadPopupPublicThread=***Public thread
 viewProjectForumCreationDate=***creation date
 viewProjectForumPosts=***posts
+viewProjectForumDeleteThread=***delete
+viewProjectForumMakePrivate=***make private
+viewProjectForumMakePublic=***make public
+
 
 projectTaskTodo=***to do
 projectTaskDone=***done

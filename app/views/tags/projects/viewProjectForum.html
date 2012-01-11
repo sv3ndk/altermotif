@@ -1,41 +1,69 @@
 <script type="text/javascript">
-
-	var getAllPosts = #{jsAction @projects.ProjectsView.doRetrieveForumPosts(':threadId') /};
-
+	var addNewThread = #{jsAction @projects.ProjectsView.doAddThread(':projectId', ':threadTitle', ':isThreadPublic') /};
 </script>
 
 <div id="projectForum">
 
-	<span class="toggleLink dabLink">&{'viewProjectForum'}) </span>
+	<span class="toggleLink dabLink">&{'viewProjectForum'}</span>
 	<div class="toggleContainer">
 	
-		<div id="projectForumTopButton">
-			<span id="viewProjectForumAddThreadLink" class="dabLink">&{'viewProjectForumAddThread'}</span>
-		</div>
-		
-		<div id="threadContainer">
+		#{if _projectVisibility.addForumThreadLinkVisible}
+			<div id="projectForumTopButton">
+				<span id="viewProjectForumAddThreadLink" class="dabLink">&{'viewProjectForumAddThread'}</span>
+			</div>
+		#{/if }
+
+		*{ threads already present when the use navigates here => written statically with Play 
+		   (this helps web crawlers to discover the content of the forum, which is important because projects are public...)}*		
+		<div class="threadContainer">
 			#{list items:_allThreads, as:"thread"}
-				<div>
-					<span class="dabLink">${thread.title}</span>
-					<span class="hidden">${thread.id}</span>
-					<span> &{'viewProjectForumCreationDate'}: </span>
-					<span>${thread.creationDate.format(controllers.BeanProvider.config.dateDisplayFormat)}</span>
-					<span> - ${thread.numberOfPosts} </span>
-					<span>&{'viewProjectForumPosts'} </span>
-				</div>
+				#{if _projectVisibility.isForumThreadVisible(thread.isThreadPublic)}
+					#{if thread.isThreadPublic}
+					<div class="forumThread">
+					#{/if}
+					#{else}
+					<div class="forumThread private">
+					#{/else}
+						<span class="dabLink">${thread.title}</span>
+						<span class="hidden">${thread.id}</span>
+						<span> &{'viewProjectForumCreationDate'}: </span>
+						<span>${thread.creationDate.format(controllers.BeanProvider.config.dateDisplayFormat)}</span>
+						<span class="numberOfPosts">${thread.numberOfPosts} &{'viewProjectForumPosts'} </span>
+						
+						#{if _projectVisibility.isForumThreadUpdatesLinkVisible()}
+							<div class="threadEditLinks">
+								#{if thread.isThreadPublic}
+									<span class="dabLink">&{'viewProjectForumMakePrivate'}</span>
+								#{/if}
+								#{else}
+									<span class="dabLink">&{'viewProjectForumMakePublic'}</span>
+								#{/else}
+								<span class="dabLink">&{'viewProjectForumDeleteThread'}</span>
+							</div>
+						#{/if}
+						
+					</div>
+				#{/if}
 			#{/list}
 		</div>
+		
+		*{ threads created now by this user => written dynamically with knockout}*		
+		<div id="dynamicallyCreatedThreads" class="threadContainer" data-bind="template : {foreach: listCreatedThread, afterAdd: afterAddThread}">
+			<div data-bind="css: {'forumThread': isThreadPublic, 'forumThread private': !isThreadPublic}" class="">
+				<span class="dabLink" data-bind="text: title"></span>
+				<span class="hidden" data-bind="text: id"></span>
+				<span> &{'viewProjectForumCreationDate'}: </span>
+				<span data-bind="text: creationDate"></span>
+				<span class="numberOfPosts"><span data-bind="text: numberOfPosts"></span> &{'viewProjectForumPosts'} </span>
+			</div>
+		</div>
+		
 	</div>
 </div>
 
 <div id="addNewThreadCreationPopup" title="&{'viewProjectForumAddThreadPopupTitle'}">
-	<input type="text" size="20"/>
-</div>
-
-
-<div id="addNewThreadHiddenForm" class="hidden">
-	{#form @projects.ProjectsView.doAddThread}
-		<input type="hidden" name="projectId" id="addNewThreadHiddenFormProjectId"></input>
-		<input type="hidden" name="threadTitle" id="addNewThreadHiddenFormThreadTitle"></input>
-	{/#form}
+	<input type="text" class="threadName" size="50"/>
+	<br />
+	<br />
+	<label><input type="checkbox"  class="threadVisibility" checked > &{'viewProjectForumAddThreadPopupPublicThread'}</label>
 </div>

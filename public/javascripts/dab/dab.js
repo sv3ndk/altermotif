@@ -28,6 +28,28 @@ var dabUtils =  {
 
 
 
+//////////////////////////////////////////
+//common Knockout stuff
+//////////////////////////////////////////
+
+var commonKOStuff = {
+
+	genericBeforeRemoveElement : function(elem) {
+		if (elem.nodeType === 1) {
+			$(elem).slideUp(function() {
+				$(elem).remove();
+			});
+		}
+	},
+
+	genericAfterAddElement : function t(elem) {
+		if (elem.nodeType === 1) {
+			$(elem).hide().slideDown();
+		}
+	}
+}
+
+
 
 
 

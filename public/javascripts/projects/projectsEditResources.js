@@ -112,23 +112,3 @@ function StaticResource(id, name, status, dueDateStr, assignees, description) {
 	this.description = description;
 }
 
-// ////////////////////////////////////////
-// common Knockout stuff
-// ////////////////////////////////////////
-
-var commonKOStuff = {
-
-	genericBeforeRemoveElement : function(elem) {
-		if (elem.nodeType === 1) {
-			$(elem).slideUp(function() {
-				$(elem).remove();
-			});
-		}
-	},
-
-	genericAfterAddElement : function t(elem) {
-		if (elem.nodeType === 1) {
-			$(elem).hide().slideDown();
-		}
-	}
-}

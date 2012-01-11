@@ -65,9 +65,28 @@
 
 #projectForumTopButton {
 	float: right;
+	margin: 10px;
 }
 
-#threadContainer {
-	border: thin solid;
-	
+.threadContainer {
+	clear: right;
 }
+
+
+.forumThread {
+	padding: 10px;
+	border: 1px solid;
+}
+
+.forumThread.private {
+	background-color: yellow;
+}
+
+.forumThread .numberOfPosts{
+	float: right;
+}
+
+.threadEditLinks {
+	text-align: right;	
+}
+

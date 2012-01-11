@@ -2,25 +2,37 @@ package com.svend.dab.core.beans.projects;
 
 import java.util.Date;
 
+import org.springframework.data.annotation.Transient;
+
+import web.utils.Utils;
+
+/**
+ * @author svend
+ *
+ */
 public class ForumThread {
 
 	private String id;
 	private String projectId;
 	private String title;
 	private Date creationDate;
+	private boolean isThreadPublic;
+
+	@Transient
+	private String creationDateStr;
+
 	private int numberOfPosts = 0;
 
-	public ForumThread() {
-		super();
-	}
-
-	public ForumThread(String projectId, String title, Date creationDate,
-			int numberOfPosts) {
+	public ForumThread(String projectId, String title, Date creationDate, int numberOfPosts, boolean isThreadPublic) {
 		super();
 		this.projectId = projectId;
 		this.title = title;
 		this.creationDate = creationDate;
 		this.numberOfPosts = numberOfPosts;
+		this.isThreadPublic = isThreadPublic;
+		
+		// makes sure it is translated directly
+		getCreationDateStr();
 	}
 
 	public String getId() {
@@ -44,6 +56,7 @@ public class ForumThread {
 	}
 
 	public void setCreationDate(Date creationDate) {
+		getCreationDateStr();
 		this.creationDate = creationDate;
 	}
 
@@ -61,6 +74,19 @@ public class ForumThread {
 
 	public void setProjectId(String projectId) {
 		this.projectId = projectId;
+	}
+
+	public String getCreationDateStr() {
+		creationDateStr = Utils.formatDate(creationDate);
+		return creationDateStr;
+	}
+
+	public boolean isThreadPublic() {
+		return isThreadPublic;
+	}
+
+	public void setThreadPublic(boolean isThreadPublic) {
+		this.isThreadPublic = isThreadPublic;
 	}
 
 }

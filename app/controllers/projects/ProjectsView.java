@@ -11,6 +11,7 @@ import models.altermotif.projects.ProjectViewVisibility;
 import web.utils.Utils;
 
 import com.svend.dab.core.beans.projects.ForumPost;
+import com.svend.dab.core.beans.projects.ForumThread;
 import com.svend.dab.core.beans.projects.Participant;
 import com.svend.dab.core.beans.projects.ParticipantList;
 import com.svend.dab.core.beans.projects.ParticpantsIdList;
@@ -447,11 +448,13 @@ public class ProjectsView extends DabController {
 	 * @param projectId
 	 * @param threadTitle
 	 */
-	public static void doAddThread(String projectId, String threadTitle) {
+	public static void doAddThread(String projectId, String threadTitle, boolean isThreadPublic) {
 		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
 		if (project != null) {
-			BeanProvider.getProjectService().createdNewForumThread(projectId, threadTitle);
-			projectsView(projectId);
+			
+			// TODO: check security here
+			ForumThread createdThread = BeanProvider.getProjectService().createdNewForumThread(projectId, threadTitle, isThreadPublic);
+			renderJSON(createdThread);
 		} else {
 			logger.log(Level.WARNING, "user trying to add a thread to a non existant project : " + projectId + " this should be impossible!");
 		}

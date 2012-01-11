@@ -14,6 +14,7 @@
 	<script src="@{'/public/javascripts/dabGeocoder.js'}" type="text/javascript" charset="${_response_encoding}"></script>
 	<script src="@{'/public/javascripts/language.js'}" type="text/javascript" charset="${_response_encoding}"></script>
 	<script src="@{'/public/javascripts/projects/projectsView.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+	<script src="@{'/public/javascripts/projects/viewProjectForum.js'}" type="text/javascript" charset="${_response_encoding}"></script>
 	
 	<script type="text/javascript">
 	
@@ -129,7 +130,7 @@
 
 		#{projects.viewProjectAssets assetList:visitedProject.assets /}
 		
-		#{projects.viewProjectForum allThreads:allThreads /}
+		#{projects.viewProjectForum allThreads:allThreads, projectVisibility:projectVisibility /}
 		
 	</div>
 </div>

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.svend.dab.core.beans.projects.Asset;
+import com.svend.dab.core.beans.projects.ForumThread;
 import com.svend.dab.core.beans.projects.ParticipantList;
 import com.svend.dab.core.beans.projects.ParticpantsIdList;
 import com.svend.dab.core.beans.projects.Project;
@@ -81,7 +82,7 @@ public interface IProjectService {
 	/////////////////////////////////////////////
 	// project forum
 	
-	public void createdNewForumThread(String projectId, String threadTitle);
+	public ForumThread createdNewForumThread(String projectId, String threadTitle, boolean isThreadPublic);
 
 	
 	

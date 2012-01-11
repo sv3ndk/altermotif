@@ -8,6 +8,6 @@ public interface IForumThreadDao {
 
    public List<ForumThread> loadProjectForumThreads(String projectId);
 
-   public void createNewThread(ForumThread forumThread);
+   public ForumThread createNewThread(ForumThread forumThread);
 
 }

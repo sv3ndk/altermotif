@@ -33,8 +33,9 @@ public class ForumThreadDao implements IForumThreadDao {
 
 
 	@Override
-	public void createNewThread(ForumThread forumThread) {
+	public ForumThread createNewThread(ForumThread forumThread) {
 		mongoTemplate.save(forumThread);
+		return forumThread;
 	}
 
 }
