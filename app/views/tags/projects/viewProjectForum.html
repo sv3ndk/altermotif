@@ -1,5 +1,8 @@
 <script type="text/javascript">
 	var addNewThread = #{jsAction @projects.ProjectsView.doAddThread(':projectId', ':threadTitle', ':isThreadPublic') /};
+	
+	var confirmMakePrivateText = "&{'viewProjectForumConfirmMakePrivate'}";
+	var confirmMakePublicText = "&{'viewProjectForumConfirmMakePublic'}"
 </script>
 
 <div id="projectForum">
@@ -15,38 +18,42 @@
 
 		*{ threads created now by this user => written dynamically with knockout}*		
 		<div id="dynamicallyThreads" class="threadContainer" data-bind="template : {foreach: listCreatedThread, afterAdd: afterAddThread}">
-			<div data-bind="css: {'forumThread': isThreadPublic, 'forumThread private': !isThreadPublic}" class="">
+			<div data-bind="css: {'forumThread': isThreadPublic(), 'forumThreadPrivate': ! isThreadPublic() }" class="">
 				<span class="dabLink" data-bind="text: title"></span>
-				<span class="hidden" data-bind="text: id"></span>
+				<span class="hidden hiddenThreadId" data-bind="text: id"></span>
 				<span> &{'viewProjectForumCreationDate'}: </span>
 				<span data-bind="text: creationDate"></span>
 				<span class="numberOfPosts"><span data-bind="text: numberOfPosts"></span> &{'viewProjectForumPosts'} </span>
+				<div class="threadEditLinks" data-bind="visible: userMayUpdate">
+					<span class="dabLink makeprivate" data-bind="visible: isThreadPublic()">&{'viewProjectForumMakePrivate'}</span>
+					<span class="dabLink makepublic" data-bind="visible: ! isThreadPublic() ">&{'viewProjectForumMakePublic'}</span>
+					<span class="dabLink">&{'viewProjectForumDeleteThread'}</span>
+				</div>
 			</div>
 		</div>
 		
 	</div>
 </div>
 
-
-
-		*{ threads already present when the use navigates here => written statically with Play 
-		   (this helps web crawlers to discover the content of the forum, which is important because projects are public...)
-		   this is hidden by javascript-enabled browsers when the page is loaded
-		   }*		
-		<div id="forumData">
-			#{list items:_allThreads, as:"thread"}
-				#{if _projectVisibility.isForumThreadVisible(thread.isThreadPublic)}
-					<div >
-						<span class="threadId">${thread.id}</span>
-						<span class="threadIsPublic">${thread.isThreadPublic}</span>
-						<span class="threadTitle">${thread.title}</span>
-						<span class="threadCreationDate">${thread.creationDate.format(controllers.BeanProvider.config.dateDisplayFormat)}</span>
-						<span class="numberOfPosts">${thread.numberOfPosts} &{'viewProjectForumPosts'} </span>
-						<span class="threadUserMayUpdate">${_projectVisibility.isForumThreadUpdatesLinkVisible()}</span>
-					</div>
-				#{/if}
-			#{/list}
-		</div>
+*{ 
+   threads already present when the use navigates here => written statically with Play 
+   (this helps web crawlers to discover the content of the forum, which is important because projects are public...)
+   this is hidden by javascript-enabled browsers when the page is loaded
+ }*		
+<div id="forumData">
+	#{list items:_allThreads, as:"thread"}
+		#{if _projectVisibility.isForumThreadVisible(thread.isThreadPublic)}
+			<div >
+				<span class="threadId">${thread.id}</span>
+				<span class="threadIsPublic">${thread.isThreadPublic}</span>
+				<span class="threadTitle">${thread.title}</span>
+				<span class="threadCreationDate">${thread.creationDate.format(controllers.BeanProvider.config.dateDisplayFormat)}</span>
+				<span class="numberOfPosts">${thread.numberOfPosts}</span>
+				<span class="threadUserMayUpdate">${_projectVisibility.isForumThreadUpdatesLinkVisible()}</span>
+			</div>
+		#{/if}
+	#{/list}
+</div>
 
 
 <div id="addNewThreadCreationPopup" title="&{'viewProjectForumAddThreadPopupTitle'}">

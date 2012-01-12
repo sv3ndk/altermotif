@@ -16,6 +16,7 @@ var dabProjectForumLib = {
 
 		this.projectViewForumModel = new dabProjectForumLib.ProjectViewForumModel();
 		this.createNewThreadDialogController = new dabProjectForumLib.CreateNewThreadDialogController(this.projectViewForumModel);
+		this.clickedThreadId;
 
 		// ////////////////////
 		// public API
@@ -29,6 +30,10 @@ var dabProjectForumLib = {
 			$("#viewProjectForumAddThreadLink").click(function() {
 				self.whenUserClicksOnAddThread(self);
 			});
+
+			// click on make private
+			new Confirm.AskAndProceed(this, "#dynamicallyThreads", "span.dabLink.makeprivate", confirmMakePrivateText, this.onClickOnMakeThreadPrivate, this.afterUserConfirmsMakeThreadPrivate).init();
+			new Confirm.AskAndProceed(this, "#dynamicallyThreads", "span.dabLink.makepublic", confirmMakePublicText, this.onClickOnMakeThreadPrivate, this.afterUserConfirmsMakeThreadPublic).init();
 
 			ko.applyBindings(this.projectViewForumModel, $("#dynamicallyCreatedThreads")[0]);
 		};
@@ -45,8 +50,23 @@ var dabProjectForumLib = {
 			self.createNewThreadDialogController.open();
 		};
 
+		this.onClickOnMakeThreadPrivate = function(self, event) {
+			self.clickedThreadId = $(event.target).parent().parent().find("span.hiddenThreadId").text();
+		};
 		
+		this.onClickOnMakeThreadPublic = function(self, event) {
+			this.onClickOnMakeThreadPrivate(self, event);
+		};
 		
+		this.afterUserConfirmsMakeThreadPrivate = function(self, event) {
+			// TODO: call the server here
+			self.projectViewForumModel.changeThreadVisibility(self.clickedThreadId, false);
+		};
+		
+		this.afterUserConfirmsMakeThreadPublic = function(self, event) {
+			// TODO: call the server here
+			self.projectViewForumModel.changeThreadVisibility(self.clickedThreadId, true);
+		};
 	},
 
 	// /////////////////////////////////////////////////////////
@@ -113,9 +133,8 @@ var dabProjectForumLib = {
 		};
 
 		this.whenThreadCreatedResponseIsReceived = function(self, createdThread) {
-			self.projectViewForumModel.addThread(createdThread);
+			self.projectViewForumModel.addServerThread(createdThread);
 		};
-
 	},
 
 	// /////////////////////////////////////////////////////////
@@ -126,57 +145,70 @@ var dabProjectForumLib = {
 
 		// //////////////////////////////
 		// public API
-		
-		
+
 		this.init = function() {
 
 			// pre-fills the KO model based on thread data present in HTML
 			var self = this;
 			$("#forumData").hide();
-			_.each($("#forumData div"), function(htmlThread) { self.addThreadFromHtml(self, htmlThread);});
+			_.each($("#forumData div"), function(htmlThread) {
+				self.addThreadFromHtml(self, htmlThread);
+			});
 		}
-		
 
 		// add a thread, built with JSON data, according to format aligned with server-side definition of a thread
 		this.addServerThread = function(serverThread) {
 			if (serverThread != undefined && serverThread != "" && serverThread != "[]") {
-				this.addThread(new dabProjectForumLib.ProjectThread(serverThread));
+				this.addThread(dabProjectForumLib.ProjectThreadFactory.buildFromServerThread(serverThread));
+			}
+		};
+
+		this.addThread = function(thread) {
+			this.listCreatedThread.push(thread);
+		};
+		
+		this.changeThreadVisibility = function (threadId, isPublic) {
+			var updatedTread = _.find(this.listCreatedThread(), function(thread) {return thread.id==threadId;});
+			if (updatedTread != undefined) {
+				updatedTread.isThreadPublic(isPublic);
 			}
 		};
 		
-		this.addThread = function(thread) {
-			this.listCreatedThread.push(thread);
-		}
+		
+		
 
 		this.afterAddThread = commonKOStuff.genericAfterAddElement;
-		
+
 		// //////////////////////////////
 		// internal API
 		this.addThreadFromHtml = function(self, htmlThread) {
-			var thread = new dabProjectForumLib.ProjectThread();
-			thread.id = $(htmlThread).find("span.threadId").text();
-			thread.projectId = projectId;
-			thread.isThreadPublic = $(htmlThread).find("span.threadIsPublic").text() == "true";
-			thread.title = $(htmlThread).find("span.threadTitle").text();
-			thread.creationDate = $(htmlThread).find("span.threadCreationDate").text();
-			thread.numberOfPosts = $(htmlThread).find("span.numberOfPosts").text();
-			self.addThread(thread);
+			var threadId = $(htmlThread).find("span.threadId").text();
+			var isThreadPublic = $(htmlThread).find("span.threadIsPublic").text() == "true";
+			var title = $(htmlThread).find("span.threadTitle").text();
+			var creationDate = $(htmlThread).find("span.threadCreationDate").text();
+			var numberOfPosts = $(htmlThread).find("span.numberOfPosts").text();
+			var userMayUpdate = $(htmlThread).find("span.threadUserMayUpdate").text() == "true";
+			
+			self.addThread(new dabProjectForumLib.ProjectThread(threadId, projectId, isThreadPublic, title, creationDate, numberOfPosts, userMayUpdate));
 		};
-		
-		
-		
+
 	},
 
 	// simply data model for containing the dynamically created threads
-	ProjectThread : function(serverThread) {
-		if (serverThread != undefined) {
-			this.id = serverThread.id;
-			this.projectId = serverThread.projectId;
-			this.isThreadPublic = serverThread.isThreadPublic;
-			this.title = serverThread.title;
-			this.creationDate = serverThread.creationDateStr;
-			this.numberOfPosts = serverThread.numberOfPosts;
+	ProjectThread : function(id, projectId, isPublic, title, creationDate, numberOfPosts, mayUpdate) {
+		this.id = id;
+		this.projectId = projectId;
+		this.isThreadPublic = ko.observable(isPublic);
+		this.title = title;
+		this.creationDate = creationDate;
+		this.numberOfPosts = numberOfPosts;
+		this.userMayUpdate = mayUpdate;
+	}, 
+		
+		
+	ProjectThreadFactory : {
+		buildFromServerThread: function (serverThread) {
+			return new dabProjectForumLib.ProjectThread(serverThread.id, serverThread.projectId,  serverThread.isThreadPublic, serverThread.title, serverThread.creationDateStr, serverThread.numberOfPosts, true);
 		}
-
 	}
 };

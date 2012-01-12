@@ -426,6 +426,8 @@ viewProjectForumPosts=***posts
 viewProjectForumDeleteThread=***delete
 viewProjectForumMakePrivate=***make private
 viewProjectForumMakePublic=***make public
+viewProjectForumConfirmMakePrivate=***Are you sure you want to make this thread private? Private thread can only be read by members of this projects
+viewProjectForumConfirmMakePublic=***Are you sure you want to make this thread public? Private thread can be read everybody (including people who do not have an Altermotif account)
 
 
 projectTaskTodo=***to do
