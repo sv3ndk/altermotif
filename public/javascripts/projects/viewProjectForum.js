@@ -22,6 +22,7 @@ var dabProjectForumLib = {
 		this.init = function() {
 			var self = this;
 
+			this.projectViewForumModel.init();
 			this.createNewThreadDialogController.init();
 
 			// click on add thread
@@ -44,6 +45,8 @@ var dabProjectForumLib = {
 			self.createNewThreadDialogController.open();
 		};
 
+		
+		
 	},
 
 	// /////////////////////////////////////////////////////////
@@ -123,24 +126,57 @@ var dabProjectForumLib = {
 
 		// //////////////////////////////
 		// public API
+		
+		
+		this.init = function() {
 
-		this.addThread = function(createdThread) {
-			if (createdThread != undefined && createdThread != "" && createdThread != "[]") {
-				this.listCreatedThread.push(new dabProjectForumLib.ProjectThread(createdThread));
+			// pre-fills the KO model based on thread data present in HTML
+			var self = this;
+			$("#forumData").hide();
+			_.each($("#forumData div"), function(htmlThread) { self.addThreadFromHtml(self, htmlThread);});
+		}
+		
+
+		// add a thread, built with JSON data, according to format aligned with server-side definition of a thread
+		this.addServerThread = function(serverThread) {
+			if (serverThread != undefined && serverThread != "" && serverThread != "[]") {
+				this.addThread(new dabProjectForumLib.ProjectThread(serverThread));
 			}
 		};
+		
+		this.addThread = function(thread) {
+			this.listCreatedThread.push(thread);
+		}
 
 		this.afterAddThread = commonKOStuff.genericAfterAddElement;
+		
+		// //////////////////////////////
+		// internal API
+		this.addThreadFromHtml = function(self, htmlThread) {
+			var thread = new dabProjectForumLib.ProjectThread();
+			thread.id = $(htmlThread).find("span.threadId").text();
+			thread.projectId = projectId;
+			thread.isThreadPublic = $(htmlThread).find("span.threadIsPublic").text() == "true";
+			thread.title = $(htmlThread).find("span.threadTitle").text();
+			thread.creationDate = $(htmlThread).find("span.threadCreationDate").text();
+			thread.numberOfPosts = $(htmlThread).find("span.numberOfPosts").text();
+			self.addThread(thread);
+		};
+		
+		
+		
 	},
 
 	// simply data model for containing the dynamically created threads
 	ProjectThread : function(serverThread) {
-		this.id = serverThread.id;
-		this.projectId = serverThread.projectId;
-		this.isThreadPublic = serverThread.isThreadPublic;
-		this.title = serverThread.title;
-		this.creationDate = serverThread.creationDateStr;
-		this.numberOfPosts = serverThread.numberOfPosts;
+		if (serverThread != undefined) {
+			this.id = serverThread.id;
+			this.projectId = serverThread.projectId;
+			this.isThreadPublic = serverThread.isThreadPublic;
+			this.title = serverThread.title;
+			this.creationDate = serverThread.creationDateStr;
+			this.numberOfPosts = serverThread.numberOfPosts;
+		}
 
 	}
 };
