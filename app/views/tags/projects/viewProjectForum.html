@@ -1,8 +1,11 @@
 <script type="text/javascript">
 	var addNewThread = #{jsAction @projects.ProjectsView.doAddThread(':projectId', ':threadTitle', ':isThreadPublic') /};
+	var changeThreadVisibility = #{jsAction @projects.ProjectsView.changeThreadVisibility(':projectId', ':threadId', ':isThreadPublic') /};
+	var deletedThread = #{jsAction @projects.ProjectsView.deleteThread(':projectId', ':threadId') /};
 	
 	var confirmMakePrivateText = "&{'viewProjectForumConfirmMakePrivate'}";
 	var confirmMakePublicText = "&{'viewProjectForumConfirmMakePublic'}"
+	var confirmRemoveThreadtext = "&{'viewProjectForumConfirmRemoveThread'}"
 </script>
 
 <div id="projectForum">
@@ -17,7 +20,7 @@
 		#{/if }
 
 		*{ threads created now by this user => written dynamically with knockout}*		
-		<div id="dynamicallyThreads" class="threadContainer" data-bind="template : {foreach: listCreatedThread, afterAdd: afterAddThread}">
+		<div id="dynamicallyThreads" class="threadContainer" data-bind="template : {foreach: listCreatedThread, afterAdd: afterAddThread, beforeRemove: beforeRemoveThread}">
 			<div data-bind="css: {'forumThread': isThreadPublic(), 'forumThreadPrivate': ! isThreadPublic() }" class="">
 				<span class="dabLink" data-bind="text: title"></span>
 				<span class="hidden hiddenThreadId" data-bind="text: id"></span>
@@ -27,7 +30,7 @@
 				<div class="threadEditLinks" data-bind="visible: userMayUpdate">
 					<span class="dabLink makeprivate" data-bind="visible: isThreadPublic()">&{'viewProjectForumMakePrivate'}</span>
 					<span class="dabLink makepublic" data-bind="visible: ! isThreadPublic() ">&{'viewProjectForumMakePublic'}</span>
-					<span class="dabLink">&{'viewProjectForumDeleteThread'}</span>
+					<span class="dabLink deleteThread">&{'viewProjectForumDeleteThread'}</span>
 				</div>
 			</div>
 		</div>

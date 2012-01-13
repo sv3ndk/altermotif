@@ -31,9 +31,10 @@ var dabProjectForumLib = {
 				self.whenUserClicksOnAddThread(self);
 			});
 
-			// click on make private
-			new Confirm.AskAndProceed(this, "#dynamicallyThreads", "span.dabLink.makeprivate", confirmMakePrivateText, this.onClickOnMakeThreadPrivate, this.afterUserConfirmsMakeThreadPrivate).init();
-			new Confirm.AskAndProceed(this, "#dynamicallyThreads", "span.dabLink.makepublic", confirmMakePublicText, this.onClickOnMakeThreadPrivate, this.afterUserConfirmsMakeThreadPublic).init();
+			// click on make private/make public/delete thread
+			new Confirm.AskAndProceed(this, "#dynamicallyThreads", "span.dabLink.makeprivate", confirmMakePrivateText, this.recordClickThreadId, this.afterUserConfirmsMakeThreadPrivate).init();
+			new Confirm.AskAndProceed(this, "#dynamicallyThreads", "span.dabLink.makepublic", confirmMakePublicText, this.recordClickThreadId, this.afterUserConfirmsMakeThreadPublic).init();
+			new Confirm.AskAndProceed(this, "#dynamicallyThreads", "span.dabLink.deleteThread", confirmRemoveThreadtext, this.recordClickThreadId, this.afterUserConfirmsDeleteThread).init();
 
 			ko.applyBindings(this.projectViewForumModel, $("#dynamicallyCreatedThreads")[0]);
 		};
@@ -50,23 +51,37 @@ var dabProjectForumLib = {
 			self.createNewThreadDialogController.open();
 		};
 
-		this.onClickOnMakeThreadPrivate = function(self, event) {
+		this.recordClickThreadId = function(self, event) {
 			self.clickedThreadId = $(event.target).parent().parent().find("span.hiddenThreadId").text();
 		};
 		
-		this.onClickOnMakeThreadPublic = function(self, event) {
-			this.onClickOnMakeThreadPrivate(self, event);
-		};
-		
 		this.afterUserConfirmsMakeThreadPrivate = function(self, event) {
-			// TODO: call the server here
-			self.projectViewForumModel.changeThreadVisibility(self.clickedThreadId, false);
+			self.updateThreadVisibility(self, self.clickedThreadId, false); 
 		};
 		
 		this.afterUserConfirmsMakeThreadPublic = function(self, event) {
-			// TODO: call the server here
-			self.projectViewForumModel.changeThreadVisibility(self.clickedThreadId, true);
+			self.updateThreadVisibility(self, self.clickedThreadId, true);
 		};
+		
+		this.updateThreadVisibility = function (self, threadId, isPublic) {
+			$.post(changeThreadVisibility({
+				projectId : projectId,
+				threadId : threadId,
+				isThreadPublic : isPublic
+			}), function(updatedThread) {
+				self.projectViewForumModel.changeThreadVisibility(updatedThread.id, updatedThread.isThreadPublic);
+			});
+		};
+		
+		this.afterUserConfirmsDeleteThread = function(self, event) {
+			$.post(deletedThread({
+				projectId : projectId,
+				threadId : self.clickedThreadId,
+			}), function(response) {
+				self.projectViewForumModel.removeThread(response.name);
+			});
+		};
+		
 	},
 
 	// /////////////////////////////////////////////////////////
@@ -167,6 +182,14 @@ var dabProjectForumLib = {
 			this.listCreatedThread.push(thread);
 		};
 		
+		this.removeThread = function (threadId) {
+			var removedThread = _.find(this.listCreatedThread(), function(thread) {return thread.id==threadId;});
+			if (removedThread != undefined) {
+				this.listCreatedThread.remove(removedThread);	
+			}
+		};
+		
+		
 		this.changeThreadVisibility = function (threadId, isPublic) {
 			var updatedTread = _.find(this.listCreatedThread(), function(thread) {return thread.id==threadId;});
 			if (updatedTread != undefined) {
@@ -174,10 +197,10 @@ var dabProjectForumLib = {
 			}
 		};
 		
-		
-		
-
+		// animation callback when adding/removing a thread
 		this.afterAddThread = commonKOStuff.genericAfterAddElement;
+		this.beforeRemoveThread = commonKOStuff.genericBeforeRemoveElement;
+
 
 		// //////////////////////////////
 		// internal API

@@ -27,7 +27,7 @@ import controllers.profile.ProfileHome;
 public class ProjectsView extends DabController {
 
 	private static Logger logger = Logger.getLogger(ProjectsView.class.getName());
-	
+
 	public static void projectsView(String p) {
 		Project project = BeanProvider.getProjectService().loadProject(p, true);
 		if (project != null && project.getStatus() != STATUS.cancelled) {
@@ -42,11 +42,9 @@ public class ProjectsView extends DabController {
 		}
 	}
 
-	//////////////////////////////////////////////////////////
+	// ////////////////////////////////////////////////////////
 	// project cancellation and termination
-	
-	
-	
+
 	public static void cancelProject(String projectId) {
 		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
 		if (project != null) {
@@ -63,22 +61,21 @@ public class ProjectsView extends DabController {
 			logger.log(Level.WARNING, "user trying to cancel a non existant project : " + projectId + " this should be impossible!");
 			Application.index();
 		}
-		
+
 		try {
-			// ugly wait: the cancellation is asynchronous => refreshing the page right away is usually too early: waiting 1 sec greatly increases the chances that the transfer has actually been done 
+			// ugly wait: the cancellation is asynchronous => refreshing the page right away is usually too early: waiting 1 sec greatly increases the chances that the transfer has actually been done
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 		}
 
 		ProfileHome.profileHome();
 	}
-	
-	
+
 	public static void terminateProject(String projectId) {
 		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
 		if (project != null) {
 			ProjectPep pep = new ProjectPep(project);
-			
+
 			if (pep.isAllowedToTerminate(getSessionWrapper().getLoggedInUserProfileId())) {
 				BeanProvider.getProjectService().terminateProject(project);
 			} else {
@@ -90,9 +87,9 @@ public class ProjectsView extends DabController {
 			logger.log(Level.WARNING, "user trying to terminate a non existant project : " + projectId + " this should be impossible!");
 			Application.index();
 		}
-		
+
 		try {
-			// ugly wait: the cancellation is asynchronous => refreshing the page right away is usually too early: waiting 1 sec greatly increases the chances that the transfer has actually been done 
+			// ugly wait: the cancellation is asynchronous => refreshing the page right away is usually too early: waiting 1 sec greatly increases the chances that the transfer has actually been done
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 		}
@@ -103,7 +100,7 @@ public class ProjectsView extends DabController {
 		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
 		if (project != null) {
 			ProjectPep pep = new ProjectPep(project);
-			
+
 			if (pep.isAllowedToRestartProject(getSessionWrapper().getLoggedInUserProfileId())) {
 				BeanProvider.getProjectService().restartProject(project);
 			} else {
@@ -115,22 +112,18 @@ public class ProjectsView extends DabController {
 			logger.log(Level.WARNING, "user trying to restart a non existant project : " + projectId + " this should be impossible!");
 			Application.index();
 		}
-		
+
 		try {
-			// ugly wait: the cancellation is asynchronous => refreshing the page right away is usually too early: waiting 1 sec greatly increases the chances that the transfer has actually been done 
+			// ugly wait: the cancellation is asynchronous => refreshing the page right away is usually too early: waiting 1 sec greatly increases the chances that the transfer has actually been done
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 		}
 		projectsView(projectId);
 	}
-	
-	
-	
-	/////////////////////////////////////////
+
+	// ///////////////////////////////////////
 	// project applications
-	
-	
-	
+
 	/**
 	 * @param projectId
 	 */
@@ -194,7 +187,7 @@ public class ProjectsView extends DabController {
 		} else {
 			logger.log(Level.WARNING, "user trying to reject application to a non existant project : " + projectId + " this should be impossible!");
 		}
-		
+
 	}
 
 	/**
@@ -242,7 +235,7 @@ public class ProjectsView extends DabController {
 		}
 		renderJSON(new MappedValue("truc", "much"));
 	}
-	
+
 	/**
 	 * @param projectId
 	 */
@@ -250,9 +243,9 @@ public class ProjectsView extends DabController {
 
 		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
 		if (project != null) {
-			
+
 			ProjectPep pep = new ProjectPep(project);
-			
+
 			if (pep.isAllowedToLeave(getSessionWrapper().getLoggedInUserProfileId())) {
 				BeanProvider.getProjectService().removeParticipant(getSessionWrapper().getLoggedInUserProfileId(), project);
 			} else {
@@ -262,18 +255,16 @@ public class ProjectsView extends DabController {
 		} else {
 			logger.log(Level.WARNING, "user trying to leave a non existant project : " + projectId + " this should be impossible!");
 		}
-		
+
 		renderJSON(new MappedValue("truc", "much"));
 	}
-	
-	
-	
+
 	public static void doMakeAdmin(String projectId, String participant) {
 		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
 		if (project != null) {
-			
+
 			ProjectPep pep = new ProjectPep(project);
-			
+
 			if (pep.isAllowedToMakeAdmin(getSessionWrapper().getLoggedInUserProfileId(), participant)) {
 				BeanProvider.getProjectService().makeAdmin(participant, project);
 			} else {
@@ -289,9 +280,9 @@ public class ProjectsView extends DabController {
 	public static void doMakeMember(String projectId, String participant) {
 		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
 		if (project != null) {
-			
+
 			ProjectPep pep = new ProjectPep(project);
-			
+
 			if (pep.isAllowedToMakeMember(getSessionWrapper().getLoggedInUserProfileId(), participant)) {
 				BeanProvider.getProjectService().makeMember(participant, project);
 			} else {
@@ -303,19 +294,18 @@ public class ProjectsView extends DabController {
 		}
 		renderJSON(new MappedValue("truc", "much"));
 	}
-	
-	
+
 	public static void doGiveOwnership(String projectId, String participant) {
 		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
 		if (project != null) {
-			
+
 			ProjectPep pep = new ProjectPep(project);
-			
+
 			if (pep.isAllowedToGiveOwnership(getSessionWrapper().getLoggedInUserProfileId(), participant)) {
 				BeanProvider.getProjectService().proposeOwnerShip(participant, project);
 			} else {
-				logger.log(Level.WARNING, "user trying to give ownership to participant member but is not allowed to,  this should be impossible, userid is" + getSessionWrapper().getLoggedInUserProfileId()
-						+ ", projectid is " + projectId);
+				logger.log(Level.WARNING, "user trying to give ownership to participant member but is not allowed to,  this should be impossible, userid is"
+						+ getSessionWrapper().getLoggedInUserProfileId() + ", projectid is " + projectId);
 			}
 		} else {
 			logger.log(Level.WARNING, "user trying to give ownership to participant member of non existant project : " + projectId + " this should be impossible!");
@@ -323,17 +313,16 @@ public class ProjectsView extends DabController {
 		renderJSON(new MappedValue("truc", "much"));
 	}
 
-	
 	public static void doCancelGiveOwnership(String projectId, String participant) {
 		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
 		if (project != null) {
 			ProjectPep pep = new ProjectPep(project);
-			
+
 			if (pep.isAllowedToCancelOwnershipTransfer(getSessionWrapper().getLoggedInUserProfileId(), participant)) {
 				BeanProvider.getProjectService().cancelOwnershipTransfer(participant, project);
 			} else {
-				logger.log(Level.WARNING, "user trying cancel an ownership transfer to participant member but is not allowed to,  this should be impossible, userid is" + getSessionWrapper().getLoggedInUserProfileId()
-						+ ", projectid is " + projectId);
+				logger.log(Level.WARNING, "user trying cancel an ownership transfer to participant member but is not allowed to,  this should be impossible, userid is"
+						+ getSessionWrapper().getLoggedInUserProfileId() + ", projectid is " + projectId);
 			}
 		} else {
 			logger.log(Level.WARNING, "user trying to cancel an  ownership transfer to participant member of non existant project : " + projectId + " this should be impossible!");
@@ -348,19 +337,19 @@ public class ProjectsView extends DabController {
 		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
 		if (project != null) {
 			ProjectPep pep = new ProjectPep(project);
-			
+
 			if (pep.isAllowedToAcceptOrRefuseOwnershipTransfer(getSessionWrapper().getLoggedInUserProfileId())) {
 				BeanProvider.getProjectService().cancelOwnershipTransfer(getSessionWrapper().getLoggedInUserProfileId(), project);
 			} else {
-				logger.log(Level.WARNING, "user trying refuse an ownership transfer to participant member but is not allowed to,  this should be impossible, userid is" + getSessionWrapper().getLoggedInUserProfileId()
-						+ ", projectid is " + projectId);
+				logger.log(Level.WARNING, "user trying refuse an ownership transfer to participant member but is not allowed to,  this should be impossible, userid is"
+						+ getSessionWrapper().getLoggedInUserProfileId() + ", projectid is " + projectId);
 			}
 		} else {
 			logger.log(Level.WARNING, "user trying to refuse an  ownership transfer to participant member of non existant project : " + projectId + " this should be impossible!");
 		}
 		renderJSON(new MappedValue("truc", "much"));
 	}
-	
+
 	/**
 	 * @param projectId
 	 */
@@ -371,24 +360,24 @@ public class ProjectsView extends DabController {
 			if (pep.isAllowedToAcceptOrRefuseOwnershipTransfer(getSessionWrapper().getLoggedInUserProfileId())) {
 				BeanProvider.getProjectService().confirmOwnershipTransfer(getSessionWrapper().getLoggedInUserProfileId(), project);
 			} else {
-				logger.log(Level.WARNING, "user trying accept an ownership transfer to participant member but is not allowed to,  this should be impossible, userid is" + getSessionWrapper().getLoggedInUserProfileId()
-						+ ", projectid is " + projectId);
+				logger.log(Level.WARNING, "user trying accept an ownership transfer to participant member but is not allowed to,  this should be impossible, userid is"
+						+ getSessionWrapper().getLoggedInUserProfileId() + ", projectid is " + projectId);
 				Application.index();
 			}
 		} else {
 			logger.log(Level.WARNING, "user trying to accept an ownership transfer to participant member of non existant project : " + projectId + " this should be impossible!");
 			Application.index();
 		}
-		
+
 		try {
-			// ugly wait: the ownership transfer is asynchronous => refreshing the page right away is usually too early: waiting 1 sec greatly increases the chances that the transfer has actually been done 
+			// ugly wait: the ownership transfer is asynchronous => refreshing the page right away is usually too early: waiting 1 sec greatly increases the chances that the transfer has actually been
+			// done
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 		}
-		
+
 		projectsView(projectId);
 	}
-	
 
 	// --------------------------------------------------------
 	// async refresh logic
@@ -397,33 +386,30 @@ public class ProjectsView extends DabController {
 		Set<String> knownParticipantUsernamesSet = Utils.jsonToSetOfStrings(knownParticipantUsernames);
 		Set<String> knownApplicationUsernamesSet = Utils.jsonToSetOfStrings(knownApplicationUsernames);
 		ParticpantsIdList removedParticipants = BeanProvider.getProjectService().determineRemovedParticipants(projectId, knownParticipantUsernamesSet, knownApplicationUsernamesSet);
-		
+
 		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
-		removedParticipants.setCancelProjectLinkEffective(new ProjectViewVisibility(new  ProjectPep(project), project, getSessionWrapper().getLoggedInUserProfileId()).isCancelProjectLinkEffective());
-		
+		removedParticipants.setCancelProjectLinkEffective(new ProjectViewVisibility(new ProjectPep(project), project, getSessionWrapper().getLoggedInUserProfileId()).isCancelProjectLinkEffective());
+
 		renderJSON(removedParticipants);
 	}
-	
+
 	public static void doDetermineAddedParticipantsAndApplications(String projectId, String knownParticipantUsernames, String knownApplicationUsernames) {
 		Set<String> knownParticipantUsernamesSet = Utils.jsonToSetOfStrings(knownParticipantUsernames);
 		Set<String> knownApplicationUsernamesSet = Utils.jsonToSetOfStrings(knownApplicationUsernames);
 		ParticipantList addedParticipants = BeanProvider.getProjectService().determineAddedParticipants(projectId, knownParticipantUsernamesSet, knownApplicationUsernamesSet);
-		
+
 		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
-		
-		
+
 		renderArgs.put("_projectVisibility", new ProjectViewVisibility(new ProjectPep(project), project, getSessionWrapper().getLoggedInUserProfileId()));
 		renderArgs.put("_numberOfConfirmedParticipants", project.getNumberOfConfirmedParticipants());
 		renderArgs.put("_numberOfApplications", project.getNumberOfApplications());
-		
+
 		renderArgs.put("_confirmedParticipants", addedParticipants.getConfirmedParticipants());
 		renderArgs.put("_unconfirmedActiveParticipants", addedParticipants.getUnconfirmedParticipants());
-		
+
 		renderTemplate("tags/projects/viewProjectParticipantsAndApplications.html");
 	}
-	
-	
-	
+
 	public static void doRetrieveParticipantContentData(String projectId, String participant) {
 		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
 		if (project != null) {
@@ -433,17 +419,18 @@ public class ProjectsView extends DabController {
 				renderArgs.put("_projectVisibility", new ProjectViewVisibility(new ProjectPep(project), project, getSessionWrapper().getLoggedInUserProfileId()));
 				renderTemplate("tags/projects/participant.html");
 			} else {
-				
-				logger.log(Level.WARNING, "user trying retrieve participant content data of for a particpant which does not belong to the proejct, project id is : " + projectId + " this should be impossible!");
+
+				logger.log(Level.WARNING, "user trying retrieve participant content data of for a particpant which does not belong to the proejct, project id is : " + projectId
+						+ " this should be impossible!");
 			}
 		} else {
 			logger.log(Level.WARNING, "user trying retrieve participant content data of non existant project : " + projectId + " this should be impossible!");
 		}
 	}
-	
-	/////////////////////////////////////////
-	// project forum
-	
+
+	// ///////////////////////////////////////
+	// forum and thread
+
 	/**
 	 * @param projectId
 	 * @param threadTitle
@@ -452,14 +439,19 @@ public class ProjectsView extends DabController {
 		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
 		if (project != null) {
 			
-			// TODO: check security here
-			ForumThread createdThread = BeanProvider.getProjectService().createdNewForumThread(projectId, threadTitle, isThreadPublic);
-			renderJSON(createdThread);
+			if (project != null) {
+				if (new ProjectPep(project).isAllowedAddForumThread(getSessionWrapper().getLoggedInUserProfileId())) {
+					ForumThread createdThread = BeanProvider.getProjectService().createdNewForumThread(projectId, threadTitle, isThreadPublic);
+					renderJSON(createdThread);
+				} else {
+					logger.log(Level.WARNING, "user trying to add a thread to a project but is not allowed to: projectId:" + projectId + "userid:"+getSessionWrapper().getLoggedInUserProfileId());
+				}
+			}
 		} else {
 			logger.log(Level.WARNING, "user trying to add a thread to a non existant project : " + projectId + " this should be impossible!");
 		}
 	}
-	
+
 	/**
 	 * @param threadId
 	 */
@@ -468,5 +460,34 @@ public class ProjectsView extends DabController {
 		renderJSON(posts);
 	}
 
+	public static void changeThreadVisibility(String projectId, String threadId, boolean isThreadPublic) {
+		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
+		if (project != null) {
+			if (new ProjectPep(project).isAllowedToUpdateThread(getSessionWrapper().getLoggedInUserProfileId())) {
+				BeanProvider.getForumThreadDao().updateThreadVisibility(projectId, threadId, isThreadPublic);
+				renderJSON(BeanProvider.getForumThreadDao().getThreadById(threadId));
+			} else {
+				logger.log(Level.WARNING, "user trying to change visibility of a thread but is not allowed to: projectId:" + projectId + ", threadId:" + threadId + "userid:"
+						+ getSessionWrapper().getLoggedInUserProfileId());
+			}
+		} else {
+			logger.log(Level.WARNING, "user trying to change visibility of a thread of a non existant project : " + projectId + " this should be impossible!");
+		}
+	}
+
+	public static void deleteThread(String projectId, String threadId) {
+		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
+		if (project != null) {
+			if (new ProjectPep(project).isAllowedToUpdateThread(getSessionWrapper().getLoggedInUserProfileId())) {
+				BeanProvider.getForumThreadDao().deleteThread(projectId, threadId);
+				renderJSON(new MappedValue("removeThreadId", threadId));
+			} else {
+				logger.log(Level.WARNING, "user trying to delete a thread but is not allowed to: projectId:" + projectId + ", threadId:" + threadId + "userid:"
+						+ getSessionWrapper().getLoggedInUserProfileId());
+			}
+		} else {
+			logger.log(Level.WARNING, "user trying to delete a thread of a non existant project : " + projectId + " this should be impossible!");
+		}
+	}
 
 }

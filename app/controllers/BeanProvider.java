@@ -72,5 +72,10 @@ public class BeanProvider {
 		return (IForumPostDao) Spring.getBeanOfType(IForumPostDao.class);
 		
 	}
+	
+	public static IForumThreadDao getForumThreadDao() {
+		return (IForumThreadDao) Spring.getBeanOfType(IForumThreadDao.class);
+		
+	}
 
 }

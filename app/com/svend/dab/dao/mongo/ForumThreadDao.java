@@ -7,8 +7,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import com.mongodb.WriteConcern;
 import com.svend.dab.core.beans.projects.ForumThread;
 import com.svend.dab.core.dao.IForumThreadDao;
 
@@ -36,6 +38,25 @@ public class ForumThreadDao implements IForumThreadDao {
 	public ForumThread createNewThread(ForumThread forumThread) {
 		mongoTemplate.save(forumThread);
 		return forumThread;
+	}
+
+
+	@Override
+	public void updateThreadVisibility(String projectId, String threadId, boolean isThreadPublic) {
+		mongoTemplate.setWriteConcern(WriteConcern.MAJORITY);
+		mongoTemplate.updateFirst(query(where("id").is(threadId)), new Update().set("isThreadPublic", isThreadPublic), ForumThread.class);
+	}
+
+
+	@Override
+	public ForumThread getThreadById(String threadId) {
+		return mongoTemplate.findById(threadId, ForumThread.class);
+	}
+
+
+	@Override
+	public void deleteThread(String projectId, String threadId) {
+		mongoTemplate.remove(query(where("id").is(threadId)), ForumThread.class);		
 	}
 
 }

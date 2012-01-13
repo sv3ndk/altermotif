@@ -393,6 +393,13 @@ public class ProjectPep {
 		return isPartOfStartedProject(user) || isThreadPublic;
 	}
 
+	
+	/**
+	 * Allowed to change visibility (public/private) and delete a thread
+	 * 
+	 * @param user
+	 * @return
+	 */
 	public boolean isAllowedToUpdateThread(String user) {
 		return isAdminOrOwnerOfStartedProject(user);
 	}
