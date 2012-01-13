@@ -19,6 +19,7 @@ GET     /projects/new			                projects.ProjectsNew.projectsNew
 GET     /projects/edit			                projects.ProjectsEdit.projectsEdit
 GET     /projects/editphotos	                projects.ProjectsEditPhotos.projectsEditPhotos
 GET     /projects/view			                projects.ProjectsView.projectsView
+GET     /projects/forum			                projects.ProjectForumThread.projectForumThread
 GET     /projects/search		                projects.ProjectsSearch.projectsSearch
 GET     /projects/findprojects	                projects.ProjectsResults.projectsResults
 

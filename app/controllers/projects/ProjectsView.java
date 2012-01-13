@@ -1,10 +1,15 @@
 package controllers.projects;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import play.mvc.Router;
+import play.mvc.Router.Route;
 
 import models.altermotif.MappedValue;
 import models.altermotif.projects.ProjectViewVisibility;
@@ -446,6 +451,9 @@ public class ProjectsView extends DabController {
 					
 					createdThread.setMayUserDeleteThisThread(pep.isAllowedToDeleteThread(getSessionWrapper().getLoggedInUserProfileId()));
 					createdThread.setMayUserUpdateVisibility(pep.isAllowedToUpdateVisibilityThread(getSessionWrapper().getLoggedInUserProfileId()));
+					Map<String, Object> params = new HashMap<String, Object>();
+					params.put("t", createdThread.getId());
+					createdThread.setThreadUrl(Router.reverse( "projects.ProjectForumThread.projectForumThread", params).url);
 					
 					renderJSON(createdThread);
 				} else {

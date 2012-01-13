@@ -21,13 +21,15 @@ public class ForumThread {
 	@Transient
 	private String creationDateStr;
 	
-	
 	// a bit ugly: this is only not null when sent to the browser in JSON
 	@Transient
 	private boolean mayUserUpdateVisibility;
 
 	@Transient
 	private boolean mayUserDeleteThisThread;
+
+	@Transient
+	private String threadUrl;
 	
 
 	private int numberOfPosts = 0;
@@ -112,6 +114,14 @@ public class ForumThread {
 
 	public void setMayUserDeleteThisThread(boolean mayUserDeleteThisThread) {
 		this.mayUserDeleteThisThread = mayUserDeleteThisThread;
+	}
+
+	public String isThreadUrl() {
+		return threadUrl;
+	}
+
+	public void setThreadUrl(String threadUrl) {
+		this.threadUrl = threadUrl;
 	}
 
 }

@@ -22,7 +22,7 @@
 		*{ threads created now by this user => written dynamically with knockout}*		
 		<div id="dynamicallyThreads" class="threadContainer" data-bind="template : {foreach: listCreatedThread, afterAdd: afterAddThread, beforeRemove: beforeRemoveThread}">
 			<div data-bind="css: {'forumThread': isThreadPublic(), 'forumThreadPrivate': ! isThreadPublic() }" class="">
-				<span class="dabLink" data-bind="text: title"></span>
+				<a class="dabLink" data-bind="text: title, attr: { href: url}"></a>
 				<span class="hidden hiddenThreadId" data-bind="text: id"></span>
 				<span> &{'viewProjectForumCreationDate'}: </span>
 				<span data-bind="text: creationDate"></span>
@@ -48,6 +48,7 @@
 		#{if _projectVisibility.isForumThreadVisible(thread.isThreadPublic)}
 			<div >
 				<span class="threadId">${thread.id}</span>
+				<a class="threadLink" href="@{projects.ProjectForumThread.projectForumThread(thread.id)}"></a>
 				<span class="threadIsPublic">${thread.isThreadPublic}</span>
 				<span class="threadTitle">${thread.title}</span>
 				<span class="threadCreationDate">${thread.creationDate.format(controllers.BeanProvider.config.dateDisplayFormat)}</span>

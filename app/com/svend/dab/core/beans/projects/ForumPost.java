@@ -12,6 +12,7 @@ public class ForumPost {
 	private Date creationDate;
 	private ProfileRef author;
 	private String content;
+	
 
 	public ForumPost() {
 		super();

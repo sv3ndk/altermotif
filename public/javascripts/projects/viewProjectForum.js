@@ -206,6 +206,7 @@ var dabProjectForumLib = {
 		// internal API
 		this.addThreadFromHtml = function(self, htmlThread) {
 			var threadId = $(htmlThread).find("span.threadId").text();
+			var threadUrl = $(htmlThread).find("a.threadLink").attr("href");
 			var isThreadPublic = $(htmlThread).find("span.threadIsPublic").text() == "true";
 			var title = $(htmlThread).find("span.threadTitle").text();
 			var creationDate = $(htmlThread).find("span.threadCreationDate").text();
@@ -213,16 +214,17 @@ var dabProjectForumLib = {
 			var userMayUpdateVisibility = $(htmlThread).find("span.threadUserMayUpdateVisibility").text() == "true";
 			var userMayDeleteThread = $(htmlThread).find("span.threadUserMayDeleteThread").text() == "true";
 			
-			self.addThread(new dabProjectForumLib.ProjectThread(threadId, projectId, isThreadPublic, title, creationDate, numberOfPosts, userMayUpdateVisibility, userMayDeleteThread));
+			self.addThread(new dabProjectForumLib.ProjectThread(threadId, threadUrl, projectId, isThreadPublic, title, creationDate, numberOfPosts, userMayUpdateVisibility, userMayDeleteThread));
 		};
 
 	},
 
 	// simply data model for containing the dynamically created threads
-	ProjectThread : function(id, projectId, isPublic, title, creationDate, numberOfPosts, userMayUpdateVisibility, userMayDeleteThread) {
+	ProjectThread : function(id, url, projectId, isPublic, title, creationDate, numberOfPosts, userMayUpdateVisibility, userMayDeleteThread) {
 		var self = this;
 		this.id = id;
 		this.projectId = projectId;
+		this.url = url;
 		this.isThreadPublic = ko.observable(isPublic);
 		this.title = title;
 		this.creationDate = creationDate;
@@ -247,7 +249,7 @@ var dabProjectForumLib = {
 		
 	ProjectThreadFactory : {
 		buildFromServerThread: function (serverThread) {
-			return new dabProjectForumLib.ProjectThread(serverThread.id, serverThread.projectId,  serverThread.isThreadPublic, serverThread.title, serverThread.creationDateStr, serverThread.numberOfPosts, serverThread.mayUserUpdateVisibility, serverThread.mayUserDeleteThisThread);
+			return new dabProjectForumLib.ProjectThread(serverThread.id, serverThread.threadUrl,  serverThread.projectId,  serverThread.isThreadPublic, serverThread.title, serverThread.creationDateStr, serverThread.numberOfPosts, serverThread.mayUserUpdateVisibility, serverThread.mayUserDeleteThisThread);
 		}
 	}
 };

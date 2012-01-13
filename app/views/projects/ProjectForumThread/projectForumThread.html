@@ -1,0 +1,18 @@
+#{extends 'masterTemplate.html' /} 
+
+
+#{set 'moreStyles'}
+	<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/projects/projectsView.css'}" />
+#{/set} 
+
+#{set 'moreScripts'}
+
+#{/set}
+
+<div id="projectViewContainer" class="pageContainer">
+
+	<p class="pageTitle">${project?.pdata?.name} <a class="dabLink" href="@{projects.ProjectsView.projectsView(project.id)}">&{'projectForumThreadBackToProject'}</a></p>
+	
+	<p class="forumSubTitle">&{'projectForumThreadThread'}: ${thread.title} #{if !thread.isThreadPublic} &{'projectForumThreadPrivate'}#{/if}</p>
+
+</div>
