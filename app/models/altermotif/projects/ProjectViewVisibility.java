@@ -188,7 +188,11 @@ public class ProjectViewVisibility {
 		return pep.isAllowedSeeThisForumThread(visitingUserId, isThreadPublic);
 	}
 
-	public boolean isForumThreadUpdatesLinkVisible() {
-		return pep.isAllowedToUpdateThread(visitingUserId);
+	public boolean isForumThreadUpdateVisibilityLinkVisible() {
+		return pep.isAllowedToUpdateVisibilityThread(visitingUserId);
+	}
+	
+	public boolean isForumThreadDeleteThreadLinkVisible() {
+		return pep.isAllowedToDeleteThread(visitingUserId);
 	}
 }

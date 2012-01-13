@@ -394,14 +394,13 @@ public class ProjectPep {
 	}
 
 	
-	/**
-	 * Allowed to change visibility (public/private) and delete a thread
-	 * 
-	 * @param user
-	 * @return
-	 */
-	public boolean isAllowedToUpdateThread(String user) {
+	public boolean isAllowedToDeleteThread(String user) {
 		return isAdminOrOwnerOfStartedProject(user);
+	}
+
+	
+	public boolean isAllowedToUpdateVisibilityThread(String user) {
+		return isPartOfStartedProject(user);
 	}
 
 	// ////////////////////////////////
@@ -448,5 +447,6 @@ public class ProjectPep {
 		ROLE role = project.findRoleOfUser(user);
 		return role == ROLE.initiator;
 	}
+
 
 }

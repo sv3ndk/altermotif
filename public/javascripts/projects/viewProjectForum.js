@@ -210,28 +210,44 @@ var dabProjectForumLib = {
 			var title = $(htmlThread).find("span.threadTitle").text();
 			var creationDate = $(htmlThread).find("span.threadCreationDate").text();
 			var numberOfPosts = $(htmlThread).find("span.numberOfPosts").text();
-			var userMayUpdate = $(htmlThread).find("span.threadUserMayUpdate").text() == "true";
+			var userMayUpdateVisibility = $(htmlThread).find("span.threadUserMayUpdateVisibility").text() == "true";
+			var userMayDeleteThread = $(htmlThread).find("span.threadUserMayDeleteThread").text() == "true";
 			
-			self.addThread(new dabProjectForumLib.ProjectThread(threadId, projectId, isThreadPublic, title, creationDate, numberOfPosts, userMayUpdate));
+			self.addThread(new dabProjectForumLib.ProjectThread(threadId, projectId, isThreadPublic, title, creationDate, numberOfPosts, userMayUpdateVisibility, userMayDeleteThread));
 		};
 
 	},
 
 	// simply data model for containing the dynamically created threads
-	ProjectThread : function(id, projectId, isPublic, title, creationDate, numberOfPosts, mayUpdate) {
+	ProjectThread : function(id, projectId, isPublic, title, creationDate, numberOfPosts, userMayUpdateVisibility, userMayDeleteThread) {
+		var self = this;
 		this.id = id;
 		this.projectId = projectId;
 		this.isThreadPublic = ko.observable(isPublic);
 		this.title = title;
 		this.creationDate = creationDate;
 		this.numberOfPosts = numberOfPosts;
-		this.userMayUpdate = mayUpdate;
+		
+		this.userMayUpdateVisibility = userMayUpdateVisibility;
+		this.userMayDeleteThread = userMayDeleteThread;
+		
+		this.isMakePublicLinkVisible = ko.computed(function() {
+			return self.userMayUpdateVisibility &&  ! self.isThreadPublic();
+		});
+		
+		this.isMakePrivateLinkVisible = ko.computed(function() {
+			return self.userMayUpdateVisibility &&  self.isThreadPublic();
+		});
+		
+		this.isAtLeastOneUpdateLinkIsVisible = ko.computed(function() {
+			return self.userMayDeleteThread || self.isMakePublicLinkVisible() || self.isMakePrivateLinkVisible();
+		});
 	}, 
 		
 		
 	ProjectThreadFactory : {
 		buildFromServerThread: function (serverThread) {
-			return new dabProjectForumLib.ProjectThread(serverThread.id, serverThread.projectId,  serverThread.isThreadPublic, serverThread.title, serverThread.creationDateStr, serverThread.numberOfPosts, true);
+			return new dabProjectForumLib.ProjectThread(serverThread.id, serverThread.projectId,  serverThread.isThreadPublic, serverThread.title, serverThread.creationDateStr, serverThread.numberOfPosts, serverThread.mayUserUpdateVisibility, serverThread.mayUserDeleteThisThread);
 		}
 	}
 };

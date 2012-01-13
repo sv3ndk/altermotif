@@ -440,8 +440,13 @@ public class ProjectsView extends DabController {
 		if (project != null) {
 			
 			if (project != null) {
-				if (new ProjectPep(project).isAllowedAddForumThread(getSessionWrapper().getLoggedInUserProfileId())) {
+				ProjectPep pep = new ProjectPep(project);
+				if (pep.isAllowedAddForumThread(getSessionWrapper().getLoggedInUserProfileId())) {
 					ForumThread createdThread = BeanProvider.getProjectService().createdNewForumThread(projectId, threadTitle, isThreadPublic);
+					
+					createdThread.setMayUserDeleteThisThread(pep.isAllowedToDeleteThread(getSessionWrapper().getLoggedInUserProfileId()));
+					createdThread.setMayUserUpdateVisibility(pep.isAllowedToUpdateVisibilityThread(getSessionWrapper().getLoggedInUserProfileId()));
+					
 					renderJSON(createdThread);
 				} else {
 					logger.log(Level.WARNING, "user trying to add a thread to a project but is not allowed to: projectId:" + projectId + "userid:"+getSessionWrapper().getLoggedInUserProfileId());
@@ -463,7 +468,7 @@ public class ProjectsView extends DabController {
 	public static void changeThreadVisibility(String projectId, String threadId, boolean isThreadPublic) {
 		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
 		if (project != null) {
-			if (new ProjectPep(project).isAllowedToUpdateThread(getSessionWrapper().getLoggedInUserProfileId())) {
+			if (new ProjectPep(project).isAllowedToUpdateVisibilityThread(getSessionWrapper().getLoggedInUserProfileId())) {
 				BeanProvider.getForumThreadDao().updateThreadVisibility(projectId, threadId, isThreadPublic);
 				renderJSON(BeanProvider.getForumThreadDao().getThreadById(threadId));
 			} else {
@@ -478,7 +483,7 @@ public class ProjectsView extends DabController {
 	public static void deleteThread(String projectId, String threadId) {
 		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
 		if (project != null) {
-			if (new ProjectPep(project).isAllowedToUpdateThread(getSessionWrapper().getLoggedInUserProfileId())) {
+			if (new ProjectPep(project).isAllowedToDeleteThread(getSessionWrapper().getLoggedInUserProfileId())) {
 				BeanProvider.getForumThreadDao().deleteThread(projectId, threadId);
 				renderJSON(new MappedValue("removeThreadId", threadId));
 			} else {

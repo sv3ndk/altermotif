@@ -20,6 +20,15 @@ public class ForumThread {
 
 	@Transient
 	private String creationDateStr;
+	
+	
+	// a bit ugly: this is only not null when sent to the browser in JSON
+	@Transient
+	private boolean mayUserUpdateVisibility;
+
+	@Transient
+	private boolean mayUserDeleteThisThread;
+	
 
 	private int numberOfPosts = 0;
 
@@ -87,6 +96,22 @@ public class ForumThread {
 
 	public void setThreadPublic(boolean isThreadPublic) {
 		this.isThreadPublic = isThreadPublic;
+	}
+
+	public boolean isMayUserUpdateVisibility() {
+		return mayUserUpdateVisibility;
+	}
+
+	public void setMayUserUpdateVisibility(boolean mayUserUpdateVisibility) {
+		this.mayUserUpdateVisibility = mayUserUpdateVisibility;
+	}
+
+	public boolean isMayUserDeleteThisThread() {
+		return mayUserDeleteThisThread;
+	}
+
+	public void setMayUserDeleteThisThread(boolean mayUserDeleteThisThread) {
+		this.mayUserDeleteThisThread = mayUserDeleteThisThread;
 	}
 
 }
