@@ -32,9 +32,12 @@ var dabProjectForumLib = {
 			});
 
 			// click on make private/make public/delete thread
-			new Confirm.AskAndProceed(this, "#dynamicallyThreads", "span.dabLink.makeprivate", confirmMakePrivateText, this.recordClickThreadId, this.afterUserConfirmsMakeThreadPrivate).init();
-			new Confirm.AskAndProceed(this, "#dynamicallyThreads", "span.dabLink.makepublic", confirmMakePublicText, this.recordClickThreadId, this.afterUserConfirmsMakeThreadPublic).init();
-			new Confirm.AskAndProceed(this, "#dynamicallyThreads", "span.dabLink.deleteThread", confirmRemoveThreadtext, this.recordClickThreadId, this.afterUserConfirmsDeleteThread).init();
+			new Confirm.AskAndProceed(this, "#dynamicallyThreads", "span.dabLink.makeprivate", confirmMakePrivateText, this.recordClickThreadId,
+					this.afterUserConfirmsMakeThreadPrivate).init();
+			new Confirm.AskAndProceed(this, "#dynamicallyThreads", "span.dabLink.makepublic", confirmMakePublicText, this.recordClickThreadId,
+					this.afterUserConfirmsMakeThreadPublic).init();
+			new Confirm.AskAndProceed(this, "#dynamicallyThreads", "span.dabLink.deleteThread", confirmRemoveThreadtext, this.recordClickThreadId,
+					this.afterUserConfirmsDeleteThread).init();
 
 			ko.applyBindings(this.projectViewForumModel, $("#dynamicallyCreatedThreads")[0]);
 		};
@@ -54,16 +57,16 @@ var dabProjectForumLib = {
 		this.recordClickThreadId = function(self, event) {
 			self.clickedThreadId = $(event.target).parent().parent().find("span.hiddenThreadId").text();
 		};
-		
+
 		this.afterUserConfirmsMakeThreadPrivate = function(self, event) {
-			self.updateThreadVisibility(self, self.clickedThreadId, false); 
+			self.updateThreadVisibility(self, self.clickedThreadId, false);
 		};
-		
+
 		this.afterUserConfirmsMakeThreadPublic = function(self, event) {
 			self.updateThreadVisibility(self, self.clickedThreadId, true);
 		};
-		
-		this.updateThreadVisibility = function (self, threadId, isPublic) {
+
+		this.updateThreadVisibility = function(self, threadId, isPublic) {
 			$.post(changeThreadVisibility({
 				projectId : projectId,
 				threadId : threadId,
@@ -72,7 +75,7 @@ var dabProjectForumLib = {
 				self.projectViewForumModel.changeThreadVisibility(updatedThread.id, updatedThread.isThreadPublic);
 			});
 		};
-		
+
 		this.afterUserConfirmsDeleteThread = function(self, event) {
 			$.post(deletedThread({
 				projectId : projectId,
@@ -81,7 +84,7 @@ var dabProjectForumLib = {
 				self.projectViewForumModel.removeThread(response.name);
 			});
 		};
-		
+
 	},
 
 	// /////////////////////////////////////////////////////////
@@ -181,26 +184,28 @@ var dabProjectForumLib = {
 		this.addThread = function(thread) {
 			this.listCreatedThread.push(thread);
 		};
-		
-		this.removeThread = function (threadId) {
-			var removedThread = _.find(this.listCreatedThread(), function(thread) {return thread.id==threadId;});
+
+		this.removeThread = function(threadId) {
+			var removedThread = _.find(this.listCreatedThread(), function(thread) {
+				return thread.id == threadId;
+			});
 			if (removedThread != undefined) {
-				this.listCreatedThread.remove(removedThread);	
+				this.listCreatedThread.remove(removedThread);
 			}
 		};
-		
-		
-		this.changeThreadVisibility = function (threadId, isPublic) {
-			var updatedTread = _.find(this.listCreatedThread(), function(thread) {return thread.id==threadId;});
+
+		this.changeThreadVisibility = function(threadId, isPublic) {
+			var updatedTread = _.find(this.listCreatedThread(), function(thread) {
+				return thread.id == threadId;
+			});
 			if (updatedTread != undefined) {
 				updatedTread.isThreadPublic(isPublic);
 			}
 		};
-		
+
 		// animation callback when adding/removing a thread
 		this.afterAddThread = commonKOStuff.genericAfterAddElement;
 		this.beforeRemoveThread = commonKOStuff.genericBeforeRemoveElement;
-
 
 		// //////////////////////////////
 		// internal API
@@ -213,8 +218,9 @@ var dabProjectForumLib = {
 			var numberOfPosts = $(htmlThread).find("span.numberOfPosts").text();
 			var userMayUpdateVisibility = $(htmlThread).find("span.threadUserMayUpdateVisibility").text() == "true";
 			var userMayDeleteThread = $(htmlThread).find("span.threadUserMayDeleteThread").text() == "true";
-			
-			self.addThread(new dabProjectForumLib.ProjectThread(threadId, threadUrl, projectId, isThreadPublic, title, creationDate, numberOfPosts, userMayUpdateVisibility, userMayDeleteThread));
+
+			self.addThread(new dabProjectForumLib.ProjectThread(threadId, threadUrl, projectId, isThreadPublic, title, creationDate, numberOfPosts,
+					userMayUpdateVisibility, userMayDeleteThread));
 		};
 
 	},
@@ -229,27 +235,28 @@ var dabProjectForumLib = {
 		this.title = title;
 		this.creationDate = creationDate;
 		this.numberOfPosts = numberOfPosts;
-		
+
 		this.userMayUpdateVisibility = userMayUpdateVisibility;
 		this.userMayDeleteThread = userMayDeleteThread;
-		
+
 		this.isMakePublicLinkVisible = ko.computed(function() {
-			return self.userMayUpdateVisibility &&  ! self.isThreadPublic();
+			return self.userMayUpdateVisibility && !self.isThreadPublic();
 		});
-		
+
 		this.isMakePrivateLinkVisible = ko.computed(function() {
-			return self.userMayUpdateVisibility &&  self.isThreadPublic();
+			return self.userMayUpdateVisibility && self.isThreadPublic();
 		});
-		
+
 		this.isAtLeastOneUpdateLinkIsVisible = ko.computed(function() {
 			return self.userMayDeleteThread || self.isMakePublicLinkVisible() || self.isMakePrivateLinkVisible();
 		});
-	}, 
-		
-		
+	},
+
 	ProjectThreadFactory : {
-		buildFromServerThread: function (serverThread) {
-			return new dabProjectForumLib.ProjectThread(serverThread.id, serverThread.threadUrl,  serverThread.projectId,  serverThread.isThreadPublic, serverThread.title, serverThread.creationDateStr, serverThread.numberOfPosts, serverThread.mayUserUpdateVisibility, serverThread.mayUserDeleteThisThread);
+		buildFromServerThread : function(serverThread) {
+			return new dabProjectForumLib.ProjectThread(serverThread.id, serverThread.threadUrl, serverThread.projectId, serverThread.isThreadPublic,
+					serverThread.title, serverThread.creationDateStr, serverThread.numberOfPosts, serverThread.mayUserUpdateVisibility,
+					serverThread.mayUserDeleteThisThread);
 		}
 	}
 };

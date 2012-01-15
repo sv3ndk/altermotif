@@ -5,12 +5,11 @@
 	text-align: center;
 }
 
-#projectToolBox{
+#projectToolBox {
 	border: thin solid;
 	padding: 20px 20px 20px 20px;
 	float: left;
 	margin-left: 40px;
-	
 }
 
 #projectBasicDetails {
@@ -20,8 +19,8 @@
 }
 
 #projectBasicDetails label {
-    font-weight: bold;
-    margin-right: 10px;
+	font-weight: bold;
+	margin-right: 10px;
 }
 
 #projectBody {
@@ -31,28 +30,27 @@
 }
 
 #projectBody dt {
-    font-weight: bold;
-    margin-top: 5px;
+	font-weight: bold;
+	margin-top: 5px;
 }
 
 #projectParticipants {
-	margin-top: 30px;	
+	margin-top: 30px;
 }
 
-#projectTaskListTable  {
+#projectTaskListTable {
 	border-spacing: 0px;
 	border-collapse: collapse;
 	border: solid 1px;
-	width: 100%;	
+	width: 100%;
 }
-
 
 #projectTaskListTable thead {
-	background-color: #DFDFDF;		
+	background-color: #DFDFDF;
 }
 
-#projectTaskListTable thead tr:hover{
-	background-color: #DFDFDF;		
+#projectTaskListTable thead tr:hover {
+	background-color: #DFDFDF;
 }
 
 #projectTaskListTable tr:hover {
@@ -62,7 +60,6 @@
 /* *****************************
 * project forum
 ******************************* */
-
 #projectForumTopButton {
 	float: right;
 	margin: 10px;
@@ -71,7 +68,6 @@
 .threadContainer {
 	clear: right;
 }
-
 
 .forumThread {
 	padding: 10px;
@@ -84,23 +80,82 @@
 	background-color: yellow;
 }
 
-.forumThread .numberOfPosts{
+.forumThread .numberOfPosts {
 	float: right;
 }
 
-.forumThreadPrivate .numberOfPosts{
+.forumThreadPrivate .numberOfPosts {
 	float: right;
 }
 
 .threadEditLinks {
-	text-align: right;	
+	text-align: right;
 }
 
 /* *****************************
 * project forum thread page
 ******************************* */
-
 .forumSubTitle {
 	text-align: center;
 	font-size: 28px;
 }
+
+#forumThreadContainer {
+	width: 600px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 30px;
+}
+
+#forumThreadNewPost {
+	margin-left: 90px;
+}
+
+#forumThreadPostButton {
+	float: right;
+	margin-bottom: 5px;
+}
+
+#forumThreadPostText {
+	width: 100%;
+}
+
+.onePost {
+	margin-top: 15px;
+}
+
+.onePostPhotoBlock {
+	width: 90px;
+	float: left;
+}
+
+.onePostMainBlock {
+	float: left;
+	width: 510px;
+}
+
+.onePostMainBlock .deleteThreadButton {
+	float: right;	
+}
+
+
+#forumPosts  {
+	margin-top: 30px;
+}	
+
+#forumPosts .breakerDiv {	
+	clear: left;
+}
+
+#forumPosts .postContent {
+	min-height: 80px;
+	border: 1px solid;
+	padding: 0px 5px;
+	margin-top: 5px;
+	
+	 white-space: pre-wrap;       /* css-3 */
+	 white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+	 white-space: -pre-wrap;      /* Opera 4-6 */
+	 white-space: -o-pre-wrap;    /* Opera 7 */
+	 word-wrap: break-word;     
+}	

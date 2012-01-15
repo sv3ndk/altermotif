@@ -1,5 +1,6 @@
 package com.svend.dab.dao.mongo;
 
+import static org.springframework.data.mongodb.core.mapreduce.MapReduceOptions.options;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
@@ -17,24 +18,21 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
-import static org.springframework.data.mongodb.core.mapreduce.MapReduceOptions.options;
-
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoException;
 import com.mongodb.WriteResult;
 import com.svend.dab.core.beans.profile.Photo;
-import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Asset;
 import com.svend.dab.core.beans.projects.Participant;
-import com.svend.dab.core.beans.projects.ProjectOverview;
-import com.svend.dab.core.beans.projects.ProjectSearchRequest;
-import com.svend.dab.core.beans.projects.TagCount;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.Project.STATUS;
+import com.svend.dab.core.beans.projects.ProjectOverview;
+import com.svend.dab.core.beans.projects.ProjectSearchRequest;
 import com.svend.dab.core.beans.projects.SelectedTheme;
+import com.svend.dab.core.beans.projects.TagCount;
 import com.svend.dab.core.beans.projects.Task;
 
 /**

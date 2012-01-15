@@ -16,4 +16,6 @@ public interface IForumThreadDao {
 
 	public void deleteThread(String projectId, String threadId);
 
+	public void updateNumberOfPosts(String id, Long countPostOfThread);
+
 }

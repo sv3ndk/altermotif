@@ -265,6 +265,7 @@ fieldset legend {
 	margin: 1%;
 	margin-left: 20%;
 	clear: left;
+	padding-top: 30px;
 }
 
 #bottomLinksContainer a {
@@ -356,4 +357,12 @@ fieldset legend {
 
 .oneProjectOverviewLine td {
 	padding: 5px 10px;
+}
+
+.profileContactThumb {
+	float: left;
+	border: none;
+	max-height: 80px;
+	max-width: 80px;
+	padding: 0 10px 0 0;
 }

@@ -1,11 +1,23 @@
 #{extends 'masterTemplate.html' /} 
 
-
 #{set 'moreStyles'}
 	<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/projects/projectsView.css'}" />
 #{/set} 
 
 #{set 'moreScripts'}
+    <script src="@{'/public/javascripts/projects/projectForumThread.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+
+	<script type="text/javascript">
+		
+		var postNewComment = #{jsAction @projects.ProjectForumThread.postNewComment(':threadId', ':postContent') /};
+		var getNewAndDeletedPosts = #{jsAction @projects.ProjectForumThread.getNewAndDeletedPosts(':threadId', ':currentlyKnownIds') /};
+		var deletePost = #{jsAction @projects.ProjectForumThread.deletePost(':threadId', ':postId') /};
+		
+		var threadId = "${thread.id}";
+		
+		var confirmDeleteForumThreadText = "&{'projectForumThreadConfirmDeletePost'}";
+		
+	</script>
 
 #{/set}
 
@@ -14,5 +26,53 @@
 	<p class="pageTitle">${project?.pdata?.name} <a class="dabLink" href="@{projects.ProjectsView.projectsView(project.id)}">&{'projectForumThreadBackToProject'}</a></p>
 	
 	<p class="forumSubTitle">&{'projectForumThreadThread'}: ${thread.title} #{if !thread.isThreadPublic} &{'projectForumThreadPrivate'}#{/if}</p>
+	
+	
+	<div id="forumThreadContainer">
+	
+		#{if forumThreadVisibility.postNewThreadLinkVisible}
+			<div id="forumThreadNewPost">
+				<input id="forumThreadPostButton" type="button" value="&{'forumThreadPostButtonText'}"></input>
+				<textarea id="forumThreadPostText" rows="6" ></textarea>
+			</div>
+		#{/if}
+		
+		
+		<div id="forumPosts" data-bind="template : {foreach: allPosts, beforeRemove: beforeRemovePost, afterAdd: afterAddPost}">
+			<div class="breakerDiv"></div>
+			<div class="onePost">
+				<div class="onePostPhotoBlock">
+					<a  data-bind="attr: { href: authorProfileLink}">
+						<img data-bind="attr: { src: authorPhotoUrl}" class="profileContactThumb" />
+					</a>
+					<br/>
+					<a class="dabLink" data-bind="text: authorId, attr: { href: authorProfileLink}"></a>
+				</div>
+			</div>
+			<div class="onePostMainBlock">
+				<span class="hidden hiddenPostId" data-bind="text: id"></span>
+				<span>&{'projectForumThreadPostDate'}:</span>
+				<span data-bind="text: creationDate" ></span>
+				<input class="deleteThreadButton" type="button" value="&{'projectForumThreadDeletePost'}" data-bind="visible: userMayDelete"></input>
+				<pre class="postContent" data-bind="text: content"></pre>
+			</div>
+		</div>
+	</div>
+	
+	<div id="forumThreadData">
+		#{list items:threadPosts, as:'onePost'}
+			<div class="onePost">
+				<span class="postId">${onePost.id}</span>
+				<span class="postCreationDate">${onePost.creationDateStr}</span>
+				<span class="postContent">${onePost.content}</span>
+				<span class="postAuthorId">${onePost.author.userName}</span>
+				<a class="profileLink" href="@{profile.ProfileView.profileView(onePost.author.userName)}"></a>
+				<span class="postAuthorPhotoUrl">${onePost.author.mainPhotoThumbLink}</span>
+				<span class="postAuthorIsActive">${onePost.author.profileActive}</span>
+				
+				<span class="visitorMayDelete">${forumThreadVisibility.deletePostLinkVisible}</span>
+			</div>
+		#{/list}
+	</div>
 
 </div>

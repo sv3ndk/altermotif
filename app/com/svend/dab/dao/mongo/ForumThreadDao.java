@@ -16,16 +16,17 @@ import com.svend.dab.core.dao.IForumThreadDao;
 
 /**
  * @author svend
- *
+ * 
  */
 @Service
 public class ForumThreadDao implements IForumThreadDao {
 
 	@Autowired
 	private MongoTemplate mongoTemplate;
-	
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.svend.dab.core.dao.IForumThreadDao#loadProjectForumThreads(java.lang.String)
 	 */
 	@Override
@@ -33,13 +34,11 @@ public class ForumThreadDao implements IForumThreadDao {
 		return mongoTemplate.find(query(where("projectId").is(projectId)), ForumThread.class);
 	}
 
-
 	@Override
 	public ForumThread createNewThread(ForumThread forumThread) {
 		mongoTemplate.save(forumThread);
 		return forumThread;
 	}
-
 
 	@Override
 	public void updateThreadVisibility(String projectId, String threadId, boolean isThreadPublic) {
@@ -47,16 +46,19 @@ public class ForumThreadDao implements IForumThreadDao {
 		mongoTemplate.updateFirst(query(where("id").is(threadId)), new Update().set("isThreadPublic", isThreadPublic), ForumThread.class);
 	}
 
-
 	@Override
 	public ForumThread getThreadById(String threadId) {
 		return mongoTemplate.findById(threadId, ForumThread.class);
 	}
 
-
 	@Override
 	public void deleteThread(String projectId, String threadId) {
-		mongoTemplate.remove(query(where("id").is(threadId)), ForumThread.class);		
+		mongoTemplate.remove(query(where("id").is(threadId)), ForumThread.class);
+	}
+
+	@Override
+	public void updateNumberOfPosts(String threadId, Long numberOfPosts) {
+		mongoTemplate.updateFirst(query(where("id").is(threadId)), new Update().set("numberOfPosts", numberOfPosts), ForumThread.class);
 	}
 
 }

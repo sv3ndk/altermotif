@@ -465,13 +465,6 @@ public class ProjectsView extends DabController {
 		}
 	}
 
-	/**
-	 * @param threadId
-	 */
-	public static void doRetrieveForumPosts(String threadId) {
-		List<ForumPost> posts = BeanProvider.getForumPostDao().getPosts(threadId);
-		renderJSON(posts);
-	}
 
 	public static void changeThreadVisibility(String projectId, String threadId, boolean isThreadPublic) {
 		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
@@ -492,7 +485,11 @@ public class ProjectsView extends DabController {
 		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
 		if (project != null) {
 			if (new ProjectPep(project).isAllowedToDeleteThread(getSessionWrapper().getLoggedInUserProfileId())) {
+
+				// non transactional, but ok, we might just lose a little space in that case
 				BeanProvider.getForumThreadDao().deleteThread(projectId, threadId);
+				BeanProvider.getForumPostDao().deletePostsOfThread(threadId);
+				
 				renderJSON(new MappedValue("removeThreadId", threadId));
 			} else {
 				logger.log(Level.WARNING, "user trying to delete a thread but is not allowed to: projectId:" + projectId + ", threadId:" + threadId + "userid:"

@@ -195,4 +195,5 @@ public class ProjectViewVisibility {
 	public boolean isForumThreadDeleteThreadLinkVisible() {
 		return pep.isAllowedToDeleteThread(visitingUserId);
 	}
+	
 }

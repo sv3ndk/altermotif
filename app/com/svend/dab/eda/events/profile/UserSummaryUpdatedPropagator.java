@@ -17,49 +17,57 @@ import com.svend.dab.core.beans.profile.UserReference;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Participation;
 import com.svend.dab.core.dao.IContactDao;
+import com.svend.dab.core.dao.IForumPostDao;
 import com.svend.dab.dao.mongo.IProjectDao;
 import com.svend.dab.dao.mongo.IUserProfileDao;
 import com.svend.dab.eda.IEventPropagator;
 
 /**
  * @author Svend
- *
+ * 
  */
 @Component
 public class UserSummaryUpdatedPropagator implements IEventPropagator<UserSummaryUpdated> {
 
-	
 	@Autowired
 	private IUserProfileDao userProfileRepo;
-	
 
 	@Autowired
 	private IContactDao contactDao;
 
-	
 	@Autowired
 	private IProjectDao projectDao;
 
+	@Autowired
+	private IForumPostDao forumPostDao;
+
 	private static Logger logger = Logger.getLogger(UserSummaryUpdatedPropagator.class.getName());
-	
+
 	@Override
 	public void propagate(UserSummaryUpdated event) throws DabException {
-		
+
 		logger.log(Level.INFO, "propagating user summary updated");
-		
+
 		UserProfile profile = userProfileRepo.retrieveUserProfileById(event.getUpdatedSummary().getUserName());
-		
+
 		if (profile == null) {
 			throw new DabPreConditionViolationException("cannot propagate a UserSummaryUpdated event: no profile found in database for username " + event.getUpdatedSummary().getUserName());
 		}
-		
+
+		// TODO. all those "replace" stuff can be re-written with a single call to the DAO (see example with propagateUserSummaryToForumPosts)
 		propagateUserSummaryToWrittenReferenceds(profile, event.getUpdatedSummary());
 		propagateUserSummaryToReceivedReferences(profile, event.getUpdatedSummary());
 		propagateUserSummaryToContacts(profile, event.getUpdatedSummary());
 		propagateUserSummaryToProject(profile, event.getUpdatedSummary());
-		
+
+		propagateUserSummaryToForumPosts(event.getUpdatedSummary());
+
 	}
-	
+
+	private void propagateUserSummaryToForumPosts(UserSummary updatedSummary) {
+		forumPostDao.updateAuthorOfAllPostsFrom(updatedSummary);
+	}
+
 	/**
 	 * @param profile
 	 * @param updatedSummary

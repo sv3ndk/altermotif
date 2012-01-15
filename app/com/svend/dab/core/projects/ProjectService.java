@@ -15,8 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.Sets;
 import com.svend.dab.core.beans.Config;
+import com.svend.dab.core.beans.profile.UserProfile;
+import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Asset;
+import com.svend.dab.core.beans.projects.ForumDiff;
+import com.svend.dab.core.beans.projects.ForumPost;
 import com.svend.dab.core.beans.projects.ForumThread;
 import com.svend.dab.core.beans.projects.Participant;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
@@ -27,9 +32,11 @@ import com.svend.dab.core.beans.projects.Project.STATUS;
 import com.svend.dab.core.beans.projects.RankedTag;
 import com.svend.dab.core.beans.projects.TagCount;
 import com.svend.dab.core.beans.projects.Task;
+import com.svend.dab.core.dao.IForumPostDao;
 import com.svend.dab.core.dao.IForumThreadDao;
 import com.svend.dab.core.dao.ITagCountDao;
 import com.svend.dab.dao.mongo.IProjectDao;
+import com.svend.dab.dao.mongo.IUserProfileDao;
 import com.svend.dab.eda.EventEmitter;
 import com.svend.dab.eda.events.projects.ProjectApplicationAccepted;
 import com.svend.dab.eda.events.projects.ProjectApplicationCancelled;
@@ -58,7 +65,13 @@ public class ProjectService implements IProjectService {
 	private ITagCountDao tagCountDao;
 
 	@Autowired
-	private IForumThreadDao forumThreadDao; 
+	private IForumThreadDao forumThreadDao;
+
+	@Autowired
+	private IForumPostDao forumPostDao;
+	
+	@Autowired
+	private IUserProfileDao userProfileRepo;
 	
 	@Autowired
 	private Config config;
@@ -360,6 +373,35 @@ public class ProjectService implements IProjectService {
 	@Override
 	public ForumThread createdNewForumThread(String projectId, String threadTitle, boolean isThreadPublic) {
 		return forumThreadDao.createNewThread(new ForumThread(projectId, threadTitle, new Date(), 0, isThreadPublic));
+	}
+
+	@Override
+	public void postNewForumMessage(String authorId, ForumThread thread, String messageContent) {
+		
+		UserProfile author = userProfileRepo.retrieveUserProfileById(authorId);
+		if (author == null) {
+			logger.log(Level.WARNING, "User with id " + authorId + " is trying to post a message but has not registered profile! This is impossible! Not doing anything");
+		} else {
+			ForumPost createdPost = new ForumPost(thread.getId(), thread.getProjectId(), new Date(), new UserSummary(author), messageContent);
+			forumPostDao.saveNewPost(createdPost);
+			forumThreadDao.updateNumberOfPosts(thread.getId(), forumPostDao.countPostOfThread(thread.getId()));
+		}
+	}
+
+	@Override
+	public ForumDiff computeThreadDiff(String threadId, Set<String> knownPostIds) {
+		
+		ForumDiff response = new ForumDiff();
+		
+		// removed threads
+		Set<String> allPostIds = forumPostDao.findAllPostIdsOfThread(threadId);
+		response.setDeletedPostIds(Sets.difference(knownPostIds, allPostIds).immutableCopy());
+		
+		// new threads
+		response.setNewPosts(forumPostDao.findThreadPostsExcluding(threadId, knownPostIds));
+		
+		
+		return response;
 	}
 
 }

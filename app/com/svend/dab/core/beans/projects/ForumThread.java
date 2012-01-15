@@ -17,6 +17,7 @@ public class ForumThread {
 	private String title;
 	private Date creationDate;
 	private boolean isThreadPublic;
+	private int numberOfPosts = 0;
 
 	@Transient
 	private String creationDateStr;
@@ -30,9 +31,6 @@ public class ForumThread {
 
 	@Transient
 	private String threadUrl;
-	
-
-	private int numberOfPosts = 0;
 
 	public ForumThread(String projectId, String title, Date creationDate, int numberOfPosts, boolean isThreadPublic) {
 		super();

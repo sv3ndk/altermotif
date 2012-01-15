@@ -402,6 +402,16 @@ public class ProjectPep {
 	public boolean isAllowedToUpdateVisibilityThread(String user) {
 		return isPartOfStartedProject(user);
 	}
+	
+	public boolean isAllowedToPostNewMessage(String user, ForumThread thread) {
+		return isPartOfStartedProject(user);
+	}
+	
+	public boolean isAllowedToDeleteForumPosts(String user, ForumThread thread) {
+		return isAdminOrOwnerOfStartedProject(user);
+	}
+
+
 
 	// ////////////////////////////////
 	// some generic project related roles
@@ -447,6 +457,8 @@ public class ProjectPep {
 		ROLE role = project.findRoleOfUser(user);
 		return role == ROLE.initiator;
 	}
+
+
 
 
 }

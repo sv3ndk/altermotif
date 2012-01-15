@@ -137,12 +137,6 @@ home page
 	margin-top: 30px;
 }
 
-.profileContactThumb {
-	float: left;
-	border: none;
-	height: 80px;
-	padding: 0 10px 0 0;
-}
 
 .profilePendingInvitations {
 	font-style: italic;

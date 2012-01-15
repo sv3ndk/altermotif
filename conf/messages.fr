@@ -427,6 +427,10 @@ viewProjectForumConfirmRemoveThread=***Are you sure you want to delete this thre
 projectForumThreadThread=***Forum thread
 projectForumThreadBackToProject=***back to project page
 projectForumThreadPrivate=***(private)
+forumThreadPostButtonText=***Post comment
+projectForumThreadPostDate=***Post date
+projectForumThreadDeletePost=***delete post
+projectForumThreadConfirmDeletePost=***Are you sure you want to delete this post? THIS ACTION CANNOT BE UNDONE! Are you sure this is what you want to do?
 
 
 projectTaskTodo=à faire
