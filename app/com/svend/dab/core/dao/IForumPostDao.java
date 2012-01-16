@@ -1,5 +1,6 @@
 package com.svend.dab.core.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -8,6 +9,8 @@ import com.svend.dab.core.beans.projects.ForumPost;
 
 public interface IForumPostDao {
 
+	public ForumPost loadPost(String postId);
+	
 	public List<ForumPost> getAllPosts(String threadId);
 
 	public void saveNewPost(ForumPost createdPost);
@@ -23,6 +26,9 @@ public interface IForumPostDao {
 	public void deletePostsOfThread(String threadId);
 
 	public Long countPostOfThread(String id);
+
+	public void updateThreadIdOfPost(String postId, String originalThreadId, String targetThreadId, Date updatedCreationDate, String updatedContent);
+
 
 
 }

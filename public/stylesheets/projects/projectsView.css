@@ -138,6 +138,11 @@
 	float: right;	
 }
 
+.onePostMainBlock .moveThreadButton {
+	float: right;	
+	margin-right: 5px;
+}
+
 
 #forumPosts  {
 	margin-top: 30px;
@@ -158,4 +163,9 @@
 	 white-space: -pre-wrap;      /* Opera 4-6 */
 	 white-space: -o-pre-wrap;    /* Opera 7 */
 	 word-wrap: break-word;     
-}	
+}
+
+
+#projectForumThreadMoveThreadPopup div.centerDropDown {
+	text-align: center;
+}

@@ -384,7 +384,7 @@ public class ProjectService implements IProjectService {
 		} else {
 			ForumPost createdPost = new ForumPost(thread.getId(), thread.getProjectId(), new Date(), new UserSummary(author), messageContent);
 			forumPostDao.saveNewPost(createdPost);
-			forumThreadDao.updateNumberOfPosts(thread.getId(), forumPostDao.countPostOfThread(thread.getId()));
+			updateNumberOfPostsOfThread(thread.getId());
 		}
 	}
 
@@ -402,6 +402,35 @@ public class ProjectService implements IProjectService {
 		
 		
 		return response;
+	}
+
+	@Override
+	public void movePostToThread(String originalThreadId, String postId, String targetThreadId, String username) {
+		
+		ForumPost post = forumPostDao.loadPost(postId);
+		
+		if (post != null && post.getThreadId().equals(originalThreadId)) {
+			// TODO: consider using an event here
+			
+			StringBuffer updatedContent = new StringBuffer();
+			updatedContent.append("===============\n");
+			updatedContent.append("Forwarded by: ").append(username).append("\n");
+			updatedContent.append("Original date: ").append(post.getCreationDateStr()).append("\n");
+			updatedContent.append("Original message:\n\n ").append(post.getContent());
+			
+			forumPostDao.updateThreadIdOfPost(postId, originalThreadId, targetThreadId, new Date(), updatedContent.toString());
+			updateNumberOfPostsOfThread(originalThreadId);
+			updateNumberOfPostsOfThread(targetThreadId);
+		}
+		
+	}
+	
+	
+	/////////////////////////////////
+	//
+	
+	protected void updateNumberOfPostsOfThread(String threadId) {
+		forumThreadDao.updateNumberOfPosts(threadId, forumPostDao.countPostOfThread(threadId));
 	}
 
 }

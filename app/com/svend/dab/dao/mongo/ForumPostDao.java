@@ -3,6 +3,7 @@ package com.svend.dab.dao.mongo;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,6 +29,11 @@ public class ForumPostDao implements IForumPostDao {
 
 	@Autowired
 	private MongoTemplate mongoTemplate;
+
+	@Override
+	public ForumPost loadPost(String postId) {
+		return mongoTemplate.findById(postId, ForumPost.class);
+	}
 
 	@Override
 	public List<ForumPost> getAllPosts(String threadId) {
@@ -96,6 +102,12 @@ public class ForumPostDao implements IForumPostDao {
 				return collection.count(query(where("threadId").is(threadId)).getQueryObject());
 			}
 		});
+	}
+
+	@Override
+	public void updateThreadIdOfPost(String postId, String originalThreadId, String targetThreadId, Date updatedCreationDate, String updatedContent) {
+		// we also query on the original threadId as a security measure
+		mongoTemplate.updateFirst(query(where("id").is(postId).and("threadId").is(originalThreadId)), new Update().set("threadId", targetThreadId).set("creationDate", updatedCreationDate).set("content", updatedContent), ForumPost.class);
 	}
 
 }

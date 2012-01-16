@@ -89,6 +89,8 @@ public interface IProjectService {
 
 	public ForumDiff computeThreadDiff(String threadId, Set<String> knownPostIds);
 
+	public void movePostToThread(String originalThreadId, String postId, String targetThreadId, String username);
+
 	
 	
 }

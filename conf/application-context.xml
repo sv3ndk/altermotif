@@ -156,12 +156,4 @@
  	<mongo:repositories base-package="com.svend.dab.dao.mongo" >
  	</mongo:repositories>
 
-<!-- 
-	
-	"mongodb-1.8":[{"name":"mongodb-altermotif-dev","label":"mongodb-1.8","plan":"free","tags":["mongodb","mongodb-1.8","nosql"],"credentials":
-	{"hostname":"172.30.48.72","host":"172.30.48.72","port":25063,"username":"bf6dcf65-6a85-4e23-ac49-0c59547ad78c","password":"d450ffe8-2f8d-49ed-85b3-e507667569a2",
-	"name":"1888afcc-41f0-4995-b9cd-422cab8bb30c","db":"db"}}]} -->
-
- -->
- 	
 </beans>

@@ -2,6 +2,7 @@ package controllers.projects;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -38,26 +39,37 @@ public class ProjectForumThread extends DabController {
 	 */
 	public static void projectForumThread(String t) {
 
-		ForumThread thread = BeanProvider.getForumThreadDao().getThreadById(t);
+		ForumThread visitedThread = BeanProvider.getForumThreadDao().getThreadById(t);
 
-		if (thread != null) {
-			Project project = BeanProvider.getProjectService().loadProject(thread.getProjectId(), false);
+		if (visitedThread != null) {
+			Project project = BeanProvider.getProjectService().loadProject(visitedThread.getProjectId(), false);
 
 			if (project != null) {
 				ProjectPep pep = new ProjectPep(project);
-				if (pep.isAllowedSeeThisForumThread(getSessionWrapper().getLoggedInUserProfileId(), thread.isThreadPublic())) {
+				if (pep.isAllowedSeeThisForumThread(getSessionWrapper().getLoggedInUserProfileId(), visitedThread.isThreadPublic())) {
 
-					List<ForumPost> allPosts = BeanProvider.getForumPostDao().getAllPosts(thread.getId());
+					List<ForumPost> allPosts = BeanProvider.getForumPostDao().getAllPosts(visitedThread.getId());
 					Date expirationdate = new Date();
 					expirationdate.setTime(expirationdate.getTime() + BeanProvider.getConfig().getCvExpirationDelayInMillis());
 					for (ForumPost post : allPosts) {
 						post.generatePhotoLink(expirationdate);
 					}
 
-					renderArgs.put("thread", thread);
+					renderArgs.put("thread", visitedThread);
 					renderArgs.put("threadPosts", allPosts);
 					renderArgs.put("project", project);
-					renderArgs.put("forumThreadVisibility", new ProjectForumThreadVisibility(getSessionWrapper().getLoggedInUserProfileId(), thread, pep));
+					renderArgs.put("forumThreadVisibility", new ProjectForumThreadVisibility(getSessionWrapper().getLoggedInUserProfileId(), project, visitedThread, pep));
+					
+					List<ForumThread> allThreads = BeanProvider.getForumThreadDao().loadProjectForumThreads(visitedThread.getProjectId());
+					List<ForumThread> allOtherThread = new LinkedList<ForumThread>();
+					for (ForumThread thr : allThreads) {
+						if (!thr.getId().equals(visitedThread.getId())) {
+							allOtherThread.add(thr);
+						}
+					}
+					renderArgs.put("allOtherThread", allOtherThread);
+					
+					
 					render();
 				} else {
 					Application.index();
@@ -86,12 +98,12 @@ public class ProjectForumThread extends DabController {
 					BeanProvider.getProjectService().postNewForumMessage(getSessionWrapper().getLoggedInUserProfileId(), thread, postContent);
 					renderJSON(new MappedValue("result", "ok"));
 				} else {
-					logger.log(Level.WARNING, "User is trying to post a message to a thread but is not allowed to!. ThreadId:" + threadId + "projectId:" + thread.getProjectId() + ",user: "
+					logger.log(Level.WARNING, "User is trying to post a message to a thread but is not allowed to! ThreadId:" + threadId + "projectId:" + thread.getProjectId() + ",user: "
 							+ getSessionWrapper().getLoggedInUserProfileId());
 				}
 			} else {
 				logger.log(Level.WARNING,
-						"User is trying to post a message to a thread linked to a non existing projet! This is impossible!. ThreadId:" + threadId + "projectId:" + thread.getProjectId() + ",user: "
+						"User is trying to post a message to a thread linked to a non existing projet! This is impossible! ThreadId:" + threadId + "projectId:" + thread.getProjectId() + ",user: "
 								+ getSessionWrapper().getLoggedInUserProfileId());
 				renderJSON(new MappedValue("result", "nok"));
 			}
@@ -127,6 +139,7 @@ public class ProjectForumThread extends DabController {
 						post.generatePhotoLink(expirationdate);
 						post.getCreationDateStr();
 						post.setUserMayDelete(pep.isAllowedToDeleteForumPosts(getSessionWrapper().getLoggedInUserProfileId(), thread));
+						post.setUserMayMove(pep.isAllowedToMoveForumPosts(getSessionWrapper().getLoggedInUserProfileId(), thread));
 					}
 
 					renderJSON(diff);
@@ -149,9 +162,9 @@ public class ProjectForumThread extends DabController {
 			if (project != null) {
 				ProjectPep pep = new ProjectPep(project);
 				if (pep.isAllowedToDeleteForumPosts(getSessionWrapper().getLoggedInUserProfileId(), thread)) {
+					// TODO: clean up: delegate to project service here
 					BeanProvider.getForumPostDao().deletePost(postId);
 					BeanProvider.getForumThreadDao().updateNumberOfPosts(thread.getId(), BeanProvider.getForumPostDao().countPostOfThread(thread.getId()));
-
 				} else {
 					renderJSON(new MappedValue("result", "nok"));
 				}
@@ -161,7 +174,28 @@ public class ProjectForumThread extends DabController {
 		} else {
 			renderJSON(new MappedValue("result", "nok"));
 		}
-
+	}
+	
+	public static void movePost(String originalThreadId, String targetThreadId, String postId) {
+		
+		ForumThread originalThread = BeanProvider.getForumThreadDao().getThreadById(originalThreadId);
+		
+		if (originalThread != null) {
+			Project project = BeanProvider.getProjectService().loadProject(originalThread.getProjectId(), false);
+			if (project != null) {
+				ProjectPep pep = new ProjectPep(project);
+				if (pep.isAllowedToMoveForumPosts(getSessionWrapper().getLoggedInUserProfileId(), originalThread)) {
+					BeanProvider.getProjectService().movePostToThread(originalThreadId, postId, targetThreadId, getSessionWrapper().getLoggedInUserProfileId());
+				} else {
+					renderJSON(new MappedValue("result", "nok"));
+				}
+			} else {
+				renderJSON(new MappedValue("result", "nok"));
+			}
+		} else {
+			renderJSON(new MappedValue("result", "nok"));
+		}
+		
 	}
 
 }

@@ -112,7 +112,7 @@ public class ProjectPep {
 	}
 
 	// //////////////////////////////
-	// project life cylce
+	// project life cycle
 
 	public boolean isAllowedToCancelProject(String user) {
 		if (!isOwnerOfStartedProject(user)) {
@@ -393,24 +393,29 @@ public class ProjectPep {
 		return isPartOfStartedProject(user) || isThreadPublic;
 	}
 
-	
 	public boolean isAllowedToDeleteThread(String user) {
 		return isAdminOrOwnerOfStartedProject(user);
 	}
 
-	
 	public boolean isAllowedToUpdateVisibilityThread(String user) {
 		return isPartOfStartedProject(user);
 	}
-	
+
 	public boolean isAllowedToPostNewMessage(String user, ForumThread thread) {
-		return isPartOfStartedProject(user);
+		if (thread.isThreadPublic()) {
+			return user != null;
+		} else {
+			return isPartOfStartedProject(user);
+		}
 	}
-	
+
 	public boolean isAllowedToDeleteForumPosts(String user, ForumThread thread) {
 		return isAdminOrOwnerOfStartedProject(user);
 	}
-
+	
+	public boolean isAllowedToMoveForumPosts(String user, ForumThread thread) {
+		return isAdminOrOwnerOfStartedProject(user);
+	}
 
 
 	// ////////////////////////////////
@@ -457,8 +462,5 @@ public class ProjectPep {
 		ROLE role = project.findRoleOfUser(user);
 		return role == ROLE.initiator;
 	}
-
-
-
 
 }

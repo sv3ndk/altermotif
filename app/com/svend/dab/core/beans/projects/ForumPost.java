@@ -23,7 +23,11 @@ public class ForumPost {
 	@Transient
 	private String authorProfilLink;
 	
+	@Transient
 	private boolean userMayDelete;
+	
+	@Transient
+	private boolean userMayMove;
 
 	public ForumPost() {
 		super();
@@ -115,6 +119,14 @@ public class ForumPost {
 
 	public void setUserMayDelete(boolean userMayDelete) {
 		this.userMayDelete = userMayDelete;
+	}
+
+	public boolean isUserMayMove() {
+		return userMayMove;
+	}
+
+	public void setUserMayMove(boolean userMayMove) {
+		this.userMayMove = userMayMove;
 	}
 
 }

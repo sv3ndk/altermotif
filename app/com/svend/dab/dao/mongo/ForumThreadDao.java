@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Order;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +33,9 @@ public class ForumThreadDao implements IForumThreadDao {
 	 */
 	@Override
 	public List<ForumThread> loadProjectForumThreads(String projectId) {
-		return mongoTemplate.find(query(where("projectId").is(projectId)), ForumThread.class);
+		Query query = query(where("projectId").is(projectId));
+		query.sort().on("creationDate",  Order.DESCENDING);
+		return mongoTemplate.find(query, ForumThread.class);
 	}
 
 	@Override

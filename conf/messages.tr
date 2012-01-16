@@ -434,6 +434,8 @@ forumThreadPostButtonText=***Post comment
 projectForumThreadPostDate=***Post date
 projectForumThreadDeletePost=***delete post
 projectForumThreadConfirmDeletePost=***Are you sure you want to delete this post? THIS ACTION CANNOT BE UNDONE! Are you sure this is what you want to do?
+projectForumThreadMovePost=***move post
+projectForumThreadMoveThreadPopupText=***Moving a post means removing it from the original thread and creating a new one with its content, with creation date set to today, in another thread. A reference to the original post as well as your username will appear in the new post. Please select the destination thread below
 
 
 projectTaskTodo=Yapılacaklar
