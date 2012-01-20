@@ -45,6 +45,10 @@ public class DabValidators {
 			flash.remove(renderArgName + ".secondpassword");
 		}
 
+		if (!createdProfile.isAcceptConditions()) {
+			Validation.addError(renderArgName + ".acceptConditions", "registerMustAcceptConditionsErrorMessage", "");
+		}
+		
 		try {
 			Date dateOfBirth = createdProfile.getDateOfBirth();
 			if (dateOfBirth != null) {

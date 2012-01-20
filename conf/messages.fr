@@ -38,6 +38,8 @@ uploadedFileTooBigError=Le fichier soumis dépasse le maximum autorisé
 profileUploadCvNotAPdf=Erreur: le CV doit être un fichier pdf
 profileUploadPhotoNotAnImage=Le fichier que vous avez essayer de télécharger n'est pas une image
 illegalHttpAddressFormat=Le format du lien est incorrect
+registerMustAcceptConditionsErrorMessage=***You must accept the terms and conditions of Altermotif in order to create a profile 
+
 
 # note: this message is not displayed by Firefox: they actually refuse to do that because some website exploit this against their users, see here:https://bugzilla.mozilla.org/show_bug.cgi?id=578828 
 warningUnsavedChangesText=Il y a des changements non sauvegardés. Ils seront perdus si vous naviguez sans sauvegarder!
@@ -81,6 +83,8 @@ loginErrorMessage=Erreur d'enregistrement
 loginErrorDetailMessage=Nom d'utilisateur ou mot de passe incorrect!
 registerPageCaptchaTitle=Veuillez placer les lettres en ordre alphabétique
 registerPageWelcomText=Bienvenue! Après votre registration, vous pourrez modifier votre compte et décider si d'autres peuvent voir votre profil ou des informations particulières tels que votre date de naissance ou votre vrai nom. Se régistrer à AlterMotif signifie que vous entrez dans un réseau des gens qui recherchent des nouvelles façons d'intéraction et de production. Inaffecté par le motif de profit aveuglant, les actions ont des objectives claires et la coopération est basé sur la motivation mutuelle. De cette manière, vous ne travaillez pas pour l'économie, mais vous entrez dans une économie qui travaille pour vous, en mettant votre but de nouveau au centre de l'attention.
+registerAcceptConditions_part1=***I accept the 
+registerAcceptConditions_part2=***terms and conditions 
 
 
 #Top menu 

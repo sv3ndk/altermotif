@@ -38,6 +38,7 @@ uploadedFileTooBigError=Yüklemek istediğiniz dosya çok büyük
 profileUploadCvNotAPdf=Hata: Özgeçmiş PDF formatında olmalı
 profileUploadPhotoNotAnImage=Yüklemeye çalıştığınız dosya resim dosyası değil
 illegalHttpAddressFormat=Girdiğiniz bağlantını formatında bir sorun var
+registerMustAcceptConditionsErrorMessage=***You must accept the terms and conditions of Altermotif in order to create a profile 
 
 
 # note: this message is not displayed by Firefox: they actually refuse to do that because some website exploit this against their users, see here:https://bugzilla.mozilla.org/show_bug.cgi?id=578828 
@@ -83,6 +84,9 @@ loginErrorMessage=Oturum açma hatası
 loginErrorDetailMessage=Kullanıcı adı/şifre hatalı!
 registerPageCaptchaTitle=Lütfen harfleri alfabetik sıraya koyun 
 registerPageWelcomText=Hoşgeldiniz!Kaydolduktan sonra, hesabınızı kişiselleştirebilir, profilinizi görünür veya gizli yapabilir, hesabınızla ilgili bazı bilgilerin (gerçek adınız ve doğum tarihiniz gibi)gizlilik derecesine karar verebilirsiniz. AlterMotif, yeni iletişim ve üretim şekilleri arayan insanların oluşturduğu bir topluluktur.Artık siz de bu topluluğun bir parçası oldunuz.Burada işbirliği karşılıklı motivasyona dayanıyor.Projelerin belirgin amaçları var ve bu amaçlar kar etmekle sınırlı değil. Hayatta yapmak istediklerinizi değerlendirirken sürekli tek bir kritere, yani projenizin kar potensiyeline önem vermekten sıkıldınız mı? AlterMotif sizi bu sınırlamadan kurtarmak amacıyla kuruldu.Gerçek isteklerinizin peşinden gidin, projelerinizi, sizin gibi düşünen insanların desteği ile hayata geçirebilin diye. AlterMotif dünyasında siz ekonomi için çalışmıyorsunuz, ekonomi sizin için çalışıyor. Buradaki en önemli şey, sizin hedefleriniz.Sizin ne yapmak istediğiniz.
+registerAcceptConditions_part1=***I accept the 
+registerAcceptConditions_part2=***terms and conditions 
+
 
 #Top menu 
 topMenuProfile=Profil

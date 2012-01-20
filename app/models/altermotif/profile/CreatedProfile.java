@@ -44,6 +44,8 @@ public class CreatedProfile {
 	@Email( message="incorrectEmailFormat") 
 	private String email;
 	
+	private boolean acceptConditions;
+	
 	
 	public CreatedProfile() {
 		super();
@@ -165,6 +167,14 @@ public class CreatedProfile {
 
 	public void setDateOfBirthStr(String dateOfBirthStr) {
 		this.dateOfBirthStr = dateOfBirthStr;
+	}
+
+	public boolean isAcceptConditions() {
+		return acceptConditions;
+	}
+
+	public void setAcceptConditions(boolean acceptConditions) {
+		this.acceptConditions = acceptConditions;
 	}
 
 }

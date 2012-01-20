@@ -38,6 +38,7 @@ uploadedFileTooBigError=The file you submitted is bigger than the allowed maximu
 profileUploadCvNotAPdf=Error: the CV must be a PDF file!
 profileUploadPhotoNotAnImage=The file you tried to upload is not an image
 illegalHttpAddressFormat=Link format incorrect
+registerMustAcceptConditionsErrorMessage=You must accept the terms and conditions of Altermotif in order to create a profile 
 
 
 # note: this message is not displayed by Firefox: they actually refuse to do that because some website exploit this against their users, see here:https://bugzilla.mozilla.org/show_bug.cgi?id=578828 
@@ -83,6 +84,8 @@ loginErrorMessage=Login error
 loginErrorDetailMessage=Username and/or password incorrect!
 registerPageCaptchaTitle=Please drag letters in alphabetical order 
 registerPageWelcomText=Welcome! Once you've registered, you'll be able to edit your account and decide whether you want others to see your profiile or bits of information like your birthday or your real name. Registering on 'Altermotif' means you are entering a network of people who are seeking new ways of interaction and production. Unhindered by the blinding pursuit of profit, actions have clear intentions and cooperation is based on mutual motivation. In this way, you are not working for the economy, but you are entering an economy that is working for you, by putting your goal back in the center of attention.
+registerAcceptConditions_part1=I accept the 
+registerAcceptConditions_part2=terms and conditions 
 
 #Top menu 
 topMenuProfile=Profile

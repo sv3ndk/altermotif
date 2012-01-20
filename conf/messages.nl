@@ -37,6 +37,7 @@ uploadedFileTooBigError=Het ingevoerde bestand is groter dan het toegestane maxi
 profileUploadCvNotAPdf=Fout: de cv moet een pdf-bestand zijn
 profileUploadPhotoNotAnImage=Het bestand dat u probeerde op te laden is geen beeld
 illegalHttpAddressFormat=***Link format incorrect
+registerMustAcceptConditionsErrorMessage=***You must accept the terms and conditions of Altermotif in order to create a profile 
 
 
 # note: this message is not displayed by Firefox: they actually refuse to do that because some website exploit this against their users, see here:https://bugzilla.mozilla.org/show_bug.cgi?id=578828 
@@ -83,6 +84,8 @@ loginErrorMessage=Fout bij het aanmelden
 loginErrorDetailMessage=Gebruikersnaam en/of wachtwoord verkeerd!
 registerPageCaptchaTitle=Gelieve de letters in alfabetische volgorde te slepen
 registerPageWelcomText=Welkom! Van zodra u geregistreerd bent, zal u in staat zijn om uw account aan te passen en te bepalen of anderen uw profiel kunnen zijn of andere stukken informatie kunnen zien zoals uw verjaardag of uw echte naam. Zich registreren op AlterMotif betekent dat je toetreedt tot een netwerk van mensen die op zoek zijn naar nieuwe vormen van interactie en productie. Ongehinderd door de verblindende achtervolging van winst, hebben acties duidelijke intenties en is samenwerking gebaseerd op wederzijdse overtuiging. Aldus werk je niet voor de economie maar betreedt je een economie die voor u werkt, door uw doel terug centraal te stellen.
+registerAcceptConditions_part1=***I accept the 
+registerAcceptConditions_part2=***terms and conditions 
 
 
 #Top menu 
