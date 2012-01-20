@@ -11,7 +11,8 @@ import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.Project.STATUS;
 import com.svend.dab.core.beans.projects.ProjectOverview;
-import com.svend.dab.core.beans.projects.ProjectSearchRequest;
+import com.svend.dab.core.beans.projects.ProjectSearchQuery;
+import com.svend.dab.core.beans.projects.ProjectSearchQuery.SORT_KEY;
 import com.svend.dab.core.beans.projects.Task;
 
 /**
@@ -23,7 +24,7 @@ public interface IProjectDao {
 
 	Project findOne(String projectId);
 	
-	List<Project> loadAllProjects(Set<String> allIds);
+	List<Project> loadAllProjects(Set<String> allIds, SORT_KEY sortkey);
 
 	Set<String> getAllProjectIds();
 
@@ -36,7 +37,7 @@ public interface IProjectDao {
 	
 	void updateProjectStatus(String id, STATUS newStatus);
 	
-	List<ProjectOverview> searchProjects(ProjectSearchRequest request);
+	List<ProjectOverview> searchProjects(ProjectSearchQuery request);
 
 	
 	// project photos

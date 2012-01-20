@@ -20,7 +20,7 @@ import com.svend.dab.core.beans.Config;
 import com.svend.dab.core.beans.projects.IndexedProject;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.ProjectOverview;
-import com.svend.dab.core.beans.projects.ProjectSearchRequest;
+import com.svend.dab.core.beans.projects.ProjectSearchQuery;
 import com.svend.dab.core.beans.projects.SelectedTheme;
 import com.svend.dab.core.dao.IIndexedProjectDao;
 import com.svend.dab.dao.mongo.IProjectDao;
@@ -104,7 +104,7 @@ public class QuickAndDirtyProjectFullTextSearch implements IProjectFTSService {
 
 	
 	@Override
-	public List<ProjectOverview> searchForProjects(ProjectSearchRequest request) {
+	public List<ProjectOverview> searchForProjects(ProjectSearchQuery request) {
 		
 		List<IndexedProject> ips = indexedProjectDao.searchForProjects(request);
 		
@@ -115,7 +115,7 @@ public class QuickAndDirtyProjectFullTextSearch implements IProjectFTSService {
 			allIds.add(ip.getProjectId());
 		}
 		
-		List<Project> projects = projectDao.loadAllProjects(allIds);
+		List<Project> projects = projectDao.loadAllProjects(allIds, request.getSortKey());
 		
 		List<ProjectOverview> projectOverview = new LinkedList<ProjectOverview>();
 		

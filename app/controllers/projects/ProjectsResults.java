@@ -1,10 +1,13 @@
 package controllers.projects;
 
+import web.utils.Utils;
 import models.altermotif.projects.WebSearchRequest;
 import controllers.BeanProvider;
 import controllers.DabController;
 
 /**
+ * Project search results
+ * 
  * @author svend
  *
  */
@@ -16,6 +19,7 @@ public class ProjectsResults extends DabController {
 			// refusing to search based on empty criterias
 			ProjectsSearch.projectsSearch();
 		} else {
+			renderArgs.put("originalSearchRequestJson", Utils.objectToJsonString(r));
 			renderArgs.put("projectsOverviews", BeanProvider.getProjectFullTextSearchService().searchForProjects(r.toBackendRequest()));
 			render();
 		}

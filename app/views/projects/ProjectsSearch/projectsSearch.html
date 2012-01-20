@@ -138,19 +138,16 @@
 
 	<div id="projectSearch_modeAdvanced" class="hidden">
 		<p>
-
 			<span>&{'projectSearchAdvancedModeExplanation_GotoSimpleMode'} </span>
 			<span id="projectSearchSwitchToSimpleModeLink" class="dabLink">&{'projectSearchAdvancedModeExplanation_GotoSimpleMode_Link'}</span>
 		</p>
-
-
 
 		#{form @projects.ProjectsResults.projectsResults()}
 			<table>
 				<tbody>
 					<tr>
 						<td class="formlabel">&{'projectSearchKeyWords'}:</td>
-						<td><input id="projectAdvancedSearchInputText" type="text" size="60"/ name="r.term"></td>
+						<td><input id="projectAdvancedSearchInputText" type="text" size="60" name="r.term"></td>
 						<td><input type="submit" value="GO" data-bind="enable: isGoButtonActive"  /></td>
 					</tr>
 					<tr>
@@ -163,11 +160,8 @@
 					</tr>
 				</tbody>
 			</table>
-			
 			<input id="hiddenAllThemesJson" name="r.themes" type="hidden" />
-		
 		#{/form }
 	</div>
-	
 
 </div>

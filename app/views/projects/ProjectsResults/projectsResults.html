@@ -1,5 +1,14 @@
 #{extends 'masterTemplate.html' /}
 
+#{set 'moreScripts'}
+    <script src="@{'/public/javascripts/projects/projectsResults.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+    
+	<script type="text/javascript">
+	    var originalSearchRequestJson = ${originalSearchRequestJson.raw()};
+	</script>
+    
+#{/set}
+
 #{set 'moreStyles'}
     <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/projects/projectsResults.css'}" />
 #{/set}
@@ -7,14 +16,33 @@
 <div id="projectSearchResultContainer">
 	<span id="searchResultTitle">&{'projectSearchResultTitle'}</span>
 	<a href="@{projects.ProjectsSearch.projectsSearch()}" class="dabLink">&{'projectSearchResultBackToSearchPage'}</a>
+	<br />
+
+	<span id="projectResultFilterLink" class="dabLink">&{'projectSearchResultFilterResults'}...</span>
+	<br />
+	
+	<span id="projectResultSortByLink" class="dabLink">&{'projectSearchResultSortBy'}...</span>
+	<div id="projectResultSortByDetails" data-bind="visible: isVisible">
+		<ul>
+			<li><label><input type="radio" value="alphabetic" data-bind="checked: sortKey"></input>&{'projectSearchResultSortByAlphabetic'}</label></li>
+			<li><label><input type="radio" value="duedate" data-bind="checked: sortKey"></input>&{'projectSearchResultSortByDueDate'}</label></li>
+			<li><label><input type="radio" value="proximity" data-bind="checked: sortKey"></input>&{'projectSearchResultSortByProximity'}</label></li>
+		</ul>
+		<input id="projectResultUpdateResultSortByButton" type="button" value="&{'projectSearchResultUpdateButtonText'}"></input>
+	</div>
 	
 	<div id="projectSearchResultList">
-	
 		#{list items:projectsOverviews, as:'oneOverview'}
 			#{projectOverview overview:oneOverview /}
 		#{/list}
-	
 	</div>
-	
-	
+</div>
+
+<div id="hiddenRefreshResultsForm" class="hidden">
+	#{form @projects.ProjectsResults.projectsResults()}
+		<input class="term" name="r.term" type="hidden">
+		<input class="tag" name="r.tag" type="hidden">
+		<input class="allThemesJson" name="r.themes" type="hidden" />
+		<input class="sortkey" name="r.sortkey" type="hidden" /> 
+	#{/form }
 </div>

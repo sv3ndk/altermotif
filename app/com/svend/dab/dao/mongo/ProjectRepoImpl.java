@@ -14,6 +14,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.data.mongodb.core.CollectionCallback;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Order;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
@@ -29,8 +30,9 @@ import com.svend.dab.core.beans.projects.Participant;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.Project.STATUS;
+import com.svend.dab.core.beans.projects.ProjectSearchQuery.SORT_KEY;
 import com.svend.dab.core.beans.projects.ProjectOverview;
-import com.svend.dab.core.beans.projects.ProjectSearchRequest;
+import com.svend.dab.core.beans.projects.ProjectSearchQuery;
 import com.svend.dab.core.beans.projects.SelectedTheme;
 import com.svend.dab.core.beans.projects.TagCount;
 import com.svend.dab.core.beans.projects.Task;
@@ -61,8 +63,44 @@ public class ProjectRepoImpl implements IProjectDao {
 	
 	
 	@Override
-	public List<Project> loadAllProjects(Set<String> allIds) {
-		return mongoTemplate.find(query(where("_id").in(allIds)), Project.class);
+	public List<Project> loadAllProjects(Set<String> allIds, SORT_KEY sortkey) {
+		
+		Query query = query(where("_id").in(allIds));
+		
+		switch (sortkey) {
+		case alphabetic:
+			query.sort().on("pdata.name", Order.ASCENDING);
+			break;
+		case duedate:
+			query.sort().on("pdata.dueDate", Order.ASCENDING);
+			break;
+		}
+		
+		
+		List<Project> projects =  mongoTemplate.find(query, Project.class);
+		
+		
+		if (sortkey == SORT_KEY.duedate) {
+			// projects with no due dates should be at the end, but appear at the beginnging => splitting into two lists
+			List<Project> projectsWithADueDate = new LinkedList<Project>();
+			List<Project> projectsWithoutADueDate = new LinkedList<Project>();
+			
+			
+			for (Project project : projects) {
+				if (project.getPdata().getDueDate() == null) {
+					projectsWithoutADueDate.add(project);
+				} else {
+					projectsWithADueDate.add(project);
+				}
+			}
+			
+			projects.clear();
+			projects.addAll(projectsWithADueDate);
+			projects.addAll(projectsWithoutADueDate);
+			
+		}
+		
+		return projects;
 	}
 
 	@Override
@@ -94,7 +132,7 @@ public class ProjectRepoImpl implements IProjectDao {
 	
 	
 	@Override
-	public List<ProjectOverview> searchProjects(ProjectSearchRequest request) {
+	public List<ProjectOverview> searchProjects(ProjectSearchQuery request) {
 
 		List<ProjectOverview> response = new LinkedList<ProjectOverview>();
 

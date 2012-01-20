@@ -443,7 +443,6 @@ projectForumThreadMovePost=***move post
 projectForumThreadMoveThreadPopupText=***Moving a post means removing it from the original thread and creating a new one with its content, with creation date set to today, in another thread. A reference to the original post as well as your username will appear in the new post. Please select the destination thread below
 
 
-
 projectTaskTodo=***to do
 projectTaskDone=***done
 projectTaskEditionTableTasks=***Required tasks
@@ -483,3 +482,9 @@ projectSearchAdvancedModeExplanation_GotoSimpleMode_Link=***direct search mode
 # project search results page
 projectSearchResultTitle=***Search results
 projectSearchResultBackToSearchPage=***back to search page
+projectSearchResultFilterResults=***filter results
+projectSearchResultSortBy=***sort by
+projectSearchResultSortByAlphabetic=***alphabetic order
+projectSearchResultSortByDueDate=***closest due date first
+projectSearchResultSortByProximity=***geographically closed first
+projectSearchResultUpdateButtonText=***Update search results

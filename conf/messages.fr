@@ -480,3 +480,9 @@ projectSearchAdvancedModeExplanation_GotoSimpleMode_Link=***direct search mode
 # project search results page
 projectSearchResultTitle=résultats de la recherche
 projectSearchResultBackToSearchPage=retour vers la page de recherche
+projectSearchResultFilterResults=***filter results
+projectSearchResultSortBy=***sort by
+projectSearchResultSortByAlphabetic=***alphabetic order
+projectSearchResultSortByDueDate=***closest due date first
+projectSearchResultSortByProximity=***geographically closed first
+projectSearchResultUpdateButtonText=***Update search results
