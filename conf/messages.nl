@@ -488,3 +488,5 @@ projectSearchResultSortByAlphabetic=***alphabetic order
 projectSearchResultSortByDueDate=***closest due date first
 projectSearchResultSortByProximity=***geographically closed first
 projectSearchResultUpdateButtonText=***Update search results
+projectSearchResultSortByProximityRefPoint=***Specify a reference location 
+projectResultSortByProximityChangeRefLocationLink=***change it

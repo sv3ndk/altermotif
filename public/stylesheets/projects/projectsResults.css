@@ -20,5 +20,8 @@
 
 #projectResultUpdateResultSortByButton {
 	margin: 5px 20px;
-	
+}
+
+#projectResultSortByProximityRefDiv{
+	margin: 0px 20px;
 }

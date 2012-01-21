@@ -5,6 +5,10 @@
     
 	<script type="text/javascript">
 	    var originalSearchRequestJson = ${originalSearchRequestJson.raw()};
+	    var defaultSortByProximityReference = "${defaultSortByProximityReference}";
+	    var defaultSortByProximityReferenceLatitude = "${defaultSortByProximityReferenceLatitude}";
+	    var defaultSortByProximityReferenceLongitude = "${defaultSortByProximityReference}";
+	    
 	</script>
     
 #{/set}
@@ -28,6 +32,15 @@
 			<li><label><input type="radio" value="duedate" data-bind="checked: sortKey"></input>&{'projectSearchResultSortByDueDate'}</label></li>
 			<li><label><input type="radio" value="proximity" data-bind="checked: sortKey"></input>&{'projectSearchResultSortByProximity'}</label></li>
 		</ul>
+		<div id="projectResultSortByProximityRefDiv" data-bind="visible: sortKey() == 'proximity'">
+			<span >&{'projectSearchResultSortByProximityRefPoint'}:</span>
+			<span id="projectResultSortByProximityRefLocation" data-bind="text: sortByProximityRefLocation"  ></span>
+			<span class="dabLink" id="projectResultSortByProximityChangeRefLocationLink">(&{'projectResultSortByProximityChangeRefLocationLink'}...)</span>
+			<br />
+			<div id="projectResultsInputLocation">
+				#{dab.inputLocation /}
+			</div>
+		</div>
 		<input id="projectResultUpdateResultSortByButton" type="button" value="&{'projectSearchResultUpdateButtonText'}"></input>
 	</div>
 	

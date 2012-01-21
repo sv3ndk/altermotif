@@ -1,9 +1,3 @@
-var geocoder;
-var map;
-var marker;
-
-var okLabelValue;
-var cancelLabelValue;
 var warningUnsavedChangesTextValue;
 
 // reverve of the above: mapping from the human name to the code
@@ -18,9 +12,7 @@ var profileLanguages ;
 // ------------------------------
 // ------------------------------
 
-function init(oklabel, cancelLabel, warningUnsavedChangesText) {
-	okLabelValue = oklabel;
-	cancelLabelValue = cancelLabel;
+function init(warningUnsavedChangesText) {
 
 	// this script is in language.js
 	initAllPossibleLanguagesMap();
@@ -39,16 +31,12 @@ function init(oklabel, cancelLabel, warningUnsavedChangesText) {
 
 };
 
-var geocoder;
-var map;
-var marker;
-
 function initCityEdition() {
 
 	initLat = $("#locationLat").val();
 	initLong = $("#locationLong").val();
 	
-	// this is present in geocoder.js
+	// this is present in dabGeocoder.js
 	initializeGeoCoder("#location", "city_map_canvas", "#locationLat", "#locationLong", initLat, initLong);
 }
 
