@@ -24,15 +24,8 @@
 
 #{set 'moreScripts'}
 
-    <script src="@{'/public/javascripts/language.js'}" type="text/javascript"
-    	charset="${_response_encoding}"></script>
-    	
-    <script src="@{'/public/javascripts/dabGeocoder.js'}" type="text/javascript"
-    	charset="${_response_encoding}"></script>
-    	
-    	
-    <script src="@{'/public/javascripts/profile/profileEdit.js'}" type="text/javascript"
-    	charset="${_response_encoding}"></script>
+    <script src="@{'/public/javascripts/dabGeocoder.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+    <script src="@{'/public/javascripts/profile/profileEdit.js'}" type="text/javascript" charset="${_response_encoding}"></script>
     	
     <script type="text/javascript">
 		$(document).ready(function() {
@@ -45,9 +38,9 @@
 
 
 <!-- some hidden data, for javascript -->
-<span id="allPossibleLanguageNames" style="display: none">${allPossibleLanguageNames}</span>
-<span id="allPossibleLevelNames"    style="display: none">["&{'low'}", "&{'average'}", "&{'good'}"]</span>
-<span id="initSelectGender"         style="display: none">${editedProfile == null ? flash['editedProfile.gender'] : editedProfile.gender}</span>
+<span id="allPossibleLanguageNames" class="hidden">${allPossibleLanguageNames}</span>
+<span id="allPossibleLevelNames"    class="hidden">["&{'low'}", "&{'average'}", "&{'good'}"]</span>
+<span id="initSelectGender"         class="hidden">${editedProfile == null ? flash['editedProfile.gender'] : editedProfile.gender}</span>
 
 
 

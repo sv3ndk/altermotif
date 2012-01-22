@@ -20,7 +20,7 @@ function init(warningUnsavedChangesText) {
 	warningUnsavedChangesTextValue = warningUnsavedChangesText;
 
 	// this is present in dab.js
-	makeInputDatePicker("#dateOfBirth", '-130:+0');
+	dabUtils.makeInputDatePicker("#dateOfBirth", '-130:+0');
 	
 	initLanguageMechanics();
 

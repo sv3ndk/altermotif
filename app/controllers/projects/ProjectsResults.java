@@ -35,10 +35,13 @@ public class ProjectsResults extends DabController {
 				}
 			}
 			
+			Utils.addAllPossibleLanguageNamesToRenderArgs(getSessionWrapper(), renderArgs);
+
 			renderArgs.put("defaultRefenceLocation", defaultRefenceLocation);
 			renderArgs.put("defaultReferenceLatitude", defaultReferenceLatitude);
 			renderArgs.put("defaultReferenceLongitude", defaultReferenceLongitude);
 			renderArgs.put("originalSearchRequestJson", Utils.objectToJsonString(r));
+			renderArgs.put("originalSearchRequest", r);
 			renderArgs.put("projectsOverviews", BeanProvider.getProjectFullTextSearchService().searchForProjects(r.toBackendRequest()));
 			render();
 		}

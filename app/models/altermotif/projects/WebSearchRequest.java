@@ -28,11 +28,23 @@ public class WebSearchRequest {
 	// JSON format String containing a list of SelectedThemes
 	private String themes;
 
+	private Double maxDistance;
+	
+	private String maxDueDateStr;
+	
+	// language
+	private String lg;
+	
 	private String sortkey;
 	
 	// in case of sort by proximity and/or filter by proximity, we need a "reference location"
-	
 	private Location rl;
+	
+	private boolean filterProx;
+	private boolean filterDate;
+	
+	// ISO code of the filtered language
+	private boolean filterLg;
 	
 
 	public ProjectSearchQuery toBackendRequest() {
@@ -66,9 +78,23 @@ public class WebSearchRequest {
 	}
 
 	public boolean isEmpty() {
-		return Strings.isNullOrEmpty(term) && Strings.isNullOrEmpty(themes) && Strings.isNullOrEmpty(tag);
+		return !hasSearchTerm() && !hasSearchTheme() && !hasSearchTag();
 	}
 
+	// ---------------------------------------
+	
+	public boolean hasSearchTerm() {
+		return !Strings.isNullOrEmpty(term);
+	}
+	
+	public boolean hasSearchTag() {
+		return !Strings.isNullOrEmpty(tag);
+	}
+	
+	public boolean hasSearchTheme() {
+		return !Strings.isNullOrEmpty(themes);
+	}
+	
 	// ---------------------------------------
 
 	public String getTerm() {
@@ -109,6 +135,54 @@ public class WebSearchRequest {
 
 	public void setRl(Location rl) {
 		this.rl = rl;
+	}
+
+	public Double getMaxDistance() {
+		return maxDistance;
+	}
+
+	public void setMaxDistance(Double maxDistance) {
+		this.maxDistance = maxDistance;
+	}
+
+	public String getMaxDueDateStr() {
+		return maxDueDateStr;
+	}
+
+	public void setMaxDueDateStr(String maxDueDateStr) {
+		this.maxDueDateStr = maxDueDateStr;
+	}
+
+	public boolean isFilterProx() {
+		return filterProx;
+	}
+
+	public void setFilterProx(boolean filterProx) {
+		this.filterProx = filterProx;
+	}
+
+	public boolean isFilterDate() {
+		return filterDate;
+	}
+
+	public void setFilterDate(boolean filterDate) {
+		this.filterDate = filterDate;
+	}
+
+	public boolean isFilterLg() {
+		return filterLg;
+	}
+
+	public void setFilterLg(boolean filterLg) {
+		this.filterLg = filterLg;
+	}
+
+	public String getLg() {
+		return lg;
+	}
+
+	public void setLg(String lg) {
+		this.lg = lg;
 	}
 
 }

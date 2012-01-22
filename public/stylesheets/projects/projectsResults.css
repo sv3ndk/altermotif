@@ -10,6 +10,14 @@
 	margin-right: 20px;
 }
 
+#projectResultFilterByDetails{
+	margin: 5px 20px;
+}
+
+#projectResultRefineQueryContainer li{
+	margin: 5px;
+}
+
 #projectResultSortByDetails {
 	margin: 5px 20px;
 }
