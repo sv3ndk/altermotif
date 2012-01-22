@@ -6,21 +6,23 @@ import java.util.Set;
 import org.springframework.data.annotation.Id;
 
 import com.google.common.base.Strings;
+import com.svend.dab.core.beans.GeoCoord;
 
 public class IndexedProject {
-	
+
 	@Id
 	private String projectId;
-	
+
 	private Set<String> terms = new HashSet<String>();
 
 	private Set<String> tags = new HashSet<String>();
-	
+
 	private Set<String> themesWithSubTheme = new HashSet<String>();
 
-	//----------------------------------
+	private GeoCoord location;
+
+	// ----------------------------------
 	//
-	
 
 	public void addTerm(String term) {
 		// skipping empty or too short terms
@@ -29,17 +31,15 @@ public class IndexedProject {
 		}
 	}
 
-	
 	public void addSelectedTheme(SelectedTheme st) {
 		if (st != null) {
 			themesWithSubTheme.add(st.getThemeId() + "_" + st.getSubThemeId());
 		}
 	}
-	
-	
-	//----------------------------------
+
+	// ----------------------------------
 	//
-	
+
 	public String getProjectId() {
 		return projectId;
 	}
@@ -71,8 +71,13 @@ public class IndexedProject {
 	public void setThemesWithSubTheme(Set<String> themesWithSubTheme) {
 		this.themesWithSubTheme = themesWithSubTheme;
 	}
-	
-	
-	
+
+	public GeoCoord getLocation() {
+		return location;
+	}
+
+	public void setLocation(GeoCoord location) {
+		this.location = location;
+	}
 
 }

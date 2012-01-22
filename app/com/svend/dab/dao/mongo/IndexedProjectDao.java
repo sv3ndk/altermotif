@@ -8,14 +8,17 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.mongodb.core.CollectionCallback;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Order;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import com.google.common.base.Strings;
-import com.svend.dab.core.beans.profile.UserProfile;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCollection;
+import com.mongodb.MongoException;
 import com.svend.dab.core.beans.projects.IndexedProject;
 import com.svend.dab.core.beans.projects.ProjectSearchQuery;
 import com.svend.dab.core.beans.projects.SelectedTheme;
@@ -84,6 +87,22 @@ public class IndexedProjectDao implements IIndexedProjectDao {
 			return mongoTemplate.find(theQuery, IndexedProject.class);
 		}
 
+	}
+
+	@Override
+	public void ensureIndexOnLocation() {
+
+		// "ensureIndex" seems to be missing in RC1 version of mongo Spring Data
+		
+		mongoTemplate.execute("indexedProject", new CollectionCallback<Long>() {
+			@Override
+			public Long doInCollection(DBCollection collection) throws MongoException, DataAccessException {
+				BasicDBObject indexDbo = new BasicDBObject();
+				indexDbo.put("location", "2d");
+				collection.ensureIndex(indexDbo);
+				return 0l;
+			}
+		});
 	}
 
 }

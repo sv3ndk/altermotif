@@ -1,6 +1,6 @@
 var dabInputLocationLib = {
 		
-	InputLocationController : function(inputHtmlElement,initLat, initLong, initLocation,  whenInputIsCancelledCallback, whenInputIsConfirmedCallback) {
+	InputLocationController : function(inputHtmlElement, initLat, initLong, initLocation,  whenInputIsCancelledCallback, whenInputIsConfirmedCallback) {
 		
 		this.inputHtmlElement = inputHtmlElement;
 		this.whenInputIsCancelledCallback = whenInputIsCancelledCallback;
@@ -25,12 +25,16 @@ var dabInputLocationLib = {
 				self.whenInputIsConfirmedCallback(self.location, self.latitude, self.longitude);
 				self.hideInput();
 			});
+			
+			inputHtmlElement.find("input.addLocationInput").val(this.location);
 
 			this.initializeGeoCoder();
 		};
 		
 		this.showInput = function () {
 			$(this.inputHtmlElement).show();
+			google.maps.event.trigger(this.map, "resize");
+			this.centerMapOnCurrentData();
 			$(this.inputHtmlElement).find("input.addLocationInput").focus();
 		};
 		
@@ -38,6 +42,14 @@ var dabInputLocationLib = {
 			$(this.inputHtmlElement).hide();
 		};
 		
+		
+		this.centerMapOnCurrentData = function() {
+			if (this.latitude != undefined && this.longitude != undefined) {
+				var latlng = new google.maps.LatLng(this.latitude, this.longitude);
+				this.marker.setPosition(latlng);
+				this.map.setCenter(latlng);
+			}
+		}
 		
 		// ///////////////////////////////
 		// internal API
@@ -56,11 +68,7 @@ var dabInputLocationLib = {
 				draggable : false
 			});
 			
-			if (this.latitude != undefined && this.longitude != undefined) {
-				var latlng = new google.maps.LatLng(this.latitude, this.longitude);
-				this.marker.setPosition(latlng);
-				this.map.setCenter(latlng);
-			}
+			this.centerMapOnCurrentData();
 		
 			inputHtmlElement.find("input.addLocationInput").autocomplete({
 				// This bit uses the geocoder to fetch address values
@@ -90,6 +98,9 @@ var dabInputLocationLib = {
 			});
 		
 		};
+		
+		
+		
 		
 		this.init();
 	},

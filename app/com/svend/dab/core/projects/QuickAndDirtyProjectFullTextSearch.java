@@ -17,6 +17,8 @@ import web.utils.Utils;
 
 import com.google.common.base.Strings;
 import com.svend.dab.core.beans.Config;
+import com.svend.dab.core.beans.GeoCoord;
+import com.svend.dab.core.beans.Location;
 import com.svend.dab.core.beans.projects.IndexedProject;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.ProjectOverview;
@@ -97,6 +99,15 @@ public class QuickAndDirtyProjectFullTextSearch implements IProjectFTSService {
 				}
 			}
 			
+			// TODO: we need MongoDB >= 1.9 in order to index 2D based on several location, but cloundfoundry only provide MongoDb 1.8 for now
+			// => we only take the first location for the moment (to be improved when we migrate to Lucene)
+			if (project.getPdata().getLocations() != null && !project.getPdata().getLocations().isEmpty()) {
+				Location loc = (Location)project.getPdata().getLocations().toArray()[0];
+				GeoCoord coord = new GeoCoord(Double.parseDouble(loc.getLatitude()), Double.parseDouble(loc.getLongitude()));
+				ip.setLocation(coord);
+			}
+			
+			
 			indexedProjectDao.updateIndex(ip);
 			
 		}
@@ -135,6 +146,12 @@ public class QuickAndDirtyProjectFullTextSearch implements IProjectFTSService {
 		
 		return projectOverview;
 		
+	}
+
+
+	@Override
+	public void ensureIndexOnLocation() {
+		indexedProjectDao.ensureIndexOnLocation();		
 	}
 
 }

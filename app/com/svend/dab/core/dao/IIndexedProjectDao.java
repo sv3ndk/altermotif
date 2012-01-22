@@ -14,6 +14,8 @@ public interface IIndexedProjectDao {
 	public void updateIndex(IndexedProject ip);
 
 	public List<IndexedProject> searchForProjects(ProjectSearchQuery request);
+
+	public void ensureIndexOnLocation();
 	
 	
 }

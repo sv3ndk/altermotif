@@ -366,3 +366,10 @@ fieldset legend {
 	max-width: 80px;
 	padding: 0 10px 0 0;
 }
+
+
+.inputLocation_city_map_canvas{
+	width: 550px;
+	height: 250px;
+	margin: 5px ;
+}

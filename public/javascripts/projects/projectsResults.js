@@ -11,31 +11,38 @@ var dabProjectResultsLib = {
 	// controller for the main forum widget
 	ProjectResultsController : function() {
 
-		this.sortByController = new dabProjectResultsLib.SortByController();
-		this.refreshPageController = new dabProjectResultsLib.RefreshPageController();
+		this.refreshModel = new dabProjectResultsLib.RefreshModel();
+		this.sortByController = new dabProjectResultsLib.SortByController(this.refreshModel);
+		this.refreshPageController = new dabProjectResultsLib.RefreshPageController(this.refreshModel);
 
 		this.init = function() {
-			this.refreshPageController.init();
-			this.sortByController.init(this.refreshPageController);
-		};
+			var self = this;
+			
+			this.refreshModel.init();
+			this.sortByController.init();
+			
+			// click on "refresh result" button
+			$("#projectResultUpdateResultButton").click(function(event) {
+				self.refreshPageController.refresh();
+			});
 
+			// knockout bindings
+			ko.applyBindings(this.refreshModel, $("#projectResultRefineQueryContainer")[0]);
+		};
 	},
 
-	SortByController : function() {
+	SortByController : function(refreshModel) {
 
-		this.sortByModel = new dabProjectResultsLib.SortByModel();
+		this.refreshModel = refreshModel;
 		this.inputLocationController;
-		this.refreshPageController;
 
-		this.init = function(refreshPageController) {
+		this.init = function(refreshModel) {
 			var self = this;
 
-			this.refreshPageController = refreshPageController;
-			this.sortByModel.init();
-			this.inputLocationController = new dabInputLocationLib.InputLocationController($("#projectResultsInputLocation div"),
-					defaultSortByProximityReference, defaultSortByProximityReferenceLatitude, defaultSortByProximityReferenceLongitude,
-					this.whenUserCancelUpdateSortRefLocation, function(newValue) {
-						self.whenUserConfirmsUpdateSortRefLocation(newValue)
+			this.inputLocationController = new dabInputLocationLib.InputLocationController($("#projectResultsSortInputLocation div"),
+					defaultReferenceLatitude, defaultReferenceLongitude, defaultRefenceLocation,
+					this.whenUserCancelUpdateSortRefLocation, function(newRefLoc, newLat, newLong) {
+						self.whenUserConfirmsUpdateSortRefLocation(newRefLoc, newLat, newLong)
 					});
 
 			// click on "sort by" link
@@ -48,26 +55,10 @@ var dabProjectResultsLib = {
 				self.whenUserClicksOnChangeSortRefPoint(self);
 			});
 
-			// click on the radio button to change the sort key
-			self.sortByModel.sortKey.subscribe(function(newValue) {
-				self.whenSortKeyIsUpdated(newValue);
-			});
-
-			// knockout bindings
-			ko.applyBindings(this.sortByModel, $("#projectResultSortByDetails")[0]);
-
-			// click on "refresh result" button
-			$("#projectResultUpdateResultSortByButton").click(function(event) {
-				self.refreshPageController.refresh();
-			});
 		};
 
 		this.whenUserClicksOnSortByLink = function(event) {
-			this.sortByModel.switchVisibility();
-		};
-
-		this.whenSortKeyIsUpdated = function(newValue) {
-			$("#hiddenRefreshResultsForm form input.sortkey").val(newValue);
+			this.refreshModel.switchSortByVisibility();
 		};
 
 		this.whenUserClicksOnChangeSortRefPoint = function(self) {
@@ -84,42 +75,27 @@ var dabProjectResultsLib = {
 		// this is called back from the input location element
 		this.whenUserConfirmsUpdateSortRefLocation = function(newLocation, newLatitude, newLongitude) {
 			$("#projectResultSortByProximityChangeRefLocationLink").removeClass("dabLinkDisabled").addClass("dabLink");
-			this.sortByModel.setSortByProximityRefLocation(newLocation, newLatitude, newLongitude);
+			this.refreshModel.updateRefLocation(newLocation, newLatitude, newLongitude);
 		};
 
 	},
 
-	SortByModel : function() {
-		this.isVisible = ko.observable(false);
-		this.sortKey = ko.observable("alphabetic");
-		this.sortByProximityRefLocation = ko.observable(defaultSortByProximityReference);
 
-		this.init = function() {
-
-			if (originalSearchRequestJson.sortkey != null && originalSearchRequestJson.sortkey != "") {
-				this.sortKey(originalSearchRequestJson.sortkey);
-			}
-		};
-
-		this.switchVisibility = function(visibleValue) {
-			var self = this;
-			this.isVisible(!this.isVisible());
-		};
-
-		this.setSortByProximityRefLocation = function(newLocation, newLatitude, newLongitude) {
-			this.sortByProximityRefLocation(newLocation);
-		};
-
-	},
-
-	RefreshPageController : function() {
-		this.init = function() {
+	RefreshPageController : function(refreshModel) {
+		
+		this.refreshModel = refreshModel;
+		
+		this.refresh = function() {
 			$("#hiddenRefreshResultsForm form input.term").val(originalSearchRequestJson.term);
 			$("#hiddenRefreshResultsForm form input.tag").val(originalSearchRequestJson.tag);
 			$("#hiddenRefreshResultsForm form input.allThemesJson").val(originalSearchRequestJson.themes);
-		};
-
-		this.refresh = function() {
+			
+			$("#hiddenRefreshResultsForm form input.sortkey").val(refreshModel.sortKey());
+			
+			$("#hiddenRefreshResultsForm form input.reflocation").val(refreshModel.refLocation());
+			$("#hiddenRefreshResultsForm form input.reflatitude").val(refreshModel.refLatitude);
+			$("#hiddenRefreshResultsForm form input.reflongitude").val(refreshModel.refLongitude);
+			
 			$("#hiddenRefreshResultsForm form").submit();
 		};
 	},
@@ -127,5 +103,32 @@ var dabProjectResultsLib = {
 	FilterController : function() {
 
 	},
+	
+	RefreshModel : function() {
+		this.isSortByVisible = ko.observable(false);
+		this.sortKey = ko.observable("alphabetic");
+		this.refLocation = ko.observable(defaultRefenceLocation);
+		this.refLatitude = defaultReferenceLatitude;
+		this.refLongitude = defaultReferenceLongitude;
+		
+		
+		this.init = function() {
+			if (originalSearchRequestJson.sortkey != null && originalSearchRequestJson.sortkey != "") {
+				this.sortKey(originalSearchRequestJson.sortkey);
+			}
+		};
+		
+		this.switchSortByVisibility = function(visibleValue) {
+			var self = this;
+			this.isSortByVisible(!this.isSortByVisible());
+		};
+		
+		this.updateRefLocation = function(newLocation, newLatitude, newLongitude) {
+			this.refLocation(newLocation);
+			this.refLatitude = newLatitude;
+			this.refLongitude = newLongitude;
+		};
+		
+	},
 
-}
+};

@@ -47,6 +47,7 @@ public class AdminService {
 
 
 	public void indexAllProjects() {
+		projectFTSService.ensureIndexOnLocation();
 		Set<String> allProjectIds = projectDao.getAllProjectIds();
 		for (String id : allProjectIds) {
 			projectFTSService.updateProjetIndex(id, true);

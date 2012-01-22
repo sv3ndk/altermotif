@@ -5,9 +5,9 @@
     
 	<script type="text/javascript">
 	    var originalSearchRequestJson = ${originalSearchRequestJson.raw()};
-	    var defaultSortByProximityReference = "${defaultSortByProximityReference}";
-	    var defaultSortByProximityReferenceLatitude = "${defaultSortByProximityReferenceLatitude}";
-	    var defaultSortByProximityReferenceLongitude = "${defaultSortByProximityReference}";
+	    var defaultRefenceLocation = "${defaultRefenceLocation}";
+	    var defaultReferenceLatitude = "${defaultReferenceLatitude}";
+	    var defaultReferenceLongitude = "${defaultReferenceLongitude}";
 	    
 	</script>
     
@@ -22,26 +22,28 @@
 	<a href="@{projects.ProjectsSearch.projectsSearch()}" class="dabLink">&{'projectSearchResultBackToSearchPage'}</a>
 	<br />
 
-	<span id="projectResultFilterLink" class="dabLink">&{'projectSearchResultFilterResults'}...</span>
-	<br />
-	
-	<span id="projectResultSortByLink" class="dabLink">&{'projectSearchResultSortBy'}...</span>
-	<div id="projectResultSortByDetails" data-bind="visible: isVisible">
-		<ul>
-			<li><label><input type="radio" value="alphabetic" data-bind="checked: sortKey"></input>&{'projectSearchResultSortByAlphabetic'}</label></li>
-			<li><label><input type="radio" value="duedate" data-bind="checked: sortKey"></input>&{'projectSearchResultSortByDueDate'}</label></li>
-			<li><label><input type="radio" value="proximity" data-bind="checked: sortKey"></input>&{'projectSearchResultSortByProximity'}</label></li>
-		</ul>
-		<div id="projectResultSortByProximityRefDiv" data-bind="visible: sortKey() == 'proximity'">
-			<span >&{'projectSearchResultSortByProximityRefPoint'}:</span>
-			<span id="projectResultSortByProximityRefLocation" data-bind="text: sortByProximityRefLocation"  ></span>
-			<span class="dabLink" id="projectResultSortByProximityChangeRefLocationLink">(&{'projectResultSortByProximityChangeRefLocationLink'}...)</span>
-			<br />
-			<div id="projectResultsInputLocation">
-				#{dab.inputLocation /}
-			</div>
+	<div id="projectResultRefineQueryContainer">
+		<span id="projectResultFilterLink" class="dabLink">&{'projectSearchResultFilterResults'}...</span>
+		<br />
+		
+		<span id="projectResultSortByLink" class="dabLink">&{'projectSearchResultSortBy'}...</span>
+		<div id="projectResultSortByDetails" data-bind="visible: isSortByVisible">
+			<ul>
+				<li><label><input type="radio" value="alphabetic" data-bind="checked: sortKey"></input>&{'projectSearchResultSortByAlphabetic'}</label></li>
+				<li><label><input type="radio" value="duedate" data-bind="checked: sortKey"></input>&{'projectSearchResultSortByDueDate'}</label></li>
+				<li><label><input type="radio" value="proximity" data-bind="checked: sortKey"></input>&{'projectSearchResultSortByProximity'}: <span data-bind="text: refLocation"  ></span>
+				<span class="dabLink" id="projectResultSortByProximityChangeRefLocationLink">(&{'projectResultChangeRefLocationLink'}...)</span>
+				</label>
+				<br />
+				<div id="projectResultsSortInputLocation">
+					#{dab.inputLocation /}
+				</div>
+				</li>
+			</ul>
 		</div>
-		<input id="projectResultUpdateResultSortByButton" type="button" value="&{'projectSearchResultUpdateButtonText'}"></input>
+		<div>
+			<input id="projectResultUpdateResultButton" type="button" value="&{'projectSearchResultUpdateButtonText'}"></input>
+		</div>
 	</div>
 	
 	<div id="projectSearchResultList">
@@ -57,5 +59,8 @@
 		<input class="tag" name="r.tag" type="hidden">
 		<input class="allThemesJson" name="r.themes" type="hidden" />
 		<input class="sortkey" name="r.sortkey" type="hidden" /> 
+		<input class="reflocation" name="rl.location" type="hidden" /> 
+		<input class="reflatitude" name="rl.latitude" type="hidden" /> 
+		<input class="reflongitude" name="rl.longitude" type="hidden" /> 
 	#{/form }
 </div>

@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import web.utils.Utils;
 
 import com.google.common.base.Strings;
+import com.svend.dab.core.beans.Location;
 import com.svend.dab.core.beans.projects.ProjectSearchQuery;
 import com.svend.dab.core.beans.projects.ProjectSearchQuery.SORT_KEY;
 import com.svend.dab.core.beans.projects.SelectedTheme;
@@ -28,6 +29,11 @@ public class WebSearchRequest {
 	private String themes;
 
 	private String sortkey;
+	
+	// in case of sort by proximity and/or filter by proximity, we need a "reference location"
+	
+	private Location rl;
+	
 
 	public ProjectSearchQuery toBackendRequest() {
 
@@ -95,6 +101,14 @@ public class WebSearchRequest {
 
 	public void setSortkey(String sortkey) {
 		this.sortkey = sortkey;
+	}
+
+	public Location getRl() {
+		return rl;
+	}
+
+	public void setRl(Location rl) {
+		this.rl = rl;
 	}
 
 }

@@ -23,21 +23,21 @@ public class ProjectsResults extends DabController {
 		} else {
 
 			// default reference point when sorting results by proximity: by default Brussels, or if the user is logged in and has specified a location in his profile, we take that instead
-			String defaultRefencePoint = "City of Brussels, Belgium";
-			String defaultSortByProximityReferenceLatitude = "50.8503396";
-			String defaultSortByProximityReferenceLongitude = "4.351710300000036";
+			String defaultRefenceLocation = "City of Brussels, Belgium";
+			String defaultReferenceLatitude = "50.8503396";
+			String defaultReferenceLongitude = "4.351710300000036";
 			if (getSessionWrapper().isLoggedIn()) {
 				UserProfile loggedInProfile = BeanProvider.getUserProfileService().loadUserProfile(getSessionWrapper().getLoggedInUserProfileId(), false);
 				if (loggedInProfile != null && loggedInProfile.getPdata().getLocation() != null) {
-					defaultRefencePoint = loggedInProfile.getPdata().getLocation();
-					defaultSortByProximityReferenceLatitude = loggedInProfile.getPdata().getLocationLat();
-					defaultSortByProximityReferenceLongitude = loggedInProfile.getPdata().getLocationLong();
+					defaultRefenceLocation = loggedInProfile.getPdata().getLocation();
+					defaultReferenceLatitude = loggedInProfile.getPdata().getLocationLat();
+					defaultReferenceLongitude = loggedInProfile.getPdata().getLocationLong();
 				}
 			}
 			
-			renderArgs.put("defaultSortByProximityReference", defaultRefencePoint);
-			renderArgs.put("defaultSortByProximityReferenceLatitude", defaultSortByProximityReferenceLatitude);
-			renderArgs.put("defaultSortByProximityReferenceLongitude", defaultSortByProximityReferenceLongitude);
+			renderArgs.put("defaultRefenceLocation", defaultRefenceLocation);
+			renderArgs.put("defaultReferenceLatitude", defaultReferenceLatitude);
+			renderArgs.put("defaultReferenceLongitude", defaultReferenceLongitude);
 			renderArgs.put("originalSearchRequestJson", Utils.objectToJsonString(r));
 			renderArgs.put("projectsOverviews", BeanProvider.getProjectFullTextSearchService().searchForProjects(r.toBackendRequest()));
 			render();

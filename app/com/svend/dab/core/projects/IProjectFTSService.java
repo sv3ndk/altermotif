@@ -18,4 +18,6 @@ public interface IProjectFTSService {
 	
 	public List<ProjectOverview> searchForProjects(ProjectSearchQuery request);
 
+	public void ensureIndexOnLocation();
+
 }
