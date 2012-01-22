@@ -74,9 +74,10 @@ public class DabValidators {
 			Validation.addError(renderArgName + ".languagesJson", "atLeastOneLanguage", "");
 		}
 
+		// OK, this is ugly...
 		// username is not submitted by the edit form (it is present in the bean because we re-use it from the register screen)
-		// there are always at min 2 errors: the one for username + one global for editedProfile
-		if (Validation.errors().size() == 2 && Validation.hasError(renderArgName + ".username")) {
+		// there are always at min 3 errors: the one for username + one global for editedProfile + the one for "accept conditions"
+		if (Validation.errors().size() == 3 && Validation.hasError(renderArgName + ".username") && Validation.hasError(renderArgName + ".acceptConditions")) {
 			Validation.clear();
 		}
 
