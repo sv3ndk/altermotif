@@ -26,6 +26,7 @@ public class ProjectsResults extends DabController {
 			String defaultRefenceLocation = "City of Brussels, Belgium";
 			String defaultReferenceLatitude = "50.8503396";
 			String defaultReferenceLongitude = "4.351710300000036";
+			
 			if (getSessionWrapper().isLoggedIn()) {
 				UserProfile loggedInProfile = BeanProvider.getUserProfileService().loadUserProfile(getSessionWrapper().getLoggedInUserProfileId(), false);
 				if (loggedInProfile != null && loggedInProfile.getPdata().getLocation() != null) {
@@ -45,7 +46,5 @@ public class ProjectsResults extends DabController {
 			renderArgs.put("projectsOverviews", BeanProvider.getProjectFullTextSearchService().searchForProjects(r.toBackendRequest()));
 			render();
 		}
-		
 	}
-
 }

@@ -1,6 +1,6 @@
 package com.svend.dab.core.beans.projects;
 
-import com.svend.dab.core.beans.Location;
+import com.svend.dab.core.beans.GeoCoord;
 
 /**
  * 
@@ -10,10 +10,10 @@ import com.svend.dab.core.beans.Location;
  */
 public class GeographicCircle {
 
-	private Location center;
+	private GeoCoord center;
 	private double radiusInKm;
 
-	public GeographicCircle(Location center, double radiusInKm) {
+	public GeographicCircle(GeoCoord center, double radiusInKm) {
 		super();
 		this.center = center;
 		this.radiusInKm = radiusInKm;
@@ -23,11 +23,11 @@ public class GeographicCircle {
 		super();
 	}
 
-	public Location getCenter() {
+	public GeoCoord getCenter() {
 		return center;
 	}
 
-	public void setCenter(Location center) {
+	public void setCenter(GeoCoord center) {
 		this.center = center;
 	}
 
@@ -37,6 +37,10 @@ public class GeographicCircle {
 
 	public void setRadiusInKm(double radiusInKm) {
 		this.radiusInKm = radiusInKm;
+	}
+
+	public double getRadiusInDegrees() {
+		return radiusInKm / 110;
 	}
 
 }

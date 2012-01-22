@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.mongodb.core.CollectionCallback;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.geo.Point;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
@@ -47,8 +48,9 @@ public class IndexedProjectDao implements IIndexedProjectDao {
 	@Override
 	public List<IndexedProject> searchForProjects(ProjectSearchQuery request) {
 
-		List<Criteria> criterias = new LinkedList<Criteria>();
-
+		Criteria criteria = where ("_id").ne("lesPetitsPasDansLesPetisPlatsHalala");
+		
+		// search term
 		if (!Strings.isNullOrEmpty(request.getSearchTerm())) {
 			StringTokenizer st = new StringTokenizer(request.getSearchTerm());
 
@@ -58,34 +60,44 @@ public class IndexedProjectDao implements IIndexedProjectDao {
 			}
 
 			if (!terms.isEmpty()) {
-				criterias.add(where("terms").all(terms.toArray()));
+				criteria.and("terms").all(terms.toArray());
 			}
 		}
 
+		// tags
 		if (request.getTags() != null && !request.getTags().isEmpty()) {
-			criterias.add(where("tags").all(request.getTags().toArray()));
+			criteria.and("tags").all(request.getTags().toArray());
 		}
 
+		// categories
 		if (request.getThemes() != null && !request.getThemes().isEmpty()) {
 			List<String> themesWithSubTheme = new LinkedList<String>();
 			for (SelectedTheme st : request.getThemes()) {
 				themesWithSubTheme.add(st.getThemeId() + "_" + st.getSubThemeId());
 			}
-			criterias.add(where("themesWithSubTheme").all(themesWithSubTheme.toArray()));
+			criteria.and("themesWithSubTheme").all(themesWithSubTheme.toArray());
 		}
+		
+		// max due date
+		if (request.getDueDateBefore() != null) {
+			criteria.and("dueDate").lte(request.getDueDateBefore());
+		}
+		
+		// project language
+		if (request.getLanguage() != null) {
+			criteria.and("language").is(request.getLanguage());
+		}
+		
+		// project location close to 
+		if (request.getInGeographicRegion() != null) {
+			
+			Point center = new Point(request.getInGeographicRegion().getCenter().getLatitude(), request.getInGeographicRegion().getCenter().getLongitude());
+			
+			criteria.and("location").near(center).maxDistance(request.getInGeographicRegion().getRadiusInDegrees());
+		}
+		
 
-		if (criterias.isEmpty()) {
-			// if no search criteria: just refusing to search!
-			return new LinkedList<IndexedProject>();
-		} else {
-			Query theQuery;
-			if (criterias.size() == 1) {
-				theQuery = query(criterias.get(0));
-			} else {
-				theQuery = query(new Criteria().andOperator(criterias.toArray(new Criteria[] {})));
-			}
-			return mongoTemplate.find(theQuery, IndexedProject.class);
-		}
+		return mongoTemplate.find(query(criteria), IndexedProject.class);
 
 	}
 

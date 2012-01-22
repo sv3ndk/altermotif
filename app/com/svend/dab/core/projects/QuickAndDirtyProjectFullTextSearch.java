@@ -68,9 +68,8 @@ public class QuickAndDirtyProjectFullTextSearch implements IProjectFTSService {
 			logger.log(Level.WARNING, "cannot update full text search of non existant project : " + projectId);
 		} else {
 			
-			IndexedProject ip = new IndexedProject();
-			ip.setProjectId(projectId);
-			ip.setTags(project.getTags());
+			IndexedProject ip = new IndexedProject(project);
+			
 			
 			if (project.getThemes() != null) {
 				for (SelectedTheme theme : project.getThemes()) {
@@ -84,7 +83,7 @@ public class QuickAndDirtyProjectFullTextSearch implements IProjectFTSService {
 					ip.addTerm(st.nextToken());
 				}
 			}
-
+			
 			if (!Strings.isNullOrEmpty(project.getPdata().getDescription())) {
 				StringTokenizer st = new StringTokenizer(project.getPdata().getDescription());
 				while (st.hasMoreTokens()) {
@@ -98,15 +97,6 @@ public class QuickAndDirtyProjectFullTextSearch implements IProjectFTSService {
 					ip.addTerm(st.nextToken());
 				}
 			}
-			
-			// TODO: we need MongoDB >= 1.9 in order to index 2D based on several location, but cloundfoundry only provide MongoDb 1.8 for now
-			// => we only take the first location for the moment (to be improved when we migrate to Lucene)
-			if (project.getPdata().getLocations() != null && !project.getPdata().getLocations().isEmpty()) {
-				Location loc = (Location)project.getPdata().getLocations().toArray()[0];
-				GeoCoord coord = new GeoCoord(Double.parseDouble(loc.getLatitude()), Double.parseDouble(loc.getLongitude()));
-				ip.setLocation(coord);
-			}
-			
 			
 			indexedProjectDao.updateIndex(ip);
 			

@@ -1,3 +1,5 @@
+
+// to be used togheter with /altermotifPlay/app/views/tags/dab/inputLocation.html
 var dabInputLocationLib = {
 		
 	InputLocationController : function(inputHtmlElement, initLat, initLong, initLocation,  whenInputIsCancelledCallback, whenInputIsConfirmedCallback) {
@@ -99,11 +101,6 @@ var dabInputLocationLib = {
 		
 		};
 		
-		
-		
-		
 		this.init();
 	},
-		
-		
 }

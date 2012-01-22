@@ -33,10 +33,9 @@ public class ProjectSearchQuery {
 	private GeographicCircle inGeographicRegion;
 	
 	// a project must have a dueDate after this in order to be selected 
-	private Date dueDateAfter;
-	
-	// a project must all those languages in order to be selected 
-	private List<String> andLanguageCodes;
+	private Date dueDateBefore;
+
+	private String language;
 	
 	private SORT_KEY sortKey = SORT_KEY.alphabetic;
 	
@@ -83,6 +82,30 @@ public class ProjectSearchQuery {
 
 	public void setSortKey(SORT_KEY sortKey) {
 		this.sortKey = sortKey;
+	}
+
+	public Date getDueDateBefore() {
+		return dueDateBefore;
+	}
+
+	public void setDueDateBefore(Date dueDateBefore) {
+		this.dueDateBefore = dueDateBefore;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
+	public GeographicCircle getInGeographicRegion() {
+		return inGeographicRegion;
+	}
+
+	public void setInGeographicRegion(GeographicCircle inGeographicRegion) {
+		this.inGeographicRegion = inGeographicRegion;
 	}
 
 }

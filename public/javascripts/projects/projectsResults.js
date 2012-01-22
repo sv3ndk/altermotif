@@ -49,7 +49,7 @@ var dabProjectResultsLib = {
 			var self = this;
 
 			this.inputLocationController = new dabInputLocationLib.InputLocationController($("#projectResultsFilterInputLocation div"),
-					defaultReferenceLatitude, defaultReferenceLongitude, defaultRefenceLocation,
+					this.refreshModel.refLatitude, this.refreshModel.refLongitude, this.refreshModel.refLocation(), 
 					this.whenUserCancelUpdateFilterRefLocation, function(newRefLoc, newLat, newLong) {
 						self.whenUserConfirmsUpdateFilterRefLocation(newRefLoc, newLat, newLong)
 					});
@@ -66,7 +66,7 @@ var dabProjectResultsLib = {
 			});
 			
 			// this is present in dab.js
-			dabUtils.makeInputDatePicker("#projectResultMaxDueDate", '-0:+100');
+			dabUtils.makeInputDatePicker("#projectResultMaxDueDate", '-20:+100');
 			
 			this.setupSetLanguageAutoComplete();
 
@@ -109,7 +109,7 @@ var dabProjectResultsLib = {
 			var self = this;
 
 			this.inputLocationController = new dabInputLocationLib.InputLocationController($("#projectResultsSortInputLocation div"),
-					defaultReferenceLatitude, defaultReferenceLongitude, defaultRefenceLocation,
+					this.refreshModel.refLatitude, this.refreshModel.refLongitude, this.refreshModel.refLocation(),
 					this.whenUserCancelUpdateSortRefLocation, function(newRefLoc, newLat, newLong) {
 						self.whenUserConfirmsUpdateSortRefLocation(newRefLoc, newLat, newLong)
 					});

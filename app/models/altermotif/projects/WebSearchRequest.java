@@ -8,7 +8,9 @@ import java.util.logging.Logger;
 import web.utils.Utils;
 
 import com.google.common.base.Strings;
+import com.svend.dab.core.beans.GeoCoord;
 import com.svend.dab.core.beans.Location;
+import com.svend.dab.core.beans.projects.GeographicCircle;
 import com.svend.dab.core.beans.projects.ProjectSearchQuery;
 import com.svend.dab.core.beans.projects.ProjectSearchQuery.SORT_KEY;
 import com.svend.dab.core.beans.projects.SelectedTheme;
@@ -28,11 +30,12 @@ public class WebSearchRequest {
 	// JSON format String containing a list of SelectedThemes
 	private String themes;
 
+	// max distance in km from "rl" below
 	private Double maxDistance;
 	
 	private String maxDueDateStr;
 	
-	// language
+	// ISO code of the filtered language
 	private String lg;
 	
 	private String sortkey;
@@ -42,8 +45,6 @@ public class WebSearchRequest {
 	
 	private boolean filterProx;
 	private boolean filterDate;
-	
-	// ISO code of the filtered language
 	private boolean filterLg;
 	
 
@@ -51,6 +52,8 @@ public class WebSearchRequest {
 
 		ProjectSearchQuery request = new ProjectSearchQuery();
 
+		////////////////////////////////////
+		// basic query (from the query page
 		if (!Strings.isNullOrEmpty(term)) {
 			request.setSearchTerm(term);
 		}
@@ -66,6 +69,29 @@ public class WebSearchRequest {
 			request.getThemes().addAll(themeSet);
 		}
 		
+		////////////////////////////////////
+		// filtering logic (same as query actually)
+		
+		if (filterDate && !Strings.isNullOrEmpty(maxDueDateStr)) {
+			request.setDueDateBefore(Utils.convertStringToDate(maxDueDateStr));
+		}
+		
+		if (filterLg && ! Strings.isNullOrEmpty(lg)) {
+			request.setLanguage(lg);
+		}
+		
+		if (filterProx && rl != null && ! Strings.isNullOrEmpty(rl.getLatitude()) && ! Strings.isNullOrEmpty(rl.getLongitude()) && maxDistance != null) {
+			GeographicCircle region = new GeographicCircle();
+			region.setCenter(new GeoCoord());
+			region.getCenter().setLatitude(Double.parseDouble(rl.getLatitude()));
+			region.getCenter().setLongitude(Double.parseDouble(rl.getLongitude()));
+			region.setRadiusInKm(maxDistance);
+			request.setInGeographicRegion(region);
+		}
+		
+		
+		////////////////////////////////////
+		// sorting logic
 		if (!Strings.isNullOrEmpty(sortkey)) {
 			try {
 				request.setSortKey(SORT_KEY.valueOf(sortkey));
@@ -73,6 +99,8 @@ public class WebSearchRequest {
 				logger.log(Level.WARNING, "unrecognized sort key: " + sortkey + ", ignoring");
 			}
 		}
+		
+		
 
 		return request;
 	}
