@@ -79,7 +79,7 @@ public class ProjectService implements IProjectService {
 	// -------------------
 	//
 
-	@Override
+	
 	public void createProject(Project createdProject, String creatorId) {
 		createdProject.setId(UUID.randomUUID().toString().replace("-", ""));
 		createdProject.getPdata().setCreationDate(new Date());
@@ -87,7 +87,7 @@ public class ProjectService implements IProjectService {
 		eventEmitter.emit(new ProjectCreated(createdProject, creatorId));
 	}
 
-	@Override
+	
 	public void updateProjectCore(Project updated, Set<Task> updatedTasks, Set<String> removedTasksIds, Set<Asset> updatedAssets, Set<String> removedAssetsIds) {
 
 		// any id starting with "new" has been created by the browser for any new Task
@@ -113,7 +113,7 @@ public class ProjectService implements IProjectService {
 		eventEmitter.emit(new ProjectUpdated(updated, updatedTasks, removedTasksIds, updatedAssets, removedAssetsIds));
 	}
 
-	@Override
+	
 	public Project loadProject(String projectId, boolean generatePhotoLinks) {
 
 		if (Strings.isNullOrEmpty(projectId)) {
@@ -138,7 +138,7 @@ public class ProjectService implements IProjectService {
 	// //////////////////////////////////////////////////
 	// project applications
 
-	@Override
+	
 	public void applyToProject(String userId, String applicationText, Project project) {
 		if (Strings.isNullOrEmpty(userId) || project == null) {
 			logger.log(Level.WARNING, "not letting a null user applying to a project or a user applying to a null project");
@@ -147,7 +147,7 @@ public class ProjectService implements IProjectService {
 		eventEmitter.emit(new ProjectApplicationEvent(userId, project.getId(), applicationText));
 	}
 
-	@Override
+	
 	public void cancelApplication(String userId, Project project) {
 		if (Strings.isNullOrEmpty(userId) || project == null) {
 			logger.log(Level.WARNING, "not letting a null user cancel a proejct application or a user cancelling for a null project");
@@ -156,7 +156,7 @@ public class ProjectService implements IProjectService {
 		eventEmitter.emit(new ProjectApplicationCancelled(userId, project.getId()));
 	}
 
-	@Override
+	
 	public void acceptApplication(String applicantId, Project project) {
 		if (Strings.isNullOrEmpty(applicantId) || project == null) {
 			logger.log(Level.WARNING, "not letting a null user cancel a proejct application or a user cancelling for a null project");
@@ -168,7 +168,7 @@ public class ProjectService implements IProjectService {
 	// //////////////////////////////////////////////////
 	// project (confirmed) participants
 
-	@Override
+	
 	public void removeParticipant(String participantId, Project project) {
 		if (Strings.isNullOrEmpty(participantId) || project == null) {
 			logger.log(Level.WARNING, "not rejecting a null participant or on a null project");
@@ -179,7 +179,7 @@ public class ProjectService implements IProjectService {
 	
 	
 	
-	@Override
+	
 	public void makeAdmin(String username, Project project) {
 		if (Strings.isNullOrEmpty(username) || project == null) {
 			logger.log(Level.WARNING, "not making admin a null participant or on a null project");
@@ -188,7 +188,7 @@ public class ProjectService implements IProjectService {
 		eventEmitter.emit(new UserProjectRoleUpdated(username, ROLE.admin, project.getId()));
 	}
 
-	@Override
+	
 	public void makeMember(String username, Project project) {
 		if (Strings.isNullOrEmpty(username) || project == null) {
 			logger.log(Level.WARNING, "not making member a null participant or on a null project");
@@ -198,7 +198,7 @@ public class ProjectService implements IProjectService {
 	}
 	
 	
-	@Override
+	
 	public void proposeOwnerShip(String username, Project project) {
 		if (Strings.isNullOrEmpty(username) || project == null) {
 			logger.log(Level.WARNING, "not give ownership to to a null participant or on a null project");
@@ -208,7 +208,7 @@ public class ProjectService implements IProjectService {
 	}
 
 	
-	@Override
+	
 	public void cancelOwnershipTransfer(String username, Project project) {
 		if (Strings.isNullOrEmpty(username) || project == null) {
 			logger.log(Level.WARNING, "not cancelling an ownership transfer to to a null participant or on a null project");
@@ -219,7 +219,7 @@ public class ProjectService implements IProjectService {
 		projectDao.updateOwnerShipProposed(project.getId(), username, false);
 	}
 
-	@Override
+	
 	public void confirmOwnershipTransfer(String promotedUsername, Project project) {
 		if (Strings.isNullOrEmpty(promotedUsername) || project == null) {
 			logger.log(Level.WARNING, "not cancelling an ownership transfer to to a null participant or on a null project");
@@ -230,7 +230,7 @@ public class ProjectService implements IProjectService {
 
 	
 
-	@Override
+	
 	public ParticpantsIdList determineRemovedParticipants(String projectId, Collection<String> knownParticipantUsernames, Collection<String> knownApplicationUsernames) {
 
 		ParticpantsIdList response = new ParticpantsIdList();
@@ -259,7 +259,7 @@ public class ProjectService implements IProjectService {
 		return response;
 	}
 
-	@Override
+	
 	public ParticipantList determineAddedParticipants(String projectId, Set<String> knownParticipantUsernames, Set<String> knownApplicationUsernames) {
 
 		ParticipantList response = new ParticipantList();
@@ -290,7 +290,7 @@ public class ProjectService implements IProjectService {
 	// popular project tags
 
 	
-	@Override
+	
 	public List<RankedTag> getPopularTags() {
 		
 		List<RankedTag> tags = new LinkedList<RankedTag>();
@@ -325,7 +325,7 @@ public class ProjectService implements IProjectService {
 		
 		Collections.sort(tags, new Comparator<RankedTag>() {
 			
-			@Override
+			
 			public int compare(RankedTag tag1, RankedTag tag2) {
 				
 				if ((tag1 == null || tag1.getTag() == null) && (tag2 == null || tag2.getTag() == null)) {
@@ -350,17 +350,17 @@ public class ProjectService implements IProjectService {
 	/////////////////////////////////////////////////
 	// project cancellation / terminations
 
-	@Override
+	
 	public void cancelProject(Project project) {
 		eventEmitter.emit(new ProjectCancelled(project.getId()));
 	}
 
-	@Override
+	
 	public void terminateProject(Project project) {
 		eventEmitter.emit(new ProjectStatusChanged(project.getId(), STATUS.done));
 	}
 
-	@Override
+	
 	public void restartProject(Project project) {
 		eventEmitter.emit(new ProjectStatusChanged(project.getId(), STATUS.started));
 	}
@@ -370,12 +370,12 @@ public class ProjectService implements IProjectService {
 	/////////////////////////////////////////////
 	// project forum
 
-	@Override
+	
 	public ForumThread createdNewForumThread(String projectId, String threadTitle, boolean isThreadPublic) {
 		return forumThreadDao.createNewThread(new ForumThread(projectId, threadTitle, new Date(), 0, isThreadPublic));
 	}
 
-	@Override
+	
 	public void postNewForumMessage(String authorId, ForumThread thread, String messageContent) {
 		
 		UserProfile author = userProfileRepo.retrieveUserProfileById(authorId);
@@ -388,7 +388,7 @@ public class ProjectService implements IProjectService {
 		}
 	}
 
-	@Override
+	
 	public ForumDiff computeThreadDiff(String threadId, Set<String> knownPostIds) {
 		
 		ForumDiff response = new ForumDiff();
@@ -404,7 +404,7 @@ public class ProjectService implements IProjectService {
 		return response;
 	}
 
-	@Override
+	
 	public void movePostToThread(String originalThreadId, String postId, String targetThreadId, String username) {
 		
 		ForumPost post = forumPostDao.loadPost(postId);

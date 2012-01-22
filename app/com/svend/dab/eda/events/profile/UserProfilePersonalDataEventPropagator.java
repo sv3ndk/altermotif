@@ -29,7 +29,6 @@ public class UserProfilePersonalDataEventPropagator implements IEventPropagator<
 
 	private static Logger logger = Logger.getLogger(UserProfilePersonalDataEventPropagator.class.getName());
 
-	@Override
 	public void propagate(UserProfilePersonalDataUpdatedEvent event) throws DabException {
 
 		if (event.getPersonalData() == null || event.getUsername() == null) {

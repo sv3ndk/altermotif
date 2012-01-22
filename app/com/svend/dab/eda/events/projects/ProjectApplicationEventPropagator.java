@@ -28,7 +28,6 @@ public class ProjectApplicationEventPropagator implements IEventPropagator<Proje
 	private static Logger logger = Logger.getLogger(ProjectMainPhotoUpdatedPropagator.class.getName());
 
 	
-	@Override
 	public void propagate(ProjectApplicationEvent event) throws DabException {
 
 		if (event == null ) {

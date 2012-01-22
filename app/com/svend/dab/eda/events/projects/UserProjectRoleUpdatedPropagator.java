@@ -25,7 +25,6 @@ public class UserProjectRoleUpdatedPropagator implements IEventPropagator<UserPr
 	private static Logger logger = Logger.getLogger(UserProjectRoleUpdatedPropagator.class.getName());
 	
 	
-	@Override
 	public void propagate(UserProjectRoleUpdated event) throws DabException {
 
 		if (event == null ) {

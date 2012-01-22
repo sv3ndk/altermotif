@@ -9,7 +9,6 @@ public class EventReceptionErrorHandler implements ErrorHandler {
 
 	private static Logger logger = Logger.getLogger(EventReceptionErrorHandler.class.getName());
 	
-	@Override
 	public void handleError(Throwable e) {
 		logger.log(Level.SEVERE, "Error while receiving an event: ", e);
 	}

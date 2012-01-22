@@ -19,7 +19,6 @@ public class ProjectUpdatedPropagator implements IEventPropagator<ProjectUpdated
 	@Autowired
 	private IProjectFTSService projectFTSService;
 
-	@Override
 	public void propagate(ProjectUpdated event) throws DabException {
 		projetRepo.updateProjectPDataAndLinksAndTagsAndThemes(event.getUpdatedProject().getId(), event.getUpdatedProject());
 		

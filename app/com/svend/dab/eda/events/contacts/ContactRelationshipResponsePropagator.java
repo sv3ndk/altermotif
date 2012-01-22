@@ -47,7 +47,6 @@ public class ContactRelationshipResponsePropagator implements IEventPropagator<C
 	// ------------------------------------------------
 	// ------------------------------------------------
 
-	@Override
 	public void propagate(ContactRelationshipResponse event) throws DabException {
 
 		if (event == null) {

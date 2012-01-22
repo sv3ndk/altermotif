@@ -40,12 +40,12 @@ public class IndexedProjectDao implements IIndexedProjectDao {
 	 * 
 	 * @see com.svend.dab.core.dao.IIndexedProjectDao#updateIndex(com.svend.dab.core.beans.projects.IndexedProject)
 	 */
-	@Override
+	
 	public void updateIndex(IndexedProject ip) {
 		mongoTemplate.save(ip);
 	}
 
-	@Override
+	
 	public List<IndexedProject> searchForProjects(ProjectSearchQuery request) {
 
 		Criteria criteria = where ("_id").ne("lesPetitsPasDansLesPetisPlatsHalala");
@@ -101,13 +101,13 @@ public class IndexedProjectDao implements IIndexedProjectDao {
 
 	}
 
-	@Override
+	
 	public void ensureIndexOnLocation() {
 
 		// "ensureIndex" seems to be missing in RC1 version of mongo Spring Data
 		
 		mongoTemplate.execute("indexedProject", new CollectionCallback<Long>() {
-			@Override
+			
 			public Long doInCollection(DBCollection collection) throws MongoException, DataAccessException {
 				BasicDBObject indexDbo = new BasicDBObject();
 				indexDbo.put("location", "2d");

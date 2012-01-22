@@ -28,8 +28,6 @@ public class ProjectStatusChangedPropagator implements IEventPropagator<ProjectS
 
 	private static Logger logger = Logger.getLogger(ProjectStatusChangedPropagator.class.getName());
 	
-	
-	@Override
 	public void propagate(ProjectStatusChanged event) throws DabException {
 		
 		if (event == null ) {

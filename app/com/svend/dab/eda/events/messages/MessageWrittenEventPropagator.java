@@ -27,7 +27,6 @@ public class MessageWrittenEventPropagator implements IEventPropagator<MessageWr
 	@Autowired
 	private IUserProfileDao userProfileRepo;
 	
-	@Override
 	public void propagate(MessageWrittenEvent event) throws DabException {
 		
 		UserProfile fromUser = userProfileRepo.retrieveUserProfileById(event.getFromUserName());

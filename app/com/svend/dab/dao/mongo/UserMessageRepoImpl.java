@@ -45,16 +45,16 @@ public class UserMessageRepoImpl implements IUserMessageDao {
 	 * 
 	 * @see com.svend.dab.dao.mongo.IUserMessageDao#markMesasgeAsRead(java.lang.String)
 	 */
-	@Override
+	
 	public void markMessageAsRead(String messageId) {
 		mongoTemplate.updateFirst(query(where("id").is(messageId)), new Update().set("read", Boolean.TRUE), UserMessage.class);
 	}
 
-	@Override
+	
 	public Long countNumberOfUnreadMessages(String username) {
 		final Query query = query(where("toUser._id").is(username).and("read").is(false).and("deletedByRecipient").is(false));
 		return mongoTemplate.execute("userMessage", new CollectionCallback<Long>() {
-			@Override
+			
 			public Long doInCollection(DBCollection collection) throws MongoException, DataAccessException {
 				return collection.count(query.getQueryObject());
 			}
@@ -65,7 +65,7 @@ public class UserMessageRepoImpl implements IUserMessageDao {
 	public Long countNumberOfReceivedMessages(String username) {
 		final Query query = query(where("toUser._id").is(username).and("deletedByRecipient").is(false));
 		return mongoTemplate.execute("userMessage", new CollectionCallback<Long>() {
-			@Override
+			
 			public Long doInCollection(DBCollection collection) throws MongoException, DataAccessException {
 				return collection.count(query.getQueryObject());
 			}
@@ -73,7 +73,7 @@ public class UserMessageRepoImpl implements IUserMessageDao {
 	}
 	
 	
-	@Override
+	
 	public long countNumberOfReceivedMessagesBefore(String username, String messageId) {
 		
 		UserMessage message = retrieveUserMessageById(messageId);
@@ -83,7 +83,7 @@ public class UserMessageRepoImpl implements IUserMessageDao {
 			final Query query = query(where("toUser._id").is(username).and("deletedByRecipient").is(false).and("creationDate").gt(message.getCreationDate()));
 			query.sort().on("creationDate", Order.DESCENDING);
 			return mongoTemplate.execute("userMessage", new CollectionCallback<Long>() {
-				@Override
+				
 				public Long doInCollection(DBCollection collection) throws MongoException, DataAccessException {
 					return collection.count(query.getQueryObject());
 				}
@@ -92,11 +92,11 @@ public class UserMessageRepoImpl implements IUserMessageDao {
 	}
 
 	
-	@Override
+	
 	public long countNumberOfWrittenMessages(String username) {
 		final Query query = query(where("fromUser._id").is(username).and("deletedByEmitter").is(false));
 		return mongoTemplate.execute("userMessage", new CollectionCallback<Long>() {
-			@Override
+			
 			public Long doInCollection(DBCollection collection) throws MongoException, DataAccessException {
 				return collection.count(query.getQueryObject());
 			}
@@ -105,14 +105,14 @@ public class UserMessageRepoImpl implements IUserMessageDao {
 
 	
 
-	@Override
+	
 	public long countNumberOfDeletedMessages(String username) {
 		Criteria deletedAsRecipientCriterium = where("toUser._id").is(username).and("deletedByRecipient").is(true);
 		Criteria deletedAsEmitterCriterium = where("fromUser._id").is(username).and("deletedByEmitter").is(true);
 		final Query query = query(new Criteria().orOperator(new Criteria[] {deletedAsRecipientCriterium, deletedAsEmitterCriterium}));
 		
 		return mongoTemplate.execute("userMessage", new CollectionCallback<Long>() {
-			@Override
+			
 			public Long doInCollection(DBCollection collection) throws MongoException, DataAccessException {
 				return collection.count(query.getQueryObject());
 			}
@@ -122,41 +122,41 @@ public class UserMessageRepoImpl implements IUserMessageDao {
 	
 	
 	
-	@Override
+	
 	public void markMessageAsDeletedByRecipient(Collection<String> messageIds, String recipientId) {
 		Query theQuery = query(where("toUser._id").is(recipientId).and("id").in(messageIds));
 		Update update = new Update().set("deletedByRecipient", true);
 		mongoTemplate.updateMulti(theQuery, update, UserMessage.class);
 	}
 
-	@Override
+	
 	public void markMessageAsDeletedByEmitter(Set<String> messageIds, String emitterId) {
 		Query theQuery = query(where("fromUser._id").is(emitterId).and("id").in(messageIds));
 		Update update = new Update().set("deletedByEmitter", true);
 		mongoTemplate.updateMulti(theQuery, update, UserMessage.class);
 	}
 
-	@Override
+	
 	public List<UserMessage> retrieveUserMessageById(List<String> ids) {
 		return mongoTemplate.find(query(where("id").in(ids)), UserMessage.class);
 	}
 	
 	
 	
-	@Override
+	
 	public UserMessage retrieveUserMessageById(String messageId) {
 		return mongoTemplate.findById(messageId, UserMessage.class);
 	}
 	
 
-	@Override
+	
 	public void updateFromUserProfileRef(ProfileRef profileRef) {
 		Query query = query(where("fromUser._id").is(profileRef.getUserName()));
 		Update update = new Update().set("fromUser", profileRef);
 		mongoTemplate.updateMulti(query, update, UserMessage.class);
 	}
 
-	@Override
+	
 	public void updateTOUserProfileRef(ProfileRef profileRef) {
 		Query query = query(where("toUser._id").is(profileRef.getUserName()));
 		Update update = new Update().set("toUser", profileRef);
@@ -164,7 +164,7 @@ public class UserMessageRepoImpl implements IUserMessageDao {
 	}
 
 	
-	@Override
+	
 	public List<UserMessage> findAllUserMessageBytoUserUserNameAndDeletedByRecipient(String toUserName, int pageNumber, int pageSize) {
 		if (pageNumber >= 0 && pageSize > 0) {
 			Query query = query(where("toUser._id").is(toUserName).and("deletedByRecipient").is(false) ).limit(pageSize).skip(pageNumber*pageSize);
@@ -175,7 +175,7 @@ public class UserMessageRepoImpl implements IUserMessageDao {
 		}
 	}
 
-	@Override
+	
 	public List<UserMessage> findAllUserMessageByFromUserUserNameAndDeletedByEmitter(String fromUserName,  int pageNumber, int pageSize) {
 		if (pageNumber >= 0 && pageSize > 0) {
 			Query query = query(where("fromUser._id").is(fromUserName).and("deletedByEmitter").is(false) ).limit(pageSize).skip(pageNumber*pageSize);
@@ -186,7 +186,7 @@ public class UserMessageRepoImpl implements IUserMessageDao {
 		}
 	}
 
-	@Override
+	
 	public List<UserMessage> findAllUserMessageBytoUserUserNameAndReadAndDeletedByRecipient(String username, boolean read) {
 		Query query = query(where("toUser._id").is(username).and("read").is(read).and("deletedByRecipient").is(false));
 		query.sort().on("creationDate", Order.DESCENDING);
@@ -194,7 +194,7 @@ public class UserMessageRepoImpl implements IUserMessageDao {
 	}
 
 	
-	@Override
+	
 	public List<UserMessage> findDeletedMessages(String username, int pageNumber, int inboxOutboxPageSize) {
 		Criteria deletedAsRecipientCriterium = where("toUser._id").is(username).and("deletedByRecipient").is(true);
 		Criteria deletedAsEmitterCriterium = where("fromUser._id").is(username).and("deletedByEmitter").is(true);
@@ -204,14 +204,14 @@ public class UserMessageRepoImpl implements IUserMessageDao {
 	}
 	
 	
-	@Override
+	
 	public void save(List<UserMessage> messages) {
 		for (UserMessage msg : messages) {
 			save (msg);
 		}
 	}
 
-	@Override
+	
 	public void save(UserMessage userMessage) {
 		mongoTemplate.save(userMessage);
 	}

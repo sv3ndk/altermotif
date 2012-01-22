@@ -29,7 +29,6 @@ public class ProjectOwnershipProposedPropagator implements IEventPropagator<Proj
 
 	private static Logger logger = Logger.getLogger(ProjectOwnershipProposedPropagator.class.getName());
 	
-	@Override
 	public void propagate(ProjectOwnershipProposed event) throws DabException {
 		
 		if (event == null ) {

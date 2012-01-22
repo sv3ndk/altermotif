@@ -39,7 +39,6 @@ public class ContactRelationshipRemovedPropagator implements IEventPropagator<Co
 	/* (non-Javadoc)
 	 * @see com.svend.dab.eda.IEventPropagator#propagate(com.svend.dab.eda.Event)
 	 */
-	@Override
 	public void propagate(ContactRelationshipRemoved event) throws DabException {
 		if (event == null) {
 			throw new DabIllegalFormatException("Cannot propagate a null request for removal of contact.");

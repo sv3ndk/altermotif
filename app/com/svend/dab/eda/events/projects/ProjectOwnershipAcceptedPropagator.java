@@ -26,7 +26,6 @@ public class ProjectOwnershipAcceptedPropagator implements IEventPropagator<Proj
 
 	private static Logger logger = Logger.getLogger(ProjectOwnershipAcceptedPropagator.class.getName());
 
-	@Override
 	public void propagate(ProjectOwnershipAccepted event) throws DabException {
 		if (event == null ) {
 			logger.log(Level.WARNING, "Cannot propagate a project ownership acceptation event: event is null ");

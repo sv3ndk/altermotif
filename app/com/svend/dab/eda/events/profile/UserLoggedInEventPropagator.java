@@ -19,7 +19,6 @@ public class UserLoggedInEventPropagator implements IEventPropagator<UserLoggedI
 	
 	private static Logger logger = Logger.getLogger(UserLoggedInEventPropagator.class.getName());
 
-	@Override
 	public void propagate(UserLoggedInEvent event) throws DabException {
 
 		if (event == null || event.getDateOfLoggin() == null || event.getUsername() == null) {

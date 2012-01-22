@@ -43,7 +43,6 @@ public class UserSummaryUpdatedPropagator implements IEventPropagator<UserSummar
 
 	private static Logger logger = Logger.getLogger(UserSummaryUpdatedPropagator.class.getName());
 
-	@Override
 	public void propagate(UserSummaryUpdated event) throws DabException {
 
 		logger.log(Level.INFO, "propagating user summary updated");

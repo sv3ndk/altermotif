@@ -72,7 +72,6 @@ public class UserProfileService implements IUserProfileService, Serializable {
 	 * 
 	 * @see com.svend.dab.core.dummy.IUserProfile#getUserProfile(java.lang.String)
 	 */
-	@Override
 	public UserProfile loadUserProfile(String userName, boolean shouldPrepareLinks) {
 		UserProfile profile = userProfileRepo.retrieveUserProfileById(userName);
 
@@ -90,13 +89,13 @@ public class UserProfileService implements IUserProfileService, Serializable {
 		return profile;
 	}
 
-	@Override
+	
 	public boolean doesUsernameExists(String username) {
 		// TODO: optimization: not necessary to load the full user here
 		return loadUserProfile(username, false) != null;
 	}
 
-	@Override
+	
 	public UserProfile registerUser(UserProfile createdUserProfile) {
 		// no event here: we want to make sure the whole operation is done
 		// synchronously (and this should be fast...)
@@ -106,12 +105,12 @@ public class UserProfileService implements IUserProfileService, Serializable {
 		return createdUserProfile;
 	}
 
-	@Override
+	
 	public void loggedIn(UserProfile userProfile) {
 		emitter.emit(new UserLoggedInEvent(userProfile));
 	}
 
-	@Override
+	
 	public void updateProfilePersonalData(UserProfile userProfile) {
 		if (userProfile == null || Strings.isNullOrEmpty(userProfile.getUsername())) {
 			logger.log(Level.WARNING, "Refusing to save a null profile or a profile with null username");
@@ -121,7 +120,7 @@ public class UserProfileService implements IUserProfileService, Serializable {
 	}
 
 	
-	@Override
+	
 	public void updatePrivacySettings(String username, PrivacySettings settings) {
 		
 		if (Strings.isNullOrEmpty(username) || settings == null) {
@@ -134,7 +133,7 @@ public class UserProfileService implements IUserProfileService, Serializable {
 
 	
 
-	@Override
+	
 	public void leaveAReference(String fromUserId, String toUserId, String referenceText) {
 		if (Strings.isNullOrEmpty(fromUserId)) {
 			logger.log(Level.WARNING, "Not adding a reference with a null from user");
@@ -151,7 +150,7 @@ public class UserProfileService implements IUserProfileService, Serializable {
 		}
 	}
 
-	@Override
+	
 	public void removeUserReference(String removedReferenceId, String fromUserId, String toUserId) {
 		if (Strings.isNullOrEmpty(removedReferenceId)) {
 			logger.log(Level.WARNING, "Not removing a reference with a null id");
@@ -168,7 +167,7 @@ public class UserProfileService implements IUserProfileService, Serializable {
 		}
 	}
 
-	@Override
+	
 	public List<UserReference> getOtherReceivedReferencesThan(String userId, java.util.Set<String> refsToDiscard) {
 
 		// TODO: optimize this: only look for received references ids
@@ -190,7 +189,7 @@ public class UserProfileService implements IUserProfileService, Serializable {
 		return newReferences;
 	}
 
-	@Override
+	
 	public List<String> determineNonExisingReceivedRefIds(String userId, Set<String> refsToDiscard) {
 		UserProfile userProfile = loadUserProfile(userId, false);
 		
@@ -217,7 +216,7 @@ public class UserProfileService implements IUserProfileService, Serializable {
 
 	
 	
-	@Override
+	
 	public List<UserReference> getOtherWrittentReferencesThan(String userId, Set<String> refsToDiscard) {
 		// TODO: optimize this: only look for received references ids
 		
@@ -241,7 +240,7 @@ public class UserProfileService implements IUserProfileService, Serializable {
 	
 	
 	
-	@Override
+	
 	public List<String> determineNonExisingWrittenRefIds(String userId, Set<String> knownRefs) {
 		// TODO: optimize this: only look for received references ids
 		UserProfile userProfile = loadUserProfile(userId, false);
@@ -272,7 +271,7 @@ public class UserProfileService implements IUserProfileService, Serializable {
 	// ----------------------------------------
 	// handling of the profile CV
 	// ----------------------------------------
-	@Override
+	
 	public void updateCv(UserProfile profile, byte[] cvContent) {
 
 		if (cvContent == null || cvContent.length == 0 || cvContent.length > config.getMaxUploadedCVSizeInBytes()) {
@@ -286,7 +285,7 @@ public class UserProfileService implements IUserProfileService, Serializable {
 
 	}
 
-	@Override
+	
 	public void removeCv(UserProfile editedUserProfile) {
 		editedUserProfile.setCvLink(null);
 		userProfileRepo.updateCv(editedUserProfile);
@@ -310,7 +309,7 @@ public class UserProfileService implements IUserProfileService, Serializable {
 	 * 
 	 * @see com.svend.dab.core.IUserProfileService#sendRequestToAddToContacts(java .lang.String, java.lang.String, java.lang.String)
 	 */
-	@Override
+	
 	public void sendRequestToAddToContacts(String fromUser, String toUser, String text) {
 		if (Strings.isNullOrEmpty(fromUser) || Strings.isNullOrEmpty(toUser)) {
 			logger.log(Level.WARNING, "refusing to send a requets to add a null user to contact or add a contact to a null user. FromUser=" + fromUser + ", toUser=" + toUser);
@@ -331,7 +330,7 @@ public class UserProfileService implements IUserProfileService, Serializable {
 	 * 
 	 * @see com.svend.dab.core.IUserProfileService#cancelRequestToAddToContacts(java .lang.String, java.lang.String)
 	 */
-	@Override
+	
 	public void cancelRequestToAddToContacts(String cancellingUser, String otherUser) {
 		if (Strings.isNullOrEmpty(cancellingUser) || Strings.isNullOrEmpty(otherUser)) {
 			logger.log(Level.WARNING, "refusing to cancel a relationship requets with a null user. cancellingUser=" + cancellingUser + ", otherUser=" + otherUser);
@@ -348,7 +347,7 @@ public class UserProfileService implements IUserProfileService, Serializable {
 	 * 
 	 * @see com.svend.dab.core.IUserProfileService#rejectRequestToAddToContacts(java .lang.String, java.lang.String)
 	 */
-	@Override
+	
 	public void rejectRequestToAddToContacts(String rejectingUserName, String requestingContactUserName) {
 		if (Strings.isNullOrEmpty(rejectingUserName) || Strings.isNullOrEmpty(requestingContactUserName)) {
 			logger.log(Level.WARNING, "refusing to reject a relationship requets with a null user. rejectingUserName=" + rejectingUserName + ", requestingContactUserName=" + requestingContactUserName);
@@ -365,7 +364,7 @@ public class UserProfileService implements IUserProfileService, Serializable {
 	 * 
 	 * @see com.svend.dab.core.IUserProfileService#acceptRequestToAddToContacts(java .lang.String, java.lang.String)
 	 */
-	@Override
+	
 	public void acceptRequestToAddToContacts(String accepting, String acceptedContactUserName) {
 		if (Strings.isNullOrEmpty(accepting) || Strings.isNullOrEmpty(acceptedContactUserName)) {
 			logger.log(Level.WARNING, "refusing to accept a relationship requets with a null user. accepting=" + accepting + ", acceptedContactUserName=" + acceptedContactUserName);
@@ -381,7 +380,7 @@ public class UserProfileService implements IUserProfileService, Serializable {
 	 * 
 	 * @see com.svend.dab.core.IUserProfileService#removeContactFromProfile(java. lang.String, java.lang.String)
 	 */
-	@Override
+	
 	public void removeContactFromProfile(String editedProfileUsername, String removedUserName) {
 		if (Strings.isNullOrEmpty(editedProfileUsername) || Strings.isNullOrEmpty(removedUserName)) {
 			logger.log(Level.WARNING, "refusing to remove a contact with a null user. editedProfileUsername=" + editedProfileUsername + ", removedUserName=" + removedUserName);
@@ -393,7 +392,7 @@ public class UserProfileService implements IUserProfileService, Serializable {
 
 	}
 
-	@Override
+	
 	public void updatePhotoGallery(UserProfile profile, boolean hasMainPhotoChanged) {
 		userProfileRepo.updatePhotoGallery(profile);
 		if (hasMainPhotoChanged) {
@@ -403,7 +402,7 @@ public class UserProfileService implements IUserProfileService, Serializable {
 	
 	
 
-	@Override
+	
 	public List<String> determineNonExistingAnyContact(String userId, List<String> knownPendingReceivedIds, List<String> knownPendingSentIds, List<String> knownContactsIds) {
 
 		List<String> removedRefs = new LinkedList<String>();
@@ -435,7 +434,7 @@ public class UserProfileService implements IUserProfileService, Serializable {
 		
 	}
 
-	@Override
+	
 	public List<Contact> getOtherReceivedPendingContactRequestsThan(String userId, Set<String> knownContacts) {
 		
 		List<Contact> newContacts = new LinkedList<Contact>();
@@ -456,7 +455,7 @@ public class UserProfileService implements IUserProfileService, Serializable {
 		return newContacts;
 	}
 
-	@Override
+	
 	public List<Contact> getOtherConfirmedCo1ntactsThan(String userId, Set<String> contactsToDiscard) {
 		List<Contact> newContacts = new LinkedList<Contact>();
 		

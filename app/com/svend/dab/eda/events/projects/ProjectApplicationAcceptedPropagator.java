@@ -31,7 +31,6 @@ public class ProjectApplicationAcceptedPropagator implements IEventPropagator<Pr
 	private static Logger logger = Logger.getLogger(ProjectApplicationAcceptedPropagator.class.getName());
 	
 	
-	@Override
 	public void propagate(ProjectApplicationAccepted event) throws DabException {
 		if (event == null ) {
 			logger.log(Level.WARNING, "Cannot propagate a project application acceptation event: event is null ");

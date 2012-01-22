@@ -49,7 +49,7 @@ public class ProjectPhotoService implements IProjectPhotoService{
 	// -----------------------------------------------
 	// -----------------------------------------------
 	
-	@Override
+	
 	public void addOnePhoto(String projectId, File photoContent) {
 		
 		if (photoContent == null) {
@@ -85,7 +85,7 @@ public class ProjectPhotoService implements IProjectPhotoService{
 	}
 
 
-	@Override
+	
 	public void removeProjectPhoto(Project project, int deletedPhotoIdx) {
 		if (project == null) {
 			logger.log(Level.WARNING, "Cannot remove a photo from a null profile: not doing anything");
@@ -121,7 +121,7 @@ public class ProjectPhotoService implements IProjectPhotoService{
 	}
 
 
-	@Override
+	
 	public void replacePhotoCaption(Project project, int photoIndex, String photoCaption) {
 		if (project == null) {
 			logger.log(Level.WARNING, "Cannot update photo caption of a null project: not doing anything");
@@ -139,7 +139,7 @@ public class ProjectPhotoService implements IProjectPhotoService{
 
 
 	
-	@Override
+	
 	public void putPhotoInFirstPositio(Project project, int photoIndex) {
 		if (project == null) {
 			logger.log(Level.WARNING, "Cannot move photo in first position for a null project: not doing anything");

@@ -30,12 +30,12 @@ public class ForumPostDao implements IForumPostDao {
 	@Autowired
 	private MongoTemplate mongoTemplate;
 
-	@Override
+	
 	public ForumPost loadPost(String postId) {
 		return mongoTemplate.findById(postId, ForumPost.class);
 	}
 
-	@Override
+	
 	public List<ForumPost> getAllPosts(String threadId) {
 		Query query = query(where("threadId").is(threadId));
 		query.sort().on("creationDate", Order.DESCENDING);
@@ -48,12 +48,12 @@ public class ForumPostDao implements IForumPostDao {
 		return posts;
 	}
 
-	@Override
+	
 	public void saveNewPost(ForumPost createdPost) {
 		mongoTemplate.save(createdPost);
 	}
 
-	@Override
+	
 	public Set<String> findAllPostIdsOfThread(String threadId) {
 		Query query = query(where("threadId").is(threadId));
 		query.fields().include("id");
@@ -70,41 +70,41 @@ public class ForumPostDao implements IForumPostDao {
 		return response;
 	}
 
-	@Override
+	
 	public List<ForumPost> findThreadPostsExcluding(String threadId, Set<String> excludedPostIds) {
 		Query query = query(where("threadId").is(threadId).and("id").nin(excludedPostIds.toArray()));
 		query.sort().on("creationDate", Order.DESCENDING);
 		return mongoTemplate.find(query, ForumPost.class);
 	}
 
-	@Override
+	
 	public void updateAuthorOfAllPostsFrom(UserSummary updatedSummary) {
 		if (updatedSummary != null) {
 			mongoTemplate.updateMulti(query(where("author._id").is(updatedSummary.getUserName())), new Update().set("author", updatedSummary), ForumPost.class);
 		}
 	}
 
-	@Override
+	
 	public void deletePost(String postId) {
 		mongoTemplate.remove(query(where("id").is(postId)), ForumPost.class);
 	}
 
-	@Override
+	
 	public void deletePostsOfThread(String threadId) {
 		mongoTemplate.remove(query(where("threadId").is(threadId)), ForumPost.class);
 	}
 
-	@Override
+	
 	public Long countPostOfThread(final String threadId) {
 		return mongoTemplate.execute("forumPost", new CollectionCallback<Long>() {
-			@Override
+			
 			public Long doInCollection(DBCollection collection) throws MongoException, DataAccessException {
 				return collection.count(query(where("threadId").is(threadId)).getQueryObject());
 			}
 		});
 	}
 
-	@Override
+	
 	public void updateThreadIdOfPost(String postId, String originalThreadId, String targetThreadId, Date updatedCreationDate, String updatedContent) {
 		// we also query on the original threadId as a security measure
 		mongoTemplate.updateFirst(query(where("id").is(postId).and("threadId").is(originalThreadId)), new Update().set("threadId", targetThreadId).set("creationDate", updatedCreationDate).set("content", updatedContent), ForumPost.class);

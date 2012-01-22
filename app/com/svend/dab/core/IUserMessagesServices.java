@@ -4,8 +4,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.data.domain.Page;
-
 import com.svend.dab.core.beans.message.UserMessage;
 
 
@@ -13,7 +11,7 @@ import com.svend.dab.core.beans.message.UserMessage;
  * @author Svend
  *
  */
-public interface IMessagesServices {
+public interface IUserMessagesServices {
 	
 	public void sendMessage(String userName, String toUsername, String subject, String messageContent);
 	

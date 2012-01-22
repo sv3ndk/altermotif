@@ -4,11 +4,18 @@
 	margin-left: 3%;
 	text-align: center;
 }
+#projectRightColumn {
+	float: left;
+}
 
 #projectToolBox {
 	border: thin solid;
 	padding: 20px 20px 20px 20px;
-	float: left;
+	margin-left: 40px;
+}
+
+#projectSocialBox {
+	padding: 5px;
 	margin-left: 40px;
 }
 

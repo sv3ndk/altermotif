@@ -37,10 +37,7 @@ public class ContactRelationshipRequestedPropagator implements IEventPropagator<
 	@Autowired
 	private IUserProfileDao userProfileRepo;
 
-	@Override
 	public void propagate(ContactRelationshipRequested event) throws DabException {
-
-		logger.log(Level.INFO, "propagating " + event);
 		
 		if (event == null) {
 			throw new DabIllegalFormatException("Cannot propagate a null request for contact.");

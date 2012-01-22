@@ -115,7 +115,6 @@
  -->
  
  	<!-- local deployment  
- 	-->
 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg >
 			<bean class="org.springframework.data.mongodb.core.SimpleMongoDbFactory" >
@@ -129,8 +128,10 @@
 			</bean>
 		</constructor-arg>
 	</bean>
+ 	-->
 	
  	<!-- CF deployment 
+ 	 -->
 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg >
 			<bean class="org.springframework.data.mongodb.core.SimpleMongoDbFactory" >
@@ -151,9 +152,15 @@
 			</bean>
 		</constructor-arg>
 	</bean>
- 	 -->
 
  	<mongo:repositories base-package="com.svend.dab.dao.mongo" >
  	</mongo:repositories>
+ 	
+	<!-- ================================ mail server config ========================== -->
+	
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+  		<property name="host" value="mail.mycompany.com"/>
+	</bean>
+	
 
 </beans>

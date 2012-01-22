@@ -3,7 +3,7 @@ package controllers;
 import play.modules.spring.Spring;
 
 import com.svend.dab.core.AdminService;
-import com.svend.dab.core.IMessagesServices;
+import com.svend.dab.core.IUserMessagesServices;
 import com.svend.dab.core.IProfilePhotoService;
 import com.svend.dab.core.IUserProfileService;
 import com.svend.dab.core.UserProfileService;
@@ -39,8 +39,8 @@ public class BeanProvider {
 		return (IProfilePhotoService) Spring.getBeanOfType(IProfilePhotoService.class);
 	}
 
-	public static IMessagesServices  getMessagesService() {
-		return (IMessagesServices) Spring.getBeanOfType(IMessagesServices.class);
+	public static IUserMessagesServices  getMessagesService() {
+		return (IUserMessagesServices) Spring.getBeanOfType(IUserMessagesServices.class);
 		
 	}
 	

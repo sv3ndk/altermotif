@@ -26,7 +26,6 @@ public class UserReferenceWrittenEventPropagator implements IEventPropagator<Use
 	
 	private static Logger logger = Logger.getLogger(UserReferenceWrittenEventPropagator.class.getName());
 
-	@Override
 	public void propagate(UserReferenceWritten event) throws DabException {
 		
 		logger.log(Level.INFO, "leaving a reference: from " + event.getFromUserName() + " to " + event.getToUserName() + " test is " + event.getText()) ;

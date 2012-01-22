@@ -25,7 +25,6 @@ public class UserReferenceRemovedEventPropagator implements IEventPropagator<Use
 	
 	private static Logger logger = Logger.getLogger(UserReferenceRemovedEventPropagator.class.getName());
 	
-	@Override
 	public void propagate(UserReferenceRemovedEvent event) throws DabException {
 		
 		if (event == null || event.getReferenceId() == null || "".equals(event.getReferenceId())) {

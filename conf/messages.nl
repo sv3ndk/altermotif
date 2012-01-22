@@ -366,6 +366,7 @@ projectNewPrivacySettingsAdmin=Administratoren van dit project
 projectNewPrivacySettingsOwner=Starter van dit project (ik)
 
 # view project page
+projectViewEmailThisProject=***Email a link to this project to a friend
 projectViewEditProjet=***Edit project
 projectViewEndProjet=***End project
 viewProjectConfirmTerminateProject=***Are you sure you want to terminate this project? If you click ok, the project will be marked as 'done' and no activity will be possible on it anymore (no new members, no tasks nor assets, no forum discussion). Are you sure this is want you want to do?

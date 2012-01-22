@@ -85,7 +85,9 @@
 	</div>
 
 	#{projects.viewProjectBasicDetails visitedProject:visitedProject, projectVisibility:projectVisibility/} 
-	
+		
+		
+	<div id="projectRightColumn">
 	#{if projectVisibility.isToolBoxVisible() }
 		<div id="projectToolBox">
 			<ul>
@@ -112,6 +114,13 @@
 			</ul>
 		</div>
 	#{/if}
+	
+	<br/>
+
+	<div id="projectSocialBox">
+		<span id="projectSocialEmail" class="dabLinkDisabled">&{'projectViewEmailThisProject'}</span>
+	</div>
+	</div>
 
 
 	<div id="projectBody">

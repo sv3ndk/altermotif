@@ -52,7 +52,7 @@ public class QuickAndDirtyProjectFullTextSearch implements IProjectFTSService {
 	private static Logger logger = Logger.getLogger(QuickAndDirtyProjectFullTextSearch.class.getName());
 	
 	
-	@Override
+	
 	public void updateProjetIndex(String projectId, boolean immediate) {
 		
 
@@ -104,7 +104,7 @@ public class QuickAndDirtyProjectFullTextSearch implements IProjectFTSService {
 	}
 
 	
-	@Override
+	
 	public List<ProjectOverview> searchForProjects(ProjectSearchQuery request) {
 		
 		List<IndexedProject> ips = indexedProjectDao.searchForProjects(request);
@@ -139,7 +139,7 @@ public class QuickAndDirtyProjectFullTextSearch implements IProjectFTSService {
 	}
 
 
-	@Override
+	
 	public void ensureIndexOnLocation() {
 		indexedProjectDao.ensureIndexOnLocation();		
 	}

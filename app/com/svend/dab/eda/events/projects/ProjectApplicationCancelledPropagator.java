@@ -31,7 +31,6 @@ public class ProjectApplicationCancelledPropagator implements IEventPropagator<P
 	private static Logger logger = Logger.getLogger(ProjectApplicationCancelledPropagator.class.getName());
 	
 	
-	@Override
 	public void propagate(ProjectApplicationCancelled event) throws DabException {
 		
 		if (event == null ) {

@@ -32,7 +32,7 @@ public class TagCountDao implements ITagCountDao {
 	/* (non-Javadoc)
 	 * @see com.svend.dab.core.dao.ITagCountDao#getMostPopularTags(int)
 	 */
-	@Override
+	
 	public List<TagCount> getMostPopularTags(int maxResults) {
 
 		Query query = query(where("value").gt(0));

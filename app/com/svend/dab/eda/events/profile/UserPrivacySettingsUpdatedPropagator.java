@@ -29,7 +29,6 @@ public class UserPrivacySettingsUpdatedPropagator implements IEventPropagator<Us
 	@Autowired
 	private EventEmitter emitter;
 	
-	@Override
 	public void propagate(UserPrivacySettingsUpdatedEvent event) throws DabException {
 		
 		UserProfile profile = userProfileRepo.retrieveUserProfileById(event.getUserId());

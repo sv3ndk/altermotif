@@ -27,7 +27,6 @@ public class ProjectParticipantRemovedPropagator implements IEventPropagator<Pro
 	private IUserProfileDao userProfileDao;
 
 	
-	@Override
 	public void propagate(ProjectParticipantRemoved event) throws DabException {
 		
 		if (event == null ) {

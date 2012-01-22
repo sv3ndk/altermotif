@@ -33,7 +33,7 @@ public class DelegatingPropagator implements IEventPropagator<Event>, IEventProp
 	 * 
 	 * @see com.svend.dab.eda.IEventPropagator#propagate(com.svend.dab.eda.events.Event)
 	 */
-	@Override
+	
 	public void propagate(Event event) throws DabException {
 		if (event == null) {
 			logger.log(Level.WARNING, "Refusing to propagate a null event => not doing anything");
@@ -42,12 +42,12 @@ public class DelegatingPropagator implements IEventPropagator<Event>, IEventProp
 		}
 	}
 
-	@Override
+	
 	public IEventPropagator getPropagatorByName(String name) {
 		return (IEventPropagator) ctx.getBean(name);
 	}
 
-	@Override
+	
 	public void setApplicationContext(ApplicationContext ctx) throws BeansException {
 		this.ctx = ctx;
 	}

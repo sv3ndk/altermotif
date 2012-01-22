@@ -32,7 +32,6 @@ public class ProjectCreatedPropagator implements IEventPropagator<ProjectCreated
 	@Autowired
 	private IProjectFTSService projectFTSService;
 	
-	@Override
 	public void propagate(ProjectCreated event) throws DabException {
 		
 		Project project = event.getCreatedProject();
