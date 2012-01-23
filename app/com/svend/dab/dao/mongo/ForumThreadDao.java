@@ -6,12 +6,16 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.mongodb.core.CollectionCallback;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Order;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import com.mongodb.DBCollection;
+import com.mongodb.MongoException;
 import com.mongodb.WriteConcern;
 import com.svend.dab.core.beans.projects.ForumThread;
 import com.svend.dab.core.dao.IForumThreadDao;
@@ -63,6 +67,16 @@ public class ForumThreadDao implements IForumThreadDao {
 	
 	public void updateNumberOfPosts(String threadId, Long numberOfPosts) {
 		mongoTemplate.updateFirst(query(where("id").is(threadId)), new Update().set("numberOfPosts", numberOfPosts), ForumThread.class);
+	}
+
+
+	public Long countThreadsOfProject(String projectId) {
+		final Query query = query(where("projectId").is(projectId));
+		return mongoTemplate.execute("forumThread", new CollectionCallback<Long>() {
+			public Long doInCollection(DBCollection collection) throws MongoException, DataAccessException {
+				return collection.count(query.getQueryObject());
+			}
+		});
 	}
 
 }

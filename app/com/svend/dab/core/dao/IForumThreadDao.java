@@ -18,4 +18,6 @@ public interface IForumThreadDao {
 
 	public void updateNumberOfPosts(String id, Long countPostOfThread);
 
+	public Long countThreadsOfProject(String projectId);
+
 }

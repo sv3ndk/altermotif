@@ -18,6 +18,7 @@ import com.svend.dab.core.beans.projects.ForumDiff;
 import com.svend.dab.core.beans.projects.ForumPost;
 import com.svend.dab.core.beans.projects.ForumThread;
 import com.svend.dab.core.beans.projects.Project;
+import com.svend.dab.core.beans.projects.Project.STATUS;
 import com.svend.dab.core.beans.projects.ProjectPep;
 
 import controllers.Application;
@@ -35,49 +36,56 @@ public class ProjectForumThread extends DabController {
 	/**
 	 * called when the browser send a GET visualize the HTML content of one forum thread
 	 * 
-	 * @param t
+	 * @param threadId
 	 */
-	public static void projectForumThread(String t) {
+	public static void projectForumThread(String projectId, String threadId) {
 
-		ForumThread visitedThread = BeanProvider.getForumThreadDao().getThreadById(t);
+		ForumThread visitedThread = BeanProvider.getForumThreadDao().getThreadById(threadId);
 
 		if (visitedThread != null) {
 			Project project = BeanProvider.getProjectService().loadProject(visitedThread.getProjectId(), false);
+			if (project != null && project.getStatus() != STATUS.cancelled) {
+				if (project.getId().equals(projectId) && project.getId().equals(visitedThread.getProjectId())) {
 
-			if (project != null) {
-				ProjectPep pep = new ProjectPep(project);
-				if (pep.isAllowedSeeThisForumThread(getSessionWrapper().getLoggedInUserProfileId(), visitedThread.isThreadPublic())) {
+					ProjectPep pep = new ProjectPep(project);
+					if (pep.isAllowedSeeThisForumThread(getSessionWrapper().getLoggedInUserProfileId(), visitedThread.isThreadPublic())) {
 
-					List<ForumPost> allPosts = BeanProvider.getForumPostDao().getAllPosts(visitedThread.getId());
-					Date expirationdate = new Date();
-					expirationdate.setTime(expirationdate.getTime() + BeanProvider.getConfig().getCvExpirationDelayInMillis());
-					for (ForumPost post : allPosts) {
-						post.generatePhotoLink(expirationdate);
-					}
-
-					renderArgs.put("thread", visitedThread);
-					renderArgs.put("threadPosts", allPosts);
-					renderArgs.put("project", project);
-					renderArgs.put("forumThreadVisibility", new ProjectForumThreadVisibility(getSessionWrapper().getLoggedInUserProfileId(), project, visitedThread, pep));
-					
-					List<ForumThread> allThreads = BeanProvider.getForumThreadDao().loadProjectForumThreads(visitedThread.getProjectId());
-					List<ForumThread> allOtherThread = new LinkedList<ForumThread>();
-					for (ForumThread thr : allThreads) {
-						if (!thr.getId().equals(visitedThread.getId())) {
-							allOtherThread.add(thr);
+						List<ForumPost> allPosts = BeanProvider.getForumPostDao().getAllPosts(visitedThread.getId());
+						Date expirationdate = new Date();
+						expirationdate.setTime(expirationdate.getTime() + BeanProvider.getConfig().getCvExpirationDelayInMillis());
+						for (ForumPost post : allPosts) {
+							post.generatePhotoLink(expirationdate);
 						}
+
+						renderArgs.put("thread", visitedThread);
+						renderArgs.put("threadPosts", allPosts);
+						renderArgs.put("project", project);
+						renderArgs.put("forumThreadVisibility", new ProjectForumThreadVisibility(getSessionWrapper().getLoggedInUserProfileId(), visitedThread, pep));
+
+						List<ForumThread> allThreads = BeanProvider.getForumThreadDao().loadProjectForumThreads(visitedThread.getProjectId());
+						List<ForumThread> allOtherThread = new LinkedList<ForumThread>();
+						for (ForumThread thr : allThreads) {
+							if (!thr.getId().equals(visitedThread.getId())) {
+								allOtherThread.add(thr);
+							}
+						}
+						renderArgs.put("allOtherThread", allOtherThread);
+
+						render();
+					} else {
+						// user is not allowed to see this thread
+						Application.index();
 					}
-					renderArgs.put("allOtherThread", allOtherThread);
-					
-					
-					render();
 				} else {
+					// project ID mismatch
 					Application.index();
 				}
 			} else {
+				// thread of a non existing project or a cancelled project
 				Application.index();
 			}
 		} else {
+			// no thread found for this threadid
 			Application.index();
 		}
 	}
@@ -175,11 +183,11 @@ public class ProjectForumThread extends DabController {
 			renderJSON(new MappedValue("result", "nok"));
 		}
 	}
-	
+
 	public static void movePost(String originalThreadId, String targetThreadId, String postId) {
-		
+
 		ForumThread originalThread = BeanProvider.getForumThreadDao().getThreadById(originalThreadId);
-		
+
 		if (originalThread != null) {
 			Project project = BeanProvider.getProjectService().loadProject(originalThread.getProjectId(), false);
 			if (project != null) {
@@ -195,7 +203,7 @@ public class ProjectForumThread extends DabController {
 		} else {
 			renderJSON(new MappedValue("result", "nok"));
 		}
-		
+
 	}
 
 }

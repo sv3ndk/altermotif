@@ -13,7 +13,10 @@ import web.utils.Utils;
 public class ForumThread {
 
 	private String id;
+	
 	private String projectId;
+	
+	
 	private String title;
 	private Date creationDate;
 	private boolean isThreadPublic;
@@ -121,5 +124,6 @@ public class ForumThread {
 	public void setThreadUrl(String threadUrl) {
 		this.threadUrl = threadUrl;
 	}
+
 
 }

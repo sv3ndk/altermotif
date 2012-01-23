@@ -48,7 +48,7 @@
 		#{if _projectVisibility.isForumThreadVisible(thread.isThreadPublic)}
 			<div >
 				<span class="threadId">${thread.id}</span>
-				<a class="threadLink" href="@{projects.ProjectForumThread.projectForumThread(thread.id)}"></a>
+				<a class="threadLink" href="@{projects.ProjectForumThread.projectForumThread(thread.projectId, thread.id)}"></a>
 				<span class="threadIsPublic">${thread.isThreadPublic}</span>
 				<span class="threadTitle">${thread.title}</span>
 				<span class="threadCreationDate">${thread.creationDate.format(controllers.BeanProvider.config.dateDisplayFormat)}</span>

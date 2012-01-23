@@ -90,9 +90,7 @@ public interface IProjectDao {
 	void addOrUpdateProjectAsset(String id, Asset newOrUpdatedAsset);
 
 	void removeAssetFromProject(String id, String removedAssetId);
-
-
-
+	
 
 
 }

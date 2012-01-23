@@ -83,7 +83,6 @@ public class UserMessageRepoImpl implements IUserMessageDao {
 			final Query query = query(where("toUser._id").is(username).and("deletedByRecipient").is(false).and("creationDate").gt(message.getCreationDate()));
 			query.sort().on("creationDate", Order.DESCENDING);
 			return mongoTemplate.execute("userMessage", new CollectionCallback<Long>() {
-				
 				public Long doInCollection(DBCollection collection) throws MongoException, DataAccessException {
 					return collection.count(query.getQueryObject());
 				}

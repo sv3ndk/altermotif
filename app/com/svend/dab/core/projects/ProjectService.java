@@ -372,6 +372,7 @@ public class ProjectService implements IProjectService {
 
 	
 	public ForumThread createdNewForumThread(String projectId, String threadTitle, boolean isThreadPublic) {
+		
 		return forumThreadDao.createNewThread(new ForumThread(projectId, threadTitle, new Date(), 0, isThreadPublic));
 	}
 
