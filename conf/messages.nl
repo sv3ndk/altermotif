@@ -500,3 +500,9 @@ projectResultFilterByProximity_part1=***no further than
 projectResultFilterByProximity_part2=***km from
 projectResultFilterByDueDate=***with due date before
 projectResultFilterByLanguage=***with this language
+
+emailPopupReplyToExplanation=***This field is optional. You may provide here an email address where the recipient of this email can send you a reply
+emailPopupTo=***To
+emailPopupToExplanation=***Specify here the email address of the recipient
+emailPopupSubject=***Email subject
+emailPopupText=***Email text

@@ -478,7 +478,6 @@ projectSearchSimpleModeExplanation_GotoAdvancedMode_Link=***advanced search mode
 projectSearchAdvancedModeExplanation_GotoSimpleMode=***Go back to
 projectSearchAdvancedModeExplanation_GotoSimpleMode_Link=***direct search mode
 
-
 # project search results page
 projectSearchResultTitle=résultats de la recherche
 projectSearchResultBackToSearchPage=retour vers la page de recherche
@@ -498,3 +497,9 @@ projectResultFilterByProximity_part1=***no further than
 projectResultFilterByProximity_part2=***km from
 projectResultFilterByDueDate=***with due date before
 projectResultFilterByLanguage=***with this language
+
+emailPopupReplyToExplanation=***This field is optional. You may provide here an email address where the recipient of this email can send you a reply
+emailPopupTo=***To
+emailPopupToExplanation=***Specify here the email address of the recipient
+emailPopupSubject=***Email subject
+emailPopupText=***Email text
