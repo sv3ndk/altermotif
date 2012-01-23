@@ -11,6 +11,10 @@ function init() {
 	initParticipantsMecanics();
 	refreshApplyLinkVisibility();
 	
+	var emailController = new dabEmailPopupLib.EmailPopupController($("#emailPopupContainer div"));
+	
+	$("#projectSocialEmail").click(function(even){emailController.open();});
+	
 }
 
 function initPhotoGallery() {

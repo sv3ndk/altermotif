@@ -363,6 +363,7 @@ projectNewPrivacySettingsOwner=Créateur de ce projet (moi)
 
 # view project page
 projectViewEmailThisProject=***Email a link to this project to a friend
+viewProjectSendAMailPopupTitle=***Send a mail to a friend about this project!
 projectViewEditProjet=Editer le projet
 projectViewEndProjet=Terminer le projet
 viewProjectConfirmTerminateProject=Êtes-vous certain de vouloir terminer ce projet? Si vous cliquez ok, le projet sera marqué en tant que 'accompli' et plus aucune action ne sera possible dessus (pas d'ajout de membres, pas de création ou suppression de tâches ou moyens, pas de discussion sur le forum). Êst-ce bien ce que vous désirez?

@@ -12,6 +12,7 @@
     <script src="@{'/public/javascripts/nondab/colorbox/jquery.colorbox.js'}" type="text/javascript" charset="${_response_encoding}"></script>
 	<script src="@{'/public/javascripts/dabGeocoder.js'}" type="text/javascript" charset="${_response_encoding}"></script>
 	<script src="@{'/public/javascripts/language.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+	<script src="@{'/public/javascripts/dab/emailPopup.js'}" type="text/javascript" charset="${_response_encoding}"></script>
 	<script src="@{'/public/javascripts/projects/projectsView.js'}" type="text/javascript" charset="${_response_encoding}"></script>
 	<script src="@{'/public/javascripts/projects/viewProjectForum.js'}" type="text/javascript" charset="${_response_encoding}"></script>
 	
@@ -118,7 +119,7 @@
 	<br/>
 
 	<div id="projectSocialBox">
-		<span id="projectSocialEmail" class="dabLinkDisabled">&{'projectViewEmailThisProject'}</span>
+		<span id="projectSocialEmail" class="dabLink">&{'projectViewEmailThisProject'}</span>
 	</div>
 	</div>
 
@@ -177,3 +178,8 @@
 		<input type="hidden" name="projectId" id="projectId"/>
 	#{/form}
 </div>
+
+<div id="emailPopupContainer">
+	#{dab.emailPopup popupTitle:messages.get('viewProjectSendAMailPopupTitle') /}
+</div>
+

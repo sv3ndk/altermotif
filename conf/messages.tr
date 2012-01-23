@@ -366,6 +366,7 @@ projectNewPrivacySettingsOwner=Proje lideri (ben)
 
 # view project page
 projectViewEmailThisProject=***Email a link to this project to a friend
+viewProjectSendAMailPopupTitle=***Send a mail to a friend about this project!
 projectViewEditProjet=Projeyi güncelle
 projectViewEndProjet=Projeyi sonlandır
 viewProjectConfirmTerminateProject=Bu projeyi sonlardırmak istediğine emin misin? Tamam'ı seçersen proje tamamlanmış olarak görünecek ve üzerinde değişiklik yapmak mümkün olmayacak (yeni üyeler, yeni görevler, tartışma forumları eklenemeyecek).

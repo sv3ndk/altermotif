@@ -3,6 +3,7 @@ package controllers;
 import play.modules.spring.Spring;
 
 import com.svend.dab.core.AdminService;
+import com.svend.dab.core.ISocialService;
 import com.svend.dab.core.IUserMessagesServices;
 import com.svend.dab.core.IProfilePhotoService;
 import com.svend.dab.core.IUserProfileService;
@@ -66,6 +67,10 @@ public class BeanProvider {
 
 	public static AdminService getAdminService() {
 		return (AdminService) Spring.getBeanOfType(AdminService.class);
+	}
+
+	public static ISocialService getSocialService() {
+		return (ISocialService) Spring.getBeanOfType(ISocialService.class);
 	}
 
 	public static IForumPostDao getForumPostDao() {

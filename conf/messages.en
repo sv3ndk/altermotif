@@ -364,6 +364,7 @@ projectNewPrivacySettingsOwner=Creator of this project (me)
 
 # view project page
 projectViewEmailThisProject=Email a link to this project to a friend
+viewProjectSendAMailPopupTitle=Send a mail to a friend about this project!
 projectViewEditProjet=Edit project
 projectViewEndProjet=End project
 viewProjectConfirmTerminateProject=Are you sure you want to terminate this project? If you click ok, the project will be marked as 'done' and no activity will be possible on it anymore (no new members, no tasks nor assets, no forum discussion). Are you sure this is want you want to do?
@@ -417,6 +418,7 @@ viewProjectConfirmAcceptOwnership=Are you sure your want to accept full ownershi
 viewProjectconfirmRefuseOwnership=Are you sure your want to refuse the ownership of this project? This action cannot be undone unless the current project owner resubmits a new ownership transfer proposal. Are you sure this is what you want to do?
 viewProjectTasks=Tasks
 viewProjectAssets=Assets
+
 
 viewProjectForum=Forum  
 viewProjectForumAddThread=Add a new thread
@@ -497,3 +499,10 @@ projectResultFilterByProximity_part1=no further than
 projectResultFilterByProximity_part2=km from
 projectResultFilterByDueDate=with due date before
 projectResultFilterByLanguage=with this language
+
+#write email popup
+emailPopupReplyToExplanation=This field is optional. You may provide here an email address where the recipient of this email can send you a reply
+emailPopupTo=To
+emailPopupToExplanation=Specify here the email address of the recipient
+emailPopupSubject=Email subject
+emailPopupText=Email text
