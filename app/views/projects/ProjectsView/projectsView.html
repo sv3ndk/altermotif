@@ -39,7 +39,10 @@
 	    var isApplyLinkVisible = ${projectVisibility.isApplyLinkVisible()};
 	    var isCancelApplicationLinkVisible = ${projectVisibility.isCancelApplicationLinkVisible()};
 	    
+	    var sendEmail = #{jsAction @Social.sendMail(':recipient', ':replyTo', ':subject', ':textContent') /};
+	    
 	    var projectId = "${visitedProject.id}"; 
+	    var projectName = "${visitedProject?.pdata?.name}";
 	    var proposedOwnerId = "${visitedProject.proposedInitiator?.user?.userName}"; 
 	    
 	    var confirmCancelProjectText 			= "&{'viewProjectConfirmCancelProject'}";
@@ -58,7 +61,11 @@
 	    var confirmCancelGiveOwnershipText 	= "&{'viewProjectConfirmCancelGiveOwnership'}";
 	    var confirmAcceptOwnershipText 		= "&{'viewProjectConfirmAcceptOwnership'}";
 	    var confirmRefuseOwnershipText 		= "&{'viewProjectconfirmRefuseOwnership'}";
-	
+	    
+	    var viewProjectSendAMailTemplateTextProjectName 		= "&{'viewProjectSendAMailTemplateTextProjectName'}";
+	    var viewProjectSendAMailDefaultEmailSubject	 			= "&{'viewProjectSendAMailDefaultEmailSubject'}";
+	    var altermotifBaseUrl = "http://cloudfoundry.altermotif.org"
+	    
 		$(document).ready(function() {
 			init();
 		})
@@ -68,10 +75,13 @@
 
 <!-- some hidden data, for javascript -->
 <span id="allPossibleLanguageNames" class="hidden">${allPossibleLanguageNames}</span>
+<span id="viewProjectSendAMailTemplateText" class="hidden">&{'viewProjectSendAMailTemplateText'}</span>
+<span id="emailSignature" class="hidden">${emailSignature}</span>
+<a id="linkToThisProjectPage" href="@{projects.ProjectsView.projectsView( visitedProject.id )}" class="hidden"></a>
 
 <div id="projectViewContainer" class="pageContainer">
 
-	<p class="pageTitle">${visitedProject?.pdata?.name}</p>
+	<p id=""class="pageTitle">${visitedProject?.pdata?.name}</p>
 
 
 	<div id="projectPhotoContainer">

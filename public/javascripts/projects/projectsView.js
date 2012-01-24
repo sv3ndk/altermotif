@@ -10,12 +10,25 @@ function init() {
 	initApplicationMecanics();
 	initParticipantsMecanics();
 	refreshApplyLinkVisibility();
+
 	
-	var emailController = new dabEmailPopupLib.EmailPopupController($("#emailPopupContainer div"));
-	
-	$("#projectSocialEmail").click(function(even){emailController.open();});
+	initOpenEmailPopup();
 	
 }
+
+function initOpenEmailPopup() {
+	
+	var defaultEmailText = $("#viewProjectSendAMailTemplateText").text();
+	
+	defaultEmailText += "\n\n" + viewProjectSendAMailTemplateTextProjectName +projectName;
+	defaultEmailText += "\n\n" + altermotifBaseUrl + $("#linkToThisProjectPage").attr("href");
+	defaultEmailText += "\n\n" + $("#emailSignature").text();
+	
+	var emailController = new dabEmailPopupLib.EmailPopupController($("#emailPopupContainer div.emailPopup"), viewProjectSendAMailDefaultEmailSubject, defaultEmailText, sendEmail);
+	
+	$("#projectSocialEmail").click(function(even){emailController.open();});
+}
+
 
 function initPhotoGallery() {
 	// photo gallery

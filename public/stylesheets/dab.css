@@ -378,3 +378,7 @@ fieldset legend {
 	vertical-align: top;
 	padding: 10px 10px 0 10px;
 }
+
+table .errorRow td{
+	padding: 0px 0 0 10px;
+}

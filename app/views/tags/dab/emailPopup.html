@@ -9,26 +9,42 @@
 
 		<tr>
 			<td class="formlabel"><label>replyTo: </label></td>
-			<td><input class="replyToInput" size="20"></input> <br /> <span
+			<td><input class="replyToInput" size="20" data-bind="value: replyTo"></input> <br /> <span
 				class="formFieldExplanation">&{'emailPopupReplyToExplanation'}</span>
 			</td>
 		</tr>
 
 		<tr>
 			<td class="formlabel"><label>&{'emailPopupTo'}*: </label></td>
-			<td><input class="toInput" size="20"></input> <br /> <span
+			<td><input class="toInput" size="20" data-bind="value: recipient" ></input> <br /> <span
 				class="formFieldExplanation">&{'emailPopupToExplanation'}</span>
 			</td>
+		</tr>
+		<tr class="errorRow toInputRequired" data-bind="visible: isRecipientMissing">
+			<td></td>
+			<td ><div class="errorMessage">&{'validation.required'}</div></td>
+		</tr>
+		<tr class="errorRow toInputRequired" data-bind="visible: isRecipientIncorrect">
+			<td></td>
+			<td ><div class="errorMessage">&{'incorrectEmailFormat'}ii</div></td>
 		</tr>
 
 		<tr>
 			<td class="formlabel"><label>&{'emailPopupSubject'}*: </label></td>
-			<td><input class="subjectInput" size="80"></input></td>
+			<td><input class="subjectInput" size="100" data-bind="value: subject"></input></td>
+		</tr>
+		<tr class="errorRow subjectInputRequired" data-bind="visible: isSubjectMissing">
+			<td></td>
+			<td ><div class="errorMessage">&{'validation.required'}</div></td>
 		</tr>
 
 		<tr>
 			<td class="formlabel"><label>&{'emailPopupText'}*: </label></td>
-			<td><textarea class="textInput" cols="80" rows="10"></textarea></td>
+			<td><textarea class="textInput" cols="100" rows="10" data-bind="value: text"></textarea></td>
+		</tr>
+		<tr class="errorRow textInputRequired" data-bind="visible: isTextMissing">
+			<td></td>
+			<td ><div class="errorMessage">&{'validation.required'}</div></td>
 		</tr>
 
 	</table>

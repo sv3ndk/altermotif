@@ -8,7 +8,7 @@ public interface ISocialService {
 
 	
 	
-	public abstract void sendEmail(String recipient, String subject, String textContent);
+	public abstract void sendEmail(String recipient, String replyTo, String subject, String textContent);
 	
 }
 

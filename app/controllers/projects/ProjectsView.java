@@ -40,6 +40,13 @@ public class ProjectsView extends DabController {
 			renderArgs.put("projectVisibility", new ProjectViewVisibility(new ProjectPep(project), project, getSessionWrapper().getLoggedInUserProfileId()));
 			renderArgs.put("allThreads", BeanProvider.getProjectForumThreadDao().loadProjectForumThreads(p));
 			Utils.addAllPossibleLanguageNamesToRenderArgs(getSessionWrapper(), renderArgs);
+			
+			String emailSignature = "---\n";
+			if (getSessionWrapper().isLoggedIn()) {
+				emailSignature += getSessionWrapper().getLoggedInUserProfileId();
+			}
+			renderArgs.put("emailSignature", emailSignature);
+			
 			render();
 		} else {
 			logger.log(Level.WARNING, "could not find project => redirecting to application home");

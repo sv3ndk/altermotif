@@ -39,7 +39,7 @@ var dabProjectForumLib = {
 			new Confirm.AskAndProceed(this, "#dynamicallyThreads", "span.dabLink.deleteThread", confirmRemoveThreadtext, this.recordClickThreadId,
 					this.afterUserConfirmsDeleteThread).init();
 
-			ko.applyBindings(this.projectViewForumModel, $("#dynamicallyCreatedThreads")[0]);
+			ko.applyBindings(this.projectViewForumModel, $("#dynamicallyThreads")[0]);
 		};
 
 		// ////////////////////////////
