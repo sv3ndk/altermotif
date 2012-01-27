@@ -2,9 +2,10 @@
 
 var dabEmailPopupLib = {
 		
-	EmailPopupController : function (htmlPopupElement, textSubject, textBody, sendEmailCallBack) {
+	EmailPopupController : function (htmlPopupElement, sendingPopupHtmlElement, textSubject, textBody, sendEmailCallBack) {
 
 		this.htmlPopupElement = htmlPopupElement;
+		this.sendingPopupHtmlElement = sendingPopupHtmlElement;
 		this.sendEmailCallBack = sendEmailCallBack;
 		
 		this.defaultTextBody = textBody;
@@ -31,6 +32,9 @@ var dabEmailPopupLib = {
 		this.init = function() {
 			var self = this;
 
+			$("#emailSentSuccessfullyNotification").notify();
+			$("#emailSentUnsuccessfullyNotification").notify();
+			
 			ko.applyBindings(self.emailPopupModel, htmlPopupElement[0]);
 			
 			this.htmlPopupElement.dialog({
@@ -59,12 +63,26 @@ var dabEmailPopupLib = {
 			var self = this;
 			this.emailPopupModel.validate();
 			if (this.emailPopupModel.isValid()) {
+				$.blockUI({message: sendingPopupHtmlElement});
+				var sentContent = encodeURI(self.emailPopupModel.text());
 				$.post(sendEmailCallBack(
-						{recipient: self.emailPopupModel.recipient(), replyTo: self.emailPopupModel.replyTo(), subject: self.emailPopupModel.subject(), textContent: self.emailPopupModel.text()}
+						{recipient: self.emailPopupModel.recipient(), replyTo: self.emailPopupModel.replyTo(), subject: self.emailPopupModel.subject(), textContent: sentContent}
 					), 
 					function(data) {
-					// TODO: handle errors or sucess here...
-					self.close();
+						$.unblockUI();
+						
+						if (data.ok) {
+							$("#emailSentSuccessfullyNotification").notify("create", {}, {
+								expires : 2000,
+								speed : 750
+							});
+						} else {
+							$("#emailSentUnsuccessfullyNotification").notify("create", {}, {
+								expires : 2000,
+								speed : 750
+							});
+						}
+						self.close();
 					}
 				);
 				

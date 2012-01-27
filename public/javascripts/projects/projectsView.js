@@ -18,13 +18,14 @@ function init() {
 
 function initOpenEmailPopup() {
 	
+	
 	var defaultEmailText = $("#viewProjectSendAMailTemplateText").text();
 	
 	defaultEmailText += "\n\n" + viewProjectSendAMailTemplateTextProjectName +projectName;
 	defaultEmailText += "\n\n" + altermotifBaseUrl + $("#linkToThisProjectPage").attr("href");
 	defaultEmailText += "\n\n" + $("#emailSignature").text();
 	
-	var emailController = new dabEmailPopupLib.EmailPopupController($("#emailPopupContainer div.emailPopup"), viewProjectSendAMailDefaultEmailSubject, defaultEmailText, sendEmail);
+	var emailController = new dabEmailPopupLib.EmailPopupController($("#emailPopupContainer div.emailPopup"), $("#emailPleaseWaitPopup"), viewProjectSendAMailDefaultEmailSubject, defaultEmailText, sendEmail);
 	
 	$("#projectSocialEmail").click(function(even){emailController.open();});
 }

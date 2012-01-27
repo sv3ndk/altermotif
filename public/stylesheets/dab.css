@@ -382,3 +382,8 @@ fieldset legend {
 table .errorRow td{
 	padding: 0px 0 0 10px;
 }
+
+
+.notificationContainer {
+	margin-top: 100px;
+}
