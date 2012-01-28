@@ -38,14 +38,23 @@ function EditAssetController() {
 				this.afterUserConfirmsRemoveAsset).init();
 
 		// click "add assignee"
-		this.userListPopup = new UserListPopup(this, chooseAssetAssigneePopupTitle, this.afterUserSelectsAssignee);
-		this.userListPopup.init();
+		this.userListPopup = new dabUserPopupLib.UserListPopup(this, $("#editProjectAssetsContainer .usersPopupList"), chooseAssetAssigneePopupTitle, this.afterUserSelectsAssignee);
 		this.koModel.maxNumOfAssigneePerTask = this.userListPopup.countTotalNumberOfPopupUser();
 		$("#editProjectAssetsContainer").on("click", ".addAssetAssigneeLink", function(event) {
 			self.clickedAssetId = $(event.target).parent().parent().find(".hiddenAssetId").text();
 			var excludedUsernames = self.koModel.getAsset(self.clickedAssetId).getListOfAssigneesNames();
 			self.userListPopup.openFiltered(excludedUsernames);
 		});
+		
+		
+		// click on "remove assignee"
+		$("#editProjectAssetsContainer").on("click", ".removeAssetAssignee", function(event) {
+			self.clickedAssetId = $(event.target).parent().parent().parent().parent().find(".hiddenAssetId").text();
+			var clickedUserId = $(event.target).parent().find(".taskUserName").text();
+			self.koModel.removeAssigneeFromAsset(self.clickedAssetId, clickedUserId);
+		});
+
+		
 	};
 
 	// this is typically called from proejctEdit.js, when the user clicks on "submit", just before actually submitting data back to the server
@@ -143,6 +152,11 @@ function EditAssetViewModel() {
 	this.addAssignee = function(assetId, username) {
 		this.getAsset(assetId).addAssignee(username);
 	};
+	
+	this.removeAssigneeFromAsset = function(taskId, username) {
+		this.getAsset(taskId).removeAssignee(username);
+	};
+
 
 	this.getAsset = function(assetId) {
 		return _.find(this.assets(), function(asset) {

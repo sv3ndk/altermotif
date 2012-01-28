@@ -40,7 +40,7 @@
 				</td>
 				<td>
 					<ul data-bind="template : {foreach: assignees, beforeRemove: beforeRemoveAssignee, afterAdd: afterAddAssignee}">
-						<li><span data-bind="text: userName" class="taskUserName"></span> <img id="trashImg" src="@{'/public/images/trash.png'}"  class="deleteImageLink removeUserLink" /></li>
+						<li><span data-bind="text: userName" class="taskUserName"></span> <img  src="@{'/public/images/trash.png'}"  class="deleteImageLink removeAssetAssignee" /></li>
 					</ul>
 					<br />
 					<span class="dabLink addAssetAssigneeLink"  data-bind="visible: isAddAssigneeVisible">&{'projectTaskEditionTableAddAssignee'}</span>
@@ -62,5 +62,7 @@
 			<td colspan="4"/>
 		</tr>
 	</table>
+	
+	#{dab.usersPopupList users:_confirmedActiveParticipants /}
+	
 </div>
-

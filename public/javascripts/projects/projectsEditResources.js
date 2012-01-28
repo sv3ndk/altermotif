@@ -58,6 +58,19 @@ function ViewProjectResource(staticResource, isNew, maxNumAssignees, defaultName
 			this.isAddAssigneeVisible(this.mayAddMoreAssignee());
 		}
 	};
+	
+	this.removeAssignee = function(assigneeUserName) {
+		var existingAssignee = this.getAssigneeByUserName(assigneeUserName);
+		
+		if (existingAssignee != undefined) {
+			var existingAssigneeIndex = _.indexOf(this.assignees(), existingAssignee);
+			if (existingAssigneeIndex != -1) {
+				this.assignees.splice(existingAssigneeIndex, 1);
+				this.isAddAssigneeVisible(this.mayAddMoreAssignee());
+			}
+		}
+		
+	};
 
 	this.mayAddMoreAssignee = function() {
 		if (this.maxNumberOfAssignees < 1) {
@@ -80,6 +93,7 @@ function ViewProjectResource(staticResource, isNew, maxNumAssignees, defaultName
 			return assignee.userName == username
 		});
 	}
+
 
 	// /////////////////////
 	// internal methods

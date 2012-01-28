@@ -9,9 +9,9 @@
     <script src="@{'/public/javascripts/messages/messagesNew.js'}" type="text/javascript" charset="${_response_encoding}"></script>
     	
     <script type="text/javascript">
-		$(document).ready(function() {
-			init();
-		})
+    
+	    var profileMessagesChooseFromMyContactsPopupTitle = "&{'profileMessagesChooseFromMyContactsPopupTitle'}";
+	    
 	</script>
 #{/set}
 
@@ -36,8 +36,8 @@
 					<tr>
 						<td>
 							&{'profileMessagesTo'}: 
-							<input id="messagesTo" size="20" name="writtenMessage.toUserName" value="${flash['writtenMessage.toUserName']}"  />
-							<span id="choooseFromMyContactsLink" class="dabLinkLSpaced">&{'profileMessagesChooseFromMyContacts'}</span>
+							<input id="messagesTo" size="20" name="writtenMessage.toUserName" value="${flash['writtenMessage.toUserName']}" data-bind="value: messageRecipient" />
+							<span id="choooseFromMyContactsLink" class="dabLinkLSpaced" data-bind="css:  {dabLinkLSpaced : isChooseLinkActive, dabLinkLSpacedDisabled : !isChooseLinkActive()}">&{'profileMessagesChooseFromMyContacts'}</span>
 						</td>
 					</tr>
 					
@@ -61,6 +61,6 @@
 		<textarea rows="10" class="messagesNewTextArea" name="writtenMessage.messageContent" >${flash['writtenMessage.messageContent']}</textarea>
 	#{/form}
 	
-	#{dab.usersPopupList popupTitle:messages.get('profileMessagesChooseFromMyContactsPopupTitle'), users:loggedinUserProfile.myActiveContactsSummaries /}
+	#{dab.usersPopupList users:loggedinUserProfile.myActiveContactsSummaries /}
 
 </div>

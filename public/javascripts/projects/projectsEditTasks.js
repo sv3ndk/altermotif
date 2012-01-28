@@ -38,14 +38,21 @@ function EditTaskController() {
 				this.afterUserConfirmsRemoveTask).init();
 
 		// click "add assignee"
-		this.userListPopup = new UserListPopup(this, choseTaskAssigneePopupTitle, this.afterUserSelectsAssignee);
-		this.userListPopup.init();
+		this.userListPopup = new dabUserPopupLib.UserListPopup(this, $("#editProjectTasksContainer .usersPopupList"), choseTaskAssigneePopupTitle, this.afterUserSelectsAssignee);
 		this.koModel.maxNumOfAssigneePerTask = this.userListPopup.countTotalNumberOfPopupUser();
 		$("#editProjectTasksContainer").on("click", ".addTaskAssigneeLink", function(event) {
 			self.clickedTaskId = $(event.target).parent().parent().find(".hiddenTaskId").text();
 			var excludedUsernames = self.koModel.getTask(self.clickedTaskId).getListOfAssigneesNames();
 			self.userListPopup.openFiltered(excludedUsernames);
 		});
+		
+		// click on "remove assignee"
+		$("#editProjectTasksContainer").on("click", ".removeTaskAssignee", function(event) {
+			self.clickedTaskId = $(event.target).parent().parent().parent().parent().find(".hiddenTaskId").text();
+			var clickedUserId = $(event.target).parent().find(".taskUserName").text();
+			self.koModel.removeAssigneeFromTask(self.clickedTaskId, clickedUserId);
+		});
+		
 	};
 
 	// this is typically called from proejctEdit.js, when the user clicks on "submit", just before actually submitting data back to the server
@@ -100,7 +107,6 @@ function EditTaskController() {
 						self.koModel.addStaticTask(task, false);
 					});
 				}
-				
 			});
 		}
 	};
@@ -142,6 +148,10 @@ function EditTaskViewModel() {
 
 	this.addAssignee = function(taskId, username) {
 		this.getTask(taskId).addAssignee(username);
+	};
+
+	this.removeAssigneeFromTask = function(taskId, username) {
+		this.getTask(taskId).removeAssignee(username);
 	};
 
 	this.getTask = function(taskId) {
