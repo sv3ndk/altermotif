@@ -1,11 +1,9 @@
 package models.altermotif;
 
-import com.google.common.base.Strings;
-
 import play.i18n.Lang;
-import play.mvc.Scope;
-import play.mvc.Scope.RenderArgs;
 import play.mvc.Scope.Session;
+
+import com.google.common.base.Strings;
 
 /**
  * Nice wrapper that gives easy to interpret method about the session state
@@ -62,31 +60,9 @@ public class SessionWrapper extends AbstractRenderableModel {
 			}
 		}
 		
-		// defaulting to English
 		return POSSIBLE_LANGUAGES[0];
-//		return 
-		
-//		int selectedLgIndex = getSelectedLgIndex();
-//		if (selectedLgIndex > 0 && selectedLgIndex -1< POSSIBLE_LANGUAGES.length) {
-//			return POSSIBLE_LANGUAGES[selectedLgIndex-1];
-//		} 
-		
-		
 	}
 	
-//	/**
-//	 * final because called from constructor
-//	 * 
-//	 * @return
-//	 */
-//	public final int getSelectedLgIndex() {
-//		try {
-//			return Integer.parseInt(session.get(LANGUAGE_SESSION_PARAM));
-//		} catch (Exception exc) {
-//			// defaulting to english in case of any erryr (index count start at 1)
-//			return 1;
-//		}
-//	}
 
 	public void updateSelectedLanguage(String selection) {
 		if (!Strings.isNullOrEmpty(selection)) {
