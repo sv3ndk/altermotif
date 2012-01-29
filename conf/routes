@@ -17,6 +17,9 @@ GET     /profile/editphotos		                profile.ProfilePhotos.profilePhotos
 GET     /profile/cv				                profile.ProfileCv.profileCv
 GET     /profile/privacy		                profile.ProfilePrivacy.profilePrivacy
 
+GET     /groups/new				                groups.GroupsNew.groupsNew
+GET     /groups/search			                groups.GroupsSearch.groupsSearch
+
 GET     /projects/new			                projects.ProjectsNew.projectsNew
 GET     /projects/edit			                projects.ProjectsEdit.projectsEdit
 GET     /projects/editphotos	                projects.ProjectsEditPhotos.projectsEditPhotos

@@ -1,0 +1,35 @@
+#{extends 'masterTemplate.html' /} 
+
+#{set 'moreStyles'}
+	<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/groups/groupsEdit.css'}" />
+#{/set} 
+
+#{set 'moreScripts'}
+    <script src="@{'/public/javascripts/groups/groupsEdit.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+
+	<script type="text/javascript">
+		
+	</script>
+
+#{/set}
+
+<div class="pageContainer">
+
+	<div class="groupsEditionContainer">
+		#{form @groups.GroupsNew.doCreateGroup() }
+			<table>
+				#{groups.groupsNewEditCommon allThemes:allThemes /}
+			
+				<tr>	
+					<td></td>
+					<td>
+						<input type="button" disabled="disabled" value="&{'groupsEditCreateGroupButton'}"></input>
+					</td>
+				</tr>
+			
+			</table>
+		#{/form }
+	</div>
+
+
+</div>

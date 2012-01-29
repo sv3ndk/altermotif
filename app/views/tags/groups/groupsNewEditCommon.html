@@ -1,0 +1,45 @@
+#{dab.inputText 
+	label:messages.get('groupsEditName'),
+	required: true,
+	inputName: "editedProject.pdata.description",
+	inputValue: _editedProject?.pdata?.description,
+	cols: 45,
+/}
+
+#{dab.inputText 
+	label:messages.get('groupsEditDescription'),
+	required: true,
+	inputName: "editedProject.pdata.description",
+	inputValue: _editedProject?.pdata?.description,
+	explanation: messages.get('groupsEditDescriptionExplanation'),
+	cols: 45,
+	rows: 4,
+/}
+
+<tr>
+	<td class="formlabel"><label>&{'groupsEditLocation'}*: </label></td>
+	<td colspan="2">
+		<span id="groupsEditAddLocation" class="dabLink"> &{'groupsEditAddLocationLink'}...</span>
+		<div id="editGroupLocation">
+			#{dab.inputLocation /}
+		</div>
+		<br />
+		<span class="formFieldExplanation">&{'groupsEditLocationExplanation'}</span>
+	</td>
+</tr>
+
+
+<tr>
+	<td class="formlabel"><label>&{'groupsEditSelectThemes'}: </label></td>
+	<td colspan="2">
+		<span class="dabLinkDisabled">todo...</span>
+	</td>
+<tr>
+
+<td class="formlabel"><label>&{'groupsEditSelectTags'}: </label></td>
+	<td colspan="2">
+		<div>
+			<span class="dabLinkDisabled">todo...</span>
+		</div>
+	</td>
+</tr>

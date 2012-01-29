@@ -102,6 +102,8 @@ topMenuMessagesNew=New
 topMenuMessagesDeleted=Deleted
 
 topMenuGroups=Groups
+topMenuGroupsNew=New group
+topMenuGroupsFind=Find a group
 
 topMenuProjects=Projects
 topMenuProjectNew=New project
@@ -250,6 +252,19 @@ profileDeletedMessagesConfirmUndeletion=Are you sure you want to undelete those 
 level0=low
 level1=average
 level2=good
+
+
+#################################
+# groups
+groupsEditName=Group name
+groupsEditDescription=Group description
+groupsEditDescriptionExplanation=Describe clearly what this group is about. What is the purpose of the group?
+groupsEditLocation=Location
+groupsEditLocationExplanation=Where will this group be located? Where can participants come from?
+groupsEditAddLocationLink=add location
+groupsEditSelectThemes=Select themes
+groupsEditSelectTags=Group tags
+groupsEditCreateGroupButton=Start group
 
 
 #################################

@@ -103,6 +103,8 @@ topMenuMessagesNew=Nieuw bericht
 topMenuMessagesDeleted=Verwijderde berichten
 
 topMenuGroups=Groepen
+topMenuGroupsNew=***New group
+topMenuGroupsFind=***Find a group
 
 topMenuProjects=Projecten
 topMenuProjectNew=Nieuw project
@@ -252,6 +254,18 @@ profileDeletedMessagesConfirmUndeletion=Weet u zeker dat u de verwijdering van d
 level0=Beginner
 level1=Middelmatig
 level2=Goed
+
+#################################
+# groups
+groupsEditName=***Group name
+groupsEditDescription=***Group description
+groupsEditDescriptionExplanation=***Describe clearly what this group is about. What is the purpose of the group?
+groupsEditLocation=***Location
+groupsEditLocationExplanation=***Where will this group be located? Where can participants come from?
+groupsEditAddLocationLink=***add location
+groupsEditSelectThemes=***Select themes
+groupsEditSelectTags=***Group tags
+groupsEditCreateGroupButton=***Start group
 
 
 #################################

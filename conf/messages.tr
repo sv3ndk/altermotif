@@ -103,6 +103,8 @@ topMenuMessagesNew=Yeni
 topMenuMessagesDeleted=Silinmiş Mesajlar
 
 topMenuGroups=Gruplar
+topMenuGroupsNew=***New group
+topMenuGroupsFind=***Find a group
 
 topMenuProjects=Projeler
 topMenuProjectNew=Yeni Proje
@@ -251,6 +253,19 @@ profileDeletedMessagesConfirmUndeletion=Gelen/Gönderilmiş mesajları geri alma
 level0=az
 level1=orta
 level2=iyi
+
+
+#################################
+# groups
+groupsEditName=***Group name
+groupsEditDescription=***Group description
+groupsEditDescriptionExplanation=***Describe clearly what this group is about. What is the purpose of the group?
+groupsEditLocation=***Location
+groupsEditLocationExplanation=***Where will this group be located? Where can participants come from?
+groupsEditAddLocationLink=***add location
+groupsEditSelectThemes=***Select themes
+groupsEditSelectTags=***Group tags
+groupsEditCreateGroupButton=***Start group
 
 
 #################################
