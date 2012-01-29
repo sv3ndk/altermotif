@@ -88,11 +88,21 @@ function initMasterLayout(updateLanguageAction) {
 function initChangeLanguageLogic(updateLanguageAction) {
 	$("#selectOneLanguageDropdown").change(function(event) {
 		
+		var newLanguageCode = $("#selectOneLanguageDropdown").val();
 		$('#selectedLg').load(
-				updateLanguageAction({selection: $("#selectOneLanguageDropdown").val()}), 
+				updateLanguageAction({selection: newLanguageCode}), 
 				function () {
 					// we reload the complete page after a language setting: there are messages everywhere!
-					window.location.href=window.location.href;
+					if (typeof isTermsAndConditionsPage != 'undefined' ) {
+						// in case of "terms and conditions", we have to relaod the page corresponding to the new language
+						window.location.href=$("#hiddenLinksToTermsAndConditions a." +newLanguageCode).attr("href");
+					} else if (typeof isPrivacyStatementPage != 'undefined') {
+						// in case of "privacy statements", we have to relaod the page corresponding to the new language
+						window.location.href=$("#hiddenLinksToPrivacyStatement a." +newLanguageCode).attr("href");
+ 					} else {
+ 						// in most cases, we just reload the current page
+ 						window.location.href=window.location.href;
+					}
 				});
 									
 	});

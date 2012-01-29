@@ -76,11 +76,11 @@
 			</p>
 			
 			<p>
-				#{select 'selectOneLanguageDropdown', value: userSession.getSelectedLgIndex(), id:'selectOneLanguageDropdown'}
-					#{option 1}&{'english'}#{/option}
-					#{option 2}&{'french'}#{/option}
-					#{option 3}&{'dutch'}#{/option}
-					#{option 4}&{'turkish'}#{/option}
+				#{select 'selectOneLanguageDropdown', value: userSession.getSelectedLg(), id:'selectOneLanguageDropdown'}
+					#{option 'en'}&{'english'}#{/option}
+					#{option 'fr'}&{'french'}#{/option}
+					#{option 'nl'}&{'dutch'}#{/option}
+					#{option 'tr'}&{'turkish'}#{/option}
 				#{/select}
 				
 				<span id="selectedLg" style="display: none" ></span>
@@ -169,10 +169,23 @@
 		#{if isAboutUsLinkVisible}
 			<a href="@{Application.aboutUs()}" class="dabLink">&{'homePageAboutUs'}</a>
 		#{/if}
-		<a href="#" class="dabLinkDisabled">&{'homePageRules'}</a>
-		<a href="#" class="dabLinkDisabled">&{'homePageDisclaimer'}</a>
-		<a href="#" class="dabLinkDisabled">&{'homePagePrivacy'}</a>
+		<a href="@{Application.termsAndConditions(selectedUserLanguageCode)}" class="dabLink">&{'homePageRules'}</a>
+		<a href="@{Application.privacyStatement(selectedUserLanguageCode)}" class="dabLink">&{'homePagePrivacy'}</a>
 		<a href="mailto:contact@altermotif.org" class="dabLink">&{'homePageContacts'}</a>
+	</div>
+	
+	<div id="hiddenLinksToTermsAndConditions" class="hidden">
+		<a class="en" href="@{Application.termsAndConditions('en')}"></a>
+		<a class="fr" href="@{Application.termsAndConditions('fr')}"></a>
+		<a class="nl" href="@{Application.termsAndConditions('nl')}"></a>
+		<a class="tr" href="@{Application.termsAndConditions('tr')}"></a>
+	</div>
+
+	<div id="hiddenLinksToPrivacyStatement" class="hidden">
+		<a class="en" href="@{Application.privacyStatement('en')}"></a>
+		<a class="fr" href="@{Application.privacyStatement('fr')}"></a>
+		<a class="nl" href="@{Application.privacyStatement('nl')}"></a>
+		<a class="tr" href="@{Application.privacyStatement('tr')}"></a>
 	</div>
 
 <div id="confirmationPopup" title="&{'confirmationPopupTitle'}">

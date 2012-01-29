@@ -60,7 +60,6 @@ homePageTitle2=Een ruimte waar ideeën werkelijkheid worden
 homePageExplanation=Hoe werkt het? => Presenteer een idee; motiveer anderen en breng het tot stand!
 homePageFindAProject=Vind een project
 homePageRules=Gebruiksvoorwaarden
-homePageDisclaimer=Disclaimer
 homePagePrivacy=Privacy
 homePageContacts=Contacteer ons
 homePageAboutUs=***About us

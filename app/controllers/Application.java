@@ -1,5 +1,8 @@
 package controllers;
 
+
+import static models.altermotif.SessionWrapper.*;
+
 public class Application extends DabController {
 
 	public static void index() {
@@ -13,13 +16,38 @@ public class Application extends DabController {
 		render();
 	}
 
-	public static void termsAndConditions() {
-		render();
-	}
 
 	public static void udpateLanguage(String selection) {
 		getSessionWrapper().updateSelectedLanguage(selection);
 		renderJSON("{'ok': true}");
 	}
 
+	public static void termsAndConditions(String languageCode) {
+		
+		if (LANGUAGE_CODE_DUTCH.equalsIgnoreCase(languageCode)) {
+			render("Application/termsAndConditions_nl.html");
+		} else if (LANGUAGE_CODE_FRENCH.equalsIgnoreCase(languageCode)) {
+			render("Application/termsAndConditions_fr.html");
+		} else if (LANGUAGE_CODE_TURKISH.equalsIgnoreCase(languageCode)) {
+			render("Application/termsAndConditions_tr.html");
+		} else  {
+			// always defaulting to English
+			render("Application/termsAndConditions_en.html");
+		}
+	}
+	
+	public static void privacyStatement(String languageCode) {
+		if (LANGUAGE_CODE_DUTCH.equalsIgnoreCase(languageCode)) {
+			render("Application/privacyStatement_nl.html");
+		} else if (LANGUAGE_CODE_FRENCH.equalsIgnoreCase(languageCode)) {
+			render("Application/privacyStatement_fr.html");
+		} else if (LANGUAGE_CODE_TURKISH.equalsIgnoreCase(languageCode)) {
+			render("Application/privacyStatement_tr.html");
+		} else  {
+			// always defaulting to English
+			render("Application/privacyStatement_en.html");
+		}
+	}
+	
+	
 }

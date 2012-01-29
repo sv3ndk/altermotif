@@ -60,7 +60,6 @@ homePageTitle2=Une espace ou les idées deviennent réalité
 homePageExplanation=Comment ça marche? => Présentez une idée, motivez d'autres et accomplissez-le!
 homePageFindAProject=Trouver un projet
 homePageRules=Conditions d'utilisation
-homePageDisclaimer=Disclaimer
 homePagePrivacy=Confidentialité
 homePageContacts=Contactez-nous
 homePageAboutUs=Qui sommes-nous?
