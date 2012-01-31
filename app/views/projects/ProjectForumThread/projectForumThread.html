@@ -16,6 +16,13 @@
 		
 		var threadId = "${thread.id}";
 		
+		var elapsedTimeUnits = {
+				NONE : "&{'nolabel'}",
+				SECONDS : "&{'elapsedTimeSeconds'}",
+				MINUTES : "&{'elapsedTimeMinutes'}",
+				HOURS : "&{'elapsedTimeHours'}",
+		};
+		
 		var confirmDeleteForumThreadText = "&{'projectForumThreadConfirmDeletePost'}";
 		
 	</script>
@@ -65,7 +72,8 @@
 		#{list items:threadPosts, as:'onePost'}
 			<div class="onePost">
 				<span class="postId">${onePost.id}</span>
-				<span class="postCreationDate">${onePost.creationDateStr}</span>
+				<span class="postElapsedTimeSinceCreation">${onePost.elapsedTimeSinceCreation}</span>
+				<span class="postElapsedTimeUnit">&{onePost.elapsedTimeUnit.label}</span>
 				<span class="postContent">${onePost.content}</span>
 				<span class="postAuthorId">${onePost.author.userName}</span>
 				<a class="profileLink" href="@{profile.ProfileView.profileView(onePost.author.userName)}"></a>

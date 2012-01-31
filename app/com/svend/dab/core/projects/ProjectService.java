@@ -14,6 +14,8 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import web.utils.Utils;
+
 import com.google.common.base.Strings;
 import com.google.common.collect.Sets;
 import com.svend.dab.core.beans.Config;
@@ -416,7 +418,7 @@ public class ProjectService implements IProjectService {
 			StringBuffer updatedContent = new StringBuffer();
 			updatedContent.append("===============\n");
 			updatedContent.append("Forwarded by: ").append(username).append("\n");
-			updatedContent.append("Original date: ").append(post.getCreationDateStr()).append("\n");
+			updatedContent.append("Original date: ").append(Utils.formatDate(post.getCreationDate())).append("\n");
 			updatedContent.append("Original message:\n\n ").append(post.getContent());
 			
 			forumPostDao.updateThreadIdOfPost(postId, originalThreadId, targetThreadId, new Date(), updatedContent.toString());

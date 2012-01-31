@@ -13,11 +13,10 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.codehaus.jackson.map.ObjectMapper;
-
 import models.altermotif.MappedValue;
 import models.altermotif.SessionWrapper;
 
+import org.codehaus.jackson.map.ObjectMapper;
 
 import play.mvc.Scope.RenderArgs;
 
@@ -286,6 +285,18 @@ public class Utils {
 		}
 		
 		return config;
+	}
+
+
+
+	public static long countElapsedMillisSince(Date creationDate) {
+		
+		if (creationDate == null) {
+			return 0;
+		}
+		
+		return new Date().getTime() - creationDate.getTime();
+		
 	}
 
 

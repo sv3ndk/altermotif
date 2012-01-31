@@ -13,6 +13,12 @@ logout=afmelden
 confirmationPopupTitle=Bevestig
 OkButton=OK
 CancelButton=Annuleer
+nolabel=
+
+elapsedTimeSeconds=***a few seconds ago
+elapsedTimeMinutes=*** minutes ago
+elapsedTimeHours=*** hours ago
+
 
 aboutUsPart1=AlterMotif is een project zoals elk ander project dat op deze website zou kunnen staan. Het startte met een idee over hoe deze wereld een betere plek zou kunnen worden. Beetje bij beetje realiseerden we ons dat de kern van het probleem schuilt in het alomtegenwoordige streven naar groei en winst zonder aandacht voor de kost die dit oplegt aan andere mensen; aan het milieu en die mensen weerhoud van akties die hen wezenlijk bewust en voldaan zouden kunnen maken. Daarop daagde het begrip dat de oplossing schuilt in ondernemerschap. Door projecten op te starten die geïnspireerd worden door onze persoonlijke motieven, uitgevoerd via nieuwe vormen van samenwerking, kunnen we alternatieve manieren aandragen om dingen te doen en aldus echte bronnen van verandering worden.
 aboutUsPart2=Zoals elk ander project op AlterMotif, heeft dit idee een groep mensen geïnspireerd en gemotiveerd om samen te komen en deze droom te realiseren, waarbij elkeen bijdraagt wat zij/hij kan. Om te garanderen dat winst geen motivator kan worden van AlterMotif en dat alle donaties aan AlterMotif voor dit doel gebruikt worden, hebben we een vereniging zonder winstoogmerk opgericht met tot doel om “elke vorm van samenwerking rond niet-winstgerichte doeleinden aan te moedigen en te faciliteren".
@@ -381,7 +387,8 @@ projectNewPrivacySettingsOwner=Starter van dit project (ik)
 # view project page
 projectViewEmailThisProject=***Email a link to this project to a friend
 viewProjectSendAMailPopupTitle=***Send a mail to a friend about this project!
-viewProjectSendAMailDefaultEmailSubject=***Have a look at this altermotif project!
+viewProjectSendAMailDefaultEmailSubject_part1=***From 
+viewProjectSendAMailDefaultEmailSubject_part2=***: have a look at this altermotif project!
 viewProjectSendAMailTemplateText=***Hi\n\n I found this project on the www.altermotif.org platform and thought it might interrest you:
 viewProjectSendAMailTemplateTextProjectName=***Project name:
 viewProjectSendAMailPleaseWaitMessage=***Your email is being sent... 

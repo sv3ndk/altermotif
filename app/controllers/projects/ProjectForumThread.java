@@ -52,7 +52,7 @@ public class ProjectForumThread extends DabController {
 
 						List<ForumPost> allPosts = BeanProvider.getForumPostDao().getAllPosts(visitedThread.getId());
 						Date expirationdate = new Date();
-						expirationdate.setTime(expirationdate.getTime() + BeanProvider.getConfig().getCvExpirationDelayInMillis());
+						expirationdate.setTime(expirationdate.getTime() + BeanProvider.getConfig().getPhotoExpirationDelayInMillis());
 						for (ForumPost post : allPosts) {
 							post.generatePhotoLink(expirationdate);
 						}
@@ -145,7 +145,7 @@ public class ProjectForumThread extends DabController {
 						linkParams.put("vuser", post.getAuthor().getUserName());
 						post.setAuthorProfilLink(Router.reverse("profile.ProfileView.profileView", linkParams).url);
 						post.generatePhotoLink(expirationdate);
-						post.getCreationDateStr();
+						post.getElapsedTimeSinceCreation();
 						post.setUserMayDelete(pep.isAllowedToDeleteForumPosts(getSessionWrapper().getLoggedInUserProfileId(), thread));
 						post.setUserMayMove(pep.isAllowedToMoveForumPosts(getSessionWrapper().getLoggedInUserProfileId(), thread));
 					}

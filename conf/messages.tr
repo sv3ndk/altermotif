@@ -13,6 +13,12 @@ logout=Çıkış
 confirmationPopupTitle=Onay
 OkButton=Tamam
 CancelButton=İptal
+nolabel=
+
+elapsedTimeSeconds=***a few seconds ago
+elapsedTimeMinutes=*** minutes ago
+elapsedTimeHours=*** hours ago
+
 
 aboutUsPart1=AlterMotif, bu sitede yeralan herhangi bir proje olabilirdi. Herşey basit bir fikirle başladı: yaşadığımız dünyayı daha iyi bir yer yapmayı nasıl başarabiliriz? Sonra yavaş yavaş farkına vardık ki; sorunlarımızın temelinde yatan önemli bir şey vardı: sürekli büyümek, daha fazla kar etmek, kalkınmak istiyoruz. Sonuçlarına aldırış etmeden, diğer insanlara ve dünyamızın sağlığına olan etkilerine rağmen sürdürüyoruz bu oyunu. Bu oyun bizi asıl yapmak istediğimiz asıl şeylerden de alıkoyuyor üstelik. Bunu değiştirmenin en etkin yolunun, kişisel girişimler olduğuna karar verdik. Kişisel motivasyonumuza dayalı, yeni yardımlaşma şekilleriyle hayata geçirilen projeler dünyaya yeni açılımlar sunabilir ve gerçek bir değişime katkı yapabilirler.
 aboutUsPart2=AlterMotif bu sitede yer alan diğer projeler gibi, bir fikir olarak başladı ve bir grup insana ilham verdi, onları biraraya getirdi. AlterMotif, bu insanların ortak çabalarının sonucu. AlterMotif, başlangıç prensibine sadık kalmak için kar amacı gütmeyen bir kuruluş olarak tasarlandı. Böylece, kar etmek, asla AlterMotif'in asıl amacı olamaycak. Siteye yapılan tüm bağışlar yine bu amaç için, yani kar amacı gütmeyen her türlü yardımlaşma şekline destek olmak için kullanılacak.
@@ -381,7 +387,8 @@ projectNewPrivacySettingsOwner=Proje lideri (ben)
 # view project page
 projectViewEmailThisProject=***Email a link to this project to a friend
 viewProjectSendAMailPopupTitle=***Send a mail to a friend about this project!
-viewProjectSendAMailDefaultEmailSubject=***Have a look at this altermotif project!
+viewProjectSendAMailDefaultEmailSubject_part1=***From 
+viewProjectSendAMailDefaultEmailSubject_part2=***: have a look at this altermotif project!
 viewProjectSendAMailTemplateText=***Hi\n\n I found this project on the www.altermotif.org platform and thought it might interrest you:
 viewProjectSendAMailTemplateTextProjectName=***Project name: 
 viewProjectSendAMailPleaseWaitMessage=***Your email is being sent... 

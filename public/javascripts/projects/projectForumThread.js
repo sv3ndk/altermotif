@@ -197,7 +197,10 @@ var dabProjectForumThreadLib = {
 					authorPhotoLink = onePost.author.mainPhoto.thumbLink.url;
 				}
 
-				self.addPostInBeginning(new dabProjectForumThreadLib.ThreadPost(onePost.id, onePost.creationDateStr, onePost.content, onePost.author.userName,
+				var creationDate = onePost.elapsedTimeSinceCreation + elapsedTimeUnits[onePost.elapsedTimeUnit];
+				
+				self.addPostInBeginning(new dabProjectForumThreadLib.ThreadPost(onePost.id,creationDate  
+						 , onePost.content, onePost.author.userName,
 						onePost.authorProfilLink, authorPhotoLink, onePost.author.profileActive, onePost.userMayDelete, onePost.userMayMove));
 			});
 		};
@@ -210,7 +213,7 @@ var dabProjectForumThreadLib = {
 		// internal API
 		this.addPostFromHtml = function(self, domElement) {
 			var id = $(domElement).find("span.postId").text();
-			var creationDate = $(domElement).find("span.postCreationDate").text();
+			var creationDate = $(domElement).find("span.postElapsedTimeSinceCreation").text() + " "+ $(domElement).find("span.postElapsedTimeUnit").text();
 			var content = $(domElement).find("span.postContent").text();
 			var authorId = $(domElement).find("span.postAuthorId").text();
 			var authorProfileLink = $(domElement).find("a.profileLink").attr("href");

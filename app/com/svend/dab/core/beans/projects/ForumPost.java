@@ -10,6 +10,10 @@ import com.svend.dab.core.beans.profile.UserSummary;
 
 public class ForumPost {
 
+	public static long ONE_MINUTE_IN_MILLIS = 60 * 1000;
+	public static long ONE_HOUR_IN_MILLIS = 60 * 60 * 1000;
+	public static long ONE_DAY_IN_MILLIS = 24 * 60 * 60 * 1000;
+	
 	private String id;
 	private String threadId;
 	private String projectId;
@@ -17,15 +21,33 @@ public class ForumPost {
 	private UserSummary author;
 	private String content;
 
+	public enum ELAPSED_TIME_UNIT {
+		NONE("nolabel"), SECONDS("elapsedTimeSeconds"), MINUTES("elapsedTimeMinutes"), HOURS("elapsedTimeHours");
+
+		private ELAPSED_TIME_UNIT(String label) {
+			this.label = label;
+		}
+
+		private final String label;
+
+		public String getLabel() {
+			return label;
+		}
+
+	}
+
 	@Transient
-	private String creationDateStr;
+	private String elapsedTimeSinceCreation;
 	
+	@Transient
+	private ELAPSED_TIME_UNIT elapsedTimeUnit;
+
 	@Transient
 	private String authorProfilLink;
-	
+
 	@Transient
 	private boolean userMayDelete;
-	
+
 	@Transient
 	private boolean userMayMove;
 
@@ -33,23 +55,21 @@ public class ForumPost {
 		super();
 	}
 
-	public ForumPost(String threadId, String projectId, Date creationDate,
-			UserSummary author, String content) {
+	public ForumPost(String threadId, String projectId, Date creationDate, UserSummary author, String content) {
 		super();
 		this.threadId = threadId;
 		this.projectId = projectId;
 		this.creationDate = creationDate;
 		this.author = author;
 		this.content = content;
-		getCreationDateStr();
+		getElapsedTimeSinceCreation();
 	}
-	
+
 	public void generatePhotoLink(Date expirationdate) {
 		if (author != null) {
 			author.generatePhotoLink(expirationdate);
 		}
 	}
-
 
 	public String getId() {
 		return id;
@@ -81,7 +101,6 @@ public class ForumPost {
 
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
-		getCreationDateStr();
 	}
 
 	public UserSummary getAuthor() {
@@ -100,10 +119,6 @@ public class ForumPost {
 		this.content = content;
 	}
 
-	public String getCreationDateStr() {
-		creationDateStr = Utils.formatDateWithTime(creationDate);
-		return creationDateStr;
-	}
 
 	public String getAuthorProfilLink() {
 		return authorProfilLink;
@@ -127,6 +142,31 @@ public class ForumPost {
 
 	public void setUserMayMove(boolean userMayMove) {
 		this.userMayMove = userMayMove;
+	}
+
+	public String getElapsedTimeSinceCreation() {
+		
+		long elapsedMillis = Utils.countElapsedMillisSince(creationDate);
+		
+		if (elapsedMillis < ONE_MINUTE_IN_MILLIS) {
+			elapsedTimeUnit = ELAPSED_TIME_UNIT.SECONDS;
+			elapsedTimeSinceCreation = "";
+		} else if (elapsedMillis < ONE_HOUR_IN_MILLIS) {
+			elapsedTimeUnit = ELAPSED_TIME_UNIT.MINUTES;
+			elapsedTimeSinceCreation = Integer.toString( (int) Math.floor (elapsedMillis / ONE_MINUTE_IN_MILLIS));
+		} else if (elapsedMillis < ONE_HOUR_IN_MILLIS) {
+			elapsedTimeUnit = ELAPSED_TIME_UNIT.HOURS;
+			elapsedTimeSinceCreation = Integer.toString( (int) Math.floor (elapsedMillis / ONE_HOUR_IN_MILLIS));
+		} else {
+			elapsedTimeUnit = ELAPSED_TIME_UNIT.NONE;
+			elapsedTimeSinceCreation = Utils.formatDate(creationDate);
+		}
+		
+		return elapsedTimeSinceCreation;
+	}
+
+	public ELAPSED_TIME_UNIT getElapsedTimeUnit() {
+		return elapsedTimeUnit;
 	}
 
 }
