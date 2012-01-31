@@ -1,21 +1,17 @@
 package controllers.projects;
 
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import play.mvc.Router;
-import play.mvc.Router.Route;
-
 import models.altermotif.MappedValue;
 import models.altermotif.projects.ProjectViewVisibility;
+import play.mvc.Router;
 import web.utils.Utils;
 
-import com.svend.dab.core.beans.projects.ForumPost;
+import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.projects.ForumThread;
 import com.svend.dab.core.beans.projects.Participant;
 import com.svend.dab.core.beans.projects.ParticipantList;
@@ -42,9 +38,15 @@ public class ProjectsView extends DabController {
 			Utils.addAllPossibleLanguageNamesToRenderArgs(getSessionWrapper(), renderArgs);
 			
 			String emailSignature = "---\n";
+			
 			if (getSessionWrapper().isLoggedIn()) {
-				emailSignature += getSessionWrapper().getLoggedInUserProfileId();
+				// TODO: optimization: only load the first and last name here, or even keep it in a cookie...
+				UserProfile user = BeanProvider.getUserProfileService().loadUserProfile(getSessionWrapper().getLoggedInUserProfileId(), false);
+				String userFullName = user.getPdata().getFirstName() + " " + user.getPdata().getLastName();
+				renderArgs.put("loggedInUserName", userFullName);
+				emailSignature += userFullName;
 			}
+			
 			renderArgs.put("emailSignature", emailSignature);
 			
 			render();

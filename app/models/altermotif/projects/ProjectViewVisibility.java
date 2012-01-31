@@ -72,6 +72,10 @@ public class ProjectViewVisibility {
 	}
 	
 	
+	public boolean isSocialBoxVisible() {
+		return pep.isAllowedToSocialize(visitingUserId);
+	}
+	
 	///////////////////////////////
 	// photo gallery
 	

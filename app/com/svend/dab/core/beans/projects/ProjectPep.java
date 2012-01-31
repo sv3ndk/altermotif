@@ -100,6 +100,12 @@ public class ProjectPep {
 		return isOwnerOfStartedProject(user);
 	}
 
+	public boolean isAllowedToSocialize(String visitingUserId) {
+		// any logged in user may send email
+		return visitingUserId != null;
+	}
+	
+	
 	// /////////////////////////////////////
 	// projects tasks and assets
 
@@ -462,5 +468,6 @@ public class ProjectPep {
 		ROLE role = project.findRoleOfUser(user);
 		return role == ROLE.initiator;
 	}
+
 
 }

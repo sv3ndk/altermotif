@@ -63,12 +63,11 @@
 	    var confirmRefuseOwnershipText 		= "&{'viewProjectconfirmRefuseOwnership'}";
 	    
 	    var viewProjectSendAMailTemplateTextProjectName 		= "&{'viewProjectSendAMailTemplateTextProjectName'}";
-	    var viewProjectSendAMailDefaultEmailSubject	 			= "&{'viewProjectSendAMailDefaultEmailSubject'}";
+	    var viewProjectSendAMailDefaultEmailSubject1 			= "&{'viewProjectSendAMailDefaultEmailSubject_part1'}";
+	    var viewProjectSendAMailDefaultEmailSubject2 			= "&{'viewProjectSendAMailDefaultEmailSubject_part2'}";
 	    var altermotifBaseUrl = "http://altermotif.cloudfoundry.com"
 	    
-		$(document).ready(function() {
-			init();
-		})
+	    var loggedInUserName = "${loggedInUserName}";
 	</script>
 #{/set}
 
@@ -99,38 +98,40 @@
 		
 		
 	<div id="projectRightColumn">
-	#{if projectVisibility.isToolBoxVisible() }
-		<div id="projectToolBox">
-			<ul>
-				<li>
-					#{if projectVisibility.isEditProjectLinkVisisble() } 
-						<a href="@{projects.ProjectsEdit.projectsEdit( visitedProject.id)}" class="dabLink">&{'projectViewEditProjet'}</a> 
-					#{/if}
-				</li>
+		#{if projectVisibility.isToolBoxVisible() }
+			<div id="projectToolBox">
+				<ul>
+					<li>
+						#{if projectVisibility.isEditProjectLinkVisisble() } 
+							<a href="@{projects.ProjectsEdit.projectsEdit( visitedProject.id)}" class="dabLink">&{'projectViewEditProjet'}</a> 
+						#{/if}
+					</li>
+		
+					<li>
+						#{if projectVisibility.isCancelProjectLinkVisisble() } 
+							<span id="cancelProjectLink" class="dabLink" >&{'projectViewCancelProjet'}</span> 
+						#{/if}
+					</li>
+		
+					<li>#{if projectVisibility.isEndProjectLinkVisisble() } 
+							<span id="terminateProjectLink" class="dabLink">&{'projectViewEndProjet'}</span> 
+						#{/if}
+					</li>
+					<li>#{if projectVisibility.isUndoEndProjectLinkVisisble() } 
+							<span id="undoTerminateProjectLink" class="dabLink">&{'projectViewUndoEndProjet'}</span> 
+						#{/if}
+					</li>
+				</ul>
+			</div>
+		#{/if}
+		
+		<br/>
 	
-				<li>
-					#{if projectVisibility.isCancelProjectLinkVisisble() } 
-						<span id="cancelProjectLink" class="dabLink" >&{'projectViewCancelProjet'}</span> 
-					#{/if}
-				</li>
-	
-				<li>#{if projectVisibility.isEndProjectLinkVisisble() } 
-						<span id="terminateProjectLink" class="dabLink">&{'projectViewEndProjet'}</span> 
-					#{/if}
-				</li>
-				<li>#{if projectVisibility.isUndoEndProjectLinkVisisble() } 
-						<span id="undoTerminateProjectLink" class="dabLink">&{'projectViewUndoEndProjet'}</span> 
-					#{/if}
-				</li>
-			</ul>
+		#{if projectVisibility.isSocialBoxVisible() }
+		<div id="projectSocialBox">
+			<span id="projectSocialEmail" class="dabLink">&{'projectViewEmailThisProject'}</span>
 		</div>
-	#{/if}
-	
-	<br/>
-
-	<div id="projectSocialBox">
-		<span id="projectSocialEmail" class="dabLink">&{'projectViewEmailThisProject'}</span>
-	</div>
+		#{/if}
 	</div>
 
 
@@ -193,7 +194,7 @@
 	#{dab.emailPopup popupTitle:messages.get('viewProjectSendAMailPopupTitle') /}
 </div>
 
-<div id="emailPleaseWaitPopup">
+<div id="emailPleaseWaitPopup" class="hidden">
 	<p>&{'viewProjectSendAMailPleaseWaitMessage'}</p>
 </div>
 

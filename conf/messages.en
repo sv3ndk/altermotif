@@ -379,8 +379,9 @@ projectNewPrivacySettingsOwner=Creator of this project (me)
 # view project page
 projectViewEmailThisProject=Email a link to this project to a friend
 viewProjectSendAMailPopupTitle=Send a mail to a friend about this project!
-viewProjectSendAMailDefaultEmailSubject=Have a look at this altermotif project!
-viewProjectSendAMailTemplateText=Hi\n\nI found this project on the www.altermotif.org platform and thought it might interrest you:
+viewProjectSendAMailDefaultEmailSubject_part1=From 
+viewProjectSendAMailDefaultEmailSubject_part2=: have a look at this altermotif project!
+viewProjectSendAMailTemplateText=Hi\n\nI found this project on the www.altermotif.org platform and thought it might interest you:
 viewProjectSendAMailTemplateTextProjectName=Project name:
 viewProjectSendAMailPleaseWaitMessage=Your email is being sent... 
 viewProjectSendAMailPleaseEMailSentSucessfully=Email has been sent successfully

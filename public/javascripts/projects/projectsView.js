@@ -1,3 +1,8 @@
+$(document).ready(function() {
+	init();
+});
+
+
 function init() {
 
 	// this is present in languages.js
@@ -17,15 +22,17 @@ function init() {
 }
 
 function initOpenEmailPopup() {
-	
-	
 	var defaultEmailText = $("#viewProjectSendAMailTemplateText").text();
 	
 	defaultEmailText += "\n\n" + viewProjectSendAMailTemplateTextProjectName +projectName;
 	defaultEmailText += "\n\n" + altermotifBaseUrl + $("#linkToThisProjectPage").attr("href");
 	defaultEmailText += "\n\n" + $("#emailSignature").text();
 	
-	var emailController = new dabEmailPopupLib.EmailPopupController($("#emailPopupContainer div.emailPopup"), $("#emailPleaseWaitPopup"), viewProjectSendAMailDefaultEmailSubject, defaultEmailText, sendEmail);
+	var defaultEmailSubject = viewProjectSendAMailDefaultEmailSubject1;
+	defaultEmailSubject += loggedInUserName;
+	defaultEmailSubject += viewProjectSendAMailDefaultEmailSubject2;
+	
+	var emailController = new dabEmailPopupLib.EmailPopupController($("#emailPopupContainer div.emailPopup"), $("#emailPleaseWaitPopup"), defaultEmailSubject, defaultEmailText, sendEmail);
 	
 	$("#projectSocialEmail").click(function(even){emailController.open();});
 }
