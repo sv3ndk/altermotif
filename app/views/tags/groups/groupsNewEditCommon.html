@@ -19,7 +19,7 @@
 <tr>
 	<td class="formlabel"><label>&{'groupsEditLocation'}*: </label></td>
 	<td id="inputGroupLocations" colspan="2" >
-		<input id="hiddenAllLocationJson" name="editedGroup.allLocationJson" type="hidden" value="${_editedGroup == null ? flash['editedGroup.allLocationJson'] : _editedGroup.allLocationJson}"/>
+		<input id="hiddenAllTagsJson" name="editedGroup.allLocationJson" type="hidden" value="${_editedGroup == null ? flash['editedGroup.allLocationJson'] : _editedGroup.allLocationJson}"/>
 		#{dab.inputMultiLocations 
 			addLocationLinkLabel:messages.get('groupsEditAddLocationLink'), 
 			explanation:messages.get('groupsEditLocationExplanation')   /}
@@ -38,10 +38,13 @@
 	</td>
 <tr>
 
+
 <td class="formlabel"><label>&{'groupsEditSelectTags'}: </label></td>
-	<td colspan="2">
-		<div>
-			<span class="dabLinkDisabled">todo...</span>
-		</div>
+	<td id="inputTags" colspan="2">
+		<input id="hiddenAllTagsJson" name="editedGroup.allTagsJson" type="hidden" value="${_editedGroup == null ? flash['editedGroup.allTagsJson'] : _editedGroup.allTagsJson  }"/>
+		#{dab.inputMultiText 
+			inputTextSize="15",
+			addTextLinkLabel:messages.get('groupsEditAddOneTagLink') /}
 	</td>
 </tr>
+

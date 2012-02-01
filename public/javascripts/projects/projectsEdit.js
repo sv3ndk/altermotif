@@ -1,14 +1,17 @@
 //var allLocations ;
 var allLinks ;
 var inputMultiLocationsController;
+var inputMultiTextController;
 
 function init() {
 	
 	var allLocations = dabUtils.parseJsonStringIntoObject("#hiddenAllLocationJson");
 	inputMultiLocationsController = new dabInputMultiLocationsLib.InputMultiLocationsController($("#inputProjectLocations div"), allLocations);
+
+	var allTags = dabUtils.parseJsonStringIntoObject("#hiddenAllTagsJson");
+	inputMultiTextController = new dabInputMultiTextLib.InputMultiTextController($("#inputTags div.inputMultiText"), allTags);
 	
 	initAddLinkLogic();
-	initTagLogic();
 	initThemeLogic();
 	
 	setupSetLanguageAutoComplete();
@@ -114,20 +117,6 @@ function updateAllThemesHiddenForm(newAllThemesValue) {
 }
 
 
-///////////////////////////////////////////////////////////////
-// add tag logic
-
-
-function initTagLogic() {
-	// this is the init function defined in projectTags.js
-	initAddTagLogic(dabUtils.parseJsonStringIntoObject("#hiddenAllTagsJson"), updateAllTagsHiddenForm);
-}
-
-//this is called back from projectTags.js any time the list of selected tags changes
-function updateAllTagsHiddenForm(newAllTagValue) {
-	$("#hiddenAllTagsJson").val(JSON.stringify(newAllTagValue));
-}
-
 ///////////////////////////////////////////////////////////
 
 function setupSetLanguageAutoComplete() {
@@ -157,6 +146,7 @@ function initSubmitCancelButtons() {
 		}
 		
 		$("#hiddenAllLocationJson").val(inputMultiLocationsController.getAllLocationJson());
+		$("#hiddenAllTagsJson").val(inputMultiTextController.getTextJson());
 		
 		$("div.projectEditionFormContainer form").submit();
 	});

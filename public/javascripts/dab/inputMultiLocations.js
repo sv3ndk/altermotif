@@ -10,8 +10,6 @@ var dabInputMultiLocationsLib = {
 		this.inputMultiLocationsModel = new dabInputMultiLocationsLib.InputMultiLocationsModel(initialLocations);
 		this.inputLocationController;
 
-		this.currentInputMode = "normal";
-
 		this.init = function() {
 			var self = this;
 

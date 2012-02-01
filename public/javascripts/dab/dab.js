@@ -34,7 +34,7 @@ var dabUtils =  {
 		} else {
 			return [];
 		}	
-	}
+	},
 	
 }
 

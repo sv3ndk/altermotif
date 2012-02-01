@@ -271,8 +271,8 @@ groupsEditLocationExplanation=***Where will this group be located? Where can par
 groupsEditAddLocationLink=***add location
 groupsEditSelectThemes=***Select themes
 groupsEditSelectTags=***Group tags
+groupsEditAddOneTagLink=***add one tag
 groupsEditCreateGroupButton=***Start group
-
 
 #################################
 # projects

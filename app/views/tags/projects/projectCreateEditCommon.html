@@ -164,16 +164,14 @@
 <tr>
 
 
-
 <td class="formlabel"><label>&{'projectNewSelectTags'}: </label></td>
-	<td colspan="2">
-		<div>
-			<input id="hiddenAllTagsJson" name="editedProject.allTagsJson" type="hidden" value="${_editedProject == null ? flash['editedProject.allTagsJson'] : _editedProject.allTagsJson  }"/>
-			#{dab.inputTag readOnly:!_projectEditVisibility.editTagsVisible /}
-		</div>
+	<td id="inputTags" colspan="2">
+		<input id="hiddenAllTagsJson" name="editedProject.allTagsJson" type="hidden" value="${_editedProject == null ? flash['editedProject.allTagsJson'] : _editedProject.allTagsJson  }"/>
+		#{dab.inputMultiText 
+			inputTextSize="15",
+			addTextLinkLabel:messages.get('projectNewAddOneTagLink') /}
 	</td>
 </tr>
-
 
 #{dab.inputText 
 	inputId: "projectNewLanguage", 

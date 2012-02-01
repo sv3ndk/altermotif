@@ -18,6 +18,11 @@ var dabGroupsEditLib = {
 			var allLocations = dabUtils.parseJsonStringIntoObject("#hiddenAllLocationJson");
 			inputMultiLocationsController = new dabInputMultiLocationsLib.InputMultiLocationsController($("#inputGroupLocations div"), allLocations);
 			
+			var allTags = dabUtils.parseJsonStringIntoObject("#hiddenAllTagsJson");
+			inputMultiTextController = new dabInputMultiTextLib.InputMultiTextController($("#inputTags div.inputMultiText"), allTags);
+
+			
+			
 			$("#groupsEditAddLocation").click(function() {
 				self.inputLocationController.showInput();
 			});
