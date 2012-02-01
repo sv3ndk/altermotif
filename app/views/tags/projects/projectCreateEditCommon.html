@@ -1,36 +1,15 @@
 <tr>
 	<td class="formlabel"><label>&{'projectNewProjectLocations'}*: </label></td>
-	<td colspan="2">
-	
-		<div>
-			<ul id="locationGroup">
-				<li id="hiddenLocationTemplate" class="hidden"><label class="projectLocationText"></label> <img id="trashImg" src="@{'/public/images/trash.png'}"  class="deleteImageLink"></img></li>
-			</ul>
-			
-			<input id="hiddenAllLocationJson" name="editedProject.pdata.allLocationJson" type="hidden" value="${_editedProject == null ? flash['editedProject.pdata.allLocationJson'] : _editedProject.pdata.allLocationJson}"/>
-			
-			<div class="hidden">
-				<input id="locationLat"  />
-				<input id="locationLong" />
-			</div>
-			
-			<ul>
-				<li class="hidden" id="locationInputCommand1">
-					<input id="addLocationInput" class="languageAutoComplete rightspaced" size="65"> </input>
-					<span  id="addLocationSecondButton" class="dabLink rightspaced" >&{'add'}</span>
-					<span  id="addLocationCancelButton" class="dabLink" >&{'CancelButton'}</span>
-				</li>
-				<li>
-					<span id="addLocationLink" class="dabLink" >&{'projectNewProjectaddALocation'}</span>
-				</li>
-			</ul>
-		</div>
+	<td id="inputProjectLocations" colspan="2" >
+		<input id="hiddenAllLocationJson" name="editedProject.pdata.allLocationJson" type="hidden" value="${_editedProject == null ? flash['editedProject.pdata.allLocationJson'] : _editedProject.pdata.allLocationJson}"/>
+		#{dab.inputMultiLocations addLocationLinkLabel: messages.get('projectNewProjectaddALocation')  /}
 	</td>
 </tr>
 <tr class="errorRow">
 	<td ></td>
 	<td><div class="errorMessage">#{error 'editedProject.pdata.allLocationJson' /}</div></td>
 </tr>
+
 <tr class="hidden" id="locationInputCommand2">
 	<td ></td>
 	<td><div id="project_map_canvas" ></div></td>
@@ -204,4 +183,3 @@
 	inputValue: _editedProject?.pdata?.language,
 	cols: 20
 /}
-

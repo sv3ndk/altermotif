@@ -33,6 +33,13 @@ var dabInputLocationLib = {
 			this.initializeGeoCoder();
 		};
 		
+		this.reset = function () {
+			$(this.inputHtmlElement).find("input.addLocationInput").val("");
+			this.latitude = 0;
+			this.longitude = 0;
+			this.location = "";
+		};
+		
 		this.showInput = function () {
 			$(this.inputHtmlElement).show();
 			google.maps.event.trigger(this.map, "resize");

@@ -10,16 +10,13 @@ var dabGroupsEditLib = {
 	// controller for the main forum widget
 	GroupsEditController : function() {
 		
-		this.inputLocationController;
+		this.inputMultiLocationsController;
 		
 		this.init = function() {
 			var self = this;
-			this.inputLocationController = new dabInputLocationLib.InputLocationController($("#editGroupLocation div"),
-					0, 0, "", 
-					this.whenUserCancelAddLocation, function(newRefLoc, newLat, newLong) {
-				self.whenUserConfirmsAddLocation(newRefLoc, newLat, newLong)
-			});
-			
+
+			var allLocations = dabUtils.parseJsonStringIntoObject("#hiddenAllLocationJson");
+			inputMultiLocationsController = new dabInputMultiLocationsLib.InputMultiLocationsController($("#inputGroupLocations div"), allLocations);
 			
 			$("#groupsEditAddLocation").click(function() {
 				self.inputLocationController.showInput();

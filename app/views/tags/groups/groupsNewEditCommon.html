@@ -1,16 +1,16 @@
 #{dab.inputText 
 	label:messages.get('groupsEditName'),
 	required: true,
-	inputName: "editedProject.pdata.description",
-	inputValue: _editedProject?.pdata?.description,
+	inputName: "editedGroup.name",
+	inputValue: _editedGroup?.name,
 	cols: 45,
 /}
 
 #{dab.inputText 
 	label:messages.get('groupsEditDescription'),
 	required: true,
-	inputName: "editedProject.pdata.description",
-	inputValue: _editedProject?.pdata?.description,
+	inputName: "editedGroup.description",
+	inputValue: _editedGroup?.description,
 	explanation: messages.get('groupsEditDescriptionExplanation'),
 	cols: 45,
 	rows: 4,
@@ -18,14 +18,16 @@
 
 <tr>
 	<td class="formlabel"><label>&{'groupsEditLocation'}*: </label></td>
-	<td colspan="2">
-		<span id="groupsEditAddLocation" class="dabLink"> &{'groupsEditAddLocationLink'}...</span>
-		<div id="editGroupLocation">
-			#{dab.inputLocation /}
-		</div>
-		<br />
-		<span class="formFieldExplanation">&{'groupsEditLocationExplanation'}</span>
+	<td id="inputGroupLocations" colspan="2" >
+		<input id="hiddenAllLocationJson" name="editedGroup.allLocationJson" type="hidden" value="${_editedGroup == null ? flash['editedGroup.allLocationJson'] : _editedGroup.allLocationJson}"/>
+		#{dab.inputMultiLocations 
+			addLocationLinkLabel:messages.get('groupsEditAddLocationLink'), 
+			explanation:messages.get('groupsEditLocationExplanation')   /}
 	</td>
+</tr>
+<tr class="errorRow">
+	<td ></td>
+	<td><div class="errorMessage">#{error 'editedGroup.allLocationJson' /}</div></td>
 </tr>
 
 

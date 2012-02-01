@@ -22,6 +22,18 @@ var dabUtils =  {
 	LocalizedTaskStatus : function(name, localizedName) {
 		this.name = name,
 		this.localizedName = localizedName
+	},
+	
+	
+	parseJsonStringIntoObject: function(jqSelector) {
+
+		var htmlValue = $(jqSelector).val();
+		if (htmlValue != null && htmlValue != "" && htmlValue != "null")  {
+			var parsed = JSON.parse(htmlValue);
+			return parsed;
+		} else {
+			return [];
+		}	
 	}
 	
 }
