@@ -108,6 +108,7 @@ var ProjectSearchSimpleSearchController = function () {
 var ProjectSearchAdvancedSearchController = function () {
 	
 	this.isGoButtonActive = ko.observable(false);
+	this.inputMultiThemesController;
 	
 	///////////////
 	// public API
@@ -117,9 +118,11 @@ var ProjectSearchAdvancedSearchController = function () {
 		self = this;
 		
 		// this is the init function defined in projectThemess.js
-		initAddThemeLogic(undefined, function(newAllThemesValue) { self.updateAllThemesHiddenForm(self, newAllThemesValue); });
+		//initAddThemeLogic(undefined, function(newAllThemesValue) { self.updateAllThemesHiddenForm(self, newAllThemesValue); });
 		
-		ko.applyBindings(this, $("#projectSearch_modeAdvanced")[0]);
+		this.inputMultiThemesController = new dabInputMultiThemesLib.InputMultiThemesController($("#inputSearchProjectsThemes div.inputMultiThemes"), allThemes);
+		
+		ko.applyBindings(this, $("#searchLine")[0]);
 		
 		$("#projectAdvancedSearchInputText").on("change", function() { self.updateGoButtonState(); });
 		

@@ -1,0 +1,17 @@
+<div class="inputMultiThemes">
+
+	
+	<span  class="addThemeLink dabLink" data-bind="visible: inputMode() == 'normal' "> ${_addThemeLinkLabel}</span>
+	
+	<div class="addThemeLine" data-bind="visible: inputMode() == 'edition' ">
+
+		<select class="mainSelect" data-bind="options: mainListData, optionsText: 'label', optionsValue: 'id' "></select>
+		<select class="secondarySelect" data-bind="options: secondaryListData, optionsText: 'label', optionsValue: 'id' "></select>
+
+		<span  class="addButton dabLink rightspaced" >&{'add'}</span>
+		<span  class="cancelButton dabLink" >&{'CancelButton'}</span>
+	
+	</div>
+	
+
+</div>

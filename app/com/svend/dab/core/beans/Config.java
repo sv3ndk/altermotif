@@ -8,8 +8,17 @@ import models.altermotif.projects.theme.Theme;
 
 import org.springframework.stereotype.Component;
 
+import play.i18n.Messages;
+
 import controllers.BeanProvider;
 
+/**
+ * 
+ * THis is meant to be replaced by a real external config 
+ * 
+ * @author svend
+ *
+ */
 @Component("config")
 public class Config {
 
@@ -23,23 +32,22 @@ public class Config {
 	private long maxUploadedPhotoSizeInBytes = 5l * 1024l * 1024;
 
 	private long maxUploadedCVSizeInBytes = 3l * 1024 * 1024;
-	
+
 	private int maxNumberOfDisplayedProjectTag = 35;
 
 	// some pages polls for boolean values to the server to know if some data is outdate (and if so, refresh whatever is approapriate). This is the period, in
 	// millis, of the polling
 	private long freshnessPollingPeriodMillis = 5000;
-	
-	private long howLongIsABitInMillis = 750; 
-	
+
+	private long howLongIsABitInMillis = 750;
+
 	private List<Theme> projectThemes = new LinkedList<Theme>();
-	
-	
+
 	// ------------------------------------------------------
 	// ------------------------------------------------------
 
 	public Config() {
-		
+
 		Theme environment = new Theme("environment", "projectThemeEnvironment");
 		environment.addSubTheme(new SubTheme("protecting", "projectThemeEnvironmentSubThemeProtecting"));
 		environment.addSubTheme(new SubTheme("recycling", "projectThemeEnvironmentSubThemeRecycling"));
@@ -48,7 +56,7 @@ public class Config {
 		environment.addSubTheme(new SubTheme("agriculture", "projectThemeEnvironmentSubThemeAgriculture"));
 		environment.addSubTheme(new SubTheme("other", "projectThemeEnvironmentSubThemeOther"));
 		projectThemes.add(environment);
-		
+
 		Theme development = new Theme("development", "projectThemeDevelopment");
 		development.addSubTheme(new SubTheme("charity", "projectThemeDevelopmentSubThemeCharity"));
 		development.addSubTheme(new SubTheme("devAtHome", "projectThemeDevelopmentSubThemeDevAtHome"));
@@ -57,28 +65,28 @@ public class Config {
 		development.addSubTheme(new SubTheme("fairtrade", "projectThemeDevelopmentSubThemeFairTrade"));
 		development.addSubTheme(new SubTheme("other", "projectThemeDevelopmentSubThemeOther"));
 		projectThemes.add(development);
-		
+
 		Theme culture = new Theme("culture", "projectThemeCulture");
 		culture.addSubTheme(new SubTheme("arts", "projectThemeCultureSubThemeArts"));
 		culture.addSubTheme(new SubTheme("journalism", "projectThemeCultureSubThemeJournalism"));
 		culture.addSubTheme(new SubTheme("education", "projectThemeCultureSubThemeEducation"));
 		culture.addSubTheme(new SubTheme("other", "projectThemeCultureSubThemeOther"));
 		projectThemes.add(culture);
-				
+
 		Theme science = new Theme("science", "projectThemeScience");
 		science.addSubTheme(new SubTheme("education", "projectThemeScienceSubThemeEducation"));
 		science.addSubTheme(new SubTheme("research", "projectThemeScienceSubThemeResearch"));
 		science.addSubTheme(new SubTheme("technology", "projectThemeScienceSubThemeTechnology"));
 		science.addSubTheme(new SubTheme("other", "projectThemeScienceSubThemeOther"));
 		projectThemes.add(science);
-		
+
 		Theme travel = new Theme("travel", "projectThemeTravel");
 		travel.addSubTheme(new SubTheme("intEx", "projectThemeTravelSubThemeIntExchange"));
 		travel.addSubTheme(new SubTheme("travInGroup", "projectThemeTravelSubThemeTravellingInGroup"));
 		travel.addSubTheme(new SubTheme("exploration", "projectThemeTravelSubThemeExploration"));
 		travel.addSubTheme(new SubTheme("other", "projectThemeTravelSubThemeOther"));
 		projectThemes.add(travel);
-		
+
 		Theme sports = new Theme("sports", "projectThemeSports");
 		sports.addSubTheme(new SubTheme("teamBuilding", "projectThemeSportsSubThemeTeamBuilding"));
 		sports.addSubTheme(new SubTheme("events", "projectThemeSportsSubThemeEvent"));
@@ -86,7 +94,7 @@ public class Config {
 		sports.addSubTheme(new SubTheme("promotion", "projectThemeSportsSubThemePromotion"));
 		sports.addSubTheme(new SubTheme("other", "projectThemeSportsSubThemeOther"));
 		projectThemes.add(sports);
-		
+
 		Theme society = new Theme("society", "projectThemeSociety");
 		society.addSubTheme(new SubTheme("urbanism", "projectThemeSocietySubThemeUrbanism"));
 		society.addSubTheme(new SubTheme("feminism", "projectThemeSocietySubThemeFeminism"));
@@ -94,22 +102,37 @@ public class Config {
 		society.addSubTheme(new SubTheme("entertainment", "projectThemeSocietySubThemeEntertainment"));
 		society.addSubTheme(new SubTheme("other", "projectThemeSocietySubThemeOther"));
 		projectThemes.add(society);
-		
-		
+
 		Theme other = new Theme("other", "projectThemeOther");
 		other.addSubTheme(new SubTheme("religion", "projectThemeOtherSubThemeReligion"));
 		other.addSubTheme(new SubTheme("employment", "projectThemeOtherSubThemeEmployment"));
 		other.addSubTheme(new SubTheme("other", "projectThemeOtherSubThemeOther"));
 		projectThemes.add(other);
 	}
-	
-	
-	
+
 	// ------------------------------------------------------
 	// ------------------------------------------------------
 	// ------------------------------------------------------
 
+	public List<Theme>  getLocalizedThemes(String languageCode) {
+		List<Theme> localizedThemes = new LinkedList<Theme>();
+		
+		for (Theme orgininalTheme : getThemes()) {
+			Theme localizedTheme = new Theme(orgininalTheme.getId(), Messages.getMessage(languageCode, orgininalTheme.getLabel(), null));
+			for (SubTheme st : orgininalTheme.getSubThemes()) {
+				SubTheme localizedSubTheme = new SubTheme(st.getId(), Messages.getMessage(languageCode, st.getLabel(), null));
+				localizedTheme.addSubTheme(localizedSubTheme);
+			}
+			localizedThemes.add(localizedTheme);
+		}
+		
+		return localizedThemes;
+	}
+
+	
+	
 	private static Config getStaticConfig() {
+		// TODO: clean up: josuah block static holder here...
 		if (staticConfig == null) {
 			synchronized (Config.class) {
 				if (staticConfig == null) {
@@ -163,7 +186,7 @@ public class Config {
 		this.freshnessPollingPeriodMillis = freshnessPollingPeriodMillis;
 	}
 
-	public List<Theme> getProjectThemes() {
+	public List<Theme> getThemes() {
 		return projectThemes;
 	}
 

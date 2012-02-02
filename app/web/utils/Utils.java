@@ -16,6 +16,8 @@ import java.util.logging.Logger;
 import models.altermotif.MappedValue;
 import models.altermotif.SessionWrapper;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import play.mvc.Scope.RenderArgs;
@@ -160,9 +162,14 @@ public class Utils {
 	
 	
 	public static void addProjectThemesToRenderArgs(SessionWrapper sessionWrapper, RenderArgs renderArgs) {
-		renderArgs.put("allThemes", getConfig().getProjectThemes());
+		renderArgs.put("allThemes", getConfig().getThemes());
 	}
 
+	
+	
+	public static void addProjectJsonThemesToRenderArgs(SessionWrapper sessionWrapper, RenderArgs renderArgs, String languageCode) {
+		renderArgs.put("allThemesJson", objectToJsonString(getConfig().getLocalizedThemes(languageCode)));
+	}
 	
 	
 	// ...-------------------
@@ -298,6 +305,9 @@ public class Utils {
 		return new Date().getTime() - creationDate.getTime();
 		
 	}
+
+
+
 
 
 }

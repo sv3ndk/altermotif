@@ -9,6 +9,11 @@
 
     <script src="@{'/public/javascripts/projects/projectsSearch.js'}" type="text/javascript" charset="${_response_encoding}"></script>
     <script src="@{'/public/javascripts/projects/projectsThemes.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+    <script src="@{'/public/javascripts/dab/inputMultiThemes.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+    
+    <script type="text/javascript">
+    	var allThemes = ${allThemesJson.raw()};
+    </script>
 
 #{/set}
 
@@ -145,7 +150,7 @@
 		#{form @projects.ProjectsResults.projectsResults()}
 			<table>
 				<tbody>
-					<tr>
+					<tr id="searchLine">
 						<td class="formlabel">&{'projectSearchKeyWords'}:</td>
 						<td><input id="projectAdvancedSearchInputText" type="text" size="60" name="r.term"></td>
 						<td><input type="submit" value="GO" data-bind="enable: isGoButtonActive"  /></td>
@@ -153,8 +158,9 @@
 					<tr>
 						<td class="formlabel">&{'projectSearchCategories'}:</td>
 						<td>
-							<div>
-								#{dab.inputTheme allThemes:allThemes, readOnly:false, isExplanationVisible:false /}
+							<div id="inputSearchProjectsThemes">
+								*{dab.inputTheme allThemes:allThemes, readOnly:false, isExplanationVisible:false }*
+								#{dab.inputMultiThemes  addThemeLinkLabel:messages.get('projectNewAddOneTheme')/}
 							</div>
 						</td>
 					</tr>

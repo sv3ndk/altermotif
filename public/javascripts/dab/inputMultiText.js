@@ -11,7 +11,7 @@ var dabInputMultiTextLib = {
 		this.init = function() {
 			var self = this;
 
-			ko.applyBindings(this.inputMultiTextModel, inputMultiHtml[0]);
+			ko.applyBindings(this.inputMultiTextModel, this.inputMultiHtml[0]);
 
 			this.inputMultiHtml.find(".addTextLink").click(function() {
 				self.whenUserClicksOnAddTag();
@@ -32,7 +32,6 @@ var dabInputMultiTextLib = {
 		};
 
 		this.getTextJson = function() {
-
 			return JSON.stringify(this.inputMultiTextModel.getTextAsArray());
 		};
 

@@ -13,7 +13,7 @@ var dabInputMultiLocationsLib = {
 		this.init = function() {
 			var self = this;
 
-			ko.applyBindings(this.inputMultiLocationsModel, inputMultiHtml[0]);
+			ko.applyBindings(this.inputMultiLocationsModel, this.inputMultiHtml[0]);
 
 			this.inputLocationController = new dabInputLocationLib.InputLocationController($(inputMultiHtml.find(".editGroupLocation div")), 0, 0, "",
 					this.whenUserCancelAddLocation, function(newRefLoc, newLat, newLong) {
