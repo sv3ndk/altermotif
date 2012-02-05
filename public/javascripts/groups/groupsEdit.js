@@ -21,6 +21,11 @@ var dabGroupsEditLib = {
 			var allTags = dabUtils.parseJsonStringIntoObject("#hiddenAllTagsJson");
 			inputMultiTextController = new dabInputMultiTextLib.InputMultiTextController($("#inputTags div.inputMultiText"), allTags);
 
+			this.inputMultiThemesController = new dabInputMultiThemesLib.InputMultiThemesController($("#inputGroupThemes div.inputMultiThemes"),
+					allThemes, null, function(newSelectedThemesValue) {
+						self.updateAllThemesHiddenForm(newSelectedThemesValue);
+					});
+
 			
 			
 			$("#groupsEditAddLocation").click(function() {
@@ -35,6 +40,10 @@ var dabGroupsEditLib = {
 		};
 		
 		this.whenUserConfirmsAddLocation = function(newRefLoc, newLat, newLong) {
+			
+		};
+		
+		this.updateAllThemesHiddenForm = function(newSelectedThemesValue) {
 			
 		};
 		

@@ -106,7 +106,7 @@ var dabProjectSearchLib =  {
 			self = this;
 	
 			this.inputMultiThemesController = new dabInputMultiThemesLib.InputMultiThemesController($("#inputSearchProjectsThemes div.inputMultiThemes"),
-					allThemes, function(newSelectedThemesValue) {
+					allThemes, null, function(newSelectedThemesValue) {
 						self.updateAllThemesHiddenForm(newSelectedThemesValue);
 					});
 	

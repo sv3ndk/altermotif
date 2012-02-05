@@ -44,6 +44,8 @@ public class ProjectsEdit extends DabLoggedController{
 				
 				Utils.addAllPossibleLanguageNamesToRenderArgs(getSessionWrapper(), renderArgs);
 				Utils.addProjectThemesToRenderArgs(getSessionWrapper(), renderArgs);
+				Utils.addProjectJsonThemesToRenderArgs(getSessionWrapper(), renderArgs, getSessionWrapper().getSelectedLg());
+
 				
 				flash.put(FLASH_PROJECT_ID, p);
 				render();

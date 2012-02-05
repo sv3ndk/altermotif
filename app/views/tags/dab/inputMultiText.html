@@ -2,20 +2,24 @@
 
 	<ul class="textList" data-bind="foreach: texts">
 		<li >
-			<span  data-bind="text: text"></span> 
-			<img src="@{'/public/images/trash.png'}"  class="deleteImageLink"></img>
+			<span  data-bind="text: text"></span>
+			#{if ! _readOnly}
+				<img src="@{'/public/images/trash.png'}"  class="deleteImageLink"></img>
+			#{/if}
 		</li>
 	</ul>
-
-	<span  class="addTextLink dabLink" data-bind="visible: inputMode() == 'normal' "> ${_addTextLinkLabel}</span>
-	<div class="inputTextGroup" data-bind="visible: inputMode() == 'edition' ">
-		<input class="inputText" type="text" size="${inputTextSize}" ></input>
-		<span class="okButton dabLink rightspaced" >&{'OK'}</span>
-		<span class="cancelButton dabLink" >&{'CancelButton'}</span>
-	</div>
-	#{if _explanation != null}
-		<br />
-		<span class="formFieldExplanation">${_explanation}</span>
+	
+	#{if ! _readOnly}
+		<span  class="addTextLink dabLink" data-bind="visible: inputMode() == 'normal' "> ${_addTextLinkLabel}</span>
+		<div class="inputTextGroup" data-bind="visible: inputMode() == 'edition' ">
+			<input class="inputText" type="text" size="${inputTextSize}" ></input>
+			<span class="okButton dabLink rightspaced" >&{'OK'}</span>
+			<span class="cancelButton dabLink" >&{'CancelButton'}</span>
+		</div>
+		#{if _explanation != null}
+			<br />
+			<span class="formFieldExplanation">${_explanation}</span>
+		#{/if}
 	#{/if}
 	
 

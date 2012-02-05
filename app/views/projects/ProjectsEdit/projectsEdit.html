@@ -14,12 +14,8 @@
     <script src="@{'/public/javascripts/projects/projectsEdit.js'}" type="text/javascript" charset="${_response_encoding}"></script>
     
     <script type="text/javascript">
-	    
-	    var projectId = "${editedProject.id}"; 
-	    
-		$(document).ready(function() {
-			init();
-		})
+	    var projectId = "${editedProject.id}";
+    	var allThemes = ${allThemesJson.raw()};
 	</script>
 #{/set}
 

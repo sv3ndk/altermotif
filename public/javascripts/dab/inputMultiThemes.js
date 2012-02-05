@@ -3,10 +3,10 @@ var dabInputMultiThemesLib = {
 	// ////////////////////////////////////////
 	// controllers
 
-	InputMultiThemesController : function(inputMultiHtml, listOfThemesObject, whenListOfSelectedThemesChangesCallback) {
+	InputMultiThemesController : function(inputMultiHtml, listOfThemesObject, initSelectedThemes, whenListOfSelectedThemesChangesCallback) {
 
 		this.inputMultiHtml = inputMultiHtml;
-		this.inputMultiThemesModel = new dabInputMultiThemesLib.InputMultiThemesModel(listOfThemesObject);
+		this.inputMultiThemesModel = new dabInputMultiThemesLib.InputMultiThemesModel(listOfThemesObject, initSelectedThemes);
 		this.whenListOfSelectedThemesChangesCallback = whenListOfSelectedThemesChangesCallback;
 
 		this.init = function() {
@@ -75,7 +75,7 @@ var dabInputMultiThemesLib = {
 	// ////////////////////////////////
 	// data models
 
-	InputMultiThemesModel : function(listOfThemesObj) {
+	InputMultiThemesModel : function(listOfThemesObj, initSelectedThemes) {
 
 		this.selectedThemes = ko.observableArray();
 		this.listOfThemesObj = listOfThemesObj;
@@ -84,12 +84,18 @@ var dabInputMultiThemesLib = {
 		this.mainListData = [];
 		this.secondaryListData = ko.observableArray();
 
-		this.init = function(listOfThemesObj) {
+		this.init = function(listOfThemesObj, initSelectedThemes) {
 			var self = this;
 			_.each(listOfThemesObj, function(theme) {
 				self.mainListData.push(theme);
 			});
 			this.setSecondaryDropTo(listOfThemesObj[0].id);
+			
+			if (initSelectedThemes != null) {
+				_.each(initSelectedThemes, function(selectedTheme) {
+					self.addToSelectedThemesList(selectedTheme.themeId, selectedTheme.subThemeId);
+				});
+			}
 		};
 
 		this.addToSelectedThemesList = function(addedThemeId, addedSubthemeId) {
@@ -153,7 +159,7 @@ var dabInputMultiThemesLib = {
 			});
 		};
 
-		this.init(listOfThemesObj);
+		this.init(listOfThemesObj, initSelectedThemes);
 	},
 
 	Theme : function(id, label) {

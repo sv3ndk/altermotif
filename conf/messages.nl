@@ -270,6 +270,7 @@ groupsEditLocation=***Location
 groupsEditLocationExplanation=***Where will this group be located? Where can participants come from?
 groupsEditAddLocationLink=***add location
 groupsEditSelectThemes=***Select themes
+groupsEditAddOneTheme=***add theme
 groupsEditSelectTags=***Group tags
 groupsEditAddOneTagLink=***add one tag
 groupsEditCreateGroupButton=***Start group

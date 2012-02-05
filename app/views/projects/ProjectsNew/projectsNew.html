@@ -13,9 +13,7 @@
     <script src="@{'/public/javascripts/projects/projectsEdit.js'}" type="text/javascript" charset="${_response_encoding}"></script>
     	
     <script type="text/javascript">
-		$(document).ready(function() {
-			init();
-		})
+		var allThemes = ${allThemesJson.raw()};
 	</script>
 #{/set}
 

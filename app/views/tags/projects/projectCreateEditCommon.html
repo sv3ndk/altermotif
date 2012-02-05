@@ -155,11 +155,12 @@
 
 <tr>
 	<td class="formlabel"><label>&{'projectNewSelectThemes'}: </label></td>
-	<td colspan="2">
-		<div>
-			<input id="hiddenAllThemesJson" name="editedProject.allThemesJson" type="hidden" value="${_editedProject == null ? flash['editedProject.allThemesJson'] : _editedProject.allThemesJson  }"/>
-			#{dab.inputTheme allThemes:_allThemes, readOnly:!_projectEditVisibility.editThemesVisible, isExplanationVisible:true /}
-		</div>
+	<td id="inputMultiThemes" colspan="2">
+		<input id="hiddenAllThemesJson" name="editedProject.allThemesJson" type="hidden" value="${_editedProject == null ? flash['editedProject.allThemesJson'] : _editedProject.allThemesJson  }"/>
+		#{dab.inputMultiThemes  
+				readOnly:!_projectEditVisibility.editThemesVisible,
+			    addThemeLinkLabel:messages.get('projectNewAddOneTheme'), 
+			    explanationText:messages.get('projectNewSelectThemesExplanation') /}
 	</td>
 <tr>
 
@@ -169,6 +170,7 @@
 		<input id="hiddenAllTagsJson" name="editedProject.allTagsJson" type="hidden" value="${_editedProject == null ? flash['editedProject.allTagsJson'] : _editedProject.allTagsJson  }"/>
 		#{dab.inputMultiText 
 			inputTextSize="15",
+			readOnly:!_projectEditVisibility.editTagsVisible,
 			addTextLinkLabel:messages.get('projectNewAddOneTagLink') /}
 	</td>
 </tr>

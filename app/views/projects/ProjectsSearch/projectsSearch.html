@@ -6,11 +6,7 @@
 #{/set}
 
 #{set 'moreScripts'}
-
     <script src="@{'/public/javascripts/projects/projectsSearch.js'}" type="text/javascript" charset="${_response_encoding}"></script>
-    <script src="@{'/public/javascripts/projects/projectsThemes.js'}" type="text/javascript" charset="${_response_encoding}"></script>
-    <script src="@{'/public/javascripts/dab/inputMultiThemes.js'}" type="text/javascript" charset="${_response_encoding}"></script>
-    
     <script type="text/javascript">
     	var allThemes = ${allThemesJson.raw()};
     </script>
@@ -159,7 +155,6 @@
 						<td class="formlabel">&{'projectSearchCategories'}:</td>
 						<td>
 							<div id="inputSearchProjectsThemes">
-								*{dab.inputTheme allThemes:allThemes, readOnly:false, isExplanationVisible:false }*
 								#{dab.inputMultiThemes  addThemeLinkLabel:messages.get('projectNewAddOneTheme')/}
 							</div>
 						</td>

@@ -1,7 +1,12 @@
+$(document).ready(function() {
+	init();
+});
+
 //var allLocations ;
 var allLinks ;
 var inputMultiLocationsController;
 var inputMultiTextController;
+var inputMultiThemesController;
 
 function init() {
 	
@@ -11,8 +16,14 @@ function init() {
 	var allTags = dabUtils.parseJsonStringIntoObject("#hiddenAllTagsJson");
 	inputMultiTextController = new dabInputMultiTextLib.InputMultiTextController($("#inputTags div.inputMultiText"), allTags);
 	
+	var initSelectedThemes = dabUtils.parseJsonStringIntoObject("#hiddenAllThemesJson");
+	inputMultiThemesController = new dabInputMultiThemesLib.InputMultiThemesController($("#inputMultiThemes div.inputMultiThemes"),
+		allThemes, initSelectedThemes, function(newSelectedThemesValue) {
+			updateAllThemesHiddenForm(newSelectedThemesValue);
+		});
+
+	
 	initAddLinkLogic();
-	initThemeLogic();
 	
 	setupSetLanguageAutoComplete();
 	initSubmitCancelButtons();
@@ -106,16 +117,10 @@ function graphicalAddOneLink(addedLink, immediate) {
 ////////////////////////////////////////////////////////////////
 // add a theme logic
 
-function initThemeLogic() {
-	// this is the init function defined in projectThemess.js
-	initAddThemeLogic(dabUtils.parseJsonStringIntoObject("#hiddenAllThemesJson"), updateAllThemesHiddenForm);
-}
-
 //this is called back from projectThemes.js any time the list of chosen themes changes
 function updateAllThemesHiddenForm(newAllThemesValue) {
 	$("#hiddenAllThemesJson").val(JSON.stringify(newAllThemesValue));
 }
-
 
 ///////////////////////////////////////////////////////////
 
