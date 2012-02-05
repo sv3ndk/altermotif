@@ -6,4 +6,6 @@ public interface IGroupService {
 
 	void createNewGroup(ProjectGroup createdGroup, String loggedInUserProfileId);
 
+	ProjectGroup loadGroupById(String groupid, boolean preparePresignedLinks);
+
 }

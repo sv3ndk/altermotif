@@ -1,5 +1,7 @@
 package com.svend.dab.core.beans.groups;
 
+import java.util.Date;
+
 import com.svend.dab.core.beans.profile.UserSummary;
 
 public class GroupParticipant {
@@ -30,6 +32,14 @@ public class GroupParticipant {
 		this.role = role;
 		this.user = user;
 	}
+	
+	
+	public void generatePhotoLinks(Date expirationdate) {
+		if (user != null) {
+			user.generatePhotoLink(expirationdate);
+		}
+	}
+
 
 	public GroupParticipant() {
 		super();
@@ -50,5 +60,6 @@ public class GroupParticipant {
 	public void setUser(UserSummary user) {
 		this.user = user;
 	}
+
 
 }

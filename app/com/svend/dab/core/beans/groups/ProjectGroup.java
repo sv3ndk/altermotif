@@ -1,6 +1,7 @@
 package com.svend.dab.core.beans.groups;
 
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -12,10 +13,9 @@ import com.svend.dab.core.beans.projects.SelectedTheme;
 public class ProjectGroup {
 
 	private String id;
-
 	private String name;
-
 	private String description;
+	private Date creationDate;
 
 	private List<Location> location;
 	private List<SelectedTheme> themes;
@@ -29,7 +29,7 @@ public class ProjectGroup {
 		super();
 	}
 
-	public ProjectGroup(String id, String name, String description, List<Location> location, List<SelectedTheme> themes, List<String> tags) {
+	public ProjectGroup(String id, String name, String description, List<Location> location, List<SelectedTheme> themes, List<String> tags, Date creationDate) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -37,16 +37,39 @@ public class ProjectGroup {
 		this.location = location;
 		this.themes = themes;
 		this.tags = tags;
+		this.creationDate = creationDate;
 	}
 
 	// ////////////////////////////////////////
 
+	
+	public void generatePhotoLinks(Date expirationdate) {
+		
+		if (participants != null) {
+			for (GroupParticipant participant : participants) {
+				participant.generatePhotoLinks(expirationdate);
+			}
+		}
+	}
+
+	
 	public void addParticipant(GroupParticipant groupParticipant) {
 		if (participants == null) {
 			participants = new LinkedList<GroupParticipant>();
 		}
 		participants.add(groupParticipant);
-		
+	}
+	
+	public int getNumberOfParticipants() {
+		if (participants == null) {
+			return 0;
+		} else {
+			return participants.size();
+		}
+	}
+
+	public int getNumberOfProjects() {
+		return 0;
 	}
 
 	
@@ -134,6 +157,15 @@ public class ProjectGroup {
 	public void setParticipants(List<GroupParticipant> participants) {
 		this.participants = participants;
 	}
+
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
+
 
 
 

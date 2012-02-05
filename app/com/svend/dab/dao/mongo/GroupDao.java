@@ -1,10 +1,16 @@
 package com.svend.dab.dao.mongo;
 
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Query.query;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import com.svend.dab.core.beans.groups.ProjectGroup;
+import com.svend.dab.core.beans.profile.UserSummary;
+import com.svend.dab.core.beans.projects.ForumPost;
 import com.svend.dab.core.dao.IGroupDao;
 
 
@@ -16,7 +22,6 @@ public class GroupDao implements IGroupDao {
 
 	
 	public void save(ProjectGroup group) {
-		
 		if (group != null) {
 			mongoTemplate.save(group);
 		}
@@ -24,8 +29,14 @@ public class GroupDao implements IGroupDao {
 
 
 	public ProjectGroup retrieveGroupById(String groupId) {
-		// TODO Auto-generated method stub
 		return mongoTemplate.findById(groupId, ProjectGroup.class);
+	}
+
+
+	public void updateParticipantOfAllGroupsWith(UserSummary updatedSummary) {
+		if (updatedSummary != null) {
+			mongoTemplate.updateMulti(query(where("participants.user._id").is(updatedSummary.getUserName())), new Update().set("participants.$.user", updatedSummary), ProjectGroup.class);
+		}
 	}
 
 }

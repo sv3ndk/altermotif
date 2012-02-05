@@ -264,8 +264,18 @@ level2=Goed
 #################################
 # groups
 
+groupRole=***Group role
 groupRoleAdmin=***Administrator
 groupRoleMember=***Member
+
+groupsViewCreatedOn=***Created on
+groupsViewMembers=***Members
+groupsViewProjects=***Projects
+groupsViewParticipants=***Participants
+groupsViewApplyToGroupAsProject=***apply with one of your projects to this group
+groupsViewApplyToGroupAsPerson=***apply with your profile to this group
+groupsViewForum=***Forum
+
 
 groupsEditName=***Group name
 groupsEditDescription=***Group description

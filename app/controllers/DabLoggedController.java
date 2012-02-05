@@ -1,7 +1,6 @@
 package controllers;
 
 import models.altermotif.SessionWrapper;
-import play.mvc.After;
 import play.mvc.Before;
 import play.mvc.Controller;
 

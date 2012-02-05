@@ -12,4 +12,71 @@
 	</script>
 #{/set}
 
-view group
+	<p  class="pageTitle">${visitedGroup.name}</p>
+	
+	<div id="groupPhotoContainer">
+		todo, add photos.. 
+	</div>
+	
+	
+	<div id="groupBasicDetails">
+		<table>
+			<tbody>
+				<tr>
+					<td><label>&{'groupsEditDescription'}</label>
+					</td>
+					<td>
+						<pre>${visitedGroup.description}</pre>
+					</td>
+				</tr>
+				
+				<tr>
+					<td><label>&{'groupsEditLocation'}</label></td>
+					<td>
+						<ul>
+							#{list items:visitedGroup.location, as:"oneLocation"}
+								<li>
+									<span>${oneLocation.location}</span>
+								</li>
+							#{/list}
+						</ul>
+					</td>
+				</tr>
+				
+				<tr>
+					<td><label>&{'groupsViewCreatedOn'}</label></td>
+					<td>
+						#{if visitedGroup.creationDate != null}
+							${visitedGroup.creationDate.format(controllers.BeanProvider.config.dateDisplayFormat)}
+						#{/if}
+					</td>
+				</tr>
+				
+			</tbody>
+		</table>
+	</div>
+	
+	<div id="groupProjects">
+		<span class="toggleLink dabLink" >&{'groupsViewProjects'} (${visitedGroup.numberOfProjects})...</span>
+		<div class="toggleContainer" style="display: none">
+			<span class="dabLinkDisabled">&{'groupsViewApplyToGroupAsProject'}</span>
+		</div>
+	</div>
+	
+	<div id="groupParticipants" >
+		<span class="toggleLink dabLink" >&{'groupsViewParticipants'} (${visitedGroup.numberOfParticipants})...</span>
+		<div class="toggleContainer" style="display: none">
+			<span class="dabLinkDisabled">&{'groupsViewApplyToGroupAsPerson'}</span>
+			 #{list items:visitedGroup.participants, as:'oneParticipant'}
+				#{groups.confirmedParticipant participant: oneParticipant /}
+			 #{/list}
+		</div>
+	</div>
+	
+	<div id="groupForum">
+		<span class="toggleLink dabLink" >&{'groupsViewForum'} (0)...</span>
+		<div class="toggleContainer" style="display: none">
+			(TODO)
+		</div>
+	</div>
+	

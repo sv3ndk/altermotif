@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.svend.dab.core.IGroupService;
 import com.svend.dab.core.beans.DabException;
 import com.svend.dab.core.beans.DabPreConditionViolationException;
 import com.svend.dab.core.beans.profile.Contact;
@@ -18,6 +19,7 @@ import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Participation;
 import com.svend.dab.core.dao.IContactDao;
 import com.svend.dab.core.dao.IForumPostDao;
+import com.svend.dab.core.dao.IGroupDao;
 import com.svend.dab.core.dao.IProjectDao;
 import com.svend.dab.core.dao.IUserProfileDao;
 import com.svend.dab.eda.IEventPropagator;
@@ -40,6 +42,9 @@ public class UserSummaryUpdatedPropagator implements IEventPropagator<UserSummar
 
 	@Autowired
 	private IForumPostDao forumPostDao;
+	
+	@Autowired
+	private IGroupDao groupDao;
 
 	private static Logger logger = Logger.getLogger(UserSummaryUpdatedPropagator.class.getName());
 
@@ -60,7 +65,12 @@ public class UserSummaryUpdatedPropagator implements IEventPropagator<UserSummar
 		propagateUserSummaryToProject(profile, event.getUpdatedSummary());
 
 		propagateUserSummaryToForumPosts(event.getUpdatedSummary());
+		propagateUserSummaryToGroups(event.getUpdatedSummary());
 
+	}
+
+	private void propagateUserSummaryToGroups(UserSummary updatedSummary) {
+		groupDao.updateParticipantOfAllGroupsWith(updatedSummary);
 	}
 
 	private void propagateUserSummaryToForumPosts(UserSummary updatedSummary) {

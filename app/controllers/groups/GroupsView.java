@@ -1,13 +1,29 @@
 package controllers.groups;
 
-import controllers.DabController;
+import com.svend.dab.core.beans.groups.ProjectGroup;
 
-public class GroupsView extends DabController {
+import controllers.Application;
+import controllers.BeanProvider;
+import controllers.DabLoggedController;
+
+public class GroupsView extends DabLoggedController {
 	
 	
 	
 	public static void groupsView(String groupid) {
-		render();
+		
+		ProjectGroup group = BeanProvider.getGroupService().loadGroupById(groupid, true);
+		
+		if (group == null) {
+			Application.index();
+		} else {
+
+			renderArgs.put("visitedGroup", group);
+			
+			render();
+		}
+		
+		
 	}
 
 }
