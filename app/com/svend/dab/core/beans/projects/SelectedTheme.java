@@ -1,5 +1,7 @@
 package com.svend.dab.core.beans.projects;
 
+import org.springframework.data.annotation.Transient;
+
 import models.altermotif.projects.theme.Theme;
 
 /**
@@ -19,6 +21,7 @@ public class SelectedTheme {
 	private String subThemeLabel;
 
 	// useless and ugly, but used on js side => streamed back to java in some cases
+	@Transient
 	private String jsonId;
 	
 	public SelectedTheme() {

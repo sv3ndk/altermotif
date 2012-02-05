@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import models.altemotif.groups.EditedGroup;
 import models.altermotif.profile.CreatedProfile;
 import models.altermotif.profile.EditedProfile;
 import models.altermotif.projects.EditedProject;
@@ -147,6 +148,18 @@ public class DabValidators {
 		if (Validation.errors().size() == 3 && Validation.hasError("editedProject.pdata.name") && Validation.hasError("editedProject.pdata.goal")) {
 			Validation.clear();
 		}
+		
+		
+	}
+
+	public static void validateEditedGroup(EditedGroup editedGroup, Validation validation, Flash flash) {
+		
+		Validation.valid("editedGroup", editedGroup);
+		
+		if (!Validation.hasError("editedGroup.locationJson") && editedGroup.getParsedLocations() == null || editedGroup.getParsedLocations().isEmpty()) {
+			Validation.addError("editedGroup.locationJson", "groupsEditAtLeastOneMessageErrorMessage", "");
+		}
+		
 		
 		
 	}

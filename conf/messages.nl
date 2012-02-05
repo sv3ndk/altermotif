@@ -263,12 +263,17 @@ level2=Goed
 
 #################################
 # groups
+
+groupRoleAdmin=***Administrator
+groupRoleMember=***Member
+
 groupsEditName=***Group name
 groupsEditDescription=***Group description
 groupsEditDescriptionExplanation=***Describe clearly what this group is about. What is the purpose of the group?
 groupsEditLocation=***Location
 groupsEditLocationExplanation=***Where will this group be located? Where can participants come from?
 groupsEditAddLocationLink=***add location
+groupsEditAtLeastOneMessageErrorMessage=***Please provide at least one location of this group
 groupsEditSelectThemes=***Select themes
 groupsEditAddOneTheme=***add theme
 groupsEditSelectTags=***Group tags

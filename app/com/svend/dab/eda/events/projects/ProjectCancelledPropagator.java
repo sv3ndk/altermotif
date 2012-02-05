@@ -10,7 +10,7 @@ import com.svend.dab.core.beans.DabException;
 import com.svend.dab.core.beans.projects.Participant;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.Project.STATUS;
-import com.svend.dab.dao.mongo.IProjectDao;
+import com.svend.dab.core.dao.IProjectDao;
 import com.svend.dab.eda.EventEmitter;
 import com.svend.dab.eda.IEventPropagator;
 

@@ -25,7 +25,7 @@ import com.svend.dab.core.beans.projects.ProjectOverview;
 import com.svend.dab.core.beans.projects.ProjectSearchQuery;
 import com.svend.dab.core.beans.projects.SelectedTheme;
 import com.svend.dab.core.dao.IIndexedProjectDao;
-import com.svend.dab.dao.mongo.IProjectDao;
+import com.svend.dab.core.dao.IProjectDao;
 
 /**
  * Quick and dirty (and I'm drunk...) version of a full text search index for projects.

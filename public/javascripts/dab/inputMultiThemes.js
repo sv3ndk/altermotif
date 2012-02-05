@@ -22,13 +22,13 @@ var dabInputMultiThemesLib = {
 			// click on "delete theme img"
 			this.inputMultiHtml.on("click", "ul.selectedThemes img.deleteImageLink", function(event) {
 				self.whenUserClicksOnDeleteTheme(event);
-				self.whenListOfSelectedThemesChangesCallback(self.inputMultiThemesModel.selectedThemes());
+				self.whenListOfSelectedThemesChangesCallback(self.getSelectedThemes());
 			});
 
 			// click on "add" (in edit mode)
 			this.inputMultiHtml.find("div.addThemeLine span.addButton").click(function(event) {
 				self.whenUserConfirmsAddTheme(event);
-				self.whenListOfSelectedThemesChangesCallback(self.inputMultiThemesModel.selectedThemes());
+				self.whenListOfSelectedThemesChangesCallback(self.getSelectedThemes());
 			});
 
 			// click on "cancel" (in edit mode)
@@ -41,6 +41,14 @@ var dabInputMultiThemesLib = {
 				self.whenUserChangeMainDropDown(event);
 			});
 
+		};
+		
+		this.getSelectedThemes = function() {
+			return this.inputMultiThemesModel.selectedThemes();
+		};
+		
+		this.getSelectedThemesJson = function() {
+			return JSON.stringify(this.getSelectedThemes());
 		};
 
 		this.whenUserClicksOnAddTheme = function(event) {

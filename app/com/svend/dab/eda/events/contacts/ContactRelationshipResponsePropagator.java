@@ -18,7 +18,7 @@ import com.svend.dab.core.beans.profile.Contact;
 import com.svend.dab.core.beans.profile.Contact.STATUS;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.dao.IContactDao;
-import com.svend.dab.dao.mongo.IUserProfileDao;
+import com.svend.dab.core.dao.IUserProfileDao;
 import com.svend.dab.eda.IEventPropagator;
 import com.svend.dab.eda.events.contacts.ContactRelationshipResponse.RESPONSE;
 

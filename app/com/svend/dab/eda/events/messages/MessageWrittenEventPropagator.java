@@ -9,7 +9,7 @@ import com.svend.dab.core.beans.message.UserMessage;
 import com.svend.dab.core.beans.profile.ProfileRef;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.dao.IUserMessageDao;
-import com.svend.dab.dao.mongo.IUserProfileDao;
+import com.svend.dab.core.dao.IUserProfileDao;
 import com.svend.dab.eda.IEventPropagator;
 
 /**

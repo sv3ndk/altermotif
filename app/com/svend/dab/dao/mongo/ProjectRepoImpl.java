@@ -36,6 +36,7 @@ import com.svend.dab.core.beans.projects.ProjectSearchQuery;
 import com.svend.dab.core.beans.projects.SelectedTheme;
 import com.svend.dab.core.beans.projects.TagCount;
 import com.svend.dab.core.beans.projects.Task;
+import com.svend.dab.core.dao.IProjectDao;
 
 /**
  * @author Svend

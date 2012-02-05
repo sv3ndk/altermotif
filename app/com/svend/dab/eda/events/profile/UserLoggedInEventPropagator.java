@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.svend.dab.core.beans.DabException;
 import com.svend.dab.core.beans.DabIllegalFormatException;
-import com.svend.dab.dao.mongo.IUserProfileDao;
+import com.svend.dab.core.dao.IUserProfileDao;
 import com.svend.dab.eda.IEventPropagator;
 
 @Component

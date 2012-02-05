@@ -16,7 +16,7 @@ import com.svend.dab.core.beans.DabUploadFailedException.failureReason;
 import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.dao.IPhotoBinaryDao;
-import com.svend.dab.dao.mongo.IProjectDao;
+import com.svend.dab.core.dao.IProjectDao;
 import com.svend.dab.eda.EventEmitter;
 import com.svend.dab.eda.events.projects.ProjectMainPhotoUpdated;
 import com.svend.dab.eda.events.s3.BinaryNoLongerRequiredEvent;

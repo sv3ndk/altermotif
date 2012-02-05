@@ -1,4 +1,4 @@
-package com.svend.dab.dao.mongo;
+package com.svend.dab.core.dao;
 
 import java.util.List;
 import java.util.Set;

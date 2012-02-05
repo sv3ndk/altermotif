@@ -3,6 +3,7 @@ package controllers;
 import play.modules.spring.Spring;
 
 import com.svend.dab.core.AdminService;
+import com.svend.dab.core.IGroupService;
 import com.svend.dab.core.ISocialService;
 import com.svend.dab.core.IUserMessagesServices;
 import com.svend.dab.core.IProfilePhotoService;
@@ -11,10 +12,10 @@ import com.svend.dab.core.UserProfileService;
 import com.svend.dab.core.beans.Config;
 import com.svend.dab.core.dao.IForumPostDao;
 import com.svend.dab.core.dao.IForumThreadDao;
+import com.svend.dab.core.dao.IProjectDao;
 import com.svend.dab.core.projects.IProjectFTSService;
 import com.svend.dab.core.projects.IProjectPhotoService;
 import com.svend.dab.core.projects.IProjectService;
-import com.svend.dab.dao.mongo.IProjectDao;
 import com.svend.dab.eda.errorhandling.NonFailingJsonMessageConverter;
 import com.svend.dab.web.upload.IUploadProcessor;
 
@@ -67,6 +68,10 @@ public class BeanProvider {
 
 	public static AdminService getAdminService() {
 		return (AdminService) Spring.getBeanOfType(AdminService.class);
+	}
+	
+	public static IGroupService getGroupService() {
+		return (IGroupService) Spring.getBeanOfType(IGroupService.class);
 	}
 
 	public static ISocialService getSocialService() {

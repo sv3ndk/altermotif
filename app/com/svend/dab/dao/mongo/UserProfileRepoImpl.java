@@ -24,6 +24,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoException;
 import com.mongodb.WriteResult;
+import com.svend.dab.core.beans.groups.GroupParticipation;
 import com.svend.dab.core.beans.profile.Contact;
 import com.svend.dab.core.beans.profile.PersonalData;
 import com.svend.dab.core.beans.profile.Photo;
@@ -34,6 +35,7 @@ import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.Participation;
 import com.svend.dab.core.beans.projects.Project.STATUS;
+import com.svend.dab.core.dao.IUserProfileDao;
 
 @Service
 public class UserProfileRepoImpl implements IUserProfileDao {
@@ -342,6 +344,14 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 	}
 	
 	
+	// ----------------------------------------
+	// projects
+
+	
+	public void addParticipationInGroup(String userName, GroupParticipation groupParticipation) {
+		genericUpdateUser(userName, new Update().addToSet("groups", groupParticipation));
+	}
+	
 	// -------------------------------------
 	// -------------------------------------
 
@@ -358,15 +368,11 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 
 	
 	public UserProfile retrieveUserProfileById(String userId) {
-		// TODO Auto-generated method stub
 		return mongoTemplate.findOne(query(where("username").is(userId)), UserProfile.class);
 	}
-
 	
 	public void save(UserProfile createdUserProfile) {
 		mongoTemplate.save(createdUserProfile);
 	}
-
-
 
 }

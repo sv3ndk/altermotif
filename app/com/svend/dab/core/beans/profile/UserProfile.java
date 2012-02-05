@@ -13,6 +13,8 @@ import org.springframework.data.annotation.Transient;
 import com.google.common.base.Strings;
 import com.svend.dab.core.beans.PhotoPack;
 import com.svend.dab.core.beans.aws.S3Link;
+import com.svend.dab.core.beans.groups.ProjectGroup;
+import com.svend.dab.core.beans.groups.GroupParticipation;
 import com.svend.dab.core.beans.profile.PrivacySettings.VISIBILITY;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.Participation;
@@ -67,6 +69,9 @@ public class UserProfile implements Serializable {
 
 	private List<Participation> projects = new LinkedList<Participation>();
 
+	private List<GroupParticipation> groups = new LinkedList<GroupParticipation>();
+	
+	
 	@Transient
 	private List<Participation> cachedConfirmedProjects;
 
@@ -485,6 +490,23 @@ public class UserProfile implements Serializable {
 		return response;
 	}
 
+	// ------------------------------------------------------------
+	// groups
+	
+	public GroupParticipation retrieveParticipationInGroup(String groupId) {
+		if (groupId == null) {
+			return null;
+		}
+		
+		for (GroupParticipation participation: groups) {
+			if (groupId.equals(participation.getGroupSummary().getGroupId() )) {
+				return participation;
+			}
+		}
+		return null;
+	}
+	
+	
 	// ------------------------------------------------------------
 	// projects
 
@@ -1121,6 +1143,14 @@ public class UserProfile implements Serializable {
 
 	public void setMainPhotoIndex(int mainPhotoIndex) {
 		this.mainPhotoIndex = mainPhotoIndex;
+	}
+
+	public List<GroupParticipation> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(List<GroupParticipation> groups) {
+		this.groups = groups;
 	}
 
 

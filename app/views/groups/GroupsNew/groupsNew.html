@@ -19,17 +19,9 @@
 		#{form @groups.GroupsNew.doCreateGroup() }
 			<table>
 				#{groups.groupsNewEditCommon allThemes:allThemes /}
-			
-				<tr>	
-					<td></td>
-					<td>
-						<br />
-						<input type="button"  value="&{'groupsEditCreateGroupButton'}"></input>
-					</td>
-				</tr>
-			
 			</table>
 		#{/form }
+		<input id="startGroupButton" type="button"  value="&{'groupsEditCreateGroupButton'}"></input>
 	</div>
 
 </div>

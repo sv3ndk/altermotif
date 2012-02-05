@@ -16,7 +16,7 @@ import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.dao.IPhotoBinaryDao;
-import com.svend.dab.dao.mongo.IUserProfileDao;
+import com.svend.dab.core.dao.IUserProfileDao;
 import com.svend.dab.eda.EventEmitter;
 import com.svend.dab.eda.events.profile.UserSummaryUpdated;
 import com.svend.dab.eda.events.s3.BinaryNoLongerRequiredEvent;

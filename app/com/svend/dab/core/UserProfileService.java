@@ -23,7 +23,7 @@ import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserReference;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.dao.ICvBinaryDao;
-import com.svend.dab.dao.mongo.IUserProfileDao;
+import com.svend.dab.core.dao.IUserProfileDao;
 import com.svend.dab.eda.EventEmitter;
 import com.svend.dab.eda.events.contacts.ContactRelationshipRemoved;
 import com.svend.dab.eda.events.contacts.ContactRelationshipRequested;
