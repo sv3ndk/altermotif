@@ -15,6 +15,14 @@ public class GroupSummary {
 		this.name = group.getName();
 	}
 
+	////////////////////
+	
+	public boolean hasAThumbPhoto() {
+		return false;
+	}
+	
+	///
+	
 	private String groupId;
 
 	private String name;

@@ -507,6 +507,14 @@ public class UserProfile implements Serializable {
 	}
 	
 	
+	public int getNumberOfGroups() {
+		if (groups == null || groups.isEmpty()) {
+			return 0;
+		} else {
+			return groups.size();
+		}
+	}
+	
 	// ------------------------------------------------------------
 	// projects
 

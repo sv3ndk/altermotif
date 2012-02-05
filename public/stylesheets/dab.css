@@ -324,6 +324,11 @@ fieldset legend {
 	height: 60px;
 }
 
+.oneGroupParticipationLine {
+	padding: 20px;
+	height: 60px;
+}
+
 .mainPhoto {
 	max-width: 300px;
 	margin-left: auto;

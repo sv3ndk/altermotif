@@ -1,0 +1,18 @@
+<div class="oneGroupParticipationLine">
+
+	<a href="@{groups.GroupsView.groupsView( _group.groupSummary.groupId )}" > 
+	#{if !_group.groupSummary.hasAThumbPhoto() }
+			<img src="@{'/public/images/defaultProjectThumb.jpg'}" class="oneLinerThumb" />
+	#{/if}
+	
+	#{else  } 
+		<img src="${_participation.projectSummary.mainPhotoThumbLink}" class="oneLinerThumb" />
+	#{/else}
+	</a>
+
+	<div>
+		<a href="@{groups.GroupsView.groupsView( _group.groupSummary.groupId )}" class="dabLink">${_group.groupSummary.name}</a>
+		<br />
+		&{'projectRole'}: &{_group.role.label}
+	</div>
+</div>
