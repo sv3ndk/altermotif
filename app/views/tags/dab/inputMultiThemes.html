@@ -1,5 +1,15 @@
 <div class="inputMultiThemes">
 
+	<ul class="selectedThemes" data-bind="foreach: selectedThemes">
+		<li>
+			<span class="hidden hiddenThemeId" data-bind="text: themeId"></span>
+			<span class="hidden hiddenSubThemeId" data-bind="text: subThemeId"></span>
+			<span data-bind="text: themeLabel"></span>
+			(<span data-bind="text: subThemeLabel"></span>)
+			
+			<img id="trashImg" src="@{'/public/images/trash.png'}"  class="deleteImageLink"/>
+		</li>
+	</ul>	
 	
 	<span  class="addThemeLink dabLink" data-bind="visible: inputMode() == 'normal' "> ${_addThemeLinkLabel}</span>
 	
@@ -10,8 +20,6 @@
 
 		<span  class="addButton dabLink rightspaced" >&{'add'}</span>
 		<span  class="cancelButton dabLink" >&{'CancelButton'}</span>
-	
 	</div>
-	
 
 </div>

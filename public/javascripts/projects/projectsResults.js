@@ -2,7 +2,6 @@ var projectResultsCtrl;
 
 $(document).ready(function() {
 	projectResultsCtrl = new dabProjectResultsLib.ProjectResultsController();
-	projectResultsCtrl.init();
 });
 
 var dabProjectResultsLib = {
@@ -35,6 +34,8 @@ var dabProjectResultsLib = {
 			// knockout bindings
 			ko.applyBindings(this.refreshModel, $("#projectResultRefineQueryContainer")[0]);
 		};
+		
+		this.init();
 	},
 	
 	
@@ -43,7 +44,6 @@ var dabProjectResultsLib = {
 		this.refreshModel = refreshModel;
 		this.languageMapper = languageMapper;
 		this.inputLocationController;
-		
 		
 		this.init = function () {
 			var self = this;

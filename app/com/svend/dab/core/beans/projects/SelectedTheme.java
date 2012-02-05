@@ -1,7 +1,5 @@
 package com.svend.dab.core.beans.projects;
 
-import org.apache.commons.lang.StringUtils;
-
 import models.altermotif.projects.theme.Theme;
 
 /**
@@ -15,17 +13,24 @@ import models.altermotif.projects.theme.Theme;
 public class SelectedTheme {
 
 	private String themeId;
+	private String themeLabel;
+
 	private String subThemeId;
+	private String subThemeLabel;
 
 	public SelectedTheme() {
 		super();
 	}
 
-	public SelectedTheme(String themeId, String subThemeId) {
+
+	public SelectedTheme(String themeId, String themeLabel, String subThemeId, String subThemeLabel) {
 		super();
 		this.themeId = themeId;
+		this.themeLabel = themeLabel;
 		this.subThemeId = subThemeId;
+		this.subThemeLabel = subThemeLabel;
 	}
+
 
 	public String getThemeId() {
 		return themeId;
@@ -84,6 +89,26 @@ public class SelectedTheme {
 		}
 		
 		return hash;
+	}
+
+
+	public String getThemeLabel() {
+		return themeLabel;
+	}
+
+
+	public void setThemeLabel(String themeLabel) {
+		this.themeLabel = themeLabel;
+	}
+
+
+	public String getSubThemeLabel() {
+		return subThemeLabel;
+	}
+
+
+	public void setSubThemeLabel(String subThemeLabel) {
+		this.subThemeLabel = subThemeLabel;
 	}
 
 }
