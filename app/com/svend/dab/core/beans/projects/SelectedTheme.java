@@ -18,6 +18,9 @@ public class SelectedTheme {
 	private String subThemeId;
 	private String subThemeLabel;
 
+	// useless and ugly, but used on js side => streamed back to java in some cases
+	private String jsonId;
+	
 	public SelectedTheme() {
 		super();
 	}
@@ -109,6 +112,16 @@ public class SelectedTheme {
 
 	public void setSubThemeLabel(String subThemeLabel) {
 		this.subThemeLabel = subThemeLabel;
+	}
+
+
+	public String getJsonId() {
+		return jsonId;
+	}
+
+
+	public void setJsonId(String jsonId) {
+		this.jsonId = jsonId;
 	}
 
 }

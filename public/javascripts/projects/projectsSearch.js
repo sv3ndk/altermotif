@@ -57,11 +57,14 @@ var dabProjectSearchLib =  {
 	
 		// "empty" URL of the search page (stil have to add parameters)
 		this.searchPageLocation;
+		this.simpleSearchModel = new dabProjectSearchLib.SimpleSearchModel();
 	
 		this.init = function() {
 			var self = this;
 	
 			this.searchPageLocation = $("#hiddenLinkToEmptySearch").attr("href");
+			
+			ko.applyBindings(this.simpleSearchModel, $("#projectCategorieListOfDropboxes")[0]);
 	
 			// click on a tag in the tag cloud
 			$("#projectTagContainer").on("click", "a", function(event) {
@@ -69,7 +72,7 @@ var dabProjectSearchLib =  {
 			});
 	
 			// selection of a category:
-			$("#projectCategorieListOfDropboxes").on("change", function(event) {
+			$("#projectCategorieListOfDropboxes").on("change", "select", function(event) {
 				self.searchProjectByTheme(self, $(event.target).val());
 			});
 	
@@ -85,6 +88,26 @@ var dabProjectSearchLib =  {
 			if (clickedThemeValue != undefined && clickedThemeValue != "") {
 				window.location = self.searchPageLocation + "?r.themes=" + clickedThemeValue;
 			}
+		};
+		
+		this.init();
+	},
+	
+	
+	SimpleSearchModel : function() {
+		
+		this.allSingleThemeSubTheme = [];
+		
+		this.init = function() {
+			var self = this;
+			_.each(allThemes, function(oneTheme) {
+				var theme = new dabInputMultiThemesLib.Theme(oneTheme.id, oneTheme.label);
+				_.each(oneTheme.subThemes, function(oneSubTheme) {
+					theme.addSubTheme(new dabInputMultiThemesLib.SelectedTheme(oneTheme.id, oneTheme.label, oneSubTheme.id, oneSubTheme.label));
+				});
+				self.allSingleThemeSubTheme.push(theme);
+			});
+			
 		};
 		
 		this.init();

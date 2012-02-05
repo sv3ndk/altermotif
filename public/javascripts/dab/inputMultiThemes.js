@@ -182,6 +182,16 @@ var dabInputMultiThemesLib = {
 		this.themeLabel = themeLabel;
 		this.subThemeId = subThemeId;
 		this.subThemeLabel = subThemeLabel;
+		
+		this.jsonId;
+		
+		this.init = function() {
+			var self = this;
+			this.jsonId =  encodeURI(JSON.stringify([{themeId: self.themeId, subThemeId: self.subThemeId}] ));
+		};
+		
+		this.init();
+		
 	},
 
 };
