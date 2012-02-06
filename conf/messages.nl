@@ -304,6 +304,35 @@ projectStatusCancelled=Geannuleerd
 projectStatusDone=Afgelopen
 
 # project themes and sub-themes
+projectThemeAnimalRights=***Animal Rights
+projectThemeAnimalRightsSubThemeCampaigning=***Campaigning
+projectThemeAnimalRightsSubThemeFoodIndustry=***Food Industry
+projectThemeAnimalRightsSubThemeStrayAnimals=***Stray Animals
+projectThemeAnimalRightsSubThemeTestingonAnimals=***Testing on Animals
+
+projectThemeArts=***Arts
+projectThemeArtsSubThemeArchitecture=***Architecture
+projectThemeArtsSubThemeCalligraphy=***Calligraphy
+projectThemeArtsSubThemeCinema=***Cinema
+projectThemeArtsSubThemeComics=***Comics
+projectThemeArtsSubThemeConceptualArt=***Conceptual Art
+projectThemeArtsSubThemeDance=***Dance
+projectThemeArtsSubThemeExhibitions=***Exhibitions
+projectThemeArtsSubThemeExperimentalArt=***Experimental Art
+projectThemeArtsSubThemeFiberArt=***Fiber Art
+projectThemeArtsSubThemeIllustration=***Illustration
+projectThemeArtsSubThemeImagingPrints=***Imaging & Prints
+projectThemeArtsSubThemeLiterature=***Literature
+projectThemeArtsSubThemeMosaics=***Mosaics
+projectThemeArtsSubThemePaintingDrawing=***Painting & Drawing
+projectThemeArtsSubThemePhotography=***Photography
+projectThemeArtsSubThemePoetry=***Poetry
+projectThemeArtsSubThemeSculpture=***Sculpture
+projectThemeArtsSubThemeStreetArt=***Street Art
+projectThemeArtsSubThemeTheatre=***Theatre
+projectThemeArtsSubThemeOther=***Other
+
+
 projectThemeEnvironment=***environment
 projectThemeEnvironmentSubThemeProtecting=***protecting
 projectThemeEnvironmentSubThemeRecycling=***recycling
@@ -321,9 +350,14 @@ projectThemeDevelopmentSubThemeFairTrade=***Fair trade
 projectThemeDevelopmentSubThemeOther=***Other
 
 projectThemeCulture=***culture
-projectThemeCultureSubThemeArts=***arts
-projectThemeCultureSubThemeJournalism=***Journalism
 projectThemeCultureSubThemeEducation=***Education
+projectThemeCultureSubThemeEvents=***Events
+projectThemeCultureSubThemeFilms=***Films
+projectThemeCultureSubThemeInternet=***Internet
+projectThemeCultureSubThemeJournalism=***Journalism
+projectThemeCultureSubThemeMusic=***Music
+projectThemeCultureSubThemePrintedMedia=***Printed Media
+projectThemeCultureSubThemeGames=***Games
 projectThemeCultureSubThemeOther=***Other
 
 projectThemeScience=***science

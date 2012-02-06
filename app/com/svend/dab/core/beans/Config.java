@@ -14,10 +14,10 @@ import controllers.BeanProvider;
 
 /**
  * 
- * THis is meant to be replaced by a real external config 
+ * THis is meant to be replaced by a real external config
  * 
  * @author svend
- *
+ * 
  */
 @Component("config")
 public class Config {
@@ -48,14 +48,48 @@ public class Config {
 
 	public Config() {
 
-		Theme environment = new Theme("environment", "projectThemeEnvironment");
-		environment.addSubTheme(new SubTheme("protecting", "projectThemeEnvironmentSubThemeProtecting"));
-		environment.addSubTheme(new SubTheme("recycling", "projectThemeEnvironmentSubThemeRecycling"));
-		environment.addSubTheme(new SubTheme("sensitizing", "projectThemeEnvironmentSubThemeSensitizing"));
-		environment.addSubTheme(new SubTheme("cleaning", "projectThemeEnvironmentSubThemeCleaning"));
-		environment.addSubTheme(new SubTheme("agriculture", "projectThemeEnvironmentSubThemeAgriculture"));
-		environment.addSubTheme(new SubTheme("other", "projectThemeEnvironmentSubThemeOther"));
-		projectThemes.add(environment);
+		Theme animalRights = new Theme("animalRights", "projectThemeAnimalRights");
+		animalRights.addSubTheme(new SubTheme("campaigning", "projectThemeAnimalRightsSubThemeCampaigning"));
+		animalRights.addSubTheme(new SubTheme("foodIndustry", "projectThemeAnimalRightsSubThemeFoodIndustry"));
+		animalRights.addSubTheme(new SubTheme("strayAnimals", "projectThemeAnimalRightsSubThemeStrayAnimals"));
+		animalRights.addSubTheme(new SubTheme("testingonAnimals", "projectThemeAnimalRightsSubThemeTestingonAnimals"));
+		animalRights.addSubTheme(new SubTheme("other", "projectThemeAnimalRightsSubThemeOther"));
+		projectThemes.add(animalRights);
+
+		Theme arts = new Theme("arts", "projectThemeArts");
+		arts.addSubTheme(new SubTheme("architecture", "projectThemeArtsSubThemeArchitecture"));
+		arts.addSubTheme(new SubTheme("calligraphy", "projectThemeArtsSubThemeCalligraphy"));
+		arts.addSubTheme(new SubTheme("cinema", "projectThemeArtsSubThemeCinema"));
+		arts.addSubTheme(new SubTheme("comics", "projectThemeArtsSubThemeComics"));
+		arts.addSubTheme(new SubTheme("conceptualArts", "projectThemeArtsSubThemeConceptualArt"));
+		arts.addSubTheme(new SubTheme("dance", "projectThemeArtsSubThemeDance"));
+		arts.addSubTheme(new SubTheme("exhibitions", "projectThemeArtsSubThemeExhibitions"));
+		arts.addSubTheme(new SubTheme("experimental", "projectThemeArtsSubThemeExperimentalArt"));
+		arts.addSubTheme(new SubTheme("fiberArt", "projectThemeArtsSubThemeFiberArt"));
+		arts.addSubTheme(new SubTheme("illustration", "projectThemeArtsSubThemeIllustration"));
+		arts.addSubTheme(new SubTheme("imagePrint", "projectThemeArtsSubThemeImagingPrints"));
+		arts.addSubTheme(new SubTheme("literature", "projectThemeArtsSubThemeLiterature"));
+		arts.addSubTheme(new SubTheme("mosaic", "projectThemeArtsSubThemeMosaics"));
+		arts.addSubTheme(new SubTheme("paintingDrawing", "projectThemeArtsSubThemePaintingDrawing"));
+		arts.addSubTheme(new SubTheme("photography", "projectThemeArtsSubThemePhotography"));
+		arts.addSubTheme(new SubTheme("poetry", "projectThemeArtsSubThemePoetry"));
+		arts.addSubTheme(new SubTheme("sculpture", "projectThemeArtsSubThemeSculpture"));
+		arts.addSubTheme(new SubTheme("streetArt", "projectThemeArtsSubThemeStreetArt"));
+		arts.addSubTheme(new SubTheme("theatre", "projectThemeArtsSubThemeTheatre"));
+		arts.addSubTheme(new SubTheme("other", "projectThemeArtsSubThemeOther"));
+		projectThemes.add(arts);
+
+		Theme culture = new Theme("culture", "projectThemeCulture");
+		culture.addSubTheme(new SubTheme("education", "projectThemeCultureSubThemeEducation"));
+		culture.addSubTheme(new SubTheme("events", "projectThemeCultureSubThemeEvents"));
+		culture.addSubTheme(new SubTheme("film", "projectThemeCultureSubThemeFilms"));
+		culture.addSubTheme(new SubTheme("internet", "projectThemeCultureSubThemeInternet"));
+		culture.addSubTheme(new SubTheme("music", "projectThemeCultureSubThemeMusic"));
+		culture.addSubTheme(new SubTheme("journalism", "projectThemeCultureSubThemeJournalism"));
+		culture.addSubTheme(new SubTheme("printedMedia", "projectThemeCultureSubThemePrintedMedia"));
+		culture.addSubTheme(new SubTheme("games", "projectThemeCultureSubThemeGames"));
+		culture.addSubTheme(new SubTheme("other", "projectThemeCultureSubThemeOther"));
+		projectThemes.add(culture);
 
 		Theme development = new Theme("development", "projectThemeDevelopment");
 		development.addSubTheme(new SubTheme("charity", "projectThemeDevelopmentSubThemeCharity"));
@@ -65,13 +99,16 @@ public class Config {
 		development.addSubTheme(new SubTheme("fairtrade", "projectThemeDevelopmentSubThemeFairTrade"));
 		development.addSubTheme(new SubTheme("other", "projectThemeDevelopmentSubThemeOther"));
 		projectThemes.add(development);
+		
+		Theme environment = new Theme("environment", "projectThemeEnvironment");
+		environment.addSubTheme(new SubTheme("protecting", "projectThemeEnvironmentSubThemeProtecting"));
+		environment.addSubTheme(new SubTheme("recycling", "projectThemeEnvironmentSubThemeRecycling"));
+		environment.addSubTheme(new SubTheme("sensitizing", "projectThemeEnvironmentSubThemeSensitizing"));
+		environment.addSubTheme(new SubTheme("cleaning", "projectThemeEnvironmentSubThemeCleaning"));
+		environment.addSubTheme(new SubTheme("agriculture", "projectThemeEnvironmentSubThemeAgriculture"));
+		environment.addSubTheme(new SubTheme("other", "projectThemeEnvironmentSubThemeOther"));
+		projectThemes.add(environment);
 
-		Theme culture = new Theme("culture", "projectThemeCulture");
-		culture.addSubTheme(new SubTheme("arts", "projectThemeCultureSubThemeArts"));
-		culture.addSubTheme(new SubTheme("journalism", "projectThemeCultureSubThemeJournalism"));
-		culture.addSubTheme(new SubTheme("education", "projectThemeCultureSubThemeEducation"));
-		culture.addSubTheme(new SubTheme("other", "projectThemeCultureSubThemeOther"));
-		projectThemes.add(culture);
 
 		Theme science = new Theme("science", "projectThemeScience");
 		science.addSubTheme(new SubTheme("education", "projectThemeScienceSubThemeEducation"));
@@ -114,9 +151,9 @@ public class Config {
 	// ------------------------------------------------------
 	// ------------------------------------------------------
 
-	public List<Theme>  getLocalizedThemes(String languageCode) {
+	public List<Theme> getLocalizedThemes(String languageCode) {
 		List<Theme> localizedThemes = new LinkedList<Theme>();
-		
+
 		for (Theme orgininalTheme : getThemes()) {
 			Theme localizedTheme = new Theme(orgininalTheme.getId(), Messages.getMessage(languageCode, orgininalTheme.getLabel(), null));
 			for (SubTheme st : orgininalTheme.getSubThemes()) {
@@ -125,12 +162,10 @@ public class Config {
 			}
 			localizedThemes.add(localizedTheme);
 		}
-		
+
 		return localizedThemes;
 	}
 
-	
-	
 	private static Config getStaticConfig() {
 		// TODO: clean up: josuah block static holder here...
 		if (staticConfig == null) {
