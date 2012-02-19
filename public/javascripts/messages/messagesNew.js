@@ -1,7 +1,5 @@
-var messagesNewController;
-
 $(document).ready(function() {
-	messagesNewController = new dabMessagesNewLib.MessagesNewController();
+	new dabMessagesNewLib.MessagesNewController();
 });
 
 var dabMessagesNewLib = {
