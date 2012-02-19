@@ -268,6 +268,8 @@ groupRole=Rol in groep
 groupRoleAdmin=Administrator
 groupRoleMember=Lid
 
+groupsViewEdit=***Edit group
+groupsViewClose=***Close group
 groupsViewCreatedOn=Gecreëerd op
 groupsViewMembers=Leden
 groupsViewProjects=Projecten
@@ -289,6 +291,9 @@ groupsEditAddOneTheme=Voeg een thema toe
 groupsEditSelectTags=Groepsmarkeringen
 groupsEditAddOneTagLink=Voeg een markering toe
 groupsEditCreateGroupButton=Groep opstarten
+groupsEditConfirmEditGroupButton=***Apply changes
+groupsEditCancelEditGroupButton=***Cancel edition
+
 
 #################################
 # projects

@@ -33,6 +33,7 @@ public class ProjectsView extends DabController {
 		Project project = BeanProvider.getProjectService().loadProject(p, true);
 		if (project != null && project.getStatus() != STATUS.cancelled) {
 			renderArgs.put("visitedProject", project);
+			renderArgs.put("altermotifBaseUrl", BeanProvider.getConfig().getAltermotifBaseUrl());
 			renderArgs.put("projectVisibility", new ProjectViewVisibility(new ProjectPep(project), project, getSessionWrapper().getLoggedInUserProfileId()));
 			renderArgs.put("allThreads", BeanProvider.getProjectForumThreadDao().loadProjectForumThreads(p));
 			Utils.addAllPossibleLanguageNamesToRenderArgs(getSessionWrapper(), renderArgs);

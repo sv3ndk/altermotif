@@ -1,15 +1,10 @@
-/**
- * 
- */
 package com.svend.dab.eda.events.profile;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.svend.dab.core.IGroupService;
 import com.svend.dab.core.beans.DabException;
 import com.svend.dab.core.beans.DabPreConditionViolationException;
 import com.svend.dab.core.beans.profile.Contact;
@@ -49,8 +44,6 @@ public class UserSummaryUpdatedPropagator implements IEventPropagator<UserSummar
 	private static Logger logger = Logger.getLogger(UserSummaryUpdatedPropagator.class.getName());
 
 	public void propagate(UserSummaryUpdated event) throws DabException {
-
-		logger.log(Level.INFO, "propagating user summary updated");
 
 		UserProfile profile = userProfileRepo.retrieveUserProfileById(event.getUpdatedSummary().getUserName());
 

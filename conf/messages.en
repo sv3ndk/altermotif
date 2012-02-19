@@ -266,6 +266,8 @@ groupRole=Group role
 groupRoleAdmin=Administrator
 groupRoleMember=Member
 
+groupsViewEdit=Edit group
+groupsViewClose=Close group
 groupsViewCreatedOn=Created on
 groupsViewMembers=Members
 groupsViewProjects=Projects
@@ -288,6 +290,8 @@ groupsEditAddOneTheme=Add theme
 groupsEditSelectTags=Group tags
 groupsEditAddOneTagLink=Add a tag
 groupsEditCreateGroupButton=Start group
+groupsEditConfirmEditGroupButton=Apply changes
+groupsEditCancelEditGroupButton=Cancel edition
 
 #################################
 # projects

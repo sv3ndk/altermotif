@@ -10,4 +10,6 @@ public interface IGroupDao {
 	public ProjectGroup retrieveGroupById(String groupId);
 
 	public void updateParticipantOfAllGroupsWith(UserSummary updatedSummary);
+
+	public void updateGroupData(ProjectGroup editedGroup);
 }

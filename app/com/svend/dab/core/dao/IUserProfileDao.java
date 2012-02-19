@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.svend.dab.core.beans.groups.GroupParticipation;
+import com.svend.dab.core.beans.groups.GroupSummary;
 import com.svend.dab.core.beans.profile.Contact;
 import com.svend.dab.core.beans.profile.PersonalData;
 import com.svend.dab.core.beans.profile.Photo;
@@ -121,8 +122,10 @@ public interface IUserProfileDao {
 
 
 	// ------------------------------------------------------
-	// projects
+	// groups
 
 	public void addParticipationInGroup(String username, GroupParticipation groupParticipation);
+
+	public void updateGroupSummaryOfAllUsersPartOf(GroupSummary updatedSummary);
 
 }

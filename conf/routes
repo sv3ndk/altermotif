@@ -18,6 +18,7 @@ GET     /profile/cv				                profile.ProfileCv.profileCv
 GET     /profile/privacy		                profile.ProfilePrivacy.profilePrivacy
 
 GET     /groups/new				                groups.GroupsNew.groupsNew
+GET     /groups/edit				            groups.GroupsEdit.groupsEdit
 GET     /groups/search			                groups.GroupsSearch.groupsSearch
 GET     /groups/view/{groupid}	                groups.GroupsView.groupsView
 

@@ -1,4 +1,4 @@
-package com.svend.dab.eda.groups;
+package com.svend.dab.eda.events.groups;
 
 import com.svend.dab.core.beans.groups.ProjectGroup;
 import com.svend.dab.eda.Event;

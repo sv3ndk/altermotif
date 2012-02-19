@@ -19,6 +19,9 @@
 	</div>
 	
 	
+	
+	
+	
 	<div id="groupBasicDetails">
 		<table>
 			<tbody>
@@ -55,6 +58,39 @@
 			</tbody>
 		</table>
 	</div>
+	
+	
+	
+	
+	<div id="groupRightColumn">
+		<table>
+			<tbody>
+				<tr>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+		#{if groupViewVisibility.isToolBoxVisible() }
+			<div id="groupToolBox">
+				<ul>
+					<li>
+						#{if groupViewVisibility.isEditGroupLinkVisisble() } 
+							<a href="@{groups.GroupsEdit.groupsEdit( visitedGroup.id)}" class="dabLink">&{'groupsViewEdit'}</a> 
+						#{/if}
+					</li>
+		
+					<li>
+						#{if groupViewVisibility.isEndGroupLinkVisisble() } 
+							<span id="cancelProjectLink" class="dabLinkDisabled" >&{'groupsViewClose'}</span> 
+						#{/if}
+					</li>
+				</ul>
+			</div>
+		#{/if}
+		
+	</div>
+	
+	
 	
 	<div id="groupProjects">
 		<span class="toggleLink dabLink" >&{'groupsViewProjects'} (${visitedGroup.numberOfProjects})...</span>

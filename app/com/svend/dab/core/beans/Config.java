@@ -25,23 +25,27 @@ public class Config {
 	private static Config staticConfig;
 
 	// when generating the S3 presigned links, what delay do we set, in millis
-	private long cvExpirationDelayInMillis = 1000 * 60 * 60;
+	private final long cvExpirationDelayInMillis = 1000 * 60 * 60;
 
-	private long photoExpirationDelayInMillis = 1000 * 60 * 60;
+	private final long photoExpirationDelayInMillis = 1000 * 60 * 60;
 
-	private long maxUploadedPhotoSizeInBytes = 5l * 1024l * 1024;
+	private final long maxUploadedPhotoSizeInBytes = 5l * 1024l * 1024;
 
-	private long maxUploadedCVSizeInBytes = 3l * 1024 * 1024;
+	private final long maxUploadedCVSizeInBytes = 3l * 1024 * 1024;
 
-	private int maxNumberOfDisplayedProjectTag = 35;
+	private final int maxNumberOfDisplayedProjectTag = 35;
 
 	// some pages polls for boolean values to the server to know if some data is outdate (and if so, refresh whatever is approapriate). This is the period, in
 	// millis, of the polling
-	private long freshnessPollingPeriodMillis = 5000;
+	private final long freshnessPollingPeriodMillis = 5000;
 
-	private long howLongIsABitInMillis = 750;
+	private final long howLongIsABitInMillis = 750;
 
-	private List<Theme> projectThemes = new LinkedList<Theme>();
+	private final List<Theme> projectThemes = new LinkedList<Theme>();
+	
+	
+	// TODO: it should be possible to deduce this from the deployment environment
+	private final String altermotifBaseUrl = "http://altermotif.cloudfoundry.com";
 
 	// ------------------------------------------------------
 	// ------------------------------------------------------
@@ -225,10 +229,6 @@ public class Config {
 		return freshnessPollingPeriodMillis;
 	}
 
-	public void setFreshnessPollingPeriodMillis(long freshnessPollingPeriodMillis) {
-		this.freshnessPollingPeriodMillis = freshnessPollingPeriodMillis;
-	}
-
 	public List<Theme> getThemes() {
 		return projectThemes;
 	}
@@ -239,6 +239,10 @@ public class Config {
 
 	public long getHowLongIsABitInMillis() {
 		return howLongIsABitInMillis;
+	}
+
+	public String getAltermotifBaseUrl() {
+		return altermotifBaseUrl;
 	}
 
 }

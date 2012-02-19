@@ -8,4 +8,6 @@ public interface IGroupService {
 
 	ProjectGroup loadGroupById(String groupid, boolean preparePresignedLinks);
 
+	void updateGroupData(ProjectGroup editedGroup);
+
 }

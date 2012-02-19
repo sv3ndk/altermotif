@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.svend.dab.eda.groups;
+package com.svend.dab.eda.events.groups;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

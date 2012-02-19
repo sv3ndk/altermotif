@@ -266,6 +266,8 @@ groupRole=Rôle en groupe
 groupRoleAdmin=Administrateur
 groupRoleMember=Membre
 
+groupsViewEdit=***Edit group
+groupsViewClose=***Close group
 groupsViewCreatedOn=Créé le 
 groupsViewMembers=Membres
 groupsViewProjects=Projets
@@ -286,6 +288,9 @@ groupsEditAddOneTheme=Ajouter un thème
 groupsEditSelectTags=Etiquettes du groupe
 groupsEditAddOneTagLink=Ajouter une étiquette
 groupsEditCreateGroupButton=Démarrer le groupe
+groupsEditConfirmEditGroupButton=***Apply changes
+groupsEditCancelEditGroupButton=***Cancel edition
+
 
 
 #################################

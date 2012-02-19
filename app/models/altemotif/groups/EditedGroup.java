@@ -15,7 +15,9 @@ import web.utils.Utils;
  * 
  */
 public class EditedGroup {
-
+	
+	private String id;
+	
 	@Required
 	private String name;
 
@@ -35,6 +37,25 @@ public class EditedGroup {
 
 	// /////////////////////////
 	
+	public EditedGroup(ProjectGroup group) {
+		if (group != null) {
+			this.id = id;
+			this.name = group.getName();
+			this.description = group.getDescription();
+			this.locationJson = Utils.objectToJsonString(group.getLocation());
+			this.themesJson = Utils.objectToJsonString(group.getThemes());
+			this.tagsJson = Utils.objectToJsonString(group.getTags());
+		}
+	}
+
+	
+
+	public EditedGroup() {
+		super();
+	}
+
+
+
 	public void applyToGroup(ProjectGroup group) {
 		
 		if (group != null) {
@@ -110,6 +131,18 @@ public class EditedGroup {
 
 	public void setTagsJson(String tagsJson) {
 		this.tagsJson = tagsJson;
+	}
+
+
+
+	public String getId() {
+		return id;
+	}
+
+
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 }

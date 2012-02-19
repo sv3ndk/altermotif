@@ -6,7 +6,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import com.google.common.base.Strings;
 import com.svend.dab.core.beans.Location;
+import com.svend.dab.core.beans.groups.GroupParticipant.ROLE;
 import com.svend.dab.core.beans.projects.SelectedTheme;
 
 
@@ -52,6 +54,26 @@ public class ProjectGroup {
 		}
 	}
 
+	
+	public ROLE findRoleOfUser(String userId) {
+		
+		// TODO: add some caching here (this method is queried several times for each page refresh, for the same user)
+		
+		if (Strings.isNullOrEmpty(userId) || participants == null || participants.isEmpty()) {
+			return null;
+		}
+		
+		for (GroupParticipant participant : participants) {
+			if (userId.equals(participant.getUser().getUserName())) {
+				return participant.getRole();
+			}
+		}
+		
+		return null;
+	}
+	
+	
+	
 	
 	public void addParticipant(GroupParticipant groupParticipant) {
 		if (participants == null) {

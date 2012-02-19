@@ -16,15 +16,19 @@
 <div class="pageContainer">
 
 	<div class="groupsEditionContainer">
-		#{form @groups.GroupsNew.doCreateGroup() }
+		#{form @groups.GroupsEdit.doEditGroup() }
 			<table>
-				#{groups.groupsNewEditCommon allThemes:allThemes /}
+				#{groups.groupsNewEditCommon editedGroup:editedGroup, allThemes:allThemes /}
 			</table>
 		#{/form }
 		
 		<div class="buttonBox">
-			<input id="startGroupButton" type="button"  value="&{'groupsEditCreateGroupButton'}"></input>
+			<input id="editGroupButton" type="button"  value="&{'groupsEditConfirmEditGroupButton'}"></input>
+			<input id="cancelEditGroupButton" type="button"  value="&{'groupsEditCancelEditGroupButton'}"></input>
 		</div>
+		
 	</div>
+	
+	<a id="hiddenNavigateToProfileHome" class="hidden" href="@{profile.ProfileHome.profileHome()}" ></a>
 
 </div>

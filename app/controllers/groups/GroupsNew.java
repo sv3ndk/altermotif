@@ -20,10 +20,8 @@ import controllers.validators.DabValidators;
 public class GroupsNew extends DabLoggedController {
 
 	public static void groupsNew() {
-		
 		Utils.addProjectThemesToRenderArgs(getSessionWrapper(), renderArgs);
 		Utils.addProjectJsonThemesToRenderArgs(getSessionWrapper(), renderArgs, getSessionWrapper().getSelectedLg());
-
 		render();
 	}
 	

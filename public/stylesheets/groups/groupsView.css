@@ -12,6 +12,18 @@
 	margin-left: 50px;
 }
 
+#groupRightColumn{
+	margin-left: 50px; 
+	float: left;
+}
+
+#groupToolBox {
+	border: thin solid;
+	padding: 20px 20px 20px 20px;
+	margin-left: 40px;
+}
+
+
 #groupBasicDetails label {
 	font-weight: bold;
 	margin-right: 10px;

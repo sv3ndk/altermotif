@@ -1,5 +1,8 @@
 package controllers.groups;
 
+import models.altemotif.groups.GroupViewVisibility;
+
+import com.svend.dab.core.beans.groups.GroupPep;
 import com.svend.dab.core.beans.groups.ProjectGroup;
 
 import controllers.Application;
@@ -17,7 +20,8 @@ public class GroupsView extends DabLoggedController {
 		if (group == null) {
 			Application.index();
 		} else {
-
+			
+			renderArgs.put("groupViewVisibility", new  GroupViewVisibility(new GroupPep(group), getSessionWrapper().getLoggedInUserProfileId()));
 			renderArgs.put("visitedGroup", group);
 			
 			render();
