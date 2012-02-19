@@ -2,6 +2,11 @@
 var messageReactionEnabled = false;
 var currentMessageId;
 
+$(document).ready(function() {
+	init();
+});
+
+
 // init ran at page load
 function init() {
 
@@ -67,7 +72,7 @@ function addOneDisplayedMessage(addedMessage) {
 
 	if (addedMessage.fromUser.isProfileActive) {
 		oneMessage.find(".messageRowFrom a.dabLink").text(addedMessage.fromUser.userName);
-		oneMessage.find(".messageRowFrom a.dabLink").attr("href", "/profile/public?vuser=" + addedMessage.fromUser.userName);
+		oneMessage.find(".messageRowFrom a.dabLink").attr("href", "/profile/" + addedMessage.fromUser.userName + "/public");
 	} else {
 		oneMessage.find(".messageRowFrom span.dabLinkDisabled").text(addedMessage.fromUser.userName);
 	}

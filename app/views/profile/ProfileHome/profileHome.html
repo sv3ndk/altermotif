@@ -61,7 +61,7 @@
 										</td>
 										<td class="inboxRowUnread">
 											#{if message.fromUser.profileActive}
-												<a class="dabLink" href="/profile/public?vuser=${message.fromUser.userName}">${message.fromUser.userName}</a>
+												<a class="dabLink" href="@{profile.ProfileView.profileView( message.fromUser.userName)}">${message.fromUser.userName}</a>
 											#{/if}
 											#{if !message.fromUser.profileActive}
 												<span class="dabLinkDisabled">${message.fromUser.userName}</span>
