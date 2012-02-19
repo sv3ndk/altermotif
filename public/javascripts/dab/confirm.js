@@ -70,7 +70,45 @@ var Confirm =  {
 		this.closeDialog = function() {
 			this.myHtmlDialog.dialog("close");		
 		}	
-	}
+	},
+	
+	MessageDisplayer : function(message) {
+		
+		this.myHtmlDialog;
+		
+		this.init = function() {
+			
+			var self = this;
+			this.myHtmlDialog = $("#messagePopup").clone();
+			this.myHtmlDialog.find("span").text(message);
+			
+			this.myHtmlDialog.dialog({
+				autoOpen : false,
+				"buttons" : [ 
+				{
+					text : cancelLabelValue,
+					click : function () {
+						self.closeDialog();
+					}
+				}
+				]
+			});
+		};
+
+		
+		////////////////////////////
+		this.closeDialog = function() {
+			this.myHtmlDialog.dialog("close");		
+		},
+		
+		this.showDialog = function() {
+			this.myHtmlDialog.dialog("open");		
+		},	
+		
+		this.init();
+		
+	},
+	
 
 }
 

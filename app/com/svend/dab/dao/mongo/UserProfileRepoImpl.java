@@ -46,14 +46,12 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 
 	private static Logger logger = Logger.getLogger(UserProfileRepoImpl.class.getName());
 
-	
-	
 	public Set<String> getAllUsernames() {
 		Query query = query(where("username").exists(true));
 		query.fields().include("username");
-		List<UserProfile> list =  mongoTemplate.find(query, UserProfile.class);
-		Set<String > names = new HashSet<String>();
-		
+		List<UserProfile> list = mongoTemplate.find(query, UserProfile.class);
+		Set<String> names = new HashSet<String>();
+
 		if (list != null) {
 			for (UserProfile profile : list) {
 				names.add(profile.getUsername());
@@ -62,7 +60,6 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 		return names;
 	}
 
-	
 	public List<UserProfile> retrieveUserProfilesByIds(List<String> ids) {
 
 		// for some reason this does not work...
@@ -78,60 +75,48 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 		return mongoTemplate.find(theQuery, UserProfile.class);
 	}
 
-	
 	public void replacePrivacySettings(String updatedUserId, PrivacySettings newPrivacySettings) {
 		genericUpdateUser(updatedUserId, new Update().set("privacySettings", newPrivacySettings));
 	}
 
-	
 	public void replaceLatestLoginAndPermKey(String updatedUserId, String uploadPermKey, Date dateOfLoggin) {
 		genericUpdateUser(updatedUserId, new Update().set("uploadPermKey", uploadPermKey).set("dateOfLatestLogin", dateOfLoggin));
 	}
 
-	
 	public void replacePersonalData(UserProfile updatedUser, PersonalData pData) {
 		genericUpdateUser(updatedUser.getUsername(), new Update().set("pdata", pData));
 	}
 
-	
 	public void updatePhotoGallery(UserProfile userProfile) {
-		
+
 		// TODO: we should only insert/remove one or a few photos here...
 		genericUpdateUser(userProfile.getUsername(), new Update().set("photos", userProfile.getPhotos()));
 	}
-	
 
-	
 	public void addOnePhoto(String username, Photo photo) {
 		genericUpdateUser(username, new Update().addToSet("photos", photo));
 	}
-	
-	
+
 	public void removeOnePhoto(String username, Photo removed) {
-		genericUpdateUser(username, new Update(). pull("photos", removed));
+		genericUpdateUser(username, new Update().pull("photos", removed));
 	}
 
-	
 	public void movePhotoToFirstPosition(String username, int photoIndex) {
 		genericUpdateUser(username, new Update().set("mainPhotoIndex", photoIndex));
 	}
 
-	
 	public void removeOnePhotoAndResetMainPhotoIndex(String username, Photo removed) {
-		genericUpdateUser(username, new Update(). pull("photos", removed).set("mainPhotoIndex", 0));
+		genericUpdateUser(username, new Update().pull("photos", removed).set("mainPhotoIndex", 0));
 	}
 
-	
 	public void removeOnePhotoAndDecrementMainPhotoIndex(String username, Photo removed) {
-		genericUpdateUser(username, new Update(). pull("photos", removed).inc("mainPhotoIndex", -1));
+		genericUpdateUser(username, new Update().pull("photos", removed).inc("mainPhotoIndex", -1));
 	}
 
-	
 	public void updateCv(UserProfile userProfile) {
 		genericUpdateUser(userProfile.getUsername(), new Update().set("cvLink", userProfile.getCvLink()));
 	}
 
-	
 	public void addPendingSentContactRequest(UserProfile userProfile, Contact pendingContact) {
 		Contact existingSentContact = userProfile.retrieveSentContactRequestTo(pendingContact.getOtherUser(userProfile.getUsername()).getUserName());
 		if (existingSentContact == null) {
@@ -139,7 +124,6 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 		}
 	}
 
-	
 	public void addPendingReceivedContactRequest(UserProfile userProfile, Contact pendingContact) {
 		Contact existingReceivedContact = userProfile.retrieveReceivedContactRequestFrom(pendingContact.getOtherUser(userProfile.getUsername()).getUserName());
 		if (existingReceivedContact == null) {
@@ -147,7 +131,6 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 		}
 	}
 
-	
 	public void addConfirmedContact(UserProfile userProfile, Contact contact) {
 		Contact existingContact = userProfile.retrieveConfirmedContactWith(contact.getOtherUser(userProfile.getUsername()).getUserName());
 		if (existingContact == null) {
@@ -155,7 +138,6 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 		}
 	}
 
-	
 	public void removePendingSentRelationship(UserProfile userProfile, String otherUsername) {
 		Contact pendingSentReContact = userProfile.retrieveSentContactRequestTo(otherUsername);
 		if (pendingSentReContact != null) {
@@ -163,15 +145,13 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 		}
 	}
 
-	
 	public void removedPendingReceivedRelationship(UserProfile userProfile, String otherUsername) {
 		Contact pendingReceivedReContact = userProfile.retrieveReceivedContactRequestFrom(otherUsername);
 		if (pendingReceivedReContact != null) {
 			genericUpdateUser(userProfile.getUsername(), new Update().pull("pendingReceivedContactRequests", new Contact(pendingReceivedReContact.getContactId())));
-		} 
+		}
 	}
 
-	
 	public void removeConfirmedContact(UserProfile userProfile, String otherUsername) {
 		Contact confirmedContact = userProfile.retrieveConfirmedContactWith(otherUsername);
 		if (confirmedContact != null) {
@@ -179,7 +159,6 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 		}
 	}
 
-	
 	public void updateContact(String updatedUserId, Contact contact, UserSummary updatedUserSummary, boolean updateRequestor) {
 		Query query = query(where("username").is(updatedUserId).and("contacts._id").is(contact.getContactId()));
 		if (updateRequestor) {
@@ -188,12 +167,11 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 			mongoTemplate.updateFirst(query, new Update().set("contacts.$.requestedToUser", updatedUserSummary), UserProfile.class);
 		}
 	}
-	
-	
-	
+
 	public void updatePendingSentContactRequests(String updatedUserId, Contact contact, UserSummary updatedUserSummary, boolean updateRequestor) {
-		logger.log(Level.INFO, "updatePendingSentContactRequests: updatedUserId=" + updatedUserId + " summary: " + updatedUserSummary + " updaterequestor: " + updateRequestor + " contact id: " + contact.getContactId());
-		
+		logger.log(Level.INFO, "updatePendingSentContactRequests: updatedUserId=" + updatedUserId + " summary: " + updatedUserSummary + " updaterequestor: " + updateRequestor + " contact id: "
+				+ contact.getContactId());
+
 		Query query = query(where("username").is(updatedUserId).and("pendingSentContactRequests._id").is(contact.getContactId()));
 		if (updateRequestor) {
 			mongoTemplate.updateFirst(query, new Update().set("pendingSentContactRequests.$.requestedByUser", updatedUserSummary), UserProfile.class);
@@ -202,11 +180,11 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 		}
 	}
 
-	
 	public void updatePendingReceivedContactRequests(String updatedUserId, Contact contact, UserSummary updatedUserSummary, boolean updateRequestor) {
-		
-		logger.log(Level.INFO, "updatePendingReceivedContactRequests: updatedUserId=" + updatedUserId + " summary: " + updatedUserSummary + " updaterequestor: " + updateRequestor + " contact id: " + contact.getContactId());
-		
+
+		logger.log(Level.INFO, "updatePendingReceivedContactRequests: updatedUserId=" + updatedUserId + " summary: " + updatedUserSummary + " updaterequestor: " + updateRequestor + " contact id: "
+				+ contact.getContactId());
+
 		Query query = query(where("username").is(updatedUserId).and("pendingReceivedContactRequests._id").is(contact.getContactId()));
 		if (updateRequestor) {
 			mongoTemplate.updateFirst(query, new Update().set("pendingReceivedContactRequests.$.requestedByUser", updatedUserSummary), UserProfile.class);
@@ -215,21 +193,17 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 		}
 	}
 
-
 	// -------------------------------
 	// references
 
-	
 	public void addReceivedReference(UserProfile userProfile, UserReference createdReference) {
 		genericUpdateUser(userProfile.getUsername(), new Update().addToSet("receivedReferences", createdReference));
 	}
 
-	
 	public void addWrittenReference(UserProfile userProfile, UserReference createdReference) {
 		genericUpdateUser(userProfile.getUsername(), new Update().addToSet("writtenReferences", createdReference));
 	}
 
-	
 	public void removeWrittenReference(UserProfile userProfile, String referenceId) {
 		UserReference reference = userProfile.retrieveWrittenReference(referenceId);
 		logger.log(Level.INFO, "removeWrittenReference, reference is " + reference);
@@ -238,7 +212,6 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 		}
 	}
 
-	
 	public void removeReceivedReference(UserProfile userProfile, String referenceId) {
 		UserReference reference = userProfile.retrieveReceivedReference(referenceId);
 		logger.log(Level.INFO, "removeReceivedReference, reference is " + reference);
@@ -247,54 +220,44 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 		}
 	}
 
-	
 	public void updateWrittenReferenceFromUser(String updatedUserId, UserReference ref, UserSummary updatedUserSummary) {
 		Query query = query(where("username").is(updatedUserId).and("writtenReferences._id").is(ref.getId()));
 		Update update = new Update().set("writtenReferences.$.fromUser", updatedUserSummary);
 		mongoTemplate.updateFirst(query, update, UserProfile.class);
 	}
 
-	
 	public void updateReceivedReferenceFromUser(String updatedUserId, UserReference ref, UserSummary updatedUserSummary) {
 		Query query = query(where("username").is(updatedUserId).and("receivedReferences._id").is(ref.getId()));
 		Update update = new Update().set("receivedReferences.$.fromUser", updatedUserSummary);
 		mongoTemplate.updateFirst(query, update, UserProfile.class);
 	}
 
-	
 	public void updateReceivedReferenceToUser(String updatedUserId, UserReference ref, UserSummary updatedUserSummary) {
 		Query query = query(where("username").is(updatedUserId).and("receivedReferences._id").is(ref.getId()));
 		Update update = new Update().set("receivedReferences.$.toUser", updatedUserSummary);
 		mongoTemplate.updateFirst(query, update, UserProfile.class);
 	}
 
-	
 	public void updateWrittenReferenceToUser(String updatedUserId, UserReference ref, UserSummary updatedUserSummary) {
 		Query query = query(where("username").is(updatedUserId).and("writtenReferences._id").is(ref.getId()));
 		Update update = new Update().set("writtenReferences.$.toUser", updatedUserSummary);
 		mongoTemplate.updateFirst(query, update, UserProfile.class);
 	}
-	
-	
 
-
-	
 	// ----------------------------------------
 	// projects
-	
-	
+
 	public void addProjectParticipation(UserProfile userProfile, Participation part) {
 		Participation existingParticipation = userProfile.retrieveParticipation(part);
 		if (existingParticipation == null) {
 			genericUpdateUser(userProfile.getUsername(), new Update().addToSet("projects", part));
-		}		
+		}
 	}
-	
-	
+
 	public void removeParticipation(final String username, final String projectId) {
-		
+
 		// db.userProfile.update({'_id':'toto'},{'$pull':{'projects':{'projectSummary.projectId':'a13784b5bb9b474fa90f0839c7ea356c'}}});
-		
+
 		mongoTemplate.execute("userProfile", new CollectionCallback<WriteResult>() {
 			public WriteResult doInCollection(DBCollection collection) throws MongoException, DataAccessException {
 				BasicDBObject queryDbo = new BasicDBObject("_id", username);
@@ -303,12 +266,10 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 			}
 		});
 	}
-	
-	
-	
+
 	public void updateProjectMainPhoto(String userName, String projectId, Photo mainPhoto) {
 		Query query = query(where("username").is(userName).and("projects.projectSummary.projectId").is(projectId));
-		
+
 		Update update;
 		if (mainPhoto == null) {
 			logger.log(Level.INFO, "removing photo of " + userName + " of project " + projectId);
@@ -320,38 +281,31 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 		mongoTemplate.updateFirst(query, update, UserProfile.class);
 	}
 
-
-	
 	public void markParticipationHasAccepted(String userName, String projectId) {
 		Query query = query(where("username").is(userName).and("projects.projectSummary.projectId").is(projectId));
 		Update update = new Update().set("projects.$.accepted", true);
 		mongoTemplate.updateFirst(query, update, UserProfile.class);
 	}
 
-
-	
 	public void updateProjectRole(String userName, String projectId, ROLE role) {
 		Query query = query(where("username").is(userName).and("projects.projectSummary.projectId").is(projectId));
 		Update update = new Update().set("projects.$.role", role);
 		mongoTemplate.updateFirst(query, update, UserProfile.class);
 	}
-	
-	
+
 	public void updateProjectStatus(String userName, String projectId, STATUS newStatus) {
 		Query query = query(where("username").is(userName).and("projects.projectSummary.projectId").is(projectId));
 		Update update = new Update().set("projects.$.projectSummary.status", newStatus);
 		mongoTemplate.updateFirst(query, update, UserProfile.class);
 	}
-	
-	
+
 	// ----------------------------------------
 	// groups
 
-	
 	public void addParticipationInGroup(String userName, GroupParticipation groupParticipation) {
 		genericUpdateUser(userName, new Update().addToSet("groups", groupParticipation));
 	}
-	
+
 	public void removeParticipationInGroup(final String username, final String groupId) {
 		mongoTemplate.execute("userProfile", new CollectionCallback<WriteResult>() {
 			public WriteResult doInCollection(DBCollection collection) throws MongoException, DataAccessException {
@@ -362,15 +316,15 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 		});
 	}
 
-	
-	
 	public void updateGroupSummaryOfAllUsersPartOf(GroupSummary updatedSummary) {
 		if (updatedSummary != null) {
 			mongoTemplate.updateMulti(query(where("groups.groupSummary.groupId").is(updatedSummary.getGroupId())), new Update().set("groups.$.groupSummary", updatedSummary), UserProfile.class);
 		}
 	}
-	
-	
+
+	public void updateGroupParticipationRole(String userName, String groupId, com.svend.dab.core.beans.groups.GroupParticipant.ROLE role) {
+		mongoTemplate.updateFirst(query(where("username").is(userName).and("groups.groupSummary.groupId").is(groupId)), new Update().set("groups.$.role", role), UserProfile.class);
+	}
 	
 	// -------------------------------------
 	// -------------------------------------
@@ -386,17 +340,13 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 		mongoTemplate.updateFirst(query, update, UserProfile.class);
 	}
 
-	
 	public UserProfile retrieveUserProfileById(String userId) {
 		return mongoTemplate.findOne(query(where("username").is(userId)), UserProfile.class);
 	}
-	
+
 	public void save(UserProfile createdUserProfile) {
 		mongoTemplate.save(createdUserProfile);
 	}
-
-
-
 
 
 }

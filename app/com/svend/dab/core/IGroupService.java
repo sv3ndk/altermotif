@@ -1,5 +1,6 @@
 package com.svend.dab.core;
 
+import com.svend.dab.core.beans.groups.GroupParticipant.ROLE;
 import com.svend.dab.core.beans.groups.ProjectGroup;
 
 public interface IGroupService {
@@ -17,5 +18,9 @@ public interface IGroupService {
 	void cancelUserApplicationToGroup(String groupId, String loggedInUserProfileId);
 
 	void acceptUserApplicationToGroup(String groupId, String applicantId);
+
+	void removeUserFromGroup(String groupId, String loggedInUserProfileId);
+
+	void updateUserParticipantRole(String groupId, String userId, ROLE role);
 
 }

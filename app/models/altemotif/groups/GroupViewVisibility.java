@@ -64,5 +64,25 @@ public class GroupViewVisibility {
 	public boolean isUserApplicationsAreVisible() {
 		return pep.isUserAllowedToAcceptAndRejectUserApplications(visitingUser);
 	}
+	
+	public boolean isLeaveLinkVisible(String groupUserId) {
+		if (groupUserId == null) {
+			return false;
+		}
+		
+		if (groupUserId.equals(visitingUser)) {
+			return pep.isUserAllowedToLeaveGroup(visitingUser);
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean isMakeAdminLinkVisible(String groupUserId) {
+		return pep.isUserAllowedToMakeAdmin(visitingUser, groupUserId);
+	}
+	
+	public boolean isMakeMemberLinkVisible(String groupUserId) {
+		return pep.isUserAllowedToMakeMember(visitingUser, groupUserId);
+	}
 
 }

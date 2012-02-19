@@ -36,6 +36,20 @@ var dabUtils =  {
 		}	
 	},
 	
+	
+	
+	showMessage : function(message) {
+		
+		
+		
+		
+		
+	},
+	
+	
+	
+	
+	
 }
 
 

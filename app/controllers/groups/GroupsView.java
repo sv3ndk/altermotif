@@ -4,6 +4,7 @@ import web.utils.Utils;
 import models.altemotif.groups.GroupViewVisibility;
 import models.altermotif.BinaryResponse;
 
+import com.svend.dab.core.beans.groups.GroupParticipant.ROLE;
 import com.svend.dab.core.beans.groups.GroupPep;
 import com.svend.dab.core.beans.groups.ProjectGroup;
 
@@ -24,6 +25,7 @@ public class GroupsView extends DabLoggedController {
 
 			renderArgs.put("groupViewVisibility", new GroupViewVisibility(new GroupPep(group), getSessionWrapper().getLoggedInUserProfileId()));
 			renderArgs.put("visitedGroup", group);
+			renderArgs.put("loggedInUserId", getSessionWrapper().getLoggedInUserProfileId());
 
 			render();
 		}
@@ -105,8 +107,54 @@ public class GroupsView extends DabLoggedController {
 				renderJSON(new BinaryResponse(false));
 			}
 		}
-		
 	}
+	
+	public static void leaveGroup(String groupId) {
+		ProjectGroup group = BeanProvider.getGroupService().loadGroupById(groupId, true);
+		
+		if (group == null) {
+			renderJSON(new BinaryResponse(false));
+		} else {
+			GroupPep pep = new GroupPep(group);
+			if (pep.isUserAllowedToLeaveGroup(getSessionWrapper().getLoggedInUserProfileId())) {
+				BeanProvider.getGroupService().removeUserFromGroup(groupId, getSessionWrapper().getLoggedInUserProfileId());
+			} else {
+				renderJSON(new BinaryResponse(false));
+			}
+		}
+	}
+	
+	public static void makeAdmin(String groupId, String upgradedUser) {
+		ProjectGroup group = BeanProvider.getGroupService().loadGroupById(groupId, true);
+		
+		if (group == null) {
+			renderJSON(new BinaryResponse(false));
+		} else {
+			GroupPep pep = new GroupPep(group);
+			if (pep.isUserAllowedToMakeAdmin(getSessionWrapper().getLoggedInUserProfileId(), upgradedUser)) {
+				BeanProvider.getGroupService().updateUserParticipantRole(groupId, upgradedUser, ROLE.admin);
+			} else {
+				renderJSON(new BinaryResponse(false));
+			}
+		}
+	}
+	
+	public static void makeMember(String groupId, String downgradedUser) {
+		ProjectGroup group = BeanProvider.getGroupService().loadGroupById(groupId, true);
+		
+		if (group == null) {
+			renderJSON(new BinaryResponse(false));
+		} else {
+			GroupPep pep = new GroupPep(group);
+			if (pep.isUserAllowedToMakeMember(getSessionWrapper().getLoggedInUserProfileId(), downgradedUser)) {
+				BeanProvider.getGroupService().updateUserParticipantRole(groupId, downgradedUser, ROLE.member);
+			} else {
+				renderJSON(new BinaryResponse(false));
+			}
+		}
+	}
+	
+	
 	
 	
 

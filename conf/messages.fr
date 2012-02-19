@@ -268,6 +268,7 @@ groupRoleMember=Membre
 
 groupsViewEdit=***Edit group
 groupsViewClose=***Close group
+groupsViewCannotCloseGroup=***Closing a group is a non undoable action. If you are sure this is what you want to do, please remove manually all user member and project members from this group and then click again on this link
 groupsViewConfirmCloseGroup=***Are you sure you want to close this group? The group will no longer be accessible. THIS ACTION CANNOT BE UNDONE. Are you sure this is what you want to do?
 groupsViewCreatedOn=Créé le 
 groupsViewMembers=Membres
@@ -284,6 +285,12 @@ groupsViewAcceptUserApplication=***Accept application
 groupsViewRejectUserApplication=***Reject application
 groupsViewConfirmAcceptApplyToGroup=***Are you sure you want to accept this user membership request to this group?
 groupsViewConfirmRejectApplyToGroup=***Are you sure you want to reject this user membership request to this group?
+groupsViewLeaveGroup=***Leave group
+groupsViewConfirmLeaveToGroup=***Are you sure you want to leave this group?
+groupsViewMakeAdministrator=***Make administrator
+groupsViewConfirmMakeAdminText=***Are you sure you want to upgrade the status of this member to administrator of this group?
+groupsViewMakeMember=***Make member
+groupsViewConfirmMakeMemberText=***Are you sure you want to downgrade the status of this member to simple member of this group?
 groupsViewForum=Forum
 
 groupsEditName=Nom du groupe

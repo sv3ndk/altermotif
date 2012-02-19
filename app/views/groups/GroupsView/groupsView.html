@@ -13,15 +13,26 @@
 	    var cancelApplytoGroup 	= #{jsAction @groups.GroupsView.cancelApplyToGroup(':groupId') /};
 	    var acceptUserApplicationToGroup 	= #{jsAction @groups.GroupsView.acceptUserApplicationToGroup(':groupId', ':applicantId') /};
 	    var rejectUserApplicationToGroup 	= #{jsAction @groups.GroupsView.rejectUserApplicationToGroup(':groupId', ':applicantId') /};
+	    var leaveGroup 						= #{jsAction @groups.GroupsView.leaveGroup(':groupId') /};
+	    var makeAdmin 						= #{jsAction @groups.GroupsView.makeAdmin(':groupId', ':upgradedUser') /};
+	    var makeMember 						= #{jsAction @groups.GroupsView.makeMember(':groupId', ':downgradedUser') /};
 	
 		var confirmCloseGroupText = "&{'groupsViewConfirmCloseGroup'}";
+		var cannotCloseGroupText= "&{'groupsViewCannotCloseGroup'}";
 		var confirmApplyToGroupText = "&{'groupsViewConfirmApplyToGroup'}";
 		var confirmCancelApplyToGroup = "&{'groupsViewConfirmCancelApplyToGroup'}";
 		var confirmAcceptApplyToGroup = "&{'groupsViewConfirmAcceptApplyToGroup'}";
 		var confirmRejectApplyToGroup = "&{'groupsViewConfirmRejectApplyToGroup'}";
+		var confirmLeaveGroup = "&{'groupsViewConfirmLeaveToGroup'}";
+		var confirmMakeAdminText = "&{'groupsViewConfirmMakeAdminText'}";
+		var confirmMemberAdminText = "&{'groupsViewConfirmMakeMemberText'}";
+		
+		var adminRoleLabel = "&{'groupRoleAdmin'}";
+		var memberRoleLabel = "&{'groupRoleMember'}";
 		
 		var isCloseGroupLinkEffective = ${groupViewVisibility.endGroupLinkEffective};
 		var visitedGroupId = "${visitedGroup.id}";
+		var loggedInUserId = "${loggedInUserId}";
 	</script>
 #{/set}
 
@@ -130,6 +141,12 @@
 						<span data-bind="text: userLocation"></span>
 						<br />
 						&{'groupRole'}: <span class="groupRole" data-bind="text: role"> </span>
+						<br />
+						<span data-bind="visible: isLeaveLinkVisible" class="dabLink leaveGroup">&{'groupsViewLeaveGroup'}</span>
+						<span data-bind="visible: isLeaveLinkVisible"> - </span>
+						<span data-bind="visible: isMakeAdminLinkVisible" class="dabLink makeAdmin">&{'groupsViewMakeAdministrator'}</span>
+						<span data-bind="visible: isMakeMemberLinkVisible" class="dabLink makeMember">&{'groupsViewMakeMember'}</span>
+						
 					</div>
 				</div>
 			</div>
@@ -137,7 +154,7 @@
 	</div>
 	
 	#{if groupViewVisibility.userApplicationsAreVisible }
-		<div id="groupUserApplicants" class="groupToggleBlocks">
+		<div id="groupPendingApplicants" class="groupToggleBlocks">
 			<span class="toggleLink dabLink" >&{'groupsViewApplicants'} (<span class="dabLink" data-bind="text: numberOfUserApplicants"></span><span class="dabLink">)...</span></span>
 			<div class="toggleContainer" style="display: none">
 			
@@ -170,11 +187,14 @@
 		<span id="applyToGroupLinkVisisble" class="hidden">${groupViewVisibility.applyToGroupLinkVisisble }</span>
 		<span id="alreadyApplyToGroupLinkVisisble" class="hidden">${groupViewVisibility.alreadyApplyToGroupLinkVisisble}</span>
 	
-		<div id="confirmedParticipants">
+		<div id="participants">
 			 #{list items:visitedGroup.participants, as:'oneParticipant'}
 				 <div class="participant" >
 					<span class="username" class="hidden" ">${oneParticipant.user.userName}</span>
 					<span class="isUserAccepted" class="hidden" ">${oneParticipant.accepted}</span>
+					<span class="isLeaveLinkVisible" class="hidden" ">${groupViewVisibility.isLeaveLinkVisible(oneParticipant.user.userName) }</span>
+					<span class="isMakeAdminLinkVisible" class="hidden" ">${groupViewVisibility.isMakeAdminLinkVisible(oneParticipant.user.userName) }</span>
+					<span class="isMakeMemberLinkVisible" class="hidden" ">${groupViewVisibility.isMakeMemberLinkVisible(oneParticipant.user.userName) }</span>
 					<a class="profileLink" href="@{profile.ProfileView.profileView( oneParticipant.user.userName)}" ></a>
 					<img src="${oneParticipant.user.mainPhotoThumbLink}" class="profileContactThumb" />
 					<span class="userLocation">${oneParticipant.user.location}</span>
@@ -200,11 +220,11 @@
 	</div>
 	
 	
-	
 	<div id="applyToGroupDialog" title="&{'confirmationPopupTitle'}">
 		&{'groupsViewApplicationPopupText'}
 		<br />
 		<br />
 		<textarea cols="45" rows="7"></textarea>
 	</div>
+	
 	

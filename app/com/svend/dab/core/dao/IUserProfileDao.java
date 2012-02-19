@@ -130,5 +130,7 @@ public interface IUserProfileDao {
 
 	public void updateGroupSummaryOfAllUsersPartOf(GroupSummary updatedSummary);
 
+	public void updateGroupParticipationRole(String userId, String groupId, com.svend.dab.core.beans.groups.GroupParticipant.ROLE role);
+
 
 }

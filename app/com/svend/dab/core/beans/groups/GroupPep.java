@@ -63,6 +63,45 @@ public class GroupPep {
 		return isUserAdmin(userId);
 	}
 
+	public boolean isUserAllowedToLeaveGroup(String userId) {
+		ROLE userRole = group.findRoleOfUser(userId);
+		
+		if (userRole == null) {
+			return false;
+		} else if (userRole == ROLE.member) {
+			return true;
+		} else if (userRole == ROLE.admin) {
+			return group.getNumberOfAdmins() > 1;
+		}
+		
+		return false;
+	}
+	
+	public boolean isUserAllowedToMakeAdmin(String userId, String upgradedUser) {
+		ROLE userRole = group.findRoleOfUser(userId);
+		if (userRole ==ROLE.admin) {
+			ROLE roleOfUpgraded = group.findRoleOfUser(upgradedUser);
+			return roleOfUpgraded == ROLE.member;
+			
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean isUserAllowedToMakeMember(String userId, String downGradedUser) {
+		
+		if (userId == null || downGradedUser == null || !downGradedUser.equals(userId)) {
+			return false;
+		}
+		
+		ROLE userRole = group.findRoleOfUser(userId);
+		if (userRole == ROLE.admin) {
+			return group.getNumberOfAdmins() > 1;
+		} else {
+			return false;
+		}
+	}
+
 	
 	///////////////////////////////
 	
@@ -79,7 +118,6 @@ public class GroupPep {
 	public ProjectGroup getGroup() {
 		return group;
 	}
-
 	
 
 }
