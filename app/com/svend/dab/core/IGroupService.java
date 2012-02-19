@@ -10,4 +10,6 @@ public interface IGroupService {
 
 	void updateGroupData(ProjectGroup editedGroup);
 
+	void closeGroup(String groupId);
+
 }

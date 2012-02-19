@@ -12,4 +12,9 @@ public interface IGroupDao {
 	public void updateParticipantOfAllGroupsWith(UserSummary updatedSummary);
 
 	public void updateGroupData(ProjectGroup editedGroup);
+
+	public void updateGroupActiveStatus(String groupId, boolean b);
+
+	public void removeUserParticipant(String groupId, String participantId);
+
 }

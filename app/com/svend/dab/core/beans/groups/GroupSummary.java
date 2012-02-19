@@ -6,6 +6,11 @@ package com.svend.dab.core.beans.groups;
  */
 public class GroupSummary {
 
+	private String groupId;
+	
+	private String name;
+	
+	
 	public GroupSummary() {
 		super();
 	}
@@ -23,9 +28,6 @@ public class GroupSummary {
 	
 	///
 	
-	private String groupId;
-
-	private String name;
 
 	public String getGroupId() {
 		return groupId;

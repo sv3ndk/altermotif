@@ -4,10 +4,16 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.mongodb.core.CollectionCallback;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCollection;
+import com.mongodb.MongoException;
+import com.mongodb.WriteResult;
 import com.svend.dab.core.beans.groups.ProjectGroup;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.dao.IGroupDao;
@@ -47,6 +53,20 @@ public class GroupDao implements IGroupDao {
 					ProjectGroup.class);
 		}
 
+	}
+
+	public void updateGroupActiveStatus(String groupId, boolean activeStatus) {
+		mongoTemplate.updateFirst(query(where("id").is(groupId)), new Update().set("isActive", activeStatus), ProjectGroup.class); 
+	}
+
+	public void removeUserParticipant(final String groupId, final String participantId) {
+		mongoTemplate.execute("projectGroup", new CollectionCallback<WriteResult>() {
+			public WriteResult doInCollection(DBCollection collection) throws MongoException, DataAccessException {
+				BasicDBObject queryDbo = new BasicDBObject("_id", groupId);
+				BasicDBObject pullDbo = new BasicDBObject("$pull", new BasicDBObject("participants", new BasicDBObject("user._id", participantId)));
+				return collection.update(queryDbo, pullDbo);
+			}
+		});
 	}
 
 }

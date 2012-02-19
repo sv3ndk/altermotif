@@ -125,7 +125,10 @@ public interface IUserProfileDao {
 	// groups
 
 	public void addParticipationInGroup(String username, GroupParticipation groupParticipation);
+	
+	public void removeParticipationInGroup(String participantId, String groupId);
 
 	public void updateGroupSummaryOfAllUsersPartOf(GroupSummary updatedSummary);
+
 
 }

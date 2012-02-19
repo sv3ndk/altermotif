@@ -27,13 +27,13 @@ public class GroupPep {
 	}
 
 	public boolean isUserAllowedToCloseGroup(String userId) {
-		return isUserAdmin(userId);
+		return isUserAdmin(userId)  && group.getNumberOfParticipants() == 1;
 	}
 	
 	
 	///////////////////////////////
 	
-	protected boolean isUserAdmin(String userId) {
+	public boolean isUserAdmin(String userId) {
 		ROLE userRole = group.findRoleOfUser(userId);
 		return userRole == ROLE.admin;
 	}

@@ -270,6 +270,7 @@ groupRoleMember=Lid
 
 groupsViewEdit=***Edit group
 groupsViewClose=***Close group
+groupsViewConfirmCloseGroup=***Are you sure you want to close this group? The group will no longer be accessible. THIS ACTION CANNOT BE UNDONE. Are you sure this is what you want to do?
 groupsViewCreatedOn=Gecreëerd op
 groupsViewMembers=Leden
 groupsViewProjects=Projecten

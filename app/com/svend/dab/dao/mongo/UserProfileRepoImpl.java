@@ -296,7 +296,6 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 		// db.userProfile.update({'_id':'toto'},{'$pull':{'projects':{'projectSummary.projectId':'a13784b5bb9b474fa90f0839c7ea356c'}}});
 		
 		mongoTemplate.execute("userProfile", new CollectionCallback<WriteResult>() {
-			
 			public WriteResult doInCollection(DBCollection collection) throws MongoException, DataAccessException {
 				BasicDBObject queryDbo = new BasicDBObject("_id", username);
 				BasicDBObject pullDbo = new BasicDBObject("$pull", new BasicDBObject("projects", new BasicDBObject("projectSummary.projectId", projectId)));
@@ -353,11 +352,22 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 		genericUpdateUser(userName, new Update().addToSet("groups", groupParticipation));
 	}
 	
+	public void removeParticipationInGroup(final String username, final String groupId) {
+		mongoTemplate.execute("userProfile", new CollectionCallback<WriteResult>() {
+			public WriteResult doInCollection(DBCollection collection) throws MongoException, DataAccessException {
+				BasicDBObject queryDbo = new BasicDBObject("_id", username);
+				BasicDBObject pullDbo = new BasicDBObject("$pull", new BasicDBObject("groups", new BasicDBObject("groupSummary.groupId", groupId)));
+				return collection.update(queryDbo, pullDbo);
+			}
+		});
+	}
+
+	
+	
 	public void updateGroupSummaryOfAllUsersPartOf(GroupSummary updatedSummary) {
 		if (updatedSummary != null) {
 			mongoTemplate.updateMulti(query(where("groups.groupSummary.groupId").is(updatedSummary.getGroupId())), new Update().set("groups.$.groupSummary", updatedSummary), UserProfile.class);
 		}
-		
 	}
 	
 	
@@ -384,6 +394,8 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 	public void save(UserProfile createdUserProfile) {
 		mongoTemplate.save(createdUserProfile);
 	}
+
+
 
 
 

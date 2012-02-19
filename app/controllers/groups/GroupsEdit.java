@@ -29,7 +29,7 @@ public class GroupsEdit extends DabLoggedController{
 		// even if we should skip load for edition reason, we still need to load the real group for the security check
 		ProjectGroup group = BeanProvider.getGroupService().loadGroupById(gid, false);
 		
-		if (group == null) {
+		if (group == null  || ! group.isActive()) {
 			// group does not exist!
 			Application.index();
 		} else {

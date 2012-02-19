@@ -26,14 +26,26 @@ public class GroupViewVisibility {
 		return isEditGroupLinkVisisble() || isEndGroupLinkVisisble();
 	}
 	
+	
+	
+	
 	public boolean isEditGroupLinkVisisble() {
 		return pep.isUserAllowedToEditGroup(visitingUser);
 	}
 	
 	public boolean isEndGroupLinkVisisble() {
-		return pep.isUserAllowedToCloseGroup(visitingUser);
+		
+		if (pep.isUserAllowedToCloseGroup(visitingUser)) {
+			return true;
+		}
+		
+		// if the user may not close the group, he may still see the link if he is admin => if he clicks, the GUI will tell him to first remove all other admins
+		return pep.isUserAdmin(visitingUser);
 	}
 
+	public boolean isEndGroupLinkEffective() {
+		return pep.isUserAllowedToCloseGroup(visitingUser);
+	}
 	
 	
 

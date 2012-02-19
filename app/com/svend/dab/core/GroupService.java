@@ -15,6 +15,7 @@ import com.svend.dab.core.beans.Config;
 import com.svend.dab.core.beans.groups.ProjectGroup;
 import com.svend.dab.core.dao.IGroupDao;
 import com.svend.dab.eda.EventEmitter;
+import com.svend.dab.eda.events.groups.GroupClosed;
 import com.svend.dab.eda.events.groups.GroupCreated;
 import com.svend.dab.eda.events.groups.GroupUpdatedEvent;
 
@@ -70,6 +71,13 @@ public class GroupService implements IGroupService {
 	public void updateGroupData(ProjectGroup editedGroup) {
 		if (editedGroup != null) {
 			eventEmitter.emit(new GroupUpdatedEvent(editedGroup));
+		}
+	}
+
+
+	public void closeGroup(String groupId) {
+		if (!Strings.isNullOrEmpty(groupId)) {
+			eventEmitter.emit(new GroupClosed(groupId));
 		}
 	}
 	

@@ -9,6 +9,9 @@
 
 	<script type="text/javascript">
 	
+		var confirmCloseGroupText = "&{'groupsViewConfirmCloseGroup'}";
+		var isCloseGroupLinkEffective = ${groupViewVisibility.endGroupLinkEffective};
+		var visitedGroupId = "${visitedGroup.id}";
 	</script>
 #{/set}
 
@@ -17,9 +20,6 @@
 	<div id="groupPhotoContainer">
 		todo, add photos.. 
 	</div>
-	
-	
-	
 	
 	
 	<div id="groupBasicDetails">
@@ -63,13 +63,6 @@
 	
 	
 	<div id="groupRightColumn">
-		<table>
-			<tbody>
-				<tr>
-					<td></td>
-				</tr>
-			</tbody>
-		</table>
 		#{if groupViewVisibility.isToolBoxVisible() }
 			<div id="groupToolBox">
 				<ul>
@@ -81,13 +74,12 @@
 		
 					<li>
 						#{if groupViewVisibility.isEndGroupLinkVisisble() } 
-							<span id="cancelProjectLink" class="dabLinkDisabled" >&{'groupsViewClose'}</span> 
+							<span id="closeGroupLink" class="dabLink" >&{'groupsViewClose'}</span> 
 						#{/if}
 					</li>
 				</ul>
 			</div>
 		#{/if}
-		
 	</div>
 	
 	
@@ -114,5 +106,12 @@
 		<div class="toggleContainer" style="display: none">
 			(TODO)
 		</div>
+	</div>
+	
+
+	<div id="hiddenCloseGroupForm" class="hidden">
+		#{form @groups.GroupsView.closeGroup()}
+			<input type="hidden" name="groupId" id="groupIdInput"></input>
+		#{/form}
 	</div>
 	

@@ -1,6 +1,5 @@
 package com.svend.dab.core.beans.groups;
 
-
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,10 +10,11 @@ import com.svend.dab.core.beans.Location;
 import com.svend.dab.core.beans.groups.GroupParticipant.ROLE;
 import com.svend.dab.core.beans.projects.SelectedTheme;
 
-
 public class ProjectGroup {
 
 	private String id;
+	
+	private boolean isActive = true;
 	private String name;
 	private String description;
 	private Date creationDate;
@@ -22,10 +22,10 @@ public class ProjectGroup {
 	private List<Location> location;
 	private List<SelectedTheme> themes;
 	private List<String> tags;
-	
+
 	private List<GroupParticipant> participants;
-	
-	//////////////////////
+
+	// ////////////////////
 
 	public ProjectGroup() {
 		super();
@@ -44,9 +44,8 @@ public class ProjectGroup {
 
 	// ////////////////////////////////////////
 
-	
 	public void generatePhotoLinks(Date expirationdate) {
-		
+
 		if (participants != null) {
 			for (GroupParticipant participant : participants) {
 				participant.generatePhotoLinks(expirationdate);
@@ -54,34 +53,47 @@ public class ProjectGroup {
 		}
 	}
 
-	
 	public ROLE findRoleOfUser(String userId) {
-		
+
 		// TODO: add some caching here (this method is queried several times for each page refresh, for the same user)
-		
+
 		if (Strings.isNullOrEmpty(userId) || participants == null || participants.isEmpty()) {
 			return null;
 		}
-		
+
 		for (GroupParticipant participant : participants) {
 			if (userId.equals(participant.getUser().getUserName())) {
 				return participant.getRole();
 			}
 		}
-		
+
 		return null;
 	}
-	
-	
-	
-	
+
+	public int getNumberOfAdmins() {
+
+		if (participants == null || participants.isEmpty()) {
+			return 0;
+		}
+
+		int numberOfAdmins = 0;
+
+		for (GroupParticipant participant : participants) {
+			if (participant.getRole() == ROLE.admin) {
+				numberOfAdmins++;
+			}
+		}
+
+		return numberOfAdmins;
+	}
+
 	public void addParticipant(GroupParticipant groupParticipant) {
 		if (participants == null) {
 			participants = new LinkedList<GroupParticipant>();
 		}
 		participants.add(groupParticipant);
 	}
-	
+
 	public int getNumberOfParticipants() {
 		if (participants == null) {
 			return 0;
@@ -94,7 +106,6 @@ public class ProjectGroup {
 		return 0;
 	}
 
-	
 	public void replaceLocations(Set<Location> newLocations) {
 		if (location == null) {
 			location = new LinkedList<Location>();
@@ -103,7 +114,7 @@ public class ProjectGroup {
 		}
 		location.addAll(newLocations);
 	}
-	
+
 	public void replaceThemes(Set<SelectedTheme> newThemes) {
 		if (themes == null) {
 			themes = new LinkedList<SelectedTheme>();
@@ -188,7 +199,12 @@ public class ProjectGroup {
 		this.creationDate = creationDate;
 	}
 
+	public boolean isActive() {
+		return isActive;
+	}
 
-
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
 
 }
