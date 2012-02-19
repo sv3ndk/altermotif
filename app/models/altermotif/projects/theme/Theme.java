@@ -1,7 +1,8 @@
 package models.altermotif.projects.theme;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.LinkedList;
+import java.util.List;
+
 
 /**
  * @author svend
@@ -11,7 +12,7 @@ public class Theme {
 
 	private final String id;
 	private final String label;
-	private Set<SubTheme> subThemes = new HashSet<SubTheme>();
+	private List<SubTheme> subThemes = new LinkedList<SubTheme>();
 
 	public Theme(String id, String label) {
 		super();
@@ -34,7 +35,7 @@ public class Theme {
 		subThemes.add(st);
 	}
 
-	public Set<SubTheme> getSubThemes() {
+	public List<SubTheme> getSubThemes() {
 		return subThemes;
 	}
 

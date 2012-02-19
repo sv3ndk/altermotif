@@ -15,9 +15,9 @@ OkButton=OK
 CancelButton=Annuleer
 nolabel=
 
-elapsedTimeSeconds=***a few seconds ago
-elapsedTimeMinutes=*** minutes ago
-elapsedTimeHours=*** hours ago
+elapsedTimeSeconds=enkele seconden geleden
+elapsedTimeMinutes=minuten geleden
+elapsedTimeHours=uur geleden
 
 
 aboutUsPart1=AlterMotif is een project zoals elk ander project dat op deze website zou kunnen staan. Het startte met een idee over hoe deze wereld een betere plek zou kunnen worden. Beetje bij beetje realiseerden we ons dat de kern van het probleem schuilt in het alomtegenwoordige streven naar groei en winst zonder aandacht voor de kost die dit oplegt aan andere mensen; aan het milieu en die mensen weerhoud van akties die hen wezenlijk bewust en voldaan zouden kunnen maken. Daarop daagde het begrip dat de oplossing schuilt in ondernemerschap. Door projecten op te starten die geïnspireerd worden door onze persoonlijke motieven, uitgevoerd via nieuwe vormen van samenwerking, kunnen we alternatieve manieren aandragen om dingen te doen en aldus echte bronnen van verandering worden.
@@ -42,12 +42,12 @@ uploadGenericError=Fout tijdens het opladen van de gegevens
 uploadedFileTooBigError=Het ingevoerde bestand is groter dan het toegestane maximum
 profileUploadCvNotAPdf=Fout: de cv moet een pdf-bestand zijn
 profileUploadPhotoNotAnImage=Het bestand dat u probeerde op te laden is geen beeld
-illegalHttpAddressFormat=***Link format incorrect
-registerMustAcceptConditionsErrorMessage=***You must accept the terms and conditions of Altermotif in order to create a profile 
+illegalHttpAddressFormat=Het formaat van de link is incorrect
+registerMustAcceptConditionsErrorMessage=U moet de gebruiksvoorwaarden acepteren om een profiel te kunnen creëren 
 
 
 # note: this message is not displayed by Firefox: they actually refuse to do that because some website exploit this against their users, see here:https://bugzilla.mozilla.org/show_bug.cgi?id=578828 
-warningUnsavedChangesTextEnkele wijzigingen op uw profiel zijn niet opgeslagen wijzigingen. Deze zullen verdwijnen indien u deze pagina verlaat zonder ze op te slaan!
+warningUnsavedChangesText=Enkele wijzigingen op uw profiel zijn niet opgeslagen wijzigingen. Deze zullen verdwijnen indien u deze pagina verlaat zonder ze op te slaan!
 
 # error page (among other things, displayed after a refused upload)
 errorPageMessage=Fout tijdens het verwerken van uw verzoek
@@ -68,7 +68,7 @@ homePageFindAProject=Vind een project
 homePageRules=Gebruiksvoorwaarden
 homePagePrivacy=Privacy
 homePageContacts=Contacteer ons
-homePageAboutUs=***About us
+homePageAboutUs=Wie zijn we?
 youDoNotHaveUnreadMessages=Er zijn geen ongelezen berichten in uw postvak IN
 homeYouHavePendingInvitationNotificationPart1=U heeft hangende contactverzoeken. U zou uw
 homeYouHavePendingInvitationNotificationLinkName=profielpagina
@@ -89,8 +89,8 @@ loginErrorMessage=Fout bij het aanmelden
 loginErrorDetailMessage=Gebruikersnaam en/of wachtwoord verkeerd!
 registerPageCaptchaTitle=Gelieve de letters in alfabetische volgorde te slepen
 registerPageWelcomText=Welkom! Van zodra u geregistreerd bent, zal u in staat zijn om uw account aan te passen en te bepalen of anderen uw profiel kunnen zijn of andere stukken informatie kunnen zien zoals uw verjaardag of uw echte naam. Zich registreren op AlterMotif betekent dat je toetreedt tot een netwerk van mensen die op zoek zijn naar nieuwe vormen van interactie en productie. Ongehinderd door de verblindende achtervolging van winst, hebben acties duidelijke intenties en is samenwerking gebaseerd op wederzijdse overtuiging. Aldus werk je niet voor de economie maar betreedt je een economie die voor u werkt, door uw doel terug centraal te stellen.
-registerAcceptConditions_part1=***I accept the 
-registerAcceptConditions_part2=***terms and conditions 
+registerAcceptConditions_part1=Ik accepteer de 
+registerAcceptConditions_part2=gebruiksvoorwaarden
 
 
 #Top menu 
@@ -109,8 +109,8 @@ topMenuMessagesNew=Nieuw bericht
 topMenuMessagesDeleted=Verwijderde berichten
 
 topMenuGroups=Groepen
-topMenuGroupsNew=***New group
-topMenuGroupsFind=***Find a group
+topMenuGroupsNew=Nieuwe groep
+topMenuGroupsFind=Vindt een groep
 
 topMenuProjects=Projecten
 topMenuProjectNew=Nieuw project
@@ -124,9 +124,9 @@ yourApplications=uw aanzoeken
 
 
 #profile screen - "view profile"
-profileYourProfileIsInactiveNotificationPart1=Uw profiel is momenteel inactief, enkel u kan deze pagina zien. Indien u dit wil wijzigen, activeer dan uw profiel in de 
+profileYourProfileIsInactiveNotificationPart1=Uw profiel is momenteel inactief, enkel u kan deze pagina zien. Indien u dit wil wijzigen, activeer dan uw profiel op de 
 profileYourProfileIsInactiveNotificationLinkName=privacy instellingen
-profileYourProfileIsInactiveNotificationPart2=***page
+profileYourProfileIsInactiveNotificationPart2= pagina
 profileUsername=Gebruikersnaam
 profileFirstName=Voornaam/Naam van de organisatie
 profileLastName=Achternaam/Statuut
@@ -218,7 +218,7 @@ uploadCVPleaseWait=Gelieve te wachten totdat de CV is opgeladen
 
 # manage privacy settings screens
 privacySettingsProfileIsActive=Mijn profiel is actief
-privacySettingsMayNotDeactivateExplanation=***You may not deactivate your profile because your are the owner of at least one project or you have received at least one ownership transfer proposal. You must transmit this ownership to another member of this project before being able to deactivate your profile.
+privacySettingsMayNotDeactivateExplanation=U mag uw profiel niet desactiveren omdat u de leider bent van minstens één project of omdat u minstens nog één openstaand verzoek hebt om leider te worden. U moet uw leiderspositie(s) overdragen naar een andere gebruiker of de projecten waarvan u leider bent afsluiten om uw profiel te kunnen desactiveren.
 privacySettingsFirstName=Mijn voornaam is zichtbaar voor
 privacySettingsLastName=Mijn achternaam is zichtbaar voor
 privacySettingsNameExplanation=Wanneer zowel mijn voor- als achternaam onzichtbaar zijn, dan zal deze gebruiker enkel uw gebruikersnaam zien:
@@ -264,31 +264,31 @@ level2=Goed
 #################################
 # groups
 
-groupRole=***Group role
-groupRoleAdmin=***Administrator
-groupRoleMember=***Member
+groupRole=Rol in groep
+groupRoleAdmin=Administrator
+groupRoleMember=Lid
 
-groupsViewCreatedOn=***Created on
-groupsViewMembers=***Members
-groupsViewProjects=***Projects
-groupsViewParticipants=***Participants
-groupsViewApplyToGroupAsProject=***apply with one of your projects to this group
-groupsViewApplyToGroupAsPerson=***apply with your profile to this group
-groupsViewForum=***Forum
+groupsViewCreatedOn=Gecreëerd op
+groupsViewMembers=Leden
+groupsViewProjects=Projecten
+groupsViewParticipants=Deelnemers
+groupsViewApplyToGroupAsProject=vraag om een project van u toe te voegen aan deze groep
+groupsViewApplyToGroupAsPerson=vraag om toegevoegd te worden aan deze groep
+groupsViewForum=Forum
 
 
-groupsEditName=***Group name
-groupsEditDescription=***Group description
-groupsEditDescriptionExplanation=***Describe clearly what this group is about. What is the purpose of the group?
-groupsEditLocation=***Location
-groupsEditLocationExplanation=***Where will this group be located? Where can participants come from?
-groupsEditAddLocationLink=***add location
-groupsEditAtLeastOneMessageErrorMessage=***Please provide at least one location of this group
-groupsEditSelectThemes=***Select themes
-groupsEditAddOneTheme=***add theme
-groupsEditSelectTags=***Group tags
-groupsEditAddOneTagLink=***add one tag
-groupsEditCreateGroupButton=***Start group
+groupsEditName=Naam van de groep
+groupsEditDescription=Beschrijving van de groep
+groupsEditDescriptionExplanation=Beschrijf duidelijk waarover deze groep gaat. Wat is het doel van de groep?
+groupsEditLocation=Locatie
+groupsEditLocationExplanation=Waar zal de groep gevestigd zijn? Waar kunnen de deelnemers vandaan komen?
+groupsEditAddLocationLink=Voeg een locatie toe
+groupsEditAtLeastOneMessageErrorMessage=Gelieve minstens één locatie voor deze groep in te voeren
+groupsEditSelectThemes=Selecteer thema's
+groupsEditAddOneTheme=Voeg een thema toe
+groupsEditSelectTags=Groepsmarkeringen
+groupsEditAddOneTagLink=Voeg een markering toe
+groupsEditCreateGroupButton=Groep opstarten
 
 #################################
 # projects
@@ -304,92 +304,99 @@ projectStatusCancelled=Geannuleerd
 projectStatusDone=Afgelopen
 
 # project themes and sub-themes
-projectThemeAnimalRights=***Animal Rights
-projectThemeAnimalRightsSubThemeCampaigning=***Campaigning
-projectThemeAnimalRightsSubThemeFoodIndustry=***Food Industry
-projectThemeAnimalRightsSubThemeStrayAnimals=***Stray Animals
-projectThemeAnimalRightsSubThemeTestingonAnimals=***Testing on Animals
+projectThemeAnimalRights=Dierenrechten
+projectThemeAnimalRightsSubThemeCampaigning=Campagnes
+projectThemeAnimalRightsSubThemeFoodIndustry=Voedselindustrie
+projectThemeAnimalRightsSubThemeStrayAnimals=Weesdieren
+projectThemeAnimalRightsSubThemeTestingonAnimals=Dierenproeven
 
-projectThemeArts=***Arts
-projectThemeArtsSubThemeArchitecture=***Architecture
-projectThemeArtsSubThemeCalligraphy=***Calligraphy
-projectThemeArtsSubThemeCinema=***Cinema
-projectThemeArtsSubThemeComics=***Comics
-projectThemeArtsSubThemeConceptualArt=***Conceptual Art
-projectThemeArtsSubThemeDance=***Dance
-projectThemeArtsSubThemeExhibitions=***Exhibitions
-projectThemeArtsSubThemeExperimentalArt=***Experimental Art
-projectThemeArtsSubThemeFiberArt=***Fiber Art
-projectThemeArtsSubThemeIllustration=***Illustration
-projectThemeArtsSubThemeImagingPrints=***Imaging & Prints
-projectThemeArtsSubThemeLiterature=***Literature
-projectThemeArtsSubThemeMosaics=***Mosaics
-projectThemeArtsSubThemePaintingDrawing=***Painting & Drawing
-projectThemeArtsSubThemePhotography=***Photography
-projectThemeArtsSubThemePoetry=***Poetry
-projectThemeArtsSubThemeSculpture=***Sculpture
-projectThemeArtsSubThemeStreetArt=***Street Art
-projectThemeArtsSubThemeTheatre=***Theatre
-projectThemeArtsSubThemeOther=***Other
+projectThemeArts=Kunst
+projectThemeArtsSubThemeArchitecture=Architectuur
+projectThemeArtsSubThemeCalligraphy=Kaligrafie
+projectThemeArtsSubThemeCinema=Cinema
+projectThemeArtsSubThemeComics=Stripverhalen
+projectThemeArtsSubThemeConceptualArt=Conceptuele kunst
+projectThemeArtsSubThemeDance=Dans
+projectThemeArtsSubThemeExhibitions=Tentoonstellingen
+projectThemeArtsSubThemeExperimentalArt=Experimentele kunst
+projectThemeArtsSubThemeFiberArt=Textielkunst
+projectThemeArtsSubThemeIllustration=Illustratie
+projectThemeArtsSubThemeImagingPrints=Grafiek en Drukken
+projectThemeArtsSubThemeLiterature=Literatuur
+projectThemeArtsSubThemeMosaics=Mozaïek
+projectThemeArtsSubThemePaintingDrawing=Schilderen en tekenen
+projectThemeArtsSubThemePhotography=Fotografie
+projectThemeArtsSubThemePoetry=Poëzie
+projectThemeArtsSubThemeSculpture=Beeldhouwen
+projectThemeArtsSubThemeStreetArt=Street Art
+projectThemeArtsSubThemeTheatre=Theater
+projectThemeArtsSubThemeOther=Andere
 
+projectThemeCulture=Cultuur & Media
+projectThemeCultureSubThemeEducation=Onderwijs
+projectThemeCultureSubThemeEvents=Evenementen
+projectThemeCultureSubThemeFilms=Films
+projectThemeCultureSubThemeInternet=Internet
+projectThemeCultureSubThemeJournalism=Journalisme
+projectThemeCultureSubThemeMusic=Muziek
+projectThemeCultureSubThemePrintedMedia=Gedrukte Media
+projectThemeCultureSubThemeGames=Spellen
+projectThemeCultureSubThemeOther=Andere
 
-projectThemeEnvironment=***environment
-projectThemeEnvironmentSubThemeProtecting=***protecting
-projectThemeEnvironmentSubThemeRecycling=***recycling
-projectThemeEnvironmentSubThemeSensitizing=***sensitizing
-projectThemeEnvironmentSubThemeCleaning=***cleaning
-projectThemeEnvironmentSubThemeAgriculture=***agriculture
-projectThemeEnvironmentSubThemeOther=***other
-
-projectThemeDevelopment=***development
-projectThemeDevelopmentSubThemeCharity=***Charity
-projectThemeDevelopmentSubThemeDevAtHome=***Development at home
-projectThemeDevelopmentSubThemeDevAbroad=***Development abroad
-projectThemeDevelopmentSubThemeSensitizing=***Sensitizing
-projectThemeDevelopmentSubThemeFairTrade=***Fair trade
+projectThemeDevelopment=Development
+projectThemeDevelopmentSubThemeFairTrade=***Fair Trade
+projectThemeDevelopmentSubThemeNorthSouthRelations=***North-South Relations
+projectThemeDevelopmentSubThemePropaganda=***Propaganda
+projectThemeDevelopmentSubThemeRethinkingEstablishedIdeas=***Rethinking Established Ideas
+projectThemeDevelopmentSubThemeSustainableLiving=***Sustainable Living
 projectThemeDevelopmentSubThemeOther=***Other
 
-projectThemeCulture=***culture
-projectThemeCultureSubThemeEducation=***Education
-projectThemeCultureSubThemeEvents=***Events
-projectThemeCultureSubThemeFilms=***Films
-projectThemeCultureSubThemeInternet=***Internet
-projectThemeCultureSubThemeJournalism=***Journalism
-projectThemeCultureSubThemeMusic=***Music
-projectThemeCultureSubThemePrintedMedia=***Printed Media
-projectThemeCultureSubThemeGames=***Games
-projectThemeCultureSubThemeOther=***Other
 
-projectThemeScience=***science
-projectThemeScienceSubThemeEducation=***Education
-projectThemeScienceSubThemeResearch=***Research
-projectThemeScienceSubThemeTechnology=***Technology
-projectThemeScienceSubThemeOther=***Other
+projectThemeEnvironment=***Environment
+projectThemeEnvironmentSubThemeAgriculture=***Agriculture
+projectThemeEnvironmentSubThemeAwarenessRaising=***Awareness Raising
+projectThemeEnvironmentSubThemeLobbying=***Lobbying
+projectThemeEnvironmentSubThemeClimateChange=***Climate Change
+projectThemeEnvironmentSubThemeConservation=***Conservation
+projectThemeEnvironmentSubThemeEnergy=***Energy
+projectThemeEnvironmentSubThemeRecyclingReuse=***Recycling & Reuse
+projectThemeEnvironmentSubThemeResearch=***Research
+projectThemeEnvironmentSubThemeWasteManagement=***Waste Management
+projectThemeEnvironmentSubThemeOther=***other
 
-projectThemeTravel=***travel
-projectThemeTravelSubThemeIntExchange=***International exchange
-projectThemeTravelSubThemeTravellingInGroup=***Travelling in group
-projectThemeTravelSubThemeExploration=***Exploration
-projectThemeTravelSubThemeOther=***Other
+
+
+projectThemeScience=Wetenschap
+projectThemeScienceSubThemeEducation=Onderwijs
+projectThemeScienceSubThemeResearch=Onderzoek & Ontwikkeling
+projectThemeScienceSubThemeTechnology=Technologie
+projectThemeScienceSubThemeOther=Andere
+
+projectThemeSociety=***society
+projectThemeSocietySubThemeElderly=***Elderly
+projectThemeSocietySubThemeEmployment=***Employment
+projectThemeSocietySubThemeGatherings=***Gatherings
+projectThemeSocietySubThemePeaceDisarmement=***Peace & Disarmement
+projectThemeSocietySubThemePoverty=***Poverty
+projectThemeSocietySubThemeSocialCohesion=***Social Cohesion/Exclusion
+projectThemeSocietySubThemeUrbanism=***Urbanism
+projectThemeSocietySubThemeWomen=***Women
+projectThemeSocietySubThemeYouth=***Youth
+projectThemeSocietySubThemeOther=***Other
 
 projectThemeSports=***sports
 projectThemeSportsSubThemeTeamBuilding=***Team building
-projectThemeSportsSubThemeEvent=***Sporting events
-projectThemeSportsSubThemeCapacity=***Capacity building
-projectThemeSportsSubThemePromotion=***Promotion
+projectThemeSportsSubThemeEvent=***Sports events
+projectThemeSportsSubThemeEducation=***Education
 projectThemeSportsSubThemeOther=***Other
 
-projectThemeSociety=***society
-projectThemeSocietySubThemeUrbanism=***Urbanism
-projectThemeSocietySubThemeFeminism=***Feminism
-projectThemeSocietySubThemeDrugs=***Drugs
-projectThemeSocietySubThemeEntertainment=***Entertainment
-projectThemeSocietySubThemeOther=***Other
+projectThemeTravel=***travel
+projectThemeTravelSubThemeEcoTourism=***Eco Tourism
+projectThemeTravelSubThemeExploration=***Exploration
+projectThemeTravelSubThemeTravellingInGroup=***Group Travel
+projectThemeTravelSubThemeTravellingIntExchange=***International Exchange
+projectThemeTravelSubThemeOther=***Other
 
-projectThemeOther=***other
-projectThemeOtherSubThemeReligion=***Religion
-projectThemeOtherSubThemeEmployment=***Employment
-projectThemeOtherSubThemeOther=***other
 
 
 # create project page
@@ -421,7 +428,7 @@ projectNewUsefulLinks=Nuttige linken
 projectNewUsefulLinksExplanation=Website adressen die nuttig kunnen zijn voor het project
 projectNewSelectThemes=Selecteer thema's
 projectNewSelectThemesExplanation=Door de thema's te selecteren die passen bij het project, zorgt u ervoor dat het project getoond wordt aan de gebruikers die op zoek zijn naar een dergelijke opportuniteit
-projectNewAddOneTheme=***add a theme...
+projectNewAddOneTheme=Een thema toevoegen
 projectNewSelectTags=Projectmarkeringen
 projectNewAddOneTagLink=Een markering toevoegen
 projectNewSelectTagsExplanation=Plaats kernwoorden die gerelateerd zijn aan het project. Anderen zullen uw project kunnen vinden op basis van deze kernwoorden.
@@ -435,25 +442,25 @@ projectNewPrivacySettingsAdmin=Administratoren van dit project
 projectNewPrivacySettingsOwner=Starter van dit project (ik)
 
 # view project page
-projectViewEmailThisProject=***Email a link to this project to a friend
-viewProjectSendAMailPopupTitle=***Send a mail to a friend about this project!
-viewProjectSendAMailDefaultEmailSubject_part1=***From 
-viewProjectSendAMailDefaultEmailSubject_part2=***: have a look at this altermotif project!
-viewProjectSendAMailTemplateText=***Hi\n\n I found this project on the www.altermotif.org platform and thought it might interrest you:
-viewProjectSendAMailTemplateTextProjectName=***Project name:
-viewProjectSendAMailPleaseWaitMessage=***Your email is being sent... 
-viewProjectSendAMailPleaseEMailSentSucessfully=***Email has been sent successfully 
-viewProjectSendAMailPleaseEMailSentUnsucessfully=***Sorry, problem while trying to send this email   
-projectViewEditProjet=***Edit project
-projectViewEndProjet=***End project
-viewProjectConfirmTerminateProject=***Are you sure you want to terminate this project? If you click ok, the project will be marked as 'done' and no activity will be possible on it anymore (no new members, no tasks nor assets, no forum discussion). Are you sure this is want you want to do?
-projectViewUndoEndProjet=***Restart project
-viewProjectConfirmRestartProject=***Are you sure you want to restart this project?
-projectViewCancelProjet=***Cancel project
-viewProjectCannotCancelProjectExplanation=***Canceling a project will permanently remove any trace of this project from altermotif. This action in NOT undo-able. If you are sure this is what you want to do, please first remove any member of this project and then click on 'Cancel project' again.
-viewProjectConfirmCancelProject=***Are you sure you want to cancel this project? This will permanently remove any trace of this project from altermotif. This action in NOT undo-able. Are you sure this is what you want to do?
+projectViewEmailThisProject=E-mail dit project naar een vriend(in)
+viewProjectSendAMailPopupTitle=Een e-mail over dit project naar een vriend(in) verzenden
+viewProjectSendAMailDefaultEmailSubject_part1=Van 
+viewProjectSendAMailDefaultEmailSubject_part2=: dit AlterMotif project zou u kunnen interesseren
+viewProjectSendAMailTemplateText=Hallo \n\n Ik vond dit project op het www.altermotif.org platform en dacht dat het jou wel zou interesseren :
+viewProjectSendAMailTemplateTextProjectName=Projectnaam:
+viewProjectSendAMailPleaseWaitMessage=Uw e-mail wordt verzonden... 
+viewProjectSendAMailPleaseEMailSentSucessfully=Uw E-mail is verzonden
+viewProjectSendAMailPleaseEMailSentUnsucessfully=Sorry, er deed zich een probleem voor tijdens de verzending van deze E-mail
+projectViewEditProjet=Wijzig project
+projectViewEndProjet=Beëindig project
+viewProjectConfirmTerminateProject=Weet u zeker dat u dit project wilt afsluiten? Indien u bevestigt, zal dit project als 'Beëindigd' worden aangeduid en er zal geen activiteit meer op mogelijk zijn, zoals het toevoegen van nieuwe leden, de aanwijzing van taken of middelen of het gebruiken van het forum. Is dit wat u wil?
+projectViewUndoEndProjet=Herstart project
+viewProjectConfirmRestartProject=Weet u zeker dat u dit project opnieuw wil opstarten?
+projectViewCancelProjet=Annuleer project
+viewProjectCannotCancelProjectExplanation=Het annuleren van een project zal elk spoor van dit project op AlterMotif verwijderen. Deze actie kan NIET worden tenietgedaan. Als u zeker weet dat u dit wil doen, gelieve dan al de andere deelnemers aan dit project te verwijderen alvorens 'annuleer project' aan te klikken.
+viewProjectConfirmCancelProject=Weet u zeker dat u dit project wil annuleren? Hierdoor zal elk spoor van dit project permanent van AlterMotif worden verwijderd. Deze actie kan NIET worden tenietgedaan. Is dit wat u wil doen?
 viewProjectGoal=Doel
-viewProjectNumberOfParticipants=***Number of participants
+viewProjectNumberOfParticipants=Aantal deelnemers
 viewProjectLocation=Locatie(s)
 viewProjectCommunicationIn=Communicatie in
 viewProjectCreatedOn=Gecreëerd op
@@ -478,68 +485,68 @@ viewProjectViewAcceptContactRequest=Accepteren
 viewProjectViewRejectContactRequest=Verwerpen
 applicationMoticationTextPopupTitle=Motivatietekst
 viewProjectConfirmRejectApplication=Weet u zeker dat u deze kandidaatstelling wil verwerpen?
-viewProjectConfirmAcceptApplication=***Are you sure you want to accept this participation application?
-profileViewRemoveParticipant=***remove
-profileViewLeaveProject=***leave
-profileViewMakeAdmin=***make admin
-profileViewMakeMember***=make member
-profileViewGiveOwnerShip=***give ownership
-profileViewCancelGiveOwnerShip=***cancel ownership transfer
-profileViewAcceptOwnerShip=***accept ownership
-profileViewRefuseOwnerShip=***refuse ownership
-viewProjectConfirmRemoveParticipant=***Are you sure you want to remove this participant from this project? Any task or asset assigned to him will now be unassigned.
-viewProjectConfirmLeaveProject=***Are your sure you want to leave this project? Any task or asset currently assigned to you will now become unassigned
-viewProjectconfirMMakeAdmin=***Are you sure you want to grant admin rights to this user on this project? 
-viewProjectconfirMMakeMember=***Are your sure you want to downgrade the privileges of this user to simple member?
-viewProjectCnfirmGiveOwnership=***Are you sure you want to transfer the ownership of this project to this user? Once he will have accepted, he will acquire full control of the project while you will yourself become a simple administrator. You will therefore not be able to undo this action. Are you sure this is what you want to do?
-viewProjectConfirmCancelGiveOwnership=***You have previously proposed to this user to take ownership of this project, but he has not accepted yet. If you click 'OK', this will remove the transfer proposal. Are you sure this is what you want to do?
-viewProjectConfirmAcceptOwnership=***Are you sure your want to accept full ownership of this project? By doing so to get access to the highest level of control.
-viewProjectconfirmRefuseOwnership=***Are you sure your want to refuse the ownership of this project? This action cannot be undone unless the current project owner resubmits a new ownership transfer proposal. Are you sure this is what you want to do?
-viewProjectTasks=***Tasks
-viewProjectAssets=***Assets
+viewProjectConfirmAcceptApplication=Weet u zeker dat u dit verzoek tot deelname wil aanvaarden?
+profileViewRemoveParticipant=Verwijderen
+profileViewLeaveProject=Verlaten
+profileViewMakeAdmin=administrator maken
+profileViewMakeMember=lid maken
+profileViewGiveOwnerShip=leiderschap geven
+profileViewCancelGiveOwnerShip=overdracht van leiderschap annuleren
+profileViewAcceptOwnerShip=leiderschap aanvaarden
+profileViewRefuseOwnerShip=leiderschap weigeren
+viewProjectConfirmRemoveParticipant=Weet u zeker dat u deze deelnemer van dit project wil verwijderen? Er zullen geen taken of middelen meer aan hem/haar zijn toegewezen.
+viewProjectConfirmLeaveProject=Weet u zeker dat u dit project wil verlaten? Gelieve er rekening mee te houden dat u dan niet langer verantwoordelijk zal zijn voor de eventuele taken en middelen die aan u zijn toegewezen.
+viewProjectconfirMMakeAdmin=Weet u zeker dat u aan deze deelnemer administratierechten wil verlenen?
+viewProjectconfirMMakeMember=Weet u zeker dat u de rechten van deze deelnemer wil terugbrengen tot deze van een gewoon lid?
+viewProjectCnfirmGiveOwnership=Weet u zeker dat u het leiderschap over dit project wil overdragen naar deze gebruiker? Eenmaal geaccepteerd, zal hij/zij de volledige controle over dit project verwerven terwijl u administrator zal worden. U zal dus niet in staat zijn om zonder zijn/haar toestemming opnieuw de projectleider te worden. Is dit inderdaad wat u wenst?
+viewProjectConfirmCancelGiveOwnership=U heeft eerder aan deze deelnemer voorgesteld om het leiderschap over dit project over te nemen. Door te bevestigen zal u dit voorstel annuleren. Is dit wat u wenst?
+viewProjectConfirmAcceptOwnership=Weet u zeker dat u het leiderschap over dit project wil overnemen? U zal dan de hoogst mogelijk controle over dit project verwerven.
+viewProjectconfirmRefuseOwnership=Weet u zeker dat u het leiderschap over dit project wil weigeren?
+viewProjectTasks=Taken
+viewProjectAssets=Middelen
 
-viewProjectForum=***Forum
-viewProjectForumAddThread=***Add a new thread
-viewProjectForumAddThreadPopupTitle=***New thread name
-viewProjectForumAddThreadPopupPublicThread=***Public thread
-viewProjectForumCreationDate=***creation date
-viewProjectForumPosts=***posts
-viewProjectForumDeleteThread=***delete
-viewProjectForumMakePrivate=***make private
-viewProjectForumMakePublic=***make public
-viewProjectForumConfirmMakePrivate=***Are you sure you want to make this thread private? Private thread can only be read by members of this projects
-viewProjectForumConfirmMakePublic=***Are you sure you want to make this thread public? Private thread can be read everybody (including people who do not have an Altermotif account)
-viewProjectForumConfirmRemoveThread=***Are you sure you want to delete this thread? THIS ACTION CANNOT BE UNDONE! All posts of this thread will be lost! Are you sure this is want you want to do?
-projectForumThreadThread=***Forum thread
-projectForumThreadBackToProject=***back to project page
-projectForumThreadPrivate=***(private)
-forumThreadPostButtonText=***Post comment
-projectForumThreadPostDate=***Post date
-projectForumThreadDeletePost=***delete post
-projectForumThreadConfirmDeletePost=***Are you sure you want to delete this post? THIS ACTION CANNOT BE UNDONE! Are you sure this is what you want to do?
-projectForumThreadMovePost=***move post
-projectForumThreadMoveThreadPopupText=***Moving a post means removing it from the original thread and creating a new one with its content, with creation date set to today, in another thread. A reference to the original post as well as your username will appear in the new post. Please select the destination thread below
+viewProjectForum=Forum
+viewProjectForumAddThread=Een nieuw onderwerp toevoegen
+viewProjectForumAddThreadPopupTitle=Naam van het onderwerp
+viewProjectForumAddThreadPopupPublicThread=Publiek onderwerp
+viewProjectForumCreationDate=gecreëerd op
+viewProjectForumPosts=reacties
+viewProjectForumDeleteThread=verwijderen
+viewProjectForumMakePrivate=privé maken
+viewProjectForumMakePublic=publiek maken
+viewProjectForumConfirmMakePrivate=Weet u zeker dat u dit onderwerp privé wil maken? Privé onderwerpen kunnen enkel gelezen worden door de deelnemers aan het project
+viewProjectForumConfirmMakePublic=Weet u zeker dat u dit onderwerp publiek wil maken? Publieke onderwerpen kunnen door iedereen gelezen worden en ook de geregistreerde gebruikers die niet deelnemen aan het project kunnen hierop reageren
+viewProjectForumConfirmRemoveThread=Weet u zeker dat u dit onderwerp wil verwijderen? DEZE ACTIE KAN NIET WORDEN TENIETGEDAAN! Al de reacties op dit onderwerp zullen verloren gaan. Is dit inderdaad wat u wenst?
+projectForumThreadThread=Onderwerp
+projectForumThreadBackToProject=Terug naar de projectpagina
+projectForumThreadPrivate=(privé)
+forumThreadPostButtonText=Plaats een reactie
+projectForumThreadPostDate=Datum van deze reactie
+projectForumThreadDeletePost=Verwijder deze reactie
+projectForumThreadConfirmDeletePost=Weet u zeker dat u deze reactie wil verwijderen? DEZE ACTIE KAN NIET WORDEN TENIETGEDAAN!
+projectForumThreadMovePost=Verplaats deze reactie
+projectForumThreadMoveThreadPopupText=Een reactie verplaatsen betekent dat deze van het oorspronkelijke onderwerp wordt verwijderd en opnieuw wordt gecreëerd onder een ander onderwerp, met de datum van vandaag. Onder de nieuwe reactie zal een verwijzing naar de oorspronkelijke reactie evenals naar uw gebruikersnaam verschijnen. Gelieve het onderwerp van bestemming hieronder aan te klikken
 
 
-projectTaskTodo=***to do
-projectTaskDone=***done
-projectTaskEditionTableTasks=***Required tasks
-projectTaskEditionTableStatus=***Status
-projectTaskEditionTableAssignedTo=***AssignedTo
-projectTaskEditionTableDueDate=***Due date
-projectTaskEditionTableDescription=***Description
-projectTaskEditionTableAddTask=***Add task
-projectTaskEditionTableConfirmRemoveTask=***Are you sure you want to remove this task from this project?
-projectTaskEditionTableConfirmRemoveUser=***Are you sure you want to unasign this task from this user?
-projectTaskEditionTableAddAssignee=***add assignee...
-projectTaskEditionTableChooseAssigneePopupTitle=***Select the assignee 
-projectTaskEditionTableNewTaskPopupTitle=***New project task 
+projectTaskTodo=Te doen
+projectTaskDone=Gedaan
+projectTaskEditionTableTasks=Vereiste taken
+projectTaskEditionTableStatus=Status
+projectTaskEditionTableAssignedTo=Toegewezen aan
+projectTaskEditionTableDueDate=Uiterste termijn
+projectTaskEditionTableDescription=Beschrijving
+projectTaskEditionTableAddTask=Een taak toevoegen
+projectTaskEditionTableConfirmRemoveTask=Weet u zeker dat u deze taak van het project wil verwijderen?
+projectTaskEditionTableConfirmRemoveUser=Weet u zeker dat u deze gebruiker van deze taak wil ontlasten?
+projectTaskEditionTableAddAssignee=Verantwoordelijke(n) aanduiden
+projectTaskEditionTableChooseAssigneePopupTitle=Selecteer de verantwoordelijke
+projectTaskEditionTableNewTaskPopupTitle=Nieuwe taak voor het project
 
-projectAssetEditionTableAddAsset=***Add asset
-projectTaskEditionTableAssets=***Required assets
-projectAssetEditionTableConfirmRemoveAsset=***Are you sure you want to remove this asset from this project?
-projectAssetAvailable=***available
-projectAssetMissing=***missing
+projectAssetEditionTableAddAsset=Middelen toevoegen
+projectTaskEditionTableAssets=Vereiste middelen
+projectAssetEditionTableConfirmRemoveAsset=Weet u zeker dat u dit instrument van het project wil verwijderen?
+projectAssetAvailable=Beschikbaar
+projectAssetMissing=Mankerend
 
 # edit project page
 projectEditConfirmButton=Project actualiseren
@@ -549,36 +556,36 @@ projectEditEditPhotos=Foto's wijzigen...
 projectPhotosSetAsMainPhoto=Instellen als standaard projectfoto
 
 # project search page
-projectSearchKeyWords=***any project with these keywords
-projectSearchCategories=***in any of these categories
-projectSearchSimpleModeExplanation=***Select one category or click on a tag for direct access to the corresponding result
-projectSearchSimpleModeExplanation_GotoAdvancedMode=***Or click here to switch to
-projectSearchSimpleModeExplanation_GotoAdvancedMode_Link=***advanced search mode
-projectSearchAdvancedModeExplanation_GotoSimpleMode=***Go back to
-projectSearchAdvancedModeExplanation_GotoSimpleMode_Link=***direct search mode
+projectSearchKeyWords=Elk project met de volgende sleutelwoorden
+projectSearchCategories=in elk van de volgende categorieën
+projectSearchSimpleModeExplanation=Selecteer een categorie of klik een markering aan om onmiddelijk de overeenstemmende resultaten te zien
+projectSearchSimpleModeExplanation_GotoAdvancedMode=of klik hier om over te schakelen naar 
+projectSearchSimpleModeExplanation_GotoAdvancedMode_Link=geavanceerd zoeken
+projectSearchAdvancedModeExplanation_GotoSimpleMode=Terugkeren naar 
+projectSearchAdvancedModeExplanation_GotoSimpleMode_Link=direct zoeken
 
 # project search results page
-projectSearchResultTitle=***Search results
-projectSearchResultBackToSearchPage=***back to search page
-projectSearchResultFilterResults=***filter results
-projectSearchResultSortBy=***sort by
-projectSearchResultSortByAlphabetic=***alphabetic order
-projectSearchResultSortByDueDate=***closest due date first
-projectSearchResultSortByProximity=***first projects with one location close to 
-projectSearchResultUpdateButtonText=***Update search results
-projectResultChangeRefLocationLink=***change reference location
-projectResultFilterByDetailsCurrentQueryDescription_part1=***Looking for projects
-projectResultFilterByDetailsCurrentQueryDescription_part2_keywords=*** with key words
-projectResultFilterByDetailsCurrentQueryDescription_part2_tag=*** with tag
-projectResultFilterByDetailsCurrentQueryDescription_part2_category=*** with category
-projectResultFilterByDetailsCurrentQueryDescription_part3_and=***and
-projectResultFilterByProximity_part1=***no further than
-projectResultFilterByProximity_part2=***km from
-projectResultFilterByDueDate=***with due date before
-projectResultFilterByLanguage=***with this language
+projectSearchResultTitle=Resultaten van de zoekopdracht
+projectSearchResultBackToSearchPage=Terug naar de zoekpagina
+projectSearchResultFilterResults=Filter resultaten
+projectSearchResultSortBy=Sorteer
+projectSearchResultSortByAlphabetic=in alfabetische volgorde
+projectSearchResultSortByDueDate=dichtstbijzijnde uiterste datum eerst
+projectSearchResultSortByProximity=eerst de projecten die gelegen zijn dichtbij
+projectSearchResultUpdateButtonText=Actualiseer zoekresultaten
+projectResultChangeRefLocationLink=Wijzig de referentielocatie
+projectResultFilterByDetailsCurrentQueryDescription_part1=Zoek projecten 
+projectResultFilterByDetailsCurrentQueryDescription_part2_keywords=met sleutelwoorden
+projectResultFilterByDetailsCurrentQueryDescription_part2_tag=met markering
+projectResultFilterByDetailsCurrentQueryDescription_part2_category=in categorie
+projectResultFilterByDetailsCurrentQueryDescription_part3_and=en 
+projectResultFilterByProximity_part1=niet verder dan
+projectResultFilterByProximity_part2=km van
+projectResultFilterByDueDate=met de uiterste termijn voor
+projectResultFilterByLanguage=met als taal
 
-emailPopupReplyToExplanation=***This field is optional. You may provide here an email address where the recipient of this email can send you a reply
-emailPopupTo=***To
-emailPopupToExplanation=***Specify here the email address of the recipient
-emailPopupSubject=***Email subject
-emailPopupText=***Email text
+emailPopupReplyToExplanation=Dit veld is optioneel. U kan hier een E-mail adres opgeven waarnaar de bestemmeling van deze E-mail een antwoord mag verzenden
+emailPopupTo=Aan
+emailPopupToExplanation=Specifieer hier het E-mail adres van de bestemmeling
+emailPopupSubject=E-mail onderwerp
+emailPopupText=Bericht

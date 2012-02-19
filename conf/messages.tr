@@ -332,22 +332,6 @@ projectThemeArtsSubThemeStreetArt=***Street Art
 projectThemeArtsSubThemeTheatre=***Theatre
 projectThemeArtsSubThemeOther=***Other
 
-projectThemeEnvironment=Çevre
-projectThemeEnvironmentSubThemeProtecting=Koruma
-projectThemeEnvironmentSubThemeRecycling=Dönüşüm
-projectThemeEnvironmentSubThemeSensitizing=Bilinçlendirme
-projectThemeEnvironmentSubThemeCleaning=Temizlik
-projectThemeEnvironmentSubThemeAgriculture=Tarım
-projectThemeEnvironmentSubThemeOther=Diğer
-
-projectThemeDevelopment=Kalkınma
-projectThemeDevelopmentSubThemeCharity=Yardım İşleri
-projectThemeDevelopmentSubThemeDevAtHome=Ulusal Kalkınma
-projectThemeDevelopmentSubThemeDevAbroad=Başka Ülkeler
-projectThemeDevelopmentSubThemeSensitizing=Bilinçlendirme
-projectThemeDevelopmentSubThemeFairTrade=İyi Ticaret?
-projectThemeDevelopmentSubThemeOther=Diğer
-
 projectThemeCulture=Kültür
 projectThemeCultureSubThemeEducation=***Education
 projectThemeCultureSubThemeEvents=***Events
@@ -359,36 +343,57 @@ projectThemeCultureSubThemePrintedMedia=***Printed Media
 projectThemeCultureSubThemeGames=***Games
 projectThemeCultureSubThemeOther=Diğer
 
+projectThemeDevelopment=Development
+projectThemeDevelopmentSubThemeFairTrade=***Fair Trade
+projectThemeDevelopmentSubThemeNorthSouthRelations=***North-South Relations
+projectThemeDevelopmentSubThemePropaganda=***Propaganda
+projectThemeDevelopmentSubThemeRethinkingEstablishedIdeas=***Rethinking Established Ideas
+projectThemeDevelopmentSubThemeSustainableLiving=***Sustainable Living
+projectThemeDevelopmentSubThemeOther=***Other
+
+projectThemeEnvironment=***Environment
+projectThemeEnvironmentSubThemeAgriculture=***Agriculture
+projectThemeEnvironmentSubThemeAwarenessRaising=***Awareness Raising
+projectThemeEnvironmentSubThemeLobbying=***Lobbying
+projectThemeEnvironmentSubThemeClimateChange=***Climate Change
+projectThemeEnvironmentSubThemeConservation=***Conservation
+projectThemeEnvironmentSubThemeEnergy=***Energy
+projectThemeEnvironmentSubThemeRecyclingReuse=***Recycling & Reuse
+projectThemeEnvironmentSubThemeResearch=***Research
+projectThemeEnvironmentSubThemeWasteManagement=***Waste Management
+projectThemeEnvironmentSubThemeOther=***other
+
+
 projectThemeScience=Bilim
 projectThemeScienceSubThemeEducation=Eğitim
 projectThemeScienceSubThemeResearch=Araştırma
 projectThemeScienceSubThemeTechnology=Teknoloji
 projectThemeScienceSubThemeOther=Diğer
 
+projectThemeSociety=***society
+projectThemeSocietySubThemeElderly=***Elderly
+projectThemeSocietySubThemeEmployment=***Employment
+projectThemeSocietySubThemeGatherings=***Gatherings
+projectThemeSocietySubThemePeaceDisarmement=***Peace & Disarmement
+projectThemeSocietySubThemePoverty=***Poverty
+projectThemeSocietySubThemeSocialCohesion=***Social Cohesion/Exclusion
+projectThemeSocietySubThemeUrbanism=***Urbanism
+projectThemeSocietySubThemeWomen=***Women
+projectThemeSocietySubThemeYouth=***Youth
+projectThemeSocietySubThemeOther=***Other
+
+projectThemeSports=***sports
+projectThemeSportsSubThemeTeamBuilding=***Team building
+projectThemeSportsSubThemeEvent=***Sports events
+projectThemeSportsSubThemeEducation=***Education
+projectThemeSportsSubThemeOther=***Other
+
 projectThemeTravel=Seyahat
-projectThemeTravelSubThemeIntExchange=Uluslararası Paylaşım/Yer Değiştirme
-projectThemeTravelSubThemeTravellingInGroup=Grup Seyahatleri
-projectThemeTravelSubThemeExploration=Keşif
-projectThemeTravelSubThemeOther=Diğer
-
-projectThemeSports=Spor
-projectThemeSportsSubThemeTeamBuilding=Takım Kurma
-projectThemeSportsSubThemeEvent=Spor Etkinlikleri
-projectThemeSportsSubThemeCapacity=Kapasite Oluşturma
-projectThemeSportsSubThemePromotion=Tanıtım
-projectThemeSportsSubThemeOther=Diğer
-
-projectThemeSociety=Toplum
-projectThemeSocietySubThemeUrbanism=Şehircilik
-projectThemeSocietySubThemeFeminism=Kadın Hakları/Feminizm
-projectThemeSocietySubThemeDrugs=Uyuşturucu Karşıtı
-projectThemeSocietySubThemeEntertainment=Eğlence
-projectThemeSocietySubThemeOther=Diğer
-
-projectThemeOther=Diğer
-projectThemeOtherSubThemeReligion=Din
-projectThemeOtherSubThemeEmployment=İstihdam Yaratma 
-projectThemeOtherSubThemeOther=Diğer
+projectThemeTravelSubThemeEcoTourism=***Eco Tourism
+projectThemeTravelSubThemeExploration=***Exploration
+projectThemeTravelSubThemeTravellingInGroup=***Group Travel
+projectThemeTravelSubThemeTravellingIntExchange=***International Exchange
+projectThemeTravelSubThemeOther=***Other
 
 
 # create project page

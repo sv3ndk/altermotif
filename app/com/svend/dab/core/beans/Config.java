@@ -92,20 +92,26 @@ public class Config {
 		projectThemes.add(culture);
 
 		Theme development = new Theme("development", "projectThemeDevelopment");
-		development.addSubTheme(new SubTheme("charity", "projectThemeDevelopmentSubThemeCharity"));
-		development.addSubTheme(new SubTheme("devAtHome", "projectThemeDevelopmentSubThemeDevAtHome"));
-		development.addSubTheme(new SubTheme("devAbroad", "projectThemeDevelopmentSubThemeDevAbroad"));
-		development.addSubTheme(new SubTheme("sensitizing", "projectThemeDevelopmentSubThemeSensitizing"));
 		development.addSubTheme(new SubTheme("fairtrade", "projectThemeDevelopmentSubThemeFairTrade"));
+		development.addSubTheme(new SubTheme("northsouth", "projectThemeDevelopmentSubThemeNorthSouthRelations"));
+		development.addSubTheme(new SubTheme("propaganda", "projectThemeDevelopmentSubThemePropaganda"));
+		development.addSubTheme(new SubTheme("rethinking", "projectThemeDevelopmentSubThemeRethinkingEstablishedIdeas"));
+		development.addSubTheme(new SubTheme("sustainable", "projectThemeDevelopmentSubThemeSustainableLiving"));
 		development.addSubTheme(new SubTheme("other", "projectThemeDevelopmentSubThemeOther"));
 		projectThemes.add(development);
 		
+		
+		
 		Theme environment = new Theme("environment", "projectThemeEnvironment");
-		environment.addSubTheme(new SubTheme("protecting", "projectThemeEnvironmentSubThemeProtecting"));
-		environment.addSubTheme(new SubTheme("recycling", "projectThemeEnvironmentSubThemeRecycling"));
-		environment.addSubTheme(new SubTheme("sensitizing", "projectThemeEnvironmentSubThemeSensitizing"));
-		environment.addSubTheme(new SubTheme("cleaning", "projectThemeEnvironmentSubThemeCleaning"));
 		environment.addSubTheme(new SubTheme("agriculture", "projectThemeEnvironmentSubThemeAgriculture"));
+		environment.addSubTheme(new SubTheme("awareness", "projectThemeEnvironmentSubThemeAwarenessRaising"));
+		environment.addSubTheme(new SubTheme("lobbying", "projectThemeEnvironmentSubThemeLobbying"));
+		environment.addSubTheme(new SubTheme("climate", "projectThemeEnvironmentSubThemeClimateChange"));
+		environment.addSubTheme(new SubTheme("conservation", "projectThemeEnvironmentSubThemeConservation"));
+		environment.addSubTheme(new SubTheme("energy", "projectThemeEnvironmentSubThemeEnergy"));
+		environment.addSubTheme(new SubTheme("recycling", "projectThemeEnvironmentSubThemeRecyclingReuse"));
+		environment.addSubTheme(new SubTheme("research", "projectThemeEnvironmentSubThemeResearch"));
+		environment.addSubTheme(new SubTheme("waste", "projectThemeEnvironmentSubThemeWasteManagement"));
 		environment.addSubTheme(new SubTheme("other", "projectThemeEnvironmentSubThemeOther"));
 		projectThemes.add(environment);
 
@@ -117,34 +123,36 @@ public class Config {
 		science.addSubTheme(new SubTheme("other", "projectThemeScienceSubThemeOther"));
 		projectThemes.add(science);
 
-		Theme travel = new Theme("travel", "projectThemeTravel");
-		travel.addSubTheme(new SubTheme("intEx", "projectThemeTravelSubThemeIntExchange"));
-		travel.addSubTheme(new SubTheme("travInGroup", "projectThemeTravelSubThemeTravellingInGroup"));
-		travel.addSubTheme(new SubTheme("exploration", "projectThemeTravelSubThemeExploration"));
-		travel.addSubTheme(new SubTheme("other", "projectThemeTravelSubThemeOther"));
-		projectThemes.add(travel);
-
+		Theme society = new Theme("society", "projectThemeSociety");
+		society.addSubTheme(new SubTheme("elderly", "projectThemeSocietySubThemeElderly"));
+		society.addSubTheme(new SubTheme("employment", "projectThemeSocietySubThemeEmployment"));
+		society.addSubTheme(new SubTheme("gathering", "projectThemeSocietySubThemeGatherings"));
+		society.addSubTheme(new SubTheme("peace", "projectThemeSocietySubThemePeaceDisarmement"));
+		society.addSubTheme(new SubTheme("poverty", "projectThemeSocietySubThemePoverty"));
+		society.addSubTheme(new SubTheme("cohesion", "projectThemeSocietySubThemeSocialCohesion"));
+		society.addSubTheme(new SubTheme("urbanism", "projectThemeSocietySubThemeUrbanism"));
+		society.addSubTheme(new SubTheme("women", "projectThemeSocietySubThemeWomen"));
+		society.addSubTheme(new SubTheme("youth", "projectThemeSocietySubThemeYouth"));
+		society.addSubTheme(new SubTheme("other", "projectThemeSocietySubThemeOther"));
+		projectThemes.add(society);
+				
 		Theme sports = new Theme("sports", "projectThemeSports");
 		sports.addSubTheme(new SubTheme("teamBuilding", "projectThemeSportsSubThemeTeamBuilding"));
 		sports.addSubTheme(new SubTheme("events", "projectThemeSportsSubThemeEvent"));
-		sports.addSubTheme(new SubTheme("capacity", "projectThemeSportsSubThemeCapacity"));
-		sports.addSubTheme(new SubTheme("promotion", "projectThemeSportsSubThemePromotion"));
+		sports.addSubTheme(new SubTheme("education", "projectThemeSportsSubThemeEducation"));
 		sports.addSubTheme(new SubTheme("other", "projectThemeSportsSubThemeOther"));
 		projectThemes.add(sports);
 
-		Theme society = new Theme("society", "projectThemeSociety");
-		society.addSubTheme(new SubTheme("urbanism", "projectThemeSocietySubThemeUrbanism"));
-		society.addSubTheme(new SubTheme("feminism", "projectThemeSocietySubThemeFeminism"));
-		society.addSubTheme(new SubTheme("drugs", "projectThemeSocietySubThemeDrugs"));
-		society.addSubTheme(new SubTheme("entertainment", "projectThemeSocietySubThemeEntertainment"));
-		society.addSubTheme(new SubTheme("other", "projectThemeSocietySubThemeOther"));
-		projectThemes.add(society);
+		
+		Theme travel = new Theme("travel", "projectThemeTravel");
+		travel.addSubTheme(new SubTheme("ecotourism", "projectThemeTravelSubThemeEcoTourism"));
+		travel.addSubTheme(new SubTheme("exploration", "projectThemeTravelSubThemeExploration"));
+		travel.addSubTheme(new SubTheme("travingroup", "projectThemeTravelSubThemeTravellingInGroup"));
+		travel.addSubTheme(new SubTheme("exchange", "projectThemeTravelSubThemeTravellingIntExchange"));
+		travel.addSubTheme(new SubTheme("other", "projectThemeTravelSubThemeOther"));
+		projectThemes.add(travel);
 
-		Theme other = new Theme("other", "projectThemeOther");
-		other.addSubTheme(new SubTheme("religion", "projectThemeOtherSubThemeReligion"));
-		other.addSubTheme(new SubTheme("employment", "projectThemeOtherSubThemeEmployment"));
-		other.addSubTheme(new SubTheme("other", "projectThemeOtherSubThemeOther"));
-		projectThemes.add(other);
+
 	}
 
 	// ------------------------------------------------------
