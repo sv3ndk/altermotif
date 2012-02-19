@@ -26,13 +26,24 @@ public class GroupParticipant {
 	private ROLE role;
 
 	private UserSummary user;
+	
+	private boolean accepted = true;
 
+	public GroupParticipant() {
+		super();
+	}
+	
 	public GroupParticipant(ROLE role, UserSummary user) {
 		super();
 		this.role = role;
 		this.user = user;
 	}
 	
+	
+	public GroupParticipant(ROLE role, UserSummary user, boolean accepted) {
+		this(role, user);
+		this.accepted = accepted;
+	}
 	
 	public void generatePhotoLinks(Date expirationdate) {
 		if (user != null) {
@@ -41,9 +52,7 @@ public class GroupParticipant {
 	}
 
 
-	public GroupParticipant() {
-		super();
-	}
+
 
 	public ROLE getRole() {
 		return role;
@@ -59,6 +68,16 @@ public class GroupParticipant {
 
 	public void setUser(UserSummary user) {
 		this.user = user;
+	}
+
+
+	public boolean isAccepted() {
+		return accepted;
+	}
+
+
+	public void setAccepted(boolean accepted) {
+		this.accepted = accepted;
 	}
 
 

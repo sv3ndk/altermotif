@@ -17,4 +17,8 @@ public interface IGroupDao {
 
 	public void removeUserParticipant(String groupId, String participantId);
 
+	public void addUserApplication(String groupId, UserSummary userId);
+
+	public void setUserApplicationAcceptedStatus(String groupId, String userId, boolean b);
+
 }

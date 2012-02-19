@@ -277,6 +277,15 @@ groupsViewProjects=Projecten
 groupsViewParticipants=Deelnemers
 groupsViewApplyToGroupAsProject=vraag om een project van u toe te voegen aan deze groep
 groupsViewApplyToGroupAsPerson=vraag om toegevoegd te worden aan deze groep
+groupsViewAlreadyAppliedToGroupAsPerson=***You have already applied to be a member of this group. Waiting for an admin to accept/reject this application
+groupsViewCancelApplicationToGroupAsPerson=***Cancel application
+groupsViewConfirmCancelApplyToGroup=***Are you sure you want to cancel your application to this group?
+groupsViewApplicationPopupText=***Please enter a short text that will be attached to the application to join this group.
+groupsViewApplicants=***User applications
+groupsViewAcceptUserApplication=***Accept application
+groupsViewRejectUserApplication=***Reject application
+groupsViewConfirmAcceptApplyToGroup=***Are you sure you want to accept this user membership request to this group?
+groupsViewConfirmRejectApplyToGroup=***Are you sure you want to reject this user membership request to this group?
 groupsViewForum=Forum
 
 

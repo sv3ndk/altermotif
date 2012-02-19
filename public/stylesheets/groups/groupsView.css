@@ -35,22 +35,26 @@
 
 #groupProjects {
 	clear: left;
-	margin-left: 200px;
 	padding-top: 50px;
 }
 
-#groupParticipants {
+
+.groupToggleBlocks {
 	margin-left: 200px;
 	margin-top: 30px;
 }
 
-#groupForum {
-	margin-left: 200px;
-	margin-top: 30px;
-}
 
 .confirmedParticipant {
 	padding: 20px;
 	height: 60px;
 }
 
+.applyingParticipant {
+	padding: 20px;
+	height: 60px;
+}
+
+#applyWithProfileTd {
+	padding-top: 30px;
+}

@@ -62,13 +62,33 @@ public class ProjectGroup {
 		}
 
 		for (GroupParticipant participant : participants) {
-			if (userId.equals(participant.getUser().getUserName())) {
+			// user not yet accepted are still concidered with no role
+			if (userId.equals(participant.getUser().getUserName()) && participant.isAccepted()) {
 				return participant.getRole();
 			}
 		}
 
 		return null;
 	}
+	
+	
+	public boolean hasAppliedForGroupMembership(String userId) {
+		
+		if (Strings.isNullOrEmpty(userId) || participants == null || participants.isEmpty()) {
+			return false;
+		}
+		
+		for (GroupParticipant participant : participants) {
+			// user not yet accepted are still concidered with no role
+			if (userId.equals(participant.getUser().getUserName()) && ! participant.isAccepted()) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
+	
 
 	public int getNumberOfAdmins() {
 
@@ -86,6 +106,26 @@ public class ProjectGroup {
 
 		return numberOfAdmins;
 	}
+	
+	public boolean isMemberOrHasALreadyApplied(String userId) {
+		
+		if (Strings.isNullOrEmpty(userId) || participants == null || participants.isEmpty()) {
+			return false;
+		}
+		
+		for (GroupParticipant participant : participants) {
+			// user not yet accepted are still concidered with no role
+			if (userId.equals(participant.getUser().getUserName()) ) {
+				return true;
+			}
+		}
+		
+		
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	
 
 	public void addParticipant(GroupParticipant groupParticipant) {
 		if (participants == null) {
@@ -98,7 +138,15 @@ public class ProjectGroup {
 		if (participants == null) {
 			return 0;
 		} else {
-			return participants.size();
+			int numberOfAcceptedParticipants = 0;
+			
+			for (GroupParticipant participant : participants) {
+				if (participant.isAccepted()) {
+					numberOfAcceptedParticipants++;
+				}
+			}
+			
+			return numberOfAcceptedParticipants;
 		}
 	}
 
@@ -206,5 +254,7 @@ public class ProjectGroup {
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
 	}
+
+
 
 }

@@ -1,6 +1,9 @@
 package com.svend.dab.core.beans.groups;
 
 import com.svend.dab.core.beans.groups.GroupParticipant.ROLE;
+import com.svend.dab.core.beans.profile.UserProfile;
+
+import controllers.BeanProvider;
 
 /**
  * 
@@ -30,6 +33,36 @@ public class GroupPep {
 		return isUserAdmin(userId)  && group.getNumberOfParticipants() == 1;
 	}
 	
+	///////////////////////////////
+	
+	public boolean isUserAllowedToApplyToGroup(String userId) {
+		if (userId == null) {
+			return false;
+		}
+
+		if (isUserMemberOrAdmin(userId)) {
+			return false;
+		}
+
+		if (group.hasAppliedForGroupMembership(userId)) {
+			return false;
+		}
+		
+		// TODO: optimization: cache the profile here instead of loading it each time...
+		// + do not load the whole profile (just the boolean is enough...)
+		UserProfile profile = BeanProvider.getUserProfileService().loadUserProfile(userId, false);
+
+		if (profile == null || !profile.getPrivacySettings().isProfileActive()) {
+			return false;
+		}
+
+		return true;
+	}
+	
+	public boolean isUserAllowedToAcceptAndRejectUserApplications(String userId) {
+		return isUserAdmin(userId);
+	}
+
 	
 	///////////////////////////////
 	
@@ -38,9 +71,15 @@ public class GroupPep {
 		return userRole == ROLE.admin;
 	}
 	
-	protected boolean isUserMemberOrAdmin(String userId) {
+	public boolean isUserMemberOrAdmin(String userId) {
 		ROLE userRole = group.findRoleOfUser(userId);
 		return userRole == ROLE.admin || userRole == ROLE.member;
 	}
+
+	public ProjectGroup getGroup() {
+		return group;
+	}
+
+	
 
 }

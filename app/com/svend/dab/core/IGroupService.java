@@ -12,4 +12,10 @@ public interface IGroupService {
 
 	void closeGroup(String groupId);
 
+	void applyToGroup(String groupId, String loggedInUserProfileId);
+
+	void cancelUserApplicationToGroup(String groupId, String loggedInUserProfileId);
+
+	void acceptUserApplicationToGroup(String groupId, String applicantId);
+
 }

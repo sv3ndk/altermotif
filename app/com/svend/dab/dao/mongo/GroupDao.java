@@ -14,6 +14,9 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoException;
 import com.mongodb.WriteResult;
+import com.svend.dab.core.beans.groups.GroupParticipant;
+import com.svend.dab.core.beans.groups.GroupParticipant.ROLE;
+import com.svend.dab.core.beans.groups.GroupParticipation;
 import com.svend.dab.core.beans.groups.ProjectGroup;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.dao.IGroupDao;
@@ -67,6 +70,19 @@ public class GroupDao implements IGroupDao {
 				return collection.update(queryDbo, pullDbo);
 			}
 		});
+	}
+
+	public void addUserApplication(String groupId, UserSummary userSummary) {
+		
+		mongoTemplate.updateFirst(query(where("id").is(groupId)),
+				new Update().addToSet("participants", new GroupParticipant(ROLE.member, userSummary, false)), ProjectGroup.class);
+		
+		
+		
+	}
+
+	public void setUserApplicationAcceptedStatus(String groupId, String userId, boolean acceptedStatus) {
+		mongoTemplate.updateFirst(query(where("id").is(groupId).and("participants.user._id").is(userId)), new Update().set("participants.$.accepted", acceptedStatus), ProjectGroup.class);
 	}
 
 }

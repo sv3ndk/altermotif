@@ -9,12 +9,24 @@
 
 	<script type="text/javascript">
 	
+	    var applytoGroup 	= #{jsAction @groups.GroupsView.applyToGroup(':groupId', ':applicationText') /};
+	    var cancelApplytoGroup 	= #{jsAction @groups.GroupsView.cancelApplyToGroup(':groupId') /};
+	    var acceptUserApplicationToGroup 	= #{jsAction @groups.GroupsView.acceptUserApplicationToGroup(':groupId', ':applicantId') /};
+	    var rejectUserApplicationToGroup 	= #{jsAction @groups.GroupsView.rejectUserApplicationToGroup(':groupId', ':applicantId') /};
+	
 		var confirmCloseGroupText = "&{'groupsViewConfirmCloseGroup'}";
+		var confirmApplyToGroupText = "&{'groupsViewConfirmApplyToGroup'}";
+		var confirmCancelApplyToGroup = "&{'groupsViewConfirmCancelApplyToGroup'}";
+		var confirmAcceptApplyToGroup = "&{'groupsViewConfirmAcceptApplyToGroup'}";
+		var confirmRejectApplyToGroup = "&{'groupsViewConfirmRejectApplyToGroup'}";
+		
 		var isCloseGroupLinkEffective = ${groupViewVisibility.endGroupLinkEffective};
 		var visitedGroupId = "${visitedGroup.id}";
 	</script>
 #{/set}
 
+	<img id="hiddenDefaultProfileThumb" class="hidden" src="@{'/public/images/defaultProfileThumb.jpg'}" />
+	
 	<p  class="pageTitle">${visitedGroup.name}</p>
 	
 	<div id="groupPhotoContainer">
@@ -54,6 +66,16 @@
 						#{/if}
 					</td>
 				</tr>
+		
+				<tr>
+					<td />
+					<td id="applyWithProfileTd">
+						<span id="applyToGroupLink" class="dabLink" data-bind="visible: applyToGroupLinkVisisble">&{'groupsViewApplyToGroupAsPerson'}</span>
+						<span data-bind="visible: alreadyApplyToGroupLinkVisisble">&{'groupsViewAlreadyAppliedToGroupAsPerson'}</span>
+						<br />
+						<span id="cancelApplyToGroupLink" class="dabLink" data-bind="visible: alreadyApplyToGroupLinkVisisble">&{'groupsViewCancelApplicationToGroupAsPerson'}</span>
+					</td>
+				</tr>				
 				
 			</tbody>
 		</table>
@@ -84,24 +106,86 @@
 	
 	
 	
-	<div id="groupProjects">
+	<div id="groupProjects" class="groupToggleBlocks">
 		<span class="toggleLink dabLink" >&{'groupsViewProjects'} (${visitedGroup.numberOfProjects})...</span>
 		<div class="toggleContainer" style="display: none">
 			<span class="dabLinkDisabled">&{'groupsViewApplyToGroupAsProject'}</span>
 		</div>
 	</div>
 	
-	<div id="groupParticipants" >
-		<span class="toggleLink dabLink" >&{'groupsViewParticipants'} (${visitedGroup.numberOfParticipants})...</span>
+	<div id="groupParticipants" class="groupToggleBlocks">
+		<span class="toggleLink dabLink" >&{'groupsViewParticipants'} (<span class="dabLink" data-bind="text: numberOfUserParticipants"></span><span class="dabLink">)...</span></span>
 		<div class="toggleContainer" style="display: none">
-			<span class="dabLinkDisabled">&{'groupsViewApplyToGroupAsPerson'}</span>
+		
+			<div data-bind="foreach: acceptedParticipants">
+				<div class="confirmedParticipant" >
+					<span class="hiddenParticipantId" style="display: none" data-bind="text: userName"></span>
+		
+					<a data-bind="attr: {href: profileLink}" class="dabLink">
+						<img data-bind="attr: {src: photoLocation}" class="profileContactThumb" />
+					</a>
+					
+					<div class="profileLink">
+						<a data-bind="attr: {href: profileLink}" class="dabLink"><span data-bind="text: userName" class="dabLink"></span></a>
+						<span data-bind="text: userLocation"></span>
+						<br />
+						&{'groupRole'}: <span class="groupRole" data-bind="text: role"> </span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	#{if groupViewVisibility.userApplicationsAreVisible }
+		<div id="groupUserApplicants" class="groupToggleBlocks">
+			<span class="toggleLink dabLink" >&{'groupsViewApplicants'} (<span class="dabLink" data-bind="text: numberOfUserApplicants"></span><span class="dabLink">)...</span></span>
+			<div class="toggleContainer" style="display: none">
+			
+				<div data-bind="foreach: applicants">
+					<div class="applyingParticipant" >
+						<span class="hiddenParticipantId" style="display: none" data-bind="text: userName"></span>
+			
+						<a data-bind="attr: {href: profileLink}" class="dabLink">
+							<img data-bind="attr: {src: photoLocation}" class="profileContactThumb" />
+						</a>
+						
+						<div class="profileLink">
+							<a data-bind="attr: {href: profileLink}" class="dabLink"><span data-bind="text: userName" class="dabLink"></span></a>
+							<span data-bind="text: userLocation"></span>
+						</div>
+						
+						<br />
+						<span class="acceptUserApplication dabLink" >&{'groupsViewAcceptUserApplication'}</span>
+						<span> - </span>
+						<span class="rejectUserApplication dabLink" >&{'groupsViewRejectUserApplication'}</span>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	#{/if }
+	
+	
+	<div id="userParticipantsDataModel" class="hidden">
+		<span id="applyToGroupLinkVisisble" class="hidden">${groupViewVisibility.applyToGroupLinkVisisble }</span>
+		<span id="alreadyApplyToGroupLinkVisisble" class="hidden">${groupViewVisibility.alreadyApplyToGroupLinkVisisble}</span>
+	
+		<div id="confirmedParticipants">
 			 #{list items:visitedGroup.participants, as:'oneParticipant'}
-				#{groups.confirmedParticipant participant: oneParticipant /}
+				 <div class="participant" >
+					<span class="username" class="hidden" ">${oneParticipant.user.userName}</span>
+					<span class="isUserAccepted" class="hidden" ">${oneParticipant.accepted}</span>
+					<a class="profileLink" href="@{profile.ProfileView.profileView( oneParticipant.user.userName)}" ></a>
+					<img src="${oneParticipant.user.mainPhotoThumbLink}" class="profileContactThumb" />
+					<span class="userLocation">${oneParticipant.user.location}</span>
+					<span class="groupRole">&{oneParticipant.role.label}</span>
+				</div>
 			 #{/list}
 		</div>
 	</div>
 	
-	<div id="groupForum">
+	
+	<div id="groupForum" class="groupToggleBlocks">
 		<span class="toggleLink dabLink" >&{'groupsViewForum'} (0)...</span>
 		<div class="toggleContainer" style="display: none">
 			(TODO)
@@ -113,5 +197,14 @@
 		#{form @groups.GroupsView.closeGroup()}
 			<input type="hidden" name="groupId" id="groupIdInput"></input>
 		#{/form}
+	</div>
+	
+	
+	
+	<div id="applyToGroupDialog" title="&{'confirmationPopupTitle'}">
+		&{'groupsViewApplicationPopupText'}
+		<br />
+		<br />
+		<textarea cols="45" rows="7"></textarea>
 	</div>
 	

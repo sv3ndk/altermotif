@@ -21,13 +21,14 @@ public class GroupViewVisibility {
 		this.pep = pep;
 		this.visitingUser = visitingUser;
 	}
+	
+	///////////////////////////////////////
 
+	
+	// toolbox
 	public boolean isToolBoxVisible() {
 		return isEditGroupLinkVisisble() || isEndGroupLinkVisisble();
 	}
-	
-	
-	
 	
 	public boolean isEditGroupLinkVisisble() {
 		return pep.isUserAllowedToEditGroup(visitingUser);
@@ -48,5 +49,20 @@ public class GroupViewVisibility {
 	}
 	
 	
+	
+	///////////////////////////////////
+	// user participant management
+	
+	public boolean isApplyToGroupLinkVisisble () {
+		return pep.isUserAllowedToApplyToGroup(visitingUser);
+	}
+	
+	public boolean isAlreadyApplyToGroupLinkVisisble () {
+		return pep.getGroup().hasAppliedForGroupMembership(visitingUser);
+	}
+	
+	public boolean isUserApplicationsAreVisible() {
+		return pep.isUserAllowedToAcceptAndRejectUserApplications(visitingUser);
+	}
 
 }

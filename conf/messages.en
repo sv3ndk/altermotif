@@ -216,6 +216,7 @@ uploadCVPleaseWait=Please wait while the CV is being uploaded
 
 
 # manage privacy settings screens
+privacySettingsProfileIsActive=My profile is active
 privacySettingsMayNotDeactivateExplanation=You may not deactivate your profile because you are the leader of at least one project or you have received at least one leadership transfer proposal. You must transmit this leadership to another participant of this project or end the project in order to be able to deactivate your profile.
 privacySettingsFirstName=My first name is visible to 
 privacySettingsLastName=My last name is visible to 
@@ -275,9 +276,16 @@ groupsViewProjects=Projects
 groupsViewParticipants=Participants
 groupsViewApplyToGroupAsProject=Ask to add one of your projects to this group
 groupsViewApplyToGroupAsPerson=Ask to be joined to this group
+groupsViewAlreadyAppliedToGroupAsPerson=You have already applied to be a member of this group. Waiting for an admin to accept/reject this application
+groupsViewCancelApplicationToGroupAsPerson=Cancel application
+groupsViewConfirmCancelApplyToGroup=Are you sure you want to cancel your application to this group?
+groupsViewApplicationPopupText=Please enter a short text that will be attached to the application to join this group.
+groupsViewApplicants=User applications
+groupsViewAcceptUserApplication=Accept application
+groupsViewRejectUserApplication=Reject application
+groupsViewConfirmAcceptApplyToGroup=Are you sure you want to accept this user membership request to this group?
+groupsViewConfirmRejectApplyToGroup=Are you sure you want to reject this user membership request to this group?
 groupsViewForum=Forum
-
-
 
 groupsEditName=Group name
 groupsEditDescription=Group description

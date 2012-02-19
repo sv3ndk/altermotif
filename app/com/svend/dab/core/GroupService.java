@@ -13,11 +13,15 @@ import org.springframework.stereotype.Service;
 import com.google.common.base.Strings;
 import com.svend.dab.core.beans.Config;
 import com.svend.dab.core.beans.groups.ProjectGroup;
+import com.svend.dab.core.beans.profile.UserProfile;
+import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.dao.IGroupDao;
+import com.svend.dab.core.dao.IUserProfileDao;
 import com.svend.dab.eda.EventEmitter;
 import com.svend.dab.eda.events.groups.GroupClosed;
 import com.svend.dab.eda.events.groups.GroupCreated;
 import com.svend.dab.eda.events.groups.GroupUpdatedEvent;
+import com.svend.dab.eda.events.groups.GroupsUserApplicationAccepted;
 
 /**
  * @author svend
@@ -34,6 +38,9 @@ public class GroupService implements IGroupService {
 	@Autowired
 	private IGroupDao groupDao;
 
+	@Autowired
+	private IUserProfileDao userProfileRepo;
+	
 	@Autowired
 	private Config config;
 
@@ -80,6 +87,31 @@ public class GroupService implements IGroupService {
 			eventEmitter.emit(new GroupClosed(groupId));
 		}
 	}
-	
+
+
+	public void applyToGroup(String groupId, String userId) {
+		
+		ProjectGroup group = groupDao.retrieveGroupById(groupId);
+		
+		UserProfile user = userProfileRepo.retrieveUserProfileById(userId);
+		
+		if (group != null && group.isActive() && user != null && user.getPrivacySettings().isProfileActive()) {
+			if (!group.isMemberOrHasALreadyApplied(userId)) {
+				groupDao.addUserApplication(groupId, new UserSummary(user));
+			}
+		}
+	}
+
+
+	public void cancelUserApplicationToGroup(String groupId, String userId) {
+		groupDao.removeUserParticipant(groupId, userId);
+	}
+
+
+	public void acceptUserApplicationToGroup(String groupId, String applicantId) {
+		if (!Strings.isNullOrEmpty(groupId) && !Strings.isNullOrEmpty(applicantId)) {
+			eventEmitter.emit(new GroupsUserApplicationAccepted(groupId, applicantId));
+		}
+	}
 
 }

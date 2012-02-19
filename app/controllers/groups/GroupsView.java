@@ -2,6 +2,7 @@ package controllers.groups;
 
 import web.utils.Utils;
 import models.altemotif.groups.GroupViewVisibility;
+import models.altermotif.BinaryResponse;
 
 import com.svend.dab.core.beans.groups.GroupPep;
 import com.svend.dab.core.beans.groups.ProjectGroup;
@@ -45,5 +46,68 @@ public class GroupsView extends DabLoggedController {
 			}
 		}
 	}
+	
+	
+	public static void applyToGroup(String groupId, String applicationText) {
+		
+		ProjectGroup group = BeanProvider.getGroupService().loadGroupById(groupId, true);
+		
+		if (group == null) {
+			renderJSON(new BinaryResponse(false));
+		} else {
+			GroupPep pep = new GroupPep(group);
+			if (pep.isUserAllowedToApplyToGroup((getSessionWrapper().getLoggedInUserProfileId()))) {
+				BeanProvider.getGroupService().applyToGroup(groupId, getSessionWrapper().getLoggedInUserProfileId());
+				renderJSON(new BinaryResponse(true));
+			} else {
+				renderJSON(new BinaryResponse(false));
+			}
+		}
+	}
+	
+	public static void cancelApplyToGroup(String groupId) {
+		ProjectGroup group = BeanProvider.getGroupService().loadGroupById(groupId, true);
+		if (group == null || ! group.hasAppliedForGroupMembership(getSessionWrapper().getLoggedInUserProfileId())) {
+			renderJSON(new BinaryResponse(false));
+		} else {
+			BeanProvider.getGroupService().cancelUserApplicationToGroup(groupId, getSessionWrapper().getLoggedInUserProfileId());
+			renderJSON(new BinaryResponse(true));
+		}
+	}
+	
+	
+	public static void acceptUserApplicationToGroup(String groupId, String applicantId) {
+		ProjectGroup group = BeanProvider.getGroupService().loadGroupById(groupId, true);
+		
+		if (group == null) {
+			renderJSON(new BinaryResponse(false));
+		} else {
+			GroupPep pep = new GroupPep(group);
+			if (pep.isUserAllowedToAcceptAndRejectUserApplications(getSessionWrapper().getLoggedInUserProfileId())) {
+				BeanProvider.getGroupService().acceptUserApplicationToGroup(groupId, applicantId);
+			} else {
+				renderJSON(new BinaryResponse(false));
+			}
+		}
+		
+	}
+	
+	public static void rejectUserApplicationToGroup(String groupId, String applicantId) {
+		ProjectGroup group = BeanProvider.getGroupService().loadGroupById(groupId, true);
+		
+		if (group == null) {
+			renderJSON(new BinaryResponse(false));
+		} else {
+			GroupPep pep = new GroupPep(group);
+			if (pep.isUserAllowedToAcceptAndRejectUserApplications(getSessionWrapper().getLoggedInUserProfileId())) {
+				BeanProvider.getGroupService().cancelUserApplicationToGroup(groupId, applicantId);
+			} else {
+				renderJSON(new BinaryResponse(false));
+			}
+		}
+		
+	}
+	
+	
 
 }
