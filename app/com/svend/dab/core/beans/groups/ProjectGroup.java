@@ -131,8 +131,6 @@ public class ProjectGroup {
 				return true;
 			}
 		}
-
-		// TODO Auto-generated method stub
 		return false;
 	}
 

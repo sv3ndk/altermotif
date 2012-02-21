@@ -13,10 +13,11 @@ import com.svend.dab.core.beans.profile.UserSummary;
 
 import controllers.Application;
 import controllers.BeanProvider;
+import controllers.DabController;
 import controllers.DabLoggedController;
 import controllers.profile.ProfileHome;
 
-public class GroupsView extends DabLoggedController {
+public class GroupsView extends DabController {
 
 	public static void groupsView(String groupid) {
 
