@@ -3,10 +3,13 @@ package controllers.groups;
 import web.utils.Utils;
 import models.altemotif.groups.GroupViewVisibility;
 import models.altermotif.BinaryResponse;
+import models.altermotif.GroupsViewParticipantActionOutcome;
 
+import com.svend.dab.core.beans.groups.GroupParticipant;
 import com.svend.dab.core.beans.groups.GroupParticipant.ROLE;
 import com.svend.dab.core.beans.groups.GroupPep;
 import com.svend.dab.core.beans.groups.ProjectGroup;
+import com.svend.dab.core.beans.profile.UserSummary;
 
 import controllers.Application;
 import controllers.BeanProvider;
@@ -87,6 +90,11 @@ public class GroupsView extends DabLoggedController {
 			GroupPep pep = new GroupPep(group);
 			if (pep.isUserAllowedToAcceptAndRejectUserApplications(getSessionWrapper().getLoggedInUserProfileId())) {
 				BeanProvider.getGroupService().acceptUserApplicationToGroup(groupId, applicantId);
+				
+				// building response with updated user rights
+				group.addParticipant(new GroupParticipant(ROLE.member, new UserSummary(applicantId, null, null, true)));
+				renderOutcome(group, applicantId);
+				
 			} else {
 				renderJSON(new BinaryResponse(false));
 			}
@@ -128,33 +136,62 @@ public class GroupsView extends DabLoggedController {
 		ProjectGroup group = BeanProvider.getGroupService().loadGroupById(groupId, true);
 		
 		if (group == null) {
-			renderJSON(new BinaryResponse(false));
+			renderJSON(new GroupsViewParticipantActionOutcome(false));
 		} else {
 			GroupPep pep = new GroupPep(group);
 			if (pep.isUserAllowedToMakeAdmin(getSessionWrapper().getLoggedInUserProfileId(), upgradedUser)) {
 				BeanProvider.getGroupService().updateUserParticipantRole(groupId, upgradedUser, ROLE.admin);
+
+				// building response with updated user rights
+				group.updateUserParticipantRole(upgradedUser, ROLE.admin);
+				renderOutcome(group, upgradedUser);
+				
 			} else {
-				renderJSON(new BinaryResponse(false));
+				renderJSON(new GroupsViewParticipantActionOutcome(false));
 			}
 		}
 	}
+
 	
 	public static void makeMember(String groupId, String downgradedUser) {
 		ProjectGroup group = BeanProvider.getGroupService().loadGroupById(groupId, true);
 		
 		if (group == null) {
-			renderJSON(new BinaryResponse(false));
+			renderJSON(new GroupsViewParticipantActionOutcome(false));
 		} else {
 			GroupPep pep = new GroupPep(group);
 			if (pep.isUserAllowedToMakeMember(getSessionWrapper().getLoggedInUserProfileId(), downgradedUser)) {
 				BeanProvider.getGroupService().updateUserParticipantRole(groupId, downgradedUser, ROLE.member);
+				
+				// building response with updated user rights
+				group.updateUserParticipantRole(downgradedUser, ROLE.member);
+				renderOutcome(group, downgradedUser);
+
 			} else {
-				renderJSON(new BinaryResponse(false));
+				renderJSON(new GroupsViewParticipantActionOutcome(false));
 			}
 		}
 	}
 	
 	
+	
+	//////////////////////////////
+	///
+	
+	private static void renderOutcome(ProjectGroup group, String otherUserId) {
+		GroupsViewParticipantActionOutcome outcome = new GroupsViewParticipantActionOutcome(true);
+		GroupViewVisibility visibility = new GroupViewVisibility(new GroupPep(group), getSessionWrapper().getLoggedInUserProfileId());
+		
+		outcome.setLoggedInUser_makeMemberLinkVisible(visibility.isMakeMemberLinkVisible(getSessionWrapper().getLoggedInUserProfileId()));
+		outcome.setLoggedInUser_makeAdminLinkVisible(visibility.isMakeAdminLinkVisible(getSessionWrapper().getLoggedInUserProfileId()));
+		outcome.setLoggedInUser_leaveLinkVisible(visibility.isLeaveLinkVisible(getSessionWrapper().getLoggedInUserProfileId()));
+		
+		outcome.setOtherUser_makeMemberLinkVisible(visibility.isMakeMemberLinkVisible(otherUserId));
+		outcome.setOtherUser_makeAdminLinkVisible(visibility.isMakeAdminLinkVisible(otherUserId));
+		outcome.setOtherUser_leaveLinkVisible(visibility.isLeaveLinkVisible(otherUserId));
+		
+		renderJSON(outcome);
+	}
 	
 	
 

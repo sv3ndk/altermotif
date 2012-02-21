@@ -46,7 +46,9 @@ public class UserSummary implements Serializable {
 	
 	public UserSummary(String username, PersonalData personalData, Photo mainPhoto, boolean active) {
 		this.userName = username;
-		this.location = personalData.getLocation();
+		if (personalData != null) {
+			this.location = personalData.getLocation();
+		}
 		this.mainPhoto = mainPhoto;
 		this.isProfileActive = active;
 	}

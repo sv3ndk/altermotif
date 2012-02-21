@@ -13,7 +13,7 @@ import com.svend.dab.core.beans.projects.SelectedTheme;
 public class ProjectGroup {
 
 	private String id;
-	
+
 	private boolean isActive = true;
 	private String name;
 	private String description;
@@ -72,23 +72,35 @@ public class ProjectGroup {
 	}
 	
 	
-	public boolean hasAppliedForGroupMembership(String userId) {
+	public void updateUserParticipantRole(String upgradedUser, ROLE role) {
 		
+		if (! Strings.isNullOrEmpty(upgradedUser)) {
+			for (GroupParticipant participant : participants) {
+				// user not yet accepted are still concidered with no role
+				if (upgradedUser.equals(participant.getUser().getUserName())) {
+					participant.setRole(role);
+					return;
+				}
+			}
+		}
+	}
+
+
+	public boolean hasAppliedForGroupMembership(String userId) {
+
 		if (Strings.isNullOrEmpty(userId) || participants == null || participants.isEmpty()) {
 			return false;
 		}
-		
+
 		for (GroupParticipant participant : participants) {
 			// user not yet accepted are still concidered with no role
-			if (userId.equals(participant.getUser().getUserName()) && ! participant.isAccepted()) {
+			if (userId.equals(participant.getUser().getUserName()) && !participant.isAccepted()) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-
-	
 
 	public int getNumberOfAdmins() {
 
@@ -106,26 +118,23 @@ public class ProjectGroup {
 
 		return numberOfAdmins;
 	}
-	
+
 	public boolean isMemberOrHasALreadyApplied(String userId) {
-		
+
 		if (Strings.isNullOrEmpty(userId) || participants == null || participants.isEmpty()) {
 			return false;
 		}
-		
+
 		for (GroupParticipant participant : participants) {
 			// user not yet accepted are still concidered with no role
-			if (userId.equals(participant.getUser().getUserName()) ) {
+			if (userId.equals(participant.getUser().getUserName())) {
 				return true;
 			}
 		}
-		
-		
+
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-	
 
 	public void addParticipant(GroupParticipant groupParticipant) {
 		if (participants == null) {
@@ -139,13 +148,13 @@ public class ProjectGroup {
 			return 0;
 		} else {
 			int numberOfAcceptedParticipants = 0;
-			
+
 			for (GroupParticipant participant : participants) {
 				if (participant.isAccepted()) {
 					numberOfAcceptedParticipants++;
 				}
 			}
-			
+
 			return numberOfAcceptedParticipants;
 		}
 	}
@@ -254,7 +263,5 @@ public class ProjectGroup {
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
 	}
-
-
 
 }

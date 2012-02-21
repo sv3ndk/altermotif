@@ -21,7 +21,7 @@ var dabGroupsViewLib = {
 			// knockout bindings for user participant
 			ko.applyBindings(this.userParticipantKoModel, $("#applyWithProfileTd")[0]);
 			ko.applyBindings(this.userParticipantKoModel, $("#groupParticipants")[0]);
-			
+
 			if ($("#groupPendingApplicants")[0] != undefined) {
 				ko.applyBindings(this.userParticipantKoModel, $("#groupPendingApplicants")[0]);
 			}
@@ -45,25 +45,29 @@ var dabGroupsViewLib = {
 			new Confirm.AskAndProceed(this, "#applyWithProfileTd", "#cancelApplyToGroupLink", confirmCancelApplyToGroup, null, function() {
 				self.afterUserConfirmsRemoveGroupApplication()
 			}).init();
-			
+
 			// click on "accept user application"
-			new Confirm.AskAndProceed(this, "#groupPendingApplicants", ".acceptUserApplication", confirmAcceptApplyToGroup, self.whenUserClicksOnAcceptUserApplication, function() {
-				self.whenUserConfirmsAcceptUserApplication()
-			}).init();
-			
+			new Confirm.AskAndProceed(this, "#groupPendingApplicants", ".acceptUserApplication", confirmAcceptApplyToGroup,
+					self.whenUserClicksOnAcceptUserApplication, function() {
+						self.whenUserConfirmsAcceptUserApplication()
+					}).init();
+
 			// click on "reject user application"
-			new Confirm.AskAndProceed(this, "#groupPendingApplicants", ".rejectUserApplication", confirmRejectApplyToGroup, self.whenUserClicksOnRejectUserApplication, function() {
-				self.whenUserConfirmsRejectUserApplication()
-			}).init();
-			
+			new Confirm.AskAndProceed(this, "#groupPendingApplicants", ".rejectUserApplication", confirmRejectApplyToGroup,
+					self.whenUserClicksOnRejectUserApplication, function() {
+						self.whenUserConfirmsRejectUserApplication()
+					}).init();
+
 			// click on "leave group"
 			new Confirm.AskAndProceed(this, "#groupParticipants", ".leaveGroup", confirmLeaveGroup, null, this.whenUserConfirmsLeaveGroup).init();
-			
+
 			// click on "make admin"
-			new Confirm.AskAndProceed(this, "#groupParticipants", ".makeAdmin", confirmMakeAdminText, this.whenUserClicksOnMakeAdmin, this.whenUserConfirmsMakeAdmin).init();
-			
+			new Confirm.AskAndProceed(this, "#groupParticipants", ".makeAdmin", confirmMakeAdminText, this.whenUserClicksOnMakeAdmin,
+					this.whenUserConfirmsMakeAdmin).init();
+
 			// click on "make admin"
-			new Confirm.AskAndProceed(this, "#groupParticipants", ".makeMember", confirmMemberAdminText, this.whenUserClicksOnMakeMember, this.whenUserConfirmsMakeMember).init();
+			new Confirm.AskAndProceed(this, "#groupParticipants", ".makeMember", confirmMemberAdminText, this.whenUserClicksOnMakeMember,
+					this.whenUserConfirmsMakeMember).init();
 
 		};
 
@@ -81,78 +85,96 @@ var dabGroupsViewLib = {
 				self.userParticipantKoModel.alreadyApplyToGroupLinkVisisble(false);
 			});
 		};
-		
+
 		this.whenUserClicksOnAcceptUserApplication = function(self, event) {
 			self.recordClickedApplicantId(event);
 		};
-		
+
 		this.whenUserConfirmsAcceptUserApplication = function() {
-			var self = this;	
+			var self = this;
 			$.post(acceptUserApplicationToGroup({
 				groupId : visitedGroupId,
-				applicantId: self.clickedApplicantId
-			}), function(data) {
-				self.userParticipantKoModel.moveApplicantToParticipants(self.clickedApplicantId);
+				applicantId : self.clickedApplicantId
+			}), function(response) {
+				if (response.success) {
+					self.userParticipantKoModel.moveApplicantToParticipants(self.clickedApplicantId);
+					self.applyUpdatedRoles(response, self.clickedApplicantId);
+				}
+
 			});
 		};
-		
+
 		this.whenUserClicksOnRejectUserApplication = function(self, event) {
 			self.recordClickedApplicantId(event);
 		};
-		
+
 		this.whenUserConfirmsRejectUserApplication = function() {
 			var self = this;
 			$.post(rejectUserApplicationToGroup({
 				groupId : visitedGroupId,
-				applicantId: self.clickedApplicantId
+				applicantId : self.clickedApplicantId
 			}), function(data) {
 				self.userParticipantKoModel.removeApplicant(self.clickedApplicantId);
 			});
 		};
-		
+
 		this.whenUserConfirmsLeaveGroup = function(self) {
 			$.post(leaveGroup({
 				groupId : visitedGroupId,
 			}), function(data) {
 				self.userParticipantKoModel.removeParticipant(loggedInUserId);
+				self.userParticipantKoModel.applyToGroupLinkVisisble(true);
 			});
 		};
-		
+
 		this.whenUserClicksOnMakeAdmin = function(self, event) {
 			self.recordClickedParticipantId(event);
 		};
-		
+
 		this.whenUserConfirmsMakeAdmin = function(self) {
 			$.post(makeAdmin({
 				groupId : visitedGroupId,
-				upgradedUser: self.clickedParticipantId
-			}), function(data) {
-				self.userParticipantKoModel.updateParticipantRole(self.clickedParticipantId, adminRoleLabel);
+				upgradedUser : self.clickedParticipantId
+			}), function(response) {
+				if (response.success) {
+					self.userParticipantKoModel.updateParticipantRole(self.clickedParticipantId, adminRoleLabel);
+					self.applyUpdatedRoles(response, self.clickedParticipantId);
+				}
 			});
 		};
-		
+
 		this.whenUserClicksOnMakeMember = function(self, event) {
 			self.recordClickedParticipantId(event);
 		};
-		
+
 		this.whenUserConfirmsMakeMember = function(self) {
 			$.post(makeMember({
 				groupId : visitedGroupId,
-				downgradedUser: self.clickedParticipantId
-			}), function(data) {
-				self.userParticipantKoModel.updateParticipantRole(loggedInUserId, memberRoleLabel);
+				downgradedUser : self.clickedParticipantId
+			}), function(response) {
+				if (response.success) {
+					self.userParticipantKoModel.updateParticipantRole(loggedInUserId, memberRoleLabel);
+					self.applyUpdatedRoles(response, self.clickedParticipantId);
+				}
 			});
 		};
-		
 
 		// ///////////////////////////
-		
+
 		this.recordClickedApplicantId = function(event) {
 			this.clickedApplicantId = $(event.target).parent().find(".hiddenParticipantId").text();
 		};
-		
+
 		this.recordClickedParticipantId = function(event) {
 			this.clickedParticipantId = $(event.target).parent().parent().find(".hiddenParticipantId").text();
+		};
+
+		this.applyUpdatedRoles = function(participantActionOutcome, otherUser) {
+			this.userParticipantKoModel.updateParticipantVisibility(loggedInUserId, participantActionOutcome.loggedInUser_leaveLinkVisible,
+					participantActionOutcome.loggedInUser_makeAdminLinkVisible, participantActionOutcome.loggedInUser_makeMemberLinkVisible);
+
+			this.userParticipantKoModel.updateParticipantVisibility(otherUser, participantActionOutcome.otherUser_leaveLinkVisible,
+					participantActionOutcome.otherUser_makeAdminLinkVisible, participantActionOutcome.otherUser_makeMemberLinkVisible);
 		};
 
 		this.init();
@@ -227,7 +249,6 @@ var dabGroupsViewLib = {
 		this.numberOfUserApplicants = ko.computed(function() {
 			return self.applicants().length;
 		});
-		
 
 		this.init = function() {
 			var self = this;
@@ -244,7 +265,7 @@ var dabGroupsViewLib = {
 			var profileLink = $(oneHtmlParticipant).find(".profileLink").attr("href");
 			var userLocation = $(oneHtmlParticipant).find(".userLocation").text();
 			var role = $(oneHtmlParticipant).find(".groupRole").text();
-			
+
 			var photoLocation = $(oneHtmlParticipant).find(".profileContactThumb").attr("src");
 			if (photoLocation == undefined || photoLocation == "") {
 				photoLocation = $("#hiddenDefaultProfileThumb").attr("src");
@@ -254,45 +275,54 @@ var dabGroupsViewLib = {
 				var isLeaveLinkVisible = $(oneHtmlParticipant).find(".isLeaveLinkVisible").text() == "true";
 				var isMakeAdminLinkVisible = $(oneHtmlParticipant).find(".isMakeAdminLinkVisible").text() == "true";
 				var isMakeMemberLinkVisible = $(oneHtmlParticipant).find(".isMakeMemberLinkVisible").text() == "true";
-				this.acceptedParticipants.push(new dabGroupsViewLib.UserParticipant(userName, profileLink, photoLocation, userLocation, role, isLeaveLinkVisible, isMakeAdminLinkVisible, isMakeMemberLinkVisible ));
+				this.acceptedParticipants.push(new dabGroupsViewLib.UserParticipant(userName, profileLink, photoLocation, userLocation, role,
+						isLeaveLinkVisible, isMakeAdminLinkVisible, isMakeMemberLinkVisible));
 			} else {
 				this.applicants.push(new dabGroupsViewLib.UserParticipant(userName, profileLink, photoLocation, userLocation, role, false, false, false));
 			}
 		};
 
-		
 		this.updateParticipantRole = function(participantId, newRole) {
 			var participant = this.findParticipantById(participantId);
-			if (participant != undefined ) {
+			if (participant != undefined) {
 				participant.role(newRole);
 				participant.isMakeAdminLinkVisible(false);
 				participant.isMakeMemberLinkVisible(false);
 			}
 		};
-		
+
+		this.updateParticipantVisibility = function(participantId, isLeaveLinkVisible, isMakeAdminLinkVisible, isMakeMemberLinkVisible) {
+			var participant = this.findParticipantById(participantId);
+			if (participant != undefined) {
+				participant.isLeaveLinkVisible(isLeaveLinkVisible);
+				participant.isMakeAdminLinkVisible(isMakeAdminLinkVisible);
+				participant.isMakeMemberLinkVisible(isMakeMemberLinkVisible);
+			}
+		};
+
 		this.removeParticipant = function(participantId) {
 			var participant = this.findParticipantById(participantId);
-			if (participant != undefined ) {
+			if (participant != undefined) {
 				var participantIndex = _.indexOf(this.acceptedParticipants(), participant);
 				if (participantIndex != -1) {
 					this.acceptedParticipants.splice(participantIndex, 1);
 				}
 			}
 		};
-		
+
 		this.removeApplicant = function(applicantId) {
 			var applicant = this.findApplicantById(applicantId);
-			if (applicant != undefined ) {
+			if (applicant != undefined) {
 				var applicantIndex = _.indexOf(this.applicants(), applicant);
 				if (applicantIndex != -1) {
 					this.applicants.splice(applicantIndex, 1);
 				}
 			}
 		};
-		
+
 		this.moveApplicantToParticipants = function(applicantId) {
 			var applicant = this.findApplicantById(applicantId);
-			if (applicant != undefined ) {
+			if (applicant != undefined) {
 				var applicantIndex = _.indexOf(this.applicants(), applicant);
 				if (applicantIndex != -1) {
 					this.applicants.splice(applicantIndex, 1);
@@ -300,15 +330,19 @@ var dabGroupsViewLib = {
 				}
 			}
 		}
-		
-		this.findApplicantById = function(applicantId ) {
-			return _.find(this.applicants(), function(oneApplicant) {return oneApplicant.userName == applicantId;});
+
+		this.findApplicantById = function(applicantId) {
+			return _.find(this.applicants(), function(oneApplicant) {
+				return oneApplicant.userName == applicantId;
+			});
 		};
-		
+
 		this.findParticipantById = function(participantId) {
-			return _.find(this.acceptedParticipants(), function(oneParticipant) {return oneParticipant.userName == participantId;});
+			return _.find(this.acceptedParticipants(), function(oneParticipant) {
+				return oneParticipant.userName == participantId;
+			});
 		};
-		
+
 		this.init();
 	},
 
@@ -318,7 +352,7 @@ var dabGroupsViewLib = {
 		this.photoLocation = photoLocation;
 		this.userLocation = userLocation;
 		this.role = ko.observable(role);
-		this.isLeaveLinkVisible = isLeaveLinkVisible;
+		this.isLeaveLinkVisible = ko.observable(isLeaveLinkVisible);
 		this.isMakeAdminLinkVisible = ko.observable(isMakeAdminLinkVisible);
 		this.isMakeMemberLinkVisible = ko.observable(isMakeMemberLinkVisible);
 	},
