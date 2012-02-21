@@ -21,6 +21,7 @@ public class GroupsViewParticipantActionOutcome {
 	private boolean otherUser_leaveLinkVisible;
 	private boolean otherUser_makeMemberLinkVisible;
 	private boolean otherUser_makeAdminLinkVisible;
+	private boolean otherUser_removeUserLinkVisible;
 
 	public GroupsViewParticipantActionOutcome() {
 		super();
@@ -85,6 +86,14 @@ public class GroupsViewParticipantActionOutcome {
 
 	public void setOtherUser_makeAdminLinkVisible(boolean otherUser_makeAdminLinkVisible) {
 		this.otherUser_makeAdminLinkVisible = otherUser_makeAdminLinkVisible;
+	}
+
+	public boolean isOtherUser_removeUserLinkVisible() {
+		return otherUser_removeUserLinkVisible;
+	}
+
+	public void setOtherUser_removeUserLinkVisible(boolean otherUser_removeUserLinkVisible) {
+		this.otherUser_removeUserLinkVisible = otherUser_removeUserLinkVisible;
 	}
 
 }

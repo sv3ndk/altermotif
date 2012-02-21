@@ -68,6 +68,10 @@ var dabGroupsViewLib = {
 			// click on "make admin"
 			new Confirm.AskAndProceed(this, "#groupParticipants", ".makeMember", confirmMemberAdminText, this.whenUserClicksOnMakeMember,
 					this.whenUserConfirmsMakeMember).init();
+			
+			// click on "remove member"
+			new Confirm.AskAndProceed(this, "#groupParticipants", ".removeMember", confirmRemoveMemberText, this.whenUserClicksOnRemoveMember,
+					this.whenUserConfirmsRemoveMember).init();
 
 		};
 
@@ -159,6 +163,22 @@ var dabGroupsViewLib = {
 			});
 		};
 
+		this.whenUserClicksOnRemoveMember = function(self, event) {
+			self.recordClickedParticipantId(event);
+		};
+		
+		this.whenUserConfirmsRemoveMember =  function(self) {
+			$.post(removeMember({
+				groupId : visitedGroupId,
+				removedUser : self.clickedParticipantId
+			}), function(response) {
+				if (response.success) {
+					self.userParticipantKoModel.removeParticipant(self.clickedParticipantId);
+					self.applyUpdatedRoles(response, self.clickedParticipantId);
+				}
+			});
+		};
+		
 		// ///////////////////////////
 
 		this.recordClickedApplicantId = function(event) {
@@ -171,10 +191,10 @@ var dabGroupsViewLib = {
 
 		this.applyUpdatedRoles = function(participantActionOutcome, otherUser) {
 			this.userParticipantKoModel.updateParticipantVisibility(loggedInUserId, participantActionOutcome.loggedInUser_leaveLinkVisible,
-					participantActionOutcome.loggedInUser_makeAdminLinkVisible, participantActionOutcome.loggedInUser_makeMemberLinkVisible);
+					participantActionOutcome.loggedInUser_makeAdminLinkVisible, participantActionOutcome.loggedInUser_makeMemberLinkVisible, false);
 
 			this.userParticipantKoModel.updateParticipantVisibility(otherUser, participantActionOutcome.otherUser_leaveLinkVisible,
-					participantActionOutcome.otherUser_makeAdminLinkVisible, participantActionOutcome.otherUser_makeMemberLinkVisible);
+					participantActionOutcome.otherUser_makeAdminLinkVisible, participantActionOutcome.otherUser_makeMemberLinkVisible, participantActionOutcome.otherUser_removeUserLinkVisible);
 		};
 
 		this.init();
@@ -275,10 +295,11 @@ var dabGroupsViewLib = {
 				var isLeaveLinkVisible = $(oneHtmlParticipant).find(".isLeaveLinkVisible").text() == "true";
 				var isMakeAdminLinkVisible = $(oneHtmlParticipant).find(".isMakeAdminLinkVisible").text() == "true";
 				var isMakeMemberLinkVisible = $(oneHtmlParticipant).find(".isMakeMemberLinkVisible").text() == "true";
+				var isRemoveMemberLinkVisible = $(oneHtmlParticipant).find(".isRemoveMemberLinkVisible").text() == "true";
 				this.acceptedParticipants.push(new dabGroupsViewLib.UserParticipant(userName, profileLink, photoLocation, userLocation, role,
-						isLeaveLinkVisible, isMakeAdminLinkVisible, isMakeMemberLinkVisible));
+						isLeaveLinkVisible, isMakeAdminLinkVisible, isMakeMemberLinkVisible, isRemoveMemberLinkVisible));
 			} else {
-				this.applicants.push(new dabGroupsViewLib.UserParticipant(userName, profileLink, photoLocation, userLocation, role, false, false, false));
+				this.applicants.push(new dabGroupsViewLib.UserParticipant(userName, profileLink, photoLocation, userLocation, role, false, false, false, false));
 			}
 		};
 
@@ -291,12 +312,13 @@ var dabGroupsViewLib = {
 			}
 		};
 
-		this.updateParticipantVisibility = function(participantId, isLeaveLinkVisible, isMakeAdminLinkVisible, isMakeMemberLinkVisible) {
+		this.updateParticipantVisibility = function(participantId, isLeaveLinkVisible, isMakeAdminLinkVisible, isMakeMemberLinkVisible, isRemoveMemberLinkVisible) {
 			var participant = this.findParticipantById(participantId);
 			if (participant != undefined) {
 				participant.isLeaveLinkVisible(isLeaveLinkVisible);
 				participant.isMakeAdminLinkVisible(isMakeAdminLinkVisible);
 				participant.isMakeMemberLinkVisible(isMakeMemberLinkVisible);
+				participant.isRemoveMemberLinkVisible(isRemoveMemberLinkVisible);
 			}
 		};
 
@@ -346,7 +368,7 @@ var dabGroupsViewLib = {
 		this.init();
 	},
 
-	UserParticipant : function(userName, profileLink, photoLocation, userLocation, role, isLeaveLinkVisible, isMakeAdminLinkVisible, isMakeMemberLinkVisible) {
+	UserParticipant : function(userName, profileLink, photoLocation, userLocation, role, isLeaveLinkVisible, isMakeAdminLinkVisible, isMakeMemberLinkVisible, isRemoveMemberLinkVisible) {
 		this.userName = userName;
 		this.profileLink = profileLink;
 		this.photoLocation = photoLocation;
@@ -355,6 +377,7 @@ var dabGroupsViewLib = {
 		this.isLeaveLinkVisible = ko.observable(isLeaveLinkVisible);
 		this.isMakeAdminLinkVisible = ko.observable(isMakeAdminLinkVisible);
 		this.isMakeMemberLinkVisible = ko.observable(isMakeMemberLinkVisible);
+		this.isRemoveMemberLinkVisible = ko.observable(isRemoveMemberLinkVisible);
 	},
 
 };

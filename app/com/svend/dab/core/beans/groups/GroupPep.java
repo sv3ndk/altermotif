@@ -101,6 +101,22 @@ public class GroupPep {
 			return false;
 		}
 	}
+	
+	
+	public boolean isUserAllowedToRemoveUser(String userId, String removeUserId) {
+		
+		if (userId == null || removeUserId == null ) {
+			return false;
+		}
+		
+		if (userId.equals(removeUserId)) {
+			return isUserAllowedToLeaveGroup(userId);
+		} else {
+			
+			return isUserAdmin(userId) && ! isUserAdmin(removeUserId);
+		}
+	}
+
 
 	
 	///////////////////////////////
@@ -118,6 +134,7 @@ public class GroupPep {
 	public ProjectGroup getGroup() {
 		return group;
 	}
+
 	
 
 }

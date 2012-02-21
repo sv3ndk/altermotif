@@ -174,6 +174,26 @@ public class GroupsView extends DabController {
 		}
 	}
 	
+	public static void removeMember(String groupId, String removedUser) {
+		ProjectGroup group = BeanProvider.getGroupService().loadGroupById(groupId, true);
+		
+		if (group == null) {
+			renderJSON(new GroupsViewParticipantActionOutcome(false));
+		} else {
+			GroupPep pep = new GroupPep(group);
+			if (pep.isUserAllowedToRemoveUser(getSessionWrapper().getLoggedInUserProfileId(), removedUser)) {
+				BeanProvider.getGroupService().removeUserFromGroup(groupId, removedUser);
+				
+				// building response with updated user rights
+				group.removeParticipant(removedUser);
+				renderOutcome(group, removedUser);
+				
+			} else {
+				renderJSON(new GroupsViewParticipantActionOutcome(false));
+			}
+		}
+	}
+	
 	
 	
 	//////////////////////////////
@@ -190,6 +210,7 @@ public class GroupsView extends DabController {
 		outcome.setOtherUser_makeMemberLinkVisible(visibility.isMakeMemberLinkVisible(otherUserId));
 		outcome.setOtherUser_makeAdminLinkVisible(visibility.isMakeAdminLinkVisible(otherUserId));
 		outcome.setOtherUser_leaveLinkVisible(visibility.isLeaveLinkVisible(otherUserId));
+		outcome.setOtherUser_removeUserLinkVisible(visibility.isRemoveMemberLinkVisible(otherUserId));
 		
 		renderJSON(outcome);
 	}

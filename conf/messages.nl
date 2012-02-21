@@ -293,6 +293,8 @@ groupsViewMakeAdministrator=***Make administrator
 groupsViewConfirmMakeAdminText=***Are you sure you want to upgrade the status of this member to administrator of this group?
 groupsViewMakeMember=***Make member
 groupsViewConfirmMakeMemberText=***Are you sure you want to downgrade the status of this member to simple member of this group?
+groupsViewRemoveMember=***Remove member
+groupsViewconfirmRemoveMemberAText=***Are you sure you want to remove this member from this group?
 groupsViewForum=Forum
 
 

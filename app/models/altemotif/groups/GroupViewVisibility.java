@@ -48,8 +48,6 @@ public class GroupViewVisibility {
 		return pep.isUserAllowedToCloseGroup(visitingUser);
 	}
 	
-	
-	
 	///////////////////////////////////
 	// user participant management
 	
@@ -83,6 +81,20 @@ public class GroupViewVisibility {
 	
 	public boolean isMakeMemberLinkVisible(String groupUserId) {
 		return pep.isUserAllowedToMakeMember(visitingUser, groupUserId);
+	}
+	
+	public boolean isRemoveMemberLinkVisible(String groupUserId) {
+		
+		if (groupUserId == null) {
+			return false;
+		}
+		
+		if (groupUserId.equals(visitingUser)) {
+			// even if a user may leave a group: the "remove member" is never displayed besides his profile (we show the "leave group" link in that case)
+			return false;
+		} else {
+			return pep.isUserAllowedToRemoveUser(visitingUser, groupUserId);
+		}
 	}
 
 }

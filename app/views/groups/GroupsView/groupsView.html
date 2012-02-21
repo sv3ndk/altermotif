@@ -16,6 +16,7 @@
 	    var leaveGroup 						= #{jsAction @groups.GroupsView.leaveGroup(':groupId') /};
 	    var makeAdmin 						= #{jsAction @groups.GroupsView.makeAdmin(':groupId', ':upgradedUser') /};
 	    var makeMember 						= #{jsAction @groups.GroupsView.makeMember(':groupId', ':downgradedUser') /};
+	    var removeMember 					= #{jsAction @groups.GroupsView.removeMember(':groupId', ':removedUser') /};
 	
 		var confirmCloseGroupText = "&{'groupsViewConfirmCloseGroup'}";
 		var cannotCloseGroupText= "&{'groupsViewCannotCloseGroup'}";
@@ -26,6 +27,7 @@
 		var confirmLeaveGroup = "&{'groupsViewConfirmLeaveToGroup'}";
 		var confirmMakeAdminText = "&{'groupsViewConfirmMakeAdminText'}";
 		var confirmMemberAdminText = "&{'groupsViewConfirmMakeMemberText'}";
+		var confirmRemoveMemberText = "&{'groupsViewconfirmRemoveMemberAText'}";
 		
 		var adminRoleLabel = "&{'groupRoleAdmin'}";
 		var memberRoleLabel = "&{'groupRoleMember'}";
@@ -143,9 +145,11 @@
 						&{'groupRole'}: <span class="groupRole" data-bind="text: role"> </span>
 						<br />
 						<span data-bind="visible: isLeaveLinkVisible" class="dabLink leaveGroup">&{'groupsViewLeaveGroup'}</span>
-						<span data-bind="visible: isLeaveLinkVisible"> - </span>
+						<span>  </span>
 						<span data-bind="visible: isMakeAdminLinkVisible" class="dabLink makeAdmin">&{'groupsViewMakeAdministrator'}</span>
 						<span data-bind="visible: isMakeMemberLinkVisible" class="dabLink makeMember">&{'groupsViewMakeMember'}</span>
+						<span>  </span>
+						<span data-bind="visible: isRemoveMemberLinkVisible" class="dabLink removeMember">&{'groupsViewRemoveMember'}</span>
 						
 					</div>
 				</div>
@@ -195,6 +199,7 @@
 					<span class="isLeaveLinkVisible" class="hidden" ">${groupViewVisibility.isLeaveLinkVisible(oneParticipant.user.userName) }</span>
 					<span class="isMakeAdminLinkVisible" class="hidden" ">${groupViewVisibility.isMakeAdminLinkVisible(oneParticipant.user.userName) }</span>
 					<span class="isMakeMemberLinkVisible" class="hidden" ">${groupViewVisibility.isMakeMemberLinkVisible(oneParticipant.user.userName) }</span>
+					<span class="isRemoveMemberLinkVisible" class="hidden" ">${groupViewVisibility.isRemoveMemberLinkVisible(oneParticipant.user.userName) }</span>
 					<a class="profileLink" href="@{profile.ProfileView.profileView( oneParticipant.user.userName)}" ></a>
 					<img src="${oneParticipant.user.mainPhotoThumbLink}" class="profileContactThumb" />
 					<span class="userLocation">${oneParticipant.user.location}</span>

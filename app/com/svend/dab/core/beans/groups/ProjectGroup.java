@@ -70,11 +70,10 @@ public class ProjectGroup {
 
 		return null;
 	}
-	
-	
+
 	public void updateUserParticipantRole(String upgradedUser, ROLE role) {
-		
-		if (! Strings.isNullOrEmpty(upgradedUser)) {
+
+		if (!Strings.isNullOrEmpty(upgradedUser)) {
 			for (GroupParticipant participant : participants) {
 				// user not yet accepted are still concidered with no role
 				if (upgradedUser.equals(participant.getUser().getUserName())) {
@@ -85,6 +84,25 @@ public class ProjectGroup {
 		}
 	}
 
+	public void removeParticipant(String removedUser) {
+
+		if (removedUser != null) {
+
+			GroupParticipant removed = null;
+			for (GroupParticipant participant : participants) {
+				// user not yet accepted are still concidered with no role
+				if (removedUser.equals(participant.getUser().getUserName())) {
+					removed = participant;
+				}
+			}
+			
+			if (removed != null) {
+				participants.remove(removed);
+			}
+
+		}
+
+	}
 
 	public boolean hasAppliedForGroupMembership(String userId) {
 
