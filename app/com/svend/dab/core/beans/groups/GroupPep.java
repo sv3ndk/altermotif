@@ -116,6 +116,11 @@ public class GroupPep {
 			return isUserAdmin(userId) && ! isUserAdmin(removeUserId);
 		}
 	}
+	
+	
+	public boolean isUserAllowedToAcceptAndRejectProjectApplications(String userId) {
+		return isUserAdmin(userId);
+	}
 
 
 	

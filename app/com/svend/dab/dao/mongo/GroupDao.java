@@ -16,9 +16,10 @@ import com.mongodb.MongoException;
 import com.mongodb.WriteResult;
 import com.svend.dab.core.beans.groups.GroupParticipant;
 import com.svend.dab.core.beans.groups.GroupParticipant.ROLE;
-import com.svend.dab.core.beans.groups.GroupParticipation;
+import com.svend.dab.core.beans.groups.GroupProjectParticipant;
 import com.svend.dab.core.beans.groups.ProjectGroup;
 import com.svend.dab.core.beans.profile.UserSummary;
+import com.svend.dab.core.beans.projects.ProjectSummary;
 import com.svend.dab.core.dao.IGroupDao;
 
 @Service
@@ -84,6 +85,11 @@ public class GroupDao implements IGroupDao {
 
 	public void updateParticipantRole(String groupId, String userId, ROLE role) {
 		mongoTemplate.updateFirst(query(where("id").is(groupId).and("participants.user._id").is(userId)), new Update().set("participants.$.role", role), ProjectGroup.class);
+	}
+
+	public void addProjectApplication(String groupId, ProjectSummary projectSummary, String applicationText) {
+		mongoTemplate.updateFirst(query(where("id").is(groupId)),
+				new Update().addToSet("projectParticipants", new GroupProjectParticipant(projectSummary, applicationText, false)), ProjectGroup.class);
 	}
 
 }

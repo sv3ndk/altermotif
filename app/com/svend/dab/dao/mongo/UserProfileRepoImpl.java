@@ -148,7 +148,8 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 	public void removedPendingReceivedRelationship(UserProfile userProfile, String otherUsername) {
 		Contact pendingReceivedReContact = userProfile.retrieveReceivedContactRequestFrom(otherUsername);
 		if (pendingReceivedReContact != null) {
-			genericUpdateUser(userProfile.getUsername(), new Update().pull("pendingReceivedContactRequests", new Contact(pendingReceivedReContact.getContactId())));
+			genericUpdateUser(userProfile.getUsername(),
+					new Update().pull("pendingReceivedContactRequests", new Contact(pendingReceivedReContact.getContactId())));
 		}
 	}
 
@@ -169,8 +170,8 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 	}
 
 	public void updatePendingSentContactRequests(String updatedUserId, Contact contact, UserSummary updatedUserSummary, boolean updateRequestor) {
-		logger.log(Level.INFO, "updatePendingSentContactRequests: updatedUserId=" + updatedUserId + " summary: " + updatedUserSummary + " updaterequestor: " + updateRequestor + " contact id: "
-				+ contact.getContactId());
+		logger.log(Level.INFO, "updatePendingSentContactRequests: updatedUserId=" + updatedUserId + " summary: " + updatedUserSummary + " updaterequestor: "
+				+ updateRequestor + " contact id: " + contact.getContactId());
 
 		Query query = query(where("username").is(updatedUserId).and("pendingSentContactRequests._id").is(contact.getContactId()));
 		if (updateRequestor) {
@@ -182,8 +183,8 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 
 	public void updatePendingReceivedContactRequests(String updatedUserId, Contact contact, UserSummary updatedUserSummary, boolean updateRequestor) {
 
-		logger.log(Level.INFO, "updatePendingReceivedContactRequests: updatedUserId=" + updatedUserId + " summary: " + updatedUserSummary + " updaterequestor: " + updateRequestor + " contact id: "
-				+ contact.getContactId());
+		logger.log(Level.INFO, "updatePendingReceivedContactRequests: updatedUserId=" + updatedUserId + " summary: " + updatedUserSummary
+				+ " updaterequestor: " + updateRequestor + " contact id: " + contact.getContactId());
 
 		Query query = query(where("username").is(updatedUserId).and("pendingReceivedContactRequests._id").is(contact.getContactId()));
 		if (updateRequestor) {
@@ -318,13 +319,18 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 
 	public void updateGroupSummaryOfAllUsersPartOf(GroupSummary updatedSummary) {
 		if (updatedSummary != null) {
-			mongoTemplate.updateMulti(query(where("groups.groupSummary.groupId").is(updatedSummary.getGroupId())), new Update().set("groups.$.groupSummary", updatedSummary), UserProfile.class);
+			mongoTemplate.updateMulti(query(where("groups.groupSummary.groupId").is(updatedSummary.getGroupId())),
+					new Update().set("groups.$.groupSummary", updatedSummary), UserProfile.class);
 		}
 	}
 
 	public void updateGroupParticipationRole(String userName, String groupId, com.svend.dab.core.beans.groups.GroupParticipant.ROLE role) {
-		mongoTemplate.updateFirst(query(where("username").is(userName).and("groups.groupSummary.groupId").is(groupId)), new Update().set("groups.$.role", role), UserProfile.class);
+		mongoTemplate.updateFirst(query(where("username").is(userName).and("groups.groupSummary.groupId").is(groupId)),
+				new Update().set("groups.$.role", role), UserProfile.class);
 	}
+
+	
+
 	
 	// -------------------------------------
 	// -------------------------------------

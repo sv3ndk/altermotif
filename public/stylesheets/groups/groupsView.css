@@ -58,3 +58,12 @@
 #applyWithProfileTd {
 	padding-top: 30px;
 }
+
+#applyToGroupWithProjectDialog div {
+	text-align: center;
+}
+
+.applyingProject{
+	padding: 20px;
+	height: 60px;
+}

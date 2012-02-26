@@ -11,7 +11,9 @@ var dabGroupsViewLib = {
 	GroupsViewController : function() {
 
 		this.userParticipantKoModel = new dabGroupsViewLib.UserParticipantKoModel();
+		this.projectsParticipantKoModel = new dabGroupsViewLib.ProjectsParticipantKoModel();
 		this.applyWithProfilePopupControler = new dabGroupsViewLib.ApplyWithProfilePopupControler(this.userParticipantKoModel);
+		this.applyWithProfileWithProjectPopupControler = new dabGroupsViewLib.ApplyWithProfileWithProjectPopupControler(this.projectsParticipantKoModel);
 		this.clickedApplicantId;
 		this.clickedParticipantId;
 
@@ -24,6 +26,12 @@ var dabGroupsViewLib = {
 
 			if ($("#groupPendingApplicants")[0] != undefined) {
 				ko.applyBindings(this.userParticipantKoModel, $("#groupPendingApplicants")[0]);
+			}
+			
+			ko.applyBindings(this.projectsParticipantKoModel, $("#applyWithProjectTd")[0]);
+			ko.applyBindings(this.projectsParticipantKoModel, $("#applyToGroupWithProjectDialog")[0]);
+			if ($("#groupPendingProjectsApplicants")[0] != undefined) {
+				ko.applyBindings(this.projectsParticipantKoModel, $("#groupPendingProjectsApplicants")[0]);
 			}
 
 			// click on "close group"
@@ -72,6 +80,11 @@ var dabGroupsViewLib = {
 			// click on "remove member"
 			new Confirm.AskAndProceed(this, "#groupParticipants", ".removeMember", confirmRemoveMemberText, this.whenUserClicksOnRemoveMember,
 					this.whenUserConfirmsRemoveMember).init();
+			
+			// click on "apply to group with one project where I am admin"
+			$("#applyToGroupWithProjectLink").click(function(event) {
+				self.applyWithProfileWithProjectPopupControler.showDialog()
+			});
 
 		};
 
@@ -202,6 +215,62 @@ var dabGroupsViewLib = {
 
 	// ///////////////////////////
 
+	ApplyWithProfileWithProjectPopupControler : function(userParticipantKoModel) {
+		
+		
+		this.init = function() {
+			
+			var self = this;
+			
+			$("#applyToGroupWithProjectDialog").dialog({
+				autoOpen : false,
+				width : 400,
+				"buttons" : [ {
+					text : okLabelValue,
+					click : function(event) {
+						self.whenUserConfirmsApplyToGroupWithProject();
+					}
+				},
+				
+				{
+					text : cancelLabelValue,
+					click : function() {
+						$("#applyToGroupWithProjectDialog").dialog("close");
+					}
+				} ]
+			});
+			
+		};
+		
+		this.showDialog = function() {
+			$("#applyToGroupWithProjectDialog textarea").val("")
+			$("#applyToGroupWithProjectDialog").dialog("open");
+		}
+		
+		this.whenUserConfirmsApplyToGroupWithProject = function() {
+			
+			var self = this;
+			var selectedProjectId = $("#applyToGroupWithProjectDialog select").val();
+			
+			$.post(applytoGroupWithProject({
+				groupId : visitedGroupId,
+				projectId : selectedProjectId,
+				applicationText : $("#applyToGroupWithProjectDialog textarea").val()
+			}), function(data) {
+
+				// update links permissions here
+
+				$("#applyToGroupWithProjectDialog").dialog("close");
+			});
+		};
+		
+		this.init();
+		
+	},
+	
+	
+	// ///////////////////////////
+	
 	ApplyWithProfilePopupControler : function(userParticipantKoModel) {
 
 		this.userParticipantKoModel = userParticipantKoModel;
@@ -255,11 +324,74 @@ var dabGroupsViewLib = {
 	// ///////////////////////////////////////////////////////////////////////////
 	// data model
 
+	ProjectsParticipantKoModel : function() {
+
+		var self = this;
+		this.applyToGroupWithProjectLinkVisisble = ko.observable($("#applyToGroupWithProjectLinkVisisble").text() == "true");
+		this.projectsIamAdminOf = ko.observableArray();
+		
+		this.projectsMembers = ko.observableArray();
+		this.numberOfProjectMembers = ko.computed(function() {
+			return self.projectsMembers().length;
+		});
+		
+		this.projectApplicants = ko.observableArray();
+		this.numberOfProjectApplicants = ko.computed(function() {
+			return self.projectApplicants().length;
+		});
+
+		
+		this.init = function() {
+			
+			$("#projectsIAmAdminOf div.projectIamAdminOf").each(function(index, oneHtmlProject) {
+				self.parseAndAddProject(oneHtmlProject)
+			});
+			
+			$("#projectParticipantsDataModel div.projectApplicant").each(function(index, oneHtmlProject) {
+				self.parseAndAddProjectMember(oneHtmlProject)
+			});
+			
+		}; 
+		
+		
+		this.parseAndAddProject = function(oneHtmlProject) {
+			var projectId = $(oneHtmlProject).find(".projectId").text();;
+			var projectName = $(oneHtmlProject).find(".projectName").text();;
+			this.projectsIamAdminOf.push(new dabGroupsViewLib.Project(projectId, projectName));
+		};
+		
+		this.parseAndAddProjectMember = function(oneHtmlProject) {
+			var projectId = $(oneHtmlProject).find(".projectId").text();
+			var isProjectAccepted = $(oneHtmlProject).find(".isProjectAccepted").text() == "true";
+			var projectApplicationText = $(oneHtmlProject).find(".projectApplicationText").text();
+			var projectName = $(oneHtmlProject).find(".projectName").text();
+			var projectLink = $(oneHtmlProject).find(".projectLink").attr("href");
+			
+			var projectMainThumb = $(oneHtmlProject).find(".projectMainThumb").attr("src");
+			if (projectMainThumb == undefined || projectMainThumb == "") {
+				projectMainThumb = $("#hiddenDefaultGroupThumb").attr("src");
+			}
+			
+			var projectParticipant = new dabGroupsViewLib.ProjectSummary(projectId, isProjectAccepted, projectApplicationText, projectName, projectLink, projectMainThumb);
+			
+			if (isProjectAccepted) {
+				this.projectsMembers.push(projectParticipant);
+			} else {
+				this.projectApplicants.push(projectParticipant);
+			}
+		};
+		
+		this.init();
+		
+	},
+	
+	
 	UserParticipantKoModel : function() {
 
 		var self = this;
 		this.applyToGroupLinkVisisble = ko.observable($("#applyToGroupLinkVisisble").text() == "true");
 		this.alreadyApplyToGroupLinkVisisble = ko.observable($("#alreadyApplyToGroupLinkVisisble").text() == "true");
+		
 		this.acceptedParticipants = ko.observableArray();
 		this.numberOfUserParticipants = ko.computed(function() {
 			return self.acceptedParticipants().length;
@@ -269,7 +401,10 @@ var dabGroupsViewLib = {
 		this.numberOfUserApplicants = ko.computed(function() {
 			return self.applicants().length;
 		});
-
+		
+		
+		///
+		
 		this.init = function() {
 			var self = this;
 
@@ -303,6 +438,7 @@ var dabGroupsViewLib = {
 			}
 		};
 
+		
 		this.updateParticipantRole = function(participantId, newRole) {
 			var participant = this.findParticipantById(participantId);
 			if (participant != undefined) {
@@ -378,6 +514,20 @@ var dabGroupsViewLib = {
 		this.isMakeAdminLinkVisible = ko.observable(isMakeAdminLinkVisible);
 		this.isMakeMemberLinkVisible = ko.observable(isMakeMemberLinkVisible);
 		this.isRemoveMemberLinkVisible = ko.observable(isRemoveMemberLinkVisible);
+	},
+	
+	Project : function(projectId, projectName) {
+		this.projectId = projectId;
+		this.projectName = projectName;
+	},
+	
+	ProjectSummary : function(projectId, isProjectAccepted, projectApplicationText, projectName, projectLink, projectMainThumb) {
+		this.projectId = projectId;
+		this.isProjectAccepted = isProjectAccepted;
+		this.projectApplicationText = projectApplicationText;
+		this.projectName = projectName;
+		this.projectLink = projectLink;
+		this.projectMainThumb = projectMainThumb;
 	},
 
 };

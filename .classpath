@@ -95,17 +95,17 @@
 	<classpathentry kind="lib" path="lib/querydsl-core-2.2.5.jar"/>
 	<classpathentry kind="lib" path="lib/querydsl-mongodb-2.2.5.jar"/>
 	<classpathentry kind="lib" path="lib/saaj-api-1.3.jar"/>
-	<classpathentry kind="lib" path="lib/spring-aop-3.1.0.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/spring-asm-3.1.0.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/spring-beans-3.1.0.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/spring-context-3.1.0.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/spring-core-3.1.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/Users/svend/development/code/altermotif/lib/spring-aop-3.1.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/Users/svend/development/code/altermotif/lib/spring-asm-3.1.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/Users/svend/development/code/altermotif/lib/spring-beans-3.1.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/Users/svend/development/code/altermotif/lib/spring-context-3.1.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/Users/svend/development/code/altermotif/lib/spring-core-3.1.1.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/spring-data-commons-core-1.2.0.RC1.jar"/>
 	<classpathentry kind="lib" path="lib/spring-data-mongodb-1.0.0.RC1.jar"/>
-	<classpathentry kind="lib" path="lib/spring-expression-3.1.0.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/spring-instrument-3.1.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/Users/svend/development/code/altermotif/lib/spring-expression-3.1.1.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/Users/svend/development/code/altermotif/lib/spring-instrument-3.1.1.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/spring-retry-1.0.0.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/spring-tx-3.1.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/Users/svend/development/code/altermotif/lib/spring-tx-3.1.1.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/stax-1.2.0.jar"/>
 	<classpathentry kind="lib" path="lib/bcmail-jdk14-138.jar"/>
 	<classpathentry kind="lib" path="lib/bcprov-jdk14-138.jar"/>
@@ -113,7 +113,7 @@
 	<classpathentry kind="lib" path="lib/freemarker-2.3.15.jar"/>
 	<classpathentry kind="lib" path="lib/hibernate-validator-4.2.0.Final.jar"/>
 	<classpathentry kind="lib" path="lib/itext-2.1.7.jar"/>
-	<classpathentry kind="lib" path="lib/jackson-core-asl-1.9.4.jar"/>
+	<classpathentry kind="lib" path="/Users/svend/development/code/altermotif/lib/jackson-core-asl-1.9.5.jar"/>
 	<classpathentry kind="lib" path="lib/jackson-mapper-asl-1.9.4.jar"/>
 	<classpathentry kind="lib" path="lib/jasperreports-2.0.5.jar"/>
 	<classpathentry kind="lib" path="lib/jaxb-api-2.2.jar"/>

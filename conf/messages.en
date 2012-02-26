@@ -281,6 +281,7 @@ groupsViewAlreadyAppliedToGroupAsPerson=You have already applied to be a member 
 groupsViewCancelApplicationToGroupAsPerson=Cancel application
 groupsViewConfirmCancelApplyToGroup=Are you sure you want to cancel your application to this group?
 groupsViewApplicationPopupText=Please enter a short text that will be attached to the application to join this group.
+groupsViewApplicationWithProjectPopupText=Please select one of the project where you are administrator below. Please also enter a short text that will be attached to the application to join this group. 
 groupsViewApplicants=User applications
 groupsViewAcceptUserApplication=Accept application
 groupsViewRejectUserApplication=Reject application
@@ -294,6 +295,7 @@ groupsViewMakeMember=Make member
 groupsViewConfirmMakeMemberText=Are you sure you want to downgrade the status of this member to simple member of this group?
 groupsViewRemoveMember=Remove member
 groupsViewconfirmRemoveMemberAText=Are you sure you want to remove this member from this group?
+groupsViewProjectApplicants=Project applications
 groupsViewForum=Forum
 
 groupsEditName=Group name

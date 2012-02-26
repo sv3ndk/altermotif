@@ -16,8 +16,11 @@ import com.svend.dab.core.beans.groups.GroupParticipant.ROLE;
 import com.svend.dab.core.beans.groups.ProjectGroup;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserSummary;
+import com.svend.dab.core.beans.projects.Project;
+import com.svend.dab.core.beans.projects.ProjectSummary;
 import com.svend.dab.core.dao.IGroupDao;
 import com.svend.dab.core.dao.IUserProfileDao;
+import com.svend.dab.core.projects.IProjectService;
 import com.svend.dab.eda.EventEmitter;
 import com.svend.dab.eda.events.groups.GroupClosed;
 import com.svend.dab.eda.events.groups.GroupCreated;
@@ -25,6 +28,8 @@ import com.svend.dab.eda.events.groups.GroupUpdatedEvent;
 import com.svend.dab.eda.events.groups.GroupUserRemoved;
 import com.svend.dab.eda.events.groups.GroupUserRoleUpdated;
 import com.svend.dab.eda.events.groups.GroupsUserApplicationAccepted;
+
+import controllers.BeanProvider;
 
 /**
  * @author svend
@@ -37,6 +42,9 @@ public class GroupService implements IGroupService {
 
 	@Autowired
 	private EventEmitter eventEmitter;
+
+	@Autowired
+	private IProjectService projectService;
 
 	@Autowired
 	private IGroupDao groupDao;
@@ -121,4 +129,26 @@ public class GroupService implements IGroupService {
 			eventEmitter.emit(new GroupUserRoleUpdated(groupId, userId, role));
 		}
 	}
+
+	public void applyToGroupWithProject(String userId, String groupId, String projectId, String applicationText) {
+
+		if (!Strings.isNullOrEmpty(userId) && !Strings.isNullOrEmpty(groupId) && !Strings.isNullOrEmpty(projectId)) {
+
+			ProjectGroup group = loadGroupById(groupId, true);
+			UserProfile profile = userProfileRepo.retrieveUserProfileById(userId);
+			Project project = projectService.loadProject(projectId, false);
+
+			if (group != null && profile != null) {
+
+				if (!group.isProjectMemberOfGroupOrHasAlreadyApplied(projectId)) {
+					com.svend.dab.core.beans.projects.Participant.ROLE role = profile.getRoleInProject(projectId);
+					if (role == com.svend.dab.core.beans.projects.Participant.ROLE.admin
+							|| role == com.svend.dab.core.beans.projects.Participant.ROLE.initiator) {
+						groupDao.addProjectApplication(groupId, new ProjectSummary(project), applicationText);
+					}
+				}
+			}
+		}
+	}
+
 }

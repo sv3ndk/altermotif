@@ -133,4 +133,5 @@ public interface IUserProfileDao {
 	public void updateGroupParticipationRole(String userId, String groupId, com.svend.dab.core.beans.groups.GroupParticipant.ROLE role);
 
 
+
 }

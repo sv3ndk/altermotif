@@ -13,7 +13,6 @@ import org.springframework.data.annotation.Transient;
 import com.google.common.base.Strings;
 import com.svend.dab.core.beans.PhotoPack;
 import com.svend.dab.core.beans.aws.S3Link;
-import com.svend.dab.core.beans.groups.ProjectGroup;
 import com.svend.dab.core.beans.groups.GroupParticipation;
 import com.svend.dab.core.beans.profile.PrivacySettings.VISIBILITY;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
@@ -1049,6 +1048,21 @@ public class UserProfile implements Serializable {
 		}
 		return cachedConfirmedProjects;
 	}
+	
+	
+	public List<Participation> getAllProjectsWhereUserIsAdmin(String loggedInUserProfileId) {
+		
+		List<Participation > projectsWhereIamAdmin = new LinkedList<Participation>();
+		
+		for (Participation participation : projects) {
+			if (participation.isAccepted() && (participation.getRole() == ROLE.admin || participation.getRole() == ROLE.initiator)) {
+				projectsWhereIamAdmin.add(participation);
+			}
+		}
+		
+		return projectsWhereIamAdmin;
+	}
+
 
 	public List<Participation> getApplications() {
 		if (cachedApplication == null) {
@@ -1144,6 +1158,18 @@ public class UserProfile implements Serializable {
 		return null;
 	}
 	
+	
+	public ROLE getRoleInProject(String projectId) {
+		
+		Participation participation = getProject(projectId);
+		if (participation != null) {
+			 return participation.getRole();
+		}
+		
+		return null;
+	}
+
+	
 
 	public int getMainPhotoIndex() {
 		return mainPhotoIndex;
@@ -1160,6 +1186,8 @@ public class UserProfile implements Serializable {
 	public void setGroups(List<GroupParticipation> groups) {
 		this.groups = groups;
 	}
+
+
 
 
 

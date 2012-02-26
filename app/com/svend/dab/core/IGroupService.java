@@ -23,4 +23,6 @@ public interface IGroupService {
 
 	void updateUserParticipantRole(String groupId, String userId, ROLE role);
 
+	void applyToGroupWithProject(String loggedInUserProfileId, String groupId, String projectId, String applicationText);
+
 }

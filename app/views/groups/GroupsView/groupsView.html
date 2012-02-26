@@ -17,6 +17,8 @@
 	    var makeAdmin 						= #{jsAction @groups.GroupsView.makeAdmin(':groupId', ':upgradedUser') /};
 	    var makeMember 						= #{jsAction @groups.GroupsView.makeMember(':groupId', ':downgradedUser') /};
 	    var removeMember 					= #{jsAction @groups.GroupsView.removeMember(':groupId', ':removedUser') /};
+	    
+	    var applytoGroupWithProject 		= #{jsAction @groups.GroupsView.applyToGroupWithProject(':groupId', ':projectId', ':applicationText') /};
 	
 		var confirmCloseGroupText = "&{'groupsViewConfirmCloseGroup'}";
 		var cannotCloseGroupText= "&{'groupsViewCannotCloseGroup'}";
@@ -39,6 +41,7 @@
 #{/set}
 
 	<img id="hiddenDefaultProfileThumb" class="hidden" src="@{'/public/images/defaultProfileThumb.jpg'}" />
+	<img id="hiddenDefaultGroupThumb" class="hidden" src="@{'/public/images/defaultProjectThumb.jpg'}" />
 	
 	<p  class="pageTitle">${visitedGroup.name}</p>
 	
@@ -87,6 +90,17 @@
 						<span data-bind="visible: alreadyApplyToGroupLinkVisisble">&{'groupsViewAlreadyAppliedToGroupAsPerson'}</span>
 						<br />
 						<span id="cancelApplyToGroupLink" class="dabLink" data-bind="visible: alreadyApplyToGroupLinkVisisble">&{'groupsViewCancelApplicationToGroupAsPerson'}</span>
+					</td>
+				</tr>
+								
+				<tr>
+					<td />
+					<td id="applyWithProjectTd">
+						<span id="applyToGroupWithProjectLink" class="dabLink" data-bind="visible: applyToGroupWithProjectLinkVisisble">&{'groupsViewApplyToGroupAsProject'}</span>
+						<br />
+						<!--  
+						span id="cancelApplyToGroupLink" class="dabLink" data-bind="visible: alreadyApplyToGroupLinkVisisble">&{'groupsViewCancelApplicationToGroupAsPerson'}</span
+						-->
 					</td>
 				</tr>				
 				
@@ -209,6 +223,64 @@
 		</div>
 	</div>
 	
+	#{if groupViewVisibility.projectsApplicationsAreVisible }
+		<div id="groupPendingProjectsApplicants" class="groupToggleBlocks">
+			<span class="toggleLink dabLink" >&{'groupsViewProjectApplicants'} (<span class="dabLink" data-bind="text: numberOfProjectApplicants"></span><span class="dabLink">)...</span></span>
+			<div class="toggleContainer" style="display: none">
+			
+				<div data-bind="foreach: projectApplicants">
+					<div class="applyingProject">
+					
+						<span class="hiddenProjectId" style="display: none" data-bind="text: projectId"></span>
+			
+						<a data-bind="attr: {href: projectLink}" class="dabLink">
+							<img data-bind="attr: {src: projectMainThumb}" class="profileContactThumb" />
+						</a>
+						
+						<div class="projectLink">
+							<a data-bind="attr: {href: projectLink}" class="dabLink"><span data-bind="text: projectName" class="dabLink"></span></a>
+						</div>
+						
+						<br />
+					
+					</div>
+				</div>
+			
+			</div>
+		</div>
+	#{/if}
+	
+	<div id="projectParticipantsDataModel" class="hidden">
+		<span id="applyToGroupWithProjectLinkVisisble" class="hidden">${groupViewVisibility.applyWithProjetLinkVisible}</span>
+		
+		<div id="projectsIAmAdminOf">
+			#{if groupViewVisibility.applyWithProjetLinkVisible}
+				#{list items:projectsWhereUserIsAdmin, as:'oneParticipation'}
+					<div class="projectIamAdminOf">
+						<span class="projectId" class="hidden">${oneParticipation.projectSummary.projectId}</span>
+						<span class="projectName" class="hidden">${oneParticipation.projectSummary.name}</span>
+					</div>
+				#{/list}
+			#{/if}
+		</div>
+		
+		<div id="projectApplicants">
+			#{list items:visitedGroup.projectParticipants, as:'oneParticipation'}
+				<div class="projectApplicant">
+					<span class="projectId" class="hidden">${oneParticipation.projet.projectId}</span>
+					<span class="isProjectAccepted" class="hidden">${oneParticipation.accepted}</span>
+					<span class="projectApplicationText" class="hidden">${oneParticipation.applicationText}</span>
+					<span class="projectName" class="hidden">${oneParticipation.projet.name}</span>
+					<a class="projectLink" href="@{projects.ProjectsView.projectsView( oneParticipation.projet.projectId)}" ></a>
+					<img class="projectMainThumb" src="${oneParticipation.projet.getMainPhotoThumbLink()}"  />
+				</div>
+			#{/list}
+		</div>
+	
+	</div>
+	
+	
+	
 	
 	<div id="groupForum" class="groupToggleBlocks">
 		<span class="toggleLink dabLink" >&{'groupsViewForum'} (0)...</span>
@@ -231,5 +303,20 @@
 		<br />
 		<textarea cols="45" rows="7"></textarea>
 	</div>
+	
+	<div id="applyToGroupWithProjectDialog" title="&{'confirmationPopupTitle'}">
+		&{'groupsViewApplicationWithProjectPopupText'}
+		<br />	
+		<br />	
+		<textarea rows="5" cols="40"></textarea>
+		<br />	
+		<br />	
+		
+		<div>
+			<select data-bind="options: projectsIamAdminOf, optionsValue: 'projectId', optionsText: 'projectName' " ></select>
+		</div>		
+		
+	</div>
+	
 	
 	

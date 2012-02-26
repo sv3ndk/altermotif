@@ -13,6 +13,7 @@ import com.svend.dab.core.beans.Config;
 import com.svend.dab.core.dao.IForumPostDao;
 import com.svend.dab.core.dao.IForumThreadDao;
 import com.svend.dab.core.dao.IProjectDao;
+import com.svend.dab.core.dao.IUserProfileDao;
 import com.svend.dab.core.projects.IProjectFTSService;
 import com.svend.dab.core.projects.IProjectPhotoService;
 import com.svend.dab.core.projects.IProjectService;
@@ -23,6 +24,10 @@ public class BeanProvider {
 	
 	public static IUserProfileService getUserProfileService() {
 		return (IUserProfileService) Spring.getBeanOfType(UserProfileService.class);
+	}
+	
+	public static IUserProfileDao getUserProfileDao() {
+		return (IUserProfileDao) Spring.getBeanOfType(IUserProfileDao.class);
 	}
 	
 	public static Config getConfig() {

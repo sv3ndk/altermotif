@@ -24,6 +24,8 @@ public class ProjectGroup {
 	private List<String> tags;
 
 	private List<GroupParticipant> participants;
+	
+	private List<GroupProjectParticipant> projectParticipants;
 
 	// ////////////////////
 
@@ -205,6 +207,29 @@ public class ProjectGroup {
 		}
 		tags.addAll(newTags);
 	}
+	
+	
+	
+	
+	public boolean isProjectMemberOfGroupOrHasAlreadyApplied(String projectId) {
+		
+		if (Strings.isNullOrEmpty(projectId)) {
+			return false;
+		}
+		
+		if (projectParticipants == null) {
+			return false;
+		}
+		
+		for (GroupProjectParticipant participant : projectParticipants) {
+			if (projectId.equals(participant.getProjet().getProjectId())) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
 
 	// /////////////////////////////////
 
@@ -279,5 +304,14 @@ public class ProjectGroup {
 	public void setActive(boolean isActive) {
 		this.isActive = isActive;
 	}
+
+	public List<GroupProjectParticipant> getProjectParticipants() {
+		return projectParticipants;
+	}
+
+	public void setProjectParticipants(List<GroupProjectParticipant> projectParticipants) {
+		this.projectParticipants = projectParticipants;
+	}
+
 
 }
