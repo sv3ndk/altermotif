@@ -14,7 +14,6 @@ public class BinaryNoLongerRequiredPropagator implements IEventPropagator<Binary
 	@Autowired
 	private AwsS3Tool awsS3Tool;
 	
-	@Override
 	public void propagate(BinaryNoLongerRequiredEvent event) throws DabException {
 		
 		if (event == null || event.getBinaryBucket() == null || event.getBinaryKey() == null) {

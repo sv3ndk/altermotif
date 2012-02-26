@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.svend.dab.core.beans.DabException;
 import com.svend.dab.core.beans.DabPreConditionViolationException;
 import com.svend.dab.core.beans.profile.UserProfile;
-import com.svend.dab.dao.mongo.IUserProfileDao;
+import com.svend.dab.core.dao.IUserProfileDao;
 import com.svend.dab.eda.IEventPropagator;
 
 /**
@@ -25,7 +25,6 @@ public class UserReferenceRemovedEventPropagator implements IEventPropagator<Use
 	
 	private static Logger logger = Logger.getLogger(UserReferenceRemovedEventPropagator.class.getName());
 	
-	@Override
 	public void propagate(UserReferenceRemovedEvent event) throws DabException {
 		
 		if (event == null || event.getReferenceId() == null || "".equals(event.getReferenceId())) {

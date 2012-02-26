@@ -6,9 +6,10 @@
 #{/set}
 
 #{set 'moreScripts'}
-
     <script src="@{'/public/javascripts/projects/projectsSearch.js'}" type="text/javascript" charset="${_response_encoding}"></script>
-    <script src="@{'/public/javascripts/projects/projectsThemes.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+    <script type="text/javascript">
+    	var allThemes = ${allThemesJson.raw()};
+    </script>
 
 #{/set}
 
@@ -23,103 +24,13 @@
 		*{ This to make sure that the base URL of the search result page is resolved by Play }*
 		<a id="hiddenLinkToEmptySearch" href="@{projects.ProjectsResults.projectsResults}" class="hidden" ></a>
 	
-		<div id="projectCategorieListOfDropboxes">
-				
-				<div>
-				<span>&{'projectThemeEnvironment'}</span> <br />
-				<select>
-				<option>--</option>
-				<option value="%5B%7B%22themeId%22%3A%22environment%22%2C%22subThemeId%22%3A%22agriculture%22%7D%5D" >&{'projectThemeEnvironmentSubThemeAgriculture'}</option>
-				<option value="%5B%7B%22themeId%22%3A%22environment%22%2C%22subThemeId%22%3A%22protecting%22%7D%5D" >&{'projectThemeEnvironmentSubThemeProtecting'}</option>
-				<option value="%5B%7B%22themeId%22%3A%22environment%22%2C%22subThemeId%22%3A%22recycling%22%7D%5D" >&{'projectThemeEnvironmentSubThemeRecycling'}</option>
-				<option value="%5B%7B%22themeId%22%3A%22environment%22%2C%22subThemeId%22%3A%22sensitizing%22%7D%5D" >&{'projectThemeEnvironmentSubThemeSensitizing'}</option>
-				<option value="%5B%7B%22themeId%22%3A%22environment%22%2C%22subThemeId%22%3A%22cleaning%22%7D%5D" >&{'projectThemeEnvironmentSubThemeCleaning'}</option>
-				<option value="%5B%7B%22themeId%22%3A%22environment%22%2C%22subThemeId%22%3A%22other%22%7D%5D" >&{'projectThemeEnvironmentSubThemeOther'}</option>
-				</select>
-				</div>
-				
-				<div>
-				<span>&{'projectThemeDevelopment'}</span> <br />
-				<select>
-				<option>--</option>
-				<option value="%5B%7B%22themeId%22%3A%22development%22%2C%22subThemeId%22%3A%22charity%22%7D%5D" >&{'projectThemeDevelopmentSubThemeCharity'}</option>
-				<option value="%5B%7B%22themeId%22%3A%22development%22%2C%22subThemeId%22%3A%22devAtHome%22%7D%5D" >&{'projectThemeDevelopmentSubThemeDevAtHome'}</option>
-				<option value="%5B%7B%22themeId%22%3A%22development%22%2C%22subThemeId%22%3A%22devAbroad%22%7D%5D" >&{'projectThemeDevelopmentSubThemeDevAbroad'}</option>
-				<option value="%5B%7B%22themeId%22%3A%22development%22%2C%22subThemeId%22%3A%22sensitizing%22%7D%5D" >&{'projectThemeDevelopmentSubThemeSensitizing'}</option>
-				<option value="%5B%7B%22themeId%22%3A%22development%22%2C%22subThemeId%22%3A%22fairtrade%22%7D%5D" >&{'projectThemeDevelopmentSubThemeFairTrade'}</option>
-				<option value="%5B%7B%22themeId%22%3A%22development%22%2C%22subThemeId%22%3A%22other%22%7D%5D" >&{'projectThemeDevelopmentSubThemeOther'}</option>
-				</select>
-				</div>
-				
-				<div>
-				<span>&{'projectThemeCulture'}</span> <br />
-				<select>
-				<option>--</option>
-				<option value="%5B%7B%22themeId%22%3A%22culture%22%2C%22subThemeId%22%3A%22arts%22%7D%5D" >&{'projectThemeCultureSubThemeArts'}</option>
-				<option value="%5B%7B%22themeId%22%3A%22culture%22%2C%22subThemeId%22%3A%22journalism%22%7D%5D" >&{'projectThemeCultureSubThemeJournalism'}</option>
-				<option value="%5B%7B%22themeId%22%3A%22culture%22%2C%22subThemeId%22%3A%22education%22%7D%5D" >&{'projectThemeCultureSubThemeEducation'}</option>
-				<option value="%5B%7B%22themeId%22%3A%22culture%22%2C%22subThemeId%22%3A%22other%22%7D%5D" >&{'projectThemeCultureSubThemeOther'}</option>
-				</select>
-				</div>
-				
-				<div>
-				<span>&{'projectThemeScience'}</span> <br />
-				<select>
-				<option>--</option>
-				<option value="%5B%7B%22themeId%22%3A%22science%22%2C%22subThemeId%22%3A%22education%22%7D%5D" >&{'projectThemeScienceSubThemeEducation'}</option>
-				<option value="%5B%7B%22themeId%22%3A%22science%22%2C%22subThemeId%22%3A%22research%22%7D%5D" >&{'projectThemeScienceSubThemeResearch'}</option>
-				<option value="%5B%7B%22themeId%22%3A%22science%22%2C%22subThemeId%22%3A%22technology%22%7D%5D" >&{'projectThemeScienceSubThemeTechnology'}</option>
-				<option value="%5B%7B%22themeId%22%3A%22science%22%2C%22subThemeId%22%3A%22other%22%7D%5D" >&{'projectThemeScienceSubThemeOther'}</option>
-				</select>
-				</div>
-				
-				<div>
-				<span>&{'projectThemeTravel'}</span> <br />
-				<select>
-				<option>--</option>
-				<option value="%5B%7B%22themeId%22%3A%22travel%22%2C%22subThemeId%22%3A%22intEx%22%7D%5D" >&{'projectThemeTravelSubThemeIntExchange'}</option>
-				<option value="%5B%7B%22themeId%22%3A%22travel%22%2C%22subThemeId%22%3A%22travInGroup%22%7D%5D" >&{'projectThemeTravelSubThemeTravellingInGroup'}</option>
-				<option value="%5B%7B%22themeId%22%3A%22travel%22%2C%22subThemeId%22%3A%22exploration%22%7D%5D" >&{'projectThemeTravelSubThemeExploration'}</option>
-				<option value="%5B%7B%22themeId%22%3A%22travel%22%2C%22subThemeId%22%3A%22other%22%7D%5D" >&{'projectThemeTravelSubThemeOther'}</option>
-				</select>
-				</div>
-				
-				<div>
-				<span>&{'projectThemeSports'}</span> <br />
-				<select>
-				<option>--</option>
-				<option value="%5B%7B%22themeId%22%3A%22sports%22%2C%22subThemeId%22%3A%22teamBuilding%22%7D%5D" >&{'projectThemeSportsSubThemeTeamBuilding'}</option>
-				<option value="%5B%7B%22themeId%22%3A%22sports%22%2C%22subThemeId%22%3A%22events%22%7D%5D" >&{'projectThemeSportsSubThemeEvent'}</option>
-				<option value="%5B%7B%22themeId%22%3A%22sports%22%2C%22subThemeId%22%3A%22capacity%22%7D%5D" >&{'projectThemeSportsSubThemeCapacity'}</option>
-				<option value="%5B%7B%22themeId%22%3A%22sports%22%2C%22subThemeId%22%3A%22promotion%22%7D%5D" >&{'projectThemeSportsSubThemePromotion'}</option>
-				<option value="%5B%7B%22themeId%22%3A%22sports%22%2C%22subThemeId%22%3A%22other%22%7D%5D" >&{'projectThemeSportsSubThemeOther'}</option>
-				</select>
-				</div>
-				
-				<div>
-				<span>&{'projectThemeSociety'}</span> <br />
-				<select>
-				<option>--</option>
-				<option value="%5B%7B%22themeId%22%3A%22society%22%2C%22subThemeId%22%3A%22urbanism%22%7D%5D" >&{'projectThemeSocietySubThemeUrbanism'}</option>
-				<option value="%5B%7B%22themeId%22%3A%22society%22%2C%22subThemeId%22%3A%22feminism%22%7D%5D" >&{'projectThemeSocietySubThemeFeminism'}</option>
-				<option value="%5B%7B%22themeId%22%3A%22society%22%2C%22subThemeId%22%3A%22drugs%22%7D%5D" >&{'projectThemeSocietySubThemeDrugs'}</option>
-				<option value="%5B%7B%22themeId%22%3A%22society%22%2C%22subThemeId%22%3A%22entertainment%22%7D%5D" >&{'projectThemeSocietySubThemeEntertainment'}</option>
-				<option value="%5B%7B%22themeId%22%3A%22society%22%2C%22subThemeId%22%3A%22other%22%7D%5D" >&{'projectThemeSocietySubThemeOther'}</option>
-				</select>
-				</div>
-				
-				<div>
-				<span>&{'projectThemeOther'}</span> <br />
-				<select>
-				<option>--</option>
-				<option value="%5B%7B%22themeId%22%3A%22other%22%2C%22subThemeId%22%3A%22religion%22%7D%5D" >&{'projectThemeOtherSubThemeReligion'}</option>
-				<option value="%5B%7B%22themeId%22%3A%22other%22%2C%22subThemeId%22%3A%22employment%22%7D%5D" >&{'projectThemeOtherSubThemeEmployment'}</option>
-				<option value="%5B%7B%22themeId%22%3A%22other%22%2C%22subThemeId%22%3A%22other%22%7D%5D" >&{'projectThemeOtherSubThemeOther'}</option>
-				</select>
-				</div>
-				
+		<div id="projectCategorieListOfDropboxes" data-bind="foreach: allSingleThemeSubTheme">
+			<div>
+				<span data-bind="text: label"></span> <br />
+				<select data-bind="options: subThemes, optionsCaption: '--', optionsValue: 'jsonId', optionsText: 'subThemeLabel' "> </select>
+			</div>
 		</div>
-	
+				
 		<div id="projectTagContainer" class="tagCloud" >
 			<ul>
 				#{list items:popularTags, as:'oneTag'}
@@ -138,36 +49,30 @@
 
 	<div id="projectSearch_modeAdvanced" class="hidden">
 		<p>
-
 			<span>&{'projectSearchAdvancedModeExplanation_GotoSimpleMode'} </span>
 			<span id="projectSearchSwitchToSimpleModeLink" class="dabLink">&{'projectSearchAdvancedModeExplanation_GotoSimpleMode_Link'}</span>
 		</p>
 
-
-
 		#{form @projects.ProjectsResults.projectsResults()}
 			<table>
 				<tbody>
-					<tr>
+					<tr id="searchLine">
 						<td class="formlabel">&{'projectSearchKeyWords'}:</td>
-						<td><input id="projectAdvancedSearchInputText" type="text" size="60"/ name="r.term"></td>
+						<td><input id="projectAdvancedSearchInputText" type="text" size="60" name="r.term"></td>
 						<td><input type="submit" value="GO" data-bind="enable: isGoButtonActive"  /></td>
 					</tr>
 					<tr>
 						<td class="formlabel">&{'projectSearchCategories'}:</td>
 						<td>
-							<div>
-								#{dab.inputTheme allThemes:allThemes, readOnly:false, isExplanationVisible:false /}
+							<div id="inputSearchProjectsThemes">
+								#{dab.inputMultiThemes  addThemeLinkLabel:messages.get('projectNewAddOneTheme')/}
 							</div>
 						</td>
 					</tr>
 				</tbody>
 			</table>
-			
 			<input id="hiddenAllThemesJson" name="r.themes" type="hidden" />
-		
 		#{/form }
 	</div>
-	
 
 </div>

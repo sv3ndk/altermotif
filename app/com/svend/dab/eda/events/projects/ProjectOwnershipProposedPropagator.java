@@ -10,8 +10,8 @@ import com.svend.dab.core.beans.DabException;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.projects.Participant;
 import com.svend.dab.core.beans.projects.Project;
-import com.svend.dab.dao.mongo.IProjectDao;
-import com.svend.dab.dao.mongo.IUserProfileDao;
+import com.svend.dab.core.dao.IProjectDao;
+import com.svend.dab.core.dao.IUserProfileDao;
 import com.svend.dab.eda.IEventPropagator;
 
 /**
@@ -29,7 +29,6 @@ public class ProjectOwnershipProposedPropagator implements IEventPropagator<Proj
 
 	private static Logger logger = Logger.getLogger(ProjectOwnershipProposedPropagator.class.getName());
 	
-	@Override
 	public void propagate(ProjectOwnershipProposed event) throws DabException {
 		
 		if (event == null ) {

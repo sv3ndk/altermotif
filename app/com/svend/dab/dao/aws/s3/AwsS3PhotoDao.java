@@ -26,7 +26,7 @@ public class AwsS3PhotoDao implements IPhotoBinaryDao {
 
 	private static Logger logger = Logger.getLogger(AwsS3PhotoDao.class.getName());
 
-	@Override
+	
 	public void removePhoto(S3PhotoLink removedPhoto) {
 
 		if (removedPhoto == null) {
@@ -38,7 +38,7 @@ public class AwsS3PhotoDao implements IPhotoBinaryDao {
 
 	}
 
-	@Override
+	
 	public void savePhoto(Photo photo, byte[] normalSizedPhoto, byte[] thumbPhoto, String mimeType) {
 		if (photo == null) {
 			throw new DabIllegalFormatException("Cannot save photo: null Photo");

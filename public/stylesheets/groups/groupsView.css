@@ -1,0 +1,60 @@
+#groupPhotoContainer {
+	width: 300px;
+	float: left;
+	margin-left: 3%;
+	text-align: center;
+}
+
+
+#groupBasicDetails {
+	width: 30%;
+	float: left;
+	margin-left: 50px;
+}
+
+#groupRightColumn{
+	margin-left: 50px; 
+	float: left;
+}
+
+#groupToolBox {
+	border: thin solid;
+	padding: 20px 20px 20px 20px;
+	margin-left: 40px;
+}
+
+
+#groupBasicDetails label {
+	font-weight: bold;
+	margin-right: 10px;
+}
+
+#groupBasicDetails td {
+	vertical-align: top;
+}
+
+#groupProjects {
+	clear: left;
+	padding-top: 50px;
+}
+
+
+.groupToggleBlocks {
+	margin-left: 200px;
+	margin-top: 30px;
+}
+
+
+.confirmedParticipant {
+	padding: 20px;
+	height: 60px;
+}
+
+.applyingParticipant {
+	padding: 20px;
+	height: 60px;
+}
+
+#applyWithProfileTd {
+	padding-top: 30px;
+}

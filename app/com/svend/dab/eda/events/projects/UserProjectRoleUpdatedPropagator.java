@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import com.svend.dab.core.beans.DabException;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.projects.Project;
-import com.svend.dab.dao.mongo.IProjectDao;
-import com.svend.dab.dao.mongo.IUserProfileDao;
+import com.svend.dab.core.dao.IProjectDao;
+import com.svend.dab.core.dao.IUserProfileDao;
 import com.svend.dab.eda.IEventPropagator;
 
 @Service("userProjectRoleUpdatedPropagator")
@@ -25,7 +25,6 @@ public class UserProjectRoleUpdatedPropagator implements IEventPropagator<UserPr
 	private static Logger logger = Logger.getLogger(UserProjectRoleUpdatedPropagator.class.getName());
 	
 	
-	@Override
 	public void propagate(UserProjectRoleUpdated event) throws DabException {
 
 		if (event == null ) {

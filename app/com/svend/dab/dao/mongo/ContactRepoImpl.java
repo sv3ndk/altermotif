@@ -46,7 +46,7 @@ public class ContactRepoImpl implements IContactDao {
 	/* (non-Javadoc)
 	 * @see com.svend.dab.dao.mongo.IContactDao#findContactsOneUser(java.lang.String)
 	 */
-	@Override
+	
 	public List<Contact> findContactsOneUser(String username) {
 		
 		// TODO: put a "or" logic here with just one query..
@@ -63,7 +63,7 @@ public class ContactRepoImpl implements IContactDao {
 		return list;
 	}
 
-	@Override
+	
 	public void updateRequestedByUser(Contact contact, UserSummary updatedUserSummary) {
 		Query query = query(where("_id").is(contact.getContactId()));
 		Update update = new Update().set("requestedByUser", updatedUserSummary);
@@ -71,19 +71,19 @@ public class ContactRepoImpl implements IContactDao {
 		
 	}
 
-	@Override
+	
 	public void updateRequestedToUser(Contact contact, UserSummary updatedUserSummary) {
 		Query query = query(where("_id").is(contact.getContactId()));
 		Update update = new Update().set("requestedToUser", updatedUserSummary);
 		mongoTemplate.updateFirst(query, update, Contact.class);
 	}
 
-	@Override
+	
 	public void delete(Contact existingContact) {
 		mongoTemplate.remove(existingContact);
 	}
 
-	@Override
+	
 	public void save(Contact contact) {
 		mongoTemplate.save(contact);
 		

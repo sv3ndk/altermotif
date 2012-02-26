@@ -14,9 +14,16 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import web.utils.Utils;
+
 import com.google.common.base.Strings;
+import com.google.common.collect.Sets;
 import com.svend.dab.core.beans.Config;
+import com.svend.dab.core.beans.profile.UserProfile;
+import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Asset;
+import com.svend.dab.core.beans.projects.ForumDiff;
+import com.svend.dab.core.beans.projects.ForumPost;
 import com.svend.dab.core.beans.projects.ForumThread;
 import com.svend.dab.core.beans.projects.Participant;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
@@ -27,9 +34,11 @@ import com.svend.dab.core.beans.projects.Project.STATUS;
 import com.svend.dab.core.beans.projects.RankedTag;
 import com.svend.dab.core.beans.projects.TagCount;
 import com.svend.dab.core.beans.projects.Task;
+import com.svend.dab.core.dao.IForumPostDao;
 import com.svend.dab.core.dao.IForumThreadDao;
+import com.svend.dab.core.dao.IProjectDao;
 import com.svend.dab.core.dao.ITagCountDao;
-import com.svend.dab.dao.mongo.IProjectDao;
+import com.svend.dab.core.dao.IUserProfileDao;
 import com.svend.dab.eda.EventEmitter;
 import com.svend.dab.eda.events.projects.ProjectApplicationAccepted;
 import com.svend.dab.eda.events.projects.ProjectApplicationCancelled;
@@ -58,7 +67,13 @@ public class ProjectService implements IProjectService {
 	private ITagCountDao tagCountDao;
 
 	@Autowired
-	private IForumThreadDao forumThreadDao; 
+	private IForumThreadDao forumThreadDao;
+
+	@Autowired
+	private IForumPostDao forumPostDao;
+	
+	@Autowired
+	private IUserProfileDao userProfileRepo;
 	
 	@Autowired
 	private Config config;
@@ -66,7 +81,7 @@ public class ProjectService implements IProjectService {
 	// -------------------
 	//
 
-	@Override
+	
 	public void createProject(Project createdProject, String creatorId) {
 		createdProject.setId(UUID.randomUUID().toString().replace("-", ""));
 		createdProject.getPdata().setCreationDate(new Date());
@@ -74,7 +89,7 @@ public class ProjectService implements IProjectService {
 		eventEmitter.emit(new ProjectCreated(createdProject, creatorId));
 	}
 
-	@Override
+	
 	public void updateProjectCore(Project updated, Set<Task> updatedTasks, Set<String> removedTasksIds, Set<Asset> updatedAssets, Set<String> removedAssetsIds) {
 
 		// any id starting with "new" has been created by the browser for any new Task
@@ -100,7 +115,7 @@ public class ProjectService implements IProjectService {
 		eventEmitter.emit(new ProjectUpdated(updated, updatedTasks, removedTasksIds, updatedAssets, removedAssetsIds));
 	}
 
-	@Override
+	
 	public Project loadProject(String projectId, boolean generatePhotoLinks) {
 
 		if (Strings.isNullOrEmpty(projectId)) {
@@ -125,7 +140,7 @@ public class ProjectService implements IProjectService {
 	// //////////////////////////////////////////////////
 	// project applications
 
-	@Override
+	
 	public void applyToProject(String userId, String applicationText, Project project) {
 		if (Strings.isNullOrEmpty(userId) || project == null) {
 			logger.log(Level.WARNING, "not letting a null user applying to a project or a user applying to a null project");
@@ -134,7 +149,7 @@ public class ProjectService implements IProjectService {
 		eventEmitter.emit(new ProjectApplicationEvent(userId, project.getId(), applicationText));
 	}
 
-	@Override
+	
 	public void cancelApplication(String userId, Project project) {
 		if (Strings.isNullOrEmpty(userId) || project == null) {
 			logger.log(Level.WARNING, "not letting a null user cancel a proejct application or a user cancelling for a null project");
@@ -143,7 +158,7 @@ public class ProjectService implements IProjectService {
 		eventEmitter.emit(new ProjectApplicationCancelled(userId, project.getId()));
 	}
 
-	@Override
+	
 	public void acceptApplication(String applicantId, Project project) {
 		if (Strings.isNullOrEmpty(applicantId) || project == null) {
 			logger.log(Level.WARNING, "not letting a null user cancel a proejct application or a user cancelling for a null project");
@@ -155,7 +170,7 @@ public class ProjectService implements IProjectService {
 	// //////////////////////////////////////////////////
 	// project (confirmed) participants
 
-	@Override
+	
 	public void removeParticipant(String participantId, Project project) {
 		if (Strings.isNullOrEmpty(participantId) || project == null) {
 			logger.log(Level.WARNING, "not rejecting a null participant or on a null project");
@@ -166,7 +181,7 @@ public class ProjectService implements IProjectService {
 	
 	
 	
-	@Override
+	
 	public void makeAdmin(String username, Project project) {
 		if (Strings.isNullOrEmpty(username) || project == null) {
 			logger.log(Level.WARNING, "not making admin a null participant or on a null project");
@@ -175,7 +190,7 @@ public class ProjectService implements IProjectService {
 		eventEmitter.emit(new UserProjectRoleUpdated(username, ROLE.admin, project.getId()));
 	}
 
-	@Override
+	
 	public void makeMember(String username, Project project) {
 		if (Strings.isNullOrEmpty(username) || project == null) {
 			logger.log(Level.WARNING, "not making member a null participant or on a null project");
@@ -185,7 +200,7 @@ public class ProjectService implements IProjectService {
 	}
 	
 	
-	@Override
+	
 	public void proposeOwnerShip(String username, Project project) {
 		if (Strings.isNullOrEmpty(username) || project == null) {
 			logger.log(Level.WARNING, "not give ownership to to a null participant or on a null project");
@@ -195,7 +210,7 @@ public class ProjectService implements IProjectService {
 	}
 
 	
-	@Override
+	
 	public void cancelOwnershipTransfer(String username, Project project) {
 		if (Strings.isNullOrEmpty(username) || project == null) {
 			logger.log(Level.WARNING, "not cancelling an ownership transfer to to a null participant or on a null project");
@@ -206,7 +221,7 @@ public class ProjectService implements IProjectService {
 		projectDao.updateOwnerShipProposed(project.getId(), username, false);
 	}
 
-	@Override
+	
 	public void confirmOwnershipTransfer(String promotedUsername, Project project) {
 		if (Strings.isNullOrEmpty(promotedUsername) || project == null) {
 			logger.log(Level.WARNING, "not cancelling an ownership transfer to to a null participant or on a null project");
@@ -217,7 +232,7 @@ public class ProjectService implements IProjectService {
 
 	
 
-	@Override
+	
 	public ParticpantsIdList determineRemovedParticipants(String projectId, Collection<String> knownParticipantUsernames, Collection<String> knownApplicationUsernames) {
 
 		ParticpantsIdList response = new ParticpantsIdList();
@@ -246,7 +261,7 @@ public class ProjectService implements IProjectService {
 		return response;
 	}
 
-	@Override
+	
 	public ParticipantList determineAddedParticipants(String projectId, Set<String> knownParticipantUsernames, Set<String> knownApplicationUsernames) {
 
 		ParticipantList response = new ParticipantList();
@@ -277,7 +292,7 @@ public class ProjectService implements IProjectService {
 	// popular project tags
 
 	
-	@Override
+	
 	public List<RankedTag> getPopularTags() {
 		
 		List<RankedTag> tags = new LinkedList<RankedTag>();
@@ -312,7 +327,7 @@ public class ProjectService implements IProjectService {
 		
 		Collections.sort(tags, new Comparator<RankedTag>() {
 			
-			@Override
+			
 			public int compare(RankedTag tag1, RankedTag tag2) {
 				
 				if ((tag1 == null || tag1.getTag() == null) && (tag2 == null || tag2.getTag() == null)) {
@@ -337,17 +352,17 @@ public class ProjectService implements IProjectService {
 	/////////////////////////////////////////////////
 	// project cancellation / terminations
 
-	@Override
+	
 	public void cancelProject(Project project) {
 		eventEmitter.emit(new ProjectCancelled(project.getId()));
 	}
 
-	@Override
+	
 	public void terminateProject(Project project) {
 		eventEmitter.emit(new ProjectStatusChanged(project.getId(), STATUS.done));
 	}
 
-	@Override
+	
 	public void restartProject(Project project) {
 		eventEmitter.emit(new ProjectStatusChanged(project.getId(), STATUS.started));
 	}
@@ -357,9 +372,68 @@ public class ProjectService implements IProjectService {
 	/////////////////////////////////////////////
 	// project forum
 
-	@Override
-	public void createdNewForumThread(String projectId, String threadTitle) {
-		forumThreadDao.createNewThread(new ForumThread(projectId, threadTitle, new Date(), 0));
+	
+	public ForumThread createdNewForumThread(String projectId, String threadTitle, boolean isThreadPublic) {
+		
+		return forumThreadDao.createNewThread(new ForumThread(projectId, threadTitle, new Date(), 0, isThreadPublic));
+	}
+
+	
+	public void postNewForumMessage(String authorId, ForumThread thread, String messageContent) {
+		
+		UserProfile author = userProfileRepo.retrieveUserProfileById(authorId);
+		if (author == null) {
+			logger.log(Level.WARNING, "User with id " + authorId + " is trying to post a message but has not registered profile! This is impossible! Not doing anything");
+		} else {
+			ForumPost createdPost = new ForumPost(thread.getId(), thread.getProjectId(), new Date(), new UserSummary(author), messageContent);
+			forumPostDao.saveNewPost(createdPost);
+			updateNumberOfPostsOfThread(thread.getId());
+		}
+	}
+
+	
+	public ForumDiff computeThreadDiff(String threadId, Set<String> knownPostIds) {
+		
+		ForumDiff response = new ForumDiff();
+		
+		// removed threads
+		Set<String> allPostIds = forumPostDao.findAllPostIdsOfThread(threadId);
+		response.setDeletedPostIds(Sets.difference(knownPostIds, allPostIds).immutableCopy());
+		
+		// new threads
+		response.setNewPosts(forumPostDao.findThreadPostsExcluding(threadId, knownPostIds));
+		
+		
+		return response;
+	}
+
+	
+	public void movePostToThread(String originalThreadId, String postId, String targetThreadId, String username) {
+		
+		ForumPost post = forumPostDao.loadPost(postId);
+		
+		if (post != null && post.getThreadId().equals(originalThreadId)) {
+			// TODO: consider using an event here
+			
+			StringBuffer updatedContent = new StringBuffer();
+			updatedContent.append("===============\n");
+			updatedContent.append("Forwarded by: ").append(username).append("\n");
+			updatedContent.append("Original date: ").append(Utils.formatDate(post.getCreationDate())).append("\n");
+			updatedContent.append("Original message:\n\n ").append(post.getContent());
+			
+			forumPostDao.updateThreadIdOfPost(postId, originalThreadId, targetThreadId, new Date(), updatedContent.toString());
+			updateNumberOfPostsOfThread(originalThreadId);
+			updateNumberOfPostsOfThread(targetThreadId);
+		}
+		
+	}
+	
+	
+	/////////////////////////////////
+	//
+	
+	protected void updateNumberOfPostsOfThread(String threadId) {
+		forumThreadDao.updateNumberOfPosts(threadId, forumPostDao.countPostOfThread(threadId));
 	}
 
 }

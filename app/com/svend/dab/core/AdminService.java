@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.projects.Participation;
 import com.svend.dab.core.beans.projects.Project;
+import com.svend.dab.core.dao.IProjectDao;
+import com.svend.dab.core.dao.IUserProfileDao;
 import com.svend.dab.core.projects.IProjectFTSService;
-import com.svend.dab.dao.mongo.IProjectDao;
-import com.svend.dab.dao.mongo.IUserProfileDao;
 
 /**
  * @author svend
@@ -47,6 +47,7 @@ public class AdminService {
 
 
 	public void indexAllProjects() {
+		projectFTSService.ensureIndexOnLocation();
 		Set<String> allProjectIds = projectDao.getAllProjectIds();
 		for (String id : allProjectIds) {
 			projectFTSService.updateProjetIndex(id, true);

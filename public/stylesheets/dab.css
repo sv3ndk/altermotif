@@ -106,6 +106,7 @@ ul {
 	cursor: pointer;
 	color: blue;
 	font-weight: normal;
+	font-size: 14px;
 }
 
 .dabLinkLSpaced {
@@ -264,6 +265,7 @@ fieldset legend {
 	margin: 1%;
 	margin-left: 20%;
 	clear: left;
+	padding-top: 30px;
 }
 
 #bottomLinksContainer a {
@@ -322,6 +324,11 @@ fieldset legend {
 	height: 60px;
 }
 
+.oneGroupParticipationLine {
+	padding: 20px;
+	height: 60px;
+}
+
 .mainPhoto {
 	max-width: 300px;
 	margin-left: auto;
@@ -355,4 +362,33 @@ fieldset legend {
 
 .oneProjectOverviewLine td {
 	padding: 5px 10px;
+}
+
+.profileContactThumb {
+	float: left;
+	border: none;
+	max-height: 80px;
+	max-width: 80px;
+	padding: 0 10px 0 0;
+}
+
+
+.inputLocation_city_map_canvas{
+	width: 550px;
+	height: 250px;
+	margin: 5px ;
+}
+
+.emailPopup td {
+	vertical-align: top;
+	padding: 10px 10px 0 10px;
+}
+
+table .errorRow td{
+	padding: 0px 0 0 10px;
+}
+
+
+.notificationContainer {
+	margin-top: 100px;
 }

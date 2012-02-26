@@ -16,7 +16,7 @@ import com.svend.dab.core.beans.profile.Contact;
 import com.svend.dab.core.beans.profile.Contact.STATUS;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.dao.IContactDao;
-import com.svend.dab.dao.mongo.IUserProfileDao;
+import com.svend.dab.core.dao.IUserProfileDao;
 import com.svend.dab.eda.IEventPropagator;
 
 /**
@@ -39,7 +39,6 @@ public class ContactRelationshipRemovedPropagator implements IEventPropagator<Co
 	/* (non-Javadoc)
 	 * @see com.svend.dab.eda.IEventPropagator#propagate(com.svend.dab.eda.Event)
 	 */
-	@Override
 	public void propagate(ContactRelationshipRemoved event) throws DabException {
 		if (event == null) {
 			throw new DabIllegalFormatException("Cannot propagate a null request for removal of contact.");

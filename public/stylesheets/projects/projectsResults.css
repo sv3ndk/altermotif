@@ -1,5 +1,3 @@
-
-
 #projectSearchResultContainer {
 	margin-left: 300px;
 	margin-top: 25px;
@@ -10,4 +8,24 @@
 #searchResultTitle {
 	font-size: 30px;
 	margin-right: 20px;
+}
+
+#projectResultFilterByDetails{
+	margin: 5px 20px;
+}
+
+#projectResultRefineQueryContainer li{
+	margin: 5px;
+}
+
+#projectResultSortByDetails {
+	margin: 5px 20px;
+}
+
+#projectResultSortByDetails input{
+	margin: 5px;
+}
+
+#projectResultUpdateResultButton {
+	margin: 5px;
 }

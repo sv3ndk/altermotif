@@ -7,9 +7,22 @@ package com.svend.dab.core.beans;
 public class Location {
 
 	private String location;
+	
+	// TODO: replace this with GeoCoord
 	private String latitude;
 	private String longitude;
 
+
+	public Location() {
+		super();
+	}
+
+	public Location(Location copied) {
+		this.location = copied.getLocation();
+		this.latitude = copied.getLatitude();
+		this.longitude = copied.getLongitude();
+	}
+	
 	public String getLocation() {
 		return location;
 	}

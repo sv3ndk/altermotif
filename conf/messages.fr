@@ -6,16 +6,22 @@ turkish=Turque
 donate=faire un don
 signIn=se connecter
 orText=ou
-register=s'enregistrer 
+register=s'enregistrer
 forFreeOfCourse=(gratuitement bien sûr)
 loggedInAs=utilisateur
 logout=déconnexion
 confirmationPopupTitle=Confirmation
 OkButton=OK
 CancelButton=Annuler
+nolabel=
+
+
+elapsedTimeSeconds=il y a quelques secondes
+elapsedTimeMinutes=minutes passées
+elapsedTimeHours=heures passées
 
 aboutUsPart1=AlterMotif est un projet comme n'importe quel autre projet qui pourrait être sur ce site. Ça a commencé avec une idée de comment ce monde pouvait être converti en un endroit plus agréable. Peu à peu, nous nous sommes rendu compte que la racine du problème réside dans la poursuite omniprésente de la croissance et du profit sans regard pour les frais que ceci impose sur d'autres personnes; sur l'environnement et retenant les gens d'actions qui pourraient réellement leur rendre accompli et conscients. Nous avons alors compris que la solution est dans l'entrepreneuriat. En initiant des projets, inspirés par nos propres motivations, réalisés à travers des nouveaux modes de coopération, nous pouvons offrir des pistes alternatives pour faire des choses et ainsi devenir de vrais acteurs de changement.
-aboutUsPart2=Comme tous les projets sur AlterMotif, cette idée a inspiré et motivé une groupe de personnes afin de se rejoindre, chacun contribuant quoiqu'ils puissent faire pour donner réalité à ce rêve. Afin d'assurer que le profit ne puisse pas devenir un motivateur d'AlterMotif et que toutes les donations soient bien utilisés pour son but, nous avons créé une associations sans but lucratif avec la mission de "encourager et faciliter chaque forme de coopération autour des buts non lucratifs". 
+aboutUsPart2=Comme tous les projets sur AlterMotif, cette idée a inspiré et motivé une groupe de personnes afin de se rejoindre, chacun contribuant quoiqu'ils puissent faire pour donner réalité à ce rêve. Afin d'assurer que le profit ne puisse pas devenir un motivateur d'AlterMotif et que toutes les donations soient bien utilisés pour son but, nous avons créé une associations sans but lucratif avec la mission de "encourager et faciliter chaque forme de coopération autour des buts non lucratifs".
 aboutUsPart3=Le projet AlterMotif est une poursuite continue. Une poursuite pour un monde différent dans lequel les gens puissent se réapproprier leur travail en retirant des actions du marché afin de les réincorporer dans leur vie social et dans lequel des vrais valeurs ont précédence sur les valeurs monétaires. AlterMotif vous invite à prendre part à ce projet. Démarrez un projet, rejoignez d'autres projets, partagez vos expériences sur les forums de discussion, faites un don, dispersez le mot... tout est bien pour qu'ensemble, on puisse le réaliser!
 
 
@@ -38,8 +44,10 @@ uploadedFileTooBigError=Le fichier soumis dépasse le maximum autorisé
 profileUploadCvNotAPdf=Erreur: le CV doit être un fichier pdf
 profileUploadPhotoNotAnImage=Le fichier que vous avez essayer de télécharger n'est pas une image
 illegalHttpAddressFormat=Le format du lien est incorrect
+registerMustAcceptConditionsErrorMessage=Vous devez accepter les conditions d'utilisation d'Altermotif afin de pouvoir créer un profil
 
-# note: this message is not displayed by Firefox: they actually refuse to do that because some website exploit this against their users, see here:https://bugzilla.mozilla.org/show_bug.cgi?id=578828 
+
+# note: this message is not displayed by Firefox: they actually refuse to do that because some website exploit this against their users, see here:https://bugzilla.mozilla.org/show_bug.cgi?id=578828
 warningUnsavedChangesText=Il y a des changements non sauvegardés. Ils seront perdus si vous naviguez sans sauvegarder!
 
 # error page (among other things, displayed after a refused upload)
@@ -58,7 +66,6 @@ homePageTitle2=Une espace ou les idées deviennent réalité
 homePageExplanation=Comment ça marche? => Présentez une idée, motivez d'autres et accomplissez-le!
 homePageFindAProject=Trouver un projet
 homePageRules=Conditions d'utilisation
-homePageDisclaimer=Disclaimer
 homePagePrivacy=Confidentialité
 homePageContacts=Contactez-nous
 homePageAboutUs=Qui sommes-nous?
@@ -81,9 +88,11 @@ loginErrorMessage=Erreur d'enregistrement
 loginErrorDetailMessage=Nom d'utilisateur ou mot de passe incorrect!
 registerPageCaptchaTitle=Veuillez placer les lettres en ordre alphabétique
 registerPageWelcomText=Bienvenue! Après votre registration, vous pourrez modifier votre compte et décider si d'autres peuvent voir votre profil ou des informations particulières tels que votre date de naissance ou votre vrai nom. Se régistrer à AlterMotif signifie que vous entrez dans un réseau des gens qui recherchent des nouvelles façons d'intéraction et de production. Inaffecté par le motif de profit aveuglant, les actions ont des objectives claires et la coopération est basé sur la motivation mutuelle. De cette manière, vous ne travaillez pas pour l'économie, mais vous entrez dans une économie qui travaille pour vous, en mettant votre but de nouveau au centre de l'attention.
+registerAcceptConditions_part1=J'accepte les 
+registerAcceptConditions_part2=conditions d'utilisation
 
 
-#Top menu 
+#Top menu
 topMenuProfile=Profil
 topMenuProfileHome=Accueil
 topMenuProfileMyProfile=Mon profil
@@ -99,6 +108,8 @@ topMenuMessagesNew=Nouveau
 topMenuMessagesDeleted=Messages supprimés
 
 topMenuGroups=Groupes
+topMenuGroupsNew=Nouveau groupe
+topMenuGroupsFind=Trouver un groupe
 
 topMenuProjects=Projets
 topMenuProjectNew=Nouveau projet
@@ -149,7 +160,7 @@ profileAddedToContactsP2=d'être dans vos contacts
 profileCancelAddedToContactRequest=Annuler la demande
 profileConfirmAddToContacts=Présentez-vous! Vous pouvez joindre un court message à votre invitation:
 profileAddToContactConfirmed=Cet utilisateur sera ajouté à votre liste de contacts dès qu'il accepte votre invitation.
-profileReceivedContactRequest=Demande d'ajout à la liste de contacts reçu 
+profileReceivedContactRequest=Demande d'ajout à la liste de contacts reçu
 profileViewReceivedContactRequestInvitation=Voir le message d'invitation
 profileContactInvitationTextPopupTitle=Demande d'ajout à la liste de contacts
 profileAcceptContactRequest=accepter
@@ -249,6 +260,59 @@ level2=bon
 
 
 #################################
+# groups
+
+groupRole=Rôle en groupe
+groupRoleAdmin=Administrateur
+groupRoleMember=Membre
+
+groupsViewEdit=***Edit group
+groupsViewClose=***Close group
+groupsViewCannotCloseGroup=***Closing a group is a non undoable action. If you are sure this is what you want to do, please remove manually all user member and project members from this group and then click again on this link
+groupsViewConfirmCloseGroup=***Are you sure you want to close this group? The group will no longer be accessible. THIS ACTION CANNOT BE UNDONE. Are you sure this is what you want to do?
+groupsViewCreatedOn=Créé le 
+groupsViewMembers=Membres
+groupsViewProjects=Projets
+groupsViewParticipants=Participants
+groupsViewApplyToGroupAsProject=Demander d'ajouter un de vos projets à ce groupe
+groupsViewApplyToGroupAsPerson=Demander d'être ajouté à ce groupe
+groupsViewAlreadyAppliedToGroupAsPerson=***You have already applied to be a member of this group. Waiting for an admin to accept/reject this application
+groupsViewCancelApplicationToGroupAsPerson=***Cancel application
+groupsViewConfirmCancelApplyToGroup=***Are you sure you want to cancel your application to this group?
+groupsViewApplicationPopupText=***Please enter a short text that will be attached to the application to join this group.
+groupsViewApplicants=***User applications
+groupsViewAcceptUserApplication=***Accept application
+groupsViewRejectUserApplication=***Reject application
+groupsViewConfirmAcceptApplyToGroup=***Are you sure you want to accept this user membership request to this group?
+groupsViewConfirmRejectApplyToGroup=***Are you sure you want to reject this user membership request to this group?
+groupsViewLeaveGroup=***Leave group
+groupsViewConfirmLeaveToGroup=***Are you sure you want to leave this group?
+groupsViewMakeAdministrator=***Make administrator
+groupsViewConfirmMakeAdminText=***Are you sure you want to upgrade the status of this member to administrator of this group?
+groupsViewMakeMember=***Make member
+groupsViewConfirmMakeMemberText=***Are you sure you want to downgrade the status of this member to simple member of this group?
+groupsViewRemoveMember=***Remove member
+groupsViewconfirmRemoveMemberAText=***Are you sure you want to remove this member from this group?
+groupsViewForum=Forum
+
+groupsEditName=Nom du groupe
+groupsEditDescription=Description du groupe
+groupsEditDescriptionExplanation=Décrivez clairement le sens de ce groupe. Quel est son but?
+groupsEditLocation=Emplacement(s)
+groupsEditLocationExplanation=Où sera localisé ce groupe? D'où peuvent venir les participants?
+groupsEditAddLocationLink=ajouter un emplacement
+groupsEditAtLeastOneMessageErrorMessage=Veuillez entrer au moins un emplacement pour ce groupe
+groupsEditSelectThemes=Choisissez des thèmes
+groupsEditAddOneTheme=Ajouter un thème
+groupsEditSelectTags=Etiquettes du groupe
+groupsEditAddOneTagLink=Ajouter une étiquette
+groupsEditCreateGroupButton=Démarrer le groupe
+groupsEditConfirmEditGroupButton=***Apply changes
+groupsEditCancelEditGroupButton=***Cancel edition
+
+
+
+#################################
 # projects
 
 # info about a project, as they appear a bit everywhere on the website (anywhere there is a "short info" concerning a project)
@@ -262,27 +326,65 @@ projectStatusCancelled=Annulé
 projectStatusDone=Terminé
 
 # project themes and sub-themes
-projectThemeEnvironment=environnement
-projectThemeEnvironmentSubThemeProtecting=protection
-projectThemeEnvironmentSubThemeRecycling=recyclage
-projectThemeEnvironmentSubThemeSensitizing=sensibilisation
-projectThemeEnvironmentSubThemeCleaning=nettoyage
-projectThemeEnvironmentSubThemeAgriculture=agriculture
-projectThemeEnvironmentSubThemeOther=autres
+# project themes and sub-themes
+projectThemeAnimalRights=Droits des Animaux
+projectThemeAnimalRightsSubThemeCampaigning=Campagnes
+projectThemeAnimalRightsSubThemeFoodIndustry=Industrie Alimentaire
+projectThemeAnimalRightsSubThemeStrayAnimals=Animaux Orphelin
+projectThemeAnimalRightsSubThemeTestingonAnimals=Tests sur Animaux
 
-projectThemeDevelopment=développement
-projectThemeDevelopmentSubThemeCharity=charité
-projectThemeDevelopmentSubThemeDevAtHome=développement intérieur
-projectThemeDevelopmentSubThemeDevAbroad=développement à l'étranger
-projectThemeDevelopmentSubThemeSensitizing=sensibilisation
-projectThemeDevelopmentSubThemeFairTrade=commerce équitable
-projectThemeDevelopmentSubThemeOther=autres
+projectThemeArts=Arts
+projectThemeArtsSubThemeArchitecture=Architecture
+projectThemeArtsSubThemeCalligraphy=Calligraphie
+projectThemeArtsSubThemeCinema=Cinéma
+projectThemeArtsSubThemeComics=Bandes Dessinées
+projectThemeArtsSubThemeConceptualArt=Art Conceptuel
+projectThemeArtsSubThemeDance=Dance
+projectThemeArtsSubThemeExhibitions=Expositions
+projectThemeArtsSubThemeExperimentalArt=Art Expérimental
+projectThemeArtsSubThemeFiberArt=Art Textile
+projectThemeArtsSubThemeIllustration=Illustration
+projectThemeArtsSubThemeImagingPrints=Imagerie & Impression
+projectThemeArtsSubThemeLiterature=Littérature
+projectThemeArtsSubThemeMosaics=Mosaiques
+projectThemeArtsSubThemePaintingDrawing=Peinture & Dessin
+projectThemeArtsSubThemePhotography=Photographie
+projectThemeArtsSubThemePoetry=Poésie
+projectThemeArtsSubThemeSculpture=Sculpture
+projectThemeArtsSubThemeStreetArt=Art de Rue
+projectThemeArtsSubThemeTheatre=Théatre
+projectThemeArtsSubThemeOther=Autres
 
-projectThemeCulture=culture
-projectThemeCultureSubThemeArts=art
-projectThemeCultureSubThemeJournalism=journalistique
-projectThemeCultureSubThemeEducation=éducation
-projectThemeCultureSubThemeOther=autres
+projectThemeCulture=Culture & Media
+projectThemeCultureSubThemeEducation=Éducation
+projectThemeCultureSubThemeEvents=Évènements
+projectThemeCultureSubThemeFilms=Films
+projectThemeCultureSubThemeInternet=Internet
+projectThemeCultureSubThemeJournalism=Journalisme
+projectThemeCultureSubThemeMusic=Musique
+projectThemeCultureSubThemePrintedMedia=Media Imprimé
+projectThemeCultureSubThemeGames=Jeux
+projectThemeCultureSubThemeOther=Autres
+
+projectThemeDevelopment=Development
+projectThemeDevelopmentSubThemeFairTrade=***Fair Trade
+projectThemeDevelopmentSubThemeNorthSouthRelations=***North-South Relations
+projectThemeDevelopmentSubThemePropaganda=***Propaganda
+projectThemeDevelopmentSubThemeRethinkingEstablishedIdeas=***Rethinking Established Ideas
+projectThemeDevelopmentSubThemeSustainableLiving=***Sustainable Living
+projectThemeDevelopmentSubThemeOther=***Other
+
+projectThemeEnvironment=Environment
+projectThemeEnvironmentSubThemeAgriculture=***Agriculture
+projectThemeEnvironmentSubThemeAwarenessRaising=***Awareness Raising
+projectThemeEnvironmentSubThemeLobbying=***Lobbying
+projectThemeEnvironmentSubThemeClimateChange=***Climate Change
+projectThemeEnvironmentSubThemeConservation=***Conservation
+projectThemeEnvironmentSubThemeEnergy=***Energy
+projectThemeEnvironmentSubThemeRecyclingReuse=***Recycling & Reuse
+projectThemeEnvironmentSubThemeResearch=***Research
+projectThemeEnvironmentSubThemeWasteManagement=***Waste Management
+projectThemeEnvironmentSubThemeOther=***other
 
 projectThemeScience=science
 projectThemeScienceSubThemeEducation=éducation
@@ -290,30 +392,30 @@ projectThemeScienceSubThemeResearch=recherche
 projectThemeScienceSubThemeTechnology=technologie
 projectThemeScienceSubThemeOther=autres
 
+projectThemeSociety=society
+projectThemeSocietySubThemeElderly=***Elderly
+projectThemeSocietySubThemeEmployment=***Employment
+projectThemeSocietySubThemeGatherings=***Gatherings
+projectThemeSocietySubThemePeaceDisarmement=***Peace & Disarmement
+projectThemeSocietySubThemePoverty=***Poverty
+projectThemeSocietySubThemeSocialCohesion=***Social Cohesion/Exclusion
+projectThemeSocietySubThemeUrbanism=***Urbanism
+projectThemeSocietySubThemeWomen=***Women
+projectThemeSocietySubThemeYouth=***Youth
+projectThemeSocietySubThemeOther=***Other
+
+projectThemeSports=***sports
+projectThemeSportsSubThemeTeamBuilding=***Team building
+projectThemeSportsSubThemeEvent=***Sports events
+projectThemeSportsSubThemeEducation=***Education
+projectThemeSportsSubThemeOther=***Other
+
 projectThemeTravel=voyages
-projectThemeTravelSubThemeIntExchange=échanges internationaux
-projectThemeTravelSubThemeTravellingInGroup=voyages en groupe
-projectThemeTravelSubThemeExploration=exploration
-projectThemeTravelSubThemeOther=autres
-
-projectThemeSports=sports
-projectThemeSportsSubThemeTeamBuilding=former une équipe
-projectThemeSportsSubThemeEvent=évènements de sport
-projectThemeSportsSubThemeCapacity=construire des capacités
-projectThemeSportsSubThemePromotion=la promotion
-projectThemeSportsSubThemeOther=autres
-
-projectThemeSociety=société
-projectThemeSocietySubThemeUrbanism=urbanisme
-projectThemeSocietySubThemeFeminism=féminisme
-projectThemeSocietySubThemeDrugs=***
-projectThemeSocietySubThemeEntertainment=récréation
-projectThemeSocietySubThemeOther=autres
-
-projectThemeOther=autres
-projectThemeOtherSubThemeReligion=réligion
-projectThemeOtherSubThemeEmployment=emploi
-projectThemeOtherSubThemeOther=autres
+projectThemeTravelSubThemeEcoTourism=***Eco Tourism
+projectThemeTravelSubThemeExploration=***Exploration
+projectThemeTravelSubThemeTravellingInGroup=***Group Travel
+projectThemeTravelSubThemeTravellingIntExchange=***International Exchange
+projectThemeTravelSubThemeOther=***Other
 
 
 # create project page
@@ -322,7 +424,7 @@ projectNewProjectGoal=But du projet
 projectNewProjectGoalExplanation=Décrivez clairement quel est le but de ce projet
 projectNewProjectLocations=Emplacement(s)
 projectNewProjectLocationsExplanation=Où aura lieu le projet? D'où peuvent venir les participants?
-projectNewProjectaddALocation=ajoutez un emplacement
+projectNewProjectaddALocation=ajouter un emplacement
 projectNewAtLeastOneMessageErrorMessage=Vous devez fournir au moins un emplacement pour ce projet
 projectNewProject=Projet
 projectNewReason=Motivation derrière le projet
@@ -358,6 +460,15 @@ projectNewPrivacySettingsAdmin=Administrateurs de ce projet
 projectNewPrivacySettingsOwner=Créateur de ce projet (moi)
 
 # view project page
+projectViewEmailThisProject=Envoyer un lien vers ce projet à un ami
+viewProjectSendAMailPopupTitle=Envoyer une message concernant ce projet à un ami!
+viewProjectSendAMailDefaultEmailSubject_part1=De
+viewProjectSendAMailDefaultEmailSubject_part2=: ce projet sur AlterMotif pourrait t'intéresser
+viewProjectSendAMailTemplateText=Bonjour \n\n J'ai trouvé ce projet sur la plate-forme www.altermotif.org et je pensais que cela pouvait t'intéresser:
+viewProjectSendAMailTemplateTextProjectName=Nom du projet :
+viewProjectSendAMailPleaseWaitMessage=Envoi de votre message...
+viewProjectSendAMailPleaseEMailSentSucessfully=Le message est envoyé
+viewProjectSendAMailPleaseEMailSentUnsucessfully=Désolé, un problème s'est produit pendant l'envoi du message
 projectViewEditProjet=Editer le projet
 projectViewEndProjet=Terminer le projet
 viewProjectConfirmTerminateProject=Êtes-vous certain de vouloir terminer ce projet? Si vous cliquez ok, le projet sera marqué en tant que 'accompli' et plus aucune action ne sera possible dessus (pas d'ajout de membres, pas de création ou suppression de tâches ou moyens, pas de discussion sur le forum). Êst-ce bien ce que vous désirez?
@@ -401,22 +512,39 @@ profileViewGiveOwnerShip=convertir en leader du projet
 profileViewCancelGiveOwnerShip=annuler le transfert du leader
 profileViewAcceptOwnerShip=accepter la position du leader
 profileViewRefuseOwnerShip=refuser la position du leader
-viewProjectConfirmRemoveParticipant=Êtes vous certain de vouloir enlever ce participant de ce projet? Toute tâche ou moyen assigné à lui sera alors non affecté.
-viewProjectConfirmLeaveProject=Êtes vous certain de vouloir quitter le projet? Chaque tâche ou moyen qui est actuellement assigné à vous sera alors non affecté.
-viewProjectconfirMMakeAdmin=Êtes vous certain de vouloir accorder des droits d'administration de ce projet à ce participant? 
+viewProjectConfirmRemoveParticipant=Êtes vous certain de vouloir enlever ce participant de ce projet? Toute tâche ou moyen assigné exclusivement à lui sera alors non affecté.
+viewProjectConfirmLeaveProject=Êtes vous certain de vouloir quitter le projet? Chaque tâche ou moyen qui est actuellement assigné exclusivement à vous sera alors non affecté.
+viewProjectconfirMMakeAdmin=Êtes vous certain de vouloir accorder des droits d'administration de ce projet à ce participant?
 viewProjectconfirMMakeMember=Êtes vous certain de vouloir dégrader les droits de ce participant vers ceux d'un membre?
 viewProjectCnfirmGiveOwnership=Êtes vous certain de vouloir transférer la position du leader de ce projet vers ce participant? Après son accord, il obtiendra tout le contrôle du projet alors que vous deviendrez un administrateur. Vous ne serez donc pas en mesure de défaire cette action par propre initiatif. Est-ce bien ce que vous désirez?
 viewProjectConfirmCancelGiveOwnership=Vous avez proposé à ce participant de reprendra la position du leader de ce projet, mais il n'a pas encore accepté. Si vous cliquez sur 'OK', cette proposition sera retiré. Est-ce bien ce que vous désirez?
 viewProjectConfirmAcceptOwnership=Êtes-vous certain de vouloir reprendre la position du leader de ce projet? Ainsi, vous aurez accès au plus haut niveau de contrôle.
 viewProjectconfirmRefuseOwnership=Êtes vous certain de vouloir refuser la position du leader de ce projet? Cette action ne pourra pas être défaite à moins que le leader vous renvoi cette demande. Est-ce bien ce que vous désirez?
-viewProjectTasks=Tâches  
+viewProjectTasks=Tâches
 viewProjectAssets=Moyens
 
-viewProjectForum=***Forum
-viewProjectForumAddThread=***Add a new thread
-viewProjectForumAddThreadPopupTitle=***New thread name
-viewProjectForumCreationDate=***creation date
-viewProjectForumPosts=***posts
+viewProjectForum=Forum
+viewProjectForumAddThread=Ajouter un sujet
+viewProjectForumAddThreadPopupTitle=Nom du sujet
+viewProjectForumAddThreadPopupPublicThread=Sujet public
+viewProjectForumCreationDate=Date de création
+viewProjectForumPosts=Posts
+viewProjectForumDeleteThread=Effacer
+viewProjectForumMakePrivate=Rendre privé
+viewProjectForumMakePublic=Rendre public
+viewProjectForumConfirmMakePrivate=Êtes-vous certain de vouloir rendre ce sujet privé? Des sujets privés ne sont visibles qu'aux participants de ce projet
+viewProjectForumConfirmMakePublic=Êtes-vous certain de vouloir rendre ce sujet public? Des sujets publics sont visibles à tout le monde et tous les utilisateurs registrés peuvent y ajouter des posts
+viewProjectForumConfirmRemoveThread=Êtes-vous certain de vouloir effacer ce sujet? CETTE ACTION NE PEUT PAS ÊTRE DÉFAITE! Tous les posts de ce sujet seront perdus! Est-ce bien ce que vous voulez?
+projectForumThreadThread=Sujet 
+projectForumThreadBackToProject=Retour vers la page du projet
+projectForumThreadPrivate=(privé)
+forumThreadPostButtonText=Poster un commentaire
+projectForumThreadPostDate=Date du post
+projectForumThreadDeletePost=Effacer le post
+projectForumThreadConfirmDeletePost=Êtes-vous certain de vouloir effacer ce post? CETTE ACTION NE PEUT PAS ÊTRE DÉFAITE! 
+projectForumThreadMovePost=Déplacer le post
+projectForumThreadMoveThreadPopupText=Déplacer un post veut dire qu'il sera effacé de son sujet originaire et recréé avec le même contenu et une nouvelle date de création, dans un autre sujet. Une référence vers le post d'origine ainsi que votre nom d'utilisateur apparaîtra dans le nouveau post. Veuillez sélectionner la nouvelle destination ci-dessous.
+
 
 
 projectTaskTodo=à faire
@@ -429,8 +557,8 @@ projectTaskEditionTableDescription=Description
 projectTaskEditionTableAddTask=ajouter une tâche
 projectTaskEditionTableConfirmRemoveTask=Êtes-vous certain de vouloir enlever cette tâche de ce projet?
 projectTaskEditionTableConfirmRemoveUser=Êtes-vous certain de vouloir désigner cette tâche de ce participant?
-projectTaskEditionTableAddAssignee=ajouter un responsable
-projectTaskEditionTableChooseAssigneePopupTitle=sélectionner le responsable
+projectTaskEditionTableAddAssignee=Désigner un responsable
+projectTaskEditionTableChooseAssigneePopupTitle=Sélectionner le responsable
 projectTaskEditionTableNewTaskPopupTitle=Nouvelle tâche du projet
 
 projectAssetEditionTableAddAsset=Ajouter un moyen
@@ -449,13 +577,34 @@ projectPhotosSetAsMainPhoto=Choisir comme photo principale du projet
 # project search page
 projectSearchKeyWords=chaque projet avec ces mots clés
 projectSearchCategories=dans une de ces catégories
-projectSearchSimpleModeExplanation=***Select one category or click on a tag for direct access to the corresponding result
-projectSearchSimpleModeExplanation_GotoAdvancedMode=***Or click here to switch to
-projectSearchSimpleModeExplanation_GotoAdvancedMode_Link=***advanced search mode
-projectSearchAdvancedModeExplanation_GotoSimpleMode=***Go back to
-projectSearchAdvancedModeExplanation_GotoSimpleMode_Link=***direct search mode
-
+projectSearchSimpleModeExplanation=Sélectionnez une catégorie ou cliquez sur une étiquette pour accéder directement au résultat correspondant
+projectSearchSimpleModeExplanation_GotoAdvancedMode=ou cliquez ici pour passer au
+projectSearchSimpleModeExplanation_GotoAdvancedMode_Link=moteur de recherche avancé
+projectSearchAdvancedModeExplanation_GotoSimpleMode=Retourner au
+projectSearchAdvancedModeExplanation_GotoSimpleMode_Link=moteur de recherche direct
 
 # project search results page
 projectSearchResultTitle=résultats de la recherche
 projectSearchResultBackToSearchPage=retour vers la page de recherche
+projectSearchResultFilterResults=filtrer les résultats
+projectSearchResultSortBy=Trier par 
+projectSearchResultSortByAlphabetic=ordre alphabétique
+projectSearchResultSortByDueDate=date d'échéance (le plus proche d'abord)
+projectSearchResultSortByProximity=emplacement, en commençant par les projects plus proches de
+projectSearchResultUpdateButtonText=mettre à jour les résultats de recherche
+projectResultChangeRefLocationLink=changer l'emplacement de référence
+projectResultFilterByDetailsCurrentQueryDescription_part1=Recherche de projets 
+projectResultFilterByDetailsCurrentQueryDescription_part2_keywords=avec mot(s) clé(s)
+projectResultFilterByDetailsCurrentQueryDescription_part2_tag=avec étiquette(s)
+projectResultFilterByDetailsCurrentQueryDescription_part2_category=avec catégorie(s)
+projectResultFilterByDetailsCurrentQueryDescription_part3_and=et
+projectResultFilterByProximity_part1=pas plus loin que
+projectResultFilterByProximity_part2=km de
+projectResultFilterByDueDate=et date d'échéance avant
+projectResultFilterByLanguage=avec cette langue
+
+emailPopupReplyToExplanation=Ce champs est optionnel. Vous pouvez indiquer une adresse e-mail ici auquel le destinataire peut vous envoyer une réponse
+emailPopupTo=Á
+emailPopupToExplanation=Introduisez ici l'adresse e-mail du destinataire
+emailPopupSubject=Sujet du courriel
+emailPopupText=Message

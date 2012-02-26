@@ -12,7 +12,6 @@ public class Participation {
 
 	private ProjectSummary projectSummary;
 	private ROLE role;
-
 	private boolean accepted = true;
 	
 	

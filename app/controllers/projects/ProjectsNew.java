@@ -18,6 +18,8 @@ public class ProjectsNew extends DabLoggedController {
 	public static void projectsNew() {
 		Utils.addAllPossibleLanguageNamesToRenderArgs(getSessionWrapper(), renderArgs);
 		Utils.addProjectThemesToRenderArgs(getSessionWrapper(), renderArgs);
+		Utils.addProjectJsonThemesToRenderArgs(getSessionWrapper(), renderArgs, getSessionWrapper().getSelectedLg());
+
 		renderArgs.put("projectEditVisibility", new ProjectEditVisibility(new CreatedProjectPep(), getSessionWrapper().getLoggedInUserProfileId()));
 		render();
 	}

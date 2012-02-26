@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.svend.dab.core.beans.DabException;
 import com.svend.dab.core.beans.DabIllegalFormatException;
-import com.svend.dab.dao.mongo.IUserProfileDao;
+import com.svend.dab.core.dao.IUserProfileDao;
 import com.svend.dab.eda.IEventPropagator;
 
 @Component
@@ -19,7 +19,6 @@ public class UserLoggedInEventPropagator implements IEventPropagator<UserLoggedI
 	
 	private static Logger logger = Logger.getLogger(UserLoggedInEventPropagator.class.getName());
 
-	@Override
 	public void propagate(UserLoggedInEvent event) throws DabException {
 
 		if (event == null || event.getDateOfLoggin() == null || event.getUsername() == null) {

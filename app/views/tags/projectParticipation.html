@@ -5,9 +5,9 @@
 			<img src="@{'/public/images/defaultProjectThumb.jpg'}" class="oneLinerThumb" />
 	#{/if}
 	
-	#{if _participation.projectSummary.hasAThumbPhoto() } 
+	#{else  } 
 		<img src="${_participation.projectSummary.mainPhotoThumbLink}" class="oneLinerThumb" />
-	#{/if}
+	#{/else}
 	</a>
 
 	<div>

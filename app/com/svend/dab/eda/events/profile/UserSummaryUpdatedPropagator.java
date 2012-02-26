@@ -1,9 +1,5 @@
-/**
- * 
- */
 package com.svend.dab.eda.events.profile;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,49 +13,63 @@ import com.svend.dab.core.beans.profile.UserReference;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Participation;
 import com.svend.dab.core.dao.IContactDao;
-import com.svend.dab.dao.mongo.IProjectDao;
-import com.svend.dab.dao.mongo.IUserProfileDao;
+import com.svend.dab.core.dao.IForumPostDao;
+import com.svend.dab.core.dao.IGroupDao;
+import com.svend.dab.core.dao.IProjectDao;
+import com.svend.dab.core.dao.IUserProfileDao;
 import com.svend.dab.eda.IEventPropagator;
 
 /**
  * @author Svend
- *
+ * 
  */
 @Component
 public class UserSummaryUpdatedPropagator implements IEventPropagator<UserSummaryUpdated> {
 
-	
 	@Autowired
 	private IUserProfileDao userProfileRepo;
-	
 
 	@Autowired
 	private IContactDao contactDao;
 
-	
 	@Autowired
 	private IProjectDao projectDao;
 
-	private static Logger logger = Logger.getLogger(UserSummaryUpdatedPropagator.class.getName());
+	@Autowired
+	private IForumPostDao forumPostDao;
 	
-	@Override
+	@Autowired
+	private IGroupDao groupDao;
+
+	private static Logger logger = Logger.getLogger(UserSummaryUpdatedPropagator.class.getName());
+
 	public void propagate(UserSummaryUpdated event) throws DabException {
-		
-		logger.log(Level.INFO, "propagating user summary updated");
-		
+
 		UserProfile profile = userProfileRepo.retrieveUserProfileById(event.getUpdatedSummary().getUserName());
-		
+
 		if (profile == null) {
 			throw new DabPreConditionViolationException("cannot propagate a UserSummaryUpdated event: no profile found in database for username " + event.getUpdatedSummary().getUserName());
 		}
-		
+
+		// TODO. all those "replace" stuff can be re-written with a single call to the DAO (see example with propagateUserSummaryToForumPosts)
 		propagateUserSummaryToWrittenReferenceds(profile, event.getUpdatedSummary());
 		propagateUserSummaryToReceivedReferences(profile, event.getUpdatedSummary());
 		propagateUserSummaryToContacts(profile, event.getUpdatedSummary());
 		propagateUserSummaryToProject(profile, event.getUpdatedSummary());
-		
+
+		propagateUserSummaryToForumPosts(event.getUpdatedSummary());
+		propagateUserSummaryToGroups(event.getUpdatedSummary());
+
 	}
-	
+
+	private void propagateUserSummaryToGroups(UserSummary updatedSummary) {
+		groupDao.updateParticipantOfAllGroupsWith(updatedSummary);
+	}
+
+	private void propagateUserSummaryToForumPosts(UserSummary updatedSummary) {
+		forumPostDao.updateAuthorOfAllPostsFrom(updatedSummary);
+	}
+
 	/**
 	 * @param profile
 	 * @param updatedSummary

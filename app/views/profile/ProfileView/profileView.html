@@ -76,7 +76,7 @@
 				<dt>
 					&{'profilePersonalObjectives'}:
 				</dt>
-				<dd><pre>${visitedUserProfile.pdata.personalObjective}</pre></textarea>
+				<dd><pre>${visitedUserProfile.pdata.personalObjective}</pre>
 				</dd>
 			#{/if}
 			
@@ -140,8 +140,11 @@
 		</div>
 
 		<div class="profileViewTogglableSection">
-			<span class="toggleLink dabLink">&{'profileGroups'}  </span>
+			<span class="toggleLink dabLink">&{'profileGroups'} (${visitedUserProfile.numberOfGroups})... </span>
 			<div class="toggleContainer" style="display: none">
+				 #{list items:visitedUserProfile.groups, as:'oneGroup'}
+				 	#{groups.groupParticipation group: oneGroup /}
+				 #{/list}
 			</div>
 		</div>
 		

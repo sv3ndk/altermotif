@@ -72,6 +72,10 @@ public class ProjectViewVisibility {
 	}
 	
 	
+	public boolean isSocialBoxVisible() {
+		return pep.isAllowedToSocialize(visitingUserId);
+	}
+	
 	///////////////////////////////
 	// photo gallery
 	
@@ -124,7 +128,7 @@ public class ProjectViewVisibility {
 	}
 	
 	//////////////////////////////////
-	// applications
+	// membership applications + role management
 	
 	public boolean isVisibleApplicationBox() {
 		return pep.isAllowedToSeeApplications(visitingUserId);
@@ -171,10 +175,29 @@ public class ProjectViewVisibility {
 		// we only display this link in the container showing this user (this is not a PEP related decision, this is just  a display concept)
 		return upgradedUser != null && upgradedUser.equals(visitingUserId) && pep.isAllowedToAcceptOrRefuseOwnershipTransfer(visitingUserId);
 	}
-	
+
 	public boolean isRefuseOwnershipLinkVisible(String upgradedUser) {
 		// we only display this link in the container showing this user (this is not a PEP related decision, this is just  a display concept)
 		return upgradedUser != null && upgradedUser.equals(visitingUserId) && pep.isAllowedToAcceptOrRefuseOwnershipTransfer(visitingUserId);
 	}
 
+	//////////////////////////////////
+	// forum
+	
+	public boolean isAddForumThreadLinkVisible() {
+		return pep.isAllowedAddForumThread(visitingUserId);
+	}
+	
+	public boolean isForumThreadVisible(boolean isThreadPublic) {
+		return pep.isAllowedSeeThisForumThread(visitingUserId, isThreadPublic);
+	}
+
+	public boolean isForumThreadUpdateVisibilityLinkVisible() {
+		return pep.isAllowedToUpdateVisibilityThread(visitingUserId);
+	}
+	
+	public boolean isForumThreadDeleteThreadLinkVisible() {
+		return pep.isAllowedToDeleteThread(visitingUserId);
+	}
+	
 }

@@ -20,7 +20,7 @@ import com.svend.dab.core.beans.profile.Contact.STATUS;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.dao.IContactDao;
-import com.svend.dab.dao.mongo.IUserProfileDao;
+import com.svend.dab.core.dao.IUserProfileDao;
 import com.svend.dab.eda.IEventPropagator;
 
 @Component
@@ -37,10 +37,7 @@ public class ContactRelationshipRequestedPropagator implements IEventPropagator<
 	@Autowired
 	private IUserProfileDao userProfileRepo;
 
-	@Override
 	public void propagate(ContactRelationshipRequested event) throws DabException {
-
-		logger.log(Level.INFO, "propagating " + event);
 		
 		if (event == null) {
 			throw new DabIllegalFormatException("Cannot propagate a null request for contact.");

@@ -16,7 +16,7 @@ import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.dao.IPhotoBinaryDao;
-import com.svend.dab.dao.mongo.IUserProfileDao;
+import com.svend.dab.core.dao.IUserProfileDao;
 import com.svend.dab.eda.EventEmitter;
 import com.svend.dab.eda.events.profile.UserSummaryUpdated;
 import com.svend.dab.eda.events.s3.BinaryNoLongerRequiredEvent;
@@ -53,7 +53,6 @@ public class ProfilePhotoService implements IProfilePhotoService {
 	 * 
 	 * @see com.svend.dab.core.IProfilePhotoService#addOnePhoto(com.svend.dab.core.beans.profile.UserProfile, byte[])
 	 */
-	@Override
 	public void addOnePhoto(String username, File photoContent) {
 
 		if (photoContent == null) {
@@ -95,7 +94,6 @@ public class ProfilePhotoService implements IProfilePhotoService {
 	 * 
 	 * @see com.svend.dab.core.IProfilePhotoService#removeProfilePhoto(com.svend.dab.core.beans.profile.UserProfile, int)
 	 */
-	@Override
 	public void removeProfilePhoto(UserProfile profile, int deletedPhotoIdx) {
 
 		if (profile == null) {
@@ -132,7 +130,6 @@ public class ProfilePhotoService implements IProfilePhotoService {
 	 * 
 	 * @see com.svend.dab.core.IProfilePhotoService#movePhotoToFirstPosition(com.svend.dab.core.beans.profile.UserProfile, int)
 	 */
-	@Override
 	public void movePhotoToFirstPosition(UserProfile userProfile, int photoIndex) {
 		if (userProfile != null && userProfile.getPhotos() != null && photoIndex >= 0 && photoIndex < userProfile.getPhotos().size()) {
 			userProfileRepo.movePhotoToFirstPosition(userProfile.getUsername(), photoIndex);
@@ -149,7 +146,6 @@ public class ProfilePhotoService implements IProfilePhotoService {
 	 * 
 	 * @see com.svend.dab.core.IProfilePhotoService#updatePhotoCaption(com.svend.dab.core.beans.profile.UserProfile, int, java.lang.String)
 	 */
-	@Override
 	public void updatePhotoCaption(UserProfile userProfile, int photoIndex, String profilePhotoCaption) {
 
 		if (userProfile != null && userProfile.getPhotos() != null && photoIndex >= 0 && photoIndex < userProfile.getPhotos().size()) {

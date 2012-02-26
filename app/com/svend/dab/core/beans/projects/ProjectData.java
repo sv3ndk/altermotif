@@ -36,6 +36,7 @@ public class ProjectData {
 	
 	private Date creationDate ;
 
+	// ISO code of the language of this project
 	private String language;
 	
 	

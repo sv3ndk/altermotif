@@ -11,8 +11,8 @@ import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.projects.Participant;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.Project;
-import com.svend.dab.dao.mongo.IProjectDao;
-import com.svend.dab.dao.mongo.IUserProfileDao;
+import com.svend.dab.core.dao.IProjectDao;
+import com.svend.dab.core.dao.IUserProfileDao;
 import com.svend.dab.eda.IEventPropagator;
 
 @Component("projectOwnershipAcceptedPropagator")
@@ -26,7 +26,6 @@ public class ProjectOwnershipAcceptedPropagator implements IEventPropagator<Proj
 
 	private static Logger logger = Logger.getLogger(ProjectOwnershipAcceptedPropagator.class.getName());
 
-	@Override
 	public void propagate(ProjectOwnershipAccepted event) throws DabException {
 		if (event == null ) {
 			logger.log(Level.WARNING, "Cannot propagate a project ownership acceptation event: event is null ");

@@ -7,18 +7,26 @@ GET     /                                       Application.index
 GET     /admin                                  Admin.admin
 
 GET     /info/aboutus                           Application.aboutUs
+GET     /info/conditions/{languageCode}         Application.termsAndConditions
+GET     /info/privacy/{languageCode}            Application.privacyStatement
 
 GET     /profile/home                           profile.ProfileHome.profileHome
-GET     /profile/public			                profile.ProfileView.profileView
+GET     /profile/{vuser}/public			                profile.ProfileView.profileView
 GET     /profile/edit			                profile.ProfileEdit.profileEdit
 GET     /profile/editphotos		                profile.ProfilePhotos.profilePhotos
 GET     /profile/cv				                profile.ProfileCv.profileCv
 GET     /profile/privacy		                profile.ProfilePrivacy.profilePrivacy
 
+GET     /groups/new				                groups.GroupsNew.groupsNew
+GET     /groups/edit				            groups.GroupsEdit.groupsEdit
+GET     /groups/search			                groups.GroupsSearch.groupsSearch
+GET     /groups/view/{groupid}	                groups.GroupsView.groupsView
+
 GET     /projects/new			                projects.ProjectsNew.projectsNew
 GET     /projects/edit			                projects.ProjectsEdit.projectsEdit
 GET     /projects/editphotos	                projects.ProjectsEditPhotos.projectsEditPhotos
-GET     /projects/view			                projects.ProjectsView.projectsView
+GET     /projects/view				            projects.ProjectsView.projectsView
+GET     /projects/forum/{projectId}/{threadId}  projects.ProjectForumThread.projectForumThread
 GET     /projects/search		                projects.ProjectsSearch.projectsSearch
 GET     /projects/findprojects	                projects.ProjectsResults.projectsResults
 

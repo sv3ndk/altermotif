@@ -155,13 +155,20 @@
 
  	<mongo:repositories base-package="com.svend.dab.dao.mongo" >
  	</mongo:repositories>
-
-<!-- 
-	
-	"mongodb-1.8":[{"name":"mongodb-altermotif-dev","label":"mongodb-1.8","plan":"free","tags":["mongodb","mongodb-1.8","nosql"],"credentials":
-	{"hostname":"172.30.48.72","host":"172.30.48.72","port":25063,"username":"bf6dcf65-6a85-4e23-ac49-0c59547ad78c","password":"d450ffe8-2f8d-49ed-85b3-e507667569a2",
-	"name":"1888afcc-41f0-4995-b9cd-422cab8bb30c","db":"db"}}]} -->
-
- -->
  	
+	<!-- ================================ mail server config ========================== -->
+	
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+  		<property name="host" value="smtp.gmail.com"/>
+  		<property name="port" value="587"></property>
+  		<property name="username" value="noreply@altermotif.org"></property>
+  		<property name="password" value="A}RZHMKm,Yc-LI_Mfh%R1bLrAUiln$$YD0pLcY)19-1X1I945vXjdo(Jb0_"></property>
+  		<property name="javaMailProperties">
+	   		<props>
+       	      <prop key="mail.smtp.auth">true</prop>
+       	      <prop key="mail.smtp.starttls.enable">true</prop>
+       	   </props>
+		</property>
+	</bean>
+
 </beans>

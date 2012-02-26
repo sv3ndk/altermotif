@@ -17,13 +17,15 @@ import web.utils.Utils;
 
 import com.google.common.base.Strings;
 import com.svend.dab.core.beans.Config;
+import com.svend.dab.core.beans.GeoCoord;
+import com.svend.dab.core.beans.Location;
 import com.svend.dab.core.beans.projects.IndexedProject;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.ProjectOverview;
-import com.svend.dab.core.beans.projects.ProjectSearchRequest;
+import com.svend.dab.core.beans.projects.ProjectSearchQuery;
 import com.svend.dab.core.beans.projects.SelectedTheme;
 import com.svend.dab.core.dao.IIndexedProjectDao;
-import com.svend.dab.dao.mongo.IProjectDao;
+import com.svend.dab.core.dao.IProjectDao;
 
 /**
  * Quick and dirty (and I'm drunk...) version of a full text search index for projects.
@@ -50,7 +52,7 @@ public class QuickAndDirtyProjectFullTextSearch implements IProjectFTSService {
 	private static Logger logger = Logger.getLogger(QuickAndDirtyProjectFullTextSearch.class.getName());
 	
 	
-	@Override
+	
 	public void updateProjetIndex(String projectId, boolean immediate) {
 		
 
@@ -66,9 +68,8 @@ public class QuickAndDirtyProjectFullTextSearch implements IProjectFTSService {
 			logger.log(Level.WARNING, "cannot update full text search of non existant project : " + projectId);
 		} else {
 			
-			IndexedProject ip = new IndexedProject();
-			ip.setProjectId(projectId);
-			ip.setTags(project.getTags());
+			IndexedProject ip = new IndexedProject(project);
+			
 			
 			if (project.getThemes() != null) {
 				for (SelectedTheme theme : project.getThemes()) {
@@ -82,7 +83,7 @@ public class QuickAndDirtyProjectFullTextSearch implements IProjectFTSService {
 					ip.addTerm(st.nextToken());
 				}
 			}
-
+			
 			if (!Strings.isNullOrEmpty(project.getPdata().getDescription())) {
 				StringTokenizer st = new StringTokenizer(project.getPdata().getDescription());
 				while (st.hasMoreTokens()) {
@@ -103,8 +104,8 @@ public class QuickAndDirtyProjectFullTextSearch implements IProjectFTSService {
 	}
 
 	
-	@Override
-	public List<ProjectOverview> searchForProjects(ProjectSearchRequest request) {
+	
+	public List<ProjectOverview> searchForProjects(ProjectSearchQuery request) {
 		
 		List<IndexedProject> ips = indexedProjectDao.searchForProjects(request);
 		
@@ -115,7 +116,7 @@ public class QuickAndDirtyProjectFullTextSearch implements IProjectFTSService {
 			allIds.add(ip.getProjectId());
 		}
 		
-		List<Project> projects = projectDao.loadAllProjects(allIds);
+		List<Project> projects = projectDao.loadAllProjects(allIds, request.getSortKey());
 		
 		List<ProjectOverview> projectOverview = new LinkedList<ProjectOverview>();
 		
@@ -135,6 +136,12 @@ public class QuickAndDirtyProjectFullTextSearch implements IProjectFTSService {
 		
 		return projectOverview;
 		
+	}
+
+
+	
+	public void ensureIndexOnLocation() {
+		indexedProjectDao.ensureIndexOnLocation();		
 	}
 
 }

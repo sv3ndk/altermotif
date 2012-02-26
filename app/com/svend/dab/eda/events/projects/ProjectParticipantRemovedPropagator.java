@@ -11,8 +11,8 @@ import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.projects.Participant;
 import com.svend.dab.core.beans.projects.Participation;
 import com.svend.dab.core.beans.projects.Project;
-import com.svend.dab.dao.mongo.IProjectDao;
-import com.svend.dab.dao.mongo.IUserProfileDao;
+import com.svend.dab.core.dao.IProjectDao;
+import com.svend.dab.core.dao.IUserProfileDao;
 import com.svend.dab.eda.IEventPropagator;
 
 @Component("participantRemovedPropagator")
@@ -27,7 +27,6 @@ public class ProjectParticipantRemovedPropagator implements IEventPropagator<Pro
 	private IUserProfileDao userProfileDao;
 
 	
-	@Override
 	public void propagate(ProjectParticipantRemoved event) throws DabException {
 		
 		if (event == null ) {

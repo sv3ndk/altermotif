@@ -11,9 +11,9 @@ import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.Participation;
 import com.svend.dab.core.beans.projects.Project;
+import com.svend.dab.core.dao.IProjectDao;
+import com.svend.dab.core.dao.IUserProfileDao;
 import com.svend.dab.core.projects.IProjectFTSService;
-import com.svend.dab.dao.mongo.IProjectDao;
-import com.svend.dab.dao.mongo.IUserProfileDao;
 import com.svend.dab.eda.IEventPropagator;
 
 /**
@@ -32,7 +32,6 @@ public class ProjectCreatedPropagator implements IEventPropagator<ProjectCreated
 	@Autowired
 	private IProjectFTSService projectFTSService;
 	
-	@Override
 	public void propagate(ProjectCreated event) throws DabException {
 		
 		Project project = event.getCreatedProject();

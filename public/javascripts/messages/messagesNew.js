@@ -1,42 +1,55 @@
-var okLabelValue;
-var cancelLabelValue;
-var numberOfActiveContactsValue;
+$(document).ready(function() {
+	new dabMessagesNewLib.MessagesNewController();
+});
 
-function init() {
-	updateChooseContactLinkState();
-	initchooseMessageRecipientPopup();
+var dabMessagesNewLib = {
 	
-	// this is in usersPopupList.js
-	initUsersPopupList(whenTheRecipientIsChosen);
-}
+	MessagesNewController: function () {
+		
+		this.messagesNewModel = new dabMessagesNewLib.MessagesNewModel();
+		
+		this.init = function() {
+			var self = this;
+			
+			// knockout bindings
+			ko.applyBindings(this.messagesNewModel, $("#messagesContainer")[0]);
 
-function initchooseMessageRecipientPopup() {
+			// click on "add user from my contacts"
+			var userListPopup = new dabUserPopupLib.UserListPopup(this, $("#messagesContainer .usersPopupList"), profileMessagesChooseFromMyContactsPopupTitle, this.whenTheRecipientIsChosen);
+			this.messagesNewModel.updatenumberOfActiveContacts(userListPopup.countTotalNumberOfPopupUser());
+			
+			$("#choooseFromMyContactsLink").click(function() {
+				if (self.messagesNewModel.isChooseLinkActive()) {
+					userListPopup.open();
+				}
+			});
+		};
+		
+		this.whenTheRecipientIsChosen = function(self, username) {
+			self.messagesNewModel.updateRecipient(username)
+		};
+		
+		this.init();
+	},
+	
+	
+	MessagesNewModel : function() {
+		var self = this;
+		
+		this.messageRecipient = ko.observable();
+		this.numberOfActiveContacts = ko.observable();
+		
+		this.isChooseLinkActive = ko.computed(function() {
+			return self.numberOfActiveContacts() > 0 && (self.messageRecipient() == "" || self.messageRecipient() == undefined);
+		});
+		
+		this.updateRecipient = function(username) {
+			this.messageRecipient(username);
+		};
 
-	$("#messagesTo").bind("change", function() {
-		updateChooseContactLinkState();
-	});
-
-	$("#choooseFromMyContactsLink").click(function() {
-		if ($("#choooseFromMyContactsLink").hasClass("dabLinkLSpaced")) {
-			openUsersPopupList();
-		}
-	});
-}
-
-function updateChooseContactLinkState() {
-	if (numberOfActiveContactsValue > 0 && ($("#messagesTo").val() == "" || $("#messagesTo").val() == null)) {
-		$("#choooseFromMyContactsLink").removeClass("dabLinkLSpacedDisabled");
-		$("#choooseFromMyContactsLink").addClass("dabLinkLSpaced");
-	} else {
-		$("#choooseFromMyContactsLink").removeClass("dabLinkLSpaced");
-		$("#choooseFromMyContactsLink").addClass("dabLinkLSpacedDisabled");
-	}
-}
-
-
-// this is called back from the user popup list handler, after the user has chosen a contact (see usersPopupList.js)
-function whenTheRecipientIsChosen(username) {
-	$("#messagesTo").val(username);
-	updateChooseContactLinkState();
-	closeUsersPopupList();
-}
+		this.updatenumberOfActiveContacts = function(number) {
+			this.numberOfActiveContacts(number);
+		};
+		
+	},
+};

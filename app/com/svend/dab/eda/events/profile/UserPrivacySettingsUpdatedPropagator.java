@@ -11,7 +11,7 @@ import com.svend.dab.core.beans.DabPreConditionViolationException;
 import com.svend.dab.core.beans.profile.ProfileRef;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserSummary;
-import com.svend.dab.dao.mongo.IUserProfileDao;
+import com.svend.dab.core.dao.IUserProfileDao;
 import com.svend.dab.eda.EventEmitter;
 import com.svend.dab.eda.IEventPropagator;
 
@@ -29,7 +29,6 @@ public class UserPrivacySettingsUpdatedPropagator implements IEventPropagator<Us
 	@Autowired
 	private EventEmitter emitter;
 	
-	@Override
 	public void propagate(UserPrivacySettingsUpdatedEvent event) throws DabException {
 		
 		UserProfile profile = userProfileRepo.retrieveUserProfileById(event.getUserId());

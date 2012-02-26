@@ -13,11 +13,12 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.codehaus.jackson.map.ObjectMapper;
-
 import models.altermotif.MappedValue;
 import models.altermotif.SessionWrapper;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 
 import play.mvc.Scope.RenderArgs;
 
@@ -161,9 +162,14 @@ public class Utils {
 	
 	
 	public static void addProjectThemesToRenderArgs(SessionWrapper sessionWrapper, RenderArgs renderArgs) {
-		renderArgs.put("allThemes", getConfig().getProjectThemes());
+		renderArgs.put("allThemes", getConfig().getThemes());
 	}
 
+	
+	
+	public static void addProjectJsonThemesToRenderArgs(SessionWrapper sessionWrapper, RenderArgs renderArgs, String languageCode) {
+		renderArgs.put("allThemesJson", objectToJsonString(getConfig().getLocalizedThemes(languageCode)));
+	}
 	
 	
 	// ...-------------------
@@ -287,6 +293,21 @@ public class Utils {
 		
 		return config;
 	}
+
+
+
+	public static long countElapsedMillisSince(Date creationDate) {
+		
+		if (creationDate == null) {
+			return 0;
+		}
+		
+		return new Date().getTime() - creationDate.getTime();
+		
+	}
+
+
+
 
 
 }

@@ -49,7 +49,7 @@ public class AwsS3CvDao implements ICvBinaryDao {
 	
 
 	
-	@Override
+	
 	public void uploadCvPdf(UserProfile profile, byte[] cvContent) {
 		if (profile == null || profile.getUsername() == null ) {
 			throw new DabPreConditionViolationException("Cannot upload CV: null user or user with null username");
@@ -80,7 +80,7 @@ public class AwsS3CvDao implements ICvBinaryDao {
 //	 * @param editedUserProfile
 //	 * @param removedPhotoKey
 //	 */
-//	@Override
+//	
 //	public void removeCv(S3Link cvLink) {
 //		
 //		if (cvLink == null || cvLink.getS3BucketName() == null || cvLink.getS3Key() == null) {

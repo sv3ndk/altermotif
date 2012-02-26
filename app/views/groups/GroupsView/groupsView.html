@@ -1,0 +1,235 @@
+#{extends 'masterTemplate.html' /} 
+
+#{set 'moreStyles'}
+	<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/groups/groupsView.css'}" />
+#{/set} 
+
+#{set 'moreScripts'}
+    <script src="@{'/public/javascripts/groups/groupsView.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+
+	<script type="text/javascript">
+	
+	    var applytoGroup 	= #{jsAction @groups.GroupsView.applyToGroup(':groupId', ':applicationText') /};
+	    var cancelApplytoGroup 	= #{jsAction @groups.GroupsView.cancelApplyToGroup(':groupId') /};
+	    var acceptUserApplicationToGroup 	= #{jsAction @groups.GroupsView.acceptUserApplicationToGroup(':groupId', ':applicantId') /};
+	    var rejectUserApplicationToGroup 	= #{jsAction @groups.GroupsView.rejectUserApplicationToGroup(':groupId', ':applicantId') /};
+	    var leaveGroup 						= #{jsAction @groups.GroupsView.leaveGroup(':groupId') /};
+	    var makeAdmin 						= #{jsAction @groups.GroupsView.makeAdmin(':groupId', ':upgradedUser') /};
+	    var makeMember 						= #{jsAction @groups.GroupsView.makeMember(':groupId', ':downgradedUser') /};
+	    var removeMember 					= #{jsAction @groups.GroupsView.removeMember(':groupId', ':removedUser') /};
+	
+		var confirmCloseGroupText = "&{'groupsViewConfirmCloseGroup'}";
+		var cannotCloseGroupText= "&{'groupsViewCannotCloseGroup'}";
+		var confirmApplyToGroupText = "&{'groupsViewConfirmApplyToGroup'}";
+		var confirmCancelApplyToGroup = "&{'groupsViewConfirmCancelApplyToGroup'}";
+		var confirmAcceptApplyToGroup = "&{'groupsViewConfirmAcceptApplyToGroup'}";
+		var confirmRejectApplyToGroup = "&{'groupsViewConfirmRejectApplyToGroup'}";
+		var confirmLeaveGroup = "&{'groupsViewConfirmLeaveToGroup'}";
+		var confirmMakeAdminText = "&{'groupsViewConfirmMakeAdminText'}";
+		var confirmMemberAdminText = "&{'groupsViewConfirmMakeMemberText'}";
+		var confirmRemoveMemberText = "&{'groupsViewconfirmRemoveMemberAText'}";
+		
+		var adminRoleLabel = "&{'groupRoleAdmin'}";
+		var memberRoleLabel = "&{'groupRoleMember'}";
+		
+		var isCloseGroupLinkEffective = ${groupViewVisibility.endGroupLinkEffective};
+		var visitedGroupId = "${visitedGroup.id}";
+		var loggedInUserId = "${loggedInUserId}";
+	</script>
+#{/set}
+
+	<img id="hiddenDefaultProfileThumb" class="hidden" src="@{'/public/images/defaultProfileThumb.jpg'}" />
+	
+	<p  class="pageTitle">${visitedGroup.name}</p>
+	
+	<div id="groupPhotoContainer">
+		todo, add photos.. 
+	</div>
+	
+	
+	<div id="groupBasicDetails">
+		<table>
+			<tbody>
+				<tr>
+					<td><label>&{'groupsEditDescription'}</label>
+					</td>
+					<td>
+						<pre>${visitedGroup.description}</pre>
+					</td>
+				</tr>
+				
+				<tr>
+					<td><label>&{'groupsEditLocation'}</label></td>
+					<td>
+						<ul>
+							#{list items:visitedGroup.location, as:"oneLocation"}
+								<li>
+									<span>${oneLocation.location}</span>
+								</li>
+							#{/list}
+						</ul>
+					</td>
+				</tr>
+				
+				<tr>
+					<td><label>&{'groupsViewCreatedOn'}</label></td>
+					<td>
+						#{if visitedGroup.creationDate != null}
+							${visitedGroup.creationDate.format(controllers.BeanProvider.config.dateDisplayFormat)}
+						#{/if}
+					</td>
+				</tr>
+		
+				<tr>
+					<td />
+					<td id="applyWithProfileTd">
+						<span id="applyToGroupLink" class="dabLink" data-bind="visible: applyToGroupLinkVisisble">&{'groupsViewApplyToGroupAsPerson'}</span>
+						<span data-bind="visible: alreadyApplyToGroupLinkVisisble">&{'groupsViewAlreadyAppliedToGroupAsPerson'}</span>
+						<br />
+						<span id="cancelApplyToGroupLink" class="dabLink" data-bind="visible: alreadyApplyToGroupLinkVisisble">&{'groupsViewCancelApplicationToGroupAsPerson'}</span>
+					</td>
+				</tr>				
+				
+			</tbody>
+		</table>
+	</div>
+	
+	
+	
+	
+	<div id="groupRightColumn">
+		#{if groupViewVisibility.isToolBoxVisible() }
+			<div id="groupToolBox">
+				<ul>
+					<li>
+						#{if groupViewVisibility.isEditGroupLinkVisisble() } 
+							<a href="@{groups.GroupsEdit.groupsEdit( visitedGroup.id)}" class="dabLink">&{'groupsViewEdit'}</a> 
+						#{/if}
+					</li>
+		
+					<li>
+						#{if groupViewVisibility.isEndGroupLinkVisisble() } 
+							<span id="closeGroupLink" class="dabLink" >&{'groupsViewClose'}</span> 
+						#{/if}
+					</li>
+				</ul>
+			</div>
+		#{/if}
+	</div>
+	
+	
+	
+	<div id="groupProjects" class="groupToggleBlocks">
+		<span class="toggleLink dabLink" >&{'groupsViewProjects'} (${visitedGroup.numberOfProjects})...</span>
+		<div class="toggleContainer" style="display: none">
+			<span class="dabLinkDisabled">&{'groupsViewApplyToGroupAsProject'}</span>
+		</div>
+	</div>
+	
+	<div id="groupParticipants" class="groupToggleBlocks">
+		<span class="toggleLink dabLink" >&{'groupsViewParticipants'} (<span class="dabLink" data-bind="text: numberOfUserParticipants"></span><span class="dabLink">)...</span></span>
+		<div class="toggleContainer" style="display: none">
+		
+			<div data-bind="foreach: acceptedParticipants">
+				<div class="confirmedParticipant" >
+					<span class="hiddenParticipantId" style="display: none" data-bind="text: userName"></span>
+		
+					<a data-bind="attr: {href: profileLink}" class="dabLink">
+						<img data-bind="attr: {src: photoLocation}" class="profileContactThumb" />
+					</a>
+					
+					<div class="profileLink">
+						<a data-bind="attr: {href: profileLink}" class="dabLink"><span data-bind="text: userName" class="dabLink"></span></a>
+						<span data-bind="text: userLocation"></span>
+						<br />
+						&{'groupRole'}: <span class="groupRole" data-bind="text: role"> </span>
+						<br />
+						<span data-bind="visible: isLeaveLinkVisible" class="dabLink leaveGroup">&{'groupsViewLeaveGroup'}</span>
+						<span>  </span>
+						<span data-bind="visible: isMakeAdminLinkVisible" class="dabLink makeAdmin">&{'groupsViewMakeAdministrator'}</span>
+						<span data-bind="visible: isMakeMemberLinkVisible" class="dabLink makeMember">&{'groupsViewMakeMember'}</span>
+						<span>  </span>
+						<span data-bind="visible: isRemoveMemberLinkVisible" class="dabLink removeMember">&{'groupsViewRemoveMember'}</span>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	#{if groupViewVisibility.userApplicationsAreVisible }
+		<div id="groupPendingApplicants" class="groupToggleBlocks">
+			<span class="toggleLink dabLink" >&{'groupsViewApplicants'} (<span class="dabLink" data-bind="text: numberOfUserApplicants"></span><span class="dabLink">)...</span></span>
+			<div class="toggleContainer" style="display: none">
+			
+				<div data-bind="foreach: applicants">
+					<div class="applyingParticipant" >
+						<span class="hiddenParticipantId" style="display: none" data-bind="text: userName"></span>
+			
+						<a data-bind="attr: {href: profileLink}" class="dabLink">
+							<img data-bind="attr: {src: photoLocation}" class="profileContactThumb" />
+						</a>
+						
+						<div class="profileLink">
+							<a data-bind="attr: {href: profileLink}" class="dabLink"><span data-bind="text: userName" class="dabLink"></span></a>
+							<span data-bind="text: userLocation"></span>
+						</div>
+						
+						<br />
+						<span class="acceptUserApplication dabLink" >&{'groupsViewAcceptUserApplication'}</span>
+						<span> - </span>
+						<span class="rejectUserApplication dabLink" >&{'groupsViewRejectUserApplication'}</span>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	#{/if }
+	
+	
+	<div id="userParticipantsDataModel" class="hidden">
+		<span id="applyToGroupLinkVisisble" class="hidden">${groupViewVisibility.applyToGroupLinkVisisble }</span>
+		<span id="alreadyApplyToGroupLinkVisisble" class="hidden">${groupViewVisibility.alreadyApplyToGroupLinkVisisble}</span>
+	
+		<div id="participants">
+			 #{list items:visitedGroup.participants, as:'oneParticipant'}
+				 <div class="participant" >
+					<span class="username" class="hidden" ">${oneParticipant.user.userName}</span>
+					<span class="isUserAccepted" class="hidden" ">${oneParticipant.accepted}</span>
+					<span class="isLeaveLinkVisible" class="hidden" ">${groupViewVisibility.isLeaveLinkVisible(oneParticipant.user.userName) }</span>
+					<span class="isMakeAdminLinkVisible" class="hidden" ">${groupViewVisibility.isMakeAdminLinkVisible(oneParticipant.user.userName) }</span>
+					<span class="isMakeMemberLinkVisible" class="hidden" ">${groupViewVisibility.isMakeMemberLinkVisible(oneParticipant.user.userName) }</span>
+					<span class="isRemoveMemberLinkVisible" class="hidden" ">${groupViewVisibility.isRemoveMemberLinkVisible(oneParticipant.user.userName) }</span>
+					<a class="profileLink" href="@{profile.ProfileView.profileView( oneParticipant.user.userName)}" ></a>
+					<img src="${oneParticipant.user.mainPhotoThumbLink}" class="profileContactThumb" />
+					<span class="userLocation">${oneParticipant.user.location}</span>
+					<span class="groupRole">&{oneParticipant.role.label}</span>
+				</div>
+			 #{/list}
+		</div>
+	</div>
+	
+	
+	<div id="groupForum" class="groupToggleBlocks">
+		<span class="toggleLink dabLink" >&{'groupsViewForum'} (0)...</span>
+		<div class="toggleContainer" style="display: none">
+			(TODO)
+		</div>
+	</div>
+	
+
+	<div id="hiddenCloseGroupForm" class="hidden">
+		#{form @groups.GroupsView.closeGroup()}
+			<input type="hidden" name="groupId" id="groupIdInput"></input>
+		#{/form}
+	</div>
+	
+	
+	<div id="applyToGroupDialog" title="&{'confirmationPopupTitle'}">
+		&{'groupsViewApplicationPopupText'}
+		<br />
+		<br />
+		<textarea cols="45" rows="7"></textarea>
+	</div>
+	
+	

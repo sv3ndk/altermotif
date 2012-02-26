@@ -1,0 +1,54 @@
+
+
+#{dab.inputText 
+	label:messages.get('groupsEditName'),
+	required: true,
+	inputName: "editedGroup.name",
+	inputValue: _editedGroup?.name,
+	cols: 45,
+/}
+
+#{dab.inputText 
+	label:messages.get('groupsEditDescription'),
+	required: true,
+	inputName: "editedGroup.description",
+	inputValue: _editedGroup?.description,
+	explanation: messages.get('groupsEditDescriptionExplanation'),
+	cols: 45,
+	rows: 4,
+/}
+
+<tr>
+	<td class="formlabel"><label>&{'groupsEditLocation'}*: </label></td>
+	<td id="inputGroupLocations" colspan="2" >
+		<input id="hiddenLocationsJson" name="editedGroup.locationJson" type="hidden" value="${_editedGroup == null ? flash['editedGroup.locationJson'] : _editedGroup.locationJson}"/>
+		#{dab.inputMultiLocations 
+			addLocationLinkLabel:messages.get('groupsEditAddLocationLink'), 
+			explanation:messages.get('groupsEditLocationExplanation')   /}
+	</td>
+</tr>
+<tr class="errorRow">
+	<td ></td>
+	<td><div class="errorMessage">#{error 'editedGroup.locationJson' /}</div></td>
+</tr>
+
+
+<tr>
+	<td class="formlabel"><label>&{'groupsEditSelectThemes'}: </label></td>
+	<td id="inputGroupThemes" colspan="2">
+	<input id="hiddenThemesJson" name="editedGroup.themesJson" type="hidden" value="${_editedGroup == null ? flash['editedGroup.themesJson'] : _editedGroup.themesJson  }" />
+	#{dab.inputMultiThemes  addThemeLinkLabel:messages.get('groupsEditAddOneTheme')/}
+</td>
+<tr>
+
+
+<td class="formlabel"><label>&{'groupsEditSelectTags'}: </label></td>
+	<td id="inputTags" colspan="2">
+		<input id="hiddenAllTagsJson" name="editedGroup.tagsJson" type="hidden" value="${_editedGroup == null ? flash['editedGroup.tagsJson'] : _editedGroup.tagsJson  }"/>
+		#{dab.inputMultiText 
+			inputTextSize="15",
+			addTextLinkLabel:messages.get('groupsEditAddOneTagLink') /}
+	</td>
+</tr>
+
+

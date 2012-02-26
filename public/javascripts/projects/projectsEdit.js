@@ -1,119 +1,44 @@
-var allLocations ;
+$(document).ready(function() {
+	init();
+});
+
+//var allLocations ;
 var allLinks ;
+var inputMultiLocationsController;
+var inputMultiTextController;
+var inputMultiThemesController;
 
 function init() {
 	
-	initLocationLogic();
+	var allLocations = dabUtils.parseJsonStringIntoObject("#hiddenAllLocationJson");
+	inputMultiLocationsController = new dabInputMultiLocationsLib.InputMultiLocationsController($("#inputProjectLocations div"), allLocations);
+
+	var allTags = dabUtils.parseJsonStringIntoObject("#hiddenAllTagsJson");
+	inputMultiTextController = new dabInputMultiTextLib.InputMultiTextController($("#inputTags div.inputMultiText"), allTags);
+	
+	var initSelectedThemes = dabUtils.parseJsonStringIntoObject("#hiddenAllThemesJson");
+	inputMultiThemesController = new dabInputMultiThemesLib.InputMultiThemesController($("#inputMultiThemes div.inputMultiThemes"),
+		allThemes, initSelectedThemes, function(newSelectedThemesValue) {
+			updateAllThemesHiddenForm(newSelectedThemesValue);
+		});
+
+	
 	initAddLinkLogic();
-	initTagLogic();
-	initThemeLogic();
 	
 	setupSetLanguageAutoComplete();
 	initSubmitCancelButtons();
 	
 	// this is present in dab.js
-	makeInputDatePicker("#projectNewDueDate", '-0:+100');
+	dabUtils.makeInputDatePicker("#projectNewDueDate", '-0:+100');
 }
 
-
-//////////////////////////////////////////////////
-// location logic
-
-
-function initLocationLogic() {
-	
-	allLocations = parseJsonStringIntoObject("#hiddenAllLocationJson");
-	for (var i = 0; i < allLocations.length; i++) {
-		graphicalAddOneLocation(allLocations[i], true);
-	}
-	
-	// this init is present in the dabGeocoder.js file
-	initializeGeoCoder("#addLocationInput", "project_map_canvas", "#locationLat", "#locationLong");
-
-	$("#addLocationLink").click(function() {
-		switchLocationMode("enteringLocation");
-	});
-
-	$("#addLocationCancelButton").click(function() {
-		switchLocationMode("normal");
-	});
-	
-	$("#addLocationSecondButton").click(function() {
-		addOneLocation();
-		switchLocationMode("normal");
-	});
-	
-	// click on the delete icon
-	$("#locationGroup").on("click", "img.deleteImageLink", function(event){
-		var removedTagValue = $(event.target).prev().text();
-		
-		var removedIndex = 0;
-		for (var oneKey in allLocations) {
-			if (allLocations[oneKey].location == removedTagValue) {
-				break;
-			}
-			removedIndex ++;
-		}
-
-		allLocations.splice(removedIndex, 1);
-		$("#hiddenAllLocationJson").val(JSON.stringify(allLocations));
-		$(event.target).parent().remove();
-	});
-	
-	
-}
-
-function switchLocationMode(mode) {
-	
-	if (mode == "normal") {
-		$("#locationInputCommand1, #locationInputCommand2").hide();
-		$("#addLocationLink").toggle(500);
-		$("#addLocationInput").val('');
-	} else {
-		$("#addLocationLink").hide();
-		$("#locationInputCommand1, #locationInputCommand2").toggle(250);
-		$("#locationLat").val("");
-		$("#locationLong").val("");
-		$("#addLocationInput").focus();
-		google.maps.event.trigger(map, "resize");
-	}
-}
-
-
-function addOneLocation () {
-
-	var oneLanguge =  {
-			location: $("#addLocationInput").val(),
-			latitude: $("#locationLat").val(),
-			longitude: $("#locationLong").val()
-	};
-	
-	if (oneLanguge.location != undefined && oneLanguge.latitude != undefined && oneLanguge.latitude != "" && oneLanguge.longitude != undefined && oneLanguge.longitude != "") {
-		allLocations.push(oneLanguge);
-		$("#hiddenAllLocationJson").val(JSON.stringify(allLocations));
-		graphicalAddOneLocation (oneLanguge, false);
-		
-	}
-}
-
-function graphicalAddOneLocation (oneLanguge, immediate) {
-	var newLocationRow = $("#hiddenLocationTemplate").clone().removeAttr("id");
-	newLocationRow.find(".projectLocationText").text(oneLanguge.location);
-	$("#locationGroup").append(newLocationRow);
-	
-	if (immediate) {
-		$("#locationGroup li:last").show(0);
-	} else {
-		$("#locationGroup li:last").show(250);
-	}
-}
 
 ///////////////////////////////////////////////////////////////
 // add/remove link logic
 
 function initAddLinkLogic() {
 
-	allLinks = parseJsonStringIntoObject("#hiddenAllLinksJson");
+	allLinks = dabUtils.parseJsonStringIntoObject("#hiddenAllLinksJson");
 	for ( var oneKey in allLinks) {
 		graphicalAddOneLink(allLinks[oneKey], true);
 	}
@@ -192,29 +117,9 @@ function graphicalAddOneLink(addedLink, immediate) {
 ////////////////////////////////////////////////////////////////
 // add a theme logic
 
-function initThemeLogic() {
-	// this is the init function defined in projectThemess.js
-	initAddThemeLogic(parseJsonStringIntoObject("#hiddenAllThemesJson"), updateAllThemesHiddenForm);
-}
-
 //this is called back from projectThemes.js any time the list of chosen themes changes
 function updateAllThemesHiddenForm(newAllThemesValue) {
 	$("#hiddenAllThemesJson").val(JSON.stringify(newAllThemesValue));
-}
-
-
-///////////////////////////////////////////////////////////////
-// add tag logic
-
-
-function initTagLogic() {
-	// this is the init function defined in projectTags.js
-	initAddTagLogic(parseJsonStringIntoObject("#hiddenAllTagsJson"), updateAllTagsHiddenForm);
-}
-
-//this is called back from projectTags.js any time the list of selected tags changes
-function updateAllTagsHiddenForm(newAllTagValue) {
-	$("#hiddenAllTagsJson").val(JSON.stringify(newAllTagValue));
 }
 
 ///////////////////////////////////////////////////////////
@@ -245,6 +150,9 @@ function initSubmitCancelButtons() {
 			editTasksCtrl.updateSubmittedTasks();
 		}
 		
+		$("#hiddenAllLocationJson").val(inputMultiLocationsController.getAllLocationJson());
+		$("#hiddenAllTagsJson").val(inputMultiTextController.getTextJson());
+		
 		$("div.projectEditionFormContainer form").submit();
 	});
 
@@ -252,19 +160,4 @@ function initSubmitCancelButtons() {
 	$("#cancelProfileButton").click(function() {
 		$("#cancelEditionContainer form").submit();
 	});
-}
-
-
-///////////////////////////////////////////////////////
-// utilities
-
-function parseJsonStringIntoObject(jqSelector) {
-
-	var allLanguageJson = $(jqSelector).val();
-	if (allLanguageJson != null && allLanguageJson != "" && allLanguageJson != "null")  {
-		var parsed = JSON.parse(allLanguageJson);
-		return parsed;
-	} else {
-		return [];
-	}	
 }

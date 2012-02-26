@@ -1,0 +1,34 @@
+#{extends 'masterTemplate.html' /} 
+
+#{set 'moreStyles'}
+	<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/groups/groupsEdit.css'}" />
+#{/set} 
+
+#{set 'moreScripts'}
+    <script src="@{'/public/javascripts/groups/groupsEdit.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+
+	<script type="text/javascript">
+		var allThemes = ${allThemesJson.raw()};
+	</script>
+
+#{/set}
+
+<div class="pageContainer">
+
+	<div class="groupsEditionContainer">
+		#{form @groups.GroupsEdit.doEditGroup() }
+			<table>
+				#{groups.groupsNewEditCommon editedGroup:editedGroup, allThemes:allThemes /}
+			</table>
+		#{/form }
+		
+		<div class="buttonBox">
+			<input id="editGroupButton" type="button"  value="&{'groupsEditConfirmEditGroupButton'}"></input>
+			<input id="cancelEditGroupButton" type="button"  value="&{'groupsEditCancelEditGroupButton'}"></input>
+		</div>
+		
+	</div>
+	
+	<a id="hiddenNavigateToProfileHome" class="hidden" href="@{profile.ProfileHome.profileHome()}" ></a>
+
+</div>

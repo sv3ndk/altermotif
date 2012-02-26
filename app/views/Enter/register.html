@@ -80,7 +80,7 @@
 			</tr>
 			<tr>
 				<td></td>
-				<td><div class="errorMessage">#{error 'createdProfile.email' /}</div></td>
+				<td><div class="errorMessage">#{error 'WcreatedProfile.email' /}</div></td>
 			</tr>
 
 			<tr>
@@ -100,6 +100,15 @@
 				<td></td>
 				<td><div class="errorMessage">#{error 'createdProfile.secondpassword' /}</div></td>
 			</tr>
+			<tr>
+				<td></td>
+				<td > <label><input type="checkbox" name="createdProfile.acceptConditions"></input>  &{'registerAcceptConditions_part1'}</label><a href="@{Application.termsAndConditions(selectedUserLanguageCode)}"  class="dabLink">&{'registerAcceptConditions_part2'}</a></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><div class="errorMessage">#{error 'createdProfile.acceptConditions' /}</div></td>
+			</tr>
+				
 			
 		</table>
 

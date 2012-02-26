@@ -15,8 +15,8 @@ import com.svend.dab.core.beans.projects.Participant;
 import com.svend.dab.core.beans.projects.Participation;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
-import com.svend.dab.dao.mongo.IProjectDao;
-import com.svend.dab.dao.mongo.IUserProfileDao;
+import com.svend.dab.core.dao.IProjectDao;
+import com.svend.dab.core.dao.IUserProfileDao;
 import com.svend.dab.eda.IEventPropagator;
 
 @Component("projectApplicationCancelledPropagator")
@@ -31,7 +31,6 @@ public class ProjectApplicationCancelledPropagator implements IEventPropagator<P
 	private static Logger logger = Logger.getLogger(ProjectApplicationCancelledPropagator.class.getName());
 	
 	
-	@Override
 	public void propagate(ProjectApplicationCancelled event) throws DabException {
 		
 		if (event == null ) {

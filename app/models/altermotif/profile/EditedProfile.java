@@ -106,12 +106,7 @@ public class EditedProfile extends CreatedProfile {
 		if (cachedLanguages == null) {
 			synchronized (this) {
 				if (cachedLanguages == null) {
-					try {
-						cachedLanguages = Utils.jsonToSetOfStuf(languagesJson, Language[].class);
-					} catch (Exception e) {
-						logger.log(Level.WARNING, "Could not transform inconming json language values into list of languges => keeping old value", e);
-					}
-
+					cachedLanguages = Utils.jsonToSetOfStuf(languagesJson, Language[].class);
 				}
 			}
 		}

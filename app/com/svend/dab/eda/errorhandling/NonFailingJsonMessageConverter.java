@@ -22,7 +22,6 @@ public class NonFailingJsonMessageConverter extends JsonMessageConverter {
 	
 	
 	
-	@Override
 	public Object fromMessage(Message message) throws MessageConversionException {
 		try {
 			return super.fromMessage(message);

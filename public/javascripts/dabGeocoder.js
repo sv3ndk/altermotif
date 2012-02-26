@@ -1,3 +1,8 @@
+
+
+
+// DEPRECATED, please use the inputLocation
+
 var geocoder;
 var map;
 var marker;

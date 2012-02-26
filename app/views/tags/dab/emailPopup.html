@@ -1,0 +1,70 @@
+<div title="${_popupTitle}" class="emailPopup">
+
+	<table>
+
+		<tr>
+			<td class="formlabel"><label>from: </label></td>
+			<td><label>noreply@altermotif.org </label></td>
+		</tr>
+
+		<tr>
+			<td class="formlabel"><label>replyTo: </label></td>
+			<td><input class="replyToInput" size="20" data-bind="value: replyTo"></input> <br /> <span
+				class="formFieldExplanation">&{'emailPopupReplyToExplanation'}</span>
+			</td>
+		</tr>
+
+		<tr>
+			<td class="formlabel"><label>&{'emailPopupTo'}*: </label></td>
+			<td><input class="toInput" size="20" data-bind="value: recipient" ></input> <br /> <span
+				class="formFieldExplanation">&{'emailPopupToExplanation'}</span>
+			</td>
+		</tr>
+		<tr class="errorRow toInputRequired" data-bind="visible: isRecipientMissing">
+			<td></td>
+			<td ><div class="errorMessage">&{'validation.required'}</div></td>
+		</tr>
+		<tr class="errorRow toInputRequired" data-bind="visible: isRecipientIncorrect">
+			<td></td>
+			<td ><div class="errorMessage">&{'incorrectEmailFormat'}ii</div></td>
+		</tr>
+
+		<tr>
+			<td class="formlabel"><label>&{'emailPopupSubject'}*: </label></td>
+			<td><input class="subjectInput" size="100" data-bind="value: subject"></input></td>
+		</tr>
+		<tr class="errorRow subjectInputRequired" data-bind="visible: isSubjectMissing">
+			<td></td>
+			<td ><div class="errorMessage">&{'validation.required'}</div></td>
+		</tr>
+
+		<tr>
+			<td class="formlabel"><label>&{'emailPopupText'}*: </label></td>
+			<td><textarea class="textInput" cols="100" rows="10" data-bind="value: text"></textarea></td>
+		</tr>
+		<tr class="errorRow textInputRequired" data-bind="visible: isTextMissing">
+			<td></td>
+			<td ><div class="errorMessage">&{'validation.required'}</div></td>
+		</tr>
+
+	</table>
+
+</div>
+
+<div id="emailSentSuccessfullyNotification" class="notificationContainer">
+	<div id="basic-template">
+		<a class="ui-notify-cross ui-notify-close" href="#">x</a>
+		<p>
+			&{'viewProjectSendAMailPleaseEMailSentSucessfully'}
+		</p>
+	</div>
+</div>
+
+<div id="emailSentUnsuccessfullyNotification" class="notificationContainer">
+	<div id="basic-template">
+		<a class="ui-notify-cross ui-notify-close" href="#">x</a>
+		<p>
+			&{'viewProjectSendAMailPleaseEMailSentUnsucessfully'}
+		</p>
+	</div>
+</div>

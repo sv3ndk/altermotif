@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import models.altemotif.groups.EditedGroup;
 import models.altermotif.profile.CreatedProfile;
 import models.altermotif.profile.EditedProfile;
 import models.altermotif.projects.EditedProject;
@@ -45,6 +46,10 @@ public class DabValidators {
 			flash.remove(renderArgName + ".secondpassword");
 		}
 
+		if (!createdProfile.isAcceptConditions()) {
+			Validation.addError(renderArgName + ".acceptConditions", "registerMustAcceptConditionsErrorMessage", "");
+		}
+		
 		try {
 			Date dateOfBirth = createdProfile.getDateOfBirth();
 			if (dateOfBirth != null) {
@@ -70,9 +75,10 @@ public class DabValidators {
 			Validation.addError(renderArgName + ".languagesJson", "atLeastOneLanguage", "");
 		}
 
+		// OK, this is ugly...
 		// username is not submitted by the edit form (it is present in the bean because we re-use it from the register screen)
-		// there are always at min 2 errors: the one for username + one global for editedProfile
-		if (Validation.errors().size() == 2 && Validation.hasError(renderArgName + ".username")) {
+		// there are always at min 3 errors: the one for username + one global for editedProfile + the one for "accept conditions"
+		if (Validation.errors().size() == 3 && Validation.hasError(renderArgName + ".username") && Validation.hasError(renderArgName + ".acceptConditions")) {
 			Validation.clear();
 		}
 
@@ -142,6 +148,18 @@ public class DabValidators {
 		if (Validation.errors().size() == 3 && Validation.hasError("editedProject.pdata.name") && Validation.hasError("editedProject.pdata.goal")) {
 			Validation.clear();
 		}
+		
+		
+	}
+
+	public static void validateEditedGroup(EditedGroup editedGroup, Validation validation, Flash flash) {
+		
+		Validation.valid("editedGroup", editedGroup);
+		
+		if (!Validation.hasError("editedGroup.locationJson") && editedGroup.getParsedLocations() == null || editedGroup.getParsedLocations().isEmpty()) {
+			Validation.addError("editedGroup.locationJson", "groupsEditAtLeastOneMessageErrorMessage", "");
+		}
+		
 		
 		
 	}

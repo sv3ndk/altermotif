@@ -21,12 +21,12 @@ public class ProjectsEdit extends DabLoggedController{
 	
 	private static Logger logger = Logger.getLogger(ProjectsEdit.class.getName());
 	
-	
 	public final static String FLASH_SKIP_LOADING_PROFILE ="skipLd";
 	public final static String FLASH_PROJECT_ID ="pid";
 	
 	public static void projectsEdit(String p) {
 
+		// even if we should skip load for edition reason, we still need to load the real project for the security check
 		Project project = BeanProvider.getProjectService().loadProject(p, true);
 		
 		if (project != null) {
@@ -44,6 +44,8 @@ public class ProjectsEdit extends DabLoggedController{
 				
 				Utils.addAllPossibleLanguageNamesToRenderArgs(getSessionWrapper(), renderArgs);
 				Utils.addProjectThemesToRenderArgs(getSessionWrapper(), renderArgs);
+				Utils.addProjectJsonThemesToRenderArgs(getSessionWrapper(), renderArgs, getSessionWrapper().getSelectedLg());
+
 				
 				flash.put(FLASH_PROJECT_ID, p);
 				render();

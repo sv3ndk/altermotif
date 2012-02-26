@@ -1,5 +1,21 @@
 #{extends 'masterTemplate.html' /}
 
+#{set 'moreScripts'}
+    <script src="@{'/public/javascripts/projects/projectsResults.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+    
+	<script type="text/javascript">
+	    var originalSearchRequestJson = ${originalSearchRequestJson.raw()};
+	    var allPossibleLanguages = ${allPossibleLanguageNames.raw()};
+	    
+	    
+	    var defaultRefenceLocation = "${defaultRefenceLocation}";
+	    var defaultReferenceLatitude = "${defaultReferenceLatitude}";
+	    var defaultReferenceLongitude = "${defaultReferenceLongitude}";
+	    
+	</script>
+    
+#{/set}
+
 #{set 'moreStyles'}
     <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/projects/projectsResults.css'}" />
 #{/set}
@@ -7,14 +23,93 @@
 <div id="projectSearchResultContainer">
 	<span id="searchResultTitle">&{'projectSearchResultTitle'}</span>
 	<a href="@{projects.ProjectsSearch.projectsSearch()}" class="dabLink">&{'projectSearchResultBackToSearchPage'}</a>
+	<br />
+
+	<div id="projectResultRefineQueryContainer">
+		
+		<span id="projectResultFilterLink" class="dabLink">&{'projectSearchResultFilterResults'}...</span>
+		<div id="projectResultFilterByDetails" data-bind="visible: isFilterByVisible">
+		
+			<span>&{'projectResultFilterByDetailsCurrentQueryDescription_part1'}</span>
+			#{if originalSearchRequest.hasSearchTerm()}
+				<span >&{'projectResultFilterByDetailsCurrentQueryDescription_part2_keywords'}: "${originalSearchRequest.term}"</span>
+			#{/if}
+			
+			#{if originalSearchRequest.hasSearchTag()}
+				<span >&{'projectResultFilterByDetailsCurrentQueryDescription_part2_tag'}: "${originalSearchRequest.tag}"</span>
+			#{/if}
+			#{if originalSearchRequest.hasSearchTheme()}
+				<span >&{'projectResultFilterByDetailsCurrentQueryDescription_part2_category'}: "${originalSearchRequest.themes}"</span>
+			#{/if}
+			<br />
+			&{'projectResultFilterByDetailsCurrentQueryDescription_part3_and'}:
+			
+			<ul>
+				<li> <input type="checkbox" data-bind="checked: isFilteredByProximity"></input> 
+					&{'projectResultFilterByProximity_part1'} <input type="text" size="2" data-bind="value: filterByProximityMaxDistance"></input> 
+					&{'projectResultFilterByProximity_part2'} <span data-bind="text: refLocation"  ></span>
+					<span class="dabLink" id="projectResultFilterByProximityChangeRefLocationLink">(&{'projectResultChangeRefLocationLink'}...)</span>
+					<br />
+					<div id="projectResultsFilterInputLocation">
+						#{dab.inputLocation /}
+					</div>
+				</li>
+				<li> <input type="checkbox" data-bind="checked: isFilteredByDueDate"></input>
+					&{'projectResultFilterByDueDate'} <input id="projectResultMaxDueDate" data-bind="value: filterByDueDateMaxDate" type="text" size="11"></input> 
+				</li>
+				<li> <input type="checkbox" data-bind="checked: isFilteredByLanguage"></input>
+					&{'projectResultFilterByLanguage'}: <input id="projectResultFilterLanguage" type="text" size="25"></input> 
+				</li>
+			</ul>
+		</div>
+		
+		<br />
+		
+		<span id="projectResultSortByLink" class="dabLink">&{'projectSearchResultSortBy'}...</span>
+		<div id="projectResultSortByDetails" data-bind="visible: isSortByVisible">
+			<ul>
+				<li><label><input type="radio" value="alphabetic" data-bind="checked: sortKey"></input>&{'projectSearchResultSortByAlphabetic'}</label></li>
+				<li><label><input type="radio" value="duedate" data-bind="checked: sortKey"></input>&{'projectSearchResultSortByDueDate'}</label></li>
+				<li><label><input type="radio" value="proximity" data-bind="checked: sortKey"></input>&{'projectSearchResultSortByProximity'}: <span data-bind="text: refLocation"  ></span>
+				<span class="dabLink" id="projectResultSortByProximityChangeRefLocationLink">(&{'projectResultChangeRefLocationLink'}...)</span>
+				</label>
+				<br />
+				<div id="projectResultsSortInputLocation">
+					#{dab.inputLocation /}
+				</div>
+				</li>
+			</ul>
+		</div>
+		<div>
+			<input id="projectResultUpdateResultButton" type="button" value="&{'projectSearchResultUpdateButtonText'}"></input>
+		</div>
+	</div>
 	
 	<div id="projectSearchResultList">
-	
 		#{list items:projectsOverviews, as:'oneOverview'}
 			#{projectOverview overview:oneOverview /}
 		#{/list}
-	
 	</div>
-	
-	
+</div>
+
+<div id="hiddenRefreshResultsForm" class="hidden">
+	#{form @projects.ProjectsResults.projectsResults()}
+		<input class="term" name="r.term" type="hidden">
+		<input class="tag" name="r.tag" type="hidden">
+		<input class="allThemesJson" name="r.themes" type="hidden" />
+		
+		<input class="filterByProximity" name="r.filterProx" type="hidden" />
+		<input class="filterByProximityMaxDistance" name="r.maxDistance" type="hidden" />
+		<input class="filterByDate" name="r.filterDate" type="hidden" />
+		<input class="filterByDateMaxDate" name="r.maxDueDateStr" type="hidden" />
+		<input class="filterByLanguage" name="r.filterLg" type="hidden" />
+		<input class="filterByLanguageCode" name="r.lg" type="hidden" />
+		 
+		<input class="sortkey" name="r.sortkey" type="hidden" /> 
+		<input class="reflocation" name="r.rl.location" type="hidden" /> 
+		<input class="reflatitude" name="r.rl.latitude" type="hidden" /> 
+		<input class="reflongitude" name="r.rl.longitude" type="hidden" /> 
+		
+		
+	#{/form }
 </div>

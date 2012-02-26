@@ -17,9 +17,6 @@
 	   	var loadOnePageAction 		= #{jsAction @messages.MessagesOutbox.loadOutboxMessages(':pageNumber') /};
 	   	var deleteMessageAction 	= #{jsAction @messages.MessagesOutbox.doDeleteMessage(':messageIds') /};
 		
-		$(document).ready(function() {
-			init();
-		})
 	</script>
 #{/set}
 

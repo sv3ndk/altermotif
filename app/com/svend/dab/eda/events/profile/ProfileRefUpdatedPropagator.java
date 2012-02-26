@@ -13,7 +13,6 @@ public class ProfileRefUpdatedPropagator implements IEventPropagator<ProfileRefU
 	@Autowired
 	private IUserMessageDao userMessageRepo;
 	
-	@Override
 	public void propagate(ProfileRefUpdated event) throws DabException {
 		
 		userMessageRepo.updateFromUserProfileRef(event.getProfileRef());
