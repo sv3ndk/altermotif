@@ -19,6 +19,7 @@
 	    var removeMember 					= #{jsAction @groups.GroupsView.removeMember(':groupId', ':removedUser') /};
 	    
 	    var applytoGroupWithProject 		= #{jsAction @groups.GroupsView.applyToGroupWithProject(':groupId', ':projectId', ':applicationText') /};
+	    var rejectProjectApplicationToGroup = #{jsAction @groups.GroupsView.rejectProjectApplicationToGroup(':groupId', ':projectId') /};
 	
 		var confirmCloseGroupText = "&{'groupsViewConfirmCloseGroup'}";
 		var cannotCloseGroupText= "&{'groupsViewCannotCloseGroup'}";
@@ -30,6 +31,9 @@
 		var confirmMakeAdminText = "&{'groupsViewConfirmMakeAdminText'}";
 		var confirmMemberAdminText = "&{'groupsViewConfirmMakeMemberText'}";
 		var confirmRemoveMemberText = "&{'groupsViewconfirmRemoveMemberAText'}";
+		
+		var confirmAcceptProjectApplicationText = "&{'groupsViewConfirmAcceptProjectApplication'}";
+		var confirmRejectProjectApplicationText = "&{'groupsViewConfirmRejectProjectApplication'}";
 		
 		var adminRoleLabel = "&{'groupRoleAdmin'}";
 		var memberRoleLabel = "&{'groupRoleMember'}";
@@ -242,6 +246,8 @@
 						</div>
 						
 						<br />
+						<span class="dabLink projectApplicantAccept">&{'groupsViewAcceptProjectApplication'}</span>
+						<span class="dabLink projectApplicantReject"> &{'groupsViewRejectProjectApplication'}</span>
 					
 					</div>
 				</div>

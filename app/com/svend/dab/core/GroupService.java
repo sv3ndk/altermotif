@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.svend.dab.core;
 
 import java.util.Date;
@@ -148,6 +145,13 @@ public class GroupService implements IGroupService {
 					}
 				}
 			}
+		}
+	}
+
+	public void rejectProjectApplication(String groupId, String projectId) {
+		
+		if (! Strings.isNullOrEmpty(projectId) && ! Strings.isNullOrEmpty(projectId)) {
+			groupDao.removeProjectParticipant(groupId, projectId);
 		}
 	}
 

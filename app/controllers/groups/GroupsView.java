@@ -217,11 +217,31 @@ public class GroupsView extends DabController {
 
 		if (getSessionWrapper().isLoggedIn()) {
 			BeanProvider.getGroupService().applyToGroupWithProject(getSessionWrapper().getLoggedInUserProfileId(), groupId, projectId, applicationText);
+			
 			renderJSON(new GroupsViewParticipantActionOutcome(true));
 		} else {
 			renderJSON(new GroupsViewParticipantActionOutcome(false));
 		}
+	}
+	
+	
+	public static void rejectProjectApplicationToGroup(String groupId, String projectId) {
+		
+		ProjectGroup group = BeanProvider.getGroupService().loadGroupById(groupId, true);
 
+		if (group == null) {
+			renderJSON(new GroupsViewParticipantActionOutcome(false));
+		} else {
+			GroupPep pep = new GroupPep(group);
+			if (pep.isUserAllowedToAcceptAndRejectProjectApplications(getSessionWrapper().getLoggedInUserProfileId())) {
+				BeanProvider.getGroupService().rejectProjectApplication(groupId, projectId);
+				renderJSON(new GroupsViewParticipantActionOutcome(true));
+				
+			} else {
+				renderJSON(new GroupsViewParticipantActionOutcome(false));
+			}
+		}
+		
 	}
 
 	// ////////////////////////////
@@ -240,6 +260,8 @@ public class GroupsView extends DabController {
 		outcome.setOtherUser_leaveLinkVisible(visibility.isLeaveLinkVisible(otherUserId));
 		outcome.setOtherUser_removeUserLinkVisible(visibility.isRemoveMemberLinkVisible(otherUserId));
 
+		outcome.setApplyToGroupWithProjectLinkVisisble(visibility.isApplyWithProjetLinkVisible());
+		
 		renderJSON(outcome);
 	}
 

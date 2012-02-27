@@ -27,4 +27,6 @@ public interface IGroupDao {
 
 	public void addProjectApplication(String groupId, ProjectSummary project, String applicationText);
 
+	public void removeProjectParticipant(String groupId, String projectId);
+
 }

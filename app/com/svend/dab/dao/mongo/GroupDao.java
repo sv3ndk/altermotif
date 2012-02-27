@@ -92,4 +92,14 @@ public class GroupDao implements IGroupDao {
 				new Update().addToSet("projectParticipants", new GroupProjectParticipant(projectSummary, applicationText, false)), ProjectGroup.class);
 	}
 
+	public void removeProjectParticipant(final String groupId, final String projectId) {
+		mongoTemplate.execute("projectGroup", new CollectionCallback<WriteResult>() {
+			public WriteResult doInCollection(DBCollection collection) throws MongoException, DataAccessException {
+				BasicDBObject queryDbo = new BasicDBObject("_id", groupId);
+				BasicDBObject pullDbo = new BasicDBObject("$pull", new BasicDBObject("projectParticipants", new BasicDBObject("projet.projectId", projectId)));
+				return collection.update(queryDbo, pullDbo);
+			}
+		});
+	}
+
 }

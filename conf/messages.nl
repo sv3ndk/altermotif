@@ -297,6 +297,10 @@ groupsViewConfirmMakeMemberText=***Are you sure you want to downgrade the status
 groupsViewRemoveMember=***Remove member
 groupsViewconfirmRemoveMemberAText=***Are you sure you want to remove this member from this group?
 groupsViewProjectApplicants=***Project applications
+groupsViewAcceptProjectApplication=***Accept application
+groupsViewRejectProjectApplication=***Reject application
+groupsViewConfirmAcceptProjectApplication=***Are you sure you want to accept this project membership application? After you click OK, this project will appear as part of this group
+groupsViewConfirmRejectProjectApplication=***Are you sure you want to reject this project membership application?
 groupsViewForum=Forum
 
 

@@ -22,6 +22,8 @@ public class GroupsViewParticipantActionOutcome {
 	private boolean otherUser_makeMemberLinkVisible;
 	private boolean otherUser_makeAdminLinkVisible;
 	private boolean otherUser_removeUserLinkVisible;
+	
+	private boolean applyToGroupWithProjectLinkVisisble;
 
 	public GroupsViewParticipantActionOutcome() {
 		super();
@@ -94,6 +96,14 @@ public class GroupsViewParticipantActionOutcome {
 
 	public void setOtherUser_removeUserLinkVisible(boolean otherUser_removeUserLinkVisible) {
 		this.otherUser_removeUserLinkVisible = otherUser_removeUserLinkVisible;
+	}
+
+	public boolean isApplyToGroupWithProjectLinkVisisble() {
+		return applyToGroupWithProjectLinkVisisble;
+	}
+
+	public void setApplyToGroupWithProjectLinkVisisble(boolean applyToGroupWithProjectLinkVisisble) {
+		this.applyToGroupWithProjectLinkVisisble = applyToGroupWithProjectLinkVisisble;
 	}
 
 }

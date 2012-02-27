@@ -25,4 +25,6 @@ public interface IGroupService {
 
 	void applyToGroupWithProject(String loggedInUserProfileId, String groupId, String projectId, String applicationText);
 
+	void rejectProjectApplication(String groupId, String projectId);
+
 }
