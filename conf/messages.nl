@@ -301,6 +301,8 @@ groupsViewAcceptProjectApplication=***Accept application
 groupsViewRejectProjectApplication=***Reject application
 groupsViewConfirmAcceptProjectApplication=***Are you sure you want to accept this project membership application? After you click OK, this project will appear as part of this group
 groupsViewConfirmRejectProjectApplication=***Are you sure you want to reject this project membership application?
+groupsViewRemoveProjectFromGroup=*Remove project
+groupsViewConfirmRemoveProject=***Are you sure you want to remove this project from this group? 
 groupsViewForum=Forum
 
 

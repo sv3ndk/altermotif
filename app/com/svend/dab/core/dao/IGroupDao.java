@@ -29,4 +29,6 @@ public interface IGroupDao {
 
 	public void removeProjectParticipant(String groupId, String projectId);
 
+	public void setProjectApplicationAcceptedStatus(String groupId, String projectId, boolean b);
+
 }

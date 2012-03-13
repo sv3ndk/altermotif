@@ -21,12 +21,12 @@ import com.svend.dab.core.projects.IProjectService;
 import com.svend.dab.eda.EventEmitter;
 import com.svend.dab.eda.events.groups.GroupClosed;
 import com.svend.dab.eda.events.groups.GroupCreated;
+import com.svend.dab.eda.events.groups.GroupProjectApplicationAccepted;
+import com.svend.dab.eda.events.groups.GroupProjectRemoved;
 import com.svend.dab.eda.events.groups.GroupUpdatedEvent;
 import com.svend.dab.eda.events.groups.GroupUserRemoved;
 import com.svend.dab.eda.events.groups.GroupUserRoleUpdated;
 import com.svend.dab.eda.events.groups.GroupsUserApplicationAccepted;
-
-import controllers.BeanProvider;
 
 /**
  * @author svend
@@ -144,14 +144,27 @@ public class GroupService implements IGroupService {
 						groupDao.addProjectApplication(groupId, new ProjectSummary(project), applicationText);
 					}
 				}
+			} else {
+				// todo: lag warning here
 			}
 		}
 	}
 
 	public void rejectProjectApplication(String groupId, String projectId) {
-		
-		if (! Strings.isNullOrEmpty(projectId) && ! Strings.isNullOrEmpty(projectId)) {
+		if (!Strings.isNullOrEmpty(groupId) && !Strings.isNullOrEmpty(projectId)) {
 			groupDao.removeProjectParticipant(groupId, projectId);
+		}
+	}
+
+	public void removeProjectFromGroup(String groupId, String projectId) {
+		if (!Strings.isNullOrEmpty(projectId) && !Strings.isNullOrEmpty(projectId)) {
+			eventEmitter.emit(new GroupProjectRemoved(groupId, projectId));
+		}
+	}
+	
+	public void acceptProjectApplication(String groupId, String projectId) {
+		if (!Strings.isNullOrEmpty(groupId) && !Strings.isNullOrEmpty(projectId)) {
+			eventEmitter.emit(new GroupProjectApplicationAccepted(groupId, projectId));
 		}
 	}
 

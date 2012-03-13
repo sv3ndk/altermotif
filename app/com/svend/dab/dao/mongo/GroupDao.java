@@ -102,4 +102,8 @@ public class GroupDao implements IGroupDao {
 		});
 	}
 
+	public void setProjectApplicationAcceptedStatus(String groupId, String projectId, boolean accepted) {
+		mongoTemplate.updateFirst(query(where("id").is(groupId).and("projectParticipants.projet.projectId").is(projectId)), new Update().set("projectParticipants.$.accepted", accepted), ProjectGroup.class);
+	}
+
 }

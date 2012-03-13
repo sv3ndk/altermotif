@@ -3,6 +3,7 @@ package com.svend.dab.core.dao;
 import java.util.List;
 import java.util.Set;
 
+import com.svend.dab.core.beans.groups.GroupSummary;
 import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Asset;
@@ -90,6 +91,14 @@ public interface IProjectDao {
 	void addOrUpdateProjectAsset(String id, Asset newOrUpdatedAsset);
 
 	void removeAssetFromProject(String id, String removedAssetId);
+
+	
+	////////////////////////////////////
+	// participation of this project in groups
+	
+	void addOneGroup(String projectId, GroupSummary groupSummary);
+
+	void removeParticipationInGroup(String projectId, String groupId);
 	
 
 

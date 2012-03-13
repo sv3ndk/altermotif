@@ -27,4 +27,8 @@ public interface IGroupService {
 
 	void rejectProjectApplication(String groupId, String projectId);
 
+	void removeProjectFromGroup(String groupId, String projectId);
+	
+	void acceptProjectApplication(String groupId, String projectId);
+
 }

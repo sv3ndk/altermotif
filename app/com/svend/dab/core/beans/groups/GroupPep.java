@@ -2,27 +2,27 @@ package com.svend.dab.core.beans.groups;
 
 import com.svend.dab.core.beans.groups.GroupParticipant.ROLE;
 import com.svend.dab.core.beans.profile.UserProfile;
+import com.svend.dab.core.beans.projects.ProjectSummary;
 
 import controllers.BeanProvider;
 
 /**
  * 
- * Policy enforcement point for groups: this contains all the role-related security authorization methods 
+ * Policy enforcement point for groups: this contains all the role-related security authorization methods
  * 
  * @author svend
- *
+ * 
  */
 public class GroupPep {
-	
-	
+
 	private final ProjectGroup group;
-	
+
 	public GroupPep(ProjectGroup group) {
 		super();
 		this.group = group;
 	}
-	
-	/////////////////////////////////////
+
+	// ///////////////////////////////////
 	//
 
 	public boolean isUserAllowedToEditGroup(String userId) {
@@ -30,11 +30,11 @@ public class GroupPep {
 	}
 
 	public boolean isUserAllowedToCloseGroup(String userId) {
-		return isUserAdmin(userId)  && group.getNumberOfParticipants() == 1;
+		return isUserAdmin(userId) && group.getNumberOfParticipants() == 1;
 	}
-	
-	///////////////////////////////
-	
+
+	// /////////////////////////////
+
 	public boolean isUserAllowedToApplyToGroup(String userId) {
 		if (userId == null) {
 			return false;
@@ -47,7 +47,7 @@ public class GroupPep {
 		if (group.hasAppliedForGroupMembership(userId)) {
 			return false;
 		}
-		
+
 		// TODO: optimization: cache the profile here instead of loading it each time...
 		// + do not load the whole profile (just the boolean is enough...)
 		UserProfile profile = BeanProvider.getUserProfileService().loadUserProfile(userId, false);
@@ -58,14 +58,14 @@ public class GroupPep {
 
 		return true;
 	}
-	
+
 	public boolean isUserAllowedToAcceptAndRejectUserApplications(String userId) {
 		return isUserAdmin(userId);
 	}
 
 	public boolean isUserAllowedToLeaveGroup(String userId) {
 		ROLE userRole = group.findRoleOfUser(userId);
-		
+
 		if (userRole == null) {
 			return false;
 		} else if (userRole == ROLE.member) {
@@ -73,27 +73,27 @@ public class GroupPep {
 		} else if (userRole == ROLE.admin) {
 			return group.getNumberOfAdmins() > 1;
 		}
-		
+
 		return false;
 	}
-	
+
 	public boolean isUserAllowedToMakeAdmin(String userId, String upgradedUser) {
 		ROLE userRole = group.findRoleOfUser(userId);
-		if (userRole ==ROLE.admin) {
+		if (userRole == ROLE.admin) {
 			ROLE roleOfUpgraded = group.findRoleOfUser(upgradedUser);
 			return roleOfUpgraded == ROLE.member;
-			
+
 		} else {
 			return false;
 		}
 	}
-	
+
 	public boolean isUserAllowedToMakeMember(String userId, String downGradedUser) {
-		
+
 		if (userId == null || downGradedUser == null || !downGradedUser.equals(userId)) {
 			return false;
 		}
-		
+
 		ROLE userRole = group.findRoleOfUser(userId);
 		if (userRole == ROLE.admin) {
 			return group.getNumberOfAdmins() > 1;
@@ -101,36 +101,38 @@ public class GroupPep {
 			return false;
 		}
 	}
-	
-	
+
 	public boolean isUserAllowedToRemoveUser(String userId, String removeUserId) {
-		
-		if (userId == null || removeUserId == null ) {
+
+		if (userId == null || removeUserId == null) {
 			return false;
 		}
-		
+
 		if (userId.equals(removeUserId)) {
 			return isUserAllowedToLeaveGroup(userId);
 		} else {
-			
-			return isUserAdmin(userId) && ! isUserAdmin(removeUserId);
+
+			return isUserAdmin(userId) && !isUserAdmin(removeUserId);
 		}
 	}
-	
-	
+
 	public boolean isUserAllowedToAcceptAndRejectProjectApplications(String userId) {
 		return isUserAdmin(userId);
 	}
 
+	public boolean isUserAllowedToRemoveProjectFromGroup(String user) {
+		return isUserAdmin(user);
+		// the fact that a project admin is also allowed to remove a project from the group is handled in the group visibility (which is ugly, but that calss is
+		// user scoped, whereas this is more generic (and I want to finish this project fast...)
+	}
 
-	
-	///////////////////////////////
-	
+	// /////////////////////////////
+
 	public boolean isUserAdmin(String userId) {
 		ROLE userRole = group.findRoleOfUser(userId);
 		return userRole == ROLE.admin;
 	}
-	
+
 	public boolean isUserMemberOrAdmin(String userId) {
 		ROLE userRole = group.findRoleOfUser(userId);
 		return userRole == ROLE.admin || userRole == ROLE.member;
@@ -139,7 +141,5 @@ public class GroupPep {
 	public ProjectGroup getGroup() {
 		return group;
 	}
-
-	
 
 }

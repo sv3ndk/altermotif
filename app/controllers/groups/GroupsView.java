@@ -228,7 +228,6 @@ public class GroupsView extends DabController {
 	public static void rejectProjectApplicationToGroup(String groupId, String projectId) {
 		
 		ProjectGroup group = BeanProvider.getGroupService().loadGroupById(groupId, true);
-
 		if (group == null) {
 			renderJSON(new GroupsViewParticipantActionOutcome(false));
 		} else {
@@ -241,7 +240,43 @@ public class GroupsView extends DabController {
 				renderJSON(new GroupsViewParticipantActionOutcome(false));
 			}
 		}
+	}
+	
+	
+	public static void removeProjectFromGroup(String groupId, String projectId) {
 		
+		ProjectGroup group = BeanProvider.getGroupService().loadGroupById(groupId, true);
+		if (group == null) {
+			renderJSON(new GroupsViewParticipantActionOutcome(false));
+		} else {
+			GroupPep pep = new GroupPep(group);
+			if (pep.isUserAllowedToRemoveProjectFromGroup(getSessionWrapper().getLoggedInUserProfileId())) {
+				BeanProvider.getGroupService().removeProjectFromGroup(groupId, projectId);
+				renderJSON(new GroupsViewParticipantActionOutcome(true));
+			} else {
+				renderJSON(new GroupsViewParticipantActionOutcome(false));
+			}
+		}
+		
+	}
+		
+	
+	public static void acceptProjectApplicationToGroup(String groupId, String projectId) {
+		
+		ProjectGroup group = BeanProvider.getGroupService().loadGroupById(groupId, true);
+		
+		if (group == null) {
+			renderJSON(new GroupsViewParticipantActionOutcome(false));
+		} else {
+			GroupPep pep = new GroupPep(group);
+			if (pep.isUserAllowedToAcceptAndRejectProjectApplications(getSessionWrapper().getLoggedInUserProfileId())) {
+				BeanProvider.getGroupService().acceptProjectApplication(groupId, projectId);
+				renderJSON(new GroupsViewParticipantActionOutcome(true));
+				
+			} else {
+				renderJSON(new GroupsViewParticipantActionOutcome(false));
+			}
+		}
 	}
 
 	// ////////////////////////////

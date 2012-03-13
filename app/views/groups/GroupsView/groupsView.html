@@ -20,6 +20,8 @@
 	    
 	    var applytoGroupWithProject 		= #{jsAction @groups.GroupsView.applyToGroupWithProject(':groupId', ':projectId', ':applicationText') /};
 	    var rejectProjectApplicationToGroup = #{jsAction @groups.GroupsView.rejectProjectApplicationToGroup(':groupId', ':projectId') /};
+	    var acceptProjectApplicationToGroup = #{jsAction @groups.GroupsView.acceptProjectApplicationToGroup(':groupId', ':projectId') /};
+	    var removeProjectFromGroup 			= #{jsAction @groups.GroupsView.removeProjectFromGroup(':groupId', ':projectId') /};
 	
 		var confirmCloseGroupText = "&{'groupsViewConfirmCloseGroup'}";
 		var cannotCloseGroupText= "&{'groupsViewCannotCloseGroup'}";
@@ -34,6 +36,7 @@
 		
 		var confirmAcceptProjectApplicationText = "&{'groupsViewConfirmAcceptProjectApplication'}";
 		var confirmRejectProjectApplicationText = "&{'groupsViewConfirmRejectProjectApplication'}";
+		var confirmRemoveProjectFromGroupText = "&{'groupsViewConfirmRemoveProject'}";
 		
 		var adminRoleLabel = "&{'groupRoleAdmin'}";
 		var memberRoleLabel = "&{'groupRoleMember'}";
@@ -102,9 +105,6 @@
 					<td id="applyWithProjectTd">
 						<span id="applyToGroupWithProjectLink" class="dabLink" data-bind="visible: applyToGroupWithProjectLinkVisisble">&{'groupsViewApplyToGroupAsProject'}</span>
 						<br />
-						<!--  
-						span id="cancelApplyToGroupLink" class="dabLink" data-bind="visible: alreadyApplyToGroupLinkVisisble">&{'groupsViewCancelApplicationToGroupAsPerson'}</span
-						-->
 					</td>
 				</tr>				
 				
@@ -138,11 +138,61 @@
 	
 	
 	<div id="groupProjects" class="groupToggleBlocks">
-		<span class="toggleLink dabLink" >&{'groupsViewProjects'} (${visitedGroup.numberOfProjects})...</span>
+		<span class="toggleLink dabLink" >&{'groupsViewProjects'} (<span class="dabLink" data-bind="text: numberOfProjectMembers"></span><span class="dabLink">)...</span></span>
 		<div class="toggleContainer" style="display: none">
-			<span class="dabLinkDisabled">&{'groupsViewApplyToGroupAsProject'}</span>
+			<div data-bind="foreach: projectsMembers">
+				<div class="groupProject">
+					
+					<span class="hiddenProjectId" style="display: none" data-bind="text: projectId"></span>
+		
+					<a data-bind="attr: {href: projectLink}" class="dabLink">
+						<img data-bind="attr: {src: projectMainThumb}" class="profileContactThumb" />
+					</a>
+					
+					<div class="projectLink">
+						<a data-bind="attr: {href: projectLink}" class="dabLink"><span data-bind="text: projectName" class="dabLink"></span></a>
+					</div>
+					
+					<br />
+					<span class="dabLink projectRemoveFromGroup" data-bind="visible: isRemoveFromGroupLinkVisible">&{'groupsViewRemoveProjectFromGroup'}</span>
+				
+				</div>
+			
+			</div>
 		</div>
 	</div>
+	
+	#{if groupViewVisibility.projectsApplicationsAreVisible }
+		<div id="groupPendingProjectsApplicants" class="groupToggleBlocks">
+			<span class="toggleLink dabLink" >&{'groupsViewProjectApplicants'} (<span class="dabLink" data-bind="text: numberOfProjectApplicants"></span><span class="dabLink">)...</span></span>
+			<div class="toggleContainer" style="display: none">
+			
+				<div data-bind="foreach: projectApplicants">
+					<div class="applyingProject">
+					
+						<span class="hiddenProjectId" style="display: none" data-bind="text: projectId"></span>
+			
+						<a data-bind="attr: {href: projectLink}" class="dabLink">
+							<img data-bind="attr: {src: projectMainThumb}" class="profileContactThumb" />
+						</a>
+						
+						<div class="projectLink">
+							<a data-bind="attr: {href: projectLink}" class="dabLink"><span data-bind="text: projectName" class="dabLink"></span></a>
+						</div>
+						
+						<br />
+						<span class="dabLink projectApplicantAccept">&{'groupsViewAcceptProjectApplication'}</span>
+						<span class="dabLink projectApplicantReject"> &{'groupsViewRejectProjectApplication'}</span>
+					
+					</div>
+				</div>
+			
+			</div>
+		</div>
+	#{/if}
+	
+	
+	
 	
 	<div id="groupParticipants" class="groupToggleBlocks">
 		<span class="toggleLink dabLink" >&{'groupsViewParticipants'} (<span class="dabLink" data-bind="text: numberOfUserParticipants"></span><span class="dabLink">)...</span></span>
@@ -227,35 +277,6 @@
 		</div>
 	</div>
 	
-	#{if groupViewVisibility.projectsApplicationsAreVisible }
-		<div id="groupPendingProjectsApplicants" class="groupToggleBlocks">
-			<span class="toggleLink dabLink" >&{'groupsViewProjectApplicants'} (<span class="dabLink" data-bind="text: numberOfProjectApplicants"></span><span class="dabLink">)...</span></span>
-			<div class="toggleContainer" style="display: none">
-			
-				<div data-bind="foreach: projectApplicants">
-					<div class="applyingProject">
-					
-						<span class="hiddenProjectId" style="display: none" data-bind="text: projectId"></span>
-			
-						<a data-bind="attr: {href: projectLink}" class="dabLink">
-							<img data-bind="attr: {src: projectMainThumb}" class="profileContactThumb" />
-						</a>
-						
-						<div class="projectLink">
-							<a data-bind="attr: {href: projectLink}" class="dabLink"><span data-bind="text: projectName" class="dabLink"></span></a>
-						</div>
-						
-						<br />
-						<span class="dabLink projectApplicantAccept">&{'groupsViewAcceptProjectApplication'}</span>
-						<span class="dabLink projectApplicantReject"> &{'groupsViewRejectProjectApplication'}</span>
-					
-					</div>
-				</div>
-			
-			</div>
-		</div>
-	#{/if}
-	
 	<div id="projectParticipantsDataModel" class="hidden">
 		<span id="applyToGroupWithProjectLinkVisisble" class="hidden">${groupViewVisibility.applyWithProjetLinkVisible}</span>
 		
@@ -275,6 +296,7 @@
 				<div class="projectApplicant">
 					<span class="projectId" class="hidden">${oneParticipation.projet.projectId}</span>
 					<span class="isProjectAccepted" class="hidden">${oneParticipation.accepted}</span>
+					<span class="isRemoveFromGroupLinkVisible" class="hidden">${groupViewVisibility.isRemoveFromGroupLinkVisible(oneParticipation)}</span>
 					<span class="projectApplicationText" class="hidden">${oneParticipation.applicationText}</span>
 					<span class="projectName" class="hidden">${oneParticipation.projet.name}</span>
 					<a class="projectLink" href="@{projects.ProjectsView.projectsView( oneParticipation.projet.projectId)}" ></a>

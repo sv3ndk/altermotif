@@ -2,19 +2,19 @@ package com.svend.dab.core.beans.projects;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
 import org.springframework.data.annotation.Transient;
 
+import com.google.common.base.Strings;
 import com.svend.dab.core.beans.PhotoPack;
+import com.svend.dab.core.beans.groups.GroupSummary;
 import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
-import com.svend.dab.core.beans.projects.Task.TASK_STATUS;
 
 /**
  * @author Svend
@@ -48,6 +48,8 @@ public class Project {
 	private ProjectData pdata = new ProjectData();
 
 	private List<Participant> participants;
+	
+	private List<GroupSummary> groups;
 	
 	private int mainPhotoIndex;
 	
@@ -95,13 +97,6 @@ public class Project {
 	// just to make sure we do not resolve the user roles everytime 
 	private HashMap<String, ROLE> cachedUserRoles = new HashMap<String, Participant.ROLE>();
 	
-	// TODO
-	@Transient
-	private String noTasks = "(todo...)";
-
-	@Transient
-	private String noAssets = "(todo...)";
-
 	// --------------------
 	//
 
@@ -416,22 +411,6 @@ public class Project {
 		return "pdata = " + pdata + ", links = " + links.toArray();
 	}
 
-	public String getNoTasks() {
-		return noTasks;
-	}
-
-	public void setNoTasks(String noTasks) {
-		this.noTasks = noTasks;
-	}
-
-	public String getNoAssets() {
-		return noAssets;
-	}
-
-	public void setNoAssets(String noAssets) {
-		this.noAssets = noAssets;
-	}
-
 	public String getId() {
 		return id;
 	}
@@ -511,6 +490,29 @@ public class Project {
 
 	public void setAssets(Set<Asset> assets) {
 		this.assets = assets;
+	}
+
+	public List<GroupSummary> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(List<GroupSummary> groups) {
+		this.groups = groups;
+	}
+
+	public boolean isPartOfGroup(String groupId) {
+		
+		if (groups == null  || groups.isEmpty() || Strings.isNullOrEmpty(groupId)) {
+			return false;
+		}
+			
+		for (GroupSummary groupSummary : groups) {
+			if (groupId.equals(groupSummary.getGroupId())) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 

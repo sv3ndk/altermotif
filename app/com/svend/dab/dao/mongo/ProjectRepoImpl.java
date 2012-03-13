@@ -23,6 +23,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoException;
 import com.mongodb.WriteResult;
+import com.svend.dab.core.beans.groups.GroupSummary;
 import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Asset;
@@ -333,7 +334,6 @@ public class ProjectRepoImpl implements IProjectDao {
 	
 	public void removeAssetFromProject(final String projectId, final String removedAssetId) {
 		mongoTemplate.execute("project", new CollectionCallback<WriteResult>() {
-			
 			public WriteResult doInCollection(DBCollection collection) throws MongoException, DataAccessException {
 				BasicDBObject queryDbo = new BasicDBObject("_id", projectId);
 				BasicDBObject pullDbo = new BasicDBObject("$pull", new BasicDBObject("assets", new BasicDBObject("_id", removedAssetId)));
@@ -342,6 +342,24 @@ public class ProjectRepoImpl implements IProjectDao {
 		});
 	}
 	
+	
+	
+	public void addOneGroup(String projectId, GroupSummary groupSummary) {
+		 mongoTemplate.updateFirst(query(where("_id").is(projectId)), new Update().addToSet("groups", groupSummary), Project.class);
+	}
+
+	public void removeParticipationInGroup(final String projectId, final String groupId) {
+		mongoTemplate.execute("project", new CollectionCallback<WriteResult>() {
+			public WriteResult doInCollection(DBCollection collection) throws MongoException, DataAccessException {
+				BasicDBObject queryDbo = new BasicDBObject("_id", projectId);
+				BasicDBObject pullDbo = new BasicDBObject("$pull", new BasicDBObject("groups", new BasicDBObject("groupId", groupId)));
+				return collection.update(queryDbo, pullDbo);
+			}
+		});
+	}
+	
+	
+	
 	// --------------------------------
 	//
 
@@ -349,6 +367,10 @@ public class ProjectRepoImpl implements IProjectDao {
 		Query query = query(where("_id").is(projectId));
 		mongoTemplate.updateFirst(query, update, Project.class);
 	}
+
+
+
+
 
 
 

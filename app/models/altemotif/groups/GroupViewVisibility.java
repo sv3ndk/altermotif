@@ -4,7 +4,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.svend.dab.core.beans.groups.GroupPep;
+import com.svend.dab.core.beans.groups.GroupProjectParticipant;
 import com.svend.dab.core.beans.projects.Participation;
+import com.svend.dab.core.beans.projects.ProjectSummary;
 
 /**
  * 
@@ -115,6 +117,27 @@ public class GroupViewVisibility {
 
 	public boolean isProjectsApplicationsAreVisible() {
 		return pep.isUserAllowedToAcceptAndRejectProjectApplications(visitingUser);
+	}
+
+	public boolean isRemoveFromGroupLinkVisible(GroupProjectParticipant removedGroup) {
+		if (pep.isUserAllowedToRemoveProjectFromGroup(visitingUser)) {
+			return true;
+		}
+
+		if (removedGroup == null) {
+			return false;
+		}
+
+		if (projetsWhereUserIsAdmin != null && !projetsWhereUserIsAdmin.isEmpty() && removedGroup != null && removedGroup.getProjet() == null) {
+			for (Participation participation : projetsWhereUserIsAdmin) {
+				if (participation != null && participation.getProjectSummary() != null
+						&& participation.getProjectSummary().getProjectId().equals(removedGroup.getProjet().getProjectId())) {
+					return true;
+				}
+			}
+		}
+
+		return true;
 	}
 
 }
