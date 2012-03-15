@@ -200,10 +200,8 @@ var dabGroupsViewLib = {
 			}),
 				function(response) {
 					if (response.success) {
-						self.userParticipantKoModel.updateParticipantRole(
-								self.clickedParticipantId, adminRoleLabel);
-						self.applyUpdatedRoles(response,
-								self.clickedParticipantId);
+						self.userParticipantKoModel.updateParticipantRole(self.clickedParticipantId, adminRoleLabel);
+						self.applyUpdatedRoles(response,self.clickedParticipantId);
 					}
 				});
 		};
@@ -219,10 +217,8 @@ var dabGroupsViewLib = {
 			}),
 				function(response) {
 					if (response.success) {
-						self.userParticipantKoModel.updateParticipantRole(
-								loggedInUserId, memberRoleLabel);
-						self.applyUpdatedRoles(response,
-								self.clickedParticipantId);
+						self.userParticipantKoModel.updateParticipantRole(loggedInUserId, memberRoleLabel);
+						self.applyUpdatedRoles(response, self.clickedParticipantId);
 					}
 				});
 		};
@@ -239,10 +235,8 @@ var dabGroupsViewLib = {
 				}),
 				function(response) {
 					if (response.success) {
-						self.userParticipantKoModel
-								.removeParticipant(self.clickedParticipantId);
-						self.applyUpdatedRoles(response,
-								self.clickedParticipantId);
+						self.userParticipantKoModel.removeParticipant(self.clickedParticipantId);
+						self.applyUpdatedRoles(response,self.clickedParticipantId);
 					}
 				});
 		};
@@ -259,7 +253,7 @@ var dabGroupsViewLib = {
 				}),
 				function(response) {
 					if (response.success) {
-						// TODO
+						self.projectsParticipantKoModel.upgradeProjectApplicationToAcceptedProject(self.clickedProjectApplicantId);
 					}
 				});
 		};
@@ -379,14 +373,14 @@ var dabGroupsViewLib = {
 
 			$.post(
 				applytoGroupWithProject({
-							groupId : visitedGroupId,
-							projectId : selectedProjectId,
-							applicationText : $("#applyToGroupWithProjectDialog textarea").val()
-						}),
-						function(response) {
-							self.userParticipantKoModel.applyToGroupWithProjectLinkVisisble(response.applyToGroupWithProjectLinkVisisble);
-							$("#applyToGroupWithProjectDialog").dialog("close");
-						});
+						groupId : visitedGroupId,
+						projectId : selectedProjectId,
+						applicationText : $("#applyToGroupWithProjectDialog textarea").val()
+					}),
+					function(response) {
+						self.userParticipantKoModel.applyToGroupWithProjectLinkVisisble(response.applyToGroupWithProjectLinkVisisble);
+						$("#applyToGroupWithProjectDialog").dialog("close");
+					});
 		};
 
 		this.init();
@@ -476,6 +470,16 @@ var dabGroupsViewLib = {
 						self.parseAndAddProjectMember(oneHtmlProject)
 					});
 
+		};
+		
+		//////////////////////////
+		
+		this.upgradeProjectApplicationToAcceptedProject = function(projectApplicantId) {
+			var applicant = this.findApplicantById(projectApplicantId);
+			if (applicant != null) {
+				this.removeApplicant(projectApplicantId);
+				this.projectsMembers.push(applicant);
+			}
 		};
 		
 		this.removeProject = function(projectId) {

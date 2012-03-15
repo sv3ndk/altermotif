@@ -112,32 +112,24 @@ public class GroupViewVisibility {
 	// project participant management
 
 	public boolean isApplyWithProjetLinkVisible() {
-		return projetsWhereUserIsAdmin != null && !projetsWhereUserIsAdmin.isEmpty();
+		if (projetsWhereUserIsAdmin != null) {
+			for (Participation participation : projetsWhereUserIsAdmin) {
+				// if he is admin of a least one group which is not yet a member of this group, the link is visible (this is not a pep decision)
+				if (!pep.getGroup().isProjectMemberOfGroupOrHasAlreadyApplied(participation.getProjectSummary().getProjectId())) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
 	}
 
 	public boolean isProjectsApplicationsAreVisible() {
 		return pep.isUserAllowedToAcceptAndRejectProjectApplications(visitingUser);
 	}
 
-	public boolean isRemoveFromGroupLinkVisible(GroupProjectParticipant removedGroup) {
-		if (pep.isUserAllowedToRemoveProjectFromGroup(visitingUser)) {
-			return true;
-		}
-
-		if (removedGroup == null) {
-			return false;
-		}
-
-		if (projetsWhereUserIsAdmin != null && !projetsWhereUserIsAdmin.isEmpty() && removedGroup != null && removedGroup.getProjet() == null) {
-			for (Participation participation : projetsWhereUserIsAdmin) {
-				if (participation != null && participation.getProjectSummary() != null
-						&& participation.getProjectSummary().getProjectId().equals(removedGroup.getProjet().getProjectId())) {
-					return true;
-				}
-			}
-		}
-
-		return true;
+	public boolean isRemoveFromGroupLinkVisible(GroupProjectParticipant removedProject) {
+		return pep.isUserAllowedToRemoveProjectFromGroup(visitingUser, removedProject.getProjet(), projetsWhereUserIsAdmin);
 	}
 
 }

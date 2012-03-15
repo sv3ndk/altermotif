@@ -504,6 +504,7 @@ viewProjectStrategy=Projectstrategie
 viewProjectRewards=Projectcompensaties
 viewProjectLinks=Nuttige linken
 viewProjectParticipants=Deelnemers
+viewProjectGroups=***Groups
 viewProjectApplications=Kandidaturen
 viewProjectApply=Zich kandidaat stellen
 viewProjectYouHaveAlreadyApplied=U heeft zich al voor dit project kandidaat gesteld

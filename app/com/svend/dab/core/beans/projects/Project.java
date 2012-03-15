@@ -514,6 +514,14 @@ public class Project {
 		
 		return false;
 	}
+	
+	public int getNumberOfGroups() {
+		if(groups == null) {
+			return 0;
+		} else {
+			return groups.size();
+		}
+	}
 
 
 }

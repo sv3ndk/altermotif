@@ -11,6 +11,7 @@ import web.utils.Utils;
 import com.svend.dab.core.beans.groups.GroupParticipant;
 import com.svend.dab.core.beans.groups.GroupParticipant.ROLE;
 import com.svend.dab.core.beans.groups.GroupPep;
+import com.svend.dab.core.beans.groups.GroupProjectParticipant;
 import com.svend.dab.core.beans.groups.ProjectGroup;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserSummary;
@@ -39,16 +40,16 @@ public class GroupsView extends DabController {
 			if (getSessionWrapper().isLoggedIn()) {
 				UserProfile user = BeanProvider.getUserProfileService().loadUserProfile(getSessionWrapper().getLoggedInUserProfileId(), false);
 				if (user != null) {
-					List<Participation> projects = user.getAllProjectsWhereUserIsAdmin(getSessionWrapper().getLoggedInUserProfileId());
+
+					List<Participation> allProjectWhereUserIsAdmin = user.getAllProjectsWhereUserIsAdmin(getSessionWrapper().getLoggedInUserProfileId());
+					visibility.addProjectsWhereUserIsAdmin(allProjectWhereUserIsAdmin);
 					
 					List<Participation> filteredProject = new LinkedList<Participation>();
-					for (Participation participation : projects) {
+					for (Participation participation : allProjectWhereUserIsAdmin) {
 						if (!group.isProjectMemberOfGroupOrHasAlreadyApplied(participation.getProjectSummary().getProjectId())) {
 							filteredProject.add(participation);
 						}
 					}
-
-					visibility.addProjectsWhereUserIsAdmin(filteredProject);
 					renderArgs.put("projectsWhereUserIsAdmin", filteredProject);
 				}
 			}
@@ -217,16 +218,15 @@ public class GroupsView extends DabController {
 
 		if (getSessionWrapper().isLoggedIn()) {
 			BeanProvider.getGroupService().applyToGroupWithProject(getSessionWrapper().getLoggedInUserProfileId(), groupId, projectId, applicationText);
-			
+
 			renderJSON(new GroupsViewParticipantActionOutcome(true));
 		} else {
 			renderJSON(new GroupsViewParticipantActionOutcome(false));
 		}
 	}
-	
-	
+
 	public static void rejectProjectApplicationToGroup(String groupId, String projectId) {
-		
+
 		ProjectGroup group = BeanProvider.getGroupService().loadGroupById(groupId, true);
 		if (group == null) {
 			renderJSON(new GroupsViewParticipantActionOutcome(false));
@@ -235,36 +235,40 @@ public class GroupsView extends DabController {
 			if (pep.isUserAllowedToAcceptAndRejectProjectApplications(getSessionWrapper().getLoggedInUserProfileId())) {
 				BeanProvider.getGroupService().rejectProjectApplication(groupId, projectId);
 				renderJSON(new GroupsViewParticipantActionOutcome(true));
-				
+
 			} else {
 				renderJSON(new GroupsViewParticipantActionOutcome(false));
 			}
 		}
 	}
-	
-	
+
 	public static void removeProjectFromGroup(String groupId, String projectId) {
-		
+
 		ProjectGroup group = BeanProvider.getGroupService().loadGroupById(groupId, true);
 		if (group == null) {
 			renderJSON(new GroupsViewParticipantActionOutcome(false));
 		} else {
-			GroupPep pep = new GroupPep(group);
-			if (pep.isUserAllowedToRemoveProjectFromGroup(getSessionWrapper().getLoggedInUserProfileId())) {
-				BeanProvider.getGroupService().removeProjectFromGroup(groupId, projectId);
-				renderJSON(new GroupsViewParticipantActionOutcome(true));
+			GroupProjectParticipant removeProjectParticipant = group.findProjectParticipant(projectId);
+			UserProfile user = BeanProvider.getUserProfileService().loadUserProfile(getSessionWrapper().getLoggedInUserProfileId(), false);
+			if (removeProjectParticipant != null && user != null) {
+				List<Participation> projectsWhereThisUserIsAdmin = user.getAllProjectsWhereUserIsAdmin(getSessionWrapper().getLoggedInUserProfileId());
+				GroupPep pep = new GroupPep(group);
+				if (pep.isUserAllowedToRemoveProjectFromGroup(getSessionWrapper().getLoggedInUserProfileId(), removeProjectParticipant.getProjet(), projectsWhereThisUserIsAdmin)) {
+					BeanProvider.getGroupService().removeProjectFromGroup(groupId, projectId);
+					renderJSON(new GroupsViewParticipantActionOutcome(true));
+				} else {
+					renderJSON(new GroupsViewParticipantActionOutcome(false));
+				}
 			} else {
 				renderJSON(new GroupsViewParticipantActionOutcome(false));
 			}
 		}
-		
 	}
-		
-	
+
 	public static void acceptProjectApplicationToGroup(String groupId, String projectId) {
-		
+
 		ProjectGroup group = BeanProvider.getGroupService().loadGroupById(groupId, true);
-		
+
 		if (group == null) {
 			renderJSON(new GroupsViewParticipantActionOutcome(false));
 		} else {
@@ -272,7 +276,7 @@ public class GroupsView extends DabController {
 			if (pep.isUserAllowedToAcceptAndRejectProjectApplications(getSessionWrapper().getLoggedInUserProfileId())) {
 				BeanProvider.getGroupService().acceptProjectApplication(groupId, projectId);
 				renderJSON(new GroupsViewParticipantActionOutcome(true));
-				
+
 			} else {
 				renderJSON(new GroupsViewParticipantActionOutcome(false));
 			}
@@ -296,7 +300,7 @@ public class GroupsView extends DabController {
 		outcome.setOtherUser_removeUserLinkVisible(visibility.isRemoveMemberLinkVisible(otherUserId));
 
 		outcome.setApplyToGroupWithProjectLinkVisisble(visibility.isApplyWithProjetLinkVisible());
-		
+
 		renderJSON(outcome);
 	}
 

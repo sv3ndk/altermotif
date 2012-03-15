@@ -180,6 +180,22 @@ public class ProjectGroup {
 	public int getNumberOfProjects() {
 		return 0;
 	}
+	
+	public GroupProjectParticipant findProjectParticipant(String projectId) {
+		
+		if (Strings.isNullOrEmpty(projectId) || projectParticipants == null) {
+			return null;
+		} else {
+			for (GroupProjectParticipant participant : projectParticipants) {
+				if (projectId.equals(participant.getProjet().getProjectId())) {
+					return participant;
+				}
+			}
+		}
+		return null;
+	}
+
+	
 
 	public void replaceLocations(Set<Location> newLocations) {
 		if (location == null) {
@@ -312,6 +328,7 @@ public class ProjectGroup {
 	public void setProjectParticipants(List<GroupProjectParticipant> projectParticipants) {
 		this.projectParticipants = projectParticipants;
 	}
+
 
 
 }

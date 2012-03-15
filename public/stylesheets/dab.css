@@ -392,3 +392,8 @@ table .errorRow td{
 .notificationContainer {
 	margin-top: 100px;
 }
+
+
+.oneGroupSummaryLine {
+	height: 80px;
+}

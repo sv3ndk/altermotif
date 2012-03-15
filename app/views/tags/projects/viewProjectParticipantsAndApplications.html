@@ -18,4 +18,14 @@
 		</div>
 	</div>
 	#{/if}
+	
+	<div id="projectGroupParticipations">
+		<span  class="toggleLink dabLink">&{'viewProjectGroups'} (${_numberOfGroups}) </span>
+		<div class="toggleContainer">
+			#{list items:_groups, as:'group'}
+				#{groups.groupSummary groupSummary:group, projectVisibility:_projectVisibility /} 
+			#{/list}
+		</div>
+	</div>
+	
 </div>

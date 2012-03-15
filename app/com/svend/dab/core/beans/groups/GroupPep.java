@@ -1,7 +1,11 @@
 package com.svend.dab.core.beans.groups;
 
+import java.util.List;
+
+import com.google.common.base.Strings;
 import com.svend.dab.core.beans.groups.GroupParticipant.ROLE;
 import com.svend.dab.core.beans.profile.UserProfile;
+import com.svend.dab.core.beans.projects.Participation;
 import com.svend.dab.core.beans.projects.ProjectSummary;
 
 import controllers.BeanProvider;
@@ -21,6 +25,8 @@ public class GroupPep {
 		super();
 		this.group = group;
 	}
+	
+	
 
 	// ///////////////////////////////////
 	//
@@ -120,10 +126,27 @@ public class GroupPep {
 		return isUserAdmin(userId);
 	}
 
-	public boolean isUserAllowedToRemoveProjectFromGroup(String user) {
-		return isUserAdmin(user);
-		// the fact that a project admin is also allowed to remove a project from the group is handled in the group visibility (which is ugly, but that calss is
-		// user scoped, whereas this is more generic (and I want to finish this project fast...)
+	public boolean isUserAllowedToRemoveProjectFromGroup(String user, ProjectSummary removedProject, List<Participation> projetsWhereUserIsAdmin) {
+		
+		if (Strings.isNullOrEmpty(user) || removedProject == null ) {
+			return false;
+		}
+		
+		// admin of this group or admin of this project are allowed to remove the project from the group
+		if (isUserAdmin(user)) {
+			return true;
+		}
+		
+		if (projetsWhereUserIsAdmin != null && !projetsWhereUserIsAdmin.isEmpty() && removedProject != null ) {
+			for (Participation participation : projetsWhereUserIsAdmin) {
+				if (participation != null && participation.getProjectSummary() != null
+						&& participation.getProjectSummary().getProjectId().equals(removedProject.getProjectId())) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	// /////////////////////////////

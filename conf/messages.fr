@@ -499,6 +499,7 @@ viewProjectRewards=Récompenses du projet
 viewProjectLinks=Liens utiles
 viewProjectParticipants=Participants
 viewProjectApplications=Candidatures
+viewProjectGroups=***Groups
 viewProjectApply=Entrer une candidature
 viewProjectYouHaveAlreadyApplied=Vous avez déjà entré votre candidature pour ce projet
 viewProjectCancelApplicationLink=Annuler la candidature
