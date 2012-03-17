@@ -8,6 +8,7 @@ import java.util.Set;
 import com.google.common.base.Strings;
 import com.svend.dab.core.beans.Location;
 import com.svend.dab.core.beans.groups.GroupParticipant.ROLE;
+import com.svend.dab.core.beans.projects.ProjectSummary;
 import com.svend.dab.core.beans.projects.SelectedTheme;
 
 public class ProjectGroup {
@@ -53,6 +54,14 @@ public class ProjectGroup {
 				participant.generatePhotoLinks(expirationdate);
 			}
 		}
+		
+		if (projectParticipants != null) {
+			for (GroupProjectParticipant projectParticipant: projectParticipants) {
+				projectParticipant.getProjet().generatePhotoLink(expirationdate);
+			}
+		}
+		
+		
 	}
 
 	public ROLE findRoleOfUser(String userId) {

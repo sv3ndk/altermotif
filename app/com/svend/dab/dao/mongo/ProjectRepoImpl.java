@@ -24,7 +24,9 @@ import com.mongodb.DBCollection;
 import com.mongodb.MongoException;
 import com.mongodb.WriteResult;
 import com.svend.dab.core.beans.groups.GroupSummary;
+import com.svend.dab.core.beans.groups.ProjectGroup;
 import com.svend.dab.core.beans.profile.Photo;
+import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Asset;
 import com.svend.dab.core.beans.projects.Participant;
@@ -358,6 +360,13 @@ public class ProjectRepoImpl implements IProjectDao {
 		});
 	}
 	
+	public void updateGroupSummaryOfAllProjectsPartOf(GroupSummary updatedSummary) {
+		if (updatedSummary != null) {
+			mongoTemplate.updateMulti(query(where("groups.groupId").is(updatedSummary.getGroupId())),
+					new Update().set("groups.$.name", updatedSummary.getName()), Project.class);
+		}
+		
+	}
 	
 	
 	// --------------------------------
@@ -367,6 +376,8 @@ public class ProjectRepoImpl implements IProjectDao {
 		Query query = query(where("_id").is(projectId));
 		mongoTemplate.updateFirst(query, update, Project.class);
 	}
+
+
 
 
 

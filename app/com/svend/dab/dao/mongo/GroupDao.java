@@ -3,10 +3,13 @@ package com.svend.dab.dao.mongo;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
+import java.util.logging.Level;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.mongodb.core.CollectionCallback;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +21,8 @@ import com.svend.dab.core.beans.groups.GroupParticipant;
 import com.svend.dab.core.beans.groups.GroupParticipant.ROLE;
 import com.svend.dab.core.beans.groups.GroupProjectParticipant;
 import com.svend.dab.core.beans.groups.ProjectGroup;
+import com.svend.dab.core.beans.profile.Photo;
+import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.ProjectSummary;
 import com.svend.dab.core.dao.IGroupDao;
@@ -104,6 +109,20 @@ public class GroupDao implements IGroupDao {
 
 	public void setProjectApplicationAcceptedStatus(String groupId, String projectId, boolean accepted) {
 		mongoTemplate.updateFirst(query(where("id").is(groupId).and("projectParticipants.projet.projectId").is(projectId)), new Update().set("projectParticipants.$.accepted", accepted), ProjectGroup.class);
+	}
+
+	public void updateProjectMainPhoto(String groupId, String projectId, Photo mainPhoto) {
+		
+		Query query = query(where("id").is(groupId).and("projectParticipants.projet.projectId").is(projectId));
+
+		Update update;
+		if (mainPhoto == null) {
+			update = new Update().unset("projectParticipants.$.projet.mainPhoto");
+		} else {
+			update = new Update().set("projectParticipants.$.projet.mainPhoto", mainPhoto);
+		}
+		mongoTemplate.updateFirst(query, update, ProjectGroup.class);
+		
 	}
 
 }

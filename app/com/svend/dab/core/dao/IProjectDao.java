@@ -99,7 +99,8 @@ public interface IProjectDao {
 	void addOneGroup(String projectId, GroupSummary groupSummary);
 
 	void removeParticipationInGroup(String projectId, String groupId);
-	
+
+	void updateGroupSummaryOfAllProjectsPartOf(GroupSummary updatedSummary);
 
 
 }

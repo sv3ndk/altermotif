@@ -10,7 +10,6 @@ public class GroupSummary {
 	
 	private String name;
 	
-	
 	public GroupSummary() {
 		super();
 	}

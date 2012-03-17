@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.svend.dab.core.beans.DabException;
+import com.svend.dab.core.beans.groups.GroupSummary;
 import com.svend.dab.core.beans.projects.Participant;
 import com.svend.dab.core.beans.projects.Project;
+import com.svend.dab.core.beans.projects.ProjectSummary;
+import com.svend.dab.core.dao.IGroupDao;
 import com.svend.dab.core.dao.IProjectDao;
 import com.svend.dab.core.dao.IUserProfileDao;
 import com.svend.dab.eda.IEventPropagator;
@@ -21,6 +24,9 @@ public class ProjectMainPhotoUpdatedPropagator implements IEventPropagator<Proje
 
 	@Autowired
 	private IUserProfileDao userProfileDao;
+	
+	@Autowired
+	private IGroupDao groupDao;
 	
 	private static Logger logger = Logger.getLogger(ProjectMainPhotoUpdatedPropagator.class.getName());
 	
@@ -42,6 +48,12 @@ public class ProjectMainPhotoUpdatedPropagator implements IEventPropagator<Proje
 		if (updatedProject.getParticipants() != null) {
 			for (Participant participant : updatedProject.getParticipants()) {
 				userProfileDao.updateProjectMainPhoto(participant.getUser().getUserName(), event.getProjectId(), event.getMainPhoto());
+			}
+		}
+		
+		if (updatedProject.getGroups() != null) {
+			for (GroupSummary summary : updatedProject.getGroups()) {
+				groupDao.updateProjectMainPhoto(summary.getGroupId(), event.getProjectId(), event.getMainPhoto());
 			}
 		}
 		
