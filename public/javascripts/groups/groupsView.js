@@ -522,6 +522,12 @@ var dabGroupsViewLib = {
 		this.parseAndAddProject = function(oneHtmlProject) {
 			var projectId = $(oneHtmlProject).find(".projectId").text();
 			var projectName = $(oneHtmlProject).find(".projectName").text();
+			
+			if (projectName == null || projectName == "") {
+				// some previous bug was leading to project without name. This should be useless now, but let's be paranoid...
+				projectName = "---"
+			}
+			
 			this.projectsIamAdminOf.push(new dabGroupsViewLib.Project(projectId, projectName));
 		};
 
@@ -539,8 +545,12 @@ var dabGroupsViewLib = {
 			}
 
 			var isRemoveFromGroupLinkVisible = $(oneHtmlProject).find(".isRemoveFromGroupLinkVisible").text() == "true";
+
+			if (projectName == null || projectName == "") {
+				// some previous bug was leading to project without name. This should be useless now, but let's be paranoid...
+				projectName = "---"
+			}
 			
-			// removeFromGroupLinkVisible
 			var projectParticipant = new dabGroupsViewLib.ProjectSummary(projectId, isProjectAccepted, projectApplicationText, projectName, projectLink, projectMainThumb, isRemoveFromGroupLinkVisible);
 
 			if (isProjectAccepted) {
