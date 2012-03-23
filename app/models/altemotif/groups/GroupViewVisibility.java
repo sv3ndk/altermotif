@@ -107,6 +107,11 @@ public class GroupViewVisibility {
 			return pep.isUserAllowedToRemoveUser(visitingUser, groupUserId);
 		}
 	}
+	
+	
+	public boolean isAddForumThreadLinkVisible() {
+		return pep.isUserAllowedToAddThreadToForum(visitingUser);
+	}
 
 	// /////////////////////////////////
 	// project participant management
@@ -130,6 +135,21 @@ public class GroupViewVisibility {
 
 	public boolean isRemoveFromGroupLinkVisible(GroupProjectParticipant removedProject) {
 		return pep.isUserAllowedToRemoveProjectFromGroup(visitingUser, removedProject.getProjet(), projetsWhereUserIsAdmin);
+	}
+	
+	////////////////////////////////
+	// forum  visibility (right to view of not a form heaer and/or a forum thread
+	
+	public boolean isForumThreadVisible(boolean isThreadPublic) {
+		return pep.isAllowedToSeeThisForumThread(visitingUser, isThreadPublic);
+	}
+	
+	public boolean isForumThreadUpdateVisibilityLinkVisible() {
+		return pep.isAllowedToUpdateVisibilityThread(visitingUser);
+	}
+	
+	public boolean isForumThreadDeleteThreadLinkVisible() {
+		return pep.isAllowedToDeleteThread(visitingUser);
 	}
 
 }

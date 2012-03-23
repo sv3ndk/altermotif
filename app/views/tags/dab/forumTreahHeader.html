@@ -1,0 +1,10 @@
+<div >
+	<span class="threadId">${_thread.id}</span>
+	<a class="threadLink" href="@{projects.ProjectForumThread.projectForumThread(_thread.projectId, _thread.id)}"></a>
+	<span class="threadIsPublic">${_thread.isThreadPublic}</span>
+	<span class="threadTitle">${_thread.title}</span>
+	<span class="threadCreationDate">${_thread.creationDate.format(controllers.BeanProvider.config.dateDisplayFormat)}</span>
+	<span class="numberOfPosts">${_thread.numberOfPosts}</span>
+	<span class="threadUserMayUpdateVisibility">${_userMayUpdate}</span>
+	<span class="threadUserMayDeleteThread">${_userMayDelete}</span>
+</div>

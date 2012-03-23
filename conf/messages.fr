@@ -302,6 +302,8 @@ groupsViewConfirmRejectProjectApplication=***Are you sure you want to reject thi
 groupsViewRemoveProjectFromGroup=*Remove project
 groupsViewConfirmRemoveProject=***Are you sure you want to remove this project from this group? 
 groupsViewForum=Forum
+groupsViewForumAddThread=***Add thread
+groupsViewForumAddThreadPopupPublicThread=***Public
 
 groupsEditName=Nom du groupe
 groupsEditDescription=Description du groupe
@@ -317,7 +319,6 @@ groupsEditAddOneTagLink=Ajouter une étiquette
 groupsEditCreateGroupButton=Démarrer le groupe
 groupsEditConfirmEditGroupButton=***Apply changes
 groupsEditCancelEditGroupButton=***Cancel edition
-
 
 
 #################################

@@ -14,7 +14,9 @@ public class ForumThread {
 
 	private String id;
 	
+	// only on of those is typically non null (a forum is either part of a group, iether part of a project)
 	private String projectId;
+	private String groupid;
 	
 	
 	private String title;
@@ -35,9 +37,10 @@ public class ForumThread {
 	@Transient
 	private String threadUrl;
 
-	public ForumThread(String projectId, String title, Date creationDate, int numberOfPosts, boolean isThreadPublic) {
+	public ForumThread(String projectId, String groupId, String title, Date creationDate, int numberOfPosts, boolean isThreadPublic) {
 		super();
 		this.projectId = projectId;
+		this.groupid = groupId;
 		this.title = title;
 		this.creationDate = creationDate;
 		this.numberOfPosts = numberOfPosts;
@@ -123,6 +126,14 @@ public class ForumThread {
 
 	public void setThreadUrl(String threadUrl) {
 		this.threadUrl = threadUrl;
+	}
+
+	public String getGroupid() {
+		return groupid;
+	}
+
+	public void setGroupid(String groupid) {
+		this.groupid = groupid;
 	}
 
 

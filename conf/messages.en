@@ -302,8 +302,9 @@ groupsViewConfirmRejectProjectApplication=Are you sure you want to reject this p
 groupsViewRemoveProjectFromGroup=Remove project
 groupsViewConfirmRemoveProject=Are you sure you want to remove this project from this group? 
 groupsViewProjectApplicants=Project applications
-
 groupsViewForum=Forum
+groupsViewForumAddThread=Add thread
+groupsViewForumAddThreadPopupPublicThread=Public
 
 groupsEditName=Group name
 groupsEditDescription=Group description

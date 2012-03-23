@@ -25,8 +25,6 @@ public class GroupPep {
 		super();
 		this.group = group;
 	}
-	
-	
 
 	// ///////////////////////////////////
 	//
@@ -127,17 +125,17 @@ public class GroupPep {
 	}
 
 	public boolean isUserAllowedToRemoveProjectFromGroup(String user, ProjectSummary removedProject, List<Participation> projetsWhereUserIsAdmin) {
-		
-		if (Strings.isNullOrEmpty(user) || removedProject == null ) {
+
+		if (Strings.isNullOrEmpty(user) || removedProject == null) {
 			return false;
 		}
-		
+
 		// admin of this group or admin of this project are allowed to remove the project from the group
 		if (isUserAdmin(user)) {
 			return true;
 		}
-		
-		if (projetsWhereUserIsAdmin != null && !projetsWhereUserIsAdmin.isEmpty() && removedProject != null ) {
+
+		if (projetsWhereUserIsAdmin != null && !projetsWhereUserIsAdmin.isEmpty() && removedProject != null) {
 			for (Participation participation : projetsWhereUserIsAdmin) {
 				if (participation != null && participation.getProjectSummary() != null
 						&& participation.getProjectSummary().getProjectId().equals(removedProject.getProjectId())) {
@@ -149,6 +147,22 @@ public class GroupPep {
 		return false;
 	}
 
+	public boolean isUserAllowedToAddThreadToForum(String userId) {
+		return isUserMemberOrAdmin(userId);
+	}
+
+	public boolean isAllowedToSeeThisForumThread(String userId, boolean isThreadPublic) {
+		return isThreadPublic || isUserMemberOrAdmin(userId);
+	}
+
+	public boolean isAllowedToUpdateVisibilityThread(String userId) {
+		return isUserMemberOrAdmin(userId);
+	}
+	
+	public boolean isAllowedToDeleteThread(String userId) {
+		return isUserAdmin(userId);
+	}
+	
 	// /////////////////////////////
 
 	public boolean isUserAdmin(String userId) {

@@ -1,7 +1,8 @@
 <script type="text/javascript">
-	var addNewThread = #{jsAction @projects.ProjectsView.doAddThread(':projectId', ':threadTitle', ':isThreadPublic') /};
-	var changeThreadVisibility = #{jsAction @projects.ProjectsView.changeThreadVisibility(':projectId', ':threadId', ':isThreadPublic') /};
-	var deletedThread = #{jsAction @projects.ProjectsView.deleteThread(':projectId', ':threadId') /};
+	var addNewThread = #{jsAction @projects.ProjectsView.doAddThread(':ownerId', ':threadTitle', ':isThreadPublic') /};
+	var changeThreadVisibility = #{jsAction @projects.ProjectsView.changeThreadVisibility(':ownerId', ':threadId', ':isThreadPublic') /};
+	var deletedThread = #{jsAction @projects.ProjectsView.deleteThread(':ownerId', ':threadId') /};
+	var ownerId = projectId;
 	
 	var confirmMakePrivateText = "&{'viewProjectForumConfirmMakePrivate'}";
 	var confirmMakePublicText = "&{'viewProjectForumConfirmMakePublic'}"
@@ -14,8 +15,8 @@
 	<div class="toggleContainer">
 	
 		#{if _projectVisibility.addForumThreadLinkVisible}
-			<div id="projectForumTopButton">
-				<span id="viewProjectForumAddThreadLink" class="dabLink">&{'viewProjectForumAddThread'}</span>
+			<div id="forumTopButton">
+				<span id="viewForumAddThreadLink" class="dabLink">&{'viewProjectForumAddThread'}</span>
 			</div>
 		#{/if }
 
@@ -46,16 +47,9 @@
 <div id="forumData">
 	#{list items:_allThreads, as:"thread"}
 		#{if _projectVisibility.isForumThreadVisible(thread.isThreadPublic)}
-			<div >
-				<span class="threadId">${thread.id}</span>
-				<a class="threadLink" href="@{projects.ProjectForumThread.projectForumThread(thread.projectId, thread.id)}"></a>
-				<span class="threadIsPublic">${thread.isThreadPublic}</span>
-				<span class="threadTitle">${thread.title}</span>
-				<span class="threadCreationDate">${thread.creationDate.format(controllers.BeanProvider.config.dateDisplayFormat)}</span>
-				<span class="numberOfPosts">${thread.numberOfPosts}</span>
-				<span class="threadUserMayUpdateVisibility">${_projectVisibility.isForumThreadUpdateVisibilityLinkVisible()}</span>
-				<span class="threadUserMayDeleteThread">${_projectVisibility.isForumThreadDeleteThreadLinkVisible()}</span>
-			</div>
+			#{dab.forumTreahHeader thread:thread, 
+					userMayUpdate:_projectVisibility.isForumThreadUpdateVisibilityLinkVisible(),
+					userMayDelete:_projectVisibility.isForumThreadDeleteThreadLinkVisible() /}
 		#{/if}
 	#{/list}
 </div>

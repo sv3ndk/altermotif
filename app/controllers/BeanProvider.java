@@ -55,10 +55,6 @@ public class BeanProvider {
 		return (IProjectService) Spring.getBeanOfType(IProjectService.class);
 	}
 
-	public static IForumThreadDao  getProjectForumThreadDao() {
-		return (IForumThreadDao) Spring.getBeanOfType(IForumThreadDao.class);
-	}
-
 	public static IProjectFTSService  getProjectFullTextSearchService() {
 		return (IProjectFTSService) Spring.getBeanOfType(IProjectFTSService.class);
 	}

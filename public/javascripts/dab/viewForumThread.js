@@ -1,21 +1,21 @@
-var projectViewForumCtrl;
-
 $(document).ready(function() {
-	projectViewForumCtrl = new dabProjectForumLib.ProjectViewForumController();
-	projectViewForumCtrl.init();
+	new dabForumThreadLib.ViewForumThreadController().init();
 });
 
-var dabProjectForumLib = {
+// generic logic for handling the forum thread, this works either for project forum thread and group forum thread
+// the ownerId is the id of either the project or the group
+
+var dabForumThreadLib = {
 
 	// /////////////////////////////////////////////////////////
 	// controller for the main forum widget
-	ProjectViewForumController : function() {
+	ViewForumThreadController : function() {
 
 		// ////////////////////////
 		// members
 
-		this.projectViewForumModel = new dabProjectForumLib.ProjectViewForumModel();
-		this.createNewThreadDialogController = new dabProjectForumLib.CreateNewThreadDialogController(this.projectViewForumModel);
+		this.viewForumThreadModel = new dabForumThreadLib.ViewForumThreadModel();
+		this.createNewThreadDialogController = new dabForumThreadLib.CreateNewThreadDialogController(this.viewForumThreadModel);
 		this.clickedThreadId;
 
 		// ////////////////////
@@ -23,11 +23,11 @@ var dabProjectForumLib = {
 		this.init = function() {
 			var self = this;
 
-			this.projectViewForumModel.init();
+			this.viewForumThreadModel.init();
 			this.createNewThreadDialogController.init();
 
 			// click on add thread
-			$("#viewProjectForumAddThreadLink").click(function() {
+			$("#viewForumAddThreadLink").click(function() {
 				self.whenUserClicksOnAddThread(self);
 			});
 
@@ -39,15 +39,15 @@ var dabProjectForumLib = {
 			new Confirm.AskAndProceed(this, "#dynamicallyThreads", "span.dabLink.deleteThread", confirmRemoveThreadtext, this.recordClickThreadId,
 					this.afterUserConfirmsDeleteThread).init();
 
-			ko.applyBindings(this.projectViewForumModel, $("#dynamicallyThreads")[0]);
+			ko.applyBindings(this.viewForumThreadModel, $("#dynamicallyThreads")[0]);
 		};
 
 		// ////////////////////////////
 		// internal functions
 
 		this.whenThreadPostsAreReceived = function(self, listOfPosts) {
-			projectViewForumModel.setListOfPosts(listOfPosts);
-			projectViewForumModel.setThreadMode(false);
+			viewForumThreadModel.setListOfPosts(listOfPosts);
+			viewForumThreadModel.setThreadMode(false);
 		};
 
 		this.whenUserClicksOnAddThread = function(self) {
@@ -68,20 +68,20 @@ var dabProjectForumLib = {
 
 		this.updateThreadVisibility = function(self, threadId, isPublic) {
 			$.post(changeThreadVisibility({
-				projectId : projectId,
+				ownerId : ownerId,
 				threadId : threadId,
 				isThreadPublic : isPublic
 			}), function(updatedThread) {
-				self.projectViewForumModel.changeThreadVisibility(updatedThread.id, updatedThread.isThreadPublic);
+				self.viewForumThreadModel.changeThreadVisibility(updatedThread.id, updatedThread.isThreadPublic);
 			});
 		};
 
 		this.afterUserConfirmsDeleteThread = function(self, event) {
 			$.post(deletedThread({
-				projectId : projectId,
+				ownerId : ownerId,
 				threadId : self.clickedThreadId,
 			}), function(response) {
-				self.projectViewForumModel.removeThread(response.name);
+				self.viewForumThreadModel.removeThread(response.name);
 			});
 		};
 
@@ -89,9 +89,9 @@ var dabProjectForumLib = {
 
 	// /////////////////////////////////////////////////////////
 	// controller for the dialog for adding a new forum thread
-	CreateNewThreadDialogController : function(projectViewForumModel) {
+	CreateNewThreadDialogController : function(viewForumThreadModel) {
 
-		this.projectViewForumModel = projectViewForumModel;
+		this.viewForumThreadModel = viewForumThreadModel;
 
 		// ///////////////////////////
 		// members
@@ -140,7 +140,7 @@ var dabProjectForumLib = {
 			var createdThreadIsPublic = $("#addNewThreadCreationPopup input.threadVisibility").attr("checked") == "checked";
 			if (createdThreadName != undefined && createdThreadName != "") {
 				$.post(addNewThread({
-					projectId : projectId,
+					ownerId : ownerId,
 					threadTitle : createdThreadName,
 					isThreadPublic : createdThreadIsPublic
 				}), function(createdThread) {
@@ -151,13 +151,13 @@ var dabProjectForumLib = {
 		};
 
 		this.whenThreadCreatedResponseIsReceived = function(self, createdThread) {
-			self.projectViewForumModel.addServerThread(createdThread);
+			self.viewForumThreadModel.addServerThread(createdThread);
 		};
 	},
 
 	// /////////////////////////////////////////////////////////
 	// main View Model
-	ProjectViewForumModel : function() {
+	ViewForumThreadModel : function() {
 
 		this.listCreatedThread = ko.observableArray();
 
@@ -177,7 +177,7 @@ var dabProjectForumLib = {
 		// add a thread, built with JSON data, according to format aligned with server-side definition of a thread
 		this.addServerThread = function(serverThread) {
 			if (serverThread != undefined && serverThread != "" && serverThread != "[]") {
-				this.addThread(dabProjectForumLib.ProjectThreadFactory.buildFromServerThread(serverThread));
+				this.addThread(dabForumThreadLib.ForumThreadFactory.buildFromServerThread(serverThread));
 			}
 		};
 
@@ -219,7 +219,7 @@ var dabProjectForumLib = {
 			var userMayUpdateVisibility = $(htmlThread).find("span.threadUserMayUpdateVisibility").text() == "true";
 			var userMayDeleteThread = $(htmlThread).find("span.threadUserMayDeleteThread").text() == "true";
 
-			self.addThread(new dabProjectForumLib.ProjectThread(threadId, threadUrl, projectId, isThreadPublic, title, creationDate, numberOfPosts,
+			self.addThread(new dabForumThreadLib.ProjectThread(threadId, threadUrl, ownerId, isThreadPublic, title, creationDate, numberOfPosts,
 					userMayUpdateVisibility, userMayDeleteThread));
 		};
 
@@ -252,9 +252,9 @@ var dabProjectForumLib = {
 		});
 	},
 
-	ProjectThreadFactory : {
+	ForumThreadFactory : {
 		buildFromServerThread : function(serverThread) {
-			return new dabProjectForumLib.ProjectThread(serverThread.id, serverThread.threadUrl, serverThread.projectId, serverThread.isThreadPublic,
+			return new dabForumThreadLib.ProjectThread(serverThread.id, serverThread.threadUrl, serverThread.projectId, serverThread.isThreadPublic,
 					serverThread.title, serverThread.creationDateStr, serverThread.numberOfPosts, serverThread.mayUserUpdateVisibility,
 					serverThread.mayUserDeleteThisThread);
 		}

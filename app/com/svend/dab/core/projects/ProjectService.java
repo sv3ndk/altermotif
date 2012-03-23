@@ -373,12 +373,6 @@ public class ProjectService implements IProjectService {
 	// project forum
 
 	
-	public ForumThread createdNewForumThread(String projectId, String threadTitle, boolean isThreadPublic) {
-		
-		return forumThreadDao.createNewThread(new ForumThread(projectId, threadTitle, new Date(), 0, isThreadPublic));
-	}
-
-	
 	public void postNewForumMessage(String authorId, ForumThread thread, String messageContent) {
 		
 		UserProfile author = userProfileRepo.retrieveUserProfileById(authorId);

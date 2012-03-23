@@ -1,11 +1,18 @@
 package controllers.groups;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import models.altemotif.groups.GroupViewVisibility;
 import models.altermotif.BinaryResponse;
 import models.altermotif.GroupsViewParticipantActionOutcome;
+import models.altermotif.MappedValue;
+import play.mvc.Router;
 import web.utils.Utils;
 
 import com.svend.dab.core.beans.groups.GroupParticipant;
@@ -15,7 +22,10 @@ import com.svend.dab.core.beans.groups.GroupProjectParticipant;
 import com.svend.dab.core.beans.groups.ProjectGroup;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserSummary;
+import com.svend.dab.core.beans.projects.ForumThread;
 import com.svend.dab.core.beans.projects.Participation;
+import com.svend.dab.core.beans.projects.Project;
+import com.svend.dab.core.beans.projects.ProjectPep;
 
 import controllers.Application;
 import controllers.BeanProvider;
@@ -24,6 +34,9 @@ import controllers.profile.ProfileHome;
 
 public class GroupsView extends DabController {
 
+	private static Logger logger = Logger.getLogger(GroupsView.class.getName());
+
+	
 	public static void groupsView(String groupid) {
 
 		ProjectGroup group = BeanProvider.getGroupService().loadGroupById(groupid, true);
@@ -36,6 +49,8 @@ public class GroupsView extends DabController {
 			renderArgs.put("groupViewVisibility", visibility);
 			renderArgs.put("visitedGroup", group);
 			renderArgs.put("loggedInUserId", getSessionWrapper().getLoggedInUserProfileId());
+			renderArgs.put("allThreads", BeanProvider.getForumThreadDao().loadGroupForumThreads(groupid));
+
 
 			if (getSessionWrapper().isLoggedIn()) {
 				UserProfile user = BeanProvider.getUserProfileService().loadUserProfile(getSessionWrapper().getLoggedInUserProfileId(), false);
@@ -268,7 +283,6 @@ public class GroupsView extends DabController {
 	public static void acceptProjectApplicationToGroup(String groupId, String projectId) {
 
 		ProjectGroup group = BeanProvider.getGroupService().loadGroupById(groupId, true);
-
 		if (group == null) {
 			renderJSON(new GroupsViewParticipantActionOutcome(false));
 		} else {
@@ -280,6 +294,73 @@ public class GroupsView extends DabController {
 			} else {
 				renderJSON(new GroupsViewParticipantActionOutcome(false));
 			}
+		}
+	}
+	
+	// ///////////////////////////////////////
+	// forum and thread
+
+	/**
+	 * @param ownerId
+	 * @param threadTitle
+	 */
+	public static void doAddThread(String ownerId, String threadTitle, boolean isThreadPublic) {
+		ProjectGroup group = BeanProvider.getGroupService().loadGroupById(ownerId, true);
+		if (group != null) {
+			GroupPep pep = new GroupPep(group);
+			if (pep.isUserAllowedToAddThreadToForum(getSessionWrapper().getLoggedInUserProfileId())) {
+				
+				ForumThread createdThread = BeanProvider.getForumThreadDao().createNewThread(new ForumThread(null, ownerId, threadTitle, new Date(), 0, isThreadPublic));
+				
+				createdThread.setMayUserDeleteThisThread(pep.isAllowedToDeleteThread(getSessionWrapper().getLoggedInUserProfileId()));
+				createdThread.setMayUserUpdateVisibility(pep.isAllowedToUpdateVisibilityThread(getSessionWrapper().getLoggedInUserProfileId()));
+				Map<String, Object> params = new HashMap<String, Object>();
+				params.put("t", createdThread.getId());
+				
+				// TODO: update this when post page is available for projet forums
+				createdThread.setThreadUrl(Router.reverse( "projects.ProjectForumThread.projectForumThread", params).url);
+				
+				renderJSON(createdThread);
+			} else {
+				logger.log(Level.WARNING, "user trying to add a thread to a groupId but is not allowed to: projectId:" + ownerId + "userid:"+getSessionWrapper().getLoggedInUserProfileId());
+			}
+		} else {
+			logger.log(Level.WARNING, "user trying to add a thread to a non existant group : " + ownerId + " this should be impossible!");
+		}
+	}
+
+
+	public static void changeThreadVisibility(String ownerId, String threadId, boolean isThreadPublic) {
+		ProjectGroup group = BeanProvider.getGroupService().loadGroupById(ownerId, true);
+		if (group != null) {
+			if (new GroupPep(group).isAllowedToUpdateVisibilityThread(getSessionWrapper().getLoggedInUserProfileId())) {
+				BeanProvider.getForumThreadDao().updateThreadVisibility(threadId, isThreadPublic);
+				renderJSON(BeanProvider.getForumThreadDao().getThreadById(threadId));
+			} else {
+				logger.log(Level.WARNING, "user trying to change visibility of a group thread but is not allowed to: groupId:" + ownerId + ", threadId:" + threadId + "userid:"
+						+ getSessionWrapper().getLoggedInUserProfileId());
+			}
+		} else {
+			logger.log(Level.WARNING, "user trying to change visibility of a thread of a non existant group : " + ownerId + " this should be impossible!");
+		}
+	}
+
+	public static void deleteThread(String ownerId, String threadId) {
+		ProjectGroup group = BeanProvider.getGroupService().loadGroupById(ownerId, true);
+		if (group != null) {
+			if (new GroupPep(group).isAllowedToDeleteThread(getSessionWrapper().getLoggedInUserProfileId())) {
+
+				// non transactional, but ok, we might just lose a little space in that case
+				BeanProvider.getForumThreadDao().deleteThread(threadId);
+				BeanProvider.getForumPostDao().deletePostsOfThread(threadId);
+				
+				renderJSON(new MappedValue("removeThreadId", threadId));
+			} else {
+				logger.log(Level.WARNING, "user trying to delete a group thread but is not allowed to: projectId:" + ownerId + ", threadId:" + threadId + "userid:"
+						+ getSessionWrapper().getLoggedInUserProfileId());
+			}
+		} else {
+			logger.log(Level.WARNING, "user trying to delete a thread of a non existant group : " + ownerId + " this should be impossible!");
 		}
 	}
 

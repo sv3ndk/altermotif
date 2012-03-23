@@ -1,0 +1,32 @@
+#forumTopButton {
+	float: right;
+	margin: 10px;
+}
+
+
+.threadContainer {
+	clear: right;
+}
+
+.forumThread {
+	padding: 10px;
+	border: 1px solid;
+}
+
+.forumThreadPrivate {
+	padding: 10px;
+	border: 1px solid;
+	background-color: yellow;
+}
+
+.forumThread .numberOfPosts {
+	float: right;
+}
+
+.forumThreadPrivate .numberOfPosts {
+	float: right;
+}
+
+.threadEditLinks {
+	text-align: right;
+}

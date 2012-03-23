@@ -1,13 +1,17 @@
 #{extends 'masterTemplate.html' /} 
 
 #{set 'moreStyles'}
+	<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/forum.css'}" />
 	<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/groups/groupsView.css'}" />
 #{/set} 
 
 #{set 'moreScripts'}
+	<script src="@{'/public/javascripts/dab/viewForumThread.js'}" type="text/javascript" charset="${_response_encoding}"></script>
     <script src="@{'/public/javascripts/groups/groupsView.js'}" type="text/javascript" charset="${_response_encoding}"></script>
 
 	<script type="text/javascript">
+		var visitedGroupId = "${visitedGroup.id}";
+		var loggedInUserId = "${loggedInUserId}";
 	
 	    var applytoGroup 	= #{jsAction @groups.GroupsView.applyToGroup(':groupId', ':applicationText') /};
 	    var cancelApplytoGroup 	= #{jsAction @groups.GroupsView.cancelApplyToGroup(':groupId') /};
@@ -22,6 +26,11 @@
 	    var rejectProjectApplicationToGroup = #{jsAction @groups.GroupsView.rejectProjectApplicationToGroup(':groupId', ':projectId') /};
 	    var acceptProjectApplicationToGroup = #{jsAction @groups.GroupsView.acceptProjectApplicationToGroup(':groupId', ':projectId') /};
 	    var removeProjectFromGroup 			= #{jsAction @groups.GroupsView.removeProjectFromGroup(':groupId', ':projectId') /};
+	    
+		var addNewThread = #{jsAction @groups.GroupsView.doAddThread(':ownerId', ':threadTitle', ':isThreadPublic') /};
+		var changeThreadVisibility = #{jsAction @groups.GroupsView.changeThreadVisibility(':ownerId', ':threadId', ':isThreadPublic') /};
+		var deletedThread = #{jsAction @groups.GroupsView.deleteThread(':ownerId', ':threadId') /};
+		var ownerId = visitedGroupId;
 	
 		var confirmCloseGroupText = "&{'groupsViewConfirmCloseGroup'}";
 		var cannotCloseGroupText= "&{'groupsViewCannotCloseGroup'}";
@@ -41,9 +50,11 @@
 		var adminRoleLabel = "&{'groupRoleAdmin'}";
 		var memberRoleLabel = "&{'groupRoleMember'}";
 		
+		var confirmMakePrivateText = "&{'viewProjectForumConfirmMakePrivate'}";
+		var confirmMakePublicText = "&{'viewProjectForumConfirmMakePublic'}"
+		var confirmRemoveThreadtext = "&{'viewProjectForumConfirmRemoveThread'}"
+		
 		var isCloseGroupLinkEffective = ${groupViewVisibility.endGroupLinkEffective};
-		var visitedGroupId = "${visitedGroup.id}";
-		var loggedInUserId = "${loggedInUserId}";
 	</script>
 #{/set}
 
@@ -311,11 +322,42 @@
 	
 	
 	<div id="groupForum" class="groupToggleBlocks">
-		<span class="toggleLink dabLink" >&{'groupsViewForum'} (0)...</span>
+		<span class="toggleLink dabLink" >&{'groupsViewForum'}...</span>
 		<div class="toggleContainer" style="display: none">
-			(TODO)
+		
+			#{if groupViewVisibility.addForumThreadLinkVisible}
+				<div id="forumTopButton">
+					<span id="viewForumAddThreadLink" class="dabLink">&{'groupsViewForumAddThread'}</span>
+				</div>
+			#{/if }
+			
+			<div id="dynamicallyThreads" class="threadContainer" data-bind="template : {foreach: listCreatedThread, afterAdd: afterAddThread, beforeRemove: beforeRemoveThread}">
+				<div data-bind="css: {'forumThread': isThreadPublic(), 'forumThreadPrivate': ! isThreadPublic() }" class="">
+					<a class="dabLink" data-bind="text: title, attr: { href: url}"></a>
+					<span class="hidden hiddenThreadId" data-bind="text: id"></span>
+					<span> &{'viewProjectForumCreationDate'}: </span>
+					<span data-bind="text: creationDate"></span>
+					<span class="numberOfPosts"><span data-bind="text: numberOfPosts"></span> &{'viewProjectForumPosts'} </span>
+					<div class="threadEditLinks" data-bind="visible: isAtLeastOneUpdateLinkIsVisible">
+						<span class="dabLink makeprivate" data-bind="visible: isMakePrivateLinkVisible">&{'viewProjectForumMakePrivate'}</span>
+						<span class="dabLink makepublic" data-bind="visible: isMakePublicLinkVisible ">&{'viewProjectForumMakePublic'}</span>
+						<span class="dabLink deleteThread" data-bind="visible: userMayDeleteThread ">&{'viewProjectForumDeleteThread'}</span>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
+	
+	<div id="forumData" style="hidden">
+		#{list items:allThreads, as:"thread"}
+			#{if groupViewVisibility.isForumThreadVisible(thread.isThreadPublic)}
+				#{dab.forumTreahHeader thread:thread, 
+						userMayUpdate:groupViewVisibility.isForumThreadUpdateVisibilityLinkVisible(),
+						userMayDelete:groupViewVisibility.isForumThreadDeleteThreadLinkVisible() /}
+			#{/if}
+		#{/list}
+	</div>
+	
 	
 
 	<div id="hiddenCloseGroupForm" class="hidden">
@@ -346,5 +388,10 @@
 		
 	</div>
 	
-	
+	<div id="addNewThreadCreationPopup" title="&{'viewProjectForumAddThreadPopupTitle'}">
+		<input type="text" class="threadName" size="50"/>
+		<br />
+		<br />
+		<label><input type="checkbox"  class="threadVisibility" checked > &{'groupsViewForumAddThreadPopupPublicThread'}</label>
+	</div>
 	

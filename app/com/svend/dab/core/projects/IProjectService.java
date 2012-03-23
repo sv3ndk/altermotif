@@ -1,6 +1,5 @@
 package com.svend.dab.core.projects;
 
-
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -17,41 +16,41 @@ import com.svend.dab.core.beans.projects.Task;
 
 /**
  * @author Svend
- *
+ * 
  */
 public interface IProjectService {
-	
+
 	public void createProject(Project createdProject, String creatorId);
-	
+
 	public Project loadProject(String projectId, boolean generatePhotoLinks);
 
-	
 	/**
 	 * Triggers an update of the project {@link ProjectData}, links and tags (not the whole project)
 	 * 
 	 * @param updated
-	 * @param updatedTasks 
-	 * @param removedTasksIds 
-	 * @param removedAssetsIds 
-	 * @param updatedAssets 
+	 * @param updatedTasks
+	 * @param removedTasksIds
+	 * @param removedAssetsIds
+	 * @param updatedAssets
 	 */
 	public void updateProjectCore(Project updated, Set<Task> updatedTasks, Set<String> removedTasksIds, Set<Asset> updatedAssets, Set<String> removedAssetsIds);
 
-	////////////////////////////////////////////////////
+	// //////////////////////////////////////////////////
 	// project applications
-	
+
 	public void applyToProject(String loggedInUserProfileId, String applicationText, Project project);
-	
+
 	public void cancelApplication(String rejectedApplicantId, Project project);
 
 	public void acceptApplication(String applicantId, Project project);
-	
-	////////////////////////////////////////////////////
-	// project (confirmed) participants 
+
+	// //////////////////////////////////////////////////
+	// project (confirmed) participants
 
 	public void removeParticipant(String participant, Project project);
 
-	public ParticpantsIdList determineRemovedParticipants(String projectId, Collection<String> knownParticipantUsernames, Collection<String> knownApplicationUsernames);
+	public ParticpantsIdList determineRemovedParticipants(String projectId, Collection<String> knownParticipantUsernames,
+			Collection<String> knownApplicationUsernames);
 
 	public ParticipantList determineAddedParticipants(String projectId, Set<String> knownParticipantUsernamesSet, Set<String> knownApplicationUsernamesSet);
 
@@ -64,9 +63,8 @@ public interface IProjectService {
 	public void cancelOwnershipTransfer(String participant, Project project);
 
 	public void confirmOwnershipTransfer(String promotedUsername, Project project);
-	
-	
-	////////////////////////////////////////////
+
+	// //////////////////////////////////////////
 	// project status
 
 	public void cancelProject(Project project);
@@ -74,16 +72,14 @@ public interface IProjectService {
 	public void terminateProject(Project project);
 
 	public void restartProject(Project project);
-	
-	/////////////////////////////////////////////
+
+	// ///////////////////////////////////////////
 	// popular project tags
-	
+
 	public List<RankedTag> getPopularTags();
-	
-	/////////////////////////////////////////////
+
+	// ///////////////////////////////////////////
 	// project forum
-	
-	public ForumThread createdNewForumThread(String projectId, String threadTitle, boolean isThreadPublic);
 
 	public void postNewForumMessage(String authorId, ForumThread thread, String messageContent);
 
@@ -91,6 +87,4 @@ public interface IProjectService {
 
 	public void movePostToThread(String originalThreadId, String postId, String targetThreadId, String username);
 
-	
-	
 }

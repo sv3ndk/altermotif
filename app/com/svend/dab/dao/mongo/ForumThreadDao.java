@@ -35,40 +35,40 @@ public class ForumThreadDao implements IForumThreadDao {
 	 * 
 	 * @see com.svend.dab.core.dao.IForumThreadDao#loadProjectForumThreads(java.lang.String)
 	 */
-	
+
 	public List<ForumThread> loadProjectForumThreads(String projectId) {
 		Query query = query(where("projectId").is(projectId));
-		query.sort().on("creationDate",  Order.DESCENDING);
+		query.sort().on("creationDate", Order.DESCENDING);
 		return mongoTemplate.find(query, ForumThread.class);
 	}
 
-	
+	public List<ForumThread> loadGroupForumThreads(String groupid) {
+		Query query = query(where("groupid").is(groupid));
+		query.sort().on("creationDate", Order.DESCENDING);
+		return mongoTemplate.find(query, ForumThread.class);
+	}
+
 	public ForumThread createNewThread(ForumThread forumThread) {
 		mongoTemplate.save(forumThread);
 		return forumThread;
 	}
 
-	
-	public void updateThreadVisibility(String projectId, String threadId, boolean isThreadPublic) {
+	public void updateThreadVisibility(String threadId, boolean isThreadPublic) {
 		mongoTemplate.setWriteConcern(WriteConcern.MAJORITY);
 		mongoTemplate.updateFirst(query(where("id").is(threadId)), new Update().set("isThreadPublic", isThreadPublic), ForumThread.class);
 	}
 
-	
 	public ForumThread getThreadById(String threadId) {
 		return mongoTemplate.findById(threadId, ForumThread.class);
 	}
 
-	
-	public void deleteThread(String projectId, String threadId) {
+	public void deleteThread(String threadId) {
 		mongoTemplate.remove(query(where("id").is(threadId)), ForumThread.class);
 	}
 
-	
 	public void updateNumberOfPosts(String threadId, Long numberOfPosts) {
 		mongoTemplate.updateFirst(query(where("id").is(threadId)), new Update().set("numberOfPosts", numberOfPosts), ForumThread.class);
 	}
-
 
 	public Long countThreadsOfProject(String projectId) {
 		final Query query = query(where("projectId").is(projectId));

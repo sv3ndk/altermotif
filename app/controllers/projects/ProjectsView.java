@@ -1,5 +1,6 @@
 package controllers.projects;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -35,7 +36,7 @@ public class ProjectsView extends DabController {
 			renderArgs.put("visitedProject", project);
 			renderArgs.put("altermotifBaseUrl", BeanProvider.getConfig().getAltermotifBaseUrl());
 			renderArgs.put("projectVisibility", new ProjectViewVisibility(new ProjectPep(project), project, getSessionWrapper().getLoggedInUserProfileId()));
-			renderArgs.put("allThreads", BeanProvider.getProjectForumThreadDao().loadProjectForumThreads(p));
+			renderArgs.put("allThreads", BeanProvider.getForumThreadDao().loadProjectForumThreads(p));
 			Utils.addAllPossibleLanguageNamesToRenderArgs(getSessionWrapper(), renderArgs);
 			
 			String emailSignature = "---\n";
@@ -447,66 +448,63 @@ public class ProjectsView extends DabController {
 	// forum and thread
 
 	/**
-	 * @param projectId
+	 * @param ownerId
 	 * @param threadTitle
 	 */
-	public static void doAddThread(String projectId, String threadTitle, boolean isThreadPublic) {
-		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
+	public static void doAddThread(String ownerId, String threadTitle, boolean isThreadPublic) {
+		Project project = BeanProvider.getProjectService().loadProject(ownerId, false);
 		if (project != null) {
-			
-			if (project != null) {
-				ProjectPep pep = new ProjectPep(project);
-				if (pep.isAllowedAddForumThread(getSessionWrapper().getLoggedInUserProfileId())) {
-					ForumThread createdThread = BeanProvider.getProjectService().createdNewForumThread(projectId, threadTitle, isThreadPublic);
-					
-					createdThread.setMayUserDeleteThisThread(pep.isAllowedToDeleteThread(getSessionWrapper().getLoggedInUserProfileId()));
-					createdThread.setMayUserUpdateVisibility(pep.isAllowedToUpdateVisibilityThread(getSessionWrapper().getLoggedInUserProfileId()));
-					Map<String, Object> params = new HashMap<String, Object>();
-					params.put("t", createdThread.getId());
-					createdThread.setThreadUrl(Router.reverse( "projects.ProjectForumThread.projectForumThread", params).url);
-					
-					renderJSON(createdThread);
-				} else {
-					logger.log(Level.WARNING, "user trying to add a thread to a project but is not allowed to: projectId:" + projectId + "userid:"+getSessionWrapper().getLoggedInUserProfileId());
-				}
+			ProjectPep pep = new ProjectPep(project);
+			if (pep.isAllowedAddForumThread(getSessionWrapper().getLoggedInUserProfileId())) {
+				ForumThread createdThread = BeanProvider.getForumThreadDao().createNewThread(new ForumThread(ownerId, null, threadTitle, new Date(), 0, isThreadPublic));
+				
+				createdThread.setMayUserDeleteThisThread(pep.isAllowedToDeleteThread(getSessionWrapper().getLoggedInUserProfileId()));
+				createdThread.setMayUserUpdateVisibility(pep.isAllowedToUpdateVisibilityThread(getSessionWrapper().getLoggedInUserProfileId()));
+				Map<String, Object> params = new HashMap<String, Object>();
+				params.put("t", createdThread.getId());
+				createdThread.setThreadUrl(Router.reverse( "projects.ProjectForumThread.projectForumThread", params).url);
+				
+				renderJSON(createdThread);
+			} else {
+				logger.log(Level.WARNING, "user trying to add a thread to a project but is not allowed to: projectId:" + ownerId + "userid:"+getSessionWrapper().getLoggedInUserProfileId());
 			}
 		} else {
-			logger.log(Level.WARNING, "user trying to add a thread to a non existant project : " + projectId + " this should be impossible!");
+			logger.log(Level.WARNING, "user trying to add a thread to a non existant project : " + ownerId + " this should be impossible!");
 		}
 	}
 
 
-	public static void changeThreadVisibility(String projectId, String threadId, boolean isThreadPublic) {
-		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
+	public static void changeThreadVisibility(String ownerId, String threadId, boolean isThreadPublic) {
+		Project project = BeanProvider.getProjectService().loadProject(ownerId, false);
 		if (project != null) {
 			if (new ProjectPep(project).isAllowedToUpdateVisibilityThread(getSessionWrapper().getLoggedInUserProfileId())) {
-				BeanProvider.getForumThreadDao().updateThreadVisibility(projectId, threadId, isThreadPublic);
+				BeanProvider.getForumThreadDao().updateThreadVisibility( threadId, isThreadPublic);
 				renderJSON(BeanProvider.getForumThreadDao().getThreadById(threadId));
 			} else {
-				logger.log(Level.WARNING, "user trying to change visibility of a thread but is not allowed to: projectId:" + projectId + ", threadId:" + threadId + "userid:"
+				logger.log(Level.WARNING, "user trying to change visibility of a thread but is not allowed to: projectId:" + ownerId + ", threadId:" + threadId + "userid:"
 						+ getSessionWrapper().getLoggedInUserProfileId());
 			}
 		} else {
-			logger.log(Level.WARNING, "user trying to change visibility of a thread of a non existant project : " + projectId + " this should be impossible!");
+			logger.log(Level.WARNING, "user trying to change visibility of a thread of a non existant project : " + ownerId + " this should be impossible!");
 		}
 	}
 
-	public static void deleteThread(String projectId, String threadId) {
-		Project project = BeanProvider.getProjectService().loadProject(projectId, false);
+	public static void deleteThread(String ownerId, String threadId) {
+		Project project = BeanProvider.getProjectService().loadProject(ownerId, false);
 		if (project != null) {
 			if (new ProjectPep(project).isAllowedToDeleteThread(getSessionWrapper().getLoggedInUserProfileId())) {
 
 				// non transactional, but ok, we might just lose a little space in that case
-				BeanProvider.getForumThreadDao().deleteThread(projectId, threadId);
+				BeanProvider.getForumThreadDao().deleteThread(threadId);
 				BeanProvider.getForumPostDao().deletePostsOfThread(threadId);
 				
 				renderJSON(new MappedValue("removeThreadId", threadId));
 			} else {
-				logger.log(Level.WARNING, "user trying to delete a thread but is not allowed to: projectId:" + projectId + ", threadId:" + threadId + "userid:"
+				logger.log(Level.WARNING, "user trying to delete a thread but is not allowed to: projectId:" + ownerId + ", threadId:" + threadId + "userid:"
 						+ getSessionWrapper().getLoggedInUserProfileId());
 			}
 		} else {
-			logger.log(Level.WARNING, "user trying to delete a thread of a non existant project : " + projectId + " this should be impossible!");
+			logger.log(Level.WARNING, "user trying to delete a thread of a non existant project : " + ownerId + " this should be impossible!");
 		}
 	}
 
