@@ -1,4 +1,4 @@
-package com.svend.dab.core.beans.projects;
+package com.svend.dab.core.beans;
 
 import java.util.Date;
 
@@ -16,7 +16,7 @@ public class ForumPost {
 	
 	private String id;
 	private String threadId;
-	private String projectId;
+//	private String projectId;
 	private Date creationDate;
 	private UserSummary author;
 	private String content;
@@ -55,10 +55,10 @@ public class ForumPost {
 		super();
 	}
 
-	public ForumPost(String threadId, String projectId, Date creationDate, UserSummary author, String content) {
+	public ForumPost(String threadId, /*String projectId, */ Date creationDate, UserSummary author, String content) {
 		super();
 		this.threadId = threadId;
-		this.projectId = projectId;
+//		this.projectId = projectId;
 		this.creationDate = creationDate;
 		this.author = author;
 		this.content = content;
@@ -87,13 +87,13 @@ public class ForumPost {
 		this.threadId = threadId;
 	}
 
-	public String getProjectId() {
-		return projectId;
-	}
-
-	public void setProjectId(String projectId) {
-		this.projectId = projectId;
-	}
+//	public String getProjectId() {
+//		return projectId;
+//	}
+//
+//	public void setProjectId(String projectId) {
+//		this.projectId = projectId;
+//	}
 
 	public Date getCreationDate() {
 		return creationDate;

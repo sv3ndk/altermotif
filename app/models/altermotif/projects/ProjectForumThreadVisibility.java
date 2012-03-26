@@ -1,7 +1,6 @@
 package models.altermotif.projects;
 
-import com.svend.dab.core.beans.projects.ForumThread;
-import com.svend.dab.core.beans.projects.Project;
+import com.svend.dab.core.beans.ForumThread;
 import com.svend.dab.core.beans.projects.ProjectPep;
 
 import controllers.BeanProvider;

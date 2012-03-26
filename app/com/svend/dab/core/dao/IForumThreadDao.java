@@ -2,7 +2,7 @@ package com.svend.dab.core.dao;
 
 import java.util.List;
 
-import com.svend.dab.core.beans.projects.ForumThread;
+import com.svend.dab.core.beans.ForumThread;
 
 public interface IForumThreadDao {
 
@@ -20,6 +20,8 @@ public interface IForumThreadDao {
 	public void updateNumberOfPosts(String id, Long countPostOfThread);
 
 	public Long countThreadsOfProject(String projectId);
+	
+	public Long countThreadsOfGroup(String groupId);
 
 
 }

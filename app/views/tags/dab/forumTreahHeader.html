@@ -1,6 +1,11 @@
 <div >
 	<span class="threadId">${_thread.id}</span>
-	<a class="threadLink" href="@{projects.ProjectForumThread.projectForumThread(_thread.projectId, _thread.id)}"></a>
+	#{if _thread.projectId != null }
+		<a class="threadLink" href="@{forum.ForumThreadView.projectForumThread(_thread.projectId, _thread.id)}"></a>
+	#{/if}
+	#{if _thread.groupid != null }
+		<a class="threadLink" href="@{forum.ForumThreadView.groupForumThread(_thread.groupid, _thread.id)}"></a>
+	#{/if}
 	<span class="threadIsPublic">${_thread.isThreadPublic}</span>
 	<span class="threadTitle">${_thread.title}</span>
 	<span class="threadCreationDate">${_thread.creationDate.format(controllers.BeanProvider.config.dateDisplayFormat)}</span>

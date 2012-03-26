@@ -1,4 +1,4 @@
-package com.svend.dab.core.beans.projects;
+package com.svend.dab.core.beans;
 
 import java.util.Date;
 

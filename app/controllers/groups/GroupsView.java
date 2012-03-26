@@ -15,6 +15,7 @@ import models.altermotif.MappedValue;
 import play.mvc.Router;
 import web.utils.Utils;
 
+import com.svend.dab.core.beans.ForumThread;
 import com.svend.dab.core.beans.groups.GroupParticipant;
 import com.svend.dab.core.beans.groups.GroupParticipant.ROLE;
 import com.svend.dab.core.beans.groups.GroupPep;
@@ -22,10 +23,7 @@ import com.svend.dab.core.beans.groups.GroupProjectParticipant;
 import com.svend.dab.core.beans.groups.ProjectGroup;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserSummary;
-import com.svend.dab.core.beans.projects.ForumThread;
 import com.svend.dab.core.beans.projects.Participation;
-import com.svend.dab.core.beans.projects.Project;
-import com.svend.dab.core.beans.projects.ProjectPep;
 
 import controllers.Application;
 import controllers.BeanProvider;
@@ -317,8 +315,7 @@ public class GroupsView extends DabController {
 				Map<String, Object> params = new HashMap<String, Object>();
 				params.put("t", createdThread.getId());
 				
-				// TODO: update this when post page is available for projet forums
-				createdThread.setThreadUrl(Router.reverse( "projects.ProjectForumThread.projectForumThread", params).url);
+				createdThread.setThreadUrl(Router.reverse( "forum.ForumThreadView.groupForumThread", params).url);
 				
 				renderJSON(createdThread);
 			} else {

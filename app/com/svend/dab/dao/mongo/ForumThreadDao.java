@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoException;
 import com.mongodb.WriteConcern;
-import com.svend.dab.core.beans.projects.ForumThread;
+import com.svend.dab.core.beans.ForumThread;
 import com.svend.dab.core.dao.IForumThreadDao;
 
 /**
@@ -72,6 +72,15 @@ public class ForumThreadDao implements IForumThreadDao {
 
 	public Long countThreadsOfProject(String projectId) {
 		final Query query = query(where("projectId").is(projectId));
+		return mongoTemplate.execute("forumThread", new CollectionCallback<Long>() {
+			public Long doInCollection(DBCollection collection) throws MongoException, DataAccessException {
+				return collection.count(query.getQueryObject());
+			}
+		});
+	}
+
+	public Long countThreadsOfGroup(String groupId) {
+		final Query query = query(where("groupid").is(groupId));
 		return mongoTemplate.execute("forumThread", new CollectionCallback<Long>() {
 			public Long doInCollection(DBCollection collection) throws MongoException, DataAccessException {
 				return collection.count(query.getQueryObject());

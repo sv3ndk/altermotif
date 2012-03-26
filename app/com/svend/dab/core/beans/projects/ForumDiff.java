@@ -3,6 +3,8 @@ package com.svend.dab.core.beans.projects;
 import java.util.List;
 import java.util.Set;
 
+import com.svend.dab.core.beans.ForumPost;
+
 /**
  * 
  * This bean represents a difference, expressed in {@link ForumPost}, between two states of the forum.

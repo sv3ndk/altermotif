@@ -306,6 +306,8 @@ groupsViewConfirmRemoveProject=***Are you sure you want to remove this project f
 groupsViewForum=Forum
 groupsViewForumAddThread=***Add thread
 groupsViewForumAddThreadPopupPublicThread=***Public
+groupForumThreadBackToGroup=***Back to group page
+
 
 groupsEditName=Naam van de groep
 groupsEditDescription=Beschrijving van de groep

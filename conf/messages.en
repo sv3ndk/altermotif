@@ -305,6 +305,8 @@ groupsViewProjectApplicants=Project applications
 groupsViewForum=Forum
 groupsViewForumAddThread=Add thread
 groupsViewForumAddThreadPopupPublicThread=Public
+groupForumThreadBackToGroup=Back to group page
+
 
 groupsEditName=Group name
 groupsEditDescription=Group description

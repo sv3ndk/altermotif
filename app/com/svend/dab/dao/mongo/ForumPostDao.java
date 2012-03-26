@@ -20,8 +20,8 @@ import org.springframework.stereotype.Service;
 
 import com.mongodb.DBCollection;
 import com.mongodb.MongoException;
+import com.svend.dab.core.beans.ForumPost;
 import com.svend.dab.core.beans.profile.UserSummary;
-import com.svend.dab.core.beans.projects.ForumPost;
 import com.svend.dab.core.dao.IForumPostDao;
 
 @Service

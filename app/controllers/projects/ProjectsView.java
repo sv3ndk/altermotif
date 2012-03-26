@@ -12,8 +12,8 @@ import models.altermotif.projects.ProjectViewVisibility;
 import play.mvc.Router;
 import web.utils.Utils;
 
+import com.svend.dab.core.beans.ForumThread;
 import com.svend.dab.core.beans.profile.UserProfile;
-import com.svend.dab.core.beans.projects.ForumThread;
 import com.svend.dab.core.beans.projects.Participant;
 import com.svend.dab.core.beans.projects.ParticipantList;
 import com.svend.dab.core.beans.projects.ParticpantsIdList;
@@ -462,7 +462,7 @@ public class ProjectsView extends DabController {
 				createdThread.setMayUserUpdateVisibility(pep.isAllowedToUpdateVisibilityThread(getSessionWrapper().getLoggedInUserProfileId()));
 				Map<String, Object> params = new HashMap<String, Object>();
 				params.put("t", createdThread.getId());
-				createdThread.setThreadUrl(Router.reverse( "projects.ProjectForumThread.projectForumThread", params).url);
+				createdThread.setThreadUrl(Router.reverse( "forum.ForumThreadView.projectForumThread", params).url);
 				
 				renderJSON(createdThread);
 			} else {

@@ -3,6 +3,7 @@ package com.svend.dab.core.beans.groups;
 import java.util.List;
 
 import com.google.common.base.Strings;
+import com.svend.dab.core.beans.ForumThread;
 import com.svend.dab.core.beans.groups.GroupParticipant.ROLE;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.projects.Participation;
@@ -147,6 +148,10 @@ public class GroupPep {
 		return false;
 	}
 
+	// //////////////////////////////////
+	// group forum related rights
+	// //////////////////////////////////
+
 	public boolean isUserAllowedToAddThreadToForum(String userId) {
 		return isUserMemberOrAdmin(userId);
 	}
@@ -158,11 +163,29 @@ public class GroupPep {
 	public boolean isAllowedToUpdateVisibilityThread(String userId) {
 		return isUserMemberOrAdmin(userId);
 	}
-	
+
 	public boolean isAllowedToDeleteThread(String userId) {
 		return isUserAdmin(userId);
 	}
-	
+
+	public boolean isAllowedToPostNewMessage(String userId, ForumThread thread) {
+		
+		if (thread.isThreadPublic()) {
+			// any logged-in user may post to a public thread
+			return userId != null;
+		} else {
+			return isUserMemberOrAdmin(userId);
+		}
+	}
+
+	public boolean isAllowedToDeleteForumPosts(String userId, ForumThread thread) {
+		return isUserAdmin(userId);
+	}
+
+	public boolean isAllowedToMoveForumPosts(String userId, ForumThread thread) {
+		return isUserAdmin(userId);
+	}
+
 	// /////////////////////////////
 
 	public boolean isUserAdmin(String userId) {

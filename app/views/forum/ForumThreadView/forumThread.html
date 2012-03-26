@@ -5,14 +5,14 @@
 #{/set} 
 
 #{set 'moreScripts'}
-    <script src="@{'/public/javascripts/projects/projectForumThread.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+    <script src="@{'/public/javascripts/dab/viewForumThreadDetails.js'}" type="text/javascript" charset="${_response_encoding}"></script>
 
 	<script type="text/javascript">
 		
-		var postNewComment = #{jsAction @projects.ProjectForumThread.postNewComment(':threadId', ':postContent') /};
-		var getNewAndDeletedPosts = #{jsAction @projects.ProjectForumThread.getNewAndDeletedPosts(':threadId', ':currentlyKnownIds') /};
-		var deletePost = #{jsAction @projects.ProjectForumThread.deletePost(':threadId', ':postId') /};
-		var movePost = #{jsAction @projects.ProjectForumThread.movePost(':originalThreadId', ':targetThreadId', ':postId') /};
+		var postNewComment = #{jsAction @forum.ForumThreadView.postNewComment(':threadId', ':postContent') /};
+		var getNewAndDeletedPosts = #{jsAction @forum.ForumThreadView.getNewAndDeletedPosts(':threadId', ':currentlyKnownIds') /};
+		var deletePost = #{jsAction @forum.ForumThreadView.deletePost(':threadId', ':postId') /};
+		var movePost = #{jsAction @forum.ForumThreadView.movePost(':originalThreadId', ':targetThreadId', ':postId') /};
 		
 		var threadId = "${thread.id}";
 		
@@ -31,7 +31,12 @@
 
 <div id="projectViewContainer" class="pageContainer">
 
-	<p class="pageTitle">${project?.pdata?.name} <a class="dabLink" href="@{projects.ProjectsView.projectsView(project.id)}">&{'projectForumThreadBackToProject'}</a></p>
+	#{if project != null}
+		<p class="pageTitle">${project?.pdata?.name} <a class="dabLink" href="@{projects.ProjectsView.projectsView(project.id)}">&{'projectForumThreadBackToProject'}</a></p>
+	#{/if}
+	#{if group != null}
+		<p class="pageTitle">${group?.name} <a class="dabLink" href="@{groups.GroupsView.groupsView(group.id)}">&{'groupForumThreadBackToGroup'}</a></p>
+	#{/if}
 	
 	<p class="forumSubTitle">&{'projectForumThreadThread'}: ${thread.title} #{if !thread.isThreadPublic} &{'projectForumThreadPrivate'}#{/if}</p>
 	

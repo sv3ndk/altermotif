@@ -1,11 +1,10 @@
-var projectForumThreadCtrl;
-
 $(document).ready(function() {
-	projectForumThreadCtrl = new dabProjectForumThreadLib.ForumThreadController();
-	projectForumThreadCtrl.init();
+	new dabForumThreadDetailsLib.ForumThreadController().init();
 });
 
-var dabProjectForumThreadLib = {
+// javascript behind the forum thread page (where we post comments,..)
+
+var dabForumThreadDetailsLib = {
 
 	// ////////////////////////////////////////
 	// CONTROLLERS
@@ -13,8 +12,8 @@ var dabProjectForumThreadLib = {
 
 	ForumThreadController : function() {
 
-		this.threadModel = new dabProjectForumThreadLib.ForumThreadModel();
-		this.moveThreadPopupController = new dabProjectForumThreadLib.MoveThreadPopupController();
+		this.threadModel = new dabForumThreadDetailsLib.ForumThreadModel();
+		this.moveThreadPopupController = new dabForumThreadDetailsLib.MoveThreadPopupController();
 		this.clickedPostId;
 
 		// ////////////////////////
@@ -199,7 +198,7 @@ var dabProjectForumThreadLib = {
 
 				var creationDate = onePost.elapsedTimeSinceCreation + elapsedTimeUnits[onePost.elapsedTimeUnit];
 				
-				self.addPostInBeginning(new dabProjectForumThreadLib.ThreadPost(onePost.id,creationDate  
+				self.addPostInBeginning(new dabForumThreadDetailsLib.ThreadPost(onePost.id,creationDate  
 						 , onePost.content, onePost.author.userName,
 						onePost.authorProfilLink, authorPhotoLink, onePost.author.profileActive, onePost.userMayDelete, onePost.userMayMove));
 			});
@@ -227,7 +226,7 @@ var dabProjectForumThreadLib = {
 				authorPhotoUrl = "/public/images/defaultProfileThumb.jpg";
 			}
 
-			self.addPost(new dabProjectForumThreadLib.ThreadPost(id, creationDate, content, authorId, authorProfileLink, authorPhotoUrl, authorIsActive,
+			self.addPost(new dabForumThreadDetailsLib.ThreadPost(id, creationDate, content, authorId, authorProfileLink, authorPhotoUrl, authorIsActive,
 					userMayDelete, userMayMove));
 		};
 

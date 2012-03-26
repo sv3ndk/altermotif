@@ -1,6 +1,7 @@
 package com.svend.dab.core.beans.projects;
 
 import com.google.common.base.Strings;
+import com.svend.dab.core.beans.ForumThread;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.Project.PROJECT_VISIBILITY;

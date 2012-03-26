@@ -3,6 +3,7 @@ package controllers;
 import play.modules.spring.Spring;
 
 import com.svend.dab.core.AdminService;
+import com.svend.dab.core.IForumService;
 import com.svend.dab.core.IGroupService;
 import com.svend.dab.core.ISocialService;
 import com.svend.dab.core.IUserMessagesServices;
@@ -86,6 +87,10 @@ public class BeanProvider {
 	
 	public static IForumThreadDao getForumThreadDao() {
 		return (IForumThreadDao) Spring.getBeanOfType(IForumThreadDao.class);
+		
+	}
+	public static IForumService getForumService() {
+		return (IForumService) Spring.getBeanOfType(IForumService.class);
 		
 	}
 

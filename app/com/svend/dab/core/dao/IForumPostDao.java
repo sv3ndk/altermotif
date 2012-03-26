@@ -4,8 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import com.svend.dab.core.beans.ForumPost;
 import com.svend.dab.core.beans.profile.UserSummary;
-import com.svend.dab.core.beans.projects.ForumPost;
 
 public interface IForumPostDao {
 
