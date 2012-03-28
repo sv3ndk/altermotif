@@ -78,13 +78,6 @@ public interface IProjectService {
 
 	public List<RankedTag> getPopularTags();
 
-	// ///////////////////////////////////////////
-	// project forum
 
-	public void postNewForumMessage(String authorId, ForumThread thread, String messageContent);
-
-	public ForumDiff computeThreadDiff(String threadId, Set<String> knownPostIds);
-
-	public void movePostToThread(String originalThreadId, String postId, String targetThreadId, String username);
 
 }

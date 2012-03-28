@@ -178,7 +178,7 @@ public class ForumThreadView extends DabController {
 		ProjectGroup group = BeanProvider.getGroupService().loadGroupById(thread.getGroupid(), false);
 		if (group != null) {
 			if (new GroupPep(group).isAllowedToPostNewMessage(getSessionWrapper().getLoggedInUserProfileId(), thread)) {
-				BeanProvider.getProjectService().postNewForumMessage(getSessionWrapper().getLoggedInUserProfileId(), thread, postContent);
+				BeanProvider.getForumService().postNewForumMessage(getSessionWrapper().getLoggedInUserProfileId(), thread, postContent);
 				renderJSON(new MappedValue("result", "ok"));
 			} else {
 				logger.log(Level.WARNING, "User is trying to post a message to a thread but is not allowed to! ThreadId:" + thread.getId() + "projectId:"
@@ -196,7 +196,7 @@ public class ForumThreadView extends DabController {
 		Project project = BeanProvider.getProjectService().loadProject(thread.getProjectId(), false);
 		if (project != null) {
 			if (new ProjectPep(project).isAllowedToPostNewMessage(getSessionWrapper().getLoggedInUserProfileId(), thread)) {
-				BeanProvider.getProjectService().postNewForumMessage(getSessionWrapper().getLoggedInUserProfileId(), thread, postContent);
+				BeanProvider.getForumService().postNewForumMessage(getSessionWrapper().getLoggedInUserProfileId(), thread, postContent);
 				renderJSON(new MappedValue("result", "ok"));
 			} else {
 				logger.log(Level.WARNING, "User is trying to post a message to a thread but is not allowed to! ThreadId:" + thread.getId() + "projectId:"
@@ -224,7 +224,7 @@ public class ForumThreadView extends DabController {
 
 			if (permisions.isAllowedSeeThisForumThread()) {
 				Set<String> knownPostIds = Utils.jsonToSetOfStrings(currentlyKnownIds);
-				ForumDiff diff = BeanProvider.getProjectService().computeThreadDiff(thread.getId(), knownPostIds);
+				ForumDiff diff = BeanProvider.getForumService().computeThreadDiff(thread.getId(), knownPostIds);
 
 				Date expirationdate = new Date();
 				expirationdate.setTime(expirationdate.getTime() + BeanProvider.getConfig().getCvExpirationDelayInMillis());
@@ -325,23 +325,29 @@ public class ForumThreadView extends DabController {
 		}
 	}
 
-	////////////////////////////
+	// //////////////////////////
 	// Move
-	
-	
+
 	public static void movePost(String originalThreadId, String targetThreadId, String postId) {
-
 		ForumThread originalThread = BeanProvider.getForumThreadDao().getThreadById(originalThreadId);
-
 		if (originalThread != null) {
-			Project project = BeanProvider.getProjectService().loadProject(originalThread.getProjectId(), false);
-			if (project != null) {
-				ProjectPep pep = new ProjectPep(project);
-				if (pep.isAllowedToMoveForumPosts(getSessionWrapper().getLoggedInUserProfileId(), originalThread)) {
-					BeanProvider.getProjectService().movePostToThread(originalThreadId, postId, targetThreadId, getSessionWrapper().getLoggedInUserProfileId());
-				} else {
-					renderJSON(new MappedValue("result", "nok"));
-				}
+			if (originalThread.getProjectId() != null) {
+				movePostCommentFromProjectForum(originalThread, targetThreadId, postId);
+			} else if (originalThread.getGroupid() != null) {
+				movePostCommentFromGroupForum(originalThread, targetThreadId, postId);
+			} else {
+				renderJSON(new MappedValue("result", "nok"));
+			}
+		} else {
+			renderJSON(new MappedValue("result", "nok"));
+		}
+	}
+
+	private static void movePostCommentFromGroupForum(ForumThread originalThread, String targetThreadId, String postId) {
+		ProjectGroup group = BeanProvider.getGroupService().loadGroupById(originalThread.getGroupid(), false);
+		if (group != null) {
+			if (new GroupPep(group).isAllowedToMoveForumPosts(getSessionWrapper().getLoggedInUserProfileId(), originalThread)) {
+				BeanProvider.getForumService().movePostToThread(originalThread.getId(), postId, targetThreadId, getSessionWrapper().getLoggedInUserProfileId());
 			} else {
 				renderJSON(new MappedValue("result", "nok"));
 			}
@@ -349,6 +355,18 @@ public class ForumThreadView extends DabController {
 			renderJSON(new MappedValue("result", "nok"));
 		}
 
+	}
+
+	private static void movePostCommentFromProjectForum(ForumThread originalThread, String targetThreadId, String postId) {
+		Project project = BeanProvider.getProjectService().loadProject(originalThread.getProjectId(), false);
+		if (project != null) {
+			ProjectPep pep = new ProjectPep(project);
+			if (pep.isAllowedToMoveForumPosts(getSessionWrapper().getLoggedInUserProfileId(), originalThread)) {
+				BeanProvider.getForumService().movePostToThread(originalThread.getId(), postId, targetThreadId, getSessionWrapper().getLoggedInUserProfileId());
+			} else {
+				renderJSON(new MappedValue("result", "nok"));
+			}
+		}
 	}
 
 }

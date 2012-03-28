@@ -14,17 +14,9 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import web.utils.Utils;
-
 import com.google.common.base.Strings;
-import com.google.common.collect.Sets;
 import com.svend.dab.core.beans.Config;
-import com.svend.dab.core.beans.ForumPost;
-import com.svend.dab.core.beans.ForumThread;
-import com.svend.dab.core.beans.profile.UserProfile;
-import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Asset;
-import com.svend.dab.core.beans.projects.ForumDiff;
 import com.svend.dab.core.beans.projects.Participant;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.ParticipantList;
@@ -34,11 +26,8 @@ import com.svend.dab.core.beans.projects.Project.STATUS;
 import com.svend.dab.core.beans.projects.RankedTag;
 import com.svend.dab.core.beans.projects.TagCount;
 import com.svend.dab.core.beans.projects.Task;
-import com.svend.dab.core.dao.IForumPostDao;
-import com.svend.dab.core.dao.IForumThreadDao;
 import com.svend.dab.core.dao.IProjectDao;
 import com.svend.dab.core.dao.ITagCountDao;
-import com.svend.dab.core.dao.IUserProfileDao;
 import com.svend.dab.eda.EventEmitter;
 import com.svend.dab.eda.events.projects.ProjectApplicationAccepted;
 import com.svend.dab.eda.events.projects.ProjectApplicationCancelled;
@@ -66,14 +55,6 @@ public class ProjectService implements IProjectService {
 	@Autowired
 	private ITagCountDao tagCountDao;
 
-	@Autowired
-	private IForumThreadDao forumThreadDao;
-
-	@Autowired
-	private IForumPostDao forumPostDao;
-
-	@Autowired
-	private IUserProfileDao userProfileRepo;
 
 	@Autowired
 	private Config config;
@@ -342,66 +323,5 @@ public class ProjectService implements IProjectService {
 		eventEmitter.emit(new ProjectStatusChanged(project.getId(), STATUS.started));
 	}
 
-	// ///////////////////////////////////////////
-	// project forum
-
-	/* (non-Javadoc)
-	 * @see com.svend.dab.core.projects.IProjectService#postNewForumMessage(java.lang.String, com.svend.dab.core.beans.ForumThread, java.lang.String)
-	 */
-	public void postNewForumMessage(String authorId, ForumThread thread, String messageContent) {
-
-		// TODO: this method is no longer project specific : used also for group forums => move this method elsewhere
-			
-		UserProfile author = userProfileRepo.retrieveUserProfileById(authorId);
-		if (author == null) {
-			logger.log(Level.WARNING, "User with id " + authorId
-					+ " is trying to post a message but has not registered profile! This is impossible! Not doing anything");
-		} else {
-			ForumPost createdPost = new ForumPost(thread.getId(), /*thread.getProjectId(), */ new Date(), new UserSummary(author), messageContent);
-			forumPostDao.saveNewPost(createdPost);
-			updateNumberOfPostsOfThread(thread.getId());
-		}
-	}
-
-	public ForumDiff computeThreadDiff(String threadId, Set<String> knownPostIds) {
-
-		ForumDiff response = new ForumDiff();
-
-		// removed threads
-		Set<String> allPostIds = forumPostDao.findAllPostIdsOfThread(threadId);
-		response.setDeletedPostIds(Sets.difference(knownPostIds, allPostIds).immutableCopy());
-
-		// new threads
-		response.setNewPosts(forumPostDao.findThreadPostsExcluding(threadId, knownPostIds));
-
-		return response;
-	}
-
-	public void movePostToThread(String originalThreadId, String postId, String targetThreadId, String username) {
-
-		ForumPost post = forumPostDao.loadPost(postId);
-
-		if (post != null && post.getThreadId().equals(originalThreadId)) {
-			// TODO: consider using an event here
-
-			StringBuffer updatedContent = new StringBuffer();
-			updatedContent.append("===============\n");
-			updatedContent.append("Forwarded by: ").append(username).append("\n");
-			updatedContent.append("Original date: ").append(Utils.formatDate(post.getCreationDate())).append("\n");
-			updatedContent.append("Original message:\n\n ").append(post.getContent());
-
-			forumPostDao.updateThreadIdOfPost(postId, originalThreadId, targetThreadId, new Date(), updatedContent.toString());
-			updateNumberOfPostsOfThread(originalThreadId);
-			updateNumberOfPostsOfThread(targetThreadId);
-		}
-
-	}
-
-	// ///////////////////////////////
-	//
-
-	protected void updateNumberOfPostsOfThread(String threadId) {
-		forumThreadDao.updateNumberOfPosts(threadId, forumPostDao.countPostOfThread(threadId));
-	}
 
 }
