@@ -271,6 +271,10 @@ var dabGroupsViewLib = {
 				function(response) {
 					if (response.success) {
 						self.projectsParticipantKoModel.removeApplicant(self.clickedProjectApplicantId);
+						if (response.addedProjectIamAdminOf != null) {
+							self.projectsParticipantKoModel.addProjectIamAdminOf(new dabGroupsViewLib.Project(response.addedProjectIamAdminOf.projectSummary.projectId, response.addedProjectIamAdminOf.projectSummary.name));
+							self.projectsParticipantKoModel.applyToGroupWithProjectLinkVisisble((response.applyToGroupWithProjectLinkVisisble));
+						}
 					}
 				});
 		};
@@ -289,6 +293,10 @@ var dabGroupsViewLib = {
 				function(response) {
 					if (response.success) {
 						self.projectsParticipantKoModel.removeProject(self.clickedProjectId);
+						if (response.addedProjectIamAdminOf != null) {
+							self.projectsParticipantKoModel.addProjectIamAdminOf(new dabGroupsViewLib.Project(response.addedProjectIamAdminOf.projectSummary.projectId, response.addedProjectIamAdminOf.projectSummary.name));
+							self.projectsParticipantKoModel.applyToGroupWithProjectLinkVisisble((response.applyToGroupWithProjectLinkVisisble));
+						}
 					}
 				});
 		};
@@ -462,7 +470,7 @@ var dabGroupsViewLib = {
 
 			$("#projectsIAmAdminOf div.projectIamAdminOf").each(
 					function(index, oneHtmlProject) {
-						self.parseAndAddProject(oneHtmlProject)
+						self.parseAndAddProjectIamAdminOf(oneHtmlProject)
 					});
 
 			$("#projectParticipantsDataModel div.projectApplicant").each(
@@ -519,7 +527,7 @@ var dabGroupsViewLib = {
 		//////////////////
 
 		// used for listing the project I am admin of
-		this.parseAndAddProject = function(oneHtmlProject) {
+		this.parseAndAddProjectIamAdminOf = function(oneHtmlProject) {
 			var projectId = $(oneHtmlProject).find(".projectId").text();
 			var projectName = $(oneHtmlProject).find(".projectName").text();
 			
@@ -527,9 +535,12 @@ var dabGroupsViewLib = {
 				// some previous bug was leading to project without name. This should be useless now, but let's be paranoid...
 				projectName = "---"
 			}
-			
-			this.projectsIamAdminOf.push(new dabGroupsViewLib.Project(projectId, projectName));
+			this.addProjectIamAdminOf(new dabGroupsViewLib.Project(projectId, projectName));
 		};
+		
+		this.addProjectIamAdminOf = function(project) {
+			this.projectsIamAdminOf.push(project);
+		}
 
 		// used for listing the projects which are member of the group
 		this.parseAndAddProjectMember = function(oneHtmlProject) {

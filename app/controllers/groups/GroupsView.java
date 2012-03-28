@@ -34,7 +34,6 @@ public class GroupsView extends DabController {
 
 	private static Logger logger = Logger.getLogger(GroupsView.class.getName());
 
-	
 	public static void groupsView(String groupid) {
 
 		ProjectGroup group = BeanProvider.getGroupService().loadGroupById(groupid, true);
@@ -49,23 +48,9 @@ public class GroupsView extends DabController {
 			renderArgs.put("loggedInUserId", getSessionWrapper().getLoggedInUserProfileId());
 			renderArgs.put("allThreads", BeanProvider.getForumThreadDao().loadGroupForumThreads(groupid));
 
-
-			if (getSessionWrapper().isLoggedIn()) {
-				UserProfile user = BeanProvider.getUserProfileService().loadUserProfile(getSessionWrapper().getLoggedInUserProfileId(), false);
-				if (user != null) {
-
-					List<Participation> allProjectWhereUserIsAdmin = user.getAllProjectsWhereUserIsAdmin(getSessionWrapper().getLoggedInUserProfileId());
-					visibility.addProjectsWhereUserIsAdmin(allProjectWhereUserIsAdmin);
-					
-					List<Participation> filteredProject = new LinkedList<Participation>();
-					for (Participation participation : allProjectWhereUserIsAdmin) {
-						if (!group.isProjectMemberOfGroupOrHasAlreadyApplied(participation.getProjectSummary().getProjectId())) {
-							filteredProject.add(participation);
-						}
-					}
-					renderArgs.put("projectsWhereUserIsAdmin", filteredProject);
-				}
-			}
+			List<Participation> allProjectWhereUserIsAdmin = computeFilteredListOfProjectWhereUserIsAdmin();
+			visibility.addProjectsWhereUserIsAdmin(allProjectWhereUserIsAdmin);
+			renderArgs.put("projectsWhereUserIsAdmin", filterProjectAltreadyInGroup(group, allProjectWhereUserIsAdmin));
 
 			render();
 		}
@@ -128,8 +113,7 @@ public class GroupsView extends DabController {
 
 				// building response with updated user rights
 				group.addParticipant(new GroupParticipant(ROLE.member, new UserSummary(applicantId, null, null, true)));
-				renderOutcome(group, applicantId);
-
+				renderJSON(buildOutcome(group, applicantId, null));
 			} else {
 				renderJSON(new BinaryResponse(false));
 			}
@@ -179,8 +163,7 @@ public class GroupsView extends DabController {
 
 				// building response with updated user rights
 				group.updateUserParticipantRole(upgradedUser, ROLE.admin);
-				renderOutcome(group, upgradedUser);
-
+				renderJSON(buildOutcome(group, upgradedUser, null));
 			} else {
 				renderJSON(new GroupsViewParticipantActionOutcome(false));
 			}
@@ -199,8 +182,7 @@ public class GroupsView extends DabController {
 
 				// building response with updated user rights
 				group.updateUserParticipantRole(downgradedUser, ROLE.member);
-				renderOutcome(group, downgradedUser);
-
+				renderJSON(buildOutcome(group, downgradedUser, null));
 			} else {
 				renderJSON(new GroupsViewParticipantActionOutcome(false));
 			}
@@ -219,8 +201,7 @@ public class GroupsView extends DabController {
 
 				// building response with updated user rights
 				group.removeParticipant(removedUser);
-				renderOutcome(group, removedUser);
-
+				renderJSON(buildOutcome(group, removedUser, null));
 			} else {
 				renderJSON(new GroupsViewParticipantActionOutcome(false));
 			}
@@ -241,13 +222,16 @@ public class GroupsView extends DabController {
 	public static void rejectProjectApplicationToGroup(String groupId, String projectId) {
 
 		ProjectGroup group = BeanProvider.getGroupService().loadGroupById(groupId, true);
-		if (group == null) {
+		if (group == null || projectId == null) {
 			renderJSON(new GroupsViewParticipantActionOutcome(false));
 		} else {
 			GroupPep pep = new GroupPep(group);
 			if (pep.isUserAllowedToAcceptAndRejectProjectApplications(getSessionWrapper().getLoggedInUserProfileId())) {
 				BeanProvider.getGroupService().rejectProjectApplication(groupId, projectId);
-				renderJSON(new GroupsViewParticipantActionOutcome(true));
+
+				Utils.waitABit();
+				ProjectGroup updatedGroup = BeanProvider.getGroupService().loadGroupById(groupId, true);
+				renderJSON(buildOutcome(updatedGroup, null, projectId));
 
 			} else {
 				renderJSON(new GroupsViewParticipantActionOutcome(false));
@@ -266,9 +250,13 @@ public class GroupsView extends DabController {
 			if (removeProjectParticipant != null && user != null) {
 				List<Participation> projectsWhereThisUserIsAdmin = user.getAllProjectsWhereUserIsAdmin(getSessionWrapper().getLoggedInUserProfileId());
 				GroupPep pep = new GroupPep(group);
-				if (pep.isUserAllowedToRemoveProjectFromGroup(getSessionWrapper().getLoggedInUserProfileId(), removeProjectParticipant.getProjet(), projectsWhereThisUserIsAdmin)) {
+				if (pep.isUserAllowedToRemoveProjectFromGroup(getSessionWrapper().getLoggedInUserProfileId(), removeProjectParticipant.getProjet(),
+						projectsWhereThisUserIsAdmin)) {
 					BeanProvider.getGroupService().removeProjectFromGroup(groupId, projectId);
-					renderJSON(new GroupsViewParticipantActionOutcome(true));
+
+					Utils.waitABit();
+					ProjectGroup updatedGroup = BeanProvider.getGroupService().loadGroupById(groupId, true);
+					renderJSON(buildOutcome(updatedGroup, null, projectId));
 				} else {
 					renderJSON(new GroupsViewParticipantActionOutcome(false));
 				}
@@ -294,7 +282,7 @@ public class GroupsView extends DabController {
 			}
 		}
 	}
-	
+
 	// ///////////////////////////////////////
 	// forum and thread
 
@@ -307,25 +295,26 @@ public class GroupsView extends DabController {
 		if (group != null) {
 			GroupPep pep = new GroupPep(group);
 			if (pep.isUserAllowedToAddThreadToForum(getSessionWrapper().getLoggedInUserProfileId())) {
-				
-				ForumThread createdThread = BeanProvider.getForumThreadDao().createNewThread(new ForumThread(null, ownerId, threadTitle, new Date(), 0, isThreadPublic));
-				
+
+				ForumThread createdThread = BeanProvider.getForumThreadDao().createNewThread(
+						new ForumThread(null, ownerId, threadTitle, new Date(), 0, isThreadPublic));
+
 				createdThread.setMayUserDeleteThisThread(pep.isAllowedToDeleteThread(getSessionWrapper().getLoggedInUserProfileId()));
 				createdThread.setMayUserUpdateVisibility(pep.isAllowedToUpdateVisibilityThread(getSessionWrapper().getLoggedInUserProfileId()));
 				Map<String, Object> params = new HashMap<String, Object>();
 				params.put("t", createdThread.getId());
-				
-				createdThread.setThreadUrl(Router.reverse( "forum.ForumThreadView.groupForumThread", params).url);
-				
+
+				createdThread.setThreadUrl(Router.reverse("forum.ForumThreadView.groupForumThread", params).url);
+
 				renderJSON(createdThread);
 			} else {
-				logger.log(Level.WARNING, "user trying to add a thread to a groupId but is not allowed to: projectId:" + ownerId + "userid:"+getSessionWrapper().getLoggedInUserProfileId());
+				logger.log(Level.WARNING, "user trying to add a thread to a groupId but is not allowed to: projectId:" + ownerId + "userid:"
+						+ getSessionWrapper().getLoggedInUserProfileId());
 			}
 		} else {
 			logger.log(Level.WARNING, "user trying to add a thread to a non existant group : " + ownerId + " this should be impossible!");
 		}
 	}
-
 
 	public static void changeThreadVisibility(String ownerId, String threadId, boolean isThreadPublic) {
 		ProjectGroup group = BeanProvider.getGroupService().loadGroupById(ownerId, true);
@@ -334,8 +323,8 @@ public class GroupsView extends DabController {
 				BeanProvider.getForumThreadDao().updateThreadVisibility(threadId, isThreadPublic);
 				renderJSON(BeanProvider.getForumThreadDao().getThreadById(threadId));
 			} else {
-				logger.log(Level.WARNING, "user trying to change visibility of a group thread but is not allowed to: groupId:" + ownerId + ", threadId:" + threadId + "userid:"
-						+ getSessionWrapper().getLoggedInUserProfileId());
+				logger.log(Level.WARNING, "user trying to change visibility of a group thread but is not allowed to: groupId:" + ownerId + ", threadId:"
+						+ threadId + "userid:" + getSessionWrapper().getLoggedInUserProfileId());
 			}
 		} else {
 			logger.log(Level.WARNING, "user trying to change visibility of a thread of a non existant group : " + ownerId + " this should be impossible!");
@@ -350,11 +339,11 @@ public class GroupsView extends DabController {
 				// non transactional, but ok, we might just lose a little space in that case
 				BeanProvider.getForumThreadDao().deleteThread(threadId);
 				BeanProvider.getForumPostDao().deletePostsOfThread(threadId);
-				
+
 				renderJSON(new MappedValue("removeThreadId", threadId));
 			} else {
-				logger.log(Level.WARNING, "user trying to delete a group thread but is not allowed to: projectId:" + ownerId + ", threadId:" + threadId + "userid:"
-						+ getSessionWrapper().getLoggedInUserProfileId());
+				logger.log(Level.WARNING, "user trying to delete a group thread but is not allowed to: projectId:" + ownerId + ", threadId:" + threadId
+						+ "userid:" + getSessionWrapper().getLoggedInUserProfileId());
 			}
 		} else {
 			logger.log(Level.WARNING, "user trying to delete a thread of a non existant group : " + ownerId + " this should be impossible!");
@@ -362,24 +351,65 @@ public class GroupsView extends DabController {
 	}
 
 	// ////////////////////////////
+	// ////////////////////////////
 	// /
 
-	private static void renderOutcome(ProjectGroup group, String otherUserId) {
+	private static GroupsViewParticipantActionOutcome buildOutcome(ProjectGroup group, String otherUserId, String projectId) {
 		GroupsViewParticipantActionOutcome outcome = new GroupsViewParticipantActionOutcome(true);
 		GroupViewVisibility visibility = new GroupViewVisibility(new GroupPep(group), getSessionWrapper().getLoggedInUserProfileId());
+
+		List<Participation> allProjectWhereUserIsAdmin = computeFilteredListOfProjectWhereUserIsAdmin();
+		visibility.addProjectsWhereUserIsAdmin(allProjectWhereUserIsAdmin);
+
+		if (projectId != null) {
+			// null is ok: not all group actions involve a projectId
+			List<Participation> updatedProjectParticipationList = filterProjectAltreadyInGroup(group, computeFilteredListOfProjectWhereUserIsAdmin());
+			for (Participation participation : updatedProjectParticipationList) {
+				if (projectId.equals(participation.getProjectSummary().getProjectId())) {
+					outcome.setAddedProjectIamAdminOf(participation);
+				}
+			}
+		}
 
 		outcome.setLoggedInUser_makeMemberLinkVisible(visibility.isMakeMemberLinkVisible(getSessionWrapper().getLoggedInUserProfileId()));
 		outcome.setLoggedInUser_makeAdminLinkVisible(visibility.isMakeAdminLinkVisible(getSessionWrapper().getLoggedInUserProfileId()));
 		outcome.setLoggedInUser_leaveLinkVisible(visibility.isLeaveLinkVisible(getSessionWrapper().getLoggedInUserProfileId()));
 
-		outcome.setOtherUser_makeMemberLinkVisible(visibility.isMakeMemberLinkVisible(otherUserId));
-		outcome.setOtherUser_makeAdminLinkVisible(visibility.isMakeAdminLinkVisible(otherUserId));
-		outcome.setOtherUser_leaveLinkVisible(visibility.isLeaveLinkVisible(otherUserId));
-		outcome.setOtherUser_removeUserLinkVisible(visibility.isRemoveMemberLinkVisible(otherUserId));
+		if (otherUserId != null) {
+			// null is ok: not all group actions involve an "other user"
+			outcome.setOtherUser_makeMemberLinkVisible(visibility.isMakeMemberLinkVisible(otherUserId));
+			outcome.setOtherUser_makeAdminLinkVisible(visibility.isMakeAdminLinkVisible(otherUserId));
+			outcome.setOtherUser_leaveLinkVisible(visibility.isLeaveLinkVisible(otherUserId));
+			outcome.setOtherUser_removeUserLinkVisible(visibility.isRemoveMemberLinkVisible(otherUserId));
+		}
 
 		outcome.setApplyToGroupWithProjectLinkVisisble(visibility.isApplyWithProjetLinkVisible());
 
-		renderJSON(outcome);
+		return outcome;
 	}
 
+	private static List<Participation> filterProjectAltreadyInGroup(ProjectGroup group, List<Participation> allProjectWhereUserIsAdmin) {
+
+		if (allProjectWhereUserIsAdmin == null || allProjectWhereUserIsAdmin.isEmpty()) {
+			return allProjectWhereUserIsAdmin;
+		}
+
+		List<Participation> filteredProject = new LinkedList<Participation>();
+		for (Participation participation : allProjectWhereUserIsAdmin) {
+			if (!group.isProjectMemberOfGroupOrHasAlreadyApplied(participation.getProjectSummary().getProjectId())) {
+				filteredProject.add(participation);
+			}
+		}
+		return filteredProject;
+	}
+
+	private static List<Participation> computeFilteredListOfProjectWhereUserIsAdmin() {
+		if (getSessionWrapper().isLoggedIn()) {
+			UserProfile user = BeanProvider.getUserProfileService().loadUserProfile(getSessionWrapper().getLoggedInUserProfileId(), false);
+			if (user != null) {
+				return user.getAllProjectsWhereUserIsAdmin(getSessionWrapper().getLoggedInUserProfileId());
+			}
+		}
+		return new LinkedList<Participation>();
+	}
 }

@@ -202,6 +202,35 @@
 		</div>
 	#{/if}
 	
+	<div id="projectParticipantsDataModel" class="hidden">
+		<span id="applyToGroupWithProjectLinkVisisble" class="hidden">${groupViewVisibility.applyWithProjetLinkVisible}</span>
+		
+		<div id="projectsIAmAdminOf">
+			#{if groupViewVisibility.applyWithProjetLinkVisible}
+				#{list items:projectsWhereUserIsAdmin, as:'oneParticipation'}
+					<div class="projectIamAdminOf">
+						<span class="projectId" class="hidden">${oneParticipation.projectSummary.projectId}</span>
+						<span class="projectName" class="hidden">${oneParticipation.projectSummary.name}</span>
+					</div>
+				#{/list}
+			#{/if}
+		</div>
+		
+		<div id="projectApplicants">
+			#{list items:visitedGroup.projectParticipants, as:'oneParticipation'}
+				<div class="projectApplicant">
+					<span class="projectId" class="hidden">${oneParticipation.projet.projectId}</span>
+					<span class="isProjectAccepted" class="hidden">${oneParticipation.accepted}</span>
+					<span class="isRemoveFromGroupLinkVisible" class="hidden">${groupViewVisibility.isRemoveFromGroupLinkVisible(oneParticipation)}</span>
+					<span class="projectApplicationText" class="hidden">${oneParticipation.applicationText}</span>
+					<span class="projectName" class="hidden">${oneParticipation.projet.name}</span>
+					<a class="projectLink" href="@{projects.ProjectsView.projectsView( oneParticipation.projet.projectId)}" ></a>
+					<img class="projectMainThumb" src="${oneParticipation.projet.getMainPhotoThumbLink()}"  />
+				</div>
+			#{/list}
+		</div>
+	
+	</div>
 	
 	
 	
@@ -288,35 +317,7 @@
 		</div>
 	</div>
 	
-	<div id="projectParticipantsDataModel" class="hidden">
-		<span id="applyToGroupWithProjectLinkVisisble" class="hidden">${groupViewVisibility.applyWithProjetLinkVisible}</span>
-		
-		<div id="projectsIAmAdminOf">
-			#{if groupViewVisibility.applyWithProjetLinkVisible}
-				#{list items:projectsWhereUserIsAdmin, as:'oneParticipation'}
-					<div class="projectIamAdminOf">
-						<span class="projectId" class="hidden">${oneParticipation.projectSummary.projectId}</span>
-						<span class="projectName" class="hidden">${oneParticipation.projectSummary.name}</span>
-					</div>
-				#{/list}
-			#{/if}
-		</div>
-		
-		<div id="projectApplicants">
-			#{list items:visitedGroup.projectParticipants, as:'oneParticipation'}
-				<div class="projectApplicant">
-					<span class="projectId" class="hidden">${oneParticipation.projet.projectId}</span>
-					<span class="isProjectAccepted" class="hidden">${oneParticipation.accepted}</span>
-					<span class="isRemoveFromGroupLinkVisible" class="hidden">${groupViewVisibility.isRemoveFromGroupLinkVisible(oneParticipation)}</span>
-					<span class="projectApplicationText" class="hidden">${oneParticipation.applicationText}</span>
-					<span class="projectName" class="hidden">${oneParticipation.projet.name}</span>
-					<a class="projectLink" href="@{projects.ProjectsView.projectsView( oneParticipation.projet.projectId)}" ></a>
-					<img class="projectMainThumb" src="${oneParticipation.projet.getMainPhotoThumbLink()}"  />
-				</div>
-			#{/list}
-		</div>
 	
-	</div>
 	
 	
 	

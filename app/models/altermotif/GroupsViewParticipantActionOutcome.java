@@ -1,5 +1,7 @@
 package models.altermotif;
 
+import com.svend.dab.core.beans.projects.Participation;
+
 /**
  * the data model class contains the outcome of an action on some particpant on the "groups view" page <br />
  * 
@@ -24,6 +26,10 @@ public class GroupsViewParticipantActionOutcome {
 	private boolean otherUser_removeUserLinkVisible;
 	
 	private boolean applyToGroupWithProjectLinkVisisble;
+	
+	// this is often null. If it is not, it means the action resulted in new project to be taken care of in the list of project the user is admin
+	// (this can happen for example if the user is group admin and rejects an application of a project he is also admin of)
+	private Participation addedProjectIamAdminOf;
 
 	public GroupsViewParticipantActionOutcome() {
 		super();
@@ -32,6 +38,12 @@ public class GroupsViewParticipantActionOutcome {
 	public GroupsViewParticipantActionOutcome(boolean success) {
 		super();
 		this.success = success;
+	}
+	
+	public GroupsViewParticipantActionOutcome(boolean success, Participation addedProjectIamAdminOf) {
+		super();
+		this.success = success;
+		this.addedProjectIamAdminOf = addedProjectIamAdminOf;
 	}
 
 	public boolean isSuccess() {
@@ -104,6 +116,14 @@ public class GroupsViewParticipantActionOutcome {
 
 	public void setApplyToGroupWithProjectLinkVisisble(boolean applyToGroupWithProjectLinkVisisble) {
 		this.applyToGroupWithProjectLinkVisisble = applyToGroupWithProjectLinkVisisble;
+	}
+
+	public Participation getAddedProjectIamAdminOf() {
+		return addedProjectIamAdminOf;
+	}
+
+	public void setAddedProjectIamAdminOf(Participation addedProjectIamAdminOf) {
+		this.addedProjectIamAdminOf = addedProjectIamAdminOf;
 	}
 
 }
