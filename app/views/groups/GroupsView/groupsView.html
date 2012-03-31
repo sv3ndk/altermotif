@@ -211,6 +211,8 @@
 					<div class="projectIamAdminOf">
 						<span class="projectId" class="hidden">${oneParticipation.projectSummary.projectId}</span>
 						<span class="projectName" class="hidden">${oneParticipation.projectSummary.name}</span>
+						<a class="projectLink" href="@{projects.ProjectsView.projectsView( oneParticipation.projectSummary.projectId)}" ></a>
+						<img class="projectMainThumb" src="${oneParticipation.projectSummary.getMainPhotoThumbLink()}"  />
 					</div>
 				#{/list}
 			#{/if}

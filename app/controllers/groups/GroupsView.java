@@ -366,6 +366,8 @@ public class GroupsView extends DabController {
 			List<Participation> updatedProjectParticipationList = filterProjectAltreadyInGroup(group, computeFilteredListOfProjectWhereUserIsAdmin());
 			for (Participation participation : updatedProjectParticipationList) {
 				if (projectId.equals(participation.getProjectSummary().getProjectId())) {
+					participation.getProjectSummary().initProjectLink();
+					participation.generatePhotoLink();
 					outcome.setAddedProjectIamAdminOf(participation);
 				}
 			}

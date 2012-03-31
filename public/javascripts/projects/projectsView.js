@@ -15,10 +15,8 @@ function init() {
 	initApplicationMecanics();
 	initParticipantsMecanics();
 	refreshApplyLinkVisibility();
-
 	
 	initOpenEmailPopup();
-	
 }
 
 function initOpenEmailPopup() {

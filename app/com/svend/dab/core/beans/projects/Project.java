@@ -9,6 +9,7 @@ import java.util.Set;
 import org.springframework.data.annotation.Transient;
 
 import com.google.common.base.Strings;
+import com.svend.dab.core.beans.PhotoAlbum;
 import com.svend.dab.core.beans.PhotoPack;
 import com.svend.dab.core.beans.groups.GroupSummary;
 import com.svend.dab.core.beans.profile.Photo;
@@ -38,38 +39,42 @@ public class Project {
 		public String getLabel() {
 			return label;
 		}
-
 	}
-	
-	public static final int MAX_NUMBER_OF_PHOTOS = 20;
 
 	private String id;
 
 	private ProjectData pdata = new ProjectData();
 
 	private List<Participant> participants;
-	
+
 	private List<GroupSummary> groups;
-	
+
+	// //////////////////
+	// TODO: replace this with an instance of "PhotoAlbum"
 	private int mainPhotoIndex;
-	
 	private List<Photo> photos;
+	// arrays of 20 links to the photos of the user (no matter how many actually present in DB)
+	@Transient
+	private PhotoPack cachedPhotosPack20;
+	public static final int MAX_NUMBER_OF_PHOTOS = 20;
+
+
+	// ////////////////////
+	private PhotoAlbum photoAlbum;
 
 	private Set<String> links;
 
 	private Set<String> tags;
-	
+
 	private Set<SelectedTheme> themes;
 
 	private STATUS status;
-	
+
 	private Set<Task> tasks;
 	private Set<Asset> assets;
-	
 
 	// ///////////////////////////
 	// cachedData
-
 
 	@Transient
 	private Participant cachedInitiator;
@@ -79,7 +84,7 @@ public class Project {
 
 	@Transient
 	private List<Participant> cachedConfirmedParticipants;
-	
+
 	@Transient
 	private List<Participant> cachedConfirmedActiveParticipants;
 
@@ -89,14 +94,10 @@ public class Project {
 	@Transient
 	private List<Participant> cachedUnconfirmedActiveParticipants;
 
-	// arrays of 20 links to the photos of the user (no matter how many actually present in DB)
 	@Transient
-	private PhotoPack cachedPhotosPack20;
-
-	@Transient
-	// just to make sure we do not resolve the user roles everytime 
+	// just to make sure we do not resolve the user roles everytime
 	private HashMap<String, ROLE> cachedUserRoles = new HashMap<String, Participant.ROLE>();
-	
+
 	// --------------------
 	//
 
@@ -109,15 +110,27 @@ public class Project {
 
 		participants.add(new Participant(role, user, applicationText));
 	}
-	
+
 	// ------------------------------------------------
 	// photos
 
+	public PhotoAlbum getPhotoAlbum() {
+		if (photoAlbum == null) {
+			synchronized (this) {
+				if (photoAlbum == null) {
+					photoAlbum = new PhotoAlbum("/projects/" + id + "/photos/", "/projects/" + id + "/thumbs/", "/public/images/defaultProjectImage.jpg'");
+				}
+			}
+		}
+		return photoAlbum;
+	}
+
+	
+	// TODO: suppress this and base the logic on getPhotoAlbum()
 	/**
 	 * @return
 	 */
 	public Photo getMainPhoto() {
-
 		if (photos != null && !photos.isEmpty()) {
 			return photos.get(mainPhotoIndex);
 		}
@@ -126,18 +139,18 @@ public class Project {
 	}
 
 	public List<Photo> getPhotosPack20() {
+		
 		if (cachedPhotosPack20 == null) {
 			synchronized (this) {
 				if (cachedPhotosPack20 == null) {
-					cachedPhotosPack20 = new  PhotoPack(20, photos);
+					cachedPhotosPack20 = new PhotoPack(20, photos);
 				}
 			}
 		}
 
 		return cachedPhotosPack20.getPack();
 	}
-	
-	
+
 	public boolean isPhotoPackFull() {
 		return photos != null && photos.size() > MAX_NUMBER_OF_PHOTOS;
 	}
@@ -149,11 +162,11 @@ public class Project {
 	public String getThumbsS3RootFolder() {
 		return "/projects/" + id + "/thumbs/";
 	}
-	
+
 	public boolean isPhotoPackEmpty() {
 		return photos == null || photos.size() == 0;
 	}
-	
+
 	public Photo getPhoto(int photoIdx) {
 		if (isPhotoPackEmpty() || photos.size() <= photoIdx) {
 			return null;
@@ -161,10 +174,8 @@ public class Project {
 		return photos.get(photoIdx);
 	}
 
-
-	//_--------------------------------------
+	// _--------------------------------------
 	// roles
-
 
 	public Participant getInitiator() {
 		if (participants == null) {
@@ -184,15 +195,16 @@ public class Project {
 	}
 
 	/**
-	 * @return this method often returns null: it returns the {@link Participant} of a member of this projcet to who the owner has proposed to transfer the ownership (this only exist until this user either accept or refuse)
+	 * @return this method often returns null: it returns the {@link Participant} of a member of this projcet to who the owner has proposed to transfer the
+	 *         ownership (this only exist until this user either accept or refuse)
 	 */
 	public Participant getProposedInitiator() {
-		
+
 		if (participants == null) {
 			// this should never happen: we should always have one participant: the initiator!
 			return null;
 		}
-		
+
 		if (cachedProposedInitiator == null) {
 			for (Participant participant : participants) {
 				if (participant.isOwnershipProposed()) {
@@ -203,7 +215,7 @@ public class Project {
 		}
 		return cachedProposedInitiator;
 	}
-	
+
 	/**
 	 * @param user
 	 * @return the {@link ROLE} that this user plays in this project, or null of this user is not part of this project
@@ -213,7 +225,7 @@ public class Project {
 		if (user == null) {
 			return null;
 		}
-		
+
 		if (cachedUserRoles.containsKey(user)) {
 			return cachedUserRoles.get(user);
 		}
@@ -248,21 +260,20 @@ public class Project {
 
 		return cachedConfirmedParticipants;
 	}
-	
+
 	public List<Participant> getConfirmedActiveParticipants() {
 		if (cachedConfirmedActiveParticipants == null) {
 			categorizeParticipants();
 		}
 		return cachedConfirmedActiveParticipants;
 	}
-	
+
 	public List<UserSummary> getConfirmedActiveParticipantsSummaries() {
 		if (cachedConfirmedActiveParticipants == null) {
 			categorizeParticipants();
 		}
 		return cachedConfirmedActiveParticipantsSummaries;
 	}
-
 
 	public List<Participant> getUnconfirmedActiveParticipants() {
 		if (cachedUnconfirmedActiveParticipants == null) {
@@ -290,12 +301,11 @@ public class Project {
 		}
 	}
 
-	
 	public Participant getConfirmedActiveParticipant(String userId) {
 		if (userId == null) {
 			return null;
 		}
-		
+
 		for (Participant participant : getConfirmedActiveParticipants()) {
 			if (userId.equals(participant.getUser().getUserName())) {
 				return participant;
@@ -303,23 +313,21 @@ public class Project {
 		}
 		return null;
 	}
-	
+
 	public Participant getParticipant(String userId) {
 		if (userId == null) {
 			return null;
 		}
-		
+
 		for (Participant participant : participants) {
 			if (userId.equals(participant.getUser().getUserName())) {
 				return participant;
 			}
 		}
-		
+
 		return null;
 	}
 
-	
-	
 	/**
 	 * @param userId
 	 * @return true if this user is already part of this project or has applied for it
@@ -337,31 +345,24 @@ public class Project {
 
 		return false;
 	}
-	
-	
+
 	public boolean isUserApplying(String userId) {
 		if (getUnconfirmedActiveParticipants() == null || userId == null) {
 			return false;
 		}
-		
+
 		for (Participant participant : getUnconfirmedActiveParticipants()) {
 			if (userId.equals(participant.getUser().getUserName())) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 
-	
-	
-	
-	
 	public boolean hasNoOtherActiveParticipantThanTheOwner() {
 		return getConfirmedActiveParticipants() == null || getConfirmedActiveParticipants().size() < 2;
 	}
-
-
 
 	// ------------------------------------------------------------------------------
 	//
@@ -371,15 +372,14 @@ public class Project {
 				photo.generatePresignedLinks(expirationdate, true, true);
 			}
 		}
-		
+
 		if (participants != null) {
 			for (Participant participant : participants) {
 				participant.generatePhotoLinks(expirationdate);
 			}
 		}
 	}
-	
-	
+
 	public void prepareTasksAndAssetsUsersummary() {
 		if (tasks != null) {
 			for (Task task : tasks) {
@@ -394,7 +394,7 @@ public class Project {
 			}
 		}
 	}
-	
+
 	// ------------------------------------------------------------------------------
 	//
 
@@ -484,7 +484,7 @@ public class Project {
 	}
 
 	public Set<Asset> getAssets() {
-		
+
 		return assets;
 	}
 
@@ -501,27 +501,25 @@ public class Project {
 	}
 
 	public boolean isPartOfGroup(String groupId) {
-		
-		if (groups == null  || groups.isEmpty() || Strings.isNullOrEmpty(groupId)) {
+
+		if (groups == null || groups.isEmpty() || Strings.isNullOrEmpty(groupId)) {
 			return false;
 		}
-			
+
 		for (GroupSummary groupSummary : groups) {
 			if (groupId.equals(groupSummary.getGroupId())) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	public int getNumberOfGroups() {
-		if(groups == null) {
+		if (groups == null) {
 			return 0;
 		} else {
 			return groups.size();
 		}
 	}
-
-
 }

@@ -179,7 +179,31 @@ public class UserProfile implements Serializable {
 	public boolean isComplete() {
 		return pdata != null && pdata.isComplete();
 	}
+	
 
+	// -----------------------------------------------------
+	// CV
+
+	/**
+	 * @param cvExpirationDelayInMillis
+	 */
+	public void generateCvLink(Date cvExpirationDate) {
+		if (cvLink != null) {
+			cvLink.generateUrl(cvExpirationDate);
+		}
+	}
+
+	/**
+	 * @return
+	 */
+	public boolean hasCv() {
+		return cvLink != null;
+	}
+
+	// -----------------------------------------------------
+	// Photos
+	
+	
 	public List<Photo> getPhotosPack20() {
 		if (cachedPhotosPack20 == null) {
 			synchronized (this) {
@@ -210,27 +234,6 @@ public class UserProfile implements Serializable {
 		return photos.get(photoIdx);
 	}
 
-	// -----------------------------------------------------
-	// CV
-
-	/**
-	 * @param cvExpirationDelayInMillis
-	 */
-	public void generateCvLink(Date cvExpirationDate) {
-		if (cvLink != null) {
-			cvLink.generateUrl(cvExpirationDate);
-		}
-	}
-
-	/**
-	 * @return
-	 */
-	public boolean hasCv() {
-		return cvLink != null;
-	}
-
-	// -----------------------------------------------------
-	// Photos
 
 	public String getPhotoS3RootFolder() {
 		return "/profiles/" + username + "/photos/";
@@ -288,17 +291,17 @@ public class UserProfile implements Serializable {
 
 	}
 
-	/**
-	 * @param deletedPhotoIdx
-	 */
-	public Photo removePhoto(int photoIndex) {
-		if (photoIndex >= 0 && photos != null && photoIndex < photos.size()) {
-			return photos.remove(photoIndex);
-		} else {
-			logger.log(Level.WARNING, "Not removing photo from profile: invalid index: " + photoIndex);
-			return null;
-		}
-	}
+//	/**
+//	 * @param deletedPhotoIdx
+//	 */
+//	public Photo removePhoto(int photoIndex) {
+//		if (photoIndex >= 0 && photos != null && photoIndex < photos.size()) {
+//			return photos.remove(photoIndex);
+//		} else {
+//			logger.log(Level.WARNING, "Not removing photo from profile: invalid index: " + photoIndex);
+//			return null;
+//		}
+//	}
 
 	/**
 	 * @return true if the link "more photos" should be displayed for this profile

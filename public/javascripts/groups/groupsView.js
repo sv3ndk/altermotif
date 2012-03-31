@@ -1,7 +1,5 @@
-var ctrl;
-
 $(document).ready(function() {
-	ctrl = new dabGroupsViewLib.GroupsViewController();
+	new dabGroupsViewLib.GroupsViewController();
 });
 
 var dabGroupsViewLib = {
@@ -13,7 +11,7 @@ var dabGroupsViewLib = {
 		this.userParticipantKoModel = new dabGroupsViewLib.UserParticipantKoModel();
 		this.projectsParticipantKoModel = new dabGroupsViewLib.ProjectsParticipantKoModel();
 		this.applyWithProfilePopupControler = new dabGroupsViewLib.ApplyWithProfilePopupControler(this.userParticipantKoModel);
-		this.applyWithProjectPopupControler = new dabGroupsViewLib.ApplyWithProjectPopupControler(this.projectsParticipantKoModel);
+		this.applyWithProjectPopupControler = new dabGroupsViewLib.ApplyWithProjectPopupControler(this.projectsParticipantKoModel, this.projectsParticipantKoModel);
 		this.clickedApplicantId;
 		this.clickedParticipantId;
 		this.clickedProjectApplicantId;
@@ -42,8 +40,7 @@ var dabGroupsViewLib = {
 			if (isCloseGroupLinkEffective) {
 				new Confirm.AskAndProceed(this, "#groupToolBox", "#closeGroupLink", confirmCloseGroupText, null, self.afterUserConfirmsCloseGroup).init();
 			} else {
-				var displayer = new Confirm.MessageDisplayer(
-						cannotCloseGroupText);
+				var displayer = new Confirm.MessageDisplayer(cannotCloseGroupText);
 				$("#closeGroupLink").click(function(event) {
 					displayer.showDialog();
 				});
@@ -148,8 +145,7 @@ var dabGroupsViewLib = {
 
 		this.whenUserConfirmsAcceptUserApplication = function() {
 			var self = this;
-			$
-					.post(
+			$.post(
 							acceptUserApplicationToGroup({
 								groupId : visitedGroupId,
 								applicantId : self.clickedApplicantId
@@ -272,9 +268,12 @@ var dabGroupsViewLib = {
 					if (response.success) {
 						self.projectsParticipantKoModel.removeApplicant(self.clickedProjectApplicantId);
 						if (response.addedProjectIamAdminOf != null) {
-							self.projectsParticipantKoModel.addProjectIamAdminOf(new dabGroupsViewLib.Project(response.addedProjectIamAdminOf.projectSummary.projectId, response.addedProjectIamAdminOf.projectSummary.name));
-							self.projectsParticipantKoModel.applyToGroupWithProjectLinkVisisble((response.applyToGroupWithProjectLinkVisisble));
+							var prjSummary = response.addedProjectIamAdminOf.projectSummary;
+							self.projectsParticipantKoModel.addProjectIamAdminOf(
+									new dabGroupsViewLib.ProjectSummary(prjSummary.projectId, false, "", 
+											prjSummary.name, prjSummary.projectLink, prjSummary.mainPhotoThumbLink, false));
 						}
+						self.projectsParticipantKoModel.applyToGroupWithProjectLinkVisisble((response.applyToGroupWithProjectLinkVisisble));
 					}
 				});
 		};
@@ -294,9 +293,11 @@ var dabGroupsViewLib = {
 					if (response.success) {
 						self.projectsParticipantKoModel.removeProject(self.clickedProjectId);
 						if (response.addedProjectIamAdminOf != null) {
-							self.projectsParticipantKoModel.addProjectIamAdminOf(new dabGroupsViewLib.Project(response.addedProjectIamAdminOf.projectSummary.projectId, response.addedProjectIamAdminOf.projectSummary.name));
-							self.projectsParticipantKoModel.applyToGroupWithProjectLinkVisisble((response.applyToGroupWithProjectLinkVisisble));
+							var prjSummary = response.addedProjectIamAdminOf.projectSummary;
+							self.projectsParticipantKoModel.addProjectIamAdminOf(
+									new dabGroupsViewLib.ProjectSummary(prjSummary.projectId, false, "", prjSummary.name, prjSummary.projectLink, prjSummary.mainPhotoThumbLink, false));
 						}
+						self.projectsParticipantKoModel.applyToGroupWithProjectLinkVisisble((response.applyToGroupWithProjectLinkVisisble));
 					}
 				});
 		};
@@ -341,14 +342,13 @@ var dabGroupsViewLib = {
 
 	// ///////////////////////////
 
-	ApplyWithProjectPopupControler : function(userParticipantKoModel) {
+	ApplyWithProjectPopupControler : function(userParticipantKoModel, projectsParticipantKoModel) {
 
 		this.userParticipantKoModel = userParticipantKoModel;
+		this.projectsParticipantKoModel = projectsParticipantKoModel;
 
 		this.init = function() {
-
 			var self = this;
-
 			$("#applyToGroupWithProjectDialog").dialog({
 				autoOpen : false,
 				width : 400,
@@ -387,6 +387,7 @@ var dabGroupsViewLib = {
 					}),
 					function(response) {
 						self.userParticipantKoModel.applyToGroupWithProjectLinkVisisble(response.applyToGroupWithProjectLinkVisisble);
+						self.projectsParticipantKoModel.moveProjectFromIamAdminOf2GroupApplicants(selectedProjectId);
 						$("#applyToGroupWithProjectDialog").dialog("close");
 					});
 		};
@@ -402,9 +403,7 @@ var dabGroupsViewLib = {
 		this.userParticipantKoModel = userParticipantKoModel;
 
 		this.init = function() {
-
 			var self = this;
-
 			$("#applyToGroupDialog").dialog({
 				autoOpen : false,
 				width : 400,
@@ -435,13 +434,10 @@ var dabGroupsViewLib = {
 				groupId : visitedGroupId,
 				applicationText : $("#applyToGroupDialog textarea").val()
 			}), function(data) {
-
 				self.userParticipantKoModel.applyToGroupLinkVisisble(false);
 				self.userParticipantKoModel.alreadyApplyToGroupLinkVisisble(true);
-
 				$("#applyToGroupDialog").dialog("close");
 			});
-
 		};
 
 		this.init();
@@ -490,6 +486,14 @@ var dabGroupsViewLib = {
 			}
 		};
 		
+		this.moveProjectFromIamAdminOf2GroupApplicants = function(projectId) {
+			var project = this.findProjectIamAdminOfById(projectId);
+			if (project != null) {
+				this.removeProjectIamAdminOf(projectId);
+				this.projectApplicants.push(project);
+			}
+		}
+		
 		this.removeProject = function(projectId) {
 			var project = this.findProjectById(projectId);
 			if (project != null) {
@@ -500,22 +504,30 @@ var dabGroupsViewLib = {
 			}
 		};
 		
-		this.findProjectById = function(projectId) {
-			return _.find(this.projectsMembers(), function(oneProject) {
-				return oneProject.projectId == projectId;
-			});
+		this.removeProjectIamAdminOf = function(projectId) {
+			var project = this.findProjectIamAdminOfById(projectId);
+			if (project != null) {
+				var projectIndex = _.indexOf(this.projectsIamAdminOf(), project);
+				if (projectIndex != -1) {
+					this.projectsIamAdminOf.splice(projectIndex, 1);
+				}
+			}
 		};
 		
 		this.removeApplicant = function(applicantId) {
 			var applicant = this.findApplicantById(applicantId);
 			if (applicant != null) {
-				
 				var applicantIndex = _.indexOf(this.projectApplicants(),applicant);
 				if (applicantIndex != -1) {
 					this.projectApplicants.splice(applicantIndex, 1);
 				}
 			}
-
+		};
+		
+		this.findProjectById = function(projectId) {
+			return _.find(this.projectsMembers(), function(oneProject) {
+				return oneProject.projectId == projectId;
+			});
 		};
 		
 		this.findApplicantById = function(applicantId) {
@@ -524,18 +536,31 @@ var dabGroupsViewLib = {
 			});
 		};
 		
+		this.findProjectIamAdminOfById = function(projectId) {
+			return _.find(this.projectsIamAdminOf(), function(oneProject) {
+				return oneProject.projectId == projectId;
+			});
+		}
+		
 		//////////////////
 
 		// used for listing the project I am admin of
 		this.parseAndAddProjectIamAdminOf = function(oneHtmlProject) {
+			// TODO: clean up copy/pasted code between this and parseAndAddProjectMember
 			var projectId = $(oneHtmlProject).find(".projectId").text();
+			var projectLink = $(oneHtmlProject).find(".projectLink").attr("href");
 			var projectName = $(oneHtmlProject).find(".projectName").text();
-			
 			if (projectName == null || projectName == "") {
 				// some previous bug was leading to project without name. This should be useless now, but let's be paranoid...
 				projectName = "---"
 			}
-			this.addProjectIamAdminOf(new dabGroupsViewLib.Project(projectId, projectName));
+			
+			var projectMainThumb = $(oneHtmlProject).find(".projectMainThumb").attr("src");
+			if (projectMainThumb == undefined || projectMainThumb == "") {
+				projectMainThumb = $("#hiddenDefaultGroupThumb").attr("src");
+			}
+			
+			this.addProjectIamAdminOf(new dabGroupsViewLib.ProjectSummary(projectId, false, "", projectName, projectLink, projectMainThumb, false));
 		};
 		
 		this.addProjectIamAdminOf = function(project) {
@@ -591,8 +616,6 @@ var dabGroupsViewLib = {
 			return self.applicants().length;
 		});
 
-		// /
-
 		this.init = function() {
 			var self = this;
 
@@ -616,24 +639,18 @@ var dabGroupsViewLib = {
 			}
 
 			if (isUserAccepted) {
-				var isLeaveLinkVisible = $(oneHtmlParticipant).find(
-						".isLeaveLinkVisible").text() == "true";
-				var isMakeAdminLinkVisible = $(oneHtmlParticipant).find(
-						".isMakeAdminLinkVisible").text() == "true";
-				var isMakeMemberLinkVisible = $(oneHtmlParticipant).find(
-						".isMakeMemberLinkVisible").text() == "true";
-				var isRemoveMemberLinkVisible = $(oneHtmlParticipant).find(
-						".isRemoveMemberLinkVisible").text() == "true";
+				var isLeaveLinkVisible = $(oneHtmlParticipant).find(".isLeaveLinkVisible").text() == "true";
+				var isMakeAdminLinkVisible = $(oneHtmlParticipant).find(".isMakeAdminLinkVisible").text() == "true";
+				var isMakeMemberLinkVisible = $(oneHtmlParticipant).find(".isMakeMemberLinkVisible").text() == "true";
+				var isRemoveMemberLinkVisible = $(oneHtmlParticipant).find(".isRemoveMemberLinkVisible").text() == "true";
 				this.acceptedParticipants
-						.push(new dabGroupsViewLib.UserParticipant(userName,
+					.push(new dabGroupsViewLib.UserParticipant(userName,
 								profileLink, photoLocation, userLocation, role,
 								isLeaveLinkVisible, isMakeAdminLinkVisible,
 								isMakeMemberLinkVisible,
 								isRemoveMemberLinkVisible));
 			} else {
-				this.applicants.push(new dabGroupsViewLib.UserParticipant(
-						userName, profileLink, photoLocation, userLocation,
-						role, false, false, false, false));
+				this.applicants.push(new dabGroupsViewLib.UserParticipant(userName, profileLink, photoLocation, userLocation, role, false, false, false, false));
 			}
 		};
 
@@ -721,11 +738,6 @@ var dabGroupsViewLib = {
 				.observable(isRemoveMemberLinkVisible);
 	},
 
-	Project : function(projectId, projectName) {
-		this.projectId = projectId;
-		this.projectName = projectName;
-	},
-
 	ProjectSummary : function(projectId, isProjectAccepted, projectApplicationText, projectName, projectLink, projectMainThumb, isRemoveFromGroupLinkVisible) {
 		this.projectId = projectId;
 		this.isProjectAccepted = isProjectAccepted;
@@ -735,5 +747,4 @@ var dabGroupsViewLib = {
 		this.projectMainThumb = projectMainThumb;
 		this.isRemoveFromGroupLinkVisible = isRemoveFromGroupLinkVisible;
 	},
-
 };

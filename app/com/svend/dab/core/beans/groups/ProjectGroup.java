@@ -8,6 +8,7 @@ import java.util.Set;
 import com.google.common.base.Strings;
 import com.svend.dab.core.beans.Location;
 import com.svend.dab.core.beans.groups.GroupParticipant.ROLE;
+import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.projects.ProjectSummary;
 import com.svend.dab.core.beans.projects.SelectedTheme;
 
@@ -28,6 +29,10 @@ public class ProjectGroup {
 	
 	private List<GroupProjectParticipant> projectParticipants;
 
+	private int mainPhotoIndex;
+	
+	private List<Photo> photos;
+	
 	// ////////////////////
 
 	public ProjectGroup() {
@@ -336,6 +341,22 @@ public class ProjectGroup {
 
 	public void setProjectParticipants(List<GroupProjectParticipant> projectParticipants) {
 		this.projectParticipants = projectParticipants;
+	}
+
+	public List<Photo> getPhotos() {
+		return photos;
+	}
+
+	public void setPhotos(List<Photo> photos) {
+		this.photos = photos;
+	}
+
+	public int getMainPhotoIndex() {
+		return mainPhotoIndex;
+	}
+
+	public void setMainPhotoIndex(int mainPhotoIndex) {
+		this.mainPhotoIndex = mainPhotoIndex;
 	}
 
 

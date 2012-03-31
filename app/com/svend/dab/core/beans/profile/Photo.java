@@ -16,20 +16,18 @@ import com.svend.dab.core.beans.aws.S3Link;
 public class Photo implements Serializable {
 
 	private static Logger logger = Logger.getLogger(Photo.class.getName());
-	
+
 	/**
 	 * 
 	 */
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private String caption;
 
 	private S3Link normalPhotoLink;
-	
-	private S3Link thumbLink;
 
-//	private static Logger logger = Logger.getLogger(Photo.class.getName());
+	private S3Link thumbLink;
 
 	// ----------------------------
 	// ----------------------------
@@ -44,35 +42,35 @@ public class Photo implements Serializable {
 		this.normalPhotoLink = normalPhotoLink;
 		this.thumbLink = thumbLink;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 
 		// "equals" here means "points to the same binary in s3"
-		
+
 		if (obj == null) {
 			return false;
 		}
-		
+
 		Photo otherPhoto = (Photo) obj;
-		
-		// caption is not taken into account for equals: if it is different, it is still the same photo (with a different caption): 
-		
+
+		// caption is not taken into account for equals: if it is different, it is still the same photo (with a different caption):
+
 		if (normalPhotoLink == null) {
 			return otherPhoto.getNormalPhotoLink() == null;
 		}
-		
+
 		return normalPhotoLink.equals(otherPhoto.getNormalPhotoLink());
 	}
 
 	// ----------------------------
 	// ----------------------------
-	
+
 	/**
 	 * @param expirationdate
 	 */
 	public void generatePresignedLinks(Date expirationdate, boolean generateNormalLink, boolean generateThumbLink) {
-		
+
 		if (normalPhotoLink != null && generateNormalLink) {
 			normalPhotoLink.generateUrl(expirationdate);
 		}
@@ -80,9 +78,8 @@ public class Photo implements Serializable {
 		if (thumbLink != null && generateThumbLink) {
 			thumbLink.generateUrl(expirationdate);
 		}
-		
+
 	}
-	
 
 	@Override
 	public String toString() {
@@ -121,7 +118,6 @@ public class Photo implements Serializable {
 		return normalPhotoLink.getAddress();
 	}
 
-	
 	public S3Link getThumbLink() {
 		return thumbLink;
 	}
@@ -135,7 +131,7 @@ public class Photo implements Serializable {
 		if (thumbLink == null) {
 			return null;
 		}
-		
+
 		return thumbLink.getAddress();
 	}
 
@@ -161,6 +157,5 @@ public class Photo implements Serializable {
 	public void setThumbLink(S3Link thumbLink) {
 		this.thumbLink = thumbLink;
 	}
-
 
 }
