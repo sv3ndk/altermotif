@@ -9,7 +9,6 @@ import com.google.common.base.Strings;
 import com.svend.dab.core.beans.Location;
 import com.svend.dab.core.beans.groups.GroupParticipant.ROLE;
 import com.svend.dab.core.beans.profile.Photo;
-import com.svend.dab.core.beans.projects.ProjectSummary;
 import com.svend.dab.core.beans.projects.SelectedTheme;
 
 public class ProjectGroup {

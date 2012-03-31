@@ -11,7 +11,7 @@ import java.util.List;
  * @author svend
  *
  */
-public class ProjectSearchQuery {
+public class SearchQuery {
 	
 	public enum SORT_KEY {
 		alphabetic,
@@ -41,14 +41,14 @@ public class ProjectSearchQuery {
 	
 	
 
-	public ProjectSearchQuery(String searchTerm, List<String> tags, List<SelectedTheme> themes) {
+	public SearchQuery(String searchTerm, List<String> tags, List<SelectedTheme> themes) {
 		super();
 		this.searchTerm = searchTerm;
 		this.tags = tags;
 		this.themes = themes;
 	}
 
-	public ProjectSearchQuery() {
+	public SearchQuery() {
 		super();
 	}
 

@@ -3,6 +3,9 @@ package com.svend.dab.core.beans.projects;
 import org.springframework.data.annotation.Id;
 
 /**
+ * 
+ * Tag count for the {@link Project}, used to be able to display the tag size correctly in the tag cloud showed in the project search page
+ * 
  * @author svend
  * 
  */

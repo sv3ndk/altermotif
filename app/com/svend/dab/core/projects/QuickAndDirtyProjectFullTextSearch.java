@@ -19,7 +19,7 @@ import com.svend.dab.core.beans.Config;
 import com.svend.dab.core.beans.projects.IndexedProject;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.ProjectOverview;
-import com.svend.dab.core.beans.projects.ProjectSearchQuery;
+import com.svend.dab.core.beans.projects.SearchQuery;
 import com.svend.dab.core.dao.IIndexedProjectDao;
 import com.svend.dab.core.dao.IProjectDao;
 
@@ -76,7 +76,7 @@ public class QuickAndDirtyProjectFullTextSearch implements IProjectFtsService {
 		}
 	}
 
-	public List<ProjectOverview> searchForProjects(ProjectSearchQuery request) {
+	public List<ProjectOverview> searchForProjects(SearchQuery request) {
 
 		List<IndexedProject> ips = indexedProjectDao.searchForProjects(request);
 

@@ -20,7 +20,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoException;
 import com.svend.dab.core.beans.projects.IndexedProject;
-import com.svend.dab.core.beans.projects.ProjectSearchQuery;
+import com.svend.dab.core.beans.projects.SearchQuery;
 import com.svend.dab.core.beans.projects.SelectedTheme;
 import com.svend.dab.core.dao.IIndexedProjectDao;
 
@@ -44,7 +44,7 @@ public class IndexedProjectDao implements IIndexedProjectDao {
 		mongoTemplate.save(ip);
 	}
 
-	public List<IndexedProject> searchForProjects(ProjectSearchQuery request) {
+	public List<IndexedProject> searchForProjects(SearchQuery request) {
 
 		Criteria criteria = where("_id").ne("lesPetitsPasDansLesPetisPlatsHalala");
 

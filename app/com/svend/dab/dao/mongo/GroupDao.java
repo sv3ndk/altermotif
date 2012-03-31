@@ -1,5 +1,6 @@
 package com.svend.dab.dao.mongo;
 
+import static org.springframework.data.mongodb.core.mapreduce.MapReduceOptions.options;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
@@ -23,12 +24,14 @@ import com.mongodb.WriteResult;
 import com.svend.dab.core.beans.groups.GroupParticipant;
 import com.svend.dab.core.beans.groups.GroupParticipant.ROLE;
 import com.svend.dab.core.beans.groups.GroupProjectParticipant;
+import com.svend.dab.core.beans.groups.GroupTagCount;
 import com.svend.dab.core.beans.groups.ProjectGroup;
 import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.ProjectSummary;
+import com.svend.dab.core.beans.projects.TagCount;
 import com.svend.dab.core.dao.IGroupDao;
 
 @Service
@@ -146,5 +149,9 @@ public class GroupDao implements IGroupDao {
 		
 	}
 
+	public void launchCountGroupTagsJob() {
+		mongoTemplate.mapReduce("projectGroup", "classpath:com/svend/dab/dao/mongo/mapreduce/countTagsMap.js",
+				"classpath:com/svend/dab/dao/mongo/mapreduce/countTagsReduce.js", options().outputCollection("groupTagCount"), GroupTagCount.class);
+	}
 
 }

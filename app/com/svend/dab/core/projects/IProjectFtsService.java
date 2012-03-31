@@ -3,7 +3,7 @@ package com.svend.dab.core.projects;
 import java.util.List;
 
 import com.svend.dab.core.beans.projects.ProjectOverview;
-import com.svend.dab.core.beans.projects.ProjectSearchQuery;
+import com.svend.dab.core.beans.projects.SearchQuery;
 
 /**
  * 
@@ -16,7 +16,7 @@ public interface IProjectFtsService {
 	
 	public void updateProjetIndex(String projectId, boolean immediate);
 	
-	public List<ProjectOverview> searchForProjects(ProjectSearchQuery request);
+	public List<ProjectOverview> searchForProjects(SearchQuery request);
 
 	public void ensureIndexOnLocation();
 

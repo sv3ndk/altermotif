@@ -1,6 +1,3 @@
-/**
- * 
- */
 package controllers.groups;
 
 import controllers.DabLoggedController;
@@ -11,7 +8,6 @@ import controllers.DabLoggedController;
  */
 public class GroupsSearch extends DabLoggedController {
 
-	
 	public static void groupsSearch () {
 		render();
 	}

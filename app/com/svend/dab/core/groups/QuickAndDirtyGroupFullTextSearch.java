@@ -1,5 +1,6 @@
 package com.svend.dab.core.groups;
 
+import java.util.List;
 import java.util.StringTokenizer;
 import java.util.logging.Logger;
 
@@ -9,8 +10,10 @@ import org.springframework.stereotype.Service;
 import web.utils.Utils;
 
 import com.google.common.base.Strings;
+import com.svend.dab.core.beans.groups.GroupOverview;
 import com.svend.dab.core.beans.groups.IndexedGroup;
 import com.svend.dab.core.beans.groups.ProjectGroup;
+import com.svend.dab.core.beans.projects.SearchQuery;
 import com.svend.dab.core.dao.IGroupDao;
 import com.svend.dab.core.dao.IIndexedGroupDao;
 
@@ -64,6 +67,13 @@ public class QuickAndDirtyGroupFullTextSearch implements IGroupFtsService {
 
 	public void ensureIndexOnLocation() {
 		indexedGroupDao.ensureIndexOnLocation();	
+	}
+
+	public List<GroupOverview> searchForGroups(SearchQuery request) {
+		
+		List<IndexedGroup> indexedGroups = indexedGroupDao.searchGroups(request);
+		
+		return null;
 	}
 
 }

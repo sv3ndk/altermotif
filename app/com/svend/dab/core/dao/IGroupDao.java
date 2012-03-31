@@ -38,5 +38,10 @@ public interface IGroupDao {
 
 	public void updateProjectMainPhoto(String groupId, String projectId, Photo mainPhoto);
 
+	/////////////////////////
+	// tag count
+	
+	public void launchCountGroupTagsJob();
+
 
 }

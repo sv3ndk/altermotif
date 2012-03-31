@@ -12,13 +12,13 @@ import play.jobs.Job;
  *
  */
 @Every("5min")
-public class CountTagsMapReduceJob extends Job<Object>{
+public class CountGroupTagsMapReduceJob extends Job<Object>{
 
-	private static Logger logger = Logger.getLogger(CountTagsMapReduceJob.class.getName());
+	private static Logger logger = Logger.getLogger(CountGroupTagsMapReduceJob.class.getName());
 	
 	@Override
 	public void doJob() throws Exception {
-		logger.log(Level.INFO, "launching tag count job");
+		logger.log(Level.INFO, "launching group tag count job");
 		BeanProvider.getProjectDao().launchCountProjectTagsJob();
 	}
 

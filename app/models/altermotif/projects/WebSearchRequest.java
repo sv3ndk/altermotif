@@ -11,8 +11,8 @@ import com.google.common.base.Strings;
 import com.svend.dab.core.beans.GeoCoord;
 import com.svend.dab.core.beans.Location;
 import com.svend.dab.core.beans.projects.GeographicCircle;
-import com.svend.dab.core.beans.projects.ProjectSearchQuery;
-import com.svend.dab.core.beans.projects.ProjectSearchQuery.SORT_KEY;
+import com.svend.dab.core.beans.projects.SearchQuery;
+import com.svend.dab.core.beans.projects.SearchQuery.SORT_KEY;
 import com.svend.dab.core.beans.projects.SelectedTheme;
 
 /**
@@ -48,9 +48,9 @@ public class WebSearchRequest {
 	private boolean filterLg;
 	
 
-	public ProjectSearchQuery toBackendRequest() {
+	public SearchQuery toBackendRequest() {
 
-		ProjectSearchQuery request = new ProjectSearchQuery();
+		SearchQuery request = new SearchQuery();
 
 		////////////////////////////////////
 		// basic query (from the query page

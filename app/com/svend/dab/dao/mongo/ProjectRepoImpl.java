@@ -33,9 +33,9 @@ import com.svend.dab.core.beans.projects.Participant;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.Project.STATUS;
-import com.svend.dab.core.beans.projects.ProjectSearchQuery.SORT_KEY;
+import com.svend.dab.core.beans.projects.SearchQuery.SORT_KEY;
 import com.svend.dab.core.beans.projects.ProjectOverview;
-import com.svend.dab.core.beans.projects.ProjectSearchQuery;
+import com.svend.dab.core.beans.projects.SearchQuery;
 import com.svend.dab.core.beans.projects.SelectedTheme;
 import com.svend.dab.core.beans.projects.TagCount;
 import com.svend.dab.core.beans.projects.Task;
@@ -125,7 +125,7 @@ public class ProjectRepoImpl implements IProjectDao {
 		genericUpdateProject(projectId, new Update().set("status", newStatus));
 	}
 
-	public List<ProjectOverview> searchProjects(ProjectSearchQuery request) {
+	public List<ProjectOverview> searchProjects(SearchQuery request) {
 
 		List<ProjectOverview> response = new LinkedList<ProjectOverview>();
 
