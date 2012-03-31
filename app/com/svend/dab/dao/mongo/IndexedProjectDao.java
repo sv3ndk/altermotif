@@ -13,7 +13,6 @@ import org.springframework.data.mongodb.core.CollectionCallback;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.geo.Point;
 import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import com.google.common.base.Strings;
@@ -40,16 +39,15 @@ public class IndexedProjectDao implements IIndexedProjectDao {
 	 * 
 	 * @see com.svend.dab.core.dao.IIndexedProjectDao#updateIndex(com.svend.dab.core.beans.projects.IndexedProject)
 	 */
-	
+
 	public void updateIndex(IndexedProject ip) {
 		mongoTemplate.save(ip);
 	}
 
-	
 	public List<IndexedProject> searchForProjects(ProjectSearchQuery request) {
 
-		Criteria criteria = where ("_id").ne("lesPetitsPasDansLesPetisPlatsHalala");
-		
+		Criteria criteria = where("_id").ne("lesPetitsPasDansLesPetisPlatsHalala");
+
 		// search term
 		if (!Strings.isNullOrEmpty(request.getSearchTerm())) {
 			StringTokenizer st = new StringTokenizer(request.getSearchTerm());
@@ -77,37 +75,32 @@ public class IndexedProjectDao implements IIndexedProjectDao {
 			}
 			criteria.and("themesWithSubTheme").all(themesWithSubTheme.toArray());
 		}
-		
+
 		// max due date
 		if (request.getDueDateBefore() != null) {
 			criteria.and("dueDate").lte(request.getDueDateBefore());
 		}
-		
+
 		// project language
 		if (request.getLanguage() != null) {
 			criteria.and("language").is(request.getLanguage());
 		}
-		
-		// project location close to 
+
+		// project location close to
 		if (request.getInGeographicRegion() != null) {
-			
 			Point center = new Point(request.getInGeographicRegion().getCenter().getLatitude(), request.getInGeographicRegion().getCenter().getLongitude());
-			
 			criteria.and("location").near(center).maxDistance(request.getInGeographicRegion().getRadiusInDegrees());
 		}
-		
 
 		return mongoTemplate.find(query(criteria), IndexedProject.class);
 
 	}
 
-	
 	public void ensureIndexOnLocation() {
 
 		// "ensureIndex" seems to be missing in RC1 version of mongo Spring Data
-		
 		mongoTemplate.execute("indexedProject", new CollectionCallback<Long>() {
-			
+
 			public Long doInCollection(DBCollection collection) throws MongoException, DataAccessException {
 				BasicDBObject indexDbo = new BasicDBObject();
 				indexDbo.put("location", "2d");

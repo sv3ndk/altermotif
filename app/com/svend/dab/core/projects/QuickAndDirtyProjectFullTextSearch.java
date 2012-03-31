@@ -1,6 +1,5 @@
 package com.svend.dab.core.projects;
 
-
 import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -17,44 +16,36 @@ import web.utils.Utils;
 
 import com.google.common.base.Strings;
 import com.svend.dab.core.beans.Config;
-import com.svend.dab.core.beans.GeoCoord;
-import com.svend.dab.core.beans.Location;
 import com.svend.dab.core.beans.projects.IndexedProject;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.ProjectOverview;
 import com.svend.dab.core.beans.projects.ProjectSearchQuery;
-import com.svend.dab.core.beans.projects.SelectedTheme;
 import com.svend.dab.core.dao.IIndexedProjectDao;
 import com.svend.dab.core.dao.IProjectDao;
 
 /**
  * Quick and dirty (and I'm drunk...) version of a full text search index for projects.
  * 
- * to be replaced by a Solr index some time...
+ * TODO: to be replaced by a Solr index some time...
  * 
  * @author svend
- *
+ * 
  */
 @Service
-public class QuickAndDirtyProjectFullTextSearch implements IProjectFTSService {
+public class QuickAndDirtyProjectFullTextSearch implements IProjectFtsService {
 
-	
 	@Autowired
 	private IProjectDao projectDao;
-	
+
 	@Autowired
 	private IIndexedProjectDao indexedProjectDao;
-	
+
 	@Autowired
 	private Config config;
 
-
 	private static Logger logger = Logger.getLogger(QuickAndDirtyProjectFullTextSearch.class.getName());
-	
-	
-	
+
 	public void updateProjetIndex(String projectId, boolean immediate) {
-		
 
 		if (!immediate) {
 			// increasing the chances to actually catch the updated data in db (you know, eventual consistency thingy...)
@@ -63,85 +54,61 @@ public class QuickAndDirtyProjectFullTextSearch implements IProjectFTSService {
 		}
 
 		Project project = projectDao.findOne(projectId);
-		
+
 		if (project == null) {
 			logger.log(Level.WARNING, "cannot update full text search of non existant project : " + projectId);
 		} else {
-			
+
 			IndexedProject ip = new IndexedProject(project);
-			
-			
-			if (project.getThemes() != null) {
-				for (SelectedTheme theme : project.getThemes()) {
-					ip.addSelectedTheme(theme);
-				}
-			}
-			
-			if (!Strings.isNullOrEmpty(project.getPdata().getName())) {
-				StringTokenizer st = new StringTokenizer(project.getPdata().getName());
+
+			// indexing full search search based on content in the name, description and goal
+			String textToIndex = new StringBuffer(project.getPdata().getName()).append(" ").append(project.getPdata().getDescription()).append(" ")
+					.append(project.getPdata().getGoal()).toString();
+
+			if (!Strings.isNullOrEmpty(textToIndex)) {
+				StringTokenizer st = new StringTokenizer(textToIndex);
 				while (st.hasMoreTokens()) {
-					ip.addTerm(st.nextToken());
+					ip.addFtsTerm(st.nextToken());
 				}
 			}
-			
-			if (!Strings.isNullOrEmpty(project.getPdata().getDescription())) {
-				StringTokenizer st = new StringTokenizer(project.getPdata().getDescription());
-				while (st.hasMoreTokens()) {
-					ip.addTerm(st.nextToken());
-				}
-			}
-			
-			if (!Strings.isNullOrEmpty(project.getPdata().getGoal())) {
-				StringTokenizer st = new StringTokenizer(project.getPdata().getGoal());
-				while (st.hasMoreTokens()) {
-					ip.addTerm(st.nextToken());
-				}
-			}
-			
+
 			indexedProjectDao.updateIndex(ip);
-			
 		}
 	}
 
-	
-	
 	public List<ProjectOverview> searchForProjects(ProjectSearchQuery request) {
-		
+
 		List<IndexedProject> ips = indexedProjectDao.searchForProjects(request);
-		
-		
+
 		Set<String> allIds = new HashSet<String>();
-		
 		for (IndexedProject ip : ips) {
 			allIds.add(ip.getProjectId());
 		}
-		
+
 		List<Project> projects = projectDao.loadAllProjects(allIds, request.getSortKey());
-		
+
 		List<ProjectOverview> projectOverview = new LinkedList<ProjectOverview>();
-		
+
 		if (projects != null) {
 			for (Project project : projects) {
 				projectOverview.add(new ProjectOverview(project));
 			}
 		}
-		
+
 		if (projectOverview != null) {
 			Date expirationdate = new Date();
 			expirationdate.setTime(expirationdate.getTime() + config.getCvExpirationDelayInMillis());
-			for (ProjectOverview overview :projectOverview) {
+			for (ProjectOverview overview : projectOverview) {
 				overview.generatePhotoLinks(expirationdate);
 			}
 		}
-		
+
 		return projectOverview;
-		
+
 	}
 
-
-	
 	public void ensureIndexOnLocation() {
-		indexedProjectDao.ensureIndexOnLocation();		
+		indexedProjectDao.ensureIndexOnLocation();
 	}
 
 }

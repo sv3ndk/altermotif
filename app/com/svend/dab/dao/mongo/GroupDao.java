@@ -3,6 +3,9 @@ package com.svend.dab.dao.mongo;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,7 @@ import com.svend.dab.core.beans.groups.ProjectGroup;
 import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserSummary;
+import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.ProjectSummary;
 import com.svend.dab.core.dao.IGroupDao;
 
@@ -33,6 +37,23 @@ public class GroupDao implements IGroupDao {
 	@Autowired
 	private MongoTemplate mongoTemplate;
 
+	
+	public Set<String> getAllGroupsIds() {
+		Query query = query(where("_id").exists(true));
+		query.fields().include("_id");
+		List<ProjectGroup> list = mongoTemplate.find(query, ProjectGroup.class);
+		Set<String> ids = new HashSet<String>();
+
+		if (list != null) {
+			for (ProjectGroup group : list) {
+				ids.add(group.getId());
+			}
+		}
+		return ids;
+		
+	}
+
+	
 	public void save(ProjectGroup group) {
 		if (group != null) {
 			mongoTemplate.save(group);
@@ -124,5 +145,6 @@ public class GroupDao implements IGroupDao {
 		mongoTemplate.updateFirst(query, update, ProjectGroup.class);
 		
 	}
+
 
 }

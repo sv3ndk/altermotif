@@ -8,30 +8,37 @@ import org.springframework.stereotype.Service;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.projects.Participation;
 import com.svend.dab.core.beans.projects.Project;
+import com.svend.dab.core.dao.IGroupDao;
 import com.svend.dab.core.dao.IProjectDao;
 import com.svend.dab.core.dao.IUserProfileDao;
-import com.svend.dab.core.projects.IProjectFTSService;
+import com.svend.dab.core.groups.IGroupFtsService;
+import com.svend.dab.core.projects.IProjectFtsService;
 
 /**
  * @author svend
- *
+ * 
  */
 @Service
 public class AdminService {
-	
-	
+
 	@Autowired
 	IUserProfileDao userProfileDao;
-	
-	
+
 	@Autowired
 	IProjectDao projectDao;
 
 	@Autowired
-	private IProjectFTSService projectFTSService;
-	
+	IGroupDao groupDao;
+
+	@Autowired
+	private IProjectFtsService projectFtsService;
+
+	@Autowired
+	private IGroupFtsService groupFtsService;
+
 	/**
-	 * this ugly method has been created when we added the "creation date" to the proejct summary => we updated all existing data like this (very dangerous method: loses udpates is other users are connected...) 
+	 * this ugly method has been created when we added the "creation date" to the proejct summary => we updated all existing data like this (very dangerous
+	 * method: loses udpates is other users are connected...)
 	 */
 	public void updateAllProjectsSummaries() {
 		Set<String> allUserIds = userProfileDao.getAllUsernames();
@@ -45,13 +52,20 @@ public class AdminService {
 		}
 	}
 
-
 	public void indexAllProjects() {
-		projectFTSService.ensureIndexOnLocation();
+		projectFtsService.ensureIndexOnLocation();
 		Set<String> allProjectIds = projectDao.getAllProjectIds();
 		for (String id : allProjectIds) {
-			projectFTSService.updateProjetIndex(id, true);
+			projectFtsService.updateProjetIndex(id, true);
 		}
 	}
-	
+
+	public void indexAllGroups() {
+		groupFtsService.ensureIndexOnLocation();
+		Set<String> allGroupIds = groupDao.getAllGroupsIds();
+		for (String id : allGroupIds) {
+			groupFtsService.updateGroupIndex(id, true);
+		}
+	}
+
 }

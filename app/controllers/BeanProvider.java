@@ -4,7 +4,6 @@ import play.modules.spring.Spring;
 
 import com.svend.dab.core.AdminService;
 import com.svend.dab.core.IForumService;
-import com.svend.dab.core.IGroupService;
 import com.svend.dab.core.ISocialService;
 import com.svend.dab.core.IUserMessagesServices;
 import com.svend.dab.core.IProfilePhotoService;
@@ -15,7 +14,8 @@ import com.svend.dab.core.dao.IForumPostDao;
 import com.svend.dab.core.dao.IForumThreadDao;
 import com.svend.dab.core.dao.IProjectDao;
 import com.svend.dab.core.dao.IUserProfileDao;
-import com.svend.dab.core.projects.IProjectFTSService;
+import com.svend.dab.core.groups.IGroupService;
+import com.svend.dab.core.projects.IProjectFtsService;
 import com.svend.dab.core.projects.IProjectPhotoService;
 import com.svend.dab.core.projects.IProjectService;
 import com.svend.dab.eda.errorhandling.NonFailingJsonMessageConverter;
@@ -56,8 +56,8 @@ public class BeanProvider {
 		return (IProjectService) Spring.getBeanOfType(IProjectService.class);
 	}
 
-	public static IProjectFTSService  getProjectFullTextSearchService() {
-		return (IProjectFTSService) Spring.getBeanOfType(IProjectFTSService.class);
+	public static IProjectFtsService  getProjectFullTextSearchService() {
+		return (IProjectFtsService) Spring.getBeanOfType(IProjectFtsService.class);
 	}
 
 	public static IProjectDao  getProjectDao() {

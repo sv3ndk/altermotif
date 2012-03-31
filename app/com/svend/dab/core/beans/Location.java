@@ -6,6 +6,7 @@ package com.svend.dab.core.beans;
  */
 public class Location {
 
+
 	private String location;
 	
 	// TODO: replace this with GeoCoord
@@ -21,6 +22,13 @@ public class Location {
 		this.location = copied.getLocation();
 		this.latitude = copied.getLatitude();
 		this.longitude = copied.getLongitude();
+	}
+	
+	public Location(String location, String latitude, String longitude) {
+		super();
+		this.location = location;
+		this.latitude = latitude;
+		this.longitude = longitude;
 	}
 	
 	public String getLocation() {

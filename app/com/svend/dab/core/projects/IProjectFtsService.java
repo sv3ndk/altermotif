@@ -12,7 +12,7 @@ import com.svend.dab.core.beans.projects.ProjectSearchQuery;
  * @author svend
  *
  */
-public interface IProjectFTSService {
+public interface IProjectFtsService {
 	
 	public void updateProjetIndex(String projectId, boolean immediate);
 	

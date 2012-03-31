@@ -20,6 +20,7 @@ import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.dao.IGroupDao;
 import com.svend.dab.core.dao.IUserProfileDao;
+import com.svend.dab.core.groups.IGroupFtsService;
 import com.svend.dab.eda.IEventPropagator;
 
 /**
@@ -37,6 +38,8 @@ public class GroupCreatedPropagator implements IEventPropagator<GroupCreated> {
 	@Autowired
 	private IGroupDao groupDao;
 	
+	@Autowired
+	private IGroupFtsService groupFtsService;
 	
 	public void propagate(GroupCreated event) throws DabException {
 		
@@ -58,6 +61,7 @@ public class GroupCreatedPropagator implements IEventPropagator<GroupCreated> {
 					userProfileRepo.addParticipationInGroup(creator.getUsername(), new GroupParticipation(ROLE.admin, new GroupSummary(createGroup)));
 				}
 				
+				groupFtsService.updateGroupIndex(event.getCreatedGroup().getId(), false);
 				
 			} else {
 				logger.log(Level.WARNING, "Not creating a new project group: no user found for this userid: " + event.getCreatorUserId());

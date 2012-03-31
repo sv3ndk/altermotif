@@ -1,5 +1,9 @@
 package controllers;
 
+/**
+ * @author svend
+ * TODO: add more indexes to MongoDb...
+ */
 public class Admin extends DabLoggedController {
 
 	public static void admin() {
@@ -26,4 +30,8 @@ public class Admin extends DabLoggedController {
 		admin();
 	}
 
+	public static void doIndexAllGroups() {
+		BeanProvider.getAdminService().indexAllGroups();
+		admin();
+	}
 }

@@ -1,5 +1,6 @@
 package controllers.projects;
 
+import com.svend.dab.core.beans.Config;
 import com.svend.dab.core.beans.profile.UserProfile;
 
 import web.utils.Utils;
@@ -22,25 +23,26 @@ public class ProjectsResults extends DabController {
 			ProjectsSearch.projectsSearch();
 		} else {
 
-			// default reference point when sorting results by proximity: by default Brussels, or if the user is logged in and has specified a location in his profile, we take that instead
-			String defaultRefenceLocation = "City of Brussels, Belgium";
-			String defaultReferenceLatitude = "50.8503396";
-			String defaultReferenceLongitude = "4.351710300000036";
+			boolean useSearchReferenceLocationFromConfig = true;
 			
 			if (getSessionWrapper().isLoggedIn()) {
 				UserProfile loggedInProfile = BeanProvider.getUserProfileService().loadUserProfile(getSessionWrapper().getLoggedInUserProfileId(), false);
 				if (loggedInProfile != null && loggedInProfile.getPdata().getLocation() != null) {
-					defaultRefenceLocation = loggedInProfile.getPdata().getLocation();
-					defaultReferenceLatitude = loggedInProfile.getPdata().getLocationLat();
-					defaultReferenceLongitude = loggedInProfile.getPdata().getLocationLong();
+					renderArgs.put("defaultRefenceLocation", loggedInProfile.getPdata().getLocation());
+					renderArgs.put("defaultReferenceLatitude", loggedInProfile.getPdata().getLocationLat());
+					renderArgs.put("defaultReferenceLongitude", loggedInProfile.getPdata().getLocationLong());
+					useSearchReferenceLocationFromConfig = false;
 				}
+			}
+			if (useSearchReferenceLocationFromConfig) {
+				Config config = BeanProvider.getConfig();
+				renderArgs.put("defaultRefenceLocation", config.getDefaultSearchReferenceLocation().getLocation());
+				renderArgs.put("defaultReferenceLatitude", config.getDefaultSearchReferenceLocation().getLatitude());
+				renderArgs.put("defaultReferenceLongitude", config.getDefaultSearchReferenceLocation().getLongitude());
 			}
 			
 			Utils.addAllPossibleLanguageNamesToRenderArgs(getSessionWrapper(), renderArgs);
 
-			renderArgs.put("defaultRefenceLocation", defaultRefenceLocation);
-			renderArgs.put("defaultReferenceLatitude", defaultReferenceLatitude);
-			renderArgs.put("defaultReferenceLongitude", defaultReferenceLongitude);
 			renderArgs.put("originalSearchRequestJson", Utils.objectToJsonString(r));
 			renderArgs.put("originalSearchRequest", r);
 			renderArgs.put("projectsOverviews", BeanProvider.getProjectFullTextSearchService().searchForProjects(r.toBackendRequest()));

@@ -42,10 +42,11 @@ public class Config {
 	private final long howLongIsABitInMillis = 750;
 
 	private final List<Theme> projectThemes = new LinkedList<Theme>();
-	
-	
+
 	// TODO: it should be possible to deduce this from the deployment environment
 	private final String altermotifBaseUrl = "http://altermotif.cloudfoundry.com";
+
+	private final Location defaultSearchReferenceLocation = new Location("City of Brussels, Belgium", "50.8503396", "4.351710300000036");
 
 	// ------------------------------------------------------
 	// ------------------------------------------------------
@@ -103,9 +104,7 @@ public class Config {
 		development.addSubTheme(new SubTheme("sustainable", "projectThemeDevelopmentSubThemeSustainableLiving"));
 		development.addSubTheme(new SubTheme("other", "projectThemeDevelopmentSubThemeOther"));
 		projectThemes.add(development);
-		
-		
-		
+
 		Theme environment = new Theme("environment", "projectThemeEnvironment");
 		environment.addSubTheme(new SubTheme("agriculture", "projectThemeEnvironmentSubThemeAgriculture"));
 		environment.addSubTheme(new SubTheme("awareness", "projectThemeEnvironmentSubThemeAwarenessRaising"));
@@ -118,7 +117,6 @@ public class Config {
 		environment.addSubTheme(new SubTheme("waste", "projectThemeEnvironmentSubThemeWasteManagement"));
 		environment.addSubTheme(new SubTheme("other", "projectThemeEnvironmentSubThemeOther"));
 		projectThemes.add(environment);
-
 
 		Theme science = new Theme("science", "projectThemeScience");
 		science.addSubTheme(new SubTheme("education", "projectThemeScienceSubThemeEducation"));
@@ -139,7 +137,7 @@ public class Config {
 		society.addSubTheme(new SubTheme("youth", "projectThemeSocietySubThemeYouth"));
 		society.addSubTheme(new SubTheme("other", "projectThemeSocietySubThemeOther"));
 		projectThemes.add(society);
-				
+
 		Theme sports = new Theme("sports", "projectThemeSports");
 		sports.addSubTheme(new SubTheme("teamBuilding", "projectThemeSportsSubThemeTeamBuilding"));
 		sports.addSubTheme(new SubTheme("events", "projectThemeSportsSubThemeEvent"));
@@ -147,7 +145,6 @@ public class Config {
 		sports.addSubTheme(new SubTheme("other", "projectThemeSportsSubThemeOther"));
 		projectThemes.add(sports);
 
-		
 		Theme travel = new Theme("travel", "projectThemeTravel");
 		travel.addSubTheme(new SubTheme("ecotourism", "projectThemeTravelSubThemeEcoTourism"));
 		travel.addSubTheme(new SubTheme("exploration", "projectThemeTravelSubThemeExploration"));
@@ -155,7 +152,6 @@ public class Config {
 		travel.addSubTheme(new SubTheme("exchange", "projectThemeTravelSubThemeTravellingIntExchange"));
 		travel.addSubTheme(new SubTheme("other", "projectThemeTravelSubThemeOther"));
 		projectThemes.add(travel);
-
 
 	}
 
@@ -243,6 +239,10 @@ public class Config {
 
 	public String getAltermotifBaseUrl() {
 		return altermotifBaseUrl;
+	}
+
+	public Location getDefaultSearchReferenceLocation() {
+		return defaultSearchReferenceLocation;
 	}
 
 }

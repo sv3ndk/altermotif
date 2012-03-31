@@ -1,5 +1,7 @@
 package com.svend.dab.core.dao;
 
+import java.util.Set;
+
 import com.svend.dab.core.beans.groups.GroupParticipant.ROLE;
 import com.svend.dab.core.beans.groups.ProjectGroup;
 import com.svend.dab.core.beans.profile.Photo;
@@ -7,6 +9,8 @@ import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.ProjectSummary;
 
 public interface IGroupDao {
+
+	public Set<String> getAllGroupsIds();
 
 	public void save(ProjectGroup group);
 
@@ -33,5 +37,6 @@ public interface IGroupDao {
 	public void setProjectApplicationAcceptedStatus(String groupId, String projectId, boolean b);
 
 	public void updateProjectMainPhoto(String groupId, String projectId, Photo mainPhoto);
+
 
 }

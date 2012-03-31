@@ -1,4 +1,4 @@
-package com.svend.dab.core;
+package com.svend.dab.core.groups;
 
 import com.svend.dab.core.beans.groups.GroupParticipant.ROLE;
 import com.svend.dab.core.beans.groups.ProjectGroup;
