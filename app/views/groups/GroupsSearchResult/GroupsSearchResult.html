@@ -1,0 +1,24 @@
+#{extends 'masterTemplate.html' /}
+
+#{set 'moreScripts'}
+    
+#{/set}
+
+#{set 'moreStyles'}
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/searchResults.css'}" />
+#{/set}
+
+
+<div class="searchResultContainer" >
+
+	<span id="searchResultTitle">&{'groupSearchResultTitle'}</span>
+	<a href="@{groups.GroupsSearch.groupsSearch()}" class="dabLink">&{'groupSearchResultBackToSearchPage'}</a>
+	
+	
+	<div id="searchResultList">
+		#{list items:groupsOverviews, as:'oneOverview'}
+			#{groups.groupOverview overview:oneOverview /}
+		#{/list}
+	</div>
+	
+</div>

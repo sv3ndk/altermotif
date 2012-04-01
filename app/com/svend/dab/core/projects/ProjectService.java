@@ -1,10 +1,7 @@
 package com.svend.dab.core.projects;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -13,6 +10,8 @@ import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import web.utils.Utils;
 
 import com.google.common.base.Strings;
 import com.svend.dab.core.beans.Config;
@@ -24,7 +23,6 @@ import com.svend.dab.core.beans.projects.ParticpantsIdList;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.Project.STATUS;
 import com.svend.dab.core.beans.projects.RankedTag;
-import com.svend.dab.core.beans.projects.TagCount;
 import com.svend.dab.core.beans.projects.Task;
 import com.svend.dab.core.dao.IProjectDao;
 import com.svend.dab.core.dao.ITagCountDao;
@@ -54,7 +52,6 @@ public class ProjectService implements IProjectService {
 
 	@Autowired
 	private ITagCountDao tagCountDao;
-
 
 	@Autowired
 	private Config config;
@@ -198,9 +195,8 @@ public class ProjectService implements IProjectService {
 	public ParticpantsIdList determineRemovedParticipants(String projectId, Collection<String> knownParticipantUsernames,
 			Collection<String> knownApplicationUsernames) {
 
-		ParticpantsIdList response = new ParticpantsIdList();
-
 		Project project = projectDao.loadProjectParticipants(projectId);
+		ParticpantsIdList response = new ParticpantsIdList();
 
 		if (project != null) {
 
@@ -254,58 +250,7 @@ public class ProjectService implements IProjectService {
 	// popular project tags
 
 	public List<RankedTag> getPopularTags() {
-
-		List<RankedTag> tags = new LinkedList<RankedTag>();
-
-		List<TagCount> rawTags = tagCountDao.getMostPopularTags(config.getMaxNumberOfDisplayedProjectTags());
-
-		if (rawTags != null && !rawTags.isEmpty()) {
-
-			if (rawTags.size() == 1) {
-				tags.add(new RankedTag(rawTags.get(0).getTag(), 0));
-			} else {
-				int highestFreq = rawTags.get(0).getValue();
-				int lowestFreq = rawTags.get(rawTags.size() - 1).getValue();
-
-				float rankStep = (highestFreq - lowestFreq) / 5;
-
-				for (TagCount rawTag : rawTags) {
-					if (rawTag.getValue() > lowestFreq + 4 * rankStep) {
-						tags.add(new RankedTag(rawTag.getTag(), 0));
-					} else if (rawTag.getValue() > lowestFreq + 3 * rankStep) {
-						tags.add(new RankedTag(rawTag.getTag(), 1));
-					} else if (rawTag.getValue() > lowestFreq + 2 * rankStep) {
-						tags.add(new RankedTag(rawTag.getTag(), 2));
-					} else if (rawTag.getValue() > lowestFreq + rankStep) {
-						tags.add(new RankedTag(rawTag.getTag(), 3));
-					} else {
-						tags.add(new RankedTag(rawTag.getTag(), 4));
-					}
-				}
-			}
-		}
-
-		Collections.sort(tags, new Comparator<RankedTag>() {
-
-			public int compare(RankedTag tag1, RankedTag tag2) {
-
-				if ((tag1 == null || tag1.getTag() == null) && (tag2 == null || tag2.getTag() == null)) {
-					return 0;
-				}
-
-				if (tag1 == null || tag1.getTag() == null) {
-					return -1;
-				}
-
-				if (tag2 == null || tag2.getTag() == null) {
-					return 1;
-				}
-
-				return tag1.getTag().compareTo(tag2.getTag());
-			}
-		});
-
-		return tags;
+		return Utils.rankCountedTags(tagCountDao.getMostPopularProjectTags(config.getMaxNumberOfDisplayedTags()));
 	}
 
 	// ///////////////////////////////////////////////
@@ -322,6 +267,5 @@ public class ProjectService implements IProjectService {
 	public void restartProject(Project project) {
 		eventEmitter.emit(new ProjectStatusChanged(project.getId(), STATUS.started));
 	}
-
 
 }

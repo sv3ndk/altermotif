@@ -7,20 +7,18 @@
 	    var originalSearchRequestJson = ${originalSearchRequestJson.raw()};
 	    var allPossibleLanguages = ${allPossibleLanguageNames.raw()};
 	    
-	    
 	    var defaultRefenceLocation = "${defaultRefenceLocation}";
 	    var defaultReferenceLatitude = "${defaultReferenceLatitude}";
 	    var defaultReferenceLongitude = "${defaultReferenceLongitude}";
-	    
 	</script>
     
 #{/set}
 
 #{set 'moreStyles'}
-    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/projects/projectsResults.css'}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/searchResults.css'}" />
 #{/set}
 
-<div id="projectSearchResultContainer">
+<div id="projectSearchResultContainer" class="searchResultContainer">
 	<span id="searchResultTitle">&{'projectSearchResultTitle'}</span>
 	<a href="@{projects.ProjectsSearch.projectsSearch()}" class="dabLink">&{'projectSearchResultBackToSearchPage'}</a>
 	<br />
@@ -87,7 +85,7 @@
 	
 	<div id="projectSearchResultList">
 		#{list items:projectsOverviews, as:'oneOverview'}
-			#{projectOverview overview:oneOverview /}
+			#{projects.projectOverview overview:oneOverview /}
 		#{/list}
 	</div>
 </div>

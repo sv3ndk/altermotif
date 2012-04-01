@@ -356,13 +356,28 @@ fieldset legend {
 .oneProjectOverviewLine{
 	border: 1px solid;
 	width: 600px;
+	min-height: 80px;
 	margin: 10px;
 	padding: 10px;
 }
 
+
 .oneProjectOverviewLine td {
 	padding: 5px 10px;
 }
+
+.oneGroupOverviewLine{
+	border: 1px solid;
+	width: 600px;
+	min-height: 80px;
+	margin: 10px;
+	padding: 10px;
+}
+
+.oneGroupOverviewLine td {
+	padding: 5px 10px;
+}
+
 
 .profileContactThumb {
 	float: left;

@@ -1,49 +1,34 @@
 #{extends 'masterTemplate.html' /}
 
 #{set 'moreStyles'}
-    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/tagcloud.css'}" />
-    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/projects/projectsSearch.css'}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/search.css'}" />
 #{/set}
 
 #{set 'moreScripts'}
+    <script src="@{'/public/javascripts/dab/dualModeSwitcher.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+    <script src="@{'/public/javascripts/dab/search.js'}" type="text/javascript" charset="${_response_encoding}"></script>
     <script src="@{'/public/javascripts/projects/projectsSearch.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+    
     <script type="text/javascript">
-    	var allThemes = ${allThemesJson.raw()};
-    </script>
-
+   		var allThemes = ${allThemesJson.raw()};
+	</script>
+    
 #{/set}
 
-<div id="projectSearchContainer">
+<div class="searchPageContainer">
 
 
 	<div id="projectSearch_modeSimple">
 	
 		<p>&{'projectSearchSimpleModeExplanation'}</p>
 		
-		
-		*{ This to make sure that the base URL of the search result page is resolved by Play }*
-		<a id="hiddenLinkToEmptySearch" href="@{projects.ProjectsResults.projectsResults}" class="hidden" ></a>
-	
-		<div id="projectCategorieListOfDropboxes" data-bind="foreach: allSingleThemeSubTheme">
-			<div>
-				<span data-bind="text: label"></span> <br />
-				<select data-bind="options: subThemes, optionsCaption: '--', optionsValue: 'jsonId', optionsText: 'subThemeLabel' "> </select>
-			</div>
-		</div>
-				
-		<div id="projectTagContainer" class="tagCloud" >
-			<ul>
-				#{list items:popularTags, as:'oneTag'}
-					<li class="tag${oneTag.rank}"><a href="#">${oneTag.tag}</a></li> 
-				#{/list}
-			</ul>
-		</div>
+		<a id="hiddenLinkToEmptyProjectSearchResultPage" href="@{projects.ProjectsResults.projectsResults}" class="hidden" ></a>
+		#{dab.simpleSearch /}	
 	
 		<p>
 			<span>&{'projectSearchSimpleModeExplanation_GotoAdvancedMode'} </span>
 			<span id="projectSearchSwitchToAdvancedModeLink" class="dabLink">&{'projectSearchSimpleModeExplanation_GotoAdvancedMode_Link'}</span>
 		</p>
-	
 	
 	</div>
 
@@ -59,7 +44,7 @@
 					<tr id="searchLine">
 						<td class="formlabel">&{'projectSearchKeyWords'}:</td>
 						<td><input id="projectAdvancedSearchInputText" type="text" size="60" name="r.term"></td>
-						<td><input type="submit" value="GO" data-bind="enable: isGoButtonActive"  /></td>
+						<td><input type="submit" value="GO"   /></td>
 					</tr>
 					<tr>
 						<td class="formlabel">&{'projectSearchCategories'}:</td>

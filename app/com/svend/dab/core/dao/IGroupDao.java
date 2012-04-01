@@ -1,5 +1,6 @@
 package com.svend.dab.core.dao;
 
+import java.util.List;
 import java.util.Set;
 
 import com.svend.dab.core.beans.groups.GroupParticipant.ROLE;
@@ -7,6 +8,7 @@ import com.svend.dab.core.beans.groups.ProjectGroup;
 import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.ProjectSummary;
+import com.svend.dab.core.beans.projects.SearchQuery.SORT_KEY;
 
 public interface IGroupDao {
 
@@ -15,6 +17,8 @@ public interface IGroupDao {
 	public void save(ProjectGroup group);
 
 	public ProjectGroup retrieveGroupById(String groupId);
+	
+	public List<ProjectGroup> loadAllGroups(Set<String> allIds, SORT_KEY sortKey);
 
 	public void updateParticipantOfAllGroupsWith(UserSummary updatedSummary);
 
@@ -42,6 +46,7 @@ public interface IGroupDao {
 	// tag count
 	
 	public void launchCountGroupTagsJob();
+
 
 
 }

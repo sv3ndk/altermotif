@@ -33,7 +33,7 @@ public class Config {
 
 	private final long maxUploadedCVSizeInBytes = 3l * 1024 * 1024;
 
-	private final int maxNumberOfDisplayedProjectTag = 35;
+	private final int maxNumberOfDisplayedTags = 35;
 
 	// some pages polls for boolean values to the server to know if some data is outdate (and if so, refresh whatever is approapriate). This is the period, in
 	// millis, of the polling
@@ -229,8 +229,8 @@ public class Config {
 		return projectThemes;
 	}
 
-	public int getMaxNumberOfDisplayedProjectTags() {
-		return maxNumberOfDisplayedProjectTag;
+	public int getMaxNumberOfDisplayedTags() {
+		return maxNumberOfDisplayedTags;
 	}
 
 	public long getHowLongIsABitInMillis() {

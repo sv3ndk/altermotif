@@ -15,6 +15,7 @@ import com.svend.dab.core.beans.groups.ProjectGroup;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.dao.IGroupDao;
 import com.svend.dab.core.dao.IProjectDao;
+import com.svend.dab.core.groups.IGroupFtsService;
 import com.svend.dab.eda.IEventPropagator;
 
 /**
@@ -32,6 +33,8 @@ public class GroupProjectRemovedPropagator implements IEventPropagator<GroupProj
 	@Autowired
 	private IProjectDao projectDao;
 
+	@Autowired
+	private IGroupFtsService groupFtsService;
 	
 	public void propagate(GroupProjectRemoved event) throws DabException {
 		
@@ -45,8 +48,9 @@ public class GroupProjectRemovedPropagator implements IEventPropagator<GroupProj
 			} else {
 				
 				groupDao.removeProjectParticipant(event.getGroupId(), event.getProjectId());
-				
 				projectDao.removeParticipationInGroup(event.getProjectId(), event.getGroupId());
+				groupFtsService.updateGroupIndex(event.getGroupId(), false);
+
 				
 			}
 		}

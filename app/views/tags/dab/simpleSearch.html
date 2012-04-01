@@ -1,0 +1,15 @@
+
+<div id="categorieListOfDropboxes" data-bind="foreach: allSingleThemeSubTheme">
+	<div>
+		<span data-bind="text: label"></span> <br />
+		<select data-bind="options: subThemes, optionsCaption: '--', optionsValue: 'jsonId', optionsText: 'subThemeLabel' "> </select>
+	</div>
+</div>
+		
+<div id="tagCloudContainer" class="tagCloud" >
+	<ul>
+		#{list items:_tagList, as:'oneTag'}
+			<li class="tag${oneTag.rank}"><a href="#">${oneTag.tag}</a></li> 
+		#{/list}
+	</ul>
+</div>

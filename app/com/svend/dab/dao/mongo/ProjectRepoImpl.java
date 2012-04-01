@@ -77,6 +77,7 @@ public class ProjectRepoImpl implements IProjectDao {
 		case duedate:
 			query.sort().on("pdata.dueDate", Order.ASCENDING);
 			break;
+		// TODO: sort by proximity: cf real full text search implementation
 		}
 
 		List<Project> projects = mongoTemplate.find(query, Project.class);

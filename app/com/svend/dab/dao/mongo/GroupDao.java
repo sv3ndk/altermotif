@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.mongodb.core.CollectionCallback;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Order;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,7 @@ import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.ProjectSummary;
+import com.svend.dab.core.beans.projects.SearchQuery.SORT_KEY;
 import com.svend.dab.core.beans.projects.TagCount;
 import com.svend.dab.core.dao.IGroupDao;
 
@@ -66,6 +68,24 @@ public class GroupDao implements IGroupDao {
 	public ProjectGroup retrieveGroupById(String groupId) {
 		return mongoTemplate.findById(groupId, ProjectGroup.class);
 	}
+	
+	public List<ProjectGroup> loadAllGroups(Set<String> allIds, SORT_KEY sortKey) {
+		
+		Query query = query(where("_id").in(allIds));
+
+		switch (sortKey) {
+		case alphabetic:
+			query.sort().on("name", Order.ASCENDING);
+			break;
+		case duedate:
+			// NOP: there is no concept of "due date" in groups => the GUI should never allow this sort key anyway (and if it does, we just ignore it)
+			break;
+		// TODO: sort by proximity: cf real full text search implementation
+		}
+
+		return mongoTemplate.find(query, ProjectGroup.class);
+	}
+
 
 	public void updateParticipantOfAllGroupsWith(UserSummary updatedSummary) {
 		if (updatedSummary != null) {

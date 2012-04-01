@@ -20,6 +20,7 @@ GET     /profile/privacy		                profile.ProfilePrivacy.profilePrivacy
 GET     /groups/new				                groups.GroupsNew.groupsNew
 GET     /groups/edit				            groups.GroupsEdit.groupsEdit
 GET     /groups/search			                groups.GroupsSearch.groupsSearch
+GET     /groups/find			                groups.GroupsSearchResult.groupsSearchResult
 GET     /groups/view/{groupid}	                groups.GroupsView.groupsView
 GET     /groups/forum/{groupId}/{threadId}      forum.ForumThreadView.groupForumThread
 
@@ -29,7 +30,7 @@ GET     /projects/editphotos	                projects.ProjectsEditPhotos.project
 GET     /projects/view				            projects.ProjectsView.projectsView
 GET     /projects/forum/{projectId}/{threadId}  forum.ForumThreadView.projectForumThread
 GET     /projects/search		                projects.ProjectsSearch.projectsSearch
-GET     /projects/findprojects	                projects.ProjectsResults.projectsResults
+GET     /projects/find			                projects.ProjectsResults.projectsResults
 
 GET     /messages/new			                messages.MessagesNew.messagesNew
 GET     /messages/new/to		                messages.MessagesNew.messagesNewTo

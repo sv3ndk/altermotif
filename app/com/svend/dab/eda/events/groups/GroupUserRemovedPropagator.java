@@ -15,6 +15,7 @@ import com.svend.dab.core.beans.groups.ProjectGroup;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.dao.IGroupDao;
 import com.svend.dab.core.dao.IUserProfileDao;
+import com.svend.dab.core.groups.IGroupFtsService;
 import com.svend.dab.eda.IEventPropagator;
 
 /**
@@ -32,12 +33,16 @@ public class GroupUserRemovedPropagator implements IEventPropagator<GroupUserRem
 	@Autowired
 	private IUserProfileDao userProfileRepo;
 
+	@Autowired
+	private IGroupFtsService groupFtsService;
+
 	public void propagate(GroupUserRemoved event) throws DabException {
 		if (event != null && ! Strings.isNullOrEmpty(event.getGroupId()) && ! Strings.isNullOrEmpty(event.getUserId())) {
 			
 			ProjectGroup group = groupDao.retrieveGroupById(event.getGroupId());
 			UserProfile user = userProfileRepo.retrieveUserProfileById(event.getUserId());
-			
+			groupFtsService.updateGroupIndex(event.getGroupId(), false);
+
 			if (group == null || ! group.isActive() || user == null || ! user.getPrivacySettings().isProfileActive()) {
 				logger.log(Level.WARNING, "refusing to propagate a GroupUserRemovedPropagator: group and/user not found or not active");
 			} else {

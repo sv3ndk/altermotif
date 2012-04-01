@@ -1,0 +1,52 @@
+<div class="oneGroupOverviewLine">
+
+	<a href="@{groups.GroupsView.groupsView( _overview.groupId )}" class="dabLink">
+	
+		#{if !_overview.hasAThumbPhoto() }
+				<img src="@{'/public/images/defaultGroupThumb.jpg'}" class="oneLinerThumb" />
+		#{/if}
+		
+		#{if _overview.hasAThumbPhoto() } 
+			<img src="${_overview.mainPhotoThumbLink}" class="oneLinerThumb" />
+		#{/if}
+	</a>
+	
+		<div>
+		
+		
+		<table>
+			<tbody>
+				<tr>
+					<td colspan="2"><a href="@{groups.GroupsView.groupsView( _overview.groupId )}" class="dabLink">${_overview.name}</a></td>
+				</tr>
+				
+				<tr>
+					<td class="formlabel"><label>&{'groupsEditDescription'}:</label></td>
+					<td>${_overview.description}</td>
+				</tr>
+				
+				<tr>
+					<td class="formlabel"><label>&{'groupSearchResultNumberOfUserParticipants'}:</label></td>
+					<td>${_overview.numberOfUserMembers}</td>
+				</tr>
+				
+				<tr>
+					<td class="formlabel"><label>&{'groupSearchResultNumberOfProjectParticipants'}:</label></td>
+					<td>${_overview.numberOfProjectMembers}</td>
+				</tr>
+
+				#{if _overview.creationDate != null}
+				<tr>
+					<td class="formlabel"><label>&{'groupsViewCreatedOn'}:</label></td>
+					<td>${_overview.creationDate.format(controllers.BeanProvider.config.dateDisplayFormat)}</td>
+				</tr>
+				#{/if}
+				
+				
+			</tbody>
+		</table>
+	</div>
+	 
+
+</div>
+

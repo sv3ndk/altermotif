@@ -8,8 +8,8 @@ public class ProjectsSearch extends DabController {
 	
 	public static void projectsSearch() {
 		renderArgs.put("popularTags", BeanProvider.getProjectService().getPopularTags());
-		Utils.addProjectThemesToRenderArgs(getSessionWrapper(), renderArgs);
-		Utils.addProjectJsonThemesToRenderArgs(getSessionWrapper(), renderArgs, getSessionWrapper().getSelectedLg());
+		Utils.addThemesToRenderArgs(getSessionWrapper(), renderArgs);
+		Utils.addJsonThemesToRenderArgs(getSessionWrapper(), renderArgs, getSessionWrapper().getSelectedLg());
 		render();
 	}
 	

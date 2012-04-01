@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.svend.dab.eda.events.groups;
 
 import java.util.logging.Level;
@@ -16,6 +13,7 @@ import com.svend.dab.core.beans.groups.ProjectGroup;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.dao.IGroupDao;
 import com.svend.dab.core.dao.IProjectDao;
+import com.svend.dab.core.groups.IGroupFtsService;
 import com.svend.dab.eda.IEventPropagator;
 
 /**
@@ -32,7 +30,10 @@ public class GroupProjectApplicationAcceptedPropagator implements IEventPropagat
 	
 	@Autowired
 	private IProjectDao projectDao;
-
+	
+	@Autowired
+	private IGroupFtsService groupFtsService;
+	
 	public void propagate(GroupProjectApplicationAccepted event) throws DabException {
 		
 		if (event != null && !Strings.isNullOrEmpty(event.getGroupId()) && !Strings.isNullOrEmpty(event.getProjectId())) {
@@ -48,6 +49,8 @@ public class GroupProjectApplicationAcceptedPropagator implements IEventPropagat
 				if (!project.isPartOfGroup(event.getGroupId())) {
 					projectDao.addOneGroup(event.getProjectId(), new GroupSummary(group));
 				}
+				
+				groupFtsService.updateGroupIndex(event.getGroupId(), false);
 				
 			}
 		} else {

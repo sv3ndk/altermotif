@@ -6,18 +6,51 @@ import com.svend.dab.core.beans.profile.Photo;
 
 public class GroupOverview {
 
+
 	private String groupId;
 	private String name;
-	private String goal;
 	private String description;
 
 	private Date creationDate;
 
 	private int numberOfUserMembers;
-	private int numberOfGroupMembers;
+	private int numberOfProjectMembers;
 
 	private Photo mainThumb;
 
+	
+	public GroupOverview() {
+		super();
+	}
+	
+	public GroupOverview(ProjectGroup group) {
+		super();
+		this.groupId = group.getId();
+		this.name = group.getName();
+		this.description = group.getDescription();
+		this.creationDate = group.getCreationDate();
+		
+		if (group.getParticipants() == null) {
+			numberOfUserMembers = 0;
+		} else {
+			numberOfUserMembers = group.getParticipants().size();
+		}
+		
+		if (group.getProjectParticipants() == null) {
+			numberOfProjectMembers = 0;
+		} else {
+			numberOfProjectMembers = group.getProjectParticipants().size();
+		}
+	}
+	
+	public boolean hasAThumbPhoto() {
+		return mainThumb != null && !mainThumb.isPhotoEmpty();
+	}
+
+	
+	//////////////////////
+	//
+	
 	public String getGroupId() {
 		return groupId;
 	}
@@ -32,14 +65,6 @@ public class GroupOverview {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getGoal() {
-		return goal;
-	}
-
-	public void setGoal(String goal) {
-		this.goal = goal;
 	}
 
 	public String getDescription() {
@@ -67,11 +92,11 @@ public class GroupOverview {
 	}
 
 	public int getNumberOfGroupMembers() {
-		return numberOfGroupMembers;
+		return numberOfProjectMembers;
 	}
 
 	public void setNumberOfGroupMembers(int numberOfGroupMembers) {
-		this.numberOfGroupMembers = numberOfGroupMembers;
+		this.numberOfProjectMembers = numberOfGroupMembers;
 	}
 
 	public Photo getMainThumb() {

@@ -10,6 +10,7 @@ import com.google.common.base.Strings;
 import com.svend.dab.core.beans.DabException;
 import com.svend.dab.core.dao.IGroupDao;
 import com.svend.dab.core.dao.IUserProfileDao;
+import com.svend.dab.core.groups.IGroupFtsService;
 import com.svend.dab.eda.IEventPropagator;
 
 /**
@@ -27,6 +28,9 @@ public class GroupUserParticipantRemovedPropagator implements IEventPropagator<G
 	@Autowired
 	private IUserProfileDao userProfileDao;
 
+	@Autowired
+	private IGroupFtsService groupFtsService;
+
 	
 	public void propagate(GroupUserParticipantRemoved event) throws DabException {
 		
@@ -34,7 +38,8 @@ public class GroupUserParticipantRemovedPropagator implements IEventPropagator<G
 			
 			groupDao.removeUserParticipant(event.getGroupId(), event.getParticipantId());
 			userProfileDao.removeParticipationInGroup(event.getParticipantId(), event.getGroupId());
-			
+			groupFtsService.updateGroupIndex(event.getGroupId(), false);
+
 		} else {
 			logger.log(Level.WARNING, "refusing to propagate a null GroupUserParticipantRemoved or event with a null group id or user id");
 		}

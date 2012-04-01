@@ -1,3 +1,36 @@
+.searchPageContainer {
+	margin-left: 300px;
+	margin-top: 75px;
+	margin-bottom: 100px;
+}
+
+.searchPageContainer td {
+	vertical-align: top;
+	padding: 10px 10px 0 10px;
+}
+
+
+
+#categorieListOfDropboxes div {
+	padding-right: 20px;
+	float: left;
+}
+
+#tagCloudContainer {
+	margin-left: 500px;
+	width: 400px;
+	clear: left;
+	padding: 30px;	
+}
+
+#tagCloudExplanation {
+	margin-top: 50px;
+	margin-left: 400px;
+	margin-bottom: 25px;
+}
+
+
+
 .tagCloud ul{
 	margin:1em 0;
 	padding:.5em 10px;

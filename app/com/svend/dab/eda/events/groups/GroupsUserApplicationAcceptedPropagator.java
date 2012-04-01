@@ -18,6 +18,7 @@ import com.svend.dab.core.beans.groups.GroupParticipant.ROLE;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.dao.IGroupDao;
 import com.svend.dab.core.dao.IUserProfileDao;
+import com.svend.dab.core.groups.IGroupFtsService;
 import com.svend.dab.eda.IEventPropagator;
 
 /**
@@ -35,6 +36,9 @@ public class GroupsUserApplicationAcceptedPropagator implements IEventPropagator
 	@Autowired
 	private IUserProfileDao userProfileRepo;
 
+	@Autowired
+	private IGroupFtsService groupFtsService;
+
 	public void propagate(GroupsUserApplicationAccepted event) throws DabException {
 
 		if (event != null && !Strings.isNullOrEmpty(event.getGroupId()) && !Strings.isNullOrEmpty(event.getUserId())) {
@@ -49,6 +53,8 @@ public class GroupsUserApplicationAcceptedPropagator implements IEventPropagator
 				if (group.hasAppliedForGroupMembership(event.getUserId())) {
 					userProfileRepo.addParticipationInGroup(event.getUserId(), new GroupParticipation(ROLE.member, new GroupSummary(group)));
 					groupDao.setUserApplicationAcceptedStatus(event.getGroupId(), event.getUserId(), true);
+					groupFtsService.updateGroupIndex(event.getGroupId(), false);
+
 				} else {
 					logger.log(Level.WARNING, "refusing to propagate: no application found");
 				}

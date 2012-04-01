@@ -308,6 +308,12 @@ groupsViewForumAddThread=***Add thread
 groupsViewForumAddThreadPopupPublicThread=***Public
 groupForumThreadBackToGroup=***Back to group page
 
+groupSearchResultTitle=***Search results
+groupSearchResultBackToSearchPage=***Back to group search page
+groupSearchResultNumberOfUserParticipants=***Number of altermotif members
+groupSearchResultNumberOfProjectParticipants=***Number of projects
+groupSearchKeyWords=***Any group with all these keywords
+groupSearchCategories=***and in any of these categories
 
 groupsEditName=Naam van de groep
 groupsEditDescription=Beschrijving van de groep

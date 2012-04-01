@@ -1,21 +1,28 @@
 package com.svend.dab.core.groups;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import web.utils.Utils;
+
 import com.google.common.base.Strings;
 import com.svend.dab.core.beans.Config;
 import com.svend.dab.core.beans.groups.GroupParticipant.ROLE;
+import com.svend.dab.core.beans.groups.GroupTagCount;
 import com.svend.dab.core.beans.groups.ProjectGroup;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.ProjectSummary;
+import com.svend.dab.core.beans.projects.RankedTag;
+import com.svend.dab.core.beans.projects.TagCount;
 import com.svend.dab.core.dao.IGroupDao;
+import com.svend.dab.core.dao.ITagCountDao;
 import com.svend.dab.core.dao.IUserProfileDao;
 import com.svend.dab.core.projects.IProjectService;
 import com.svend.dab.eda.EventEmitter;
@@ -51,6 +58,9 @@ public class GroupService implements IGroupService {
 
 	@Autowired
 	private Config config;
+
+	@Autowired
+	private ITagCountDao tagCountDao;
 
 	/*
 	 * (non-Javadoc)
@@ -161,11 +171,15 @@ public class GroupService implements IGroupService {
 			eventEmitter.emit(new GroupProjectRemoved(groupId, projectId));
 		}
 	}
-	
+
 	public void acceptProjectApplication(String groupId, String projectId) {
 		if (!Strings.isNullOrEmpty(groupId) && !Strings.isNullOrEmpty(projectId)) {
 			eventEmitter.emit(new GroupProjectApplicationAccepted(groupId, projectId));
 		}
+	}
+
+	public List<RankedTag> getPopularTags() {
+		return Utils.rankCountedTags(tagCountDao.getMostPopularGroupTags(config.getMaxNumberOfDisplayedTags()));
 	}
 
 }

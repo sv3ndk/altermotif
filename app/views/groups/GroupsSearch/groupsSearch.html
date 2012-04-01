@@ -1,19 +1,61 @@
 #{extends 'masterTemplate.html' /} 
 
 #{set 'moreStyles'}
-	<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/groups/groupsSearch.css'}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/search.css'}" />
 #{/set} 
 
 #{set 'moreScripts'}
+    <script src="@{'/public/javascripts/dab/dualModeSwitcher.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+    <script src="@{'/public/javascripts/dab/search.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+    
     <script src="@{'/public/javascripts/groups/groupsSearch.js'}" type="text/javascript" charset="${_response_encoding}"></script>
 
-	<script type="text/javascript">
-		
+    <script type="text/javascript">
+   		var allThemes = ${allThemesJson.raw()};
 	</script>
 
 #{/set}
 
-<div class="pageContainer">
+<div class="searchPageContainer">
 
+	<div id="groupSearch_modeSimple">
 
+		<a id="hiddenLinkToEmptyGroupSearchResultPage" href="@{groups.GroupsSearchResult.groupsSearchResult}" class="hidden" ></a>
+		#{dab.simpleSearch tagList:popularTags /}	
+	
+		<p>
+			<span>&{'projectSearchSimpleModeExplanation_GotoAdvancedMode'} </span>
+			<span id="groupSearchSwitchToAdvancedModeLink" class="dabLink">&{'projectSearchSimpleModeExplanation_GotoAdvancedMode_Link'}</span>
+		</p>
+	</div>
+	
+	<div id="groupSearch_modeAdvanced" class="hidden">
+		<p>
+			<span>&{'projectSearchAdvancedModeExplanation_GotoSimpleMode'} </span>
+			<span id="groupSearchSwitchToSimpleModeLink" class="dabLink">&{'projectSearchAdvancedModeExplanation_GotoSimpleMode_Link'}</span>
+		</p>
+		
+		#{form @groups.GroupsSearchResult.groupsSearchResult()}
+			<table>
+				<tbody>
+					<tr id="searchLine">
+						<td class="formlabel">&{'groupSearchKeyWords'}:</td>
+						<td><input type="text" size="60" name="r.term"></td>
+						<td><input type="submit" value="GO"   /></td>
+					</tr>
+					<tr>
+						<td class="formlabel">&{'groupSearchCategories'}:</td>
+						<td>
+							<div id="inputSearchGroupThemes">
+								#{dab.inputMultiThemes  addThemeLinkLabel:messages.get('projectNewAddOneTheme')/}
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<input id="hiddenAllThemesJson" name="r.themes" type="hidden" />
+		#{/form }
+		
+		
+	</div>
 </div>

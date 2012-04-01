@@ -1,6 +1,10 @@
 package com.svend.dab.core.groups;
 
+
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.logging.Logger;
 
@@ -16,6 +20,7 @@ import com.svend.dab.core.beans.groups.ProjectGroup;
 import com.svend.dab.core.beans.projects.SearchQuery;
 import com.svend.dab.core.dao.IGroupDao;
 import com.svend.dab.core.dao.IIndexedGroupDao;
+
 
 /**
  * @author svend
@@ -59,10 +64,8 @@ public class QuickAndDirtyGroupFullTextSearch implements IGroupFtsService {
 			}
 			
 			indexedGroupDao.updateIndex(indexedGroup);
-			
 
 		}
-
 	}
 
 	public void ensureIndexOnLocation() {
@@ -73,7 +76,20 @@ public class QuickAndDirtyGroupFullTextSearch implements IGroupFtsService {
 		
 		List<IndexedGroup> indexedGroups = indexedGroupDao.searchGroups(request);
 		
-		return null;
+		Set<String> allIds = new HashSet<String>();
+		for (IndexedGroup ig : indexedGroups) {
+			allIds.add(ig.getGroupId());
+		}
+
+		List<ProjectGroup> groups = groupDao.loadAllGroups(allIds, request.getSortKey());
+
+		List<GroupOverview> result = new LinkedList<GroupOverview>();
+		
+		for (ProjectGroup group : groups) {
+			result.add(new GroupOverview(group));
+		}
+		
+		return result;
 	}
 
 }

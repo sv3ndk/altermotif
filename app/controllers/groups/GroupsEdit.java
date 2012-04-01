@@ -44,8 +44,8 @@ public class GroupsEdit extends DabLoggedController{
 				}
 				
 				
-				Utils.addProjectThemesToRenderArgs(getSessionWrapper(), renderArgs);
-				Utils.addProjectJsonThemesToRenderArgs(getSessionWrapper(), renderArgs, getSessionWrapper().getSelectedLg());
+				Utils.addThemesToRenderArgs(getSessionWrapper(), renderArgs);
+				Utils.addJsonThemesToRenderArgs(getSessionWrapper(), renderArgs, getSessionWrapper().getSelectedLg());
 				flash.put(FLASH_GROUP_ID, gid);
 				render();
 			}

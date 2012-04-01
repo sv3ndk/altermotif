@@ -306,6 +306,12 @@ groupsViewForumAddThread=***Add thread
 groupsViewForumAddThreadPopupPublicThread=***Public
 groupForumThreadBackToGroup=***Back to group page
 
+groupSearchResultTitle=***Search results
+groupSearchResultBackToSearchPage=***Back to group search page
+groupSearchResultNumberOfUserParticipants=***Number of altermotif members
+groupSearchResultNumberOfProjectParticipants=***Number of projects
+groupSearchKeyWords=***Any group with all these keywords
+groupSearchCategories=***and in any of these categories
 
 groupsEditName=Nom du groupe
 groupsEditDescription=Description du groupe
@@ -587,7 +593,7 @@ projectEditEditPhotos=Editer les photos
 projectPhotosSetAsMainPhoto=Choisir comme photo principale du projet
 
 # project search page
-projectSearchKeyWords=chaque projet avec ces mots clés
+projectSearchKeyWords=chaque projet avec tous ces mots clés
 projectSearchCategories=dans une de ces catégories
 projectSearchSimpleModeExplanation=Sélectionnez une catégorie ou cliquez sur une étiquette pour accéder directement au résultat correspondant
 projectSearchSimpleModeExplanation_GotoAdvancedMode=ou cliquez ici pour passer au

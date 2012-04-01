@@ -16,6 +16,16 @@ public class TagCount {
 
 	private int value;
 
+	public TagCount() {
+		super();
+	}
+
+	public TagCount(String tag, int value) {
+		super();
+		this.tag = tag;
+		this.value = value;
+	}
+
 	public String getTag() {
 		return tag;
 	}

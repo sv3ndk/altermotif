@@ -1,7 +1,10 @@
 package com.svend.dab.core.groups;
 
+import java.util.List;
+
 import com.svend.dab.core.beans.groups.GroupParticipant.ROLE;
 import com.svend.dab.core.beans.groups.ProjectGroup;
+import com.svend.dab.core.beans.projects.RankedTag;
 
 public interface IGroupService {
 
@@ -30,5 +33,7 @@ public interface IGroupService {
 	void removeProjectFromGroup(String groupId, String projectId);
 	
 	void acceptProjectApplication(String groupId, String projectId);
+
+	List<RankedTag> getPopularTags();
 
 }
