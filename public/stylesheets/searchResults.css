@@ -11,22 +11,23 @@
 	margin-right: 20px;
 }
 
-#projectResultFilterByDetails{
+.searchResultFilterByDetails{
 	margin: 5px 20px;
 }
 
-#projectResultRefineQueryContainer li{
+.searchResultRefineQueryContainer li{
 	margin: 5px;
 }
 
-#projectResultSortByDetails {
+.searchResultSortByDetails {
 	margin: 5px 20px;
 }
 
-#projectResultSortByDetails input{
+.searchResultSortByDetails input{
 	margin: 5px;
 }
 
-#projectResultUpdateResultButton {
+.searchResultUpdateResultButton {
 	margin: 5px;
 }
+

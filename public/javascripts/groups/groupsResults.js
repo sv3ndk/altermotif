@@ -1,42 +1,42 @@
 $(document).ready(function() {
-	new dabProjectResultsLib.ProjectResultsController();
+	new dabGroupResultsLib.GroupResultsController();
 });
 
-var dabProjectResultsLib = {
+var dabGroupResultsLib = {
+		
 
 	// /////////////////////////////////////////////////////////
 	// controller for the main forum widget
-	ProjectResultsController : function() {
-
-		this.languageMapper = new dabLanguageLib.LanguageMapper();
-		this.refreshModel = new dabSearchResultLib.RefreshSearchResultModel();
+	GroupResultsController : function() {
 		
-		this.filterController = new dabSearchResultLib.FilterController(this.refreshModel, this.languageMapper);
+		this.refreshModel = new dabSearchResultLib.RefreshSearchResultModel();
+		this.filterController = new dabSearchResultLib.FilterController(this.refreshModel, null);
 		this.sortByController = new dabSearchResultLib.SortByController(this.refreshModel);
-		this.refreshPageController = new dabProjectResultsLib.ProjectRefreshPageController(this.refreshModel, this.languageMapper);
+		
+		this.refreshPageController = new dabGroupResultsLib.GroupRefreshPageController(this.refreshModel);
 
+		
 		this.init = function() {
 			var self = this;
 			
-			this.languageMapper.init(allPossibleLanguages);
 			this.filterController.init();
-			$("#projectResultFilterLanguage").val(this.languageMapper.resolveLanguageOfCode(originalSearchRequestJson.lg));
 			
 			// click on "refresh result" button
 			$("input.searchResultUpdateResultButton").click(function(event) {
 				self.refreshPageController.refresh();
 			});
 
-			ko.applyBindings(this.refreshModel, $("#projectResultRefineQueryContainer")[0]);
+			ko.applyBindings(this.refreshModel, $("#groupResultRefineQueryContainer")[0]);
 		};
 		
+		
 		this.init();
+
 	},
 	
-	ProjectRefreshPageController : function(refreshModel, languageMapper) {
+	GroupRefreshPageController : function(refreshModel) {
 		
 		this.refreshModel = refreshModel;
-		this.languageMapper = languageMapper;
 		
 		this.refresh = function() {
 			$("#hiddenRefreshResultsForm form input.term").val(originalSearchRequestJson.term);
@@ -50,15 +50,11 @@ var dabProjectResultsLib = {
 			$("#hiddenRefreshResultsForm form input.reflongitude").val(this.refreshModel.refLongitude);
 			
 			$("#hiddenRefreshResultsForm form input.filterByProximity").val(this.refreshModel.isFilteredByProximity());
-			$("#hiddenRefreshResultsForm form input.filterByDate").val(this.refreshModel.isFilteredByDueDate());
-			$("#hiddenRefreshResultsForm form input.filterByLanguage").val(this.refreshModel.isFilteredByLanguage());
-			
 			$("#hiddenRefreshResultsForm form input.filterByProximityMaxDistance").val(this.refreshModel.filterByProximityMaxDistance());
-			$("#hiddenRefreshResultsForm form input.filterByDateMaxDate").val(this.refreshModel.filterByDueDateMaxDate());
-			$("#hiddenRefreshResultsForm form input.filterByLanguageCode").val(this.languageMapper.resolveCodeOfLanguage($("#projectResultFilterLanguage").val()));
 			
 			$("#hiddenRefreshResultsForm form").submit();
 		};
 	},
 
-};
+
+}

@@ -315,6 +315,15 @@ groupSearchResultNumberOfProjectParticipants=***Number of projects
 groupSearchKeyWords=***Any group with all these keywords
 groupSearchCategories=***and in any of these categories
 
+groupResultFilterByDetailsCurrentQueryDescription_part1=***Looking for groups
+groupResultFilterByDetailsCurrentQueryDescription_part2_keywords=*** with key words
+groupResultFilterByDetailsCurrentQueryDescription_part2_tag=*** with tag
+groupResultFilterByDetailsCurrentQueryDescription_part2_category=*** with category
+groupResultFilterByDetailsCurrentQueryDescription_part3_and=***and
+groupResultFilterByProximity_part1=***no further than
+groupResultFilterByProximity_part2=***km from
+groupResultChangeRefLocationLink=***Change reference location
+
 groupsEditName=Naam van de groep
 groupsEditDescription=Beschrijving van de groep
 groupsEditDescriptionExplanation=Beschrijf duidelijk waarover deze groep gaat. Wat is het doel van de groep?

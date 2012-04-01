@@ -1,10 +1,7 @@
 package controllers.projects;
 
-import com.svend.dab.core.beans.Config;
-import com.svend.dab.core.beans.profile.UserProfile;
-
-import web.utils.Utils;
 import models.altermotif.projects.WebSearchRequest;
+import web.utils.Utils;
 import controllers.BeanProvider;
 import controllers.DabController;
 
@@ -23,24 +20,7 @@ public class ProjectsResults extends DabController {
 			ProjectsSearch.projectsSearch();
 		} else {
 
-			boolean useSearchReferenceLocationFromConfig = true;
-			
-			if (getSessionWrapper().isLoggedIn()) {
-				UserProfile loggedInProfile = BeanProvider.getUserProfileService().loadUserProfile(getSessionWrapper().getLoggedInUserProfileId(), false);
-				if (loggedInProfile != null && loggedInProfile.getPdata().getLocation() != null) {
-					renderArgs.put("defaultRefenceLocation", loggedInProfile.getPdata().getLocation());
-					renderArgs.put("defaultReferenceLatitude", loggedInProfile.getPdata().getLocationLat());
-					renderArgs.put("defaultReferenceLongitude", loggedInProfile.getPdata().getLocationLong());
-					useSearchReferenceLocationFromConfig = false;
-				}
-			}
-			if (useSearchReferenceLocationFromConfig) {
-				Config config = BeanProvider.getConfig();
-				renderArgs.put("defaultRefenceLocation", config.getDefaultSearchReferenceLocation().getLocation());
-				renderArgs.put("defaultReferenceLatitude", config.getDefaultSearchReferenceLocation().getLatitude());
-				renderArgs.put("defaultReferenceLongitude", config.getDefaultSearchReferenceLocation().getLongitude());
-			}
-			
+			Utils.addDefaultReferenceLocationToRenderArgs(renderArgs, getSessionWrapper().getLoggedInUserProfileId());
 			Utils.addAllPossibleLanguageNamesToRenderArgs(getSessionWrapper(), renderArgs);
 
 			renderArgs.put("originalSearchRequestJson", Utils.objectToJsonString(r));
@@ -49,4 +29,5 @@ public class ProjectsResults extends DabController {
 			render();
 		}
 	}
+
 }

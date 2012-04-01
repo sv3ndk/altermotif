@@ -1,7 +1,17 @@
 #{extends 'masterTemplate.html' /}
 
 #{set 'moreScripts'}
-    
+    <script src="@{'/public/javascripts/dab/searchResult.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+	<script src="@{'/public/javascripts/groups/groupsResults.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+	
+	<script type="text/javascript">
+	    var originalSearchRequestJson = ${originalSearchRequestJson.raw()};
+	    
+	    var defaultRefenceLocation = "${defaultRefenceLocation}";
+	    var defaultReferenceLatitude = "${defaultReferenceLatitude}";
+	    var defaultReferenceLongitude = "${defaultReferenceLongitude}";
+	</script>
+	
 #{/set}
 
 #{set 'moreStyles'}
@@ -14,11 +24,85 @@
 	<span id="searchResultTitle">&{'groupSearchResultTitle'}</span>
 	<a href="@{groups.GroupsSearch.groupsSearch()}" class="dabLink">&{'groupSearchResultBackToSearchPage'}</a>
 	
+	<br />
+
+	<div id="groupResultRefineQueryContainer" class="searchResultRefineQueryContainer">
+		
+		<span class="dabLink searchResultFilterLink">&{'projectSearchResultFilterResults'}...</span>
+		<div id="groupResultFilterByDetails" class="searchResultFilterByDetails" data-bind="visible: isFilterByVisible">
+		
+			<span>&{'groupResultFilterByDetailsCurrentQueryDescription_part1'}</span>
+			#{if originalSearchRequest.hasSearchTerm()}
+				<span >&{'groupResultFilterByDetailsCurrentQueryDescription_part2_keywords'}: "${originalSearchRequest.term}"</span>
+			#{/if}
+			
+			#{if originalSearchRequest.hasSearchTag()}
+				<span >&{'groupResultFilterByDetailsCurrentQueryDescription_part2_tag'}: "${originalSearchRequest.tag}"</span>
+			#{/if}
+			#{if originalSearchRequest.hasSearchTheme()}
+				<span >&{'groupResultFilterByDetailsCurrentQueryDescription_part2_category'}: "${originalSearchRequest.themes}"</span>
+			#{/if}
+			<br />
+			&{'groupResultFilterByDetailsCurrentQueryDescription_part3_and'}:
+			
+			<ul>
+				<li> <input type="checkbox" data-bind="checked: isFilteredByProximity"></input> 
+					&{'groupResultFilterByProximity_part1'} <input type="text" size="2" data-bind="value: filterByProximityMaxDistance"></input> 
+					&{'groupResultFilterByProximity_part2'} <span data-bind="text: refLocation"  ></span>
+					<span class="dabLink searchResultFilterByProximityChangeRefLocationLink">(&{'groupResultChangeRefLocationLink'}...)</span>
+					<br />
+					<div class="searchResultsFilterInputLocation">
+						#{dab.inputLocation /}
+					</div>
+				</li>
+			</ul>
+		
+		</div>
+		<br />
+		
+		<span class="dabLink searchResultSortByLink">&{'projectSearchResultSortBy'}...</span>
+		<div id="groupResultSortByDetails" class="searchResultSortByDetails" data-bind="visible: isSortByVisible">
+		
+			<ul>
+				<li><label><input type="radio" value="alphabetic" data-bind="checked: sortKey"></input>&{'projectSearchResultSortByAlphabetic'}</label></li>
+				<li><label><input type="radio" value="proximity" data-bind="checked: sortKey"></input>&{'projectSearchResultSortByProximity'}: <span data-bind="text: refLocation"  ></span>
+				<span class="dabLink searchResultSortByProximityChangeRefLocationLink">(&{'projectResultChangeRefLocationLink'}...)</span>
+				</label>
+				<br />
+				<div class="searchResultsSortInputLocation">
+					#{dab.inputLocation /}
+				</div>
+				</li>
+			</ul>
+		
+		</div>
+		
+		<div>
+			<input class="searchResultUpdateResultButton" type="button" value="&{'projectSearchResultUpdateButtonText'}"></input>
+		</div>
+		
+	</div>
 	
 	<div id="searchResultList">
 		#{list items:groupsOverviews, as:'oneOverview'}
 			#{groups.groupOverview overview:oneOverview /}
 		#{/list}
+	</div>
+
+	<div id="hiddenRefreshResultsForm" class="hidden">
+		#{form @groups.GroupsSearchResult.groupsSearchResult()}
+			<input class="term" name="r.term" type="hidden">
+			<input class="tag" name="r.tag" type="hidden">
+			<input class="allThemesJson" name="r.themes" type="hidden" />
+			
+			<input class="filterByProximity" name="r.filterProx" type="hidden" />
+			<input class="filterByProximityMaxDistance" name="r.maxDistance" type="hidden" />
+			 
+			<input class="sortkey" name="r.sortkey" type="hidden" /> 
+			<input class="reflocation" name="r.rl.location" type="hidden" /> 
+			<input class="reflatitude" name="r.rl.latitude" type="hidden" /> 
+			<input class="reflongitude" name="r.rl.longitude" type="hidden" /> 
+		#{/form }
 	</div>
 	
 </div>

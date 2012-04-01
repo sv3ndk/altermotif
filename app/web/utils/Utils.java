@@ -26,6 +26,7 @@ import play.mvc.Scope.RenderArgs;
 
 import com.google.common.base.Strings;
 import com.svend.dab.core.beans.Config;
+import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.projects.RankedTag;
 import com.svend.dab.core.beans.projects.TagCount;
 
@@ -153,6 +154,9 @@ public class Utils {
 			return codeToLanguage.get(code);
 		}
 	}
+	
+	
+	
 
 	// ////////////////////////////////////
 	// themes (identical for groups and projects)
@@ -207,6 +211,30 @@ public class Utils {
 			}
 		}
 	}
+	
+	////////////////////////////////////
+	
+	public static void addDefaultReferenceLocationToRenderArgs(RenderArgs renderArgs, String loggedUserId) {
+		
+		boolean useSearchReferenceLocationFromConfig = true;
+		
+		if (Strings.isNullOrEmpty(loggedUserId)) {
+			UserProfile loggedInProfile = BeanProvider.getUserProfileService().loadUserProfile(loggedUserId, false);
+			if (loggedInProfile != null && loggedInProfile.getPdata().getLocation() != null) {
+				renderArgs.put("defaultRefenceLocation", loggedInProfile.getPdata().getLocation());
+				renderArgs.put("defaultReferenceLatitude", loggedInProfile.getPdata().getLocationLat());
+				renderArgs.put("defaultReferenceLongitude", loggedInProfile.getPdata().getLocationLong());
+				useSearchReferenceLocationFromConfig = false;
+			}
+		}
+		if (useSearchReferenceLocationFromConfig) {
+			Config config = BeanProvider.getConfig();
+			renderArgs.put("defaultRefenceLocation", config.getDefaultSearchReferenceLocation().getLocation());
+			renderArgs.put("defaultReferenceLatitude", config.getDefaultSearchReferenceLocation().getLatitude());
+			renderArgs.put("defaultReferenceLongitude", config.getDefaultSearchReferenceLocation().getLongitude());
+		}
+	}
+
 
 	// ////////////////////////////////
 	public static String formatDate(Date date) {
@@ -338,5 +366,6 @@ public class Utils {
 		return new Date().getTime() - creationDate.getTime();
 
 	}
+
 
 }
