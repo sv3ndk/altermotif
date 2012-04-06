@@ -5,10 +5,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.data.annotation.Transient;
+
 import com.google.common.base.Strings;
 import com.svend.dab.core.beans.Location;
 import com.svend.dab.core.beans.groups.GroupParticipant.ROLE;
 import com.svend.dab.core.beans.profile.Photo;
+import com.svend.dab.core.beans.projects.Project.STATUS;
 import com.svend.dab.core.beans.projects.SelectedTheme;
 
 public class ProjectGroup {
@@ -27,6 +30,9 @@ public class ProjectGroup {
 	private List<GroupParticipant> participants;
 	
 	private List<GroupProjectParticipant> projectParticipants;
+	
+	@Transient
+	private List<GroupProjectParticipant> startedProjectParticipants;
 
 	private int mainPhotoIndex;
 	
@@ -337,10 +343,28 @@ public class ProjectGroup {
 	public List<GroupProjectParticipant> getProjectParticipants() {
 		return projectParticipants;
 	}
-
+	
 	public void setProjectParticipants(List<GroupProjectParticipant> projectParticipants) {
 		this.projectParticipants = projectParticipants;
 	}
+	
+	public List<GroupProjectParticipant> getStartedProjectParticipants() {
+		
+		if (startedProjectParticipants == null) {
+			startedProjectParticipants = new LinkedList<GroupProjectParticipant>();
+			
+			if (projectParticipants != null) {
+				for (GroupProjectParticipant participant : projectParticipants) {
+					if (participant.getProjet().getStatus() == STATUS.started) {
+						startedProjectParticipants.add(participant);
+					}
+				}
+			}
+		}
+		
+		return startedProjectParticipants;
+	}
+
 
 	public List<Photo> getPhotos() {
 		return photos;

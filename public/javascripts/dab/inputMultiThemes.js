@@ -160,7 +160,10 @@ var dabInputMultiThemesLib = {
 			var themeDef = _.find(this.listOfThemesObj, function(theme) {
 				return theme.id == selectedMainThemeId
 			});
-			this.secondaryListData.splice(0, this.secondaryListData().length - 1);
+			
+			if (this.secondaryListData().length > 0) {
+				this.secondaryListData.splice(0, this.secondaryListData().length);
+			}
 
 			_.each(themeDef.subThemes, function(subtheme) {
 				self.secondaryListData.push(subtheme);

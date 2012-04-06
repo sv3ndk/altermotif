@@ -219,7 +219,7 @@
 		</div>
 		
 		<div id="projectApplicants">
-			#{list items:visitedGroup.projectParticipants, as:'oneParticipation'}
+			#{list items:visitedGroup.startedProjectParticipants, as:'oneParticipation'}
 				<div class="projectApplicant">
 					<span class="projectId" class="hidden">${oneParticipation.projet.projectId}</span>
 					<span class="isProjectAccepted" class="hidden">${oneParticipation.accepted}</span>

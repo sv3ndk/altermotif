@@ -7,6 +7,7 @@ import com.svend.dab.core.beans.groups.GroupParticipant.ROLE;
 import com.svend.dab.core.beans.groups.ProjectGroup;
 import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.profile.UserSummary;
+import com.svend.dab.core.beans.projects.Project.STATUS;
 import com.svend.dab.core.beans.projects.ProjectSummary;
 import com.svend.dab.core.beans.projects.SearchQuery.SORT_KEY;
 
@@ -42,10 +43,12 @@ public interface IGroupDao {
 
 	public void updateProjectMainPhoto(String groupId, String projectId, Photo mainPhoto);
 
+	public void updateProjectStatus(String groupId, String projectId, STATUS newStatus);
 	/////////////////////////
 	// tag count
 	
 	public void launchCountGroupTagsJob();
+
 
 
 

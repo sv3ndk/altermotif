@@ -17,6 +17,7 @@ import com.svend.dab.core.beans.groups.GroupParticipation;
 import com.svend.dab.core.beans.profile.PrivacySettings.VISIBILITY;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.Participation;
+import com.svend.dab.core.beans.projects.Project.STATUS;
 
 /**
  * @author Svend
@@ -1053,12 +1054,12 @@ public class UserProfile implements Serializable {
 	}
 	
 	
-	public List<Participation> getAllProjectsWhereUserIsAdmin(String loggedInUserProfileId) {
+	public List<Participation> getAllActiveProjectsWhereUserIsAdmin(String loggedInUserProfileId) {
 		
 		List<Participation > projectsWhereIamAdmin = new LinkedList<Participation>();
 		
 		for (Participation participation : projects) {
-			if (participation.isAccepted() && (participation.getRole() == ROLE.admin || participation.getRole() == ROLE.initiator)) {
+			if (participation.isAccepted() && participation.getProjectSummary().getStatus() == STATUS.started && (participation.getRole() == ROLE.admin || participation.getRole() == ROLE.initiator)) {
 				projectsWhereIamAdmin.add(participation);
 			}
 		}

@@ -461,7 +461,8 @@ public class ProjectsView extends DabController {
 				createdThread.setMayUserDeleteThisThread(pep.isAllowedToDeleteThread(getSessionWrapper().getLoggedInUserProfileId()));
 				createdThread.setMayUserUpdateVisibility(pep.isAllowedToUpdateVisibilityThread(getSessionWrapper().getLoggedInUserProfileId()));
 				Map<String, Object> params = new HashMap<String, Object>();
-				params.put("t", createdThread.getId());
+				params.put("threadId", createdThread.getId());
+				params.put("projectId", createdThread.getProjectId());
 				createdThread.setThreadUrl(Router.reverse( "forum.ForumThreadView.projectForumThread", params).url);
 				
 				renderJSON(createdThread);

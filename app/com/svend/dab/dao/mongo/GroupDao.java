@@ -31,6 +31,7 @@ import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Project;
+import com.svend.dab.core.beans.projects.Project.STATUS;
 import com.svend.dab.core.beans.projects.ProjectSummary;
 import com.svend.dab.core.beans.projects.SearchQuery.SORT_KEY;
 import com.svend.dab.core.beans.projects.TagCount;
@@ -152,7 +153,8 @@ public class GroupDao implements IGroupDao {
 	}
 
 	public void setProjectApplicationAcceptedStatus(String groupId, String projectId, boolean accepted) {
-		mongoTemplate.updateFirst(query(where("id").is(groupId).and("projectParticipants.projet.projectId").is(projectId)), new Update().set("projectParticipants.$.accepted", accepted), ProjectGroup.class);
+		mongoTemplate.updateFirst(query(where("id").is(groupId).and("projectParticipants.projet.projectId").is(projectId)), 
+				new Update().set("projectParticipants.$.accepted", accepted), ProjectGroup.class);
 	}
 
 	public void updateProjectMainPhoto(String groupId, String projectId, Photo mainPhoto) {
@@ -172,6 +174,13 @@ public class GroupDao implements IGroupDao {
 	public void launchCountGroupTagsJob() {
 		mongoTemplate.mapReduce("projectGroup", "classpath:com/svend/dab/dao/mongo/mapreduce/countTagsMap.js",
 				"classpath:com/svend/dab/dao/mongo/mapreduce/countTagsReduce.js", options().outputCollection("groupTagCount"), GroupTagCount.class);
+	}
+
+
+	public void updateProjectStatus(String groupId, String projectId, STATUS newStatus) {
+		mongoTemplate.updateFirst(query(where("id").is(groupId).and("projectParticipants.projet.projectId").is(projectId)), 
+				new Update().set("projectParticipants.$.projet.status", newStatus), ProjectGroup.class);
+		
 	}
 
 }

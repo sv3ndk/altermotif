@@ -1,3 +1,4 @@
+play clean
 play war -o ../../altermotifDeploy/
 vmc login svend.vanderveken@gmail.com --passwd aBlHdgTE
 cd ../../altermotifDeploy
