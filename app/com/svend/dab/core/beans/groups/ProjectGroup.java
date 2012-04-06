@@ -29,6 +29,9 @@ public class ProjectGroup {
 
 	private List<GroupParticipant> participants;
 	
+	@Transient
+	private List<GroupParticipant> activeParticipants;
+	
 	private List<GroupProjectParticipant> projectParticipants;
 	
 	@Transient
@@ -323,6 +326,23 @@ public class ProjectGroup {
 	public void setParticipants(List<GroupParticipant> participants) {
 		this.participants = participants;
 	}
+	
+	public List<GroupParticipant> getActiveParticipants() {
+		if (activeParticipants == null) {
+			activeParticipants = new LinkedList<GroupParticipant>();
+			
+			if (participants != null) {
+				for (GroupParticipant participant : participants) {
+					if (participant.getUser().isProfileActive()) {
+						activeParticipants.add(participant);
+					}
+				}
+			}
+		}
+		
+		return activeParticipants;
+	}
+	
 
 	public Date getCreationDate() {
 		return creationDate;

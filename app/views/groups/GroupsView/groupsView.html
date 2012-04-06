@@ -302,7 +302,7 @@
 		<span id="alreadyApplyToGroupLinkVisisble" class="hidden">${groupViewVisibility.alreadyApplyToGroupLinkVisisble}</span>
 	
 		<div id="participants">
-			 #{list items:visitedGroup.participants, as:'oneParticipant'}
+			 #{list items:visitedGroup.activeParticipants, as:'oneParticipant'}
 				 <div class="participant" >
 					<span class="username" class="hidden" ">${oneParticipant.user.userName}</span>
 					<span class="isUserAccepted" class="hidden" ">${oneParticipant.accepted}</span>
