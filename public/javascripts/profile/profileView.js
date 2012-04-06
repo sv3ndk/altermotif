@@ -1,11 +1,15 @@
-var visitedProfileId;
+$(document).ready(function() {
+	init();
+});
+
+// this is in language.js
+var languageMapper;
 
 function init() {
 
-	visitedProfileId = $("#vuser").text();
-	
-	// this script is in language.js
-	initAllPossibleLanguagesMap();
+	// this is in language.js
+	languageMapper = new dabLanguageLib.LanguageMapper();
+	languageMapper.init(JSON.parse($("#allPossibleLanguageNames").text()));
 
 	initLeaveAReferenceForm();
 	initContactMechanics();
@@ -23,7 +27,7 @@ function insertLanguageLabels() {
 	
 	$(".languageCell").each(function(index, element) {
 		var languageCode = $(element).find("span.hidden").text();
-		$(element).find("span.langugeLabel").text(allPossibleLanguagesMap[languageCode]);
+		$(element).find("span.langugeLabel").text(languageMapper.resolveLanguageOfCode(languageCode));
 	});
 	
 }
@@ -32,8 +36,6 @@ function updateAllTexts() {
 	updateReceivedReferencesText();
 	updateSentReferencesText();
 	updateContactText();
-	
-	
 }
 
 function initYourProfileIsInactiveNotification() {

@@ -2,12 +2,15 @@ $(document).ready(function() {
 	init();
 });
 
+//this is in language.js
+var languageMapper;
 
 function init() {
 
-	// this is present in languages.js
-	initAllPossibleLanguagesMap();
-	
+	// this is in language.js
+	languageMapper = new dabLanguageLib.LanguageMapper();
+	languageMapper.init(JSON.parse($("#allPossibleLanguageNames").text()));
+
 	initToolBoxLinks();
 	
 	insertLangugeName();
@@ -49,7 +52,7 @@ function initPhotoGallery() {
 
 function insertLangugeName() {
 	var languageCode = $(".languageCell").find("span.hidden").text();
-	$(".languageCell span.langugeLabel").text(allPossibleLanguagesMap[languageCode]);
+	$(".languageCell span.langugeLabel").text(languageMapper.resolveLanguageOfCode(languageCode));
 }
 
 

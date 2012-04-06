@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.svend.dab.eda.events.groups;
 
 import java.util.logging.Level;
@@ -11,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.svend.dab.core.beans.DabException;
 import com.svend.dab.core.beans.groups.GroupParticipant;
+import com.svend.dab.core.beans.groups.GroupProjectParticipant;
 import com.svend.dab.core.beans.groups.ProjectGroup;
 import com.svend.dab.core.dao.IGroupDao;
 import com.svend.dab.eda.EventEmitter;
@@ -52,8 +50,12 @@ public class GroupClosedEventPropagator implements IEventPropagator<GroupClosed>
 					}
 				}
 				
-				
-				// TODO: emit "remove project from group" event here (should be useless though...)
+				// emit "remove project from group" event here
+				if (updateGroup.getProjectParticipants() != null) {
+					for (GroupProjectParticipant projectParticipant : updateGroup.getProjectParticipants()) {
+						eventEmitter.emit(new GroupProjectRemoved(event.getGroupId(), projectParticipant.getProjet().getProjectId()));
+					}
+				}
 				
 				groupDao.updateGroupActiveStatus(event.getGroupId(), false);
 			}
@@ -62,9 +64,5 @@ public class GroupClosedEventPropagator implements IEventPropagator<GroupClosed>
 		} else {
 			logger.log(Level.WARNING, "refusing to propagate a null GroupClosedEventPropagator or event with a null group id");
 		}
-		
-		
-		
 	}
-
 }

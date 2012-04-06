@@ -125,7 +125,7 @@ public class ForumThreadView extends DabController {
 					renderArgs.put("group", group);
 					renderArgs.put("forumThreadVisibility", new GroupForumThreadVisibility(getSessionWrapper().getLoggedInUserProfileId(), visitedThread, pep));
 
-					List<ForumThread> allThreads = BeanProvider.getForumThreadDao().loadProjectForumThreads(visitedThread.getProjectId());
+					List<ForumThread> allThreads = BeanProvider.getForumThreadDao().loadGroupForumThreads(visitedThread.getGroupid());
 					List<ForumThread> allOtherThread = new LinkedList<ForumThread>();
 					for (ForumThread thr : allThreads) {
 						if (!thr.getId().equals(visitedThread.getId())) {

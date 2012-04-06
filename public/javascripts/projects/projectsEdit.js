@@ -2,7 +2,6 @@ $(document).ready(function() {
 	init();
 });
 
-//var allLocations ;
 var allLinks ;
 var inputMultiLocationsController;
 var inputMultiTextController;
@@ -22,7 +21,6 @@ function init() {
 			updateAllThemesHiddenForm(newSelectedThemesValue);
 		});
 
-	
 	initAddLinkLogic();
 	
 	setupSetLanguageAutoComplete();
@@ -125,12 +123,13 @@ function updateAllThemesHiddenForm(newAllThemesValue) {
 ///////////////////////////////////////////////////////////
 
 function setupSetLanguageAutoComplete() {
-	
-	// this is defined in languges.js
-	initAllPossibleLanguagesMap();
+
+	// this is in language.js
+	var languageMapper = new dabLanguageLib.LanguageMapper();
+	languageMapper.init(JSON.parse($("#allPossibleLanguageNames").text()));
 	
 	$("#projectNewLanguage").autocomplete({
-		source : allPossibleLanguagesList
+		source : languageMapper.allPossibleLanguagesList
 	}
 	);
 }

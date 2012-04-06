@@ -1,22 +1,19 @@
 var warningUnsavedChangesTextValue;
 
-// reverve of the above: mapping from the human name to the code
-var allPossibleLanguagesMap_reverse;
-
-// mappting between a level (0, 1 or 2) and the name of this level
+// mapptng between a level (0, 1 or 2) and the name of this level
 var allPossibleLevelNamesMap;
 
 // languages of the profile: this is udpated in real type as the user modifies his list of langauges
 var profileLanguages ; 
+
+//this is in language.js
+var languageMapper;
 
 // ------------------------------
 // ------------------------------
 
 function init(warningUnsavedChangesText) {
 
-	// this script is in language.js
-	initAllPossibleLanguagesMap();
-	
 	warningUnsavedChangesTextValue = warningUnsavedChangesText;
 
 	// this is present in dab.js
@@ -28,7 +25,6 @@ function init(warningUnsavedChangesText) {
 	initCityEdition();
 	
 	initSelectGender();
-
 };
 
 function initCityEdition() {
@@ -43,7 +39,10 @@ function initCityEdition() {
 
 
 function initLanguageMechanics() {
-
+	
+	// this script is in language.js
+	languageMapper = new dabLanguageLib.LanguageMapper();
+	languageMapper.init(JSON.parse($("#allPossibleLanguageNames").text()));
 
 	// builds the mapping between level code and level human name
 	var allPossibleLevelNames = $("#allPossibleLevelNames").text();
@@ -59,15 +58,14 @@ function initLanguageMechanics() {
 		}
 	}
 	
-	
 	initLanguageButtons();
 }
 
 
-// add one row in the html for dispalying this language +`a drop down to allow changeing the level
+// add one row in the html for dispalying this language +`a drop down to allow changing the level
 function graphicalAddOneLanguage(languageCode, languageLevel) {
 	var el = "<li style='display: none'><div class=\"languageLabel\">"
-	el += allPossibleLanguagesMap[languageCode];
+	el += languageMapper.resolveLanguageOfCode(languageCode);
 	el += "</div>";
 
 	el += "<select class='rightspaced' size='1' >";
@@ -85,10 +83,7 @@ function graphicalAddOneLanguage(languageCode, languageLevel) {
 	$("#languageGroup").append(el);
 	$("#languageGroup li:last").show(250);
 	$("#languageGroup li:last").append($("#trashImg").clone().removeAttr("id").show());
-	//$("#languageGroup").append("<br />");
 }
-
-
 
 
 function initLanguageButtons() {
@@ -103,16 +98,15 @@ function initLanguageButtons() {
 		switchLanguageMode("normal");
 	});
 
-	// allPossibleLanguagesList is defined in languages.js 
 	$("#addLanguageInput").autocomplete({
-		source : allPossibleLanguagesList
+		source : languageMapper.allPossibleLanguagesList
 	});
 	
 	$("#addLanguageSecondButton").click(function() {
 
 		var chosenLanguage = $("#addLanguageInput").val();
 		if (chosenLanguage != null) {
-			var chosenCode = allPossibleLanguagesMap_reverse[chosenLanguage];
+			var chosenCode = languageMapper.resolveCodeOfLanguage(chosenLanguage);
 			if (chosenCode != null) {
 				if (!isThisLanguageAlreadyChosen(chosenCode)) {
 					if (profileLanguages == null) {
@@ -134,7 +128,7 @@ function initLanguageButtons() {
 	$("#languageGroup").on("change", "select", function(event){
 		
 		var level = $(event.target).val();
-		var code = allPossibleLanguagesMap_reverse[$(event.target).prev().text()]; 
+		var code = languageMapper.resolveCodeOfLanguage($(event.target).prev().text()); 
 		
 		for (var oneKey in profileLanguages) {
 			if (profileLanguages[oneKey].name == code) {
@@ -148,7 +142,7 @@ function initLanguageButtons() {
 	
 	// click on the delete icon
 	$("#languageGroup").on("click", "img.deleteImageLink", function(event){
-		var code = allPossibleLanguagesMap_reverse[$(event.target).prev().prev().text()];
+		var code = languageMapper.resolveCodeOfLanguage($(event.target).prev().prev().text());
 		
 		var removedIndex = 0;
 		for (var oneKey in profileLanguages) {
@@ -255,7 +249,6 @@ function unloadMessage(event) {
 	return warningUnsavedChangesTextValue;
 
 	// FF > 4 refuse to take this message into account...
-
 }
 
 

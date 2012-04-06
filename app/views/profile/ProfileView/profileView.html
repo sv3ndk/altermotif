@@ -35,19 +35,21 @@
 	    var acceptContactRequestAction	= #{jsAction @profile.ProfileView.acceptContactRequest(':otherUser') /};
 	    var removeContactAction			= #{jsAction @profile.ProfileView.removeContact(':otherUser') /};
 
-	    var isProfileActive = "${visitedUserProfile.privacySettings.profileActive}"; 
+	    var isProfileActive = "${visitedUserProfile.privacySettings.profileActive}";
+	    var visitedProfileId = "${visitedUserProfile.username}";
 	    
-		$(document).ready(function() {
-			init();
-		})
 	</script>
 #{/set}
 
 
-
 <!-- some hidden data, for javascript -->
 <span id="allPossibleLanguageNames" style="display: none">${allPossibleLanguageNames}</span>
-	
+<span id="profileReceivedReferences" style="display: none"}>&{'profileReceivedReferences'}</span>
+<span id="profileWrittenReferences" style="display: none"}>&{'profileWrittenReferences'}</span>
+<span id="profileContacts" style="display: none"}>&{'profileContacts'}</span>
+<span id="isAddToContactLinkVisible" style="display: none"}>${profileVisibility.addToContactLinkVisible}</span>
+<span id="isAddedToContactLinkVisible" style="display: none"}>${profileVisibility.addedToContactVisible}</span>
+<img id="defaultProfileThumbImage" src="@{'/public/images/defaultProfileThumb.jpg'}" style="display: none"></img>
 
 <div id="personalContainer"	class="pageContainer">
 
@@ -193,17 +195,6 @@
 		</div>
 	</div>
 </div>
-
-
-<!-- hidden data -->
-<span id="vuser" style="display: none"}>${visitedUserProfile.username}</span>
-<span id="profileReceivedReferences" style="display: none"}>&{'profileReceivedReferences'}</span>
-<span id="profileWrittenReferences" style="display: none"}>&{'profileWrittenReferences'}</span>
-<span id="profileContacts" style="display: none"}>&{'profileContacts'}</span>
-<span id="isAddToContactLinkVisible" style="display: none"}>${profileVisibility.addToContactLinkVisible}</span>
-<span id="isAddedToContactLinkVisible" style="display: none"}>${profileVisibility.addedToContactVisible}</span>
-
-<img id="defaultProfileThumbImage" src="@{'/public/images/defaultProfileThumb.jpg'}" style="display: none"></img>
 
 <!-- reference popups -->
 
