@@ -4,30 +4,38 @@
     <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/profile.css'}" />
 #{/set}
 
-
 #{set 'moreScripts'}
-
-    <script src="@{'/public/javascripts/photoedit.js'}" type="text/javascript"
-    	charset="${_response_encoding}"></script>
-
-    <script src="@{'/public/javascripts/profile/profilePhotos.js'}" type="text/javascript"
-    	charset="${_response_encoding}"></script>
+    <script src="@{'/public/javascripts/photoedit.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+    <script src="@{'/public/javascripts/profile/profilePhotos.js'}" type="text/javascript" charset="${_response_encoding}"></script>
     	
     <script type="text/javascript">
 			var setCaptionText = "&{'profileMPClickToSetCaption'}";
 			var mainPhotoIndex = "${userProfile.mainPhotoIndex}";
-
 		   	var updatePhotoCaptionAction 	= #{jsAction @profile.ProfilePhotos.doUpdatePhotoCaption(':profilePhotoIndex', ':profilePhotoCaption') /};
-			
-			$(document).ready(function() {
-				init();
-			})
 		</script>
 #{/set}
-
 
 #{profile.photos.uploadPhotoThumbs photoPack:userProfile.photosPack20, mainPhotoIndex:userProfile.mainPhotoIndex + 1/}
 
 #{profile.photos.uploadPhotoMPToolbox uploadPhotoLinkActive:uploadPhotoLinkActive, setAsMainPhotoText:'profileMSetProfilePhoto', photoEditType:"profile"/}
 
 #{profile.photos.profileMPCentralPhotoContainer /}
+
+
+<div id="hiddenUploadPhotoForm" style="display: none">
+	<form method="post"	enctype="multipart/form-data" action="@{profile.ProfilePhotos.doUploadPhoto()}">
+		<input type="file" id="theFile" name="theFile"  />
+	</form>
+</div>
+
+<div id="hiddenDeletePhotoForm" style="display: none">
+	<form method="post"	enctype="multipart/form-data" action="@{profile.ProfilePhotos.doDeletePhoto()}">
+		<input type="hidden" id="deletedPhotoIdx" name="deletedPhotoIdx"  />
+	</form>
+</div>
+	
+<div id="hiddenSetAsMainPhotoForm" style="display: none">
+	<form method="post"	enctype="multipart/form-data" action="@{profile.ProfilePhotos.doSetAsMainPhoto()}">
+		<input type="hidden" id="photoIndex" name="photoIndex"  />
+	</form>
+</div>
