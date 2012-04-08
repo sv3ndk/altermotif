@@ -65,7 +65,7 @@ public class ProfilePhotoService implements IProfilePhotoService {
 			throw new DabUploadFailedException("cannot process: no user profile found for  " + username, failureReason.technicalError);
 		}
 
-		if (profile.isPhotoPackFullAlready()) {
+		if (profile.getPhotoAlbum().isFull()) {
 			throw new DabUploadFailedException("cannot process: no user profile found for  " + username + ": already 20 photos! (the front end shoud prevent this!)", failureReason.technicalError);
 		}
 
@@ -75,12 +75,12 @@ public class ProfilePhotoService implements IProfilePhotoService {
 		byte[] normalSize = photoUtils.resizePhotoToNormalSize(receivedPhoto);
 		byte[] thumbSize = photoUtils.resizePhotoToThumbSize(receivedPhoto);
 
-		Photo photo = photoUtils.createOnePhotoPlaceholder(profile.getPhotoS3RootFolder(), profile.getThumbsS3RootFolder());
+		Photo photo = photoUtils.createOnePhotoPlaceholder(profile.getPhotoAlbum().getPhotoS3RootFolder(), profile.getPhotoAlbum().getThumbsS3RootFolder());
 
 		// saves first the photo in S3 => in case of failure, we just have some lost space over there (+ a message on the user screen)
 		photoDao.savePhoto(photo, normalSize, thumbSize, JPEG_MIME_TYPE);
 
-		boolean hasMainPhotoChanged = profile.isPhotoPackEmpty();
+		boolean hasMainPhotoChanged = profile.getPhotoAlbum().isPhotoPackEmpty();
 		userProfileRepo.addOnePhoto(profile.getUsername(), photo);
 
 		if (hasMainPhotoChanged) {
@@ -100,16 +100,16 @@ public class ProfilePhotoService implements IProfilePhotoService {
 			logger.log(Level.WARNING, "Cannot remove a photo from a null profile: not doing anything");
 		} else {
 
-			Photo removed = profile.getPhoto(deletedPhotoIdx);
+			Photo removed = profile.getPhotoAlbum().getPhoto(deletedPhotoIdx);
 			if (removed == null) {
 				logger.log(Level.WARNING, "It seems the profile refused to remove photo with index == " + deletedPhotoIdx + " => not propagating any event");
 			} else {
 				
-				if (profile.getMainPhotoIndex() < deletedPhotoIdx) {
+				if (profile.getPhotoAlbum().getMainPhotoIndex() < deletedPhotoIdx) {
 					userProfileRepo.removeOnePhoto(profile.getUsername(), removed);
-				} else if (profile.getMainPhotoIndex() == deletedPhotoIdx) {
+				} else if (profile.getPhotoAlbum().getMainPhotoIndex() == deletedPhotoIdx) {
 					userProfileRepo.removeOnePhotoAndResetMainPhotoIndex(profile.getUsername(), removed);
-					profile.setMainPhotoIndex(0);
+					profile.getPhotoAlbum().setMainPhotoIndex(0);
 					emitter.emit(new UserSummaryUpdated(new UserSummary(profile)));
 				} else {
 					userProfileRepo.removeOnePhotoAndDecrementMainPhotoIndex(profile.getUsername(), removed);
@@ -131,9 +131,9 @@ public class ProfilePhotoService implements IProfilePhotoService {
 	 * @see com.svend.dab.core.IProfilePhotoService#movePhotoToFirstPosition(com.svend.dab.core.beans.profile.UserProfile, int)
 	 */
 	public void movePhotoToFirstPosition(UserProfile userProfile, int photoIndex) {
-		if (userProfile != null && userProfile.getPhotos() != null && photoIndex >= 0 && photoIndex < userProfile.getPhotos().size()) {
+		if (userProfile != null && userProfile.getPhotoAlbum().getPhotos() != null && photoIndex >= 0 && photoIndex < userProfile.getPhotoAlbum().getPhotos().size()) {
 			userProfileRepo.movePhotoToFirstPosition(userProfile.getUsername(), photoIndex);
-			userProfile.setMainPhotoIndex(photoIndex);
+			userProfile.getPhotoAlbum().setMainPhotoIndex(photoIndex);
 			emitter.emit(new UserSummaryUpdated(new UserSummary(userProfile)));
 
 		} else {
@@ -146,17 +146,12 @@ public class ProfilePhotoService implements IProfilePhotoService {
 	 * 
 	 * @see com.svend.dab.core.IProfilePhotoService#updatePhotoCaption(com.svend.dab.core.beans.profile.UserProfile, int, java.lang.String)
 	 */
-	public void updatePhotoCaption(UserProfile userProfile, int photoIndex, String profilePhotoCaption) {
+	public void updatePhotoCaption(UserProfile userProfile, int photoIndex, String photoCaption) {
 
-		if (userProfile != null && userProfile.getPhotos() != null && photoIndex >= 0 && photoIndex < userProfile.getPhotos().size()) {
+		if (userProfile != null ) {
 
-			Photo updatedPhoto = userProfile.getPhotos().get(photoIndex);
-			if (profilePhotoCaption == null) {
-				updatedPhoto.setCaption("");
-			} else {
-				updatedPhoto.setCaption(profilePhotoCaption);
-			}
-			userProfileService.updatePhotoGallery(userProfile, false);
+			Photo editedPhoto = userProfile.getPhotoAlbum().getPhoto(photoIndex);
+			userProfileRepo.updatePhotoCaption(userProfile.getUsername(), editedPhoto.getNormalPhotoLink().getS3Key(), photoCaption);
 
 		} else {
 			logger.log(Level.WARNING, "Not updating photo caption: invalid index or user profile null or user profile with null photo set. Index=" + photoIndex);

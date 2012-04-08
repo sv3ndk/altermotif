@@ -40,7 +40,7 @@ public class UserSummary implements Serializable {
 
 
 	public UserSummary(UserProfile user) {
-		this(user.getUsername(), user.getPdata(), user.getMainPhoto(), user.getPrivacySettings().isProfileActive());
+		this(user.getUsername(), user.getPdata(), user.getPhotoAlbum().getMainPhoto(), user.getPrivacySettings().isProfileActive());
 	}
 	
 	

@@ -2,10 +2,6 @@ package com.svend.dab.core.beans.profile;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import org.springframework.data.annotation.Id;
 
 import com.svend.dab.core.beans.aws.S3Link;
 
@@ -14,12 +10,6 @@ import com.svend.dab.core.beans.aws.S3Link;
  * 
  */
 public class Photo implements Serializable {
-
-	private static Logger logger = Logger.getLogger(Photo.class.getName());
-
-	/**
-	 * 
-	 */
 
 	private static final long serialVersionUID = 1L;
 

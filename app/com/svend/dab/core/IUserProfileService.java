@@ -48,7 +48,7 @@ public interface IUserProfileService {
 	//----------------------
 	// photos
 
-	public abstract void updatePhotoGallery(UserProfile profile, boolean hasMainPhotoChanged);
+	//public abstract void updatePhotoGallery(UserProfile profile, boolean hasMainPhotoChanged);
 	
 	// ----------------------------------
 	// references

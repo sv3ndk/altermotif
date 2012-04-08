@@ -83,12 +83,9 @@
 
 	<p id=""class="pageTitle">${visitedProject?.pdata?.name}</p>
 
-
 	<div id="projectPhotoContainer">
-		#{photoGallery
-			mainPhoto:visitedProject.mainPhoto , 
-			galleryType:'project',
-			photos:visitedProject.photos,
+		#{photos.photoGallery
+			photoAlbum:visitedProject.getPhotoAlbum(),
 			isPhotoGalleryVisible:projectVisibility.isPhotoGalleryVisible(),
 			isProjectEditLinkVisible:projectVisibility.isEditPhotoGalleryLinkVisible(),
 			visitedProjectId:visitedProject.id

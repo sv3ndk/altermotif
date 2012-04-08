@@ -80,7 +80,7 @@ public class ProjectViewVisibility {
 	// photo gallery
 	
 	public boolean isPhotoGalleryVisible() {
-		return project.getPhotos() != null;
+		return ! project.getPhotoAlbum().isPhotoPackEmpty() ;
 	}
 	
 	public boolean isEditPhotoGalleryLinkVisible() {

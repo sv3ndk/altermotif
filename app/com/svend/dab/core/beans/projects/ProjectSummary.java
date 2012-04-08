@@ -7,7 +7,6 @@ import java.util.Map;
 import org.springframework.data.annotation.Transient;
 
 import play.mvc.Router;
-import play.mvc.Router.Route;
 
 import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.projects.Project.STATUS;
@@ -31,8 +30,6 @@ public class ProjectSummary {
 	@Transient
 	private String projectLink;
 
-	@Transient
-	private String mainPhotoThumbLink;
 
 	public ProjectSummary() {
 		super();
@@ -42,7 +39,7 @@ public class ProjectSummary {
 		super();
 		this.projectId = project.getId();
 		this.name = project.getPdata().getName();
-		this.mainPhoto = project.getMainPhoto();
+		this.mainPhoto = project.getPhotoAlbum().getMainPhoto();
 		this.status = project.getStatus();
 		this.creationDate = project.getPdata().getCreationDate();
 	}
@@ -76,7 +73,6 @@ public class ProjectSummary {
 	public void generatePhotoLink(Date expirationdate) {
 		if (mainPhoto != null) {
 			mainPhoto.generatePresignedLinks(expirationdate, false, true);
-			mainPhotoThumbLink = getMainPhotoThumbLink();
 		}
 	}
 

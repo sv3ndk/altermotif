@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.svend.dab.eda.events.profile;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +37,7 @@ public class UserPrivacySettingsUpdatedPropagator implements IEventPropagator<Us
 		userProfileRepo.replacePrivacySettings(event.getUserId(), event.getNewPrivacySettings());
 		
 		if (profile.getPrivacySettings().isProfileActive() != event.getNewPrivacySettings().isProfileActive()) {
-			emitter.emit(new UserSummaryUpdated(new UserSummary(event.getUserId(), profile.getPdata(), profile.getMainPhoto(), event.getNewPrivacySettings().isProfileActive())));
+			emitter.emit(new UserSummaryUpdated(new UserSummary(event.getUserId(), profile.getPdata(), profile.getPhotoAlbum().getMainPhoto(), event.getNewPrivacySettings().isProfileActive())));
 			emitter.emit(new ProfileRefUpdated(new ProfileRef(event.getUserId(), event.getNewPrivacySettings().isProfileActive())));
 		}
 	}

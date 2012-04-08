@@ -1,10 +1,23 @@
+/*
+ * In order to use this, the html must provide the following functionalities:
+ * 
+ * HTML form used to perform the following actions:
+ * 
+ * hiddenDeletePhotoForm
+ * hiddenSetAsMainPhotoForm
+ * hiddenUploadPhotoForm
+ * 
+ * + a Play AJAX function to update the photo caption, called like this: updatePhotoCaptionAction
+ * 
+ */
+
 var photoEditLib = {
 		
-	PhotoEditController : function(photoEditActionController) {
+	PhotoEditController : function() {
 	
 		this.selectedPhotoIndex = 0;
 		this.isPhotoInterractionEnabled = true;
-		this.photoEditActionController = photoEditActionController;
+		this.photoEditActionController = new photoEditLib.PhotoEditActionController();
 		
 		this.init = function() {
 
@@ -178,5 +191,66 @@ var photoEditLib = {
 		};
 		this.init();
 	},
+	
+	PhotoEditActionController :function() {
+		
+		this.init = function() {
+			
+			$("#pleaseWaitUploadDialog").dialog({
+				autoOpen : false,
+				closeOnEscape : false,
+				modal : true,
+				beforeClose : function(event, ui) {
+					// prevents the dialog to close
+					return false;
+				}
+			});
+	
+			$("#theFile").change(function() {
+				$("#pleaseWaitUploadDialog").dialog("open");
+				$("#hiddenUploadPhotoForm form").submit();
+			});
+			
+		};
+		
+		
+		this.doDeletePhoto = function(deletedPhotoIndex) {
+			$("#hiddenDeletePhotoForm #deletedPhotoIdx").val(deletedPhotoIndex);
+			$("#hiddenDeletePhotoForm form").submit();
+		};
+		
+		this.doSetAsMainPhoto = function(mainPhotoIndex) {
+			$("#hiddenSetAsMainPhotoForm #photoIndex").val(mainPhotoIndex);
+			$("#hiddenSetAsMainPhotoForm form").submit();
+		};
+		
+		this.doUploadPhoto = function() {
+			$("#hiddenUploadPhotoForm").show();
+			$("#theFile").click();
+			$("#hiddenUploadPhotoForm").hide();
+		};
+		
+		this.doUpdatePhotoCaption = function(editedPhotoIndex, newCaption) {
+			$.post(
+				updatePhotoCaptionAction(
+						{photoIndex: editedPhotoIndex, photoCaption: newCaption}
+						),
+						
+				function(data) {
+					$("#photoCaption").text(newCaption)
+	
+					$("#profileMPThumbContainer img").each(function(index, imageElement) {
+						if (index == editedPhotoIndex) {
+							$(imageElement).attr("alt", newCaption);
+						}
+					});
+					
+					$("	#editCaptionDialog").dialog("close");
+				}
+			);
+		};
+		this.init();
+	},
+	
 		
 }

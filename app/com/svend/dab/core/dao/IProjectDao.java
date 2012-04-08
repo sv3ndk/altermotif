@@ -3,6 +3,7 @@ package com.svend.dab.core.dao;
 import java.util.List;
 import java.util.Set;
 
+import com.svend.dab.core.beans.PhotoAlbum;
 import com.svend.dab.core.beans.groups.GroupSummary;
 import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.profile.UserSummary;
@@ -32,17 +33,22 @@ public interface IProjectDao {
 
 	void save(Project project);
 
-	// this is getting less and less atomic...
-	// TODO: clean this up...
 	void updateProjectPDataAndLinksAndTagsAndThemes(String id, Project project);
 	
 	void updateProjectStatus(String id, STATUS newStatus);
 	
 	List<ProjectOverview> searchProjects(SearchQuery request);
 
-	
 	// project photos
 
+	
+	/**
+	 * Updates the complet photo album: usage of this is discourage: prefer the finer-grained photo related methods
+	 * @param id
+	 * @param photoAlbum
+	 */
+	void updatePhotoAlbum(String id, PhotoAlbum photoAlbum);
+	
 	void addOnePhoto(String id, Photo newPhoto);
 
 	void removeOnePhoto(String id, Photo removed);
@@ -54,6 +60,7 @@ public interface IProjectDao {
 	void updatePhotoCaption(String id, String s3PhotoKey, String photoCaption);
 
 	void movePhotoToFirstPosition(String id, int mainPhotoIndex);
+	
 	
 	///////////////////////////
 	// project participants
@@ -101,6 +108,5 @@ public interface IProjectDao {
 	void removeParticipationInGroup(String projectId, String groupId);
 
 	void updateGroupSummaryOfAllProjectsPartOf(GroupSummary updatedSummary);
-
 
 }

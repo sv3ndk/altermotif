@@ -23,19 +23,18 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoException;
 import com.mongodb.WriteResult;
+import com.svend.dab.core.beans.PhotoAlbum;
 import com.svend.dab.core.beans.groups.GroupSummary;
-import com.svend.dab.core.beans.groups.ProjectGroup;
 import com.svend.dab.core.beans.profile.Photo;
-import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Asset;
 import com.svend.dab.core.beans.projects.Participant;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.Project.STATUS;
-import com.svend.dab.core.beans.projects.SearchQuery.SORT_KEY;
 import com.svend.dab.core.beans.projects.ProjectOverview;
 import com.svend.dab.core.beans.projects.SearchQuery;
+import com.svend.dab.core.beans.projects.SearchQuery.SORT_KEY;
 import com.svend.dab.core.beans.projects.SelectedTheme;
 import com.svend.dab.core.beans.projects.TagCount;
 import com.svend.dab.core.beans.projects.Task;
@@ -170,31 +169,40 @@ public class ProjectRepoImpl implements IProjectDao {
 		Update update = new Update().set("pdata", project.getPdata()).set("links", links).set("tags", tags).set("themes", themes);
 		mongoTemplate.updateFirst(query, update, Project.class);
 	}
+	
+	/////////////////////
+	// photos
+	
+	
+	public void updatePhotoAlbum(String id, PhotoAlbum photoAlbum) {
+		genericUpdateProject(id, new Update().set("photoAlbum", photoAlbum));
+	}
+
 
 	public void addOnePhoto(String id, Photo newPhoto) {
-		genericUpdateProject(id, new Update().addToSet("photos", newPhoto));
+		genericUpdateProject(id, new Update().addToSet("photoAlbum.photos", newPhoto));
 	}
 
 	public void removeOnePhoto(String id, Photo removed) {
-		genericUpdateProject(id, new Update().pull("photos", removed));
+		genericUpdateProject(id, new Update().pull("photoAlbum.photos", removed));
 	}
 
 	public void removeOnePhotoAndResetMainPhotoIndex(String id, Photo removed) {
-		genericUpdateProject(id, new Update().pull("photos", removed).set("mainPhotoIndex", 0));
+		genericUpdateProject(id, new Update().pull("photoAlbum.photos", removed).set("photoAlbum.mainPhotoIndex", 0));
 	}
 
 	public void removeOnePhotoAndDecrementMainPhotoIndex(String id, Photo removed) {
-		genericUpdateProject(id, new Update().pull("photos", removed).inc("mainPhotoIndex", -1));
+		genericUpdateProject(id, new Update().pull("photoAlbum.photos", removed).inc("photoAlbum.mainPhotoIndex", -1));
 	}
 
 	public void updatePhotoCaption(String projectId, String s3PhotoKey, String photoCaption) {
-		Query query = query(where("_id").is(projectId).and("photos.normalPhotoLink.s3Key").is(s3PhotoKey));
-		Update update = new Update().set("photos.$.caption", photoCaption);
+		Query query = query(where("_id").is(projectId).and("photoAlbum.photos.normalPhotoLink.s3Key").is(s3PhotoKey));
+		Update update = new Update().set("photoAlbum.photos.$.caption", photoCaption);
 		mongoTemplate.updateFirst(query, update, Project.class);
 	}
 
 	public void movePhotoToFirstPosition(String projectId, int mainPhotoIndex) {
-		genericUpdateProject(projectId, new Update().set("mainPhotoIndex", mainPhotoIndex));
+		genericUpdateProject(projectId, new Update().set("photoAlbum.mainPhotoIndex", mainPhotoIndex));
 	}
 
 	// /////////////////////////
@@ -334,5 +342,7 @@ public class ProjectRepoImpl implements IProjectDao {
 		Query query = query(where("_id").is(projectId));
 		mongoTemplate.updateFirst(query, update, Project.class);
 	}
+
+
 
 }

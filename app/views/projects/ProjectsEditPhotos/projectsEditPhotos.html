@@ -13,17 +13,17 @@
 
     <script type="text/javascript">
 		var setCaptionText = "&{'profileMPClickToSetCaption'}";
-		var mainPhotoIndex = "${editedProject.mainPhotoIndex}";
+		var mainPhotoIndex = "${editedProject.getPhotoAlbum().getMainPhotoIndex()}";
 
 	   	var updatePhotoCaptionAction 	= #{jsAction @projects.ProjectsEditPhotos.doUpdatePhotoCaption(':photoIndex', ':photoCaption') /};
 	</script>
 #{/set}
 
-#{profile.photos.uploadPhotoThumbs photoPack:editedProject.photosPack20, mainPhotoIndex:editedProject.mainPhotoIndex + 1 /}
+#{photos.uploadPhotoThumbs photoAlbum:editedProject.getPhotoAlbum() /}
 
-#{profile.photos.uploadPhotoMPToolbox uploadPhotoLinkActive:uploadPhotoLinkActive, setAsMainPhotoText:"projectPhotosSetAsMainPhoto", photoEditType:"project" /}
+#{photos.uploadPhotoMPToolbox uploadPhotoLinkActive:uploadPhotoLinkActive, setAsMainPhotoText:"projectPhotosSetAsMainPhoto", photoEditType:"project" /}
 
-#{profile.photos.profileMPCentralPhotoContainer /}
+#{photos.centralPhotoContainer /}
 
 <div id="hiddenUploadPhotoForm" style="display: none">
 	<form method="post"	enctype="multipart/form-data" action="@{projects.ProjectsEditPhotos.doUploadPhoto()}">

@@ -10,18 +10,21 @@ import org.springframework.data.annotation.Transient;
 
 import com.google.common.base.Strings;
 import com.svend.dab.core.beans.PhotoAlbum;
-import com.svend.dab.core.beans.PhotoPack;
 import com.svend.dab.core.beans.groups.GroupSummary;
 import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
 
+import controllers.BeanProvider;
+
 /**
  * @author Svend
  * 
  */
 public class Project {
+
+	public static final String DEFAULT_PROJECT_IMAGE = "/public/images/defaultProjectImage.jpg";
 
 	public enum PROJECT_VISIBILITY {
 		everybody, loggedin, members, admins, owner;
@@ -50,16 +53,10 @@ public class Project {
 	private List<GroupSummary> groups;
 
 	// //////////////////
-	// TODO: replace this with an instance of "PhotoAlbum"
-	private int mainPhotoIndex;
+
+	// TODO: remove this (after one deployment + complete visit of all projects)
 	private List<Photo> photos;
-	// arrays of 20 links to the photos of the user (no matter how many actually present in DB)
-	@Transient
-	private PhotoPack cachedPhotosPack20;
-	public static final int MAX_NUMBER_OF_PHOTOS = 20;
 
-
-	// ////////////////////
 	private PhotoAlbum photoAlbum;
 
 	private Set<String> links;
@@ -114,66 +111,37 @@ public class Project {
 	// ------------------------------------------------
 	// photos
 
+	/**
+	 * @return the {@link PhotoAlbum} for this project (never null)
+	 */
 	public PhotoAlbum getPhotoAlbum() {
 		if (photoAlbum == null) {
 			synchronized (this) {
 				if (photoAlbum == null) {
-					photoAlbum = new PhotoAlbum("/projects/" + id + "/photos/", "/projects/" + id + "/thumbs/", "/public/images/defaultProjectImage.jpg'");
+					// the information below is stored together with the photo album
+					photoAlbum = new PhotoAlbum("/projects/" + id + "/photos/", "/projects/" + id + "/thumbs/");
 				}
 			}
 		}
+
+		// setting the transient properties of the photo album every time
+		photoAlbum.setMaxNumberOfPhotos(BeanProvider.getConfig().getMaxNumberOfPhotosInProject());
+		photoAlbum.setDefaultMainPhoto(DEFAULT_PROJECT_IMAGE);
+		
 		return photoAlbum;
 	}
 
-	
-	// TODO: suppress this and base the logic on getPhotoAlbum()
-	/**
-	 * @return
-	 */
-	public Photo getMainPhoto() {
-		if (photos != null && !photos.isEmpty()) {
-			return photos.get(mainPhotoIndex);
-		}
-
-		return new Photo();
-	}
-
-	public List<Photo> getPhotosPack20() {
+	public void generatePhotoLinks(Date expirationdate) {
 		
-		if (cachedPhotosPack20 == null) {
-			synchronized (this) {
-				if (cachedPhotosPack20 == null) {
-					cachedPhotosPack20 = new PhotoPack(20, photos);
-				}
+		getPhotoAlbum().generatePhotoLinks(expirationdate);
+
+		if (participants != null) {
+			for (Participant participant : participants) {
+				participant.generatePhotoLinks(expirationdate);
 			}
 		}
-
-		return cachedPhotosPack20.getPack();
 	}
-
-	public boolean isPhotoPackFull() {
-		return photos != null && photos.size() > MAX_NUMBER_OF_PHOTOS;
-	}
-
-	public String getPhotoS3RootFolder() {
-		return "/projects/" + id + "/photos/";
-	}
-
-	public String getThumbsS3RootFolder() {
-		return "/projects/" + id + "/thumbs/";
-	}
-
-	public boolean isPhotoPackEmpty() {
-		return photos == null || photos.size() == 0;
-	}
-
-	public Photo getPhoto(int photoIdx) {
-		if (isPhotoPackEmpty() || photos.size() <= photoIdx) {
-			return null;
-		}
-		return photos.get(photoIdx);
-	}
-
+	
 	// _--------------------------------------
 	// roles
 
@@ -366,19 +334,6 @@ public class Project {
 
 	// ------------------------------------------------------------------------------
 	//
-	public void generatePhotoLinks(Date expirationdate) {
-		if (photos != null) {
-			for (Photo photo : photos) {
-				photo.generatePresignedLinks(expirationdate, true, true);
-			}
-		}
-
-		if (participants != null) {
-			for (Participant participant : participants) {
-				participant.generatePhotoLinks(expirationdate);
-			}
-		}
-	}
 
 	public void prepareTasksAndAssetsUsersummary() {
 		if (tasks != null) {
@@ -427,14 +382,6 @@ public class Project {
 		this.participants = participants;
 	}
 
-	public List<Photo> getPhotos() {
-		return photos;
-	}
-
-	public void setPhotos(List<Photo> photos) {
-		this.photos = photos;
-	}
-
 	public STATUS getStatus() {
 		return status;
 	}
@@ -457,14 +404,6 @@ public class Project {
 
 	public void setTags(Set<String> tags) {
 		this.tags = tags;
-	}
-
-	public int getMainPhotoIndex() {
-		return mainPhotoIndex;
-	}
-
-	public void setMainPhotoIndex(int mainPhotoIndex) {
-		this.mainPhotoIndex = mainPhotoIndex;
 	}
 
 	public Set<SelectedTheme> getThemes() {
@@ -521,5 +460,13 @@ public class Project {
 		} else {
 			return groups.size();
 		}
+	}
+
+	public List<Photo> getPhotos() {
+		return photos;
+	}
+
+	public void setPhotos(List<Photo> photos) {
+		this.photos = photos;
 	}
 }

@@ -64,7 +64,14 @@
 	<p  class="pageTitle">${visitedGroup.name}</p>
 	
 	<div id="groupPhotoContainer">
-		todo, add photos.. 
+		#{photos.photoGallery
+			mainPhoto:visitedGroup.mainPhoto , 
+			galleryType:'project',
+			photos:visitedProject.photos,
+			isPhotoGalleryVisible:projectVisibility.isPhotoGalleryVisible(),
+			isProjectEditLinkVisible:projectVisibility.isEditPhotoGalleryLinkVisible(),
+			visitedProjectId:visitedProject.id
+		 /}
 	</div>
 	
 	

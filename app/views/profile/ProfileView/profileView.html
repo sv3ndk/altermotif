@@ -66,7 +66,9 @@
 	</p>
 	
 	<div id="userProfilePhotoContainer">
-		#{photoGallery mainPhoto:visitedUserProfile.mainPhoto, galleryType:'profile', photos:visitedUserProfile.photos, isPhotoGalleryVisible:profileVisibility.userPhotoGalleryVisible/}
+		#{photos.photoGallery 
+			photoAlbum:visitedUserProfile.getPhotoAlbum(), 
+			isPhotoGalleryVisible:profileVisibility.userPhotoGalleryVisible/}
 	</div>
 	
 	#{profile.userProfileBasicDetails visitedUserProfile:visitedUserProfile, profileVisibility:profileVisibility/}

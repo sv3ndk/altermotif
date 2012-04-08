@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import com.svend.dab.core.beans.PhotoAlbum;
 import com.svend.dab.core.beans.groups.GroupParticipation;
 import com.svend.dab.core.beans.groups.GroupSummary;
 import com.svend.dab.core.beans.profile.Contact;
@@ -39,7 +40,7 @@ public interface IUserProfileDao {
 	// ------------------------------------------
 	// photos
 	
-	public void updatePhotoGallery(UserProfile userProfile);
+	public void updatePhotoCaption(String username, String s3PhotoKey, String photoCaption);		
 	
 	public void addOnePhoto(String username, Photo photo);
 	
@@ -53,6 +54,8 @@ public interface IUserProfileDao {
 	
 	public void updateCv(UserProfile editedUserProfile);
 	
+	public void updatePhotoAlbum(String id, PhotoAlbum photoAlbum);
+
 	// ---------------------------------
 	// contacts
 	
@@ -131,6 +134,7 @@ public interface IUserProfileDao {
 	public void updateGroupSummaryOfAllUsersPartOf(GroupSummary updatedSummary);
 
 	public void updateGroupParticipationRole(String userId, String groupId, com.svend.dab.core.beans.groups.GroupParticipant.ROLE role);
+
 
 
 

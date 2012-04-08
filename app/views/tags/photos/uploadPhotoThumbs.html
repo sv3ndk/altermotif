@@ -1,20 +1,18 @@
-
-
 <div id="profileMPThumbContainer">
 		
+	*{ row 1 }*
 	<div class="profileMPThumbContainer">
-		#{list items:_photoPack, as: 'onePhoto'}
+		#{list items:_photoAlbum.getCompletList(), as: 'onePhoto'}
 	
 			#{if onePhoto_index < 11}
 				#{if !onePhoto.isPhotoEmpty}
 				
-					#{if onePhoto_index == _mainPhotoIndex}
+					#{if onePhoto_index == (_photoAlbum.mainPhotoIndex + 1 )}
 						<img src="${onePhoto.thumbAddress}" alt="${onePhoto.caption}" class="mainPhoto"></img>
 					#{/if}
-
-					#{if onePhoto_index != _mainPhotoIndex}
+					#{else }
 						<img src="${onePhoto.thumbAddress}" alt="${onePhoto.caption}" ></img>
-					#{/if}
+					#{/else}
 					
 					<span style="display: none">${onePhoto.normalPhotoAddress}</span>
 				#{/if}
@@ -32,8 +30,9 @@
 	</div>
 		
 
+	*{ row 2 }*
 	<div class="profileMPThumbContainer">
-		#{list items:_photoPack, as: 'onePhoto'}
+		#{list items:_photoAlbum.getCompletList(), as: 'onePhoto'}
 	
 			#{if onePhoto_index > 10}
 				#{if !onePhoto.isPhotoEmpty}

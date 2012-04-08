@@ -23,7 +23,7 @@ public class UserProfilePersonalDataEventPropagator implements IEventPropagator<
 
 	@Autowired
 	IUserProfileDao userProfileRepo;
-	
+
 	@Autowired
 	private EventEmitter emitter;
 
@@ -43,7 +43,8 @@ public class UserProfilePersonalDataEventPropagator implements IEventPropagator<
 
 			userProfileRepo.replacePersonalData(profile, event.getPersonalData());
 			if (profile.getPdata().isLocationDifferent(event.getPersonalData())) {
-				UserSummary updatedUserSummary = new UserSummary(event.getUsername(), event.getPersonalData(),profile.getMainPhoto(), profile.getPrivacySettings().isProfileActive());
+				UserSummary updatedUserSummary = new UserSummary(event.getUsername(), event.getPersonalData(), profile.getPhotoAlbum().getMainPhoto(), profile
+						.getPrivacySettings().isProfileActive());
 				emitter.emit(new UserSummaryUpdated(updatedUserSummary));
 			}
 

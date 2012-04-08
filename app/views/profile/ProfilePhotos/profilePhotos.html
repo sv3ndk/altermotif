@@ -10,18 +10,18 @@
     	
     <script type="text/javascript">
 			var setCaptionText = "&{'profileMPClickToSetCaption'}";
-			var mainPhotoIndex = "${userProfile.mainPhotoIndex}";
-		   	var updatePhotoCaptionAction 	= #{jsAction @profile.ProfilePhotos.doUpdatePhotoCaption(':profilePhotoIndex', ':profilePhotoCaption') /};
+			var mainPhotoIndex = "${userProfile.getPhotoAlbum().getMainPhotoIndex()}";
+		   	var updatePhotoCaptionAction 	= #{jsAction @profile.ProfilePhotos.doUpdatePhotoCaption(':photoIndex', ':photoCaption') /};
 		</script>
 #{/set}
 
-#{profile.photos.uploadPhotoThumbs photoPack:userProfile.photosPack20, mainPhotoIndex:userProfile.mainPhotoIndex + 1/}
+#{photos.uploadPhotoThumbs photoAlbum:userProfile.getPhotoAlbum() /}
 
-#{profile.photos.uploadPhotoMPToolbox uploadPhotoLinkActive:uploadPhotoLinkActive, setAsMainPhotoText:'profileMSetProfilePhoto', photoEditType:"profile"/}
+#{photos.uploadPhotoMPToolbox uploadPhotoLinkActive:uploadPhotoLinkActive, setAsMainPhotoText:'profileMSetProfilePhoto', photoEditType:"profile"/}
 
-#{profile.photos.profileMPCentralPhotoContainer /}
+#{photos.centralPhotoContainer /}
 
-
+*{ the following 3 forms are requried by photoedit.js}*
 <div id="hiddenUploadPhotoForm" style="display: none">
 	<form method="post"	enctype="multipart/form-data" action="@{profile.ProfilePhotos.doUploadPhoto()}">
 		<input type="file" id="theFile" name="theFile"  />

@@ -11,13 +11,15 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 
 import com.google.common.base.Strings;
-import com.svend.dab.core.beans.PhotoPack;
+import com.svend.dab.core.beans.PhotoAlbum;
 import com.svend.dab.core.beans.aws.S3Link;
 import com.svend.dab.core.beans.groups.GroupParticipation;
 import com.svend.dab.core.beans.profile.PrivacySettings.VISIBILITY;
 import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.Participation;
 import com.svend.dab.core.beans.projects.Project.STATUS;
+
+import controllers.BeanProvider;
 
 /**
  * @author Svend
@@ -26,6 +28,8 @@ import com.svend.dab.core.beans.projects.Project.STATUS;
 public class UserProfile implements Serializable {
 
 	private static final long serialVersionUID = -6374495407099516286L;
+
+	private static final String DEFAULT_PROJECT_IMAGE = "/public/images/defaultProfilePicture.png";
 
 	private static Logger logger = Logger.getLogger(UserProfile.class.getName());
 
@@ -39,9 +43,10 @@ public class UserProfile implements Serializable {
 
 	private PrivacySettings privacySettings;
 
-	private int mainPhotoIndex;
-
+	// TODO: remove this (after deployments...)
 	private List<Photo> photos;
+
+	private PhotoAlbum photoAlbum;
 
 	private List<UserReference> writtenReferences = new LinkedList<UserReference>();
 
@@ -70,8 +75,7 @@ public class UserProfile implements Serializable {
 	private List<Participation> projects = new LinkedList<Participation>();
 
 	private List<GroupParticipation> groups = new LinkedList<GroupParticipation>();
-	
-	
+
 	@Transient
 	private List<Participation> cachedConfirmedProjects;
 
@@ -84,10 +88,6 @@ public class UserProfile implements Serializable {
 	@Transient
 	private List<UserSummary> myActiveContactsSummaries;
 
-	// arrays of 20 links to the photos of the user (no matter how many actually present in DB)
-	@Transient
-	private PhotoPack cachedPhotosPack20;
-
 	private Date dateOfLatestLogin;
 
 	// -----------------------------------
@@ -95,6 +95,7 @@ public class UserProfile implements Serializable {
 
 	// this is re-initialized on each login: this is communicated to and checked by the upload servlet
 	// => this should prevent malicious upload of binaries to other people's profile
+	// TODO: I think this can be removed now...
 	private String uploadPermKey;
 
 	// ----------------------------------
@@ -102,7 +103,6 @@ public class UserProfile implements Serializable {
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return "[profile: username= " + username + "]";
 	}
 
@@ -111,7 +111,7 @@ public class UserProfile implements Serializable {
 	}
 
 	/**
-	 * Copy constructore (not coying photos nor contact nor references)
+	 * Copy constructor (not coying photos nor contact nor references)
 	 * 
 	 * @param copied
 	 */
@@ -145,27 +145,11 @@ public class UserProfile implements Serializable {
 		this.uploadPermKey = copied.getUploadPermKey();
 	}
 
-	/**
-	 * @param userName
-	 * @param password
-	 * @param firstName
-	 * @param email
-	 * @param gender
-	 * @param lastName
-	 * @param location
-	 * @param locationLat
-	 * @param locationLong
-	 * @param website
-	 * @param personalObjective
-	 * @param personalDescription
-	 * @param personalPhilosophy
-	 * @param personalAssets
-	 */
-	public UserProfile(String userName, String password, String firstName, String email, String gender, String lastName, String location, String locationLat, String locationLong, String website,
-			String personalObjective, String personalDescription, String personalPhilosophy, String personalAssets) {
+	public UserProfile(String userName, String password, String firstName, String email, String gender, String lastName, String location, String locationLat,
+			String locationLong, String website, String personalObjective, String personalDescription, String personalPhilosophy, String personalAssets) {
 
-		this.pdata = new PersonalData(location, password, firstName, lastName, email, gender, null, null, website, locationLat, locationLong, personalObjective, personalDescription,
-				personalPhilosophy, personalAssets);
+		this.pdata = new PersonalData(location, password, firstName, lastName, email, gender, null, null, website, locationLat, locationLong,
+				personalObjective, personalDescription, personalPhilosophy, personalAssets);
 		this.username = userName;
 
 	}
@@ -180,7 +164,6 @@ public class UserProfile implements Serializable {
 	public boolean isComplete() {
 		return pdata != null && pdata.isComplete();
 	}
-	
 
 	// -----------------------------------------------------
 	// CV
@@ -203,57 +186,30 @@ public class UserProfile implements Serializable {
 
 	// -----------------------------------------------------
 	// Photos
-	
-	
-	public List<Photo> getPhotosPack20() {
-		if (cachedPhotosPack20 == null) {
+
+	public PhotoAlbum getPhotoAlbum() {
+		if (photoAlbum == null) {
 			synchronized (this) {
-				if (cachedPhotosPack20 == null) {
-					cachedPhotosPack20 = new PhotoPack(20, photos);
+				if (photoAlbum == null) {
+					// the information below is stored together with the photo album
+					photoAlbum = new PhotoAlbum("/profiles/" + username + "/photos/", "/profiles/" + username + "/thumbs/");
 				}
 			}
 		}
-		return cachedPhotosPack20.getPack();
-	}
 
-	public boolean isPhotoPackFullAlready() {
-		return photos != null && photos.size() >= 20;
-	}
+		// setting the transient properties of the photo album every time
+		photoAlbum.setMaxNumberOfPhotos(BeanProvider.getConfig().getMaxNumberOfPhotosInProject());
+		photoAlbum.setDefaultMainPhoto(DEFAULT_PROJECT_IMAGE);
 
-	public boolean isPhotoPackEmpty() {
-		return photos == null || photos.size() == 0;
-	}
-
-	/**
-	 * @param photoIdx
-	 * @return
-	 */
-	public Photo getPhoto(int photoIdx) {
-		if (isPhotoPackEmpty() || photos.size() <= photoIdx) {
-			return null;
-		}
-		return photos.get(photoIdx);
-	}
-
-
-	public String getPhotoS3RootFolder() {
-		return "/profiles/" + username + "/photos/";
-	}
-
-	public String getThumbsS3RootFolder() {
-		return "/profiles/" + username + "/thumbs/";
+		return photoAlbum;
 	}
 
 	/**
 	 * @param expirationdate
 	 */
 	public void generatephotoLinks(Date expirationdate) {
-		if (photos != null) {
-			for (Photo photo : photos) {
-				photo.generatePresignedLinks(expirationdate, true, true);
-			}
-		}
 
+		getPhotoAlbum().generatePhotoLinks(expirationdate);
 		if (contacts != null) {
 			for (Contact contact : contacts) {
 				contact.generatePhotoLink(expirationdate);
@@ -290,37 +246,6 @@ public class UserProfile implements Serializable {
 			}
 		}
 
-	}
-
-//	/**
-//	 * @param deletedPhotoIdx
-//	 */
-//	public Photo removePhoto(int photoIndex) {
-//		if (photoIndex >= 0 && photos != null && photoIndex < photos.size()) {
-//			return photos.remove(photoIndex);
-//		} else {
-//			logger.log(Level.WARNING, "Not removing photo from profile: invalid index: " + photoIndex);
-//			return null;
-//		}
-//	}
-
-	/**
-	 * @return true if the link "more photos" should be displayed for this profile
-	 */
-	public boolean hasMoreThanOnePhoto() {
-		return photos != null && photos.size() > 1;
-	}
-
-	/**
-	 * @return
-	 */
-	public Photo getMainPhoto() {
-
-		if (photos != null && !photos.isEmpty()) {
-			return photos.get(mainPhotoIndex);
-		}
-
-		return new Photo();
 	}
 
 	// ------------------------------------------------------------
@@ -461,18 +386,12 @@ public class UserProfile implements Serializable {
 	 */
 	public UserReference retrieveReceivedReference(String referenceId) {
 
-		logger.log(Level.INFO, "retrieveReceivedReference " + referenceId);
-
 		if (receivedReferences != null && referenceId != null) {
-
 			for (UserReference ref : receivedReferences) {
 				if (referenceId.equals(ref.getId())) {
 					return ref;
-				} else {
-					logger.log(Level.INFO, "different: " + ref.getId());
 				}
 			}
-
 		}
 		return null;
 	}
@@ -495,21 +414,20 @@ public class UserProfile implements Serializable {
 
 	// ------------------------------------------------------------
 	// groups
-	
+
 	public GroupParticipation retrieveParticipationInGroup(String groupId) {
 		if (groupId == null) {
 			return null;
 		}
-		
-		for (GroupParticipation participation: groups) {
-			if (groupId.equals(participation.getGroupSummary().getGroupId() )) {
+
+		for (GroupParticipation participation : groups) {
+			if (groupId.equals(participation.getGroupSummary().getGroupId())) {
 				return participation;
 			}
 		}
 		return null;
 	}
-	
-	
+
 	public int getNumberOfGroups() {
 		if (groups == null || groups.isEmpty()) {
 			return 0;
@@ -517,7 +435,7 @@ public class UserProfile implements Serializable {
 			return groups.size();
 		}
 	}
-	
+
 	// ------------------------------------------------------------
 	// projects
 
@@ -806,6 +724,8 @@ public class UserProfile implements Serializable {
 	// ------------------------------------------
 	// privacy settings
 
+	// TODO: move this to a "profile PEP" or somthing
+	
 	/**
 	 * @param loggedInUserProfileId
 	 */
@@ -861,13 +781,13 @@ public class UserProfile implements Serializable {
 		return dateOfLatestLogin;
 	}
 
-	public List<Photo> getPhotos() {
-		return photos;
-	}
-
-	public void setPhotos(List<Photo> photos) {
-		this.photos = photos;
-	}
+//	public List<Photo> getPhotos() {
+//		return photos;
+//	}
+//
+//	public void setPhotos(List<Photo> photos) {
+//		this.photos = photos;
+//	}
 
 	public List<UserReference> getWrittenReferences() {
 		return writtenReferences;
@@ -1011,17 +931,18 @@ public class UserProfile implements Serializable {
 	}
 
 	public List<UserSummary> getMyActiveContactsSummaries() {
-		
+
 		if (myActiveContactsSummaries == null) {
 			myActiveContactsSummaries = new LinkedList<UserSummary>();
 			for (OwnerAwareContact contact : getMyActiveContacts()) {
 				myActiveContactsSummaries.add(contact.getOtherUser());
 			}
 		}
-		
+
 		return myActiveContactsSummaries;
-		
+
 	}
+
 	/**
 	 * @return
 	 */
@@ -1052,21 +973,20 @@ public class UserProfile implements Serializable {
 		}
 		return cachedConfirmedProjects;
 	}
-	
-	
+
 	public List<Participation> getAllActiveProjectsWhereUserIsAdmin(String loggedInUserProfileId) {
-		
-		List<Participation > projectsWhereIamAdmin = new LinkedList<Participation>();
-		
+
+		List<Participation> projectsWhereIamAdmin = new LinkedList<Participation>();
+
 		for (Participation participation : projects) {
-			if (participation.isAccepted() && participation.getProjectSummary().getStatus() == STATUS.started && (participation.getRole() == ROLE.admin || participation.getRole() == ROLE.initiator)) {
+			if (participation.isAccepted() && participation.getProjectSummary().getStatus() == STATUS.started
+					&& (participation.getRole() == ROLE.admin || participation.getRole() == ROLE.initiator)) {
 				projectsWhereIamAdmin.add(participation);
 			}
 		}
-		
+
 		return projectsWhereIamAdmin;
 	}
-
 
 	public List<Participation> getApplications() {
 		if (cachedApplication == null) {
@@ -1101,22 +1021,21 @@ public class UserProfile implements Serializable {
 		}
 		return false;
 	}
-	
+
 	public boolean isOwnerOfAtLeastOneProject() {
-		
+
 		if (getConfirmedProjects() == null) {
 			return false;
 		}
-		
+
 		for (Participation participation : getConfirmedProjects()) {
 			if (participation.getRole() == ROLE.initiator) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-
 
 	public Long getNumberOfConfirmedProjects() {
 
@@ -1129,20 +1048,20 @@ public class UserProfile implements Serializable {
 	}
 
 	public Long getNumberOfApplications() {
-		
+
 		if (getApplications() == null) {
 			return 0L;
 		} else {
 			return Long.valueOf(getApplications().size());
 		}
-		
+
 	}
 
 	public Participation getApplication(String projectId) {
 		if (Strings.isNullOrEmpty(projectId)) {
 			return null;
 		}
-		for (Participation participation: getApplications()) {
+		for (Participation participation : getApplications()) {
 			if (projectId.equals(participation.getProjectSummary().getProjectId())) {
 				return participation;
 			}
@@ -1154,33 +1073,22 @@ public class UserProfile implements Serializable {
 		if (Strings.isNullOrEmpty(projectId)) {
 			return null;
 		}
-		for (Participation project: getProjects()) {
+		for (Participation project : getProjects()) {
 			if (projectId.equals(project.getProjectSummary().getProjectId())) {
 				return project;
 			}
 		}
 		return null;
 	}
-	
-	
+
 	public ROLE getRoleInProject(String projectId) {
-		
+
 		Participation participation = getProject(projectId);
 		if (participation != null) {
-			 return participation.getRole();
+			return participation.getRole();
 		}
-		
+
 		return null;
-	}
-
-	
-
-	public int getMainPhotoIndex() {
-		return mainPhotoIndex;
-	}
-
-	public void setMainPhotoIndex(int mainPhotoIndex) {
-		this.mainPhotoIndex = mainPhotoIndex;
 	}
 
 	public List<GroupParticipation> getGroups() {
@@ -1191,8 +1099,11 @@ public class UserProfile implements Serializable {
 		this.groups = groups;
 	}
 
+	public List<Photo> getPhotos() {
+		return photos;
+	}
 
-
-
-
+	public void setPhotos(List<Photo> photos) {
+		this.photos = photos;
+	}
 }

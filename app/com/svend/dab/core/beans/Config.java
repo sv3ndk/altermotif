@@ -32,6 +32,10 @@ public class Config {
 	private final long maxUploadedPhotoSizeInBytes = 5l * 1024l * 1024;
 
 	private final long maxUploadedCVSizeInBytes = 3l * 1024 * 1024;
+	
+	private final int maxNumberOfPhotosInProject = 20;
+	
+	private final int maxNumberOfPhotosInProfile = 20;
 
 	private final int maxNumberOfDisplayedTags = 35;
 
@@ -243,6 +247,14 @@ public class Config {
 
 	public Location getDefaultSearchReferenceLocation() {
 		return defaultSearchReferenceLocation;
+	}
+
+	public int getMaxNumberOfPhotosInProject() {
+		return maxNumberOfPhotosInProject;
+	}
+
+	public int getMaxNumberOfPhotosInProfile() {
+		return maxNumberOfPhotosInProfile;
 	}
 
 }

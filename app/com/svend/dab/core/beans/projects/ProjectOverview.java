@@ -36,7 +36,7 @@ public class ProjectOverview {
 		
 		numberOfMembers = project.getConfirmedActiveParticipants().size();
 		
-		mainThumb = project.getMainPhoto();
+		mainThumb = project.getPhotoAlbum().getMainPhoto();
 		
 	}
 	

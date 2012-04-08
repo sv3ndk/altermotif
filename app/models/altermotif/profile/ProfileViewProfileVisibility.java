@@ -51,7 +51,7 @@ public class ProfileViewProfileVisibility extends AbstractRenderableModel{
 	}
 	
 	public boolean isUserPhotoGalleryVisible() {
-		return visitedUserProfile.hasMoreThanOnePhoto() && (isVisitingHisOwnProfile() || visitedUserProfile.isPhotoGalleryVisibleTo(userSession.getLoggedInUserProfileId()));
+		return visitedUserProfile.getPhotoAlbum().hashMoreThanOnePhoto() && (isVisitingHisOwnProfile() || visitedUserProfile.isPhotoGalleryVisibleTo(userSession.getLoggedInUserProfileId()));
 	}
 
 	public boolean isUserProfileGenderVisible() {

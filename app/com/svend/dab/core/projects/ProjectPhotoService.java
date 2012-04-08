@@ -62,9 +62,12 @@ public class ProjectPhotoService implements IProjectPhotoService{
 			throw new DabUploadFailedException("cannot process upload: no project found for id profile found for  " + projectId, failureReason.technicalError);
 		}
 		
-		if (updatedProject.isPhotoPackFull()) {
+		if (updatedProject.getPhotoAlbum().isFull()) {
 			throw new DabUploadFailedException("cannot process upload: project " + projectId + " has already enough photos! THis should be prevented on browser side!", failureReason.technicalError);
 		}
+		
+		final boolean wasPhotoAlbumEmptyBeforeAddingThis = updatedProject.getPhotoAlbum().isPhotoPackEmpty(); 
+		
 		
 		byte[] receivedPhoto = photoUtils.readPhotoContent(photoContent);
 		
@@ -72,13 +75,12 @@ public class ProjectPhotoService implements IProjectPhotoService{
 		byte[] normalSize = photoUtils.resizePhotoToNormalSize(receivedPhoto);
 		byte[] thumbSize = photoUtils.resizePhotoToThumbSize(receivedPhoto);
 		
-		Photo newPhoto = photoUtils.createOnePhotoPlaceholder(updatedProject.getPhotoS3RootFolder(), updatedProject.getThumbsS3RootFolder());
+		Photo newPhoto = photoUtils.createOnePhotoPlaceholder(updatedProject.getPhotoAlbum().getPhotoS3RootFolder(), updatedProject.getPhotoAlbum().getThumbsS3RootFolder());
 		photoDao.savePhoto(newPhoto, normalSize, thumbSize, JPEG_MIME_TYPE);
 		
-		boolean hasMainPhotoChanged = updatedProject.isPhotoPackEmpty();
 		projectDao.addOnePhoto(updatedProject.getId(), newPhoto);
 
-		if (hasMainPhotoChanged) {
+		if (wasPhotoAlbumEmptyBeforeAddingThis) {
 			emitter.emit(new ProjectMainPhotoUpdated(newPhoto, projectId));
 		}
 		
@@ -91,26 +93,25 @@ public class ProjectPhotoService implements IProjectPhotoService{
 			logger.log(Level.WARNING, "Cannot remove a photo from a null profile: not doing anything");
 		} else {
 
-			Photo removed = project.getPhoto(deletedPhotoIdx);
+			Photo removed = project.getPhotoAlbum().getPhoto(deletedPhotoIdx);
 			if (removed == null) {
 				logger.log(Level.WARNING, "It seems the profile refused to remove photo with index == " + deletedPhotoIdx + " => not propagating any event");
 			}
 			
-			if (project.getMainPhotoIndex() < deletedPhotoIdx) {
+			if (project.getPhotoAlbum().getMainPhotoIndex() < deletedPhotoIdx) {
 				projectDao.removeOnePhoto(project.getId(), removed);
-			} else if (project.getMainPhotoIndex() == deletedPhotoIdx) {
+			} else if (project.getPhotoAlbum().getMainPhotoIndex() == deletedPhotoIdx) {
 				projectDao.removeOnePhotoAndResetMainPhotoIndex(project.getId(), removed);
 			} else {
 				projectDao.removeOnePhotoAndDecrementMainPhotoIndex(project.getId(), removed);
 			}
 
-
 			if (deletedPhotoIdx == 0) {
-				// the new main photo will now be the second one (potentially null, which means we should remove the main photo from all project summary
-				emitter.emit(new ProjectMainPhotoUpdated(project.getPhoto(1), project.getId()));
+				// the new main photo will now be the second one (potentially null, which means we should remove the main photo from all project summary)
+				emitter.emit(new ProjectMainPhotoUpdated(project.getPhotoAlbum().getPhoto(1), project.getId()));
 			}
 
-			// actual removal of the file from s3 is done asynchronously, in order to improve gui response time
+			// actual removal of the file from s3 is done asynchronously, in order to improve GUI response time
 			try {
 				emitter.emit(new BinaryNoLongerRequiredEvent(removed.getNormalPhotoLink()));
 			} catch (DabException e) {
@@ -126,7 +127,7 @@ public class ProjectPhotoService implements IProjectPhotoService{
 		if (project == null) {
 			logger.log(Level.WARNING, "Cannot update photo caption of a null project: not doing anything");
 		} else {
-			Photo editedPhoto = project.getPhoto(photoIndex);
+			Photo editedPhoto = project.getPhotoAlbum().getPhoto(photoIndex);
 			
 			if (editedPhoto == null) {
 				logger.log(Level.WARNING, "Cannot update photo caption: no photo found with index " + photoIndex);
@@ -145,7 +146,7 @@ public class ProjectPhotoService implements IProjectPhotoService{
 			logger.log(Level.WARNING, "Cannot move photo in first position for a null project: not doing anything");
 		} else {
 			projectDao.movePhotoToFirstPosition(project.getId(), photoIndex);
-			emitter.emit(new ProjectMainPhotoUpdated(project.getPhoto(photoIndex), project.getId()));
+			emitter.emit(new ProjectMainPhotoUpdated(project.getPhotoAlbum().getPhoto(photoIndex), project.getId()));
 		}
 	}
 

@@ -43,7 +43,7 @@ public class ProjectsEditPhotos extends DabLoggedController {
 
 				flash.put(FLASH_EDITED_PROJECT_ID, p);
 				renderArgs.put("editedProject", project);
-				renderArgs.put("uploadPhotoLinkActive", !project.isPhotoPackFull());
+				renderArgs.put("uploadPhotoLinkActive", !project.getPhotoAlbum().isFull());
 
 				render();
 

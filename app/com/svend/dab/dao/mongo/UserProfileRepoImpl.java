@@ -24,6 +24,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoException;
 import com.mongodb.WriteResult;
+import com.svend.dab.core.beans.PhotoAlbum;
 import com.svend.dab.core.beans.groups.GroupParticipation;
 import com.svend.dab.core.beans.groups.GroupSummary;
 import com.svend.dab.core.beans.profile.Contact;
@@ -87,30 +88,36 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 		genericUpdateUser(updatedUser.getUsername(), new Update().set("pdata", pData));
 	}
 
-	public void updatePhotoGallery(UserProfile userProfile) {
-
-		// TODO: we should only insert/remove one or a few photos here...
-		genericUpdateUser(userProfile.getUsername(), new Update().set("photos", userProfile.getPhotos()));
+	
+	public void updatePhotoAlbum(String username, PhotoAlbum photoAlbum) {
+		genericUpdateUser(username, new Update().set("photoAlbum", photoAlbum));
 	}
 
+
 	public void addOnePhoto(String username, Photo photo) {
-		genericUpdateUser(username, new Update().addToSet("photos", photo));
+		genericUpdateUser(username, new Update().addToSet("photoAlbum.photos", photo));
 	}
 
 	public void removeOnePhoto(String username, Photo removed) {
-		genericUpdateUser(username, new Update().pull("photos", removed));
+		genericUpdateUser(username, new Update().pull("photoAlbum.photos", removed));
 	}
 
 	public void movePhotoToFirstPosition(String username, int photoIndex) {
-		genericUpdateUser(username, new Update().set("mainPhotoIndex", photoIndex));
+		genericUpdateUser(username, new Update().set("photoAlbum.mainPhotoIndex", photoIndex));
 	}
 
 	public void removeOnePhotoAndResetMainPhotoIndex(String username, Photo removed) {
-		genericUpdateUser(username, new Update().pull("photos", removed).set("mainPhotoIndex", 0));
+		genericUpdateUser(username, new Update().pull("photoAlbum.photos", removed).set("photoAlbum.mainPhotoIndex", 0));
 	}
 
 	public void removeOnePhotoAndDecrementMainPhotoIndex(String username, Photo removed) {
-		genericUpdateUser(username, new Update().pull("photos", removed).inc("mainPhotoIndex", -1));
+		genericUpdateUser(username, new Update().pull("photoAlbum.photos", removed).inc("photoAlbum.mainPhotoIndex", -1));
+	}
+
+	public void updatePhotoCaption(String username, String s3PhotoKey, String photoCaption) {
+		Query query = query(where("username").is(username).and("photoAlbum.photos.normalPhotoLink.s3Key").is(s3PhotoKey));
+		Update update = new Update().set("photoAlbum.photos.$.caption", photoCaption);
+		mongoTemplate.updateFirst(query, update, UserProfile.class);
 	}
 
 	public void updateCv(UserProfile userProfile) {
@@ -329,9 +336,6 @@ public class UserProfileRepoImpl implements IUserProfileDao {
 				new Update().set("groups.$.role", role), UserProfile.class);
 	}
 
-	
-
-	
 	// -------------------------------------
 	// -------------------------------------
 

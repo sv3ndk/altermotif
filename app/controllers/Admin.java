@@ -34,4 +34,10 @@ public class Admin extends DabLoggedController {
 		BeanProvider.getAdminService().indexAllGroups();
 		admin();
 	}
+	
+	public static void copyPhotosToAlbumPhotos() {
+		BeanProvider.getAdminService().copyPhotosToAlbumPhotos();
+		admin();
+	}
+	
 }

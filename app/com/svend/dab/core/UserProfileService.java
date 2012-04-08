@@ -393,12 +393,12 @@ public class UserProfileService implements IUserProfileService, Serializable {
 	}
 
 	
-	public void updatePhotoGallery(UserProfile profile, boolean hasMainPhotoChanged) {
-		userProfileRepo.updatePhotoGallery(profile);
-		if (hasMainPhotoChanged) {
-			emitter.emit(new UserSummaryUpdated(new UserSummary(profile)));
-		}
-	}
+//	public void updatePhotoGallery(UserProfile profile, boolean hasMainPhotoChanged) {
+//		userProfileRepo.updatePhotoGallery(profile);
+//		if (hasMainPhotoChanged) {
+//			emitter.emit(new UserSummaryUpdated(new UserSummary(profile)));
+//		}
+//	}
 	
 	
 
