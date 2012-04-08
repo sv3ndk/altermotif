@@ -14,6 +14,7 @@ confirmationPopupTitle=Bevestig
 OkButton=OK
 CancelButton=Annuleer
 nolabel=
+slogan=***Get together. Get things done. A new approach to doing things
 
 elapsedTimeSeconds=enkele seconden geleden
 elapsedTimeMinutes=minuten geleden

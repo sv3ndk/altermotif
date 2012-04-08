@@ -1,7 +1,7 @@
 #{extends 'masterTemplate.html' /}
 
 #{set 'moreStyles'}
-    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/profile.css'}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/homepage.css'}" />
 #{/set}
 
 
@@ -24,22 +24,22 @@
 		<ul>
 			<li>
 				#{if userProfile.hasCv()}
-					<a href="${userProfile.cvLink.address}" target="_blank"><img src="@{'/public/images/pdficon.gif'}" class="iconLink"></img> <span class="dabLink">&{'viewMyCv'}</span></a>
+					<a href="${userProfile.cvLink.address}" target="_blank"><img src="@{'/public/images/download.png'}" class="iconLink"></img> <span class="dabLink">&{'viewMyCv'}</span></a>
 				#{/if}
-				#{if !userProfile.hasCv()}
-					<img src="@{'/public/images/pdficon.gif'}" class="iconLinkInactive"></img> <span class="dabLinkDisabled">&{'viewMyCv'}</span>
-				#{/if}
+				#{else}
+					<img src="@{'/public/images/download.png'}" class="iconLinkInactive"></img> <span class="dabLinkDisabled">&{'viewMyCv'}</span>
+				#{/else}
+			</li>
+			<li >
+				<img id="uploadCvButton" src="@{'/public/images/upload.png'}" class="iconLink"></img> <span id="uploadCvLink" class="dabLink">&{'profileSelectCvToUpload'}</span>
 			</li>
 			<li>
 				#{if userProfile.hasCv()}
 					<img id="removeCvButton" src="@{'/public/images/trash.png'}" class="iconLink"> <span class="dabLink" id="removeCvLink">&{'removeMyCv'}</span>
 				#{/if}
-				#{if !userProfile.hasCv()}
+				#{else}
 					<img src="@{'/public/images/trash.png'}" class="iconLinkInactive"></img> <span class="dabLinkDisabled">&{'removeMyCv'}</span>
-				#{/if}
-			</li>
-			<li >
-				<img id="uploadCvButton" src="@{'/public/images/upload.png'}" class="iconLink"></img> <span id="uploadCvLink" class="dabLink">&{'profileSelectCvToUpload'}</span>
+				#{/else}
 			</li>
 			
 		</ul>

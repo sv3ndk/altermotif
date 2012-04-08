@@ -76,17 +76,37 @@ home page
 	text-decoration: none;
 }
 
+
+
+
+
+
+
+/*Profil Homepage ////////////////////////////////////////////////////////// */
+#personalContainer{
+	margin-top:50px;
+	margin-left: 30px;
+	margin-right: 30px;
+	width: auto;
+	padding:30px 0 0 0;
+}
+#userProfilePhotoContainer{
+	text-align:left;
+	float:left;
+	padding:20px 40px 0 0;
+}
 #userProfileBasicDetails {
 	width: 30%;
-	float: left;
 	margin-left: 50px;
+	padding:20px 0 0 0;
+	text-align:left;
+	border:none;
 }
-
-#userProfileBasicDetails label {
-	font-weight: bold;
-	margin-right: 10px;
+#userProfileBasicDetails td{
+	padding:10px 0;
+	line-height:1.2em;
+	vertical-align:baseline;
 }
-
 #userProfilePersonalStuff {
 	clear: both;
 	max-width: 70%;

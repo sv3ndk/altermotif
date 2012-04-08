@@ -1,44 +1,555 @@
+/*HOMEPAGE*/
+#homepageFirstColumn{
+	float:left;
+	padding-right:40px;
+}
+#homepageSecondColumn{
+	width:750px;
+	padding-top:20px;
+}
+#homePageTitleContainer {
+	margin-top:110px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 760px;
+}
+#homePageTitle1 {
+	font-family:"Georgia",serif;
+	font-size:3em;
+	font-style:italic;
+	line-height:1.25em;
+	/*font-weight:bold;*/
+	color:#333;
+}
+#homePageTitle2 {
+	font-family:"Verdana",sans-serif;
+	font-style:italic;
+	font-size:1.75em;
+	line-height:1.5em;
+	color:#333;
+}
+.findProjectButton a{
+	font-family:"Georgia",serif;
+	font-style:italic;
+	font-weight:bold;
+	font-size:1em;
+	color:#333;	
+}
+
+#homepageMainLogo {
+	margin-left: auto;
+	margin-right: auto;
+	width: 500px;
+	/*margin-top: 2%;*/
+}
+
 
 #loginMenu {
 	float: right;
 	margin-right: 25px;	
 }
 
-#homePageTitleContainer {
-	margin-top: 7%;
-}
-
-#homePageTitle1 {
-	text-align: center;
-	font-size: 40px;
-	margin-top: -2%;
-}
-
-#homePageTitle2 {
-	text-align: center;
-	font-size: 24px;
-	margin-top: -25px;
-}
-
-
-#homepageMainLogo {
-	margin-left: auto;
-	margin-right: auto;
-	width: 500px;
-	margin-top: 2%;
-}
-
-
 #homePageExplanationContainer {
-	margin-top: 2%;
+	/*margin-top: 2%;*/
 }
 
 .homePageExplanation {
-	font-size: 18px;
-	margin-left: 25%;
+	margin-top:40px;
+}
+.homePageExplain1{
+	font-style:normal;
+	font-weight:normal;
+	font-size:2em;
+	color:#333;
+}
+.homePageExplain2{
+	font-size:1.5em;
+}
+.projectContainerExample{
+	width:220px;
+	padding:0 20px 0 0:
+	height:260px;
+	float:left;
 }
 
 .homePageExplanation#lien {
 	font-size: 24px;
 }
 
+/*About us*/
+.logoAM{
+	float:left;
+	width:182px;
+	height:322px;
+	margin-left:200px;
+	background-image:url(../images/am_logo_new.png);
+	background-repeat:no-repeat;
+	}
+.generalInfoTexts{
+	margin-top:50px;
+	margin-left: 40%;
+	margin-right: 60%;
+	width: 580px;
+	
+}
+.generalInfoTexts p, .generalInfoTexts ul{
+	color:#666;
+	font-size:1.2em;
+	line-height:1.5em;
+}
+.generalInfoTexts h1, .generalInfoTexts h2, .generalInfoTexts h3, .generalInfoTexts h4, .generalInfoTexts h5, .generalInfoTexts li{
+	padding-top:20px;
+}
+.generalInfoTexts ul{
+	list-style-type:square;
+}
+/*New project - Home*/
+#projectNewContainer{
+	margin-top:80px;
+	margin-left: 30px;
+	margin-right: 30px;
+	width: auto;	
+}
+
+
+
+/*Profil Homepage ////////////////////////////////////////////////////////// */
+#personalContainer{
+	margin-top:50px;
+	margin-left: 30px;
+	margin-right: 30px;
+	width: auto;
+	padding:30px 0 0 0;
+}
+#userProfilePhotoContainer{
+	text-align:left;
+	float:left;
+	padding:20px 40px 0 0;
+}
+#userProfileBasicDetails {
+	width: 30%;
+	margin-left: 50px;
+	padding:20px 0 0 0;
+	text-align:left;
+	border:none;
+}
+#userProfileBasicDetails td{
+	padding:10px 0;
+	line-height:1.2em;
+	vertical-align:baseline;
+}
+#userProfilePersonalStuff {
+	clear: both;
+	max-width: 70%;
+	padding: 30px;
+}
+/* basic mechanics for the whole profile page (with the 4 tabs) */
+
+
+/**************************
+home page
+****************************/
+.notificationContainer {
+	margin-top: 100px;
+}
+
+.homeToggleBlock {
+	margin: 20px 0px 20px 0px;
+}
+
+/* ********
+ style for the view profile tab
+*/
+
+#viewProfileCvLink img.dabLink {
+	text-decoration: none;
+}
+
+#userProfileBasicDetails {
+	width: 30%;
+	float: left;
+	margin-left: 50px;
+}
+
+
+#userProfileBasicDetails label {
+	font-weight: bold;
+	margin-right: 30px;
+}
+
+#userProfilePersonalStuff {
+	clear: both;
+	max-width: 70%;
+	padding:10px 30px 30px 30px;
+}
+
+#userProfilePersonalStuff dt {
+	font-weight:bold;
+	margin-top: 5px;
+}
+
+/**/
+.profileViewTogglableSection {
+	font-weight:bold;
+	font-size:1.2em;
+	margin-bottom: 15px;
+}
+
+#profileReceivedReference {
+	 margin-top: 20px;
+}
+
+#profileWrittenReferences {
+	
+}
+
+
+.profileReference {
+	border: 1px solid #ccc;
+	padding: 20px;
+	margin: 20px 0;
+}
+
+.referenceFromFor {
+	font-weight: bold;
+}
+
+
+.profileContact {
+	border: 1px solid #ccc;
+	padding: 20px;
+	margin: 20px 0;
+	height: 80px;
+}
+
+
+.profileContactLink {
+	margin-top: 30px;
+}
+
+.profileContactThumb {
+	float: left;
+	border: none;
+	height: 80px;
+	padding: 0 10px 0 0;
+}
+
+.profilePendingInvitations {
+	font-style: italic;
+	font-weight: bold;
+	margin-left: 10px;
+}
+
+#profileLeaveAReference {
+	margin-bottom: 10px;
+}
+
+/* ********
+ style for the edit profile tab
+*/
+#editProfileContainer {
+	margin:0;
+}
+
+#editProfileContainer td {
+	vertical-align: top;
+	padding: 30px 0 0 10px;
+}
+
+
+/* usualy the table overwrite the td padding value => we have to re-specify it for each table*/
+#editProfileContainer .errorRow td{
+	padding: 0px 0 0 10px;
+}
+
+
+.editProfileUpdateBottomButton {
+	 margin-left:10px;
+}
+
+.editProfileCancelBottomButton {
+	margin: 30px 10px 10px 15px;
+}
+
+#city_map_canvas {
+	width: 365px;
+	height: 250px;
+	margin-top: -15px ;
+}
+
+.latLongData {
+	font-size: 0.7em;
+	float: right;
+	text-align: right;
+	background: none repeat scroll 0 0 white;
+	border: thin none;
+	margin: 0 5px;
+}
+
+.languageLabel {
+	float: left;
+	width: 100px;
+}
+
+.languageAutoComplete {
+	margin: 10px 10px 15px 0;
+}
+
+.cancelAddLanguageButton {
+	text-decoration: underline;
+	cursor: pointer;
+	color: #333;
+	font-weight: normal;
+	margin-left: 15px;
+}
+.editProfilLanguages{
+	margin-top:14px;
+}
+
+/* ********
+ style for the edit profile tab
+*/
+
+.genderRadio {
+	margin: 10px;
+}
+
+
+#profileMPThumbContainer {
+	margin-top:70px;
+	margin-left: 30px;
+}
+	
+.profileMPThumbContainer {
+	margin-left:300px;
+	margin-right: auto;
+	margin-top: 30px;
+	width: 860px;
+	float: left;
+}
+
+.profileMPThumbContainer img {
+	float: left;
+	max-height: 225px;
+	max-width: 225px;
+	margin: 5px 5px 15px 22px;
+	cursor: pointer;
+}
+
+.profileMPThumbContainer img.mainPhoto {
+	max-height: 100px;
+	max-width: 100px;
+}
+
+.profileMPThumbContainer img.yoohoo {
+	border: 2px solid #ffeb00;
+	margin:3px 3px 15px 22px;
+}
+
+#profileMPCentralPhotoContainer {
+	clear: left;
+	margin-left:30px;
+	margin-top: 284px;
+	/*margin-left: auto;*/
+	/*margin-right: auto;*/
+	width: 300px;
+	position:fixed;
+}
+
+#profileMPCentralPhoto {
+	width: 100%;
+	margin-top: -80px;
+	margin-bottom: 20px;
+}
+
+#profileMPToolboxFiller {
+	clear: left;
+	float: left;
+	height: 10px;
+	width: 50%;
+}
+
+#profileMPToolbox {
+	background-color:#F5F5F5;
+	position:fixed;
+	width:300px;
+	clear:both;
+	margin-left: 30px;
+	margin-top: 194px;
+}
+
+#profileMPToolbox ul li {
+	list-style: none outside none;
+	margin-left: 0;
+	padding-left: 0;
+	margin-bottom: 6px;
+}
+
+#profileMPToolbox ul li span {
+	margin-left: 8px;
+	margin-right:30px;
+}
+
+#pleaseWaitDialog img.progress {
+	margin-left: 30px;
+	margin-top: 10px;
+	text-align: center;
+}
+
+#photoActions {
+	background-color:#F5F5F5;
+	width:300px;
+	clear:both;
+	margin-left:10px;
+	margin-top:20px;
+}
+
+#photoActions ul li {
+	list-style: none;
+	margin-bottom: 10px;
+}
+
+#photoActions ul li span,#photoActions ul li a.dabLink {
+	margin-left: 10px;
+}
+/*****/
+#profilePhotoMpcaptionDiv {
+	text-align:left;
+}
+#profilePhotoMpcaptionDiv span{
+	margin-left:8px;
+}
+
+/* ********
+ style for the manage cv screen
+*/
+#cvConfirmUpload {
+	margin-left: 10px;
+}
+
+#cvFileName {
+	font-style: italic;
+	padding-left: 50px;
+}
+/*PROFILE'S PAGE END*/
+
+
+/*MESSAGES STYLES*/
+.messagesMainContainer {
+	float: right;
+    margin-left: 200px;
+    margin-top: 30px;
+    width: 98%; 
+}
+
+.messagesListTable {
+	border: 1px solid #ccc;
+	margin-left: 10px;
+	width: 98%;
+	border-spacing: 0;
+}
+
+.messagesListTableHeader {
+	background-color: #ccc;
+	font-weight: bold;
+}
+
+.messagesListTableHeaderSmall {
+	font-weight: normal;
+}
+
+.messageDetailTable {
+	border: 1px solid #ccc;
+	margin-left: 10px;
+	width: 98%;
+	border-spacing: 0;
+	margin-top: 30px;
+	margin-bottom: 50px;
+}
+
+ 
+.messagesInboxDetailContainer {
+	min-height: 200px;
+	width: 99.5%;
+	border: 0 none;
+}
+
+
+.profileMessagesInboxBottomRight {
+	text-align: right;
+}
+
+
+.messagesReactionLinkEnabled {
+	margin-left: 10px;
+	margin-right: 10px;
+	text-decoration: underline;
+	cursor: pointer;
+	color: blue;
+	font-weight: normal;
+}
+
+.messagesReactionLinkDisabled {
+	margin-left: 10px;
+	margin-right: 10px;
+	font-weight: normal;
+	text-decoration: underline;
+}
+
+.profileMessagesInboxBottomRight {
+	text-align: right;
+}
+
+
+
+#messagesNewFormHeader {
+	background-color: #ccc;
+	width: 98%;
+}
+#messagesNewFormHeader td {
+	background-color: #ccc;
+	padding:5px;
+}				
+.messagesNewTextArea {
+	width: 97.2%;
+	border: 1px solid #ccc;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.messagesNewError {
+	width: 500px;
+	margin: auto;
+}
+
+.inboxRow {
+	cursor: pointer;	
+}
+
+.inboxRowUnread {
+	cursor: pointer;
+	font-weight: bold;	
+}
+
+
+.inboxRowTr {
+	cursor: pointer;	
+}
+
+.inboxRowTr:hover {
+	background-color: #EFEFEF;
+}
+
+
+.inboxOutboxDeleteCheckbox {
+	text-align: center;
+	width: 30px;
+}
+/*MESSAGES STYLES END*/
+
+/**/
+.ui-widget {
+    font-family: Verdana,Arial,sans-serif;
+    font-size: 1em;
+}
+/**/

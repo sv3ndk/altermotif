@@ -1,11 +1,82 @@
-body {
-	margin: 0px;
+/*
+GENERAL
+*/
+
+body{
+	margin:0;
+	padding:0;
+	background-color:#f5f5f5;
+	/*background-color:#e3e3e3;*/
+	font-family:"Verdana",sans-serif;
+	color:#666;
+	font-size:13px;
+}
+h1, h2, h3, h4, h5, h6{
+	font-family:"Georgia",serif;
+	font-style:italic;
+	color:#666;
+}
+label,input,select,textarea{
+	font-family:"Verdana",sans-serif;font-size:13px;font-weight:normal;line-height:normal;
+}
+#donateButton{
+	font-family:"Georgia", serif;
+	font-style:italic;
+	font-weight:bold;
 }
 
-body,p,pre,br,input,textarea,dt,dd,a,span {
-	color: #33170D;
-	font-family: sans-serif;
-	font-size: 1em;
+
+/*TOOL BAR*/
+#toolBar{
+	width:100%;
+	background-color:#333;
+	height:40px;
+}
+#toolBarFirstPart{
+	padding:10px 0 0 20px;
+	float:left;
+}
+
+#toolBarSecondPart{
+	float:right;
+}
+#sloganToolBar{
+	padding-left:50px;
+	color:#fff;
+}
+#toolBarFirstPart a{
+	color:#ffeb00;
+	text-decoration:none;
+	font-family:"Georgia", serif;
+	font-style:italic;
+	font-weight:bold;
+}
+#toolBarSecondPart a{
+	color:#ffeb00;
+	text-decoration:none;
+	font-family:"Verdana", sans-serif;
+}
+#toolBarAccountControls{
+	float:left;
+	padding:10px 20px 0 0;
+}
+
+
+/*FOOTER*/
+#footer{
+	font-size:13px;
+	clear:both;
+	margin-top:150px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 420px;
+	padding-bottom:40px;
+	text-align:center;
+}
+#footer li{
+	list-style-type:none;
+	float:left;
+	padding-right:20px;
 }
 
 .box {
@@ -31,9 +102,20 @@ body,p,pre,br,input,textarea,dt,dd,a,span {
 	margin-bottom: .5em;
 }
 
-a {
-	color: blue;
-	text-decoration: underline;
+
+input{
+	font-weight:bold;
+	font-size:2em;}
+
+
+
+a{
+	color:#333;
+	text-decoration:underline;
+}
+a:hover{
+	color:#666;
+	text-decoration:none;
 }
 
 /* removes the border around the clickable images */
@@ -55,7 +137,14 @@ ul {
 }
 
 .formlabel {
-	text-align: right;
+	padding-top:8px;
+	padding-right:20px;
+	text-align:left;
+	font-weight: bold;
+}
+
+.formlabel label {
+	font-weight: bold;
 }
 
 .noclass {
@@ -68,8 +157,8 @@ ul {
 
 
 .formLeftColumn {
-	text-align: right;
-	width: 140px;
+	text-align: left;
+	width: 155px;
 }
 
 .formMidleColumn {
@@ -82,12 +171,9 @@ ul {
 
 .errorMessage {
     color: red;
-    font-size: 14px;
+    font-size: 13px;
     margin-bottom:10px;
 }
-
-
-
 
 .errorMessageLink {
     margin-left: 10px;	
@@ -95,24 +181,38 @@ ul {
 
 
 .toggleContainer {
-	width: 75%;
-	margin: 20px;
-	border: thin solid;
-	padding: 20px 20px 20px 20px;
+    border: medium none;
+    margin: 20px 0 30px 0;
+    padding: 0 0 20px 0;
+    width: 85%;
+}
+
+.profileViewTogglableSection .dabLink{
+	font-weight:bold;
+}
+.homeToggleBlock .dabLink{
+	font-weight:bold;
 }
 
 .dabLink {
 	text-decoration: underline;
 	cursor: pointer;
-	color: blue;
+	color:#333;
 	font-weight: normal;
-	font-size: 14px;
+	font-size: 13px;
+}
+.dabLink:hover {
+	text-decoration:none;
+	cursor: pointer;
+	color:#666;
+	font-weight: normal;
+	font-size: 13px;
 }
 
 .dabLinkLSpaced {
 	text-decoration: underline;
 	cursor: pointer;
-	color: blue;
+	color:#333;
 	font-weight: normal;
 	margin-left: 10px;
 }
@@ -120,7 +220,7 @@ ul {
 .dabLinkRSpaced {
 	text-decoration: underline;
 	cursor: pointer;
-	color: blue;
+	color:#333;
 	font-weight: normal;
 	margin-right: 10px;
 }
@@ -128,7 +228,7 @@ ul {
 .dabLinkSpaced {
 	text-decoration: underline;
 	cursor: pointer;
-	color: blue;
+	color:#333;
 	font-weight: normal;
 	margin-right: 10px;
 	margin-left: 10px;
@@ -152,7 +252,7 @@ ul {
 .dabLinkDisabled {
 	text-decoration: underline;
 	font-weight: normal;
-	color: #555555;
+	color: #666;
 	cursor: default;
 }
 
@@ -194,7 +294,7 @@ ul {
 
 .formFieldExplanation {
 	font-size: 12px;
-	float: left;
+	/*float: left;*/
 }
 
 /* ------------------------
@@ -225,23 +325,30 @@ Elements in the top header (included in every page)
 }
 
 #topLinks select {
+	font-size: 15px;
 	float: right;
-	margin: 0.5em;
+	margin: 0;
 }
+
+#selectOneLanguageDropdown{
+	width:110px;
+}
+
+
 
 #userLogoutLink {
 	float: right;
-	margin: 0.5em;
+	margin: 0;
 }
 
 /****************************************************
  new top menu
  **************************************************** */
 #topDropDownMenu {
-	margin: 0 0 0 100px;
-	padding: 40px 0 0 90px;
+	margin:0;
+	padding:10px 0 0 90px;
+	z-index:999;
 }
-
 /*
 collapsable containers
 */
@@ -259,18 +366,22 @@ fieldset legend {
 	top: 0.2em;
 }
 
-/* bottom links, present in all pages 
-*/
+/* bottom links, present in all pages */
 #bottomLinksContainer {
-	margin: 1%;
-	margin-left: 20%;
-	clear: left;
-	padding-top: 30px;
+	/*border-top:dotted 1px #333;*/
+	font-size:13px;
+	clear:both;
+	padding-top:20px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;/*420px*/
+	margin-bottom:50px;
+	text-align:center;
 }
 
 #bottomLinksContainer a {
-	margin-left: 15px;
-	margin-right: 15px;
+	margin-left: 5px;
+	margin-right: 5px;
 }
 
 /************************************************
@@ -290,20 +401,24 @@ fieldset legend {
 /************************************************
 
 ************************************************/
+
+
 .pageContainer {
-	margin-left: 200px;
+	margin-top:70px;
+	margin-left: 20px;
+	margin-bottom: 20px;
 }
 
 /* Used for the title of the proejct page and the profile page */
 .pageTitle {
-	text-align: center;
+	margin-left:30px;
 	font-size: 38px;
 }
 
 .oneLinerThumb {
 	float: left;
-	border: none;
-	padding: 0 10px 0 0;
+	/*border: 1px solid #333;*/
+	padding: 0 30px 0 0;
 	max-height: 80px;
 	max-width: 80px;
 }
@@ -312,19 +427,16 @@ fieldset legend {
 	float: left;
 	width: 80px;
 	height: 80px;
+	margin-right:30px;
 }
 
 	
 .oneUserSummary {
+	margin-bottom:30px;
 	height: 80px;
 }
 
 .oneProjectParticipationLine{
-	padding: 20px;
-	height: 60px;
-}
-
-.oneGroupParticipationLine {
 	padding: 20px;
 	height: 60px;
 }
@@ -341,14 +453,16 @@ fieldset legend {
 }
 
 .descriptionList dd dt {
-	margin-top: 5px;
+	margin-top: 5px 0 0 0;
 }
+
 .descriptionList dd pre {
-	margin-left: 15px;
+	margin-bottom: 2em;
+	font-family:Verdana, sans-serif;
 }
 
 .descriptionList dd li {
-	margin-left: 15px;
+	/*margin-left: 15px;*/
 }
 
 
@@ -356,28 +470,13 @@ fieldset legend {
 .oneProjectOverviewLine{
 	border: 1px solid;
 	width: 600px;
-	min-height: 80px;
 	margin: 10px;
 	padding: 10px;
 }
-
 
 .oneProjectOverviewLine td {
 	padding: 5px 10px;
 }
-
-.oneGroupOverviewLine{
-	border: 1px solid;
-	width: 600px;
-	min-height: 80px;
-	margin: 10px;
-	padding: 10px;
-}
-
-.oneGroupOverviewLine td {
-	padding: 5px 10px;
-}
-
 
 .profileContactThumb {
 	float: left;
@@ -386,29 +485,55 @@ fieldset legend {
 	max-width: 80px;
 	padding: 0 10px 0 0;
 }
-
-
-.inputLocation_city_map_canvas{
-	width: 550px;
-	height: 250px;
-	margin: 5px ;
+/*Tabs container*/
+#projectSearchAdvanced{
+	clear:left;
+	padding-top:20px;
 }
-
-.emailPopup td {
-	vertical-align: top;
-	padding: 10px 10px 0 10px;
+#projectSearch_modeSimple p{
+	/*padding-left:20px;*/
 }
-
-table .errorRow td{
-	padding: 0px 0 0 10px;
+div.tabs{
+	margin:0;
+	padding:0;
+	border:solid 1px #333;
+	clear:both;
+	height:240px;	
 }
-
-
-.notificationContainer {
-	margin-top: 100px;
+div.tabs p{
+	padding-left:20px;
 }
+.tabNavigation{
+	/*padding-left:20px;*/
+}
+ul.tabNavigation{
+	list-style-type:none;
+	padding: 0px;
+	margin: 0px;
+}
+.tabNavigationCheckbox{
+	/*padding-left:20px;*/
+}
+ul.tabNavigation li:hover{ 
+	background-color: #ffeb00;
+}
+ul.tabNavigation li{
+	float:left;
+	padding:5px 20px;
+	/*border-top: 1px solid #333;*/
+	border-bottom: 1px solid #333; 
+	border-right: 1px solid #333;
+}
+ul.tabNavigation li:last-child{
+	border-right:none;	
+}
+ul.tabNavigation li a{
+	text-decoration:none;
 
-
-.oneGroupSummaryLine {
-	height: 80px;
+}
+ul.tabNavigation li a:hover{
+	color:#333;
+}
+.fs15{
+	font-size:1.5em;
 }

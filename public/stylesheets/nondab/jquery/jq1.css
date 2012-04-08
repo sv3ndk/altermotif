@@ -1,0 +1,25 @@
+#page-wrap										{ width: 800px; margin: 10px auto; } 
+/*ul											{ list-style: none; text-align:left; }*/
+
+/* 
+	LEVEL ONE
+*/
+/*ul.dropdown                         			{ position: relative; }*/
+ul.dropdown li                      			{ float: left; zoom: 1; border-right: 1px solid #333; background: #F5F5F5; } /*#F5F5F5*/
+ul.dropdown li:last-child						{border-right:none;}
+ul.dropdown a:hover		            			{ color: #666; }
+ul.dropdown a:active                			{ color: #333; }
+ul.dropdown li a                    			{ display: block; padding: 4px 8px; color: #333; text-decoration: none;}
+ul.dropdown li:last-child a         			{ border: none; } /* Doesn't work in IE */
+ul.dropdown li.hover, ul.dropdown li:hover      { background: #F5F5F5; color: #666; position: relative; }
+ul.dropdown li.hover a              			{ color: #666; }
+
+/* 
+	LEVEL TWO
+*/
+ul.dropdown ul.sub_menu							{ width: 160px; visibility: hidden; position: absolute; top: 100%; padding-top:5px; padding-left: 3px; margin-left: 3px;}
+ul.dropdown li:hover > ul 						{ visibility: visible;}
+ul.dropdown li ul.sub_menu li					{clear:both;border-top: 1px solid #666; border-right: 1px solid #666; border-left: 1px solid #666;}
+ul.dropdown li ul.sub_menu li:last-child		{border-bottom: 1px solid #666;}
+ul.dropdown li ul.sub_menu li a					{color: #333;}
+ul.dropdown li ul.sub_menu li a:hover			{background: #ffeb00;}

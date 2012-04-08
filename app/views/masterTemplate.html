@@ -12,9 +12,11 @@
 <meta charset="${_response_encoding}">
 
 <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/dab.css'}">
+<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/forms.css'}">
 <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/nondab/jquery/jquery-ui-1.8.18.custom.css'}" />
-<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/nondab/jquery/jquery.dropdown.style.css'}" />
+
 <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/nondab/jquery/jquery.dropdown.style.ie.css'}" />
+<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/nondab/jquery/jq1.css'}" />
 <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/nondab/jquery/ui.notify.css'}" />
 
 #{get 'moreStyles' /}
@@ -58,145 +60,149 @@
 </head>
 <body>
 
-	<div id="topHeaderBloc">
+<!-- TOOL'S BAR /// begin -->
+<div id="toolBar">
 
-		<a href="@{Application.index()}"> <img
-			src="@{'/public/images/dabLogo.png'}" class="headerLogo" />
-		</a>
+	<div id="toolBarFirstPart">
+		<a href="@{Application.donate()}" class="donateButton">&{'donate'}</a>
+		<span id="sloganToolBar"> <strong>AlterMotif | </strong>&{'slogan'}</span>
 
-		<div id="topLinks">
-			<p>
-				<span class="dabLinkDisabled">&{'donate'}</span>
-			</p>
-
-			<p>
-				#{if !userSession.isLoggedIn()}
-					<a href="@{Enter.login()}" class="dabLink">&{'signIn'}</a>
-					&{'orText'}
-					<a href="@{Enter.register()}" class="dabLink">&{'register'}</a>
-				#{/if}
-			</p>
-			
-			<p>
-				#{select 'selectOneLanguageDropdown', value: userSession.getSelectedLg(), id:'selectOneLanguageDropdown'}
-					#{option 'en'}&{'english'}#{/option}
-					#{option 'fr'}&{'french'}#{/option}
-					#{option 'nl'}&{'dutch'}#{/option}
-					#{option 'tr'}&{'turkish'}#{/option}
-				#{/select}
-				
-				<span id="selectedLg" style="display: none" ></span>
-			</p>
-			
-			
+	</div>		
+	<div id="toolBarSecondPart">
+		<div id="toolBarAccountControls">
+		
 			#{if userSession.isLoggedIn()}
-			<p>
-				<div id="userLogoutLink">
-					&{'loggedInAs'} <a href="@{profile.ProfileView.profileView( userSession.loggedInUserProfileId )}" class="dabLink">${userSession.loggedInUserProfileId}</a>
-					<a href="@{Enter.doLogout()}" class="dabLink">&{'logout'}</a>
-				</div>
-			</p>
+			
+			
+				&{'loggedInAs'}: 
+				<a href="@{profile.ProfileView.profileView( userSession.loggedInUserProfileId )}" class="dabLink">${userSession.loggedInUserProfileId}</a>
+				<span> | </span>
+				<a href="@{Enter.doLogout()}" class="dabLink">&{'logout'}</a>
+		
+		
 			#{/if}
+			#{else }
+				<a href="@{Enter.login()}" class="dabLink">&{'signIn'}</a>
+				&{'orText'}
+				<a href="@{Enter.register()}" class="dabLink">&{'register'}</a>
+			#{/else}
+			
+		
 		</div>
+		<div id="topLinks">
 		
-		#{if userSession.isLoggedIn()}
+			#{select 'selectOneLanguageDropdown', value: userSession.getSelectedLg(), id:'selectOneLanguageDropdown'}
+				#{option 'en'}&{'english'}#{/option}
+				#{option 'fr'}&{'french'}#{/option}
+				#{option 'nl'}&{'dutch'}#{/option}
+				#{option 'tr'}&{'turkish'}#{/option}
+			#{/select}
+			
+			<span id="selectedLg" style="display: none" ></span>
 		
-			<div id="topDropDownMenu">
-				<ul class="dropdown">
-					<li><a href="#">&{'topMenuProfile'} </a>
-						<ul class="sub_menu">
-							<li>
-								<a href="@{profile.ProfileHome.profileHome()}">&{'topMenuProfileHome'}</a>
-							</li>
-							<li>
-								<a href="@{profile.ProfileView.profileView( userSession.loggedInUserProfileId )}">&{'topMenuProfileMyProfile'}</a>
-							</li>
-							<li>
-							<li>
-								<a href="@{profile.ProfileEdit.profileEdit()}">&{'topMenuProfileEditProfile'}</a>
-							</li>
+		</div>
+	</div>					
+</div>
+<!-- TOOL'S BAR /// end -->
 
-							<li>
-								<a href="@{profile.ProfilePhotos.profilePhotos()}">&{'topMenuProfileManagePhotos'}</a>
-							</li>
-
-							<li>
-								<a href="@{profile.ProfileCv.profileCv()}">&{'topMenuProfileManageCv'}</a>
-							</li>
-
-							<li>
-								<a href="@{profile.ProfilePrivacy.profilePrivacy()}">&{'topMenuProfilePrivacySettings'}</a>
-							</li>
-
-						</ul>
+#{if userSession.isLoggedIn()}
+	
+	<div id="topDropDownMenu">
+		<ul class="dropdown">
+			<li><a href="#">&{'topMenuProfile'} </a>
+				<ul class="sub_menu">
+					<li>
+						<a href="@{profile.ProfileHome.profileHome()}">&{'topMenuProfileHome'}</a>
 					</li>
-					<li><a href="#">&{'topMenuGroups'} </a>
-						<ul class="sub_menu">
-							<li>
-								<a href="@{groups.GroupsNew.groupsNew()}">&{'topMenuGroupsNew'}</a>
-							</li>
-							<li>
-								<a href="@{groups.GroupsSearch.groupsSearch()}">&{'topMenuGroupsFind'}</a>
-							</li>
-						</ul>
+					<li>
+						<a href="@{profile.ProfileView.profileView( userSession.loggedInUserProfileId )}">&{'topMenuProfileMyProfile'}</a>
 					</li>
-					<li><a href="#">&{'topMenuProjects'} </a>
-						<ul class="sub_menu">
-							<li>
-								<a href="@{projects.ProjectsNew.projectsNew()}">&{'topMenuProjectNew'}</a>
-							</li>
-							<li>
-								<a href="@{projects.ProjectsSearch.projectsSearch()}">&{'topMenuProjectFind'}</a>
-							</li>
-						</ul>
+					<li>
+					<li>
+						<a href="@{profile.ProfileEdit.profileEdit()}">&{'topMenuProfileEditProfile'}</a>
 					</li>
-					<li><a href="#">&{'topMenuMessages'} </a>
-						<ul class="sub_menu">
-							<li>
-								<a href="@{messages.MessagesNew.messagesNew()}">&{'topMenuMessagesNew'}</a>
-							</li>
-							<li>
-								<a href="@{messages.MessagesInbox.messagesInbox()}">&{'topMenuMessagesInbox'} (${numberOfUnreadReceivedMessages})</a>
-							</li>
-							<li>
-								<a href="@{messages.MessagesOutbox.messagesOutbox()}">&{'topMenuMessagesOutbox'}</a>
-							</li>
-							<li>
-								<a href="@{messages.MessagesDeleted.messagesDeleted()}">&{'topMenuMessagesDeleted'}</a>
-							</li>
-						</ul>
+
+					<li>
+						<a href="@{profile.ProfilePhotos.profilePhotos()}">&{'topMenuProfileManagePhotos'}</a>
+					</li>
+
+					<li>
+						<a href="@{profile.ProfileCv.profileCv()}">&{'topMenuProfileManageCv'}</a>
+					</li>
+
+					<li>
+						<a href="@{profile.ProfilePrivacy.profilePrivacy()}">&{'topMenuProfilePrivacySettings'}</a>
+					</li>
+
+				</ul>
+			</li>
+			<li><a href="#">&{'topMenuGroups'} </a>
+				<ul class="sub_menu">
+					<li>
+						<a href="@{groups.GroupsNew.groupsNew()}">&{'topMenuGroupsNew'}</a>
+					</li>
+					<li>
+						<a href="@{groups.GroupsSearch.groupsSearch()}">&{'topMenuGroupsFind'}</a>
 					</li>
 				</ul>
-			
-			</div>
-			
-		#{/if}
-	</div>
-			
-	 #{doLayout /}	
+			</li>
+			<li><a href="#">&{'topMenuProjects'} </a>
+				<ul class="sub_menu">
+					<li>
+						<a href="@{projects.ProjectsNew.projectsNew()}">&{'topMenuProjectNew'}</a>
+					</li>
+					<li>
+						<a href="@{projects.ProjectsSearch.projectsSearch()}">&{'topMenuProjectFind'}</a>
+					</li>
+				</ul>
+			</li>
+			<li><a href="#">&{'topMenuMessages'} </a>
+				<ul class="sub_menu">
+					<li>
+						<a href="@{messages.MessagesNew.messagesNew()}">&{'topMenuMessagesNew'}</a>
+					</li>
+					<li>
+						<a href="@{messages.MessagesInbox.messagesInbox()}">&{'topMenuMessagesInbox'} (${numberOfUnreadReceivedMessages})</a>
+					</li>
+					<li>
+						<a href="@{messages.MessagesOutbox.messagesOutbox()}">&{'topMenuMessagesOutbox'}</a>
+					</li>
+					<li>
+						<a href="@{messages.MessagesDeleted.messagesDeleted()}">&{'topMenuMessagesDeleted'}</a>
+					</li>
+				</ul>
+			</li>
+		</ul>
 	
-	<div id="bottomLinksContainer">
-		#{if isAboutUsLinkVisible}
-			<a href="@{Application.aboutUs()}" class="dabLink">&{'homePageAboutUs'}</a>
-		#{/if}
-		<a href="@{Application.termsAndConditions(selectedUserLanguageCode)}" class="dabLink">&{'homePageRules'}</a>
-		<a href="@{Application.privacyStatement(selectedUserLanguageCode)}" class="dabLink">&{'homePagePrivacy'}</a>
-		<a href="mailto:contact@altermotif.org" class="dabLink">&{'homePageContacts'}</a>
 	</div>
-	
-	<div id="hiddenLinksToTermsAndConditions" class="hidden">
-		<a class="en" href="@{Application.termsAndConditions('en')}"></a>
-		<a class="fr" href="@{Application.termsAndConditions('fr')}"></a>
-		<a class="nl" href="@{Application.termsAndConditions('nl')}"></a>
-		<a class="tr" href="@{Application.termsAndConditions('tr')}"></a>
-	</div>
+		
+#{/if}
 
-	<div id="hiddenLinksToPrivacyStatement" class="hidden">
-		<a class="en" href="@{Application.privacyStatement('en')}"></a>
-		<a class="fr" href="@{Application.privacyStatement('fr')}"></a>
-		<a class="nl" href="@{Application.privacyStatement('nl')}"></a>
-		<a class="tr" href="@{Application.privacyStatement('tr')}"></a>
-	</div>
+			
+ #{doLayout /}	
+
+<div id="bottomLinksContainer">
+	#{if isAboutUsLinkVisible}
+		<a href="@{Application.aboutUs()}" class="dabLink">&{'homePageAboutUs'}</a>
+	#{/if}
+	<a href="@{Application.termsAndConditions(selectedUserLanguageCode)}" class="dabLink">&{'homePageRules'}</a>
+	<a href="@{Application.privacyStatement(selectedUserLanguageCode)}" class="dabLink">&{'homePagePrivacy'}</a>
+	<a href="mailto:contact@altermotif.org" class="dabLink">&{'homePageContacts'}</a>
+</div>
+
+<div id="hiddenLinksToTermsAndConditions" class="hidden">
+	<a class="en" href="@{Application.termsAndConditions('en')}"></a>
+	<a class="fr" href="@{Application.termsAndConditions('fr')}"></a>
+	<a class="nl" href="@{Application.termsAndConditions('nl')}"></a>
+	<a class="tr" href="@{Application.termsAndConditions('tr')}"></a>
+</div>
+
+<div id="hiddenLinksToPrivacyStatement" class="hidden">
+	<a class="en" href="@{Application.privacyStatement('en')}"></a>
+	<a class="fr" href="@{Application.privacyStatement('fr')}"></a>
+	<a class="nl" href="@{Application.privacyStatement('nl')}"></a>
+	<a class="tr" href="@{Application.privacyStatement('tr')}"></a>
+</div>
 
 <div id="confirmationPopup" title="&{'confirmationPopupTitle'}">
 	<span></span>

@@ -49,5 +49,10 @@ public class Application extends DabController {
 		}
 	}
 	
+	public static void donate(String languageCode) {
+		render();
+	}
+	
+	
 	
 }

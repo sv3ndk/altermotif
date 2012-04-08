@@ -7,27 +7,36 @@
 
 
 <div id="homePageTitleContainer">
-	<p id="homePageTitle1">
-		&{'homePageTitle1'}
-	</p>
-	<p id="homePageTitle2">
+
+	<div id="homepageFirstColumn">
+	<img src="@{'/public/images/am_logo_new.png'}" alt="altermotif"/>
+	</div>
+	
+	<div id="homepageSecondColumn">
+	<p>
+	<span id="homePageTitle1">
+	 &{'homePageTitle1'}
+	</span> <br/>
+	<span id="homePageTitle2">
 		&{'homePageTitle2'}
+	</span> <br/>
 	</p>
-</div>
-
-
-<div id="homepageMainLogo">
-	<img src="@{'/public/images/homePageImage.png'}"></img>
-</div>
-
-
-<div id="homePageExplanationContainer">
+		
+	
 	<p class="homePageExplanation">
-		&{'homePageExplanation'}
+		<h2 class="homePageExplain1">How does it work?</h2>
+		<span class="homePageExplain2">&{'homePageExplanation'}</span>
 	</p>
+
 	<p class="homePageExplanation" id="lien">
-		<a href="@{projects.ProjectsSearch.projectsSearch()}" class="dabLink">&{'homePageFindAProject'}</a>  
+		<span class="findProjectButton">
+		<a href="@{projects.ProjectsSearch.projectsSearch()}" >&{'homePageFindAProject'}</a>
+		</span>
+		
 	</p>
+	</div>
 </div>
+
+
 
 
