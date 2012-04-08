@@ -331,7 +331,7 @@ public class ProjectRepoImpl implements IProjectDao {
 	public void updateGroupSummaryOfAllProjectsPartOf(GroupSummary updatedSummary) {
 		if (updatedSummary != null) {
 			mongoTemplate.updateMulti(query(where("groups.groupId").is(updatedSummary.getGroupId())),
-					new Update().set("groups.$.name", updatedSummary.getName()), Project.class);
+					new Update().set("groups.$.name", updatedSummary.getName()).set("groups.$.mainPhoto", updatedSummary.getMainPhoto()), Project.class);
 		}
 	}
 

@@ -134,7 +134,6 @@ public class ProjectPhotoService implements IProjectPhotoService{
 			} else {
 				projectDao.updatePhotoCaption(project.getId(), editedPhoto.getNormalPhotoLink().getS3Key(), photoCaption);
 			}
-			
 		}
 	}
 

@@ -106,14 +106,32 @@ public class GroupsEditPhotos extends DabLoggedController {
 	 * @param photoCaption
 	 */
 	public static void doUpdatePhotoCaption(int photoIndex, String photoCaption) {
+
+		// TODO: security check for this user here
+		ProjectGroup group = BeanProvider.getGroupService().loadGroupById(flash.get(FLASH_EDITED_GROUP_ID), false);
+		
+		if (group == null) {
+			logger.log(Level.WARNING, "Could update photo caption: no group  found for  project" + flash.get(FLASH_EDITED_GROUP_ID) + "This is very weird! => redirecting to home page");
+			controllers.Application.index();
+		}
+		
+		BeanProvider.getGroupPhotoService().replacePhotoCaption(group, photoIndex, photoCaption);
+		groupsEditPhotos(flash.get(FLASH_EDITED_GROUP_ID));
 		
 	}
 	
 	public static void doSetAsMainPhoto(int photoIndex) {
 		
+		// TODO: security check for this user here
+		ProjectGroup group = BeanProvider.getGroupService().loadGroupById(flash.get(FLASH_EDITED_GROUP_ID), false);
+		
+		if (group == null) {
+			logger.log(Level.WARNING, "Could set photo in first position: no group  found for  project" + flash.get(FLASH_EDITED_GROUP_ID) + "This is very weird! => redirecting to home page");
+			controllers.Application.index();
+		}
+		
+		BeanProvider.getGroupPhotoService().putPhotoInFirstPositio(group, photoIndex);;
+		groupsEditPhotos(flash.get(FLASH_EDITED_GROUP_ID));
 	}
-
-
-
 
 }

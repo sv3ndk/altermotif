@@ -7,7 +7,6 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -28,13 +27,10 @@ import com.svend.dab.core.beans.groups.GroupProjectParticipant;
 import com.svend.dab.core.beans.groups.GroupTagCount;
 import com.svend.dab.core.beans.groups.ProjectGroup;
 import com.svend.dab.core.beans.profile.Photo;
-import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserSummary;
-import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.Project.STATUS;
 import com.svend.dab.core.beans.projects.ProjectSummary;
 import com.svend.dab.core.beans.projects.SearchQuery.SORT_KEY;
-import com.svend.dab.core.beans.projects.TagCount;
 import com.svend.dab.core.dao.IGroupDao;
 
 @Service
@@ -192,6 +188,16 @@ public class GroupDao implements IGroupDao {
 
 	public void removeOnePhotoAndDecrementMainPhotoIndex(String id, Photo removed) {
 		genericUpdateProject(id, new Update().pull("photoAlbum.photos", removed).inc("photoAlbum.mainPhotoIndex", -1));
+	}
+
+	public void updatePhotoCaption(String id, String s3Key, String photoCaption) {
+		Query query = query(where("_id").is(id).and("photoAlbum.photos.normalPhotoLink.s3Key").is(s3Key));
+		Update update = new Update().set("photoAlbum.photos.$.caption", photoCaption);
+		mongoTemplate.updateFirst(query, update, ProjectGroup.class);
+	}
+
+	public void movePhotoToFirstPosition(String projectId, int mainPhotoIndex) {
+		genericUpdateProject(projectId, new Update().set("photoAlbum.mainPhotoIndex", mainPhotoIndex));
 	}
 
 	// --------------------------------

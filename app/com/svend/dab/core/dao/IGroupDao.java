@@ -60,6 +60,10 @@ public interface IGroupDao {
 
 	public void removeOnePhotoAndDecrementMainPhotoIndex(String id, Photo removed);
 
+	public void updatePhotoCaption(String id, String s3Key, String photoCaption);
+
+	public void movePhotoToFirstPosition(String id, int photoIndex);
+
 
 
 

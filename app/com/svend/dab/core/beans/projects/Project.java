@@ -141,6 +141,13 @@ public class Project {
 				participant.generatePhotoLinks(expirationdate);
 			}
 		}
+		
+		if (groups != null) {
+			for (GroupSummary groupSummary : groups) {
+				groupSummary.generatePhotoLink(expirationdate);
+			}
+		}
+		
 	}
 	
 	// _--------------------------------------

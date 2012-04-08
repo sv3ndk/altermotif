@@ -30,7 +30,7 @@ public class GroupSummary {
 	////////////////////
 	
 	public boolean hasAThumbPhoto() {
-		return mainPhoto != null;
+		return mainPhoto != null && !mainPhoto.isPhotoEmpty();
 	}
 	
 	public void generatePhotoLink(Date expirationdate) {

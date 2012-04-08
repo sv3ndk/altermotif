@@ -19,7 +19,7 @@ GET     /profile/privacy		                profile.ProfilePrivacy.profilePrivacy
 
 GET     /groups/new				                groups.GroupsNew.groupsNew
 GET     /groups/edit				            groups.GroupsEdit.groupsEdit
-GET     /projects/editphotos/{groupId}          groups.GroupsEditPhotos.groupsEditPhotos
+GET     /groups/editphotos/{groupId}          	groups.GroupsEditPhotos.groupsEditPhotos
 GET     /groups/search			                groups.GroupsSearch.groupsSearch
 GET     /groups/find			                groups.GroupsSearchResult.groupsSearchResult
 GET     /groups/view/{groupId}	                groups.GroupsView.groupsView

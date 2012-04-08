@@ -20,6 +20,7 @@ import com.svend.dab.core.dao.IGroupDao;
 import com.svend.dab.core.dao.IPhotoBinaryDao;
 import com.svend.dab.eda.EventEmitter;
 import com.svend.dab.eda.events.groups.GroupSummaryUpdated;
+import com.svend.dab.eda.events.projects.ProjectMainPhotoUpdated;
 import com.svend.dab.eda.events.s3.BinaryNoLongerRequiredEvent;
 
 @Service
@@ -114,12 +115,30 @@ public class GroupPhotoService implements IGroupPhotoService {
 	}
 
 	public void replacePhotoCaption(ProjectGroup group, int photoIndex, String photoCaption) {
-		// TODO Auto-generated method stub
+		if (group == null) {
+			logger.log(Level.WARNING, "Cannot update photo caption of a null group: not doing anything");
+		} else {
+			Photo editedPhoto = group.getPhotoAlbum().getPhoto(photoIndex);
+			
+			if (editedPhoto == null) {
+				logger.log(Level.WARNING, "Cannot update photo caption: no photo found with index " + photoIndex);
+			} else {
+				groupDao.updatePhotoCaption(group.getId(), editedPhoto.getNormalPhotoLink().getS3Key(), photoCaption);
+			}
+			
+		}
 
 	}
 
 	public void putPhotoInFirstPositio(ProjectGroup group, int photoIndex) {
-		// TODO Auto-generated method stub
+		if (group == null) {
+			logger.log(Level.WARNING, "Cannot move photo in first position for a null group: not doing anything");
+		} else {
+			groupDao.movePhotoToFirstPosition(group.getId(), photoIndex);
+			GroupSummaryUpdated event = new GroupSummaryUpdated(new GroupSummary(group));
+			event.getUpdatedSummary().setMainPhoto(group.getPhotoAlbum().getPhoto(photoIndex));
+			emitter.emit(event);
+		}
 
 	}
 

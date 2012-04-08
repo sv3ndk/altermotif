@@ -10,7 +10,6 @@ import java.util.logging.Logger;
 import play.mvc.Router;
 
 import com.svend.dab.core.beans.DabUploadFailedException;
-import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.ProjectPep;
 
@@ -118,11 +117,6 @@ public class ProjectsEditPhotos extends DabLoggedController {
 	 */
 	public static void doUpdatePhotoCaption(int photoIndex, String photoCaption) {
 
-		UserProfile userProfile = BeanProvider.getUserProfileService().loadUserProfile(getSessionWrapper().getLoggedInUserProfileId(), true);
-		if (userProfile == null) {
-			logger.log(Level.WARNING, "Could update caption for photo: no user found for  " + getSessionWrapper().getLoggedInUserProfileId() + "This is very weird! => redirecting to home page");
-			controllers.Application.index();
-		}
 		// TODO: security check for this user here
 		
 		Project project = BeanProvider.getProjectService().loadProject(flash.get(FLASH_EDITED_PROJECT_ID), false);
@@ -142,11 +136,6 @@ public class ProjectsEditPhotos extends DabLoggedController {
 	
 	public static void doSetAsMainPhoto(int photoIndex) {
 		
-		UserProfile userProfile = BeanProvider.getUserProfileService().loadUserProfile(getSessionWrapper().getLoggedInUserProfileId(), true);
-		if (userProfile == null) {
-			logger.log(Level.WARNING, "Could set as main photo: no user found for  " + getSessionWrapper().getLoggedInUserProfileId() + "This is very weird! => redirecting to home page");
-			controllers.Application.index();
-		}
 		// TODO: security check for this user here
 		
 		Project project = BeanProvider.getProjectService().loadProject(flash.get(FLASH_EDITED_PROJECT_ID), false);
