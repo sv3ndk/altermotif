@@ -34,9 +34,9 @@ public class GroupsView extends DabController {
 
 	private static Logger logger = Logger.getLogger(GroupsView.class.getName());
 
-	public static void groupsView(String groupid) {
+	public static void groupsView(String groupId) {
 
-		ProjectGroup group = BeanProvider.getGroupService().loadGroupById(groupid, true);
+		ProjectGroup group = BeanProvider.getGroupService().loadGroupById(groupId, true);
 
 		if (group == null || !group.isActive()) {
 			Application.index();
@@ -46,7 +46,7 @@ public class GroupsView extends DabController {
 			renderArgs.put("groupViewVisibility", visibility);
 			renderArgs.put("visitedGroup", group);
 			renderArgs.put("loggedInUserId", getSessionWrapper().getLoggedInUserProfileId());
-			renderArgs.put("allThreads", BeanProvider.getForumThreadDao().loadGroupForumThreads(groupid));
+			renderArgs.put("allThreads", BeanProvider.getForumThreadDao().loadGroupForumThreads(groupId));
 
 			List<Participation> allProjectWhereUserIsAdmin = computeListOfActiveProjectWhereUserIsAdmin();
 			visibility.addProjectsWhereUserIsAdmin(allProjectWhereUserIsAdmin);

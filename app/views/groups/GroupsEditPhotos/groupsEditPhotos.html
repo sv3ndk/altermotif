@@ -7,36 +7,36 @@
 #{set 'moreScripts'}
     <script src="@{'/public/javascripts/photoedit.js'}" type="text/javascript" charset="${_response_encoding}"></script>
 
-    <script src="@{'/public/javascripts/projects/projectsEditPhotos.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+    <script src="@{'/public/javascripts/groups/groupsEditPhotos.js'}" type="text/javascript" charset="${_response_encoding}"></script>
 
     <script type="text/javascript">
 		var setCaptionText = "&{'profileMPClickToSetCaption'}";
-		var mainPhotoIndex = "${editedProject.getPhotoAlbum().getMainPhotoIndex()}";
+		var mainPhotoIndex = "${editedGroup.getPhotoAlbum().getMainPhotoIndex()}";
 
-	   	var updatePhotoCaptionAction 	= #{jsAction @projects.ProjectsEditPhotos.doUpdatePhotoCaption(':photoIndex', ':photoCaption') /};
+	   	var updatePhotoCaptionAction 	= #{jsAction @groups.GroupsEditPhotos.doUpdatePhotoCaption(':photoIndex', ':photoCaption') /};
 	</script>
 #{/set}
 
-#{photos.uploadPhotoThumbs photoAlbum:editedProject.getPhotoAlbum() /}
+#{photos.uploadPhotoThumbs photoAlbum:editedGroup.getPhotoAlbum() /}
 
 #{photos.uploadPhotoMPToolbox uploadPhotoLinkActive:uploadPhotoLinkActive, setAsMainPhotoText:"projectPhotosSetAsMainPhoto", photoEditType:"project" /}
 
 #{photos.centralPhotoContainer /}
 
 <div id="hiddenUploadPhotoForm" style="display: none">
-	<form method="post"	enctype="multipart/form-data" action="@{projects.ProjectsEditPhotos.doUploadPhoto()}">
+	<form method="post"	enctype="multipart/form-data" action="@{groups.GroupsEditPhotos.doUploadPhoto()}">
 		<input type="file" id="theFile" name="theFile"  />
 	</form>
 </div>
 
 <div id="hiddenDeletePhotoForm" style="display: none">
-	<form method="post"	enctype="multipart/form-data" action="@{projects.ProjectsEditPhotos.doDeletePhoto()}">
+	<form method="post"	enctype="multipart/form-data" action="@{groups.GroupsEditPhotos.doDeletePhoto()}">
 		<input type="hidden" id="deletedPhotoIdx" name="deletedPhotoIdx"  />
 	</form>
 </div>
 	
 <div id="hiddenSetAsMainPhotoForm" style="display: none">
-	<form method="post"	enctype="multipart/form-data" action="@{projects.ProjectsEditPhotos.doSetAsMainPhoto()}">
+	<form method="post"	enctype="multipart/form-data" action="@{groups.GroupsEditPhotos.doSetAsMainPhoto()}">
 		<input type="hidden" id="photoIndex" name="photoIndex"  />
 	</form>
 </div>

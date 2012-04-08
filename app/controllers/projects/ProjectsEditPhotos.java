@@ -31,17 +31,17 @@ public class ProjectsEditPhotos extends DabLoggedController {
 	
 	
 	/**
-	 * @param p
+	 * @param projectId
 	 */
-	public static void projectsEditPhotos(String p) {
+	public static void projectsEditPhotos(String projectId) {
 
-		Project project = BeanProvider.getProjectService().loadProject(p, true);
+		Project project = BeanProvider.getProjectService().loadProject(projectId, true);
 
 		if (project != null) {
 			ProjectPep pep = new ProjectPep(project);
 			if (pep.isAllowedToEditPhotoGallery(getSessionWrapper().getLoggedInUserProfileId())) {
 
-				flash.put(FLASH_EDITED_PROJECT_ID, p);
+				flash.put(FLASH_EDITED_PROJECT_ID, projectId);
 				renderArgs.put("editedProject", project);
 				renderArgs.put("uploadPhotoLinkActive", !project.getPhotoAlbum().isFull());
 
@@ -70,7 +70,7 @@ public class ProjectsEditPhotos extends DabLoggedController {
 			projectsEditPhotos(flash.get(FLASH_EDITED_PROJECT_ID));
 			
 		} catch (DabUploadFailedException e) {
-			flash.put(SESSION_ATTR_SUGGESTED_NAVIGATION, Router.reverse("profile.ProjectsEditPhotos.projectsEditPhotos(" + flash.get(FLASH_EDITED_PROJECT_ID)) + ")");
+			flash.put(SESSION_ATTR_SUGGESTED_NAVIGATION, Router.reverse("projects.ProjectsEditPhotos.projectsEditPhotos(" + flash.get(FLASH_EDITED_PROJECT_ID)) + ")");
 
 			if (e.getReason() == null) {
 				// this should never happen, defaulting to a generic error message
@@ -85,13 +85,10 @@ public class ProjectsEditPhotos extends DabLoggedController {
 
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "could not process upload request: generic error", e);
-			flash.put(SESSION_ATTR_SUGGESTED_NAVIGATION, Router.reverse("profile.ProjectsEditPhotos.projectsEditPhotos(" + flash.get(FLASH_EDITED_PROJECT_ID)) + ")");
+			flash.put(SESSION_ATTR_SUGGESTED_NAVIGATION, Router.reverse("projects.ProjectsEditPhotos.projectsEditPhotos(" + flash.get(FLASH_EDITED_PROJECT_ID)) + ")");
 			flash.put(SESSION_ATTR_ERROR_MESSAGE_KEY, DabUploadFailedException.failureReason.technicalError.getErrorMessageKey());
 			UploadError.uploadError();
 		}
-
-
-		
 	}
 	
 	/**
@@ -99,11 +96,6 @@ public class ProjectsEditPhotos extends DabLoggedController {
 	 */
 	public static void doDeletePhoto(int deletedPhotoIdx) {
 
-		UserProfile userProfile = BeanProvider.getUserProfileService().loadUserProfile(getSessionWrapper().getLoggedInUserProfileId(), true);
-		if (userProfile == null) {
-			logger.log(Level.WARNING, "Could delete photo: no user found for  " + getSessionWrapper().getLoggedInUserProfileId() + "This is very weird! => redirecting to home page");
-			controllers.Application.index();
-		}
 		// TODO: security check for this user here
 		
 		Project project = BeanProvider.getProjectService().loadProject(flash.get(FLASH_EDITED_PROJECT_ID), false);

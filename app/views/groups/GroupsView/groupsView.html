@@ -3,9 +3,12 @@
 #{set 'moreStyles'}
 	<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/forum.css'}" />
 	<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/groups/groupsView.css'}" />
+	<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/nondab/colorbox/colorbox.css'}" />
 #{/set} 
 
 #{set 'moreScripts'}
+    <script src="@{'/public/javascripts/nondab/colorbox/jquery.colorbox.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+
 	<script src="@{'/public/javascripts/dab/viewForumThread.js'}" type="text/javascript" charset="${_response_encoding}"></script>
     <script src="@{'/public/javascripts/groups/groupsView.js'}" type="text/javascript" charset="${_response_encoding}"></script>
 
@@ -65,12 +68,10 @@
 	
 	<div id="groupPhotoContainer">
 		#{photos.photoGallery
-			mainPhoto:visitedGroup.mainPhoto , 
-			galleryType:'project',
-			photos:visitedProject.photos,
-			isPhotoGalleryVisible:projectVisibility.isPhotoGalleryVisible(),
-			isProjectEditLinkVisible:projectVisibility.isEditPhotoGalleryLinkVisible(),
-			visitedProjectId:visitedProject.id
+			photoAlbum:visitedGroup.getPhotoAlbum(),
+			isPhotoGalleryVisible:groupViewVisibility.isPhotoGalleryVisible(),
+			isGroupEditLinkVisible:groupViewVisibility.isEditPhotoGalleryLinkVisible(),
+			visitedGroupId:visitedGroup.id
 		 /}
 	</div>
 	

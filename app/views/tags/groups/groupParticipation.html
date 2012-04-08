@@ -4,9 +4,8 @@
 	#{if !_group.groupSummary.hasAThumbPhoto() }
 			<img src="@{'/public/images/defaultGroupThumb.jpg'}" class="oneLinerThumb" />
 	#{/if}
-	
 	#{else  } 
-		<img src="${_participation.projectSummary.mainPhotoThumbLink}" class="oneLinerThumb" />
+		<img src="${_group.groupSummary.mainPhotoThumbLink}" class="oneLinerThumb" />
 	#{/else}
 	</a>
 

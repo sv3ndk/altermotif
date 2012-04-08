@@ -6,7 +6,6 @@ import java.util.List;
 import com.svend.dab.core.beans.groups.GroupPep;
 import com.svend.dab.core.beans.groups.GroupProjectParticipant;
 import com.svend.dab.core.beans.projects.Participation;
-import com.svend.dab.core.beans.projects.ProjectSummary;
 
 /**
  * 
@@ -59,6 +58,16 @@ public class GroupViewVisibility {
 		return pep.isUserAllowedToCloseGroup(visitingUser);
 	}
 
+	
+	public boolean isPhotoGalleryVisible() {
+		return ! pep.getGroup().getPhotoAlbum().isPhotoPackEmpty() ;
+	}
+	
+	public boolean isEditPhotoGalleryLinkVisible() {
+		return pep.isAllowedToEditPhotoGallery(visitingUser);
+	}
+
+	
 	// /////////////////////////////////
 	// user participant management
 

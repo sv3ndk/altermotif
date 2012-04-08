@@ -36,6 +36,15 @@ var dabGroupsViewLib = {
 				ko.applyBindings(this.projectsParticipantKoModel,$("#groupPendingProjectsApplicants")[0]);
 			}
 
+			// photo gallery
+			$("a[rel='profilePhotos']").colorbox({
+				transition : "none",
+				width : "75%",
+				height : "75%",
+				photo : true
+			});
+
+			
 			// click on "close group"
 			if (isCloseGroupLinkEffective) {
 				new Confirm.AskAndProceed(this, "#groupToolBox", "#closeGroupLink", confirmCloseGroupText, null, self.afterUserConfirmsCloseGroup).init();

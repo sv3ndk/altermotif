@@ -186,6 +186,11 @@ public class GroupPep {
 		return isUserAdmin(userId);
 	}
 
+	
+	public boolean isAllowedToEditPhotoGallery(String userId) {
+		return isUserMemberOrAdmin(userId);
+	}
+
 	// /////////////////////////////
 
 	public boolean isUserAdmin(String userId) {
@@ -201,5 +206,6 @@ public class GroupPep {
 	public ProjectGroup getGroup() {
 		return group;
 	}
+
 
 }

@@ -17,5 +17,10 @@
 			<br />
 			<a href="@{projects.ProjectsEditPhotos.projectsEditPhotos( _visitedProjectId)}" class="dabLink">&{'projectEditEditPhotos'}</a>
 		#{/if}
+		
+		#{if _isGroupEditLinkVisible}
+			<br />
+			<a  href="@{groups.GroupsEditPhotos.groupsEditPhotos( _visitedGroupId)}" class="dabLink">&{'projectEditEditPhotos'}</a>
+		#{/if}
 	</p>
 </div>

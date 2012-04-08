@@ -29,7 +29,7 @@ public class UserProfile implements Serializable {
 
 	private static final long serialVersionUID = -6374495407099516286L;
 
-	private static final String DEFAULT_PROJECT_IMAGE = "/public/images/defaultProfilePicture.png";
+	private static final String DEFAULT_PROFILE_IMAGE = "/public/images/defaultProfilePicture.png";
 
 	private static Logger logger = Logger.getLogger(UserProfile.class.getName());
 
@@ -191,15 +191,16 @@ public class UserProfile implements Serializable {
 		if (photoAlbum == null) {
 			synchronized (this) {
 				if (photoAlbum == null) {
-					// the information below is stored together with the photo album
-					photoAlbum = new PhotoAlbum("/profiles/" + username + "/photos/", "/profiles/" + username + "/thumbs/");
+					photoAlbum = new PhotoAlbum();
 				}
 			}
 		}
-
+		
 		// setting the transient properties of the photo album every time
-		photoAlbum.setMaxNumberOfPhotos(BeanProvider.getConfig().getMaxNumberOfPhotosInProject());
-		photoAlbum.setDefaultMainPhoto(DEFAULT_PROJECT_IMAGE);
+		photoAlbum.setPhotoS3RootFolder("/profiles/" + username + "/photos/");
+		photoAlbum.setThumbS3RootFolder("/profiles/" + username + "/thumbs/");
+		photoAlbum.setMaxNumberOfPhotos(BeanProvider.getConfig().getMaxNumberOfPhotosInProfile());
+		photoAlbum.setDefaultMainPhoto(DEFAULT_PROFILE_IMAGE);
 
 		return photoAlbum;
 	}
@@ -210,6 +211,7 @@ public class UserProfile implements Serializable {
 	public void generatephotoLinks(Date expirationdate) {
 
 		getPhotoAlbum().generatePhotoLinks(expirationdate);
+		
 		if (contacts != null) {
 			for (Contact contact : contacts) {
 				contact.generatePhotoLink(expirationdate);
@@ -242,6 +244,12 @@ public class UserProfile implements Serializable {
 
 		if (projects != null) {
 			for (Participation participation : projects) {
+				participation.generatePhotoLink(expirationdate);
+			}
+		}
+		
+		if (groups != null) {
+			for (GroupParticipation participation : groups) {
 				participation.generatePhotoLink(expirationdate);
 			}
 		}

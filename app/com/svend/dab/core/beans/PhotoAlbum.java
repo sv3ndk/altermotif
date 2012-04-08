@@ -15,8 +15,8 @@ public class PhotoAlbum {
 
 	private List<Photo> photos;
 
-	private final String photoS3RootFolder;
-	private final String thumbS3RootFolder;
+	private String photoS3RootFolder;
+	private String thumbS3RootFolder;
 	private int mainPhotoIndex;
 
 	
@@ -33,10 +33,8 @@ public class PhotoAlbum {
 	private List<Photo> photoCompleteList;
 
 
-	public PhotoAlbum(String photoS3RootFolder, String thumbS3RootFolder) {
+	public PhotoAlbum() {
 		super();
-		this.photoS3RootFolder = photoS3RootFolder;
-		this.thumbS3RootFolder = thumbS3RootFolder;
 	}
 
 	// ////////////////////////////////////
@@ -164,6 +162,14 @@ public class PhotoAlbum {
 
 	public void setPhotos(List<Photo> photos) {
 		this.photos = photos;
+	}
+
+	public void setPhotoS3RootFolder(String photoS3RootFolder) {
+		this.photoS3RootFolder = photoS3RootFolder;
+	}
+
+	public void setThumbS3RootFolder(String thumbS3RootFolder) {
+		this.thumbS3RootFolder = thumbS3RootFolder;
 	}
 
 

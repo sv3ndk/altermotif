@@ -9,12 +9,16 @@ import org.springframework.data.annotation.Transient;
 
 import com.google.common.base.Strings;
 import com.svend.dab.core.beans.Location;
+import com.svend.dab.core.beans.PhotoAlbum;
 import com.svend.dab.core.beans.groups.GroupParticipant.ROLE;
-import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.projects.Project.STATUS;
 import com.svend.dab.core.beans.projects.SelectedTheme;
 
+import controllers.BeanProvider;
+
 public class ProjectGroup {
+
+	private static final String DEFAULT_GROUP_IMAGE = "/public/images/defaultGroupImage.jpg";;
 
 	private String id;
 
@@ -37,9 +41,7 @@ public class ProjectGroup {
 	@Transient
 	private List<GroupProjectParticipant> startedProjectParticipants;
 
-	private int mainPhotoIndex;
-	
-	private List<Photo> photos;
+	private PhotoAlbum photoAlbum;
 	
 	// ////////////////////
 
@@ -62,6 +64,8 @@ public class ProjectGroup {
 
 	public void generatePhotoLinks(Date expirationdate) {
 
+		getPhotoAlbum().generatePhotoLinks(expirationdate);
+		
 		if (participants != null) {
 			for (GroupParticipant participant : participants) {
 				participant.generatePhotoLinks(expirationdate);
@@ -73,9 +77,31 @@ public class ProjectGroup {
 				projectParticipant.getProjet().generatePhotoLink(expirationdate);
 			}
 		}
-		
-		
 	}
+	
+
+	/**
+	 * @return the {@link PhotoAlbum} for this project (never null)
+	 */
+	public PhotoAlbum getPhotoAlbum() {
+		if (photoAlbum == null) {
+			synchronized (this) {
+				if (photoAlbum == null) {
+					photoAlbum = new PhotoAlbum();
+				}
+			}
+		}
+		
+		// setting the transient properties of the photo album every time
+		photoAlbum.setPhotoS3RootFolder("/groups/" + id + "/photos/");
+		photoAlbum.setThumbS3RootFolder("/groups/" + id + "/thumbs/");
+		photoAlbum.setMaxNumberOfPhotos(BeanProvider.getConfig().getMaxNumberOfPhotosInGroup());
+		photoAlbum.setDefaultMainPhoto(DEFAULT_GROUP_IMAGE);
+		
+		return photoAlbum;
+	}
+
+	
 
 	public ROLE findRoleOfUser(String userId) {
 
@@ -123,9 +149,7 @@ public class ProjectGroup {
 			if (removed != null) {
 				participants.remove(removed);
 			}
-
 		}
-
 	}
 
 	public boolean hasAppliedForGroupMembership(String userId) {
@@ -384,24 +408,5 @@ public class ProjectGroup {
 		
 		return startedProjectParticipants;
 	}
-
-
-	public List<Photo> getPhotos() {
-		return photos;
-	}
-
-	public void setPhotos(List<Photo> photos) {
-		this.photos = photos;
-	}
-
-	public int getMainPhotoIndex() {
-		return mainPhotoIndex;
-	}
-
-	public void setMainPhotoIndex(int mainPhotoIndex) {
-		this.mainPhotoIndex = mainPhotoIndex;
-	}
-
-
 
 }

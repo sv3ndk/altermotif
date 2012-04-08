@@ -35,6 +35,8 @@ public class Config {
 	
 	private final int maxNumberOfPhotosInProject = 20;
 	
+	private final int maxNumberOfPhotosInGroup = 20;
+	
 	private final int maxNumberOfPhotosInProfile = 20;
 
 	private final int maxNumberOfDisplayedTags = 35;
@@ -255,6 +257,10 @@ public class Config {
 
 	public int getMaxNumberOfPhotosInProfile() {
 		return maxNumberOfPhotosInProfile;
+	}
+
+	public int getMaxNumberOfPhotosInGroup() {
+		return maxNumberOfPhotosInGroup;
 	}
 
 }

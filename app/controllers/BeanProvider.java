@@ -16,6 +16,7 @@ import com.svend.dab.core.dao.IGroupDao;
 import com.svend.dab.core.dao.IProjectDao;
 import com.svend.dab.core.dao.IUserProfileDao;
 import com.svend.dab.core.groups.IGroupFtsService;
+import com.svend.dab.core.groups.IGroupPhotoService;
 import com.svend.dab.core.groups.IGroupService;
 import com.svend.dab.core.projects.IProjectFtsService;
 import com.svend.dab.core.projects.IProjectPhotoService;
@@ -103,6 +104,10 @@ public class BeanProvider {
 
 	public static IGroupDao getGroupDao() {
 		return (IGroupDao) Spring.getBeanOfType(IGroupDao.class);
+	}
+
+	public static IGroupPhotoService getGroupPhotoService() {
+		return (IGroupPhotoService) Spring.getBeanOfType(IGroupPhotoService.class);
 	}
 
 }

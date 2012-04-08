@@ -19,15 +19,16 @@ GET     /profile/privacy		                profile.ProfilePrivacy.profilePrivacy
 
 GET     /groups/new				                groups.GroupsNew.groupsNew
 GET     /groups/edit				            groups.GroupsEdit.groupsEdit
+GET     /projects/editphotos/{groupId}          groups.GroupsEditPhotos.groupsEditPhotos
 GET     /groups/search			                groups.GroupsSearch.groupsSearch
 GET     /groups/find			                groups.GroupsSearchResult.groupsSearchResult
-GET     /groups/view/{groupid}	                groups.GroupsView.groupsView
+GET     /groups/view/{groupId}	                groups.GroupsView.groupsView
 GET     /groups/forum/{groupId}/{threadId}      forum.ForumThreadView.groupForumThread
 
 GET     /projects/new			                projects.ProjectsNew.projectsNew
 GET     /projects/edit			                projects.ProjectsEdit.projectsEdit
-GET     /projects/editphotos	                projects.ProjectsEditPhotos.projectsEditPhotos
-GET     /projects/view				            projects.ProjectsView.projectsView
+GET     /projects/editphotos/{projectId}	    projects.ProjectsEditPhotos.projectsEditPhotos
+GET     /projects/view/{projectId}			    projects.ProjectsView.projectsView
 GET     /projects/forum/{projectId}/{threadId}  forum.ForumThreadView.projectForumThread
 GET     /projects/search		                projects.ProjectsSearch.projectsSearch
 GET     /projects/find			                projects.ProjectsResults.projectsResults

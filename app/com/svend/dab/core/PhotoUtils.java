@@ -5,13 +5,14 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.LinkedList;
+import java.io.OutputStream;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -120,7 +121,7 @@ public class PhotoUtils {
 		InputStream in = null;
 		ByteArrayOutputStream baos = null;
 		try {
-			in = new ByteArrayInputStream(photoContent);
+			in = new BufferedInputStream(new ByteArrayInputStream(photoContent));
 			BufferedImage image = ImageIO.read(in);
 
 			if (image == null) {
@@ -139,16 +140,18 @@ public class PhotoUtils {
 				int type = image.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : image.getType();
 				BufferedImage resizedImage = new BufferedImage(newWidth, newHeight, type);
 
-				Graphics2D g = resizedImage.createGraphics();
-				g.setComposite(AlphaComposite.Src);
-				g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-				g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-				g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-				g.drawImage(image, 0, 0, newWidth, newHeight, null);
-				g.dispose();
+				Graphics2D graphic = resizedImage.createGraphics();
+				graphic.setComposite(AlphaComposite.Src);
+				graphic.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+				graphic.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+				graphic.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+				graphic.drawImage(image, 0, 0, newWidth, newHeight, null);
 
 				baos = new ByteArrayOutputStream();
 				ImageIO.write(resizedImage, "jpg", baos);
+				
+				graphic.dispose();
+				graphic.finalize();
 
 				return baos.toByteArray();
 

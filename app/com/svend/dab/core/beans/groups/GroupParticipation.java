@@ -1,5 +1,7 @@
 package com.svend.dab.core.beans.groups;
 
+import java.util.Date;
+
 import com.svend.dab.core.beans.groups.GroupParticipant.ROLE;
 
 public class GroupParticipation {
@@ -15,6 +17,12 @@ public class GroupParticipation {
 		super();
 		this.role = role;
 		this.groupSummary = groupSummary;
+	}
+	
+	public void generatePhotoLink(Date expirationdate) {
+		if (groupSummary != null) {
+			groupSummary.generatePhotoLink(expirationdate);
+		}
 	}
 
 	public ROLE getRole() {
@@ -32,5 +40,6 @@ public class GroupParticipation {
 	public void setGroupSummary(GroupSummary groupSummary) {
 		this.groupSummary = groupSummary;
 	}
+
 
 }

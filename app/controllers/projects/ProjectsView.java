@@ -30,13 +30,13 @@ public class ProjectsView extends DabController {
 
 	private static Logger logger = Logger.getLogger(ProjectsView.class.getName());
 
-	public static void projectsView(String p) {
-		Project project = BeanProvider.getProjectService().loadProject(p, true);
+	public static void projectsView(String projectId) {
+		Project project = BeanProvider.getProjectService().loadProject(projectId, true);
 		if (project != null && project.getStatus() != STATUS.cancelled) {
 			renderArgs.put("visitedProject", project);
 			renderArgs.put("altermotifBaseUrl", BeanProvider.getConfig().getAltermotifBaseUrl());
 			renderArgs.put("projectVisibility", new ProjectViewVisibility(new ProjectPep(project), project, getSessionWrapper().getLoggedInUserProfileId()));
-			renderArgs.put("allThreads", BeanProvider.getForumThreadDao().loadProjectForumThreads(p));
+			renderArgs.put("allThreads", BeanProvider.getForumThreadDao().loadProjectForumThreads(projectId));
 			Utils.addAllPossibleLanguageNamesToRenderArgs(getSessionWrapper(), renderArgs);
 			
 			String emailSignature = "---\n";

@@ -343,6 +343,4 @@ public class ProjectRepoImpl implements IProjectDao {
 		mongoTemplate.updateFirst(query, update, Project.class);
 	}
 
-
-
 }

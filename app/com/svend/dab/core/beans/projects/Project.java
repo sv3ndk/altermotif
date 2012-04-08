@@ -118,13 +118,14 @@ public class Project {
 		if (photoAlbum == null) {
 			synchronized (this) {
 				if (photoAlbum == null) {
-					// the information below is stored together with the photo album
-					photoAlbum = new PhotoAlbum("/projects/" + id + "/photos/", "/projects/" + id + "/thumbs/");
+					photoAlbum = new PhotoAlbum();
 				}
 			}
 		}
-
+		
 		// setting the transient properties of the photo album every time
+		photoAlbum.setPhotoS3RootFolder("/projects/" + id + "/photos/");
+		photoAlbum.setThumbS3RootFolder("/projects/" + id + "/thumbs/");
 		photoAlbum.setMaxNumberOfPhotos(BeanProvider.getConfig().getMaxNumberOfPhotosInProject());
 		photoAlbum.setDefaultMainPhoto(DEFAULT_PROJECT_IMAGE);
 		

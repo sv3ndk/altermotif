@@ -49,6 +49,17 @@ public interface IGroupDao {
 	
 	public void launchCountGroupTagsJob();
 
+	//////////////////////////
+	// photos
+	
+	public void addOnePhoto(String id, Photo newPhoto);
+
+	public void removeOnePhoto(String id, Photo removed);
+
+	public void removeOnePhotoAndResetMainPhotoIndex(String id, Photo removed);
+
+	public void removeOnePhotoAndDecrementMainPhotoIndex(String id, Photo removed);
+
 
 
 
