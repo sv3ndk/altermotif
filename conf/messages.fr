@@ -268,7 +268,7 @@ groupRoleMember=Membre
 
 groupsViewEdit=Editer le groupe
 groupsViewClose=Clôturer le groupe
-groupsViewCannotCloseGroup=Clôturer un groupe est une action définitive. Si c'est bien ce que vous voulez, veuillez enlever tous les autres participants au groupe et recliquez ce lien ensuite.
+groupsViewCannotCloseGroup=Clôturer un groupe est une action définitive. Si c'est bien ce que vous voulez, veuillez enlever tous les utilisateurs et projets du groupe et recliquez ce lien ensuite.
 groupsViewConfirmCloseGroup=Ce groupe ne sera plus accessible. CETTE ACTION NE PEUT PAS ÊTRE DÉFAITE. Est-ce bien ce que vous désirez?
 groupsViewCreatedOn=Créé le 
 groupsViewMembers=Membres
