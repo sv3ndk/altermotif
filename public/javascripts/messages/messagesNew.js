@@ -36,7 +36,7 @@ var dabMessagesNewLib = {
 	MessagesNewModel : function() {
 		var self = this;
 		
-		this.messageRecipient = ko.observable();
+		this.messageRecipient = ko.observable($("#messagesTo").val());
 		this.numberOfActiveContacts = ko.observable();
 		
 		this.isChooseLinkActive = ko.computed(function() {
