@@ -76,7 +76,11 @@ public class DabMessagesService implements IUserMessagesServices, Serializable {
 
 
 	public List<UserMessage> getWrittenMessages(String fromUserName, int pageNumber) {
-		return userMessageDao.findAllUserMessageByFromUserUserNameAndDeletedByEmitter(fromUserName, pageNumber, config.getInboxOutboxPageSize());
+		List<UserMessage> response =   userMessageDao.findAllUserMessageByFromUserUserNameAndDeletedByEmitter(fromUserName, pageNumber, config.getInboxOutboxPageSize());
+		for (UserMessage message : response) {
+			message.prepareLinkToProfiles();
+		}
+		return response;
 	}
 	
 	public List<UserMessage> getDeletedMessages(String username, int pageNumber) {

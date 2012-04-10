@@ -22,7 +22,7 @@
 
 <div id="messagesContainer" class="messagesMainContainer">
 	
-	<div id="messagesInboxTable">
+	<div class="messagesTable">
 	
 		<table class="messagesListTable" id="messagesListTable">
 			<thead>
@@ -57,7 +57,7 @@
 			
 			<tr class="messagesListTableHeader" id="topMessageListLastRow">
 
-				<td colspan="2"><span id="messageDeleteSelected" data-bind="css: {messagesReactionLinkEnabled : isAtLeastOneMessageSelected(), messagesReactionLinkDisabled : !isAtLeastOneMessageSelected()}" >&{'profileMessagesDeleteSelected'}</span></td>
+				<td colspan="2"><span id="deleteSelectedMessagesLink" data-bind="css: {messagesReactionLinkEnabled : isAtLeastOneMessageSelected(), messagesReactionLinkDisabled : !isAtLeastOneMessageSelected()}" >&{'profileMessagesDeleteSelected'}</span></td>
 				<td colspan="2" class="profileMessagesInboxBottomRight">
 					<span id="messagesPreviousLink"  data-bind="css: {messagesReactionLinkEnabled: previousPageExists(), messagesReactionLinkDisabled: !previousPageExists()}" >&{'profileMessagesPrevious'}</span>
 					<span id="messagesNextLink" data-bind="css: {messagesReactionLinkEnabled: nextPageExists(), messagesReactionLinkDisabled: !nextPageExists()}" >&{'profileMessagesNext'}</span>
@@ -75,7 +75,7 @@
 					<span class="dabLinkDisabled" data-bind="visible: !displayedMessage.fromUser().isProfileActive, text: displayedMessage.fromUser().userName"></span>
 				</td>
 				<td>&{'profileMessagesSubject'}: <span class="messagesListTableHeaderSmall" data-bind="text: displayedMessage.subject"></span></td>
-				<td> <span id="messageDetailDate" class="messagesListTableHeaderSmall"></span></td>
+				<td> <span id="messageDetailDate" class="messagesListTableHeaderSmall" data-bind="text: displayedMessage.creationDate"></span></td>
 				<td class="profileMessagesInboxBottomRight">
 					<span id="replyToLink" data-bind="css: {messagesReactionLinkEnabled: displayedMessage.fromUser().isProfileActive,  messagesReactionLinkDisabled: !displayedMessage.fromUser().isProfileActive}" >&{'profileMessagesReply'}</span> 
 					<span id="forwardLink" style="margin-left: 10px" data-bind="css: {messagesReactionLinkEnabled: messageReactionEnabled(),  messagesReactionLinkDisabled: !messageReactionEnabled()}">&{'profileMessagesForward'}</span> 

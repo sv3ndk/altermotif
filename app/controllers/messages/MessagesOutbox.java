@@ -4,16 +4,15 @@ import static controllers.messages.MessagesNew.FLASH_FORWARD_MESSAGE_ID;
 
 import java.util.Set;
 
-import com.google.common.base.Strings;
-
 import models.altermotif.MappedValue;
 import models.altermotif.messages.MessagesPage;
-import controllers.BeanProvider;
-import controllers.DabController;
-import controllers.DabLoggedController;
-import play.mvc.*;
 import web.utils.DateMessageJsonSerializer;
 import web.utils.Utils;
+
+import com.google.common.base.Strings;
+
+import controllers.BeanProvider;
+import controllers.DabLoggedController;
 
 public class MessagesOutbox extends DabLoggedController {
 
