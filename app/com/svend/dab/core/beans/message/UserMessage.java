@@ -3,9 +3,7 @@ package com.svend.dab.core.beans.message;
 import java.io.Serializable;
 import java.util.Date;
 
-
 import com.svend.dab.core.beans.profile.ProfileRef;
-import com.svend.dab.core.beans.profile.UserSummary;
 
 /**
  * @author Svend
@@ -25,6 +23,7 @@ public class UserMessage implements Serializable {
 	private Boolean read = Boolean.FALSE;
 	private Boolean deletedByRecipient = Boolean.FALSE;
 	private Boolean deletedByEmitter = Boolean.FALSE;
+	
 
 	// -----------------------------------
 	//
@@ -57,6 +56,13 @@ public class UserMessage implements Serializable {
 
 	// -----------------------------------
 	//
+
+	
+	public void prepareLinkToProfiles() {
+		
+		fromUser.prepareLinkToProfiles();
+		toUser.prepareLinkToProfiles();
+	}
 
 	// -----------------------------------
 	// computed fields
@@ -143,5 +149,6 @@ public class UserMessage implements Serializable {
 	public void setToUser(ProfileRef toUser) {
 		this.toUser = toUser;
 	}
+
 
 }

@@ -51,7 +51,11 @@ public class DabMessagesService implements IUserMessagesServices, Serializable {
 	}
 
 	public List<UserMessage> getReceivedMessages(String toUserName, int pageNumber) {
-		return userMessageDao.findAllUserMessageBytoUserUserNameAndDeletedByRecipient(toUserName, pageNumber, config.getInboxOutboxPageSize());
+		List<UserMessage> response =  userMessageDao.findAllUserMessageBytoUserUserNameAndDeletedByRecipient(toUserName, pageNumber, config.getInboxOutboxPageSize());
+		for (UserMessage message : response) {
+			message.prepareLinkToProfiles();
+		}
+		return response;
 	}
 	
 	public boolean isThereMoreInboxPagesThen(String username, int pageNumber) {

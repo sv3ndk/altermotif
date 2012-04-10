@@ -26,35 +26,33 @@ function init() {
 function loadCurrentMessagePage() {
 	$.post(loadOnePageAction({
 		pageNumber : currentPage
-	}),
-
-	function(messagePage) {
-
-		removeAllDisplayedMessages();
-
-		if (messagePage.messages.length > 0) {
-			for (oneKey in messagePage.messages) {
-				if (oneKey != undefined && oneKey != "") {
-					addOneDisplayedMessage(messagePage.messages[oneKey]);
+	}), function(messagePage) {
+	
+			removeAllDisplayedMessages();
+	
+			if (messagePage.messages.length > 0) {
+				for (oneKey in messagePage.messages) {
+					if (oneKey != undefined && oneKey != "") {
+						addOneDisplayedMessage(messagePage.messages[oneKey]);
+					}
 				}
 			}
-		}
-
-		$("#masterCheckbox").removeAttr("checked");
-
-		if (messagePage.previousPageExists) {
-			$("#messagesPreviousLink").addClass("messagesReactionLinkEnabled").removeClass("messagesReactionLinkDisabled");
-		} else {
-			$("#messagesPreviousLink").addClass("messagesReactionLinkDisabled").removeClass("messagesReactionLinkEnabled");
-		}
-
-		if (messagePage.nextPageExists) {
-			$("#messagesNextLink").addClass("messagesReactionLinkEnabled").removeClass("messagesReactionLinkDisabled");
-		} else {
-			$("#messagesNextLink").addClass("messagesReactionLinkDisabled").removeClass("messagesReactionLinkEnabled");
-		}
-
-	});
+	
+			$("#masterCheckbox").removeAttr("checked");
+	
+			if (messagePage.previousPageExists) {
+				$("#messagesPreviousLink").addClass("messagesReactionLinkEnabled").removeClass("messagesReactionLinkDisabled");
+			} else {
+				$("#messagesPreviousLink").addClass("messagesReactionLinkDisabled").removeClass("messagesReactionLinkEnabled");
+			}
+	
+			if (messagePage.nextPageExists) {
+				$("#messagesNextLink").addClass("messagesReactionLinkEnabled").removeClass("messagesReactionLinkDisabled");
+			} else {
+				$("#messagesNextLink").addClass("messagesReactionLinkDisabled").removeClass("messagesReactionLinkEnabled");
+			}
+	
+		});
 }
 
 function removeAllDisplayedMessages() {
@@ -180,8 +178,7 @@ function initNextPrevious() {
 	$("#messagesPreviousLink").click(
 			function() {
 				if (currentPage > 0
-						&& $("#messagesPreviousLink").hasClass(
-								"messagesReactionLinkEnabled")) {
+						&& $("#messagesPreviousLink").hasClass("messagesReactionLinkEnabled")) {
 					currentPage--;
 					loadCurrentMessagePage();
 				}

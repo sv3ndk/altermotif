@@ -4,6 +4,7 @@ package controllers.messages;
 import static controllers.messages.MessagesNew.FLASH_FORWARD_MESSAGE_ID;
 import static controllers.messages.MessagesNew.FLASH_REPLY_TO_MESSAGE_ID;
 
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -13,6 +14,7 @@ import web.utils.DateMessageJsonSerializer;
 import web.utils.Utils;
 
 import com.google.common.base.Strings;
+import com.svend.dab.core.beans.message.UserMessage;
 
 import controllers.BeanProvider;
 import controllers.DabLoggedController;

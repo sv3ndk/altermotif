@@ -64,7 +64,8 @@ registerPageInvalidCaptcha=Onjuiste validatiecode
 pageTitle=Altermotif
 homePageTitle1=Realiseer je eigen doelen
 homePageTitle2=Een ruimte waar ideeën werkelijkheid worden
-homePageExplanation=Hoe werkt het? => Presenteer een idee; motiveer anderen en breng het tot stand!
+homePageHowDoesItWort=Hoe werkt het?
+homePageExplanation=Presenteer een idee; motiveer anderen en breng het tot stand!
 homePageFindAProject=Vind een project
 homePageRules=Gebruiksvoorwaarden
 homePagePrivacy=Privacy
@@ -360,6 +361,7 @@ projectThemeAnimalRightsSubThemeCampaigning=Campagnes
 projectThemeAnimalRightsSubThemeFoodIndustry=Voedselindustrie
 projectThemeAnimalRightsSubThemeStrayAnimals=Weesdieren
 projectThemeAnimalRightsSubThemeTestingonAnimals=Dierenproeven
+projectThemeAnimalRightsSubThemeOther=Andere
 
 projectThemeArts=Kunst
 projectThemeArtsSubThemeArchitecture=Architectuur

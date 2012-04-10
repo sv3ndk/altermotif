@@ -1,9 +1,12 @@
-/**
- * 
- */
 package com.svend.dab.core.beans.profile;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+
+import play.mvc.Router;
 
 /**
  * 
@@ -16,8 +19,12 @@ public class ProfileRef {
 
 	@Id
 	private String userName;
-	private boolean isProfileActive = true;
 	
+	
+	private boolean isProfileActive = true;
+
+	@Transient
+	private String linkToProfile;
 
 	public ProfileRef(String userName, boolean isProfileActive) {
 		super();
@@ -32,6 +39,13 @@ public class ProfileRef {
 	public ProfileRef(UserProfile user) {
 		this(user.getUsername(), user.getPrivacySettings().isProfileActive());
 	}
+	
+	public void prepareLinkToProfiles() {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("vuser", this.userName);
+		this.linkToProfile = Router.reverse("profile.ProfileView.profileView", params).toString();			
+	}
+
 
 	public String getUserName() {
 		return userName;
@@ -48,5 +62,14 @@ public class ProfileRef {
 	public void setProfileActive(boolean isProfileActive) {
 		this.isProfileActive = isProfileActive;
 	}
+
+	public String getLinkToProfile() {
+		return linkToProfile;
+	}
+
+	public void setLinkToProfile(String linkToProfile) {
+		this.linkToProfile = linkToProfile;
+	}
+
 
 }

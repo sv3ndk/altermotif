@@ -64,7 +64,8 @@ registerPageInvalidCaptcha=Geçersiz onay kodu
 pageTitle=AlterMotif
 homePageTitle1=Kişisel hedeflerinize ulaşın!
 homePageTitle2=Fikirlerin gerçek olduğu bir yer
-homePageExplanation=Nasıl mı? => Bir fikir sunun, diğer üyelerin desteğini alın ve hedefinize ulaşın!
+homePageHowDoesItWort=Nasıl mı? 
+homePageExplanation=Bir fikir sunun, diğer üyelerin desteğini alın ve hedefinize ulaşın!
 homePageFindAProject=Proje Bul
 homePageRules=Kullanım Kuralları
 homePagePrivacy=Gizlilik Politikası
@@ -360,6 +361,7 @@ projectThemeAnimalRightsSubThemeCampaigning=Kampanya
 projectThemeAnimalRightsSubThemeFoodIndustry=Gıda Sektörü
 projectThemeAnimalRightsSubThemeStrayAnimals=Sahipsiz Hayvanlar
 projectThemeAnimalRightsSubThemeTestingonAnimals=Deneyler'de Canlı Hayvan Kullanımı
+projectThemeAnimalRightsSubThemeOther=Diğer
 
 projectThemeArts=Sanat
 projectThemeArtsSubThemeArchitecture=Mimari

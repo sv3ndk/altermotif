@@ -1,194 +1,176 @@
-// the user may only reply or forward a mesage after he has at least clicked on one (otherwise, there is no mesage to reply/forward to))
-var messageReactionEnabled = false;
-var currentMessageId;
-
 $(document).ready(function() {
-	init();
+	new dabMessageInboxLib.MessageInboxController();
 });
 
+var dabMessageInboxLib =  {
+	
+	MessageInboxController : function() {
+		
+		this.messageInboxDataModel = new dabMessagesLib.MessageDataModel();
+		
+		// this is initialized from html (and from Java before that)
+		this.currentPage = currentPage;
+		var self = this;
+		
+		this.init = function() {
+			
+			ko.applyBindings(this.messageInboxDataModel, $("#messagesInboxTable")[0]);
+			
+			// clicks on a message
+			$("#messagesInboxTable").on("click", '.inboxRow, .inboxRowUnread', function(event) {
+				self.whenUserClicksOnMessage(event);
+			});
+			
+			$("#replyToLink").click( function() {
+				self.replyTo();
+			});
+					
+			$("#forwardLink").click(function() {
+				self.forwardMessage();
+			});
+			
+			$("#messagesPreviousLink").click(function() {
+				self.whenUserClicksPrevious();
+			});
 
-// init ran at page load
-function init() {
-
-	loadCurrentMessagePage();
-
-	registerClickOnInboxRow();
-
-	$("#replyToLink").click(replyTo);
-	$("#forwardLink").click(forwardMessage);
-
-	initNextPrevious();
-
-	// this is present in messagesDeletionLogic.js
-	initDeletionLogic();
-}
-
-// //////////////////////////////////
-// //////////////////////////////////
-
-function loadCurrentMessagePage() {
-	$.post(loadOnePageAction({
-		pageNumber : currentPage
-	}),
-
-	function(messagePage) {
-
-		removeAllDisplayedMessages();
-
-		if (messagePage.messages.length > 0) {
-			for (oneKey in messagePage.messages) {
-				if (oneKey != undefined && oneKey != "") {
-					addOneDisplayedMessage(messagePage.messages[oneKey]);
+			$("#messagesNextLink").click(function() {
+				self.whenUserClicksNext();
+			});
+			
+			$("#messagesInboxTable").on("change", "tr.inboxRowTr input.msgCb", function(event) {
+				self.whenUserClickOnRowCheckBox(event);
+			});
+			
+			$("#masterCheckbox").click(function(event) {
+				if ($("#masterCheckbox").attr("checked") == undefined) {
+					$("#messagesInboxTable tr.inboxRowTr input.msgCb").removeAttr("checked");
+					self.messageInboxDataModel.toggleAllCheckBoxes(false);
+				} else {
+					$("#messagesInboxTable tr.inboxRowTr input.msgCb").attr("checked", "checked");
+					self.messageInboxDataModel.toggleAllCheckBoxes(true);
+				}	
+			});
+			
+			$("#messageDeleteSelected").click(function() {
+				if (self.messageInboxDataModel.isAtLeastOneMessageSelected()) {
+					$("#confirmDeleteMessages").dialog("open");
 				}
+			});
+
+			this.initConfirmDeleteDialog();
+			this.loadCurrentMessagePage();
+		};
+		
+		// calls the back-end for new message and updates the model accordingly 
+		this.loadCurrentMessagePage = function () {
+			$.post(loadOnePageAction({
+				pageNumber : self.currentPage
+			}),
+			function(messagePage) {
+				self.parseMessagesPage(messagePage);
+			});
+		};
+		
+		this.parseMessagesPage = function (messagePage){
+			this.messageInboxDataModel.clear();
+			_.each(messagePage.messages, function(message) {
+				self.messageInboxDataModel.addOneMessage(message);
+			}); 
+			this.messageInboxDataModel.previousPageExists(messagePage.previousPageExists);
+			this.messageInboxDataModel.nextPageExists(messagePage.nextPageExists);
+		};
+		
+		this.whenUserClicksPrevious = function () {
+			if (this.currentPage > 0 && this.messageInboxDataModel.previousPageExists()) {
+				this.currentPage--;
+				this.loadCurrentMessagePage();
+			}
+		};
+		
+		this.whenUserClicksNext = function () {
+			if (this.messageInboxDataModel.nextPageExists()) {
+				this.currentPage++;
+				this.loadCurrentMessagePage();
+			}
+		};
+		
+		this.whenUserClicksOnMessage = function(event) {
+			var eventTarget = $(event.target); 
+			
+			// if we clicked on the user name link or on the checkbox: no need to refresh the message content
+			if (eventTarget.hasClass("dabLink") || eventTarget.attr("type") == "checkbox") {
+				return;
+			}
+			
+			var messageIdToBeMarkedAsRead = this.messageInboxDataModel.setDisplayedMessage(this.determineClickedRowIndex(event));
+			if (messageIdToBeMarkedAsRead != null) {
+				$.post(markAsReadAction({
+					messageId : messageIdToBeMarkedAsRead
+				}));
+			}
+		};
+		
+		this.whenUserClickOnRowCheckBox = function (event) {
+			this.messageInboxDataModel.toggleCheckBox(this.determineClickedRowIndex(event));
+		};
+		
+		this.replyTo = function() {
+			if (this.messageInboxDataModel.messageReactionEnabled() && this.messageInboxDataModel.displayedMessage.id() != undefined) {
+				$("#hiddenReplyToForm input.hiddenSubmit").val(this.messageInboxDataModel.displayedMessage.id());
+				$("#hiddenReplyToForm form").submit();
+			}
+		};
+
+		this.forwardMessage = function () {
+			if (this.messageInboxDataModel.messageReactionEnabled() && this.messageInboxDataModel.displayedMessage.id() != undefined) {
+				$("#hiddenForwardForm input.hiddenSubmit").val(this.messageInboxDataModel.displayedMessage.id());
+				$("#hiddenForwardForm form").submit();
+			}
+		};
+		
+		
+		this.deleteSelectedMessages = function() {
+			if (self.messageInboxDataModel.isAtLeastOneMessageSelected()) {
+				$.post(
+						deleteMessageAction({messageIds: JSON.stringify(self.messageInboxDataModel.getAllSelectedMessageIds())}), 
+						function(response) {
+							self.loadCurrentMessagePage();
+							$("#confirmDeleteMessages").dialog("close");
+						}
+					);
+			} else {
+				$("#confirmDeleteMessages").dialog("close");
 			}
 		}
-
-		$("#masterCheckbox").removeAttr("checked");
-
-		if (messagePage.previousPageExists) {
-			$("#messagesPreviousLink").addClass("messagesReactionLinkEnabled").removeClass("messagesReactionLinkDisabled");
-		} else {
-			$("#messagesPreviousLink").addClass("messagesReactionLinkDisabled").removeClass("messagesReactionLinkEnabled");
-		}
-
-		if (messagePage.nextPageExists) {
-			$("#messagesNextLink").addClass("messagesReactionLinkEnabled").removeClass("messagesReactionLinkDisabled");
-		} else {
-			$("#messagesNextLink").addClass("messagesReactionLinkDisabled").removeClass("messagesReactionLinkEnabled");
-		}
-
-	});
-}
-
-function removeAllDisplayedMessages() {
-	$("#messagesListTable tr.inboxRowTr").filter(":not(#hiddenRowTemplate)").remove();
-}
-
-function addOneDisplayedMessage(addedMessage) {
-
-	var oneMessage = $("#hiddenRowTemplate").clone().show();
-
-	oneMessage.removeAttr("id");
-
-	if (addedMessage.fromUser.isProfileActive) {
-		oneMessage.find(".messageRowFrom a.dabLink").text(addedMessage.fromUser.userName);
-		oneMessage.find(".messageRowFrom a.dabLink").attr("href", "/profile/" + addedMessage.fromUser.userName + "/public");
-	} else {
-		oneMessage.find(".messageRowFrom span.dabLinkDisabled").text(addedMessage.fromUser.userName);
-	}
-
-	oneMessage.find(".messageRowSubject span").text(addedMessage.subject);
-	oneMessage.find(".messageRowCreationTime span").text(addedMessage.creationDate);
-	oneMessage.data("fullMessage", addedMessage);
-
-	if (addedMessage.read) {
-		oneMessage.find("td").addClass("inboxRow");
-	} else {
-		oneMessage.find("td").addClass("inboxRowUnread");
-	}
-
-	oneMessage.insertBefore($("#topMessageListLastRow"));
-
-}
-
-// //////////////////////////////////////////
-// show message content when clicking on top table
-
-function registerClickOnInboxRow() {
-	$("#messagesListTable").on("click", '.inboxRow, .inboxRowUnread', function(event) {
-		updateDisplayedMessage($(event.target));
-	});
-}
-
-function updateDisplayedMessage(eventTarget) {
-
-	// if we clicked on the user name link or on the checkbox: no need to
-	// refresh the message content
-	if (eventTarget.hasClass("dabLink") || eventTarget.attr("type") == "checkbox") {
-		return;
-	}
-
-	var htmlElem = eventTarget;
-	var message;
-	var markMessageAsUnread;
-
-	while (htmlElem.attr("id") != "messagesListTable") {
-		if (htmlElem.hasClass("inboxRowUnread")) {
-			markMessageAsUnread = true;
-		}
-		message = htmlElem.data("fullMessage");
-
-		// breaking now makes sure htmlElem points to the table row, whatever
-		// the user clicked
-		if (message != undefined) {
-			break;
-		}
-
-		htmlElem = htmlElem.parent();
-	}
-
-	if (message != undefined) {
-
-		$("#messageContent").val(message.content);
-		$('#messageDetailSubject').text(message.subject);
-		$('#messageDetailDate').text(message.creationDate);
-
-		$('#messageDetailFrom').text(message.fromUser.userName);
-		$('#messageDetailFrom').attr("href", "/profile/public?vuser=" + message.fromUser.userName);
-
-		if (!messageReactionEnabled) {
-			$('#replyToLink').removeClass("messagesReactionLinkDisabled").addClass("messagesReactionLinkEnabled");
-			$('#forwardLink').removeClass("messagesReactionLinkDisabled").addClass("messagesReactionLinkEnabled");
-		}
-		messageReactionEnabled = true;
-		currentMessageId = message.id;
-
-		if (markMessageAsUnread) {
-
-			htmlElem.find("td").removeClass("inboxRowUnread").addClass("inboxRow");
-			$.post(markAsReadAction({
-				messageId : message.id
-			}), function(response) {
-				// NOP
+		
+		
+		this.initConfirmDeleteDialog = function(){
+			
+			$("#confirmDeleteMessages").dialog({
+				autoOpen : false,
+				modal : true,
+				"buttons" : [ {
+					text : okLabelValue,
+					click : self.deleteSelectedMessages
+				}, {
+					text : cancelLabelValue,
+					click : function() {
+						$(this).dialog("close");
+					}
+				}]
 			});
+		};
+
+		/////////////////////
+		
+		this.determineClickedRowIndex = function(event) {
+			var clickedRow = $(event.target);
+			while (!clickedRow.is("tr")) {
+				clickedRow = clickedRow.parent();
+			}
+			return clickedRow.index();
 		}
 
-	}
-}
-
-// ///////////////////////////////////
-// reply , forward
-
-function replyTo() {
-	if (messageReactionEnabled && currentMessageId != undefined) {
-		$("#hiddenReplyToForm input.hiddenSubmit").val(currentMessageId);
-		$("#hiddenReplyToForm form").submit();
-	}
-}
-
-function forwardMessage() {
-	if (messageReactionEnabled) {
-		$("#hiddenForwardForm input.hiddenSubmit").val(currentMessageId);
-		$("#hiddenForwardForm form").submit();
-	}
-}
-
-// /////////////////////////////////////
-// next, previous page
-
-function initNextPrevious() {
-
-	$("#messagesPreviousLink").click(function() {
-		if (currentPage > 0 && $("#messagesPreviousLink").hasClass("messagesReactionLinkEnabled")) {
-			currentPage--;
-			loadCurrentMessagePage();
-		}
-	});
-
-	$("#messagesNextLink").click(function() {
-		if ($("#messagesNextLink").hasClass("messagesReactionLinkEnabled")) {
-			currentPage++;
-			loadCurrentMessagePage();
-		}
-	});
-}
+		this.init();
+	},
+};

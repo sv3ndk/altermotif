@@ -64,7 +64,8 @@ whoShouldSeeThis=Qui peut voir ceci?
 pageTitle=Altermotif
 homePageTitle1=Réalisez vos propres objectifs
 homePageTitle2=Une espace ou les idées deviennent réalité
-homePageExplanation=Comment ça marche? => Présentez une idée, motivez d'autres et accomplissez-le!
+homePageHowDoesItWort=Comment ça marche?
+homePageExplanation=Présentez une idée, motivez d'autres et accomplissez-le!
 homePageFindAProject=Trouver un projet
 homePageRules=Conditions d'utilisation
 homePagePrivacy=Confidentialité
@@ -359,6 +360,7 @@ projectThemeAnimalRightsSubThemeCampaigning=Campagnes
 projectThemeAnimalRightsSubThemeFoodIndustry=Industrie Alimentaire
 projectThemeAnimalRightsSubThemeStrayAnimals=Animaux Orphelin
 projectThemeAnimalRightsSubThemeTestingonAnimals=Tests sur Animaux
+projectThemeAnimalRightsSubThemeOther=Autres
 
 projectThemeArts=Arts
 projectThemeArtsSubThemeArchitecture=Architecture
