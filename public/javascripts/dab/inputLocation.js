@@ -8,7 +8,7 @@ var dabInputLocationLib = {
 		this.whenInputIsCancelledCallback = whenInputIsCancelledCallback;
 		this.whenInputIsConfirmedCallback = whenInputIsConfirmedCallback;
 		
-		this.geocoder = new google.maps.Geocoder();
+		this.geocoder ;
 		this.map;
 		this.marker;
 		
@@ -18,19 +18,29 @@ var dabInputLocationLib = {
 		
 		this.init = function() {
 			var self = this;
+			
 			$(this.inputHtmlElement).find(".addLocationCancelButton").click(function() {
 				self.whenInputIsCancelledCallback();
 				self.hideInput();
 			});
-
-			$(this.inputHtmlElement).find(".addLocationOkButton").click(function () {
-				self.whenInputIsConfirmedCallback(self.location, self.latitude, self.longitude);
-				self.hideInput();
-			});
 			
-			inputHtmlElement.find("input.addLocationInput").val(this.location);
-
-			this.initializeGeoCoder();
+			// "google" is only defined if we could successfully connect to the google maps API
+			if (typeof google != "undefined") {
+				this.geocoder = new google.maps.Geocoder();
+			
+	
+				$(this.inputHtmlElement).find(".addLocationOkButton").click(function () {
+					self.whenInputIsConfirmedCallback(self.location, self.latitude, self.longitude);
+					self.hideInput();
+				});
+				
+				inputHtmlElement.find("input.addLocationInput").val(this.location);
+	
+				this.initializeGeoCoder();
+			} else {
+				// let's prevent the user to click "OK" if there is no way to contact google anyway
+				$(this.inputHtmlElement).find(".addLocationOkButton").hide();
+			}
 		};
 		
 		this.reset = function () {
@@ -41,10 +51,13 @@ var dabInputLocationLib = {
 		};
 		
 		this.showInput = function () {
-			$(this.inputHtmlElement).show();
-			google.maps.event.trigger(this.map, "resize");
-			this.centerMapOnCurrentData();
-			$(this.inputHtmlElement).find("input.addLocationInput").focus();
+			// "google" is only defined if we could successfully connect to the google maps API
+			if (typeof google != "undefined") {
+				$(this.inputHtmlElement).show();
+				google.maps.event.trigger(this.map, "resize");
+				this.centerMapOnCurrentData();
+				$(this.inputHtmlElement).find("input.addLocationInput").focus();
+			}
 		};
 		
 		this.hideInput = function () {

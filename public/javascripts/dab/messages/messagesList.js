@@ -1,8 +1,13 @@
+// this contain the logic for controlling any page displaying a list of messages
+// the logic is the same for inbox, outbox and deleted messages
+
+$(document).ready(function() {
+	new dabMessagesLib.MessageController();
+});
+
+
 var dabMessagesLib = {
 		
-	/////////////////////
-	// controller user for inbox, outbox and deleted messages
-	// the logic is extactly the same is all pages: next/previous/delete/read/refresh...
 	MessageController : function() {
 		
 		this.messageDataModel = new dabMessagesLib.MessageDataModel();
@@ -55,8 +60,15 @@ var dabMessagesLib = {
 					$("#confirmDeleteMessages").dialog("open");
 				}
 			});
+			
+			
+			$("#undeleteSelectedMessagesLink").click(function() {
+				if (self.messageDataModel.isAtLeastOneMessageSelected()) {
+					$("#confirmUndeleteMessages").dialog("open");
+				}
+			});
 
-			this.initConfirmDeleteDialog();
+			this.initConfirmDeleteAndUndeleteDialog();
 			this.loadCurrentMessagePage();
 		};
 		
@@ -102,8 +114,8 @@ var dabMessagesLib = {
 			}
 			
 			var messageIdToBeMarkedAsRead = this.messageDataModel.setDisplayedMessage(this.determineClickedRowIndex(event));
-			if (messageIdToBeMarkedAsRead != null && markAsReadAction) {
-				// markAsReadAction is null for outbout and read message pages: we do not "mark" messages there
+			if (messageIdToBeMarkedAsRead != null && typeof markAsReadAction != "undefined") {
+				// markAsReadAction is undefined for outbound and read message pages: we do not "mark" messages there
 				$.post(markAsReadAction({
 					messageId : messageIdToBeMarkedAsRead
 				}));
@@ -143,8 +155,22 @@ var dabMessagesLib = {
 			}
 		}
 		
+		this.undeleteSelectedMessages = function() {
+			if (self.messageDataModel.isAtLeastOneMessageSelected()) {
+				$.post(
+						undeleteMessageAction({messageIds: JSON.stringify(self.messageDataModel.getAllSelectedMessageIds())}), 
+						function(response) {
+							self.loadCurrentMessagePage();
+							$("#confirmUndeleteMessages").dialog("close");
+						}
+				);
+			} else {
+				$("#confirmUndeleteMessages").dialog("close");
+			}
+		}
 		
-		this.initConfirmDeleteDialog = function(){
+		
+		this.initConfirmDeleteAndUndeleteDialog = function(){
 			
 			$("#confirmDeleteMessages").dialog({
 				autoOpen : false,
@@ -159,6 +185,21 @@ var dabMessagesLib = {
 					}
 				}]
 			});
+			
+			$("#confirmUndeleteMessages").dialog({
+				autoOpen : false,
+				modal : true,
+				"buttons" : [ {
+					text : okLabelValue,
+					click : self.undeleteSelectedMessages
+				}, {
+					text : cancelLabelValue,
+					click : function() {
+						$(this).dialog("close");
+					}
+				}]
+			});
+			
 		};
 
 		/////////////////////

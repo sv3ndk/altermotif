@@ -3,6 +3,9 @@
  */
 package controllers.messages;
 
+import static controllers.messages.MessagesNew.FLASH_FORWARD_MESSAGE_ID;
+import static controllers.messages.MessagesNew.FLASH_REPLY_TO_MESSAGE_ID;
+
 import java.util.logging.Logger;
 
 import com.svend.dab.core.beans.profile.UserProfile;
@@ -88,6 +91,22 @@ public class MessagesNew extends DabLoggedController {
 			BeanProvider.getMessagesService().sendMessage(getSessionWrapper().getLoggedInUserProfileId(), writtenMessage.getToUserName(), writtenMessage.getSubject(), writtenMessage.getMessageContent());
 			ProfileHome.profileHome();
 		}
+	}
+
+
+
+	// this is called from the controllers of message inbox and message deleted
+	protected static void replyTo(String messageId) {
+		flash.put(FLASH_REPLY_TO_MESSAGE_ID, messageId);
+		MessagesNew.messagesNew();
+	}
+
+
+
+	// this is called from the controllers of message inbox, outbox and message deleted
+	protected static void forward(String messageId) {
+		flash.put(FLASH_FORWARD_MESSAGE_ID, messageId);
+		MessagesNew.messagesNew();
 	}
 	
 }

@@ -1,3 +1,7 @@
+$(document).ready(function() {
+	init();
+});
+
 function init() {
 	initDeleteCv();
 	initUploadCv();

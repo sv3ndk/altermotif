@@ -4,100 +4,97 @@
     <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/messages.css'}" />
 #{/set}
 
-
 #{set 'moreScripts'}
-    <script src="@{'/public/javascripts/messages/messagesDeletionLogic.js'}" type="text/javascript"
-    	charset="${_response_encoding}"></script>
-
-    <script src="@{'/public/javascripts/messages/messagesDeleted.js'}" type="text/javascript"
-    	charset="${_response_encoding}"></script>
+    <script src="@{'/public/javascripts/dab/messages/messagesList.js'}" type="text/javascript" charset="${_response_encoding}"></script>
     	
     <script type="text/javascript">
 	   	var currentPage = 0;
-	   	var loadOnePageAction 		= #{jsAction @messages.MessagesDeleted.loadMessages(':pageNumber') /};
+	   	var loadOnePageAction = #{jsAction @messages.MessagesDeleted.loadMessages(':pageNumber') /};
+	   	var undeleteMessageAction 	= #{jsAction @messages.MessagesDeleted.doUndeleteMessage(':messageIds') /};
 	</script>
 #{/set}
 
 
-
 <div id="messagesContainer" class="messagesMainContainer">
-	<div id="messagesDeletedTable">
+	<div class="messagesTable">
 	
-			<table class="messagesListTable" id="messagesListTable">
-				<tbody >
-					<tr class="messagesListTableHeader">
-						<td class="inboxOutboxDeleteCheckbox">
-							<input type="checkbox" id="masterCheckbox"
-							 />
-						</td>
-						<td>&{'profileMessagesFrom'}</td>
-						<td>&{'profileMessagesTo'}</td>
-						<td>&{'profileMessagesSubject'}</td>
-						<td>&{'profileMessagesReceived'}</td>
-					</tr>
+		<table class="messagesListTable" id="messagesListTable">
+			<thead>
+				<tr class="messagesListTableHeader">
+					<td class="inboxOutboxDeleteCheckbox">
+						<input type="checkbox" id="masterCheckbox"/>
+					</td>
+					<td>&{'profileMessagesFrom'}</td>
+					<td>&{'profileMessagesTo'}</td>
+					<td>&{'profileMessagesSubject'}</td>
+					<td>&{'profileMessagesReceived'}</td>
+				</tr>
+			</thead>
 
+			<tbody data-bind="foreach: messages">
+				<tr class="inboxRowTr">
+					<td class="inboxOutboxDeleteCheckbox"><input type="checkbox" class="msgCb"/></td>
+					<td class="inboxRow">
+						<a class="dabLink" data-bind="visible: fromUser().isProfileActive, text: fromUser().userName, attr: {href: fromUser().linkToProfile}"></a>
+						<span class="dabLinkDisabled" data-bind="visible: !fromUser().isProfileActive, text: fromUser().userName"></span>
+					</td>
 
-					<tr id="hiddenRowTemplate" style="display: none" class="inboxRowTr"> 
-						<td class="inboxOutboxDeleteCheckbox"><input type="checkbox" class="msgCb"/></td>
-						<td class="messageRowFrom">
-							<a class="dabLink"></a>
-							<span class="dabLinkDisabled"></span>
-						</td>
-						<td class="messageRowTo">
-							<a class="dabLink"></a>
-							<span class="dabLinkDisabled"></span>
-						</td>
-						
-						<td class="messageRowSubject">
-							<span></span>
-						</td>
-						
-						<td class="messageRowCreationTime">
-							<span></span>
-						</td>
-					</tr>
+					<td class="inboxRow" >
+						<a class="dabLink" data-bind="visible: toUser().isProfileActive, text: toUser().userName, attr: {href: toUser().linkToProfile}"></a>
+						<span class="dabLinkDisabled" data-bind="visible: !toUser().isProfileActive, text: toUser().userName"></span>
+					</td>
 					
+					<td class="inboxRow">
+						<span data-bind="text: subject"></span>
+					</td>
 					
-					
-					<tr class="messagesListTableHeader" id="topMessageListLastRow">
-						<td colspan="3"><span id="messageDeleteSelected" class="messagesReactionLinkDisabled" >&{'profileMessagesUndeleteSelected'}</span></td>
-						<td colspan="2" class="profileMessagesInboxBottomRight">
-							<span id="messagesPreviousLink" class="messagesReactionLinkDisabled" >&{'profileMessagesPrevious'}</span>
-							<span id="messagesNextLink" class="messagesReactionLinkDisabled" >&{'profileMessagesNext'}</span>
-						</td>
-					</tr>
-					
-					
-				</tbody>
-			</table>
-			
-			
-		<table class="messageDetailTable">
-			<tr class="messagesListTableHeader">
-				<td>&nbsp;</td>
-				<td>&{'profileMessagesFrom'}: <a id="messageDetailFrom" class="messagesListTableHeaderSmall dabLink"></a></td>
-				<td>&{'profileMessagesTo'}:   <a id="messageDetailTo" class="messagesListTableHeaderSmall dabLink"></a></td>
-				<td>&{'profileMessagesSubject'}: <span id="messageDetailSubject" class="messagesListTableHeaderSmall"></span></td>
-				<td> <span id="messageDetailDate" class="messagesListTableHeaderSmall"></span></td>
-				<td class="profileMessagesInboxBottomRight">
-					<span class="messagesReactionLinkDisabled" id="replyToLink">&{'profileMessagesReply'}</span> 
-					<span class="messagesReactionLinkDisabled" id="forwardLink" style="margin-left: 10px">&{'profileMessagesForward'}</span> 
+					<td class="inboxRow">
+						<span data-bind="text: creationDate"></span>
+					</td>
+				</tr>
+			</tbody>
+
+			<tr class="messagesListTableHeader" id="topMessageListLastRow">
+				<td colspan="3"><span id="undeleteSelectedMessagesLink" data-bind="css: {messagesReactionLinkEnabled : isAtLeastOneMessageSelected(), messagesReactionLinkDisabled : !isAtLeastOneMessageSelected()}" >&{'profileMessagesUndeleteSelected'}</span></td>
+				<td colspan="2" class="profileMessagesInboxBottomRight">
+					<span id="messagesPreviousLink"  data-bind="css: {messagesReactionLinkEnabled: previousPageExists(), messagesReactionLinkDisabled: !previousPageExists()}" >&{'profileMessagesPrevious'}</span>
+					<span id="messagesNextLink" data-bind="css: {messagesReactionLinkEnabled: nextPageExists(), messagesReactionLinkDisabled: !nextPageExists()}" >&{'profileMessagesNext'}</span>
 				</td>
 			</tr>
-			
-			<tr>
-				<td colspan="5">
-					<textarea id="messageContent" class="messagesInboxDetailContainer"></textarea>
-				</td>
-			</tr>
-			
 		</table>
 			
-	
+		<table class="messageDetailTable">
+			<thead>
+				<tr class="messagesListTableHeader">
+					<td>&nbsp;</td>
+					<td>&{'profileMessagesFrom'}: <a id="messageDetailFrom" class="messagesListTableHeaderSmall dabLink"></a>
+						<a class="dabLink" data-bind="visible: displayedMessage.fromUser().isProfileActive, text: displayedMessage.fromUser().userName, attr: {href: displayedMessage.fromUser().linkToProfile}"></a>
+						<span class="dabLinkDisabled" data-bind="visible: !displayedMessage.fromUser().isProfileActive, text: displayedMessage.fromUser().userName"></span>
+					</td>
+					<td>&{'profileMessagesTo'}:   
+						<a class="dabLink" data-bind="visible: displayedMessage.toUser().isProfileActive, text: displayedMessage.toUser().userName, attr: {href: displayedMessage.toUser().linkToProfile}"></a>
+						<span class="dabLinkDisabled" data-bind="visible: !displayedMessage.toUser().isProfileActive, text: displayedMessage.toUser().userName"></span>
+					</td>
+					<td>&{'profileMessagesSubject'}: <span class="messagesListTableHeaderSmall" data-bind="text: displayedMessage.subject"></span></td>
+					<td> <span id="messageDetailDate" class="messagesListTableHeaderSmall" data-bind="text: displayedMessage.creationDate"></span></td>
+					
+					<td class="profileMessagesInboxBottomRight">
+						<span id="replyToLink" data-bind="css: {messagesReactionLinkEnabled: displayedMessage.fromUser().isProfileActive,  messagesReactionLinkDisabled: !displayedMessage.fromUser().isProfileActive}" >&{'profileMessagesReply'}</span> 
+						<span id="forwardLink" style="margin-left: 10px" data-bind="css: {messagesReactionLinkEnabled: messageReactionEnabled(),  messagesReactionLinkDisabled: !messageReactionEnabled()}">&{'profileMessagesForward'}</span> 
+					</td>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr>
+					<td colspan="6">
+						<textarea id="messageContent" data-bind="text: displayedMessage.content"></textarea>
+					</td>
+				</tr>
+			</tbody>			
+		</table>
 	</div>
 </div>
-
-
 
 
 <div id="hiddenReplyToForm" class="hidden">
@@ -112,5 +109,6 @@
 	#{/form}
 </div>
 
-
-
+<div id="confirmUndeleteMessages" title="&{'confirmationPopupTitle'}">
+	&{'profileDeletedMessagesConfirmUndeletion'}
+</div>

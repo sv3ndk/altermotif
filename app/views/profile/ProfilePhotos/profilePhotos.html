@@ -1,18 +1,18 @@
 #{extends 'masterTemplate.html' /}
 
 #{set 'moreStyles'}
-    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/profile.css'}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="${dabStylesheetsPath}/profile.css" />
 #{/set}
 
 #{set 'moreScripts'}
-    <script src="@{'/public/javascripts/photoedit.js'}" type="text/javascript" charset="${_response_encoding}"></script>
-    <script src="@{'/public/javascripts/profile/profilePhotos.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+    <script src="@{'/public/javascripts/dab/photoedit.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+    <script src="@{'/public/javascripts/dab/profile/profilePhotos.js'}" type="text/javascript" charset="${_response_encoding}"></script>
     	
     <script type="text/javascript">
-			var setCaptionText = "&{'profileMPClickToSetCaption'}";
-			var mainPhotoIndex = "${userProfile.getPhotoAlbum().getMainPhotoIndex()}";
-		   	var updatePhotoCaptionAction 	= #{jsAction @profile.ProfilePhotos.doUpdatePhotoCaption(':photoIndex', ':photoCaption') /};
-		</script>
+		var setCaptionText = "&{'profileMPClickToSetCaption'}";
+		var mainPhotoIndex = "${userProfile.getPhotoAlbum().getMainPhotoIndex()}";
+	   	var updatePhotoCaptionAction 	= #{jsAction @profile.ProfilePhotos.doUpdatePhotoCaption(':photoIndex', ':photoCaption') /};
+	</script>
 #{/set}
 
 #{photos.uploadPhotoThumbs photoAlbum:userProfile.getPhotoAlbum() /}

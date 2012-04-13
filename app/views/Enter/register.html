@@ -3,20 +3,20 @@
 
 #{set 'moreStyles'}
     <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/nondab/jquery/jquery.buttonCaptcha.styles.css'}" />
-    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/enter/register.css'}" />
+    
+    <link rel="stylesheet" type="text/css" media="screen" href="${dabStylesheetsPath}/enter/register.css" />
 #{/set}
 
 
 #{set 'moreScripts'}
-    <script src="@{'/public/javascripts/enter/register.js'}" type="text/javascript"
-    	charset="${_response_encoding}"></script>
-    <script src="@{'/public/javascripts/nondab/jquery/jquery.buttonCaptcha.min.js'}" type="text/javascript"
-    	charset="${_response_encoding}"></script>
+    <script src="${dabJavascriptPath}/enter/register.js" type="text/javascript" charset="${_response_encoding}"></script>
+    
+    <script src="@{'/public/javascripts/nondab/jquery/jquery.buttonCaptcha.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
     	
     <script type="text/javascript">
 		$(document).ready(function() {
 			initCaptcha("&{'registerPageCaptchaTitle'}", "${captcha.value }");
-		})
+		});
 	</script>
 #{/set}
 

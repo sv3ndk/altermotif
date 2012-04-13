@@ -4,10 +4,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-
 import com.svend.dab.core.beans.message.UserMessage;
 import com.svend.dab.core.beans.profile.ProfileRef;
 
@@ -30,7 +26,7 @@ public interface IUserMessageDao {
 	public abstract long countNumberOfDeletedMessages(String username);
 	public abstract List<UserMessage> findDeletedMessages(String username, int pageNumber, int inboxOutboxPageSize);
 	
-	public List<UserMessage> retrieveUserMessageById(List<String> messageIds);
+	public List<UserMessage> retrieveUserMessageById(Collection<String> messageIds);
 	public abstract UserMessage retrieveUserMessageById(String messageId);
 
 	public void markMessageAsDeletedByRecipient(Collection<String> messageIds, String recipientId);

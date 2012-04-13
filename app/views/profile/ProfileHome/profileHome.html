@@ -1,19 +1,16 @@
 #{extends 'masterTemplate.html' /}
 
 #{set 'moreStyles'}
-    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/messages.css'}" />
-    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/profile.css'}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="${dabStylesheetsPath}/messages.css" />
 #{/set}
 
-
 #{set 'moreScripts'}
-    <script src="@{'/public/javascripts/profile/profileHome.js'}" type="text/javascript"
-    	charset="${_response_encoding}"></script>
+    <script src="@{'/public/javascripts/dab/profile/profileHome.js'}" type="text/javascript" charset="${_response_encoding}"></script>
     	
     <script type="text/javascript">
 		$(document).ready(function() {
 			init("${visitedUserProfile.hasAtLeastOnePendingReceivedContactsRequest()}");
-		})
+		});
 	</script>
 #{/set}
 

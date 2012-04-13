@@ -1,4 +1,4 @@
-  /**
+/**
  * 
  */
 package com.svend.dab.dao.mongo;
@@ -45,37 +45,33 @@ public class UserMessageRepoImpl implements IUserMessageDao {
 	 * 
 	 * @see com.svend.dab.dao.mongo.IUserMessageDao#markMesasgeAsRead(java.lang.String)
 	 */
-	
+
 	public void markMessageAsRead(String messageId) {
 		mongoTemplate.updateFirst(query(where("id").is(messageId)), new Update().set("read", Boolean.TRUE), UserMessage.class);
 	}
 
-	
 	public Long countNumberOfUnreadMessages(String username) {
 		final Query query = query(where("toUser._id").is(username).and("read").is(false).and("deletedByRecipient").is(false));
 		return mongoTemplate.execute("userMessage", new CollectionCallback<Long>() {
-			
+
 			public Long doInCollection(DBCollection collection) throws MongoException, DataAccessException {
 				return collection.count(query.getQueryObject());
 			}
 		});
 	}
-	
-	
+
 	public Long countNumberOfReceivedMessages(String username) {
 		final Query query = query(where("toUser._id").is(username).and("deletedByRecipient").is(false));
 		return mongoTemplate.execute("userMessage", new CollectionCallback<Long>() {
-			
+
 			public Long doInCollection(DBCollection collection) throws MongoException, DataAccessException {
 				return collection.count(query.getQueryObject());
 			}
 		});
 	}
-	
-	
-	
+
 	public long countNumberOfReceivedMessagesBefore(String username, String messageId) {
-		
+
 		UserMessage message = retrieveUserMessageById(messageId);
 		if (message == null) {
 			return 0l;
@@ -90,83 +86,64 @@ public class UserMessageRepoImpl implements IUserMessageDao {
 		}
 	}
 
-	
-	
 	public long countNumberOfWrittenMessages(String username) {
 		final Query query = query(where("fromUser._id").is(username).and("deletedByEmitter").is(false));
 		return mongoTemplate.execute("userMessage", new CollectionCallback<Long>() {
-			
+
 			public Long doInCollection(DBCollection collection) throws MongoException, DataAccessException {
 				return collection.count(query.getQueryObject());
 			}
 		});
 	}
 
-	
-
-	
 	public long countNumberOfDeletedMessages(String username) {
 		Criteria deletedAsRecipientCriterium = where("toUser._id").is(username).and("deletedByRecipient").is(true);
 		Criteria deletedAsEmitterCriterium = where("fromUser._id").is(username).and("deletedByEmitter").is(true);
-		final Query query = query(new Criteria().orOperator(new Criteria[] {deletedAsRecipientCriterium, deletedAsEmitterCriterium}));
-		
+		final Query query = query(new Criteria().orOperator(new Criteria[] { deletedAsRecipientCriterium, deletedAsEmitterCriterium }));
+
 		return mongoTemplate.execute("userMessage", new CollectionCallback<Long>() {
-			
+
 			public Long doInCollection(DBCollection collection) throws MongoException, DataAccessException {
 				return collection.count(query.getQueryObject());
 			}
 		});
 	}
 
-	
-	
-	
-	
 	public void markMessageAsDeletedByRecipient(Collection<String> messageIds, String recipientId) {
 		Query theQuery = query(where("toUser._id").is(recipientId).and("id").in(messageIds));
 		Update update = new Update().set("deletedByRecipient", true);
 		mongoTemplate.updateMulti(theQuery, update, UserMessage.class);
 	}
 
-	
 	public void markMessageAsDeletedByEmitter(Set<String> messageIds, String emitterId) {
 		Query theQuery = query(where("fromUser._id").is(emitterId).and("id").in(messageIds));
 		Update update = new Update().set("deletedByEmitter", true);
 		mongoTemplate.updateMulti(theQuery, update, UserMessage.class);
 	}
 
-	
-	public List<UserMessage> retrieveUserMessageById(List<String> ids) {
+	public List<UserMessage> retrieveUserMessageById(Collection<String> ids) {
 		return mongoTemplate.find(query(where("id").in(ids)), UserMessage.class);
 	}
-	
-	
-	
-	
+
 	public UserMessage retrieveUserMessageById(String messageId) {
 		return mongoTemplate.findById(messageId, UserMessage.class);
 	}
-	
 
-	
 	public void updateFromUserProfileRef(ProfileRef profileRef) {
 		Query query = query(where("fromUser._id").is(profileRef.getUserName()));
 		Update update = new Update().set("fromUser", profileRef);
 		mongoTemplate.updateMulti(query, update, UserMessage.class);
 	}
 
-	
 	public void updateTOUserProfileRef(ProfileRef profileRef) {
 		Query query = query(where("toUser._id").is(profileRef.getUserName()));
 		Update update = new Update().set("toUser", profileRef);
 		mongoTemplate.updateMulti(query, update, UserMessage.class);
 	}
 
-	
-	
 	public List<UserMessage> findAllUserMessageBytoUserUserNameAndDeletedByRecipient(String toUserName, int pageNumber, int pageSize) {
 		if (pageNumber >= 0 && pageSize > 0) {
-			Query query = query(where("toUser._id").is(toUserName).and("deletedByRecipient").is(false) ).limit(pageSize).skip(pageNumber*pageSize);
+			Query query = query(where("toUser._id").is(toUserName).and("deletedByRecipient").is(false)).limit(pageSize).skip(pageNumber * pageSize);
 			query.sort().on("creationDate", Order.DESCENDING);
 			return mongoTemplate.find(query, UserMessage.class);
 		} else {
@@ -174,10 +151,9 @@ public class UserMessageRepoImpl implements IUserMessageDao {
 		}
 	}
 
-	
-	public List<UserMessage> findAllUserMessageByFromUserUserNameAndDeletedByEmitter(String fromUserName,  int pageNumber, int pageSize) {
+	public List<UserMessage> findAllUserMessageByFromUserUserNameAndDeletedByEmitter(String fromUserName, int pageNumber, int pageSize) {
 		if (pageNumber >= 0 && pageSize > 0) {
-			Query query = query(where("fromUser._id").is(fromUserName).and("deletedByEmitter").is(false) ).limit(pageSize).skip(pageNumber*pageSize);
+			Query query = query(where("fromUser._id").is(fromUserName).and("deletedByEmitter").is(false)).limit(pageSize).skip(pageNumber * pageSize);
 			query.sort().on("creationDate", Order.DESCENDING);
 			return mongoTemplate.find(query, UserMessage.class);
 		} else {
@@ -185,35 +161,28 @@ public class UserMessageRepoImpl implements IUserMessageDao {
 		}
 	}
 
-	
 	public List<UserMessage> findAllUserMessageBytoUserUserNameAndReadAndDeletedByRecipient(String username, boolean read) {
 		Query query = query(where("toUser._id").is(username).and("read").is(read).and("deletedByRecipient").is(false));
 		query.sort().on("creationDate", Order.DESCENDING);
 		return mongoTemplate.find(query, UserMessage.class);
 	}
 
-	
-	
 	public List<UserMessage> findDeletedMessages(String username, int pageNumber, int inboxOutboxPageSize) {
 		Criteria deletedAsRecipientCriterium = where("toUser._id").is(username).and("deletedByRecipient").is(true);
 		Criteria deletedAsEmitterCriterium = where("fromUser._id").is(username).and("deletedByEmitter").is(true);
-		Query query = query(new Criteria().orOperator(new Criteria[] {deletedAsRecipientCriterium, deletedAsEmitterCriterium}));
+		Query query = query(new Criteria().orOperator(new Criteria[] { deletedAsRecipientCriterium, deletedAsEmitterCriterium }));
 		query.sort().on("creationDate", Order.DESCENDING);
 		return mongoTemplate.find(query, UserMessage.class);
 	}
-	
-	
-	
+
 	public void save(List<UserMessage> messages) {
 		for (UserMessage msg : messages) {
-			save (msg);
+			save(msg);
 		}
 	}
 
-	
 	public void save(UserMessage userMessage) {
 		mongoTemplate.save(userMessage);
 	}
-
 
 }

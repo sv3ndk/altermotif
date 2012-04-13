@@ -1,22 +1,8 @@
 #{extends 'masterTemplate.html' /}
 
-#{set 'moreStyles'}
-    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/homepage.css'}" />
-#{/set}
-
-
 #{set 'moreScripts'}
-    <script src="@{'/public/javascripts/profile/profileCv.js'}" type="text/javascript"
-    	charset="${_response_encoding}"></script>
-    	
-    <script type="text/javascript">
-		$(document).ready(function() {
-			init();
-		})
-	</script>
+    <script src="@{'/public/javascripts/dab/profile/profileCv.js'}" type="text/javascript"  charset="${_response_encoding}"></script>
 #{/set}
-
-
 
 <div class="pageContainer">
 

@@ -23,7 +23,7 @@ import com.svend.dab.eda.events.messages.MessageWrittenEvent;
  * 
  */
 @Component
-public class DabMessagesService implements IUserMessagesServices, Serializable {
+public class UserMessagesService implements IUserMessagesServices, Serializable {
 
 	private static final long serialVersionUID = -8226701664350200145L;
 
@@ -34,7 +34,7 @@ public class DabMessagesService implements IUserMessagesServices, Serializable {
 	@Autowired
 	private IUserMessageDao userMessageDao;
 
-	private static Logger logger = Logger.getLogger(DabMessagesService.class.getName());
+	private static Logger logger = Logger.getLogger(UserMessagesService.class.getName());
 	
 	@Autowired
 	private EventEmitter eventEmitter;
@@ -76,7 +76,7 @@ public class DabMessagesService implements IUserMessagesServices, Serializable {
 
 
 	public List<UserMessage> getWrittenMessages(String fromUserName, int pageNumber) {
-		List<UserMessage> response =   userMessageDao.findAllUserMessageByFromUserUserNameAndDeletedByEmitter(fromUserName, pageNumber, config.getInboxOutboxPageSize());
+		List<UserMessage> response = userMessageDao.findAllUserMessageByFromUserUserNameAndDeletedByEmitter(fromUserName, pageNumber, config.getInboxOutboxPageSize());
 		for (UserMessage message : response) {
 			message.prepareLinkToProfiles();
 		}
@@ -84,7 +84,11 @@ public class DabMessagesService implements IUserMessagesServices, Serializable {
 	}
 	
 	public List<UserMessage> getDeletedMessages(String username, int pageNumber) {
-		return userMessageDao.findDeletedMessages(username, pageNumber, config.getInboxOutboxPageSize());
+		List<UserMessage> response =  userMessageDao.findDeletedMessages(username, pageNumber, config.getInboxOutboxPageSize());
+		for (UserMessage message : response) {
+			message.prepareLinkToProfiles();
+		}
+		return response;
 	}
 	
 	public List<UserMessage> getUnreadReceivedMessages(String username) {
@@ -98,8 +102,6 @@ public class DabMessagesService implements IUserMessagesServices, Serializable {
 	public Long getNumberOfUnreadMessages(String username) {
 		return userMessageDao.countNumberOfUnreadMessages(username);
 	}
-	
-	
 	
 	public void markMessagesAsDeletedByRecipient(Collection<String> messageIds, String recipientId) {
 		if (!Strings.isNullOrEmpty(recipientId) && CollectionUtils.isNotEmpty(messageIds)) {
@@ -115,7 +117,7 @@ public class DabMessagesService implements IUserMessagesServices, Serializable {
 	}
 
 	
-	public void undeleteMessages(List<String> undeletedMessagesIds, String username) {
+	public void undeleteMessages(Collection<String> undeletedMessagesIds, String username) {
 		if (undeletedMessagesIds != null && undeletedMessagesIds.size() > 0 && username != null) {
 			
 			List<UserMessage> foundMessages = userMessageDao.retrieveUserMessageById(undeletedMessagesIds);

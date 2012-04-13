@@ -1,7 +1,6 @@
 #{extends 'masterTemplate.html' /}
 
 #{set 'moreStyles'}
-
 <style>
 	.ui-autocomplete {
 		max-height: 175px;
@@ -18,20 +17,17 @@
 		height: 175px;
 	}
 </style>
-
-    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/homepage.css'}" />
 #{/set}
 
 
 #{set 'moreScripts'}
 
     <script src="@{'/public/javascripts/dabGeocoder.js'}" type="text/javascript" charset="${_response_encoding}"></script>
-    <script src="@{'/public/javascripts/profile/profileEdit.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+    <script src="@{'/public/javascripts/dab/profile/profileEdit.js'}" type="text/javascript" charset="${_response_encoding}"></script>
     	
     <script type="text/javascript">
 		$(document).ready(function() {
-			init(
-					"&{'warningUnsavedChangesText'}");
+			init("&{'warningUnsavedChangesText'}");
 		});
 	</script>
 #{/set}

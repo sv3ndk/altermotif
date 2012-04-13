@@ -27,8 +27,8 @@ public class MessageNewHelper {
 	public void caterScopeForReply(String userId, RenderArgs renderArgs, Flash flash, String messageId) {
 		
 		UserMessage message = BeanProvider.getMessagesService().getMessageById(messageId);
-		// security meseare: makes sure nobody tries to anwser to a message he did not receive...
-		if ( message != null && userId.equals(message.getToUser().getUserName())) {
+		// security meseare: makes sure nobody tries to anwser to a message he did not receive or send (we can reply to "sent" messages in the "deleted messages" page)
+		if ( message != null && (userId.equals(message.getFromUser().getUserName()) || userId.equals(message.getToUser().getUserName()))) {
 			flash.put(FLASH_FORM_MESSAGE_TO,message.getFromUser().getUserName());
 			flash.put(FLASH_FORM_SUBJECT,"RE: " + message.getSubject());
 			flash.put(FLASH_FORM_CONTENT, buildMessageRepliedContent(userId, message));

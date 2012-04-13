@@ -47,7 +47,7 @@ public interface IUserMessagesServices {
 
 	public void markMessagesAsDeletedByEmitter(Set<String> ids, String emitterId);
 
-	public void undeleteMessages(List<String> undeletedMessages, String username);
+	public void undeleteMessages(Collection<String> undeletedMessages, String username);
 
 	public UserMessage getMessageById(String messageId);
 

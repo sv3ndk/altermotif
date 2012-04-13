@@ -5,17 +5,14 @@
 #{/set}
 
 #{set 'moreScripts'}
-    <script src="@{'/public/javascripts/messages/messagesCommon.js'}" type="text/javascript" charset="${_response_encoding}"></script>
-    <script src="@{'/public/javascripts/messages/messagesOutbox.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+    <script src="@{'/public/javascripts/dab/messages/messagesList.js'}" type="text/javascript" charset="${_response_encoding}"></script>
     	
     <script type="text/javascript">
 	   	var currentPage = 0;
-	   	
 	   	var loadOnePageAction 		= #{jsAction @messages.MessagesOutbox.loadOutboxMessages(':pageNumber') /};
 	   	var deleteMessageAction 	= #{jsAction @messages.MessagesOutbox.doDeleteMessage(':messageIds') /};
 	</script>
 #{/set}
-
 
 
 <div id="messagesContainer" class="messagesMainContainer">
@@ -37,16 +34,16 @@
 				<tbody data-bind="foreach: messages">
 					<tr class="inboxRowTr">
 						<td class="inboxOutboxDeleteCheckbox"><input type="checkbox" class="msgCb"/></td>
-						<td data-bind="css: { inboxRow: isRead() , 'inboxRowUnread': !isRead()}">
+						<td class="inboxRow">
 							<a class="dabLink" data-bind="visible: toUser().isProfileActive, text: toUser().userName, attr: {href: toUser().linkToProfile}"></a>
 							<span class="dabLinkDisabled" data-bind="visible: !toUser().isProfileActive, text: toUser().userName"></span>
 						</td>
 						
-						<td  data-bind="css: { inboxRow: isRead() , 'inboxRowUnread': !isRead()}">
+						<td class="inboxRow">
 							<span data-bind="text: subject"></span>
 						</td>
 						
-						<td data-bind="css: { inboxRow: isRead() , 'inboxRowUnread': !isRead()}">
+						<td class="inboxRow">
 							<span data-bind="text: creationDate"></span>
 						</td>
 					</tr>
@@ -65,7 +62,7 @@
 		
 		
 		<table class="messageDetailTable">
-			<tbody>
+			<thead>
 				<tr class="messagesListTableHeader">
 					<td>&nbsp;</td>
 					<td>&{'profileMessagesTo'}:
@@ -78,12 +75,14 @@
 					<span id="forwardLink" style="margin-left: 10px" data-bind="css: {messagesReactionLinkEnabled: messageReactionEnabled(),  messagesReactionLinkDisabled: !messageReactionEnabled()}">&{'profileMessagesForward'}</span> 
 				</td>
 				</tr>
+			</thead>
 				
-			<tr>
-				<td colspan="5">
-					<textarea id="messageContent" data-bind="text: displayedMessage.content"></textarea>
-				</td>
-			</tr>
+			<tbody>
+				<tr>
+					<td colspan="5">
+						<textarea id="messageContent" data-bind="text: displayedMessage.content"></textarea>
+					</td>
+				</tr>
 			</tbody>
 		</table>
 	</div>

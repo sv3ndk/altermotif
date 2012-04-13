@@ -19,8 +19,7 @@
 	<context:annotation-config />
 	<context:component-scan base-package="com.svend" />
 
-	<bean id="validator"
-      class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
 
 
 	<!-- ================================ RabbitMQ config ========================== -->
@@ -56,15 +55,15 @@
 	
 
 	<!-- Request that queues, exchanges and bindings be automatically declared on the broker: 
-	-->
 	<rabbit:admin connection-factory="rabbitConnectionFactory" />
+	-->
 	
 
 	<!-- Declare the "messages" queue: 
-	-->
 	<rabbit:queue name="dab.events" durable="true" />
 
 	<rabbit:queue name="dab.events.retry" durable="true" />
+	-->
 
 
 	<task:annotation-driven scheduler="myScheduler" executor="myExecutor" />
@@ -107,51 +106,43 @@
 
 	<!--  cloud:mongo-db-factory id="mongoDbFactory" /-->
 
-<!-- 
-	<mongo:mongo id="mongo" host="localhost" port="27017" />
-	
-	<mongo:db-factory  dbname="dabdb" host="127.0.0.1" port="27017" username="" password="" />
+	<beans profile="devOnline, devLocal">
+		<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+			<constructor-arg >
+				<bean class="org.springframework.data.mongodb.core.SimpleMongoDbFactory" >
+					<constructor-arg name="mongo">
+						<bean class="com.mongodb.Mongo">
+							<constructor-arg name="host" value="localhost" />
+							<constructor-arg name="port" value="27017" />
+						</bean>
+					</constructor-arg>
+					<constructor-arg name="databaseName" value="dabdb" />
+				</bean>
+			</constructor-arg>
+		</bean>
+	</beans>
 
- -->
- 
- 	<!-- local deployment  
- 	-->
-	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
-		<constructor-arg >
-			<bean class="org.springframework.data.mongodb.core.SimpleMongoDbFactory" >
-				<constructor-arg name="mongo">
-					<bean class="com.mongodb.Mongo">
-						<constructor-arg name="host" value="localhost" />
-						<constructor-arg name="port" value="27017" />
-					</bean>
-				</constructor-arg>
-				<constructor-arg name="databaseName" value="dabdb" />
-			</bean>
-		</constructor-arg>
-	</bean>
-	
- 	<!-- CF deployment 
-	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
-		<constructor-arg >
-			<bean class="org.springframework.data.mongodb.core.SimpleMongoDbFactory" >
-				<constructor-arg name="mongo">
-					<bean class="com.mongodb.Mongo">
-						<constructor-arg name="host" value="172.30.48.72" />
-						<constructor-arg name="port" value="25063" />
-					</bean>
-				</constructor-arg>
-				<constructor-arg name="databaseName" value="db" />
-				<constructor-arg name="userCredentials">
-					<bean class="org.springframework.data.authentication.UserCredentials">
-						<constructor-arg name="username" value="bf6dcf65-6a85-4e23-ac49-0c59547ad78c"/>
-						<constructor-arg name="password" value="d450ffe8-2f8d-49ed-85b3-e507667569a2"/>
-					</bean>
-				</constructor-arg>
-				
-			</bean>
-		</constructor-arg>
-	</bean>
- 	 -->
+	<beans profile="prod" >
+		<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+			<constructor-arg >
+				<bean class="org.springframework.data.mongodb.core.SimpleMongoDbFactory" >
+					<constructor-arg name="mongo">
+						<bean class="com.mongodb.Mongo">
+							<constructor-arg name="host" value="172.30.48.72" />
+							<constructor-arg name="port" value="25063" />
+						</bean>
+					</constructor-arg>
+					<constructor-arg name="databaseName" value="db" />
+					<constructor-arg name="userCredentials">
+						<bean class="org.springframework.data.authentication.UserCredentials">
+							<constructor-arg name="username" value="bf6dcf65-6a85-4e23-ac49-0c59547ad78c"/>
+							<constructor-arg name="password" value="d450ffe8-2f8d-49ed-85b3-e507667569a2"/>
+						</bean>
+					</constructor-arg>
+				</bean>
+			</constructor-arg>
+		</bean>
+	</beans>	
 
  	<mongo:repositories base-package="com.svend.dab.dao.mongo" >
  	</mongo:repositories>

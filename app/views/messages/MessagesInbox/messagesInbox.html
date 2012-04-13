@@ -6,16 +6,13 @@
 
 
 #{set 'moreScripts'}
-    <script src="@{'/public/javascripts/messages/messagesCommon.js'}" type="text/javascript" charset="${_response_encoding}"></script>
-    <script src="@{'/public/javascripts/messages/messagesInbox.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+    <script src="@{'/public/javascripts/dab/messages/messagesList.js'}" type="text/javascript" charset="${_response_encoding}"></script>
     	
     <script type="text/javascript">
 	   	var loadOnePageAction 		= #{jsAction @messages.MessagesInbox.loadInboxMessages(':pageNumber') /};
 	   	var markAsReadAction 		= #{jsAction @messages.MessagesInbox.doMarkMessageAsRead(':messageId') /};
 	   	var deleteMessageAction 	= #{jsAction @messages.MessagesInbox.doDeleteMessage(':messageIds') /};
-	   	
 	   	var currentPage = ${pageNumber};
-		
 	</script>
 #{/set}
 
@@ -54,9 +51,7 @@
 				</tr>
 			</tbody>
 			
-			
 			<tr class="messagesListTableHeader" id="topMessageListLastRow">
-
 				<td colspan="2"><span id="deleteSelectedMessagesLink" data-bind="css: {messagesReactionLinkEnabled : isAtLeastOneMessageSelected(), messagesReactionLinkDisabled : !isAtLeastOneMessageSelected()}" >&{'profileMessagesDeleteSelected'}</span></td>
 				<td colspan="2" class="profileMessagesInboxBottomRight">
 					<span id="messagesPreviousLink"  data-bind="css: {messagesReactionLinkEnabled: previousPageExists(), messagesReactionLinkDisabled: !previousPageExists()}" >&{'profileMessagesPrevious'}</span>
@@ -96,12 +91,9 @@
 
 
 
-<div id="confirmDeleteMessages"
-	title="&{'confirmationPopupTitle'}">
-		&{'profileInboxMessagesConfirmDeletion'}
+<div id="confirmDeleteMessages" title="&{'confirmationPopupTitle'}">
+	&{'profileInboxMessagesConfirmDeletion'}
 </div>
-
-
 
 <div id="hiddenReplyToForm" class="hidden">
 	#{form @messages.MessagesInbox.doReplyTo() }
@@ -114,6 +106,3 @@
 		<input type="hidden" name="messageId" class="hiddenSubmit" />
 	#{/form}
 </div>
-
-
-

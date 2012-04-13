@@ -12,6 +12,9 @@ public class DabController extends Controller{
     	new SessionWrapper(session).putInArgsList(renderArgs);
     	renderArgs.put("selectedUserLanguageCode", getSessionWrapper().getSelectedLg());
     	
+   		renderArgs.put("dabStylesheetsPath", BeanProvider.getResourceLocator().getStylesheetPath());
+   		
+    	
     	if (getSessionWrapper().isLoggedIn()) {
     		renderArgs.put("numberOfUnreadReceivedMessages", BeanProvider.getMessagesService().getNumberOfUnreadMessages(getSessionWrapper().getLoggedInUserProfileId()));
     	}

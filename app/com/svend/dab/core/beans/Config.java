@@ -6,9 +6,11 @@ import java.util.List;
 import models.altermotif.projects.theme.SubTheme;
 import models.altermotif.projects.theme.Theme;
 
+import org.apache.commons.lang.NotImplementedException;
 import org.springframework.stereotype.Component;
 
 import play.i18n.Messages;
+import play.modules.spring.SpringPlugin;
 
 import controllers.BeanProvider;
 
@@ -165,6 +167,21 @@ public class Config {
 	// ------------------------------------------------------
 	// ------------------------------------------------------
 
+	public enum DEPLOYMENT_MODE {
+		devOnline, 
+		devLocal,
+		prod
+	}
+	
+	public DEPLOYMENT_MODE getDeploymentMode() {
+		return DEPLOYMENT_MODE.valueOf(SpringPlugin.applicationContext.getEnvironment().getActiveProfiles()[0]);
+	}
+	
+	
+	
+	///////////////////////
+	
+	
 	public List<Theme> getLocalizedThemes(String languageCode) {
 		List<Theme> localizedThemes = new LinkedList<Theme>();
 
@@ -262,5 +279,6 @@ public class Config {
 	public int getMaxNumberOfPhotosInGroup() {
 		return maxNumberOfPhotosInGroup;
 	}
+
 
 }

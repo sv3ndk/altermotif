@@ -3,7 +3,6 @@
 ///////////////////////////////////////
 // main db library
 
-
 var dabUtils =  {
 	
 	// associate a jquery datepicker to any element matching this jqSelector

@@ -2,14 +2,9 @@ $(document).ready(function() {
 	// set focus on the first input field
 	$("#username").focus();
 
-	$("#dateOfBirth").datepicker({
-		changeMonth : true,
-		changeYear : true,
-		dateFormat : "dd/mm/yy",
-		yearRange : '-130:+0',
-		showAnim : "blind"
-	});
-
+	// this is in dab.js
+	dabUtils.makeInputDatePicker("#dateOfBirth", '-130:+0');
+	
 });
 
 function initCaptcha(registerPageCaptchaTitle, hophop) {
