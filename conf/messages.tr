@@ -201,6 +201,7 @@ profileRemoveProfile=Profili Sil
 
 
 #profile screen: manage photos
+profilePhotosBackToProfile=***Back to profile
 profileMPDeletePhotoLink=Bu resmi sil
 confirmDeletePhoto=Bu resim silinsin mi?
 profileMPUploadPhoto=Karşıdan resim yükle (en fazla 5Mb)

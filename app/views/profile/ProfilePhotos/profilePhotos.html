@@ -15,11 +15,18 @@
 	</script>
 #{/set}
 
-#{photos.uploadPhotoThumbs photoAlbum:userProfile.getPhotoAlbum() /}
 
-#{photos.uploadPhotoMPToolbox uploadPhotoLinkActive:uploadPhotoLinkActive, setAsMainPhotoText:'profileMSetProfilePhoto', photoEditType:"profile"/}
-
-#{photos.centralPhotoContainer /}
+<div class="pageContainer">
+	<p>
+		<a href="@{profile.ProfileView.profileView( userProfile.username)}" class="dabLink" >&{'profilePhotosBackToProfile'}</a>
+	</p>
+	
+	#{photos.uploadPhotoThumbs photoAlbum:userProfile.getPhotoAlbum() /}
+	
+	#{photos.uploadPhotoMPToolbox uploadPhotoLinkActive:uploadPhotoLinkActive, setAsMainPhotoText:'profileMSetProfilePhoto', photoEditType:"profile"/}
+	
+	#{photos.centralPhotoContainer /}
+</div>
 
 *{ the following 3 forms are requried by photoedit.js}*
 <div id="hiddenUploadPhotoForm" style="display: none">

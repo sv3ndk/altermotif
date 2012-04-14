@@ -201,6 +201,7 @@ profileRemoveProfile=Verwijder profiel
 
 
 #profile screen: manage photos
+profilePhotosBackToProfile=***Back to profile
 profileMPDeletePhotoLink=Verwijder deze foto
 confirmDeletePhoto=Weet u zeker dat u deze foto van uw profiel wil verijderen?
 profileMPUploadPhoto=Een foto opladen (max 5Mb)

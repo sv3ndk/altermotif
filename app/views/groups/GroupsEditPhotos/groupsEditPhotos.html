@@ -17,11 +17,18 @@
 	</script>
 #{/set}
 
-#{photos.uploadPhotoThumbs photoAlbum:editedGroup.getPhotoAlbum() /}
+<div class="pageContainer">
+	<p>
+		<a href="@{groups.GroupsView.groupsView( editedGroup.id )}" class="dabLink" >&{'groupForumThreadBackToGroup'}</a>
+	</p>
 
-#{photos.uploadPhotoMPToolbox uploadPhotoLinkActive:uploadPhotoLinkActive, setAsMainPhotoText:"projectPhotosSetAsMainPhoto", photoEditType:"project" /}
+	#{photos.uploadPhotoThumbs photoAlbum:editedGroup.getPhotoAlbum() /}
+	
+	#{photos.uploadPhotoMPToolbox uploadPhotoLinkActive:uploadPhotoLinkActive, setAsMainPhotoText:"projectPhotosSetAsMainPhoto", photoEditType:"project" /}
+	
+	#{photos.centralPhotoContainer /}
 
-#{photos.centralPhotoContainer /}
+</div>
 
 <div id="hiddenUploadPhotoForm" style="display: none">
 	<form method="post"	enctype="multipart/form-data" action="@{groups.GroupsEditPhotos.doUploadPhoto()}">

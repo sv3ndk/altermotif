@@ -197,6 +197,7 @@ profileCancelChanges=Annuler les modifications
 profileRemoveProfile=Désactiver le profil
 
 #profile screen: manage photos
+profilePhotosBackToProfile=***Back to profile
 profileMPDeletePhotoLink=Effacer cette photo
 confirmDeletePhoto=Êtes-vous certain de vouloir effacer cette photo de votre profile?
 profileMPUploadPhoto=Télécharger une photo (max 5Mb)

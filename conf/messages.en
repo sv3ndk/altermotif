@@ -201,6 +201,7 @@ profileCancelChanges=Cancel changes
 profileRemoveProfile=Deactivate profile
 
 #profile screen: manage photos
+profilePhotosBackToProfile=Back to profile
 profileMPDeletePhotoLink=Delete this photo
 confirmDeletePhoto=Are you sure you want to delete this photo from your profile?
 profileMPUploadPhoto=Upload a photo (max 5Mb)
@@ -309,6 +310,8 @@ groupsViewForum=Forum
 groupsViewForumAddThread=Add thread
 groupsViewForumAddThreadPopupPublicThread=Public
 groupForumThreadBackToGroup=Back to group page
+
+
 
 groupSearchResultTitle=Search results
 groupSearchResultBackToSearchPage=Back to group search page

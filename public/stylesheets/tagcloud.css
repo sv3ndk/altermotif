@@ -1,0 +1,55 @@
+.tagCloud ul{
+	/*width:225px;*/
+	margin:0;
+	padding:20px 20px;
+	text-align:center;
+	}
+	
+.tagCloud li{
+	margin:0;
+	padding:0;
+	list-style:none;
+	display:inline;
+	}
+	
+.tagCloud li a{
+	text-decoration:none;
+	color:#666;
+	padding:0 2px;	
+	}
+	
+.tagCloud li a:hover{	
+	color:#ffeb00;
+	}		
+
+.tag4{font-size:100%;}
+.tag3{font-size:120%;}
+.tag2{font-size:140%;}
+.tag1{font-size:160%;}
+.tag0{font-size:180%;}
+
+/* alternative layout */
+
+.tagCloud .alt{
+	text-align:left;
+	padding:0;
+	background:none;
+	}
+	
+.tagCloud .alt li{
+	padding:2px 10px;
+	background:#efefef;
+	display:block;
+	}
+	
+.tagCloud .alt .tag0, 
+.tagCloud .alt .tag1, 
+.tagCloud .alt .tag2, 
+.tagCloud .alt .tag3, 
+.tagCloud .alt .tag4{font-size:100%;}
+.tagCloud .alt .tag4{background:#7cc0f4;}
+.tagCloud .alt .tag3{background:#67abe0;}
+.tagCloud .alt .tag2{background:#4d92c7;}
+.tagCloud .alt .tag1{background:#3277ad;}
+.tagCloud .alt .tag0{background:#266ca2;}
+	

@@ -5,3 +5,4 @@ tmp/
 *.jar
 modules/
 /logs
+/maquette

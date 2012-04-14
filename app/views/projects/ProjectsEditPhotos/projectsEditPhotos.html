@@ -17,12 +17,18 @@
 	</script>
 #{/set}
 
-#{photos.uploadPhotoThumbs photoAlbum:editedProject.getPhotoAlbum() /}
+<div class="pageContainer">
+	<p>
+		<a href="@{projects.ProjectsView.projectsView( editedProject.id )}" class="dabLink" >&{'projectForumThreadBackToProject'}</a>
+	</p>
 
-#{photos.uploadPhotoMPToolbox uploadPhotoLinkActive:uploadPhotoLinkActive, setAsMainPhotoText:"projectPhotosSetAsMainPhoto", photoEditType:"project" /}
+	#{photos.uploadPhotoThumbs photoAlbum:editedProject.getPhotoAlbum() /}
+	
+	#{photos.uploadPhotoMPToolbox uploadPhotoLinkActive:uploadPhotoLinkActive, setAsMainPhotoText:"projectPhotosSetAsMainPhoto", photoEditType:"project" /}
+	
+	#{photos.centralPhotoContainer /}
 
-#{photos.centralPhotoContainer /}
-
+</div>
 <div id="hiddenUploadPhotoForm" style="display: none">
 	<form method="post"	enctype="multipart/form-data" action="@{projects.ProjectsEditPhotos.doUploadPhoto()}">
 		<input type="file" id="theFile" name="theFile"  />
