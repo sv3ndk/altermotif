@@ -53,7 +53,10 @@ public class Utils {
 
 	private enum filenames {
 
-		en("languagenames_en_iso8859.properties"), fr("languagenames_fr_iso8859.properties"), nl("languagenames_nl_iso8859.properties");
+		en("languagenames_en_iso8859.properties"), 
+		fr("languagenames_fr_iso8859.properties"), 
+		tr("languagenames_tr_iso8859.properties"), 
+		nl("languagenames_nl_iso8859.properties");
 
 		private filenames(String fn) {
 			this.filename = fn;
@@ -77,6 +80,8 @@ public class Utils {
 
 	public static List<MappedValue> getAllPossibleLanguageNames(String inLanguage) {
 
+		// TODO: optmization: cache this in memory, do not load it every time!
+		
 		if (allPossibleLanguageNames == null) {
 			synchronized (Utils.class) {
 				if (allPossibleLanguageNames == null) {
