@@ -36,10 +36,9 @@ public class ProjectSummary {
 	}
 
 	public ProjectSummary(Project project) {
-		super();
 		this.projectId = project.getId();
 		this.name = project.getPdata().getName();
-		this.mainPhoto = project.getPhotoAlbum().getMainPhoto();
+		this.mainPhoto = project.getPhotoAlbum().getMainPhoto().buildCopyWithThumbOnly();
 		this.status = project.getStatus();
 		this.creationDate = project.getPdata().getCreationDate();
 	}

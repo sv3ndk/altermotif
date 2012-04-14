@@ -24,7 +24,7 @@ public class GroupSummary {
 	public GroupSummary(ProjectGroup group) {
 		this.groupId = group.getId();
 		this.name = group.getName();
-		this.mainPhoto = group.getPhotoAlbum().getMainPhoto();
+		this.mainPhoto = group.getPhotoAlbum().getMainPhoto().buildCopyWithThumbOnly();
 	}
 
 	////////////////////
@@ -46,8 +46,6 @@ public class GroupSummary {
 			return mainPhoto.getThumbAddress();
 		}
 	}
-
-	
 
 	public String getGroupId() {
 		return groupId;

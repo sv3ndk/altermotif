@@ -1,6 +1,7 @@
 package com.svend.dab.core.groups;
 
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import web.utils.Utils;
 
 import com.google.common.base.Strings;
+import com.svend.dab.core.beans.Config;
 import com.svend.dab.core.beans.groups.GroupOverview;
 import com.svend.dab.core.beans.groups.IndexedGroup;
 import com.svend.dab.core.beans.groups.ProjectGroup;
@@ -36,6 +38,9 @@ public class QuickAndDirtyGroupFullTextSearch implements IGroupFtsService {
 
 	@Autowired
 	private IIndexedGroupDao indexedGroupDao;
+
+	@Autowired
+	private Config config;
 	
 	public void updateGroupIndex(String groupId, boolean immediate) {
 
@@ -85,8 +90,13 @@ public class QuickAndDirtyGroupFullTextSearch implements IGroupFtsService {
 
 		List<GroupOverview> result = new LinkedList<GroupOverview>();
 		
+		Date expirationdate = new Date();
+		expirationdate.setTime(expirationdate.getTime() + config.getPhotoExpirationDelayInMillis());
+		
 		for (ProjectGroup group : groups) {
-			result.add(new GroupOverview(group));
+			GroupOverview overview = new GroupOverview(group);
+			overview.generatePhotoLinks(expirationdate);
+			result.add(overview);
 		}
 		
 		return result;

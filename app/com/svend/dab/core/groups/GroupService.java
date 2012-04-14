@@ -13,14 +13,12 @@ import web.utils.Utils;
 import com.google.common.base.Strings;
 import com.svend.dab.core.beans.Config;
 import com.svend.dab.core.beans.groups.GroupParticipant.ROLE;
-import com.svend.dab.core.beans.groups.GroupTagCount;
 import com.svend.dab.core.beans.groups.ProjectGroup;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.beans.projects.ProjectSummary;
 import com.svend.dab.core.beans.projects.RankedTag;
-import com.svend.dab.core.beans.projects.TagCount;
 import com.svend.dab.core.dao.IGroupDao;
 import com.svend.dab.core.dao.ITagCountDao;
 import com.svend.dab.core.dao.IUserProfileDao;
@@ -80,12 +78,9 @@ public class GroupService implements IGroupService {
 		ProjectGroup group = groupDao.retrieveGroupById(groupId);
 
 		if (group != null && preparePresignedLinks) {
-
 			Date expirationdate = new Date();
 			expirationdate.setTime(expirationdate.getTime() + config.getPhotoExpirationDelayInMillis());
 			group.generatePhotoLinks(expirationdate);
-
-			// TODO: prepare presigned URL here (when photos will be there...)
 		}
 
 		return group;

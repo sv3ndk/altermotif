@@ -49,7 +49,7 @@ public class UserSummary implements Serializable {
 		if (personalData != null) {
 			this.location = personalData.getLocation();
 		}
-		this.mainPhoto = mainPhoto;
+		this.mainPhoto = mainPhoto.buildCopyWithThumbOnly();
 		this.isProfileActive = active;
 	}
 	

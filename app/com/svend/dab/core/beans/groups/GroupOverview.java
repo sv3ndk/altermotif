@@ -29,6 +29,7 @@ public class GroupOverview {
 		this.name = group.getName();
 		this.description = group.getDescription();
 		this.creationDate = group.getCreationDate();
+		this.mainThumb = group.getPhotoAlbum().getMainPhoto();
 		
 		if (group.getParticipants() == null) {
 			numberOfUserMembers = 0;
@@ -41,10 +42,27 @@ public class GroupOverview {
 		} else {
 			numberOfProjectMembers = group.getProjectParticipants().size();
 		}
+		
+		
 	}
 	
 	public boolean hasAThumbPhoto() {
 		return mainThumb != null && !mainThumb.isPhotoEmpty();
+	}
+
+	
+	public void generatePhotoLinks(Date expirationdate) {
+		if (mainThumb != null) {
+			mainThumb.generatePresignedLinks(expirationdate, false, true);
+		}
+	}
+	
+	public String getMainPhotoThumbLink() {
+		if (mainThumb == null) {
+			return "";
+		} else {
+			return mainThumb.getThumbAddress();
+		}
 	}
 
 	
@@ -106,5 +124,6 @@ public class GroupOverview {
 	public void setMainThumb(Photo mainThumb) {
 		this.mainThumb = mainThumb;
 	}
+
 
 }

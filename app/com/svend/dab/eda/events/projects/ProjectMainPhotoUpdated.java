@@ -13,7 +13,9 @@ public class ProjectMainPhotoUpdated extends Event {
 
 	public ProjectMainPhotoUpdated(Photo mainPhoto, String projectId) {
 		super();
-		this.mainPhoto = mainPhoto;
+		if (mainPhoto != null) {
+			this.mainPhoto = mainPhoto.buildCopyWithThumbOnly();
+		}
 		this.projectId = projectId;
 	}
 

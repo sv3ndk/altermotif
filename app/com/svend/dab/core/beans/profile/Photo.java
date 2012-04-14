@@ -125,6 +125,15 @@ public class Photo implements Serializable {
 		return thumbLink.getAddress();
 	}
 
+	/**
+	 * @return a copy of this {@link Photo} but without the "normal" photo
+	 * This is useful for optimization when replicating photos in "summaries": there is no need to have the main photo in that case
+	 *  
+	 */
+	public Photo buildCopyWithThumbOnly() {
+		return new Photo(caption, null, thumbLink);
+	}
+
 	// ----------------------------
 	// ----------------------------
 
