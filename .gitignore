@@ -4,3 +4,4 @@ tmp/
 *.class
 *.jar
 modules/
+/logs

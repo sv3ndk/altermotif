@@ -7,7 +7,7 @@ var dabProjectSearchLib =  {
 	
 	ProjectSearchRoot: function() {
 		this.modeSwitcher = new dualModeSwitcherLib.ModeSwitchController("#projectSearchSwitchToSimpleModeLink", "#projectSearchSwitchToAdvancedModeLink", 
-				"#projectSearch_modeSimple", "#projectSearch_modeAdvanced");
+				"#projectSearch_modeSimple", "#projectSearch_modeAdvanced", "", "#projectAdvancedSearchInputText");
 		
 		var searchResultBaseUrl = $("#hiddenLinkToEmptyProjectSearchResultPage").attr("href"); 
 		this.simpleSearchController = new dabSearchLib.SimpleSearchController(searchResultBaseUrl);

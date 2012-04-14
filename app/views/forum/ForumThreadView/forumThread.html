@@ -31,22 +31,29 @@
 
 <div id="projectViewContainer" class="pageContainer">
 
+	
 	#{if project != null}
-		<p class="pageTitle">${project?.pdata?.name} <a class="dabLink" href="@{projects.ProjectsView.projectsView(project.id)}">&{'projectForumThreadBackToProject'}</a></p>
+		<p class="pageTitle">
+			<a class="dabLink" href="@{projects.ProjectsView.projectsView(project.id)}">&{'projectForumThreadBackToProject'}</a>
+		</p>
+		<p class="forumSubTitle2">${project?.pdata?.name} </p>
 	#{/if}
+	
 	#{if group != null}
-		<p class="pageTitle">${group?.name} <a class="dabLink" href="@{groups.GroupsView.groupsView(group.id)}">&{'groupForumThreadBackToGroup'}</a></p>
+		<p class="pageTitle">
+			<a class="dabLink" href="@{groups.GroupsView.groupsView(group.id)}">&{'groupForumThreadBackToGroup'}</a>
+		</p>
+		<p class="forumSubTitle2">${group?.name} </p>
 	#{/if}
 	
 	<p class="forumSubTitle">&{'projectForumThreadThread'}: ${thread.title} #{if !thread.isThreadPublic} &{'projectForumThreadPrivate'}#{/if}</p>
-	
 	
 	<div id="forumThreadContainer">
 	
 		#{if forumThreadVisibility.postNewThreadLinkVisible}
 			<div id="forumThreadNewPost">
-				<input id="forumThreadPostButton" type="button" value="&{'forumThreadPostButtonText'}"></input>
 				<textarea id="forumThreadPostText" rows="6" ></textarea>
+				<input id="forumThreadPostButton" type="button" value="&{'forumThreadPostButtonText'}"></input>
 			</div>
 		#{/if}
 		

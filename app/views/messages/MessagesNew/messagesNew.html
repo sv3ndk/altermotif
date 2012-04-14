@@ -1,7 +1,6 @@
 #{extends 'masterTemplate.html' /}
 
 #{set 'moreStyles'}
-    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/messages.css'}" />
 #{/set}
 
 #{set 'moreScripts'}
@@ -28,12 +27,18 @@
 	</div>
 
 	#{form @messages.MessagesNew.doSendMessage() }
-		<div id="messagesNewFormHeader">
-			<table>
+	
+		<div>
+			<input type="submit" value="&{'profileMessagesSend'}"/>
+			<br />
+			<br />
+			<table id="messagesNewFormHeader">
 				<tbody>
 					<tr>
 						<td>
-							&{'profileMessagesTo'}: 
+							<strong>&{'profileMessagesTo'}</strong>
+						</td>
+						<td>
 							<input id="messagesTo" size="20" name="writtenMessage.toUserName" value="${flash['writtenMessage.toUserName']}" data-bind="value: messageRecipient" />
 							<span id="choooseFromMyContactsLink" class="dabLinkLSpaced" data-bind="css:  {dabLinkLSpaced : isChooseLinkActive, dabLinkLSpacedDisabled : !isChooseLinkActive()}">&{'profileMessagesChooseFromMyContacts'}</span>
 						</td>
@@ -41,17 +46,13 @@
 					
 					<tr>
 						<td>
-							&{'profileMessagesSubject'}: 
+							<strong>&{'profileMessagesSubject'}</strong>
+						</td>
+						<td > 
 							<input  size="50"  name="writtenMessage.subject" value="${flash['writtenMessage.subject']}"  />
 						</td>
 					</tr>
 
-					<tr>
-						<td>
-							<input type="submit" value="&{'profileMessagesSend'}"/>
-						</td>
-					</tr>
-					
 				</tbody>
 			</table>
 		</div>

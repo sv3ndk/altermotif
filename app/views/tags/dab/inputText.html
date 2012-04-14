@@ -1,10 +1,11 @@
+
 <tr>
 	<td class="formLeftColumn">
-		${_label}
+		<label class="formlabel">${_label}
 		#{if _required}
 			*
 		#{/if}
-		:
+		</label>
 	</td>
 	
 	<td class="formMidleColumn">
@@ -18,7 +19,7 @@
 		#{/if}
 		
 		#{if _rows != null}
-			<textarea name="${_inputName}" rows="${_rows}" cols="${_cols}">${_inputValue == null ? flash[_inputName] : _inputValue}</textarea>
+			<textarea name="${_inputName}" rows="${_rows}" cols="${_cols}" id="${_inputId}">${_inputValue == null ? flash[_inputName] : _inputValue}</textarea>
 		#{/if}
 		
 		#{if _explanation != null}

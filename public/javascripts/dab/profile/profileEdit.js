@@ -25,6 +25,9 @@ function init(warningUnsavedChangesText) {
 	initCityEdition();
 	
 	initSelectGender();
+	
+	$("#firstName").focus();
+
 };
 
 function initCityEdition() {

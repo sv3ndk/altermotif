@@ -1,59 +1,9 @@
 <div id="profileMPThumbContainer">
-		
-	*{ row 1 }*
-	<div class="profileMPThumbContainer">
-		#{list items:_photoAlbum.getCompletList(), as: 'onePhoto'}
-	
-			#{if onePhoto_index < 11}
-				#{if !onePhoto.isPhotoEmpty}
-				
-					#{if onePhoto_index == (_photoAlbum.mainPhotoIndex + 1 )}
-						<img src="${onePhoto.thumbAddress}" alt="${onePhoto.caption}" class="mainPhoto"></img>
-					#{/if}
-					#{else }
-						<img src="${onePhoto.thumbAddress}" alt="${onePhoto.caption}" ></img>
-					#{/else}
-					
-					<span style="display: none">${onePhoto.normalPhotoAddress}</span>
-				#{/if}
-
-				#{if onePhoto.isPhotoEmpty}
-					<img src="@{'/public/images/empty.png'}" class="profileEmptyImage"></img>
-				#{/if}
-
-				<span style="display: none">
-					${onePhoto.caption}
-				</span>
-			#{/if}
-			
-		#{/list }
+	<div id="profileMPThumbContainer">
+		#{photos.photoRow photoAlbum:_photoAlbum, startIndex:0, endIndex:3 /}
+		#{photos.photoRow photoAlbum:_photoAlbum, startIndex:3, endIndex:6 /}
+		#{photos.photoRow photoAlbum:_photoAlbum, startIndex:6, endIndex:9 /}
+		#{photos.photoRow photoAlbum:_photoAlbum, startIndex:9, endIndex:12 /}
+		#{photos.photoRow photoAlbum:_photoAlbum, startIndex:12, endIndex:15 /}
 	</div>
-		
-
-	*{ row 2 }*
-	<div class="profileMPThumbContainer">
-		#{list items:_photoAlbum.getCompletList(), as: 'onePhoto'}
-	
-			#{if onePhoto_index > 10}
-				#{if !onePhoto.isPhotoEmpty}
-					<img src="${onePhoto.thumbAddress}" alt="${onePhoto.caption}"></img>
-					
-					<!-- hidden address of the real photo -->
-					<span style="display: none">
-						${onePhoto.normalPhotoAddress}
-					</span>
-				#{/if}
-
-				#{if onePhoto.isPhotoEmpty}
-					<img src="@{'/public/images/empty.png'}" class="profileEmptyImage"></img>
-				#{/if}
-
-				<span style="display: none">
-					${onePhoto.caption}
-				</span>
-			#{/if}
-			
-		#{/list }
-	</div>
-	
 </div>

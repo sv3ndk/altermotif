@@ -2,6 +2,7 @@
 
 #{set 'moreStyles'}
     <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/search.css'}" />
+    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/tagcloud.css'}" />
 #{/set} 
 
 #{set 'moreScripts'}
@@ -20,13 +21,30 @@
 
 	<div id="groupSearch_modeSimple">
 
+		<p><span class="fs15">&{'projectSearchSimpleModeExplanation'}</span></p>
+
 		<a id="hiddenLinkToEmptyGroupSearchResultPage" href="@{groups.GroupsSearchResult.groupsSearchResult}" class="hidden" ></a>
-		#{dab.simpleSearch tagList:popularTags /}	
+
+		<div id="categorieListOfDropboxes" data-bind="foreach: allSingleThemeSubTheme">
+			<div>
+				<span data-bind="text: label"></span> <br />
+				<select data-bind="options: subThemes, optionsCaption: '--', optionsValue: 'jsonId', optionsText: 'subThemeLabel' "> </select>
+			</div>
+		</div>
 	
 		<p>
 			<span>&{'projectSearchSimpleModeExplanation_GotoAdvancedMode'} </span>
 			<span id="groupSearchSwitchToAdvancedModeLink" class="dabLink">&{'projectSearchSimpleModeExplanation_GotoAdvancedMode_Link'}</span>
 		</p>
+		
+		<div id="tagCloudContainer" class="tagCloud" >
+			<ul>
+				#{list items:popularTags, as:'oneTag'}
+					<li class="tag${oneTag.rank}"><a href="#">${oneTag.tag}</a></li> 
+				#{/list}
+			</ul>
+		</div>
+		
 	</div>
 	
 	<div id="groupSearch_modeAdvanced" class="hidden">
@@ -39,12 +57,12 @@
 			<table>
 				<tbody>
 					<tr id="searchLine">
-						<td class="formlabel">&{'groupSearchKeyWords'}:</td>
-						<td><input type="text" size="60" name="r.term"></td>
+						<td class="formlabel"><label>&{'groupSearchKeyWords'}</label></td>
+						<td><input id="groupAvancedSearchInputText" type="text" size="60" name="r.term"></td>
 						<td><input type="submit" value="GO"   /></td>
 					</tr>
 					<tr>
-						<td class="formlabel">&{'groupSearchCategories'}:</td>
+						<td class="formlabel"><label>&{'groupSearchCategories'}</label></td>
 						<td>
 							<div id="inputSearchGroupThemes">
 								#{dab.inputMultiThemes  addThemeLinkLabel:messages.get('projectNewAddOneTheme')/}

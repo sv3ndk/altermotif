@@ -11,9 +11,10 @@
     <script src="@{'/public/javascripts/projects/projectsEditTasks.js'}" type="text/javascript" charset="${_response_encoding}"></script>
     <script src="@{'/public/javascripts/projects/projectsEditAssets.js'}" type="text/javascript" charset="${_response_encoding}"></script>
     <script src="@{'/public/javascripts/projects/projectsEdit.js'}" type="text/javascript" charset="${_response_encoding}"></script>
-    	
+    
     <script type="text/javascript">
 		var allThemes = ${allThemesJson.raw()};
+		var firstEditedFieldId = "editedProjectName";
 	</script>
 #{/set}
 
@@ -29,6 +30,7 @@
 					label:messages.get('projectNewProjectName'),
 					required: true,
 					inputName: "editedProject.pdata.name",
+					inputId: "editedProjectName",
 					cols: 35
 				/}
 

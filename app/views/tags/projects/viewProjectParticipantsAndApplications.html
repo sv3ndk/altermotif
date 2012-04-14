@@ -1,6 +1,6 @@
 <div>
 	<div id="projectParticipants">
-		<span id="numberOfParticipantSpan" class="toggleLink dabLink">&{'viewProjectParticipants'} (${_numberOfConfirmedParticipants}) </span>
+		<span id="numberOfParticipantSpan" class="toggleLink">&{'viewProjectParticipants'} (${_numberOfConfirmedParticipants}) </span>
 		<div class="toggleContainer">
 			#{list items:_confirmedParticipants, as:'participant'}
 				#{projects.participant participant:participant, projectVisibility:_projectVisibility /} 
@@ -10,7 +10,7 @@
 	
 	#{if _projectVisibility.isVisibleApplicationBox()}
 	<div id="projectApplications">
-		<span id="numberOfApplicantsSpan" class="toggleLink dabLink">&{'viewProjectApplications'} (${_numberOfApplications}) </span>
+		<span id="numberOfApplicantsSpan" class="toggleLink">&{'viewProjectApplications'} (${_numberOfApplications}) </span>
 		<div class="toggleContainer">
 			#{list items:_unconfirmedActiveParticipants, as:'application'}
 				#{projects.application application:application, projectVisibility:_projectVisibility /} 
@@ -20,7 +20,7 @@
 	#{/if}
 	
 	<div id="projectGroupParticipations">
-		<span  class="toggleLink dabLink">&{'viewProjectGroups'} (${_numberOfGroups}) </span>
+		<span  class="toggleLink">&{'viewProjectGroups'} (${_numberOfGroups}) </span>
 		<div class="toggleContainer">
 			#{list items:_groups, as:'group'}
 				#{groups.groupSummary groupSummary:group, projectVisibility:_projectVisibility /} 

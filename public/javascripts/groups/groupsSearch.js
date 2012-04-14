@@ -6,7 +6,7 @@ var groupsSearchLib = {
 
 	GroupsSearchController : function() {
 		this.modeSwitcher = new dualModeSwitcherLib.ModeSwitchController("#groupSearchSwitchToSimpleModeLink", "#groupSearchSwitchToAdvancedModeLink", 
-				"#groupSearch_modeSimple", "#groupSearch_modeAdvanced");
+				"#groupSearch_modeSimple", "#groupSearch_modeAdvanced", "", "#groupAvancedSearchInputText");
 		
 		var searchResultBaseUrl = $("#hiddenLinkToEmptyGroupSearchResultPage").attr("href"); 
 		this.simpleSearchController = new dabSearchLib.SimpleSearchController(searchResultBaseUrl);

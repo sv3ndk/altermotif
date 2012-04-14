@@ -20,6 +20,7 @@
 	required: true,
 	inputName: "editedProject.pdata.description",
 	inputValue: _editedProject?.pdata?.description,
+	inputId: "editedProjectDescription",
 	visibilityName: "editedProject.pdata.descriptionVisibility",
 	visibilityValue: _editedProject?.pdata?.descriptionVisibility,
 	cols: 65,
@@ -83,7 +84,7 @@
 
 <tr>
 	<td class="formLeftColumn">
-		&{'projectNewRequiredTasks'}:
+		<label class="formlabel">&{'projectNewRequiredTasks'}</label>
 	</td>
 	<td colspan="2">
 		#{if _projectEditVisibility.editTasksVisible}
@@ -99,7 +100,7 @@
 
 <tr>
 	<td class="formLeftColumn">
-		&{'projectNewRequiredAssets'}:
+		<label class="formlabel">&{'projectNewRequiredAssets'}</label>
 	</td>
 	<td colspan="2">
 		#{if _projectEditVisibility.editAssetsVisible}
@@ -125,7 +126,7 @@
 /}
 
 <tr>
-	<td class="formlabel"><label>&{'projectNewUsefulLinks'}: </label></td>
+	<td ><label class="formlabel">&{'projectNewUsefulLinks'}: </label></td>
 	<td colspan="2">
 		<div>
 			<ul id="linksGroup">

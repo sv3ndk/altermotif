@@ -1,6 +1,13 @@
-#Sat Apr 14 14:44:48 GMT+05:30 2012
+#Sat Apr 14 19:33:44 GMT+05:30 2012
 eclipse.preferences.version=1
+encoding//app/views/Application/privacyStatement_en.html=UTF-8
+encoding//app/views/Application/privacyStatement_fr.html=UTF-8
+encoding//app/views/Application/privacyStatement_nl.html=UTF-8
+encoding//app/views/Application/privacyStatement_tr.html=UTF-8
 encoding//app/views/Application/termsAndConditions_en.html=UTF-8
+encoding//app/views/Application/termsAndConditions_fr.html=UTF-8
+encoding//app/views/Application/termsAndConditions_nl.html=UTF-8
+encoding//app/views/Application/termsAndConditions_tr.html=UTF-8
 encoding//app/views/masterTemplate.html=UTF-8
 encoding//app/web/utils/languagenames_en_iso8859.properties=ISO-8859-1
 encoding//app/web/utils/languagenames_fr_iso8859.properties=ISO-8859-1

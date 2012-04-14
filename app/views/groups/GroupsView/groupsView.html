@@ -60,11 +60,13 @@
 		var isCloseGroupLinkEffective = ${groupViewVisibility.endGroupLinkEffective};
 	</script>
 #{/set}
+<div class="pageContainer">
 
 	<img id="hiddenDefaultProfileThumb" class="hidden" src="@{'/public/images/defaultProfileThumb.jpg'}" />
 	<img id="hiddenDefaultGroupThumb" class="hidden" src="@{'/public/images/defaultProjectThumb.jpg'}" />
 	
-	<p  class="pageTitle">${visitedGroup.name}</p>
+	<h1>${visitedGroup.name}</h1>
+	<br />
 	
 	<div id="groupPhotoContainer">
 		#{photos.photoGallery
@@ -92,9 +94,7 @@
 					<td>
 						<ul>
 							#{list items:visitedGroup.location, as:"oneLocation"}
-								<li>
-									<span>${oneLocation.location}</span>
-								</li>
+								<li><span>${oneLocation.location}</span></li>
 							#{/list}
 						</ul>
 					</td>
@@ -405,4 +405,5 @@
 		<br />
 		<label><input type="checkbox"  class="threadVisibility" checked > &{'groupsViewForumAddThreadPopupPublicThread'}</label>
 	</div>
+</div>
 	

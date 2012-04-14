@@ -1,8 +1,8 @@
 #projectPhotoContainer {
+	margin-top:30px;
 	width: 300px;
 	float: left;
-	margin-left: 3%;
-	text-align: center;
+	margin-left: 30px;
 }
 #projectRightColumn {
 	float: left;
@@ -15,11 +15,11 @@
 }
 
 #projectSocialBox {
-	padding: 5px;
-	margin-left: 40px;
+	/*margin-left: 40px;*/ 
 }
 
 #projectBasicDetails {
+	margin-top:30px;
 	width: 30%;
 	float: left;
 	margin-left: 50px;
@@ -27,9 +27,13 @@
 
 #projectBasicDetails label {
 	font-weight: bold;
-	margin-right: 10px;
+	margin-right: 30px;
 }
-
+#projectBasicDetails td {
+	padding:10px 0;
+	line-height:1.2em;
+	vertical-align:baseline;
+}
 #projectBody {
 	clear: both;
 	max-width: 70%;
@@ -37,31 +41,49 @@
 }
 
 #projectBody dt {
+	color:#333;
 	font-weight: bold;
 	margin-top: 5px;
 }
-
+/*
 #projectParticipants {
 	margin-top: 30px;
+	margin-bottom:30px;
 }
-
+#projectGroupParticipations{
+	margin-top: 30px;
+	margin-bottom:30px;
+}*/
 #projectTaskListTable {
 	border-spacing: 0px;
 	border-collapse: collapse;
 	border: solid 1px;
 	width: 100%;
 }
-
+#projectTaskListTable ul{
+	padding-left:0;
+}
+#projectTaskListTable td{
+	vertical-align:baseline;
+	padding:10px 20px 10px 10px;
+	line-height:1.2em;
+}
+#projectTaskListTable th{
+	vertical-align:baseline;
+	padding:10px 30px 10px 10px;
+	line-height:1.2em;
+}
 #projectTaskListTable thead {
-	background-color: #DFDFDF;
+	text-align:left;
+	background-color: #ccc;
 }
 
 #projectTaskListTable thead tr:hover {
-	background-color: #DFDFDF;
+	background-color: #ccc;
 }
 
 #projectTaskListTable tr:hover {
-	background-color: #EFEFEF;
+	background-color: #ffeb00;
 }
 
 /* *****************************
@@ -73,28 +95,38 @@
 * project forum thread page
 ******************************* */
 .forumSubTitle {
-	text-align: center;
-	font-size: 28px;
+	margin-left:30px;
+	font-size: 3em;
+	font-family:Georgia,serif;
+	font-style:italic;
+}
+
+.forumSubTitle2 {
+	margin-left:30px;
+	font-size: 2.5em;
+	font-family:Georgia,serif;
+	font-style:italic;
 }
 
 #forumThreadContainer {
-	width: 600px;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 30px;
+	width: 60%;
+	/*margin-left: auto;
+	margin-right: auto;*/
+	margin-top: 20px;
+	margin-bottom:60px;
 }
 
 #forumThreadNewPost {
-	margin-left: 90px;
+	margin-left: 30px;
 }
 
 #forumThreadPostButton {
-	float: right;
-	margin-bottom: 5px;
+	/*float: right;*/
+	margin-top: 5px;
 }
 
 #forumThreadPostText {
-	width: 100%;
+	width:100%;
 }
 
 .onePost {
@@ -102,13 +134,16 @@
 }
 
 .onePostPhotoBlock {
+	margin-right:30px;
 	width: 90px;
 	float: left;
 }
 
 .onePostMainBlock {
+	width:83%;
 	float: left;
-	width: 510px;
+	border-top:1px solid #ccc;
+	border-bottom:1px solid #ccc;
 }
 
 .onePostMainBlock .deleteThreadButton {
@@ -122,7 +157,9 @@
 
 
 #forumPosts  {
-	margin-top: 30px;
+	margin:70px 0 100px 30px;
+	padding-bottom:60px;
+	width: 100%;
 }	
 
 #forumPosts .breakerDiv {	
@@ -131,17 +168,19 @@
 
 #forumPosts .postContent {
 	min-height: 80px;
-	border: 1px solid;
+	/*border: 1px solid;*/
 	padding: 0px 5px;
 	margin-top: 5px;
-	
 	 white-space: pre-wrap;       /* css-3 */
 	 white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
 	 white-space: -pre-wrap;      /* Opera 4-6 */
 	 white-space: -o-pre-wrap;    /* Opera 7 */
 	 word-wrap: break-word;     
 }
-
+#forumPosts pre.postContent {
+	font-family:Verdana, sans-serif;
+	padding-top:10px;     
+}
 
 #projectForumThreadMoveThreadPopup div.centerDropDown {
 	text-align: center;

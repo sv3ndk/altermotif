@@ -5,7 +5,11 @@
 #{/set}
 
 #{set 'moreScripts'}
-    <script src="@{'/public/javascripts/dab/enter/login.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+    <script type="text/javascript">
+	    $(document).ready(function() {
+			$("#usernameInput").focus();
+		});
+	</script>
 #{/set}
 
 

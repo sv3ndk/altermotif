@@ -1,11 +1,10 @@
 #projectNewContainer {
-	margin-left: 15%;
-	margin-top: 30px;
+	font-size: 13px;margin-top: 30px;
 }
 
 #projectNewContainer td {
 	vertical-align: top;
-	padding: 10px 10px 0 10px;
+	padding: 30px 5px 0 5px;
 }
 
 #editProjectTable {
@@ -21,6 +20,12 @@
 	width: 380px;
 	height: 250px;
 	margin-top: -15px ;
+}
+#editProjectTable ul {
+	text-align:left;
+	vertical-align:top;
+	margin:0;
+	padding:0;
 }
 
 

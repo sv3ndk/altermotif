@@ -39,6 +39,8 @@ var dabGroupsEditLib = {
 			$("#editGroupButton").click(function(event){self.whenUserClickConfirmEditGroup()});
 			$("#cancelEditGroupButton").click(function(event){self.whenUserClickCancelEditGroup()});
 			
+			$("#editedGroupName").focus();
+			
 		};
 		
 		

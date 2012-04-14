@@ -3,7 +3,7 @@
 var dualModeSwitcherLib = {
 
 	ModeSwitchController : function(switchToSimpleLinkId,
-			swichToAdvancedLinkId, simpleDivId, advancedDivId) {
+			swichToAdvancedLinkId, simpleDivId, advancedDivId, simpleFocusId, advancedFocusId) {
 
 		this.isSimpleMode = true;
 
@@ -14,10 +14,12 @@ var dualModeSwitcherLib = {
 			var self = this;
 			$(swichToAdvancedLinkId).click(function(event) {
 				self.switchMode(false);
+				$(advancedFocusId).focus();
 			});
 
 			$(switchToSimpleLinkId).click(function(event) {
 				self.switchMode(true);
+				$(simpleFocusId).focus();
 			});
 
 		};

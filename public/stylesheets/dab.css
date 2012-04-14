@@ -147,15 +147,6 @@ ul {
 	font-weight: bold;
 }
 
-.noclass {
-	
-}
-
-.hidden {
-	display: none;
-}
-
-
 .formLeftColumn {
 	text-align: left;
 	width: 155px;
@@ -168,6 +159,16 @@ ul {
 .formRightColumn {
 	width: 350px;
 }
+
+
+.noclass {
+	
+}
+
+.hidden {
+	display: none;
+}
+
 
 .errorMessage {
     color: red;
@@ -190,9 +191,6 @@ ul {
 .profileViewTogglableSection .dabLink{
 	font-weight:bold;
 }
-.homeToggleBlock .dabLink{
-	font-weight:bold;
-}
 
 .dabLink {
 	text-decoration: underline;
@@ -201,6 +199,8 @@ ul {
 	font-weight: normal;
 	font-size: 13px;
 }
+
+
 .dabLink:hover {
 	text-decoration:none;
 	cursor: pointer;
@@ -208,6 +208,25 @@ ul {
 	font-weight: normal;
 	font-size: 13px;
 }
+
+.toggleLink {
+	text-decoration: underline;
+	cursor: pointer;
+	color:#333;
+	font-weight:bold;
+	font-size: 13px;
+}
+
+.toggleLink:hover {
+	text-decoration:none;
+	cursor: pointer;
+	color:#666;
+	font-weight: normal;
+	font-size: 13px;
+}
+
+
+
 
 .dabLinkLSpaced {
 	text-decoration: underline;

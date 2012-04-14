@@ -23,6 +23,9 @@ var dabMessagesNewLib = {
 					userListPopup.open();
 				}
 			});
+			
+			$("#messagesTo").focus();
+
 		};
 		
 		this.whenTheRecipientIsChosen = function(self, username) {

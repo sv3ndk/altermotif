@@ -28,6 +28,8 @@ function init() {
 	
 	// this is present in dab.js
 	dabUtils.makeInputDatePicker("#projectNewDueDate", '-0:+100');
+	
+	$("#" + firstEditedFieldId).focus();
 }
 
 

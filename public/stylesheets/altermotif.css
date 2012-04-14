@@ -25,6 +25,495 @@ label,input,select,textarea{
 	font-weight:bold;
 }
 
+input{
+	font-weight:bold;
+	font-size:2em;}
+
+
+
+a{
+	color:#333;
+	text-decoration:underline;
+}
+a:hover{
+	color:#666;
+	text-decoration:none;
+}
+
+/* removes the border around the clickable images */
+a img {
+	border: 0px;
+}
+
+
+ul {
+	list-style-type: none;
+}
+
+.centerParagraph {
+	text-align: center;
+}
+
+.rightspaced {
+	margin: 0px 15px 0px 0px;
+}
+
+.formlabel {
+	padding-top:8px;
+	padding-right:20px;
+	text-align:left;
+	font-weight: bold;
+}
+
+.formlabel label {
+	font-weight: bold;
+}
+
+.noclass {
+	
+}
+
+.hidden {
+	display: none;
+}
+
+
+.formLeftColumn {
+	text-align: left;
+	width: 155px;
+}
+
+.formMidleColumn {
+	width: 400px;
+}
+
+.formRightColumn {
+	width: 350px;
+}
+
+.errorMessage {
+    color: red;
+    font-size: 13px;
+    margin-bottom:10px;
+}
+
+.errorMessageLink {
+    margin-left: 10px;	
+}
+
+
+.dabLink {
+	text-decoration: underline;
+	cursor: pointer;
+	color:#333;
+	font-weight: normal;
+	font-size: 13px;
+}
+.dabLink:hover {
+	text-decoration:none;
+	cursor: pointer;
+	color:#666;
+	font-weight: normal;
+	font-size: 13px;
+}
+
+.dabLinkLSpaced {
+	text-decoration: underline;
+	cursor: pointer;
+	color:#333;
+	font-weight: normal;
+	margin-left: 10px;
+}
+
+.dabLinkRSpaced {
+	text-decoration: underline;
+	cursor: pointer;
+	color:#333;
+	font-weight: normal;
+	margin-right: 10px;
+}
+
+.dabLinkSpaced {
+	text-decoration: underline;
+	cursor: pointer;
+	color:#333;
+	font-weight: normal;
+	margin-right: 10px;
+	margin-left: 10px;
+}
+
+.dabLinkNotification {
+	text-decoration: underline;
+	cursor: pointer;
+	color: grey;
+	font-weight: normal;
+}
+
+.dabLinkLSpacedDisabled {
+	text-decoration: underline;
+	font-weight: normal;
+	color: #555555;
+	cursor: default;
+	margin-left: 10px;
+}
+
+.dabLinkDisabled {
+	text-decoration: underline;
+	font-weight: normal;
+	color: #666;
+	cursor: default;
+}
+
+
+.toggleContainer {
+    border: medium none;
+    margin: 20px 0 30px 0;
+    padding: 0 0 20px 0;
+    width: 85%;
+}
+
+.toggleLink {
+	text-decoration: underline;
+	cursor: pointer;
+	color:#333;
+	font-weight:bold;
+	font-size: 13px;
+}
+
+.toggleLink:hover {
+	text-decoration:none;
+	cursor: pointer;
+	color:#666;
+	font-weight: normal;
+	font-size: 13px;
+}
+
+
+.iconLink {
+	vertical-align: middle;
+	width: 24px;
+	cursor: pointer;
+}
+
+.iconLinkInactive {
+	vertical-align: middle;
+	width: 24px;
+}
+
+.deleteImageLink {
+	vertical-align: middle;
+	width: 24px;
+	cursor: pointer;
+}
+
+.deleteImageLinkLSpaced {
+	margin-left: 10px;
+	vertical-align: middle;
+	width: 24px;
+	cursor: pointer;
+}
+
+.deleteImageLinkInactive {
+	margin-left: 10px;
+	vertical-align: middle;
+	width: 24px;
+}
+
+
+.formFieldExplanation {
+	font-size: 12px;
+	/*float: left;*/
+}
+
+
+
+
+/*TOOL BAR*/
+#toolBar{
+	width:100%;
+	background-color:#333;
+	height:40px;
+}
+#toolBarFirstPart{
+	padding:10px 0 0 20px;
+	float:left;
+}
+
+#toolBarSecondPart{
+	float:right;
+}
+#sloganToolBar{
+	padding-left:50px;
+	color:#fff;
+}
+#toolBarFirstPart a{
+	color:#ffeb00;
+	text-decoration:none;
+	font-family:"Georgia", serif;
+	font-style:italic;
+	font-weight:bold;
+}
+#toolBarSecondPart a{
+	color:#ffeb00;
+	text-decoration:none;
+	font-family:"Verdana", sans-serif;
+}
+#toolBarAccountControls{
+	float:left;
+	padding:10px 20px 0 0;
+}
+
+#topLinks {
+	float: right;
+	margin-right: 25px;
+}
+
+#topLinks  p {
+	text-align: right;
+	margin: 0.5em;
+}
+
+#topLinks select {
+	font-size: 15px;
+	float: right;
+	margin: 0;
+}
+
+#selectOneLanguageDropdown{
+	width:110px;
+}
+
+
+
+#userLogoutLink {
+	float: right;
+	margin: 0;
+}
+
+
+#topDropDownMenu {
+	margin:0;
+	padding:10px 0 0 90px;
+	z-index:999;
+}
+
+
+
+
+
+
+
+
+/*FOOTER*/
+#footer{
+	font-size:13px;
+	clear:both;
+	margin-top:150px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 420px;
+	padding-bottom:40px;
+	text-align:center;
+}
+
+#footer li{
+	list-style-type:none;
+	float:left;
+	padding-right:20px;
+}
+.bottomLinks {
+	text-decoration: underline;
+	font-weight: normal;
+	margin: 15px;
+}
+
+/* bottom links, present in all pages */
+#bottomLinksContainer {
+	/*border-top:dotted 1px #333;*/
+	font-size:13px;
+	clear:both;
+	padding-top:20px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;/*420px*/
+	margin-bottom:50px;
+	text-align:center;
+}
+
+#bottomLinksContainer a {
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+
+
+
+
+/************************************************
+
+************************************************/
+
+
+.pageContainer {
+	margin-top:70px;
+	margin-left: 20px;
+	margin-bottom: 20px;
+}
+
+.oneLinerThumb {
+	float: left;
+	/*border: 1px solid #333;*/
+	padding: 0 30px 0 0;
+	max-height: 80px;
+	max-width: 80px;
+}
+
+.oneLinerThumbContainer {
+	float: left;
+	width: 80px;
+	height: 80px;
+	margin-right:30px;
+}
+
+	
+.oneUserSummary {
+	margin-bottom:30px;
+	height: 80px;
+}
+
+.oneProjectParticipationLine{
+	padding: 20px;
+	height: 60px;
+}
+
+.oneGroupParticipationLine{
+	padding: 20px;
+	height: 60px;
+}
+
+
+
+.mainPhoto {
+	max-width: 300px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+
+#aboutUsContainer {
+	width: 500px;
+}
+
+.descriptionList dd dt {
+	margin-top: 5px 0 0 0;
+}
+
+.descriptionList dd pre {
+	margin-bottom: 2em;
+	font-family:Verdana, sans-serif;
+}
+
+.descriptionList dd li {
+	/*margin-left: 15px;*/
+}
+
+
+
+.oneProjectOverviewLine{
+	border: 1px solid;
+	width: 600px;
+	margin: 10px;
+	padding: 10px;
+}
+
+.oneProjectOverviewLine td {
+	padding: 5px 10px;
+}
+
+.profileContactThumb {
+	float: left;
+	border: none;
+	max-height: 80px;
+	max-width: 80px;
+	padding: 0 10px 0 0;
+}
+/*Tabs container*/
+#projectSearchAdvanced{
+	clear:left;
+	padding-top:20px;
+}
+#projectSearch_modeSimple p{
+	/*padding-left:20px;*/
+}
+div.tabs{
+	margin:0;
+	padding:0;
+	border:solid 1px #333;
+	clear:both;
+	height:240px;	
+}
+div.tabs p{
+	padding-left:20px;
+}
+.tabNavigation{
+	/*padding-left:20px;*/
+}
+ul.tabNavigation{
+	list-style-type:none;
+	padding: 0px;
+	margin: 0px;
+}
+.tabNavigationCheckbox{
+	/*padding-left:20px;*/
+}
+ul.tabNavigation li:hover{ 
+	background-color: #ffeb00;
+}
+ul.tabNavigation li{
+	float:left;
+	padding:5px 20px;
+	/*border-top: 1px solid #333;*/
+	border-bottom: 1px solid #333; 
+	border-right: 1px solid #333;
+}
+ul.tabNavigation li:last-child{
+	border-right:none;	
+}
+ul.tabNavigation li a{
+	text-decoration:none;
+
+}
+ul.tabNavigation li a:hover{
+	color:#333;
+}
+.fs15{
+	font-size:1.5em;
+}
+
+
+
+.box {
+	margin-left: 2em;
+	margin-right: 2em;
+	margin-top: .5em;
+	margin-bottom: .5em;
+}
+
+.boxTitle {
+	text-align: center;
+	font-size: 24px;
+	font-weight: bold;
+	margin-top: .5em;
+	margin-bottom: .5em;
+}
+
+.boxText {
+	text-align: center;
+	font-size: 18px;
+	font-weight: bold;
+	margin-top: .5em;
+	margin-bottom: .5em;
+}
 
 
 /*HOMEPAGE*/
@@ -57,6 +546,13 @@ label,input,select,textarea{
 	line-height:1.5em;
 	color:#333;
 }
+
+.pageTitle {
+	margin-left: 30px;
+	font-size: 38px;
+}
+
+
 .findProjectButton a{
 	font-family:"Georgia",serif;
 	font-style:italic;
@@ -219,9 +715,11 @@ home page
 
 /**/
 .profileViewTogglableSection {
-	font-weight:bold;
-	font-size:1.2em;
 	margin-bottom: 15px;
+}
+
+.profileViewTogglableSection span.dabLink{
+	font-weight:bold;
 }
 
 #profileReceivedReference {
@@ -234,7 +732,7 @@ home page
 
 
 .profileReference {
-	border: 1px solid #ccc;
+/*	border: 1px solid #ccc; */
 	padding: 20px;
 	margin: 20px 0;
 }
@@ -245,7 +743,7 @@ home page
 
 
 .profileContact {
-	border: 1px solid #ccc;
+/*	border: 1px solid #ccc; */
 	padding: 20px;
 	margin: 20px 0;
 	height: 80px;
@@ -253,7 +751,7 @@ home page
 
 
 .profileContactLink {
-	margin-top: 30px;
+/*	margin-top: 30px; */
 }
 
 .profileContactThumb {
@@ -350,7 +848,7 @@ home page
 }
 	
 .profileMPThumbContainer {
-	margin-left:300px;
+	margin-left: 300px;
 	margin-right: auto;
 	margin-top: 30px;
 	width: 860px;
@@ -363,6 +861,11 @@ home page
 	max-width: 225px;
 	margin: 5px 5px 15px 22px;
 	cursor: pointer;
+}
+
+.profileMPThumbContainer img.profileEmptyImage {
+	width: 225px;
+	height: 225px;
 }
 
 .profileMPThumbContainer img.mainPhoto {
