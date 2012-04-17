@@ -13,12 +13,10 @@
 					<img src="${onePhoto.thumbAddress}" alt="${onePhoto.caption}" ></img>
 				#{/else}
 				
-				<span style="display: none">${onePhoto.normalPhotoAddress}</span>
+				<span class="hidden" >${onePhoto.normalPhotoAddress}</span>
 			#{/else}
 	
-			<span style="display: none">
-				${onePhoto.caption}
-			</span>
+			<span class="hidden" id="hiddenPhotoCaption">${onePhoto.caption}</span>
 		#{/if}
 	#{/list }
 </div>

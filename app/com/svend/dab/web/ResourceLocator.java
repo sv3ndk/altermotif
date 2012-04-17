@@ -18,7 +18,9 @@ public class ResourceLocator {
     	if (BeanProvider.getConfig().getDeploymentMode() == devLocal) {
     		return  LOCAL_PUBLIC_RESOURCES + "/stylesheets";
     	} else {
-    		throw new NotImplementedException("");
+    		// TODO
+    		return  LOCAL_PUBLIC_RESOURCES + "/stylesheets";
+//    		throw new NotImplementedException("");
     	}
 	}
 	

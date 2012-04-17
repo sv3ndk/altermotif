@@ -19,9 +19,10 @@ var photoEditLib = {
 		this.isPhotoInterractionEnabled = true;
 		this.photoEditActionController = new photoEditLib.PhotoEditActionController();
 		
+		var self = this;
+		
 		this.init = function() {
 
-			var self = this;
 			this.initAllPopups();
 
 			// click on a thumbnail
@@ -43,12 +44,8 @@ var photoEditLib = {
 			});
 
 			// edit photo caption
-			$("#profilePhotoMpcaptionDiv span.dabLink, #profilePhotoMpcaptionDiv img.iconLink").click(function() {
-				self.whenUserClicksEditPhotoCaption();
-				if (isPhotoInterractionEnabled) {
-					$("#editedCaption").val($("#photoCaption").text());
-					$("#editCaptionDialog").dialog("open");
-				}
+			$("#photoCaptionLink, #photoCaptionImage").click(function(event) {
+				self.whenUserClicksEditPhotoCaption(event);
 			});
 			
 			// upload photo
@@ -66,7 +63,6 @@ var photoEditLib = {
 		//////////////////////////////
 		//////////////////////////////
 		this.whenUserClicksOnThumbnail = function(event) {
-			var self = this;
 			var fullSizePhotoAddr = $(event.target).next().text();
 			
 			$("#profileMPCentralPhoto").attr("src", fullSizePhotoAddr);
@@ -75,30 +71,19 @@ var photoEditLib = {
 			$(event.target).addClass("yoohoo");
 	
 			if ($(event.target).hasClass("profileEmptyImage")) {
-				$("#deletePhotoLink, #photoCaption").removeClass("dabLink").addClass("dabLinkDisabled");
+				$("#deletePhotoLink, #photoCaptionLink").removeClass("dabLink").addClass("dabLinkDisabled");
 				$("#deletePhotoButton, #photoCaptionImage").removeClass("iconLink").addClass("iconLinkInactive");
 				$("#photoCaption").text(setCaptionText);
-				isPhotoInterractionEnabled = false;
+				self.isPhotoInterractionEnabled = false;
 			} else {
-				$("#deletePhotoLink, #photoCaption").removeClass("dabLinkDisabled").addClass("dabLink");
+				$("#deletePhotoLink, #photoCaptionLink").removeClass("dabLinkDisabled").addClass("dabLink");
 				$("#deletePhotoButton, #photoCaptionImage").removeClass("iconLinkInactive").addClass("iconLink");
-				
-				var newCaption = $(this).attr("alt");
-				if (newCaption == "") {
-					$("#photoCaption").text(setCaptionText);
-				} else {
-					$("#photoCaption").text(newCaption);
-				}
-				
-				$("#photoCaption").text();
 	
-				isPhotoInterractionEnabled = true;
+				self.isPhotoInterractionEnabled = true;
 			}
 	
 			// if this thumbnail is the first photo: this is already the profile photo => disactivate the "set photo as profile photo" link, otherwise
 			// activate it
-			
-			//mainPhotoIndex;
 			
 			var clickedIndex = $("#profileMPThumbContainer img").index($(this));
 			
@@ -115,7 +100,9 @@ var photoEditLib = {
 				if ($(imageElement).hasClass("yoohoo")) {
 					self.selectedPhotoIndex = index;
 				}
-			});
+	  		});
+			
+			this.photoEditActionController.updateSelectedPhotoCaption($(event.target).next().next().text());
 		};
 		
 		//////////////////////////////
@@ -128,9 +115,9 @@ var photoEditLib = {
 		
 		
 		//////////////////////////////
-		this.whenUserClicksEditPhotoCaption = function() {
+		this.whenUserClicksEditPhotoCaption = function(event) {
 			if (this.isPhotoInterractionEnabled) {
-				$("#editedCaption").val($("#photoCaption").text());
+				$("#editedCaption").val(self.photoEditActionController.selectedPhotoCaption);
 				$("#editCaptionDialog").dialog("open");
 			}
 		}
@@ -194,6 +181,13 @@ var photoEditLib = {
 	
 	PhotoEditActionController :function() {
 		
+		this.selectedPhotoCaption;
+		
+		// this is ugly: TODO: use a proper model!
+		this.imgOfEditedPhotoCaption;
+		
+		var self = this;
+		
 		this.init = function() {
 			
 			$("#pleaseWaitUploadDialog").dialog({
@@ -211,6 +205,17 @@ var photoEditLib = {
 				$("#hiddenUploadPhotoForm form").submit();
 			});
 			
+		};
+		
+		
+		this.updateSelectedPhotoCaption = function(newCaption) {
+			
+			this.selectedPhotoCaption = newCaption;
+			if (this.selectedPhotoCaption == "" || this.selectedPhotoCaption == null) {
+				$("#photoCaptionLink").text(setCaptionText);
+			} else {
+				$("#photoCaptionLink").text(this.selectedPhotoCaption);
+			}
 		};
 		
 		
@@ -237,13 +242,7 @@ var photoEditLib = {
 						),
 						
 				function(data) {
-					$("#photoCaption").text(newCaption)
-	
-					$("#profileMPThumbContainer img").each(function(index, imageElement) {
-						if (index == editedPhotoIndex) {
-							$(imageElement).attr("alt", newCaption);
-						}
-					});
+					self.updateSelectedPhotoCaption(newCaption);
 					
 					$("	#editCaptionDialog").dialog("close");
 				}
@@ -251,6 +250,4 @@ var photoEditLib = {
 		};
 		this.init();
 	},
-	
-		
 }

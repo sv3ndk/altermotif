@@ -4,27 +4,3 @@ memory leak
 encryption des mots de passe
 certificat HTTPS
 
-done:
-
-- graphisme: je pense avoir repris à peu près tou ton travail Augusto, mais j'ai sans doutes oubliés des trucs, sorry, n'hésite pas à revenir vers moi si j'ai oublié des trucs. N'hésite pas à me demander des changement dans l'HTML lui-même si ça t'aide 
-   * j'ai renommé "homepage.css" en "altermotif.css" comme tu le suggérais (c'est effectivement plus logique). 
-   * Il y avait pas mal de doublons entre dab.css et altermotif.css ("dab" c'est l'acronyme de l'ancien nom du site)
-          => j'ai tenté de rassembler tout ça dans altermotif.css et j'ai supprimé dab.css
-   * page de recherche de groupe/projet:
-       + la css est la même pour les deux pages => elle s'appelle désormais search.css, j'ai aussi renomé un peu les id (pour ne plus être spécifique à "projet")
-       + la logique actuelle que Stephen a demandé c'est de sélectionner une catégorie et ensuite de naviguer directement 
-            => est-ce qu'on met vraiment des checkbox? Et on navique dès qu'on clique sur 1? C'est un peu bizarre non? => j'ai laissé les dropdown pour l'instant, je changerai quand on y verra plus clair
-   * j'ai vu que tu as rajoutés des <strong> à certains endroits. Si c'est ok pour toi j'aimerais rester en css tant que possible => normalement si tu travailles sur ce selecteur: ".formlabel label" (dans altermotif.css) tu devrais obtenir l'effet désiré partout
-   * dans le forum: il manquait le titre du groupe/projet => je l'ai rajouté avec une class "forumSubTitle2"
-   * photo album: 
-      + les utilisateurs peuvent uploaders des photos dans tous les formats => on n'a pas 3 belles photos carréés 
-      + chaque utilisateur/groupe/projet a une photo principale (avec la classe "mainPhoto") => il faudrait afficher cette photo différemment
-      + le lien pour spécifier le "caption" d'une photo normalement indique "Click here to enter photo caption" si le caption n'est pas spécifié, ou alors la valeur du texte => où afficher le caption désormais?
-
-
-- inclusion des suggestions de langues en turque + nouvelles traduction en anglais/néérlandais (merci pour les traductions!)
-
-J'égalelemt corrigé les bug ci-dessous
-- le bouton "undelete" dand la page "deleted messages" fonctionne de nouveau
-- les photos apparaissent désormais dans la page de résultat de recherche des groupes
-- ajout du lien "back to group/projet/profile" dans la page edit photo (group/projet/profile)

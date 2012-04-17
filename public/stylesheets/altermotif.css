@@ -1085,3 +1085,18 @@ home page
     font-size: 1em;
 }
 /**/
+
+
+/************************************************
+popup dans la page "write new message", pour afficher la liste des contacts parmis lesquels choisir un destinataire
+************************************************/
+.oneContactPopupLine {
+	clear: left;
+	padding: 10px;
+	height: 80px;
+}
+
+.oneContactPopupLine:hover {
+	background-color: #FFFFFF;
+}
+

@@ -2,18 +2,6 @@
 <classpath>
 	<classpathentry excluding="views/**" kind="src" path="app"/>
 	<classpathentry kind="src" path="test"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/amqp-client-2.5.0.jar"/>
-	<classpathentry kind="lib" path="lib/aopalliance-1.0.jar"/>
-	<classpathentry kind="lib" path="lib/aws-java-sdk-1.1.9.jar"/>
-	<classpathentry kind="lib" path="lib/commons-httpclient-3.1.jar"/>
-	<classpathentry kind="lib" path="lib/guava-10.0.1.jar"/>
-	<classpathentry kind="lib" path="lib/jsr305-1.3.9.jar"/>
-	<classpathentry kind="lib" path="lib/spring-amqp-1.0.0.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/spring-rabbit-1.0.0.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/stax-api-1.0-2.jar"/>
-	<classpathentry kind="lib" path="lib/stax-api-1.0.1.jar"/>
-	<classpathentry kind="lib" path="lib/validation-api-1.0.0.GA.jar"/>
 	<classpathentry kind="var" path="PLAY/framework/lib/activation-1.1.1.jar"/>
 	<classpathentry kind="var" path="PLAY/framework/lib/antlr-2.7.6.jar"/>
 	<classpathentry kind="var" path="PLAY/framework/lib/asm-all-3.3.1.jar"/>
@@ -70,63 +58,11 @@
 	<classpathentry kind="var" path="PLAY/framework/lib/xstream-1.3.jar"/>
 	<classpathentry kind="var" path="PLAY/framework/play-1.2.4.jar" sourcepath="/PLAY_SRC"/>
 	<classpathentry kind="var" path="PLAY/modules/spring-1.0.2/lib/play-spring.jar"/>
-	<classpathentry kind="lib" path="lib/annotations-1.3.2.jar"/>
-	<classpathentry kind="lib" path="lib/asm-3.0.jar"/>
-	<classpathentry kind="lib" path="lib/aspectjweaver-1.6.8.jar"/>
-	<classpathentry kind="lib" path="lib/backport-util-concurrent-3.0.jar"/>
-	<classpathentry kind="lib" path="lib/bsh-2.0b4.jar"/>
-	<classpathentry kind="lib" path="lib/codegen-0.4.4.jar"/>
-	<classpathentry kind="lib" path="lib/collections-generic-4.01.jar"/>
-	<classpathentry kind="lib" path="lib/commons-lang3-3.0.1.jar"/>
-	<classpathentry kind="lib" path="lib/geronimo-ejb_3.0_spec-1.0.1.jar"/>
-	<classpathentry kind="lib" path="lib/geronimo-interceptor_3.0_spec-1.0.1.jar"/>
-	<classpathentry kind="lib" path="lib/geronimo-jms_1.1_spec-1.1.jar"/>
-	<classpathentry kind="lib" path="lib/geronimo-jta_1.1_spec-1.1.jar"/>
-	<classpathentry kind="lib" path="lib/guava-bootstrap-10.0.1.jar"/>
-	<classpathentry kind="lib" path="lib/jaxws-api-2.1-1.jar"/>
-	<classpathentry kind="lib" path="lib/jruby-1.4.0.jar"/>
-	<classpathentry kind="lib" path="lib/jsr166-1.7.0.jar"/>
-	<classpathentry kind="lib" path="lib/jsr250-api-1.0.jar"/>
-	<classpathentry kind="lib" path="lib/jsr305-1.3.2.jar"/>
-	<classpathentry kind="lib" path="lib/mongo-java-driver-2.7.1.jar"/>
-	<classpathentry kind="lib" path="lib/mysema-commons-lang-0.2.2.jar"/>
-	<classpathentry kind="lib" path="lib/persistence-api-1.0.jar"/>
-	<classpathentry kind="lib" path="lib/querydsl-apt-2.2.5.jar"/>
-	<classpathentry kind="lib" path="lib/querydsl-core-2.2.5.jar"/>
-	<classpathentry kind="lib" path="lib/querydsl-mongodb-2.2.5.jar"/>
-	<classpathentry kind="lib" path="lib/saaj-api-1.3.jar"/>
-	<classpathentry kind="lib" path="/Users/svend/development/code/altermotif/lib/spring-aop-3.1.1.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/Users/svend/development/code/altermotif/lib/spring-asm-3.1.1.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/Users/svend/development/code/altermotif/lib/spring-beans-3.1.1.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/Users/svend/development/code/altermotif/lib/spring-context-3.1.1.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/Users/svend/development/code/altermotif/lib/spring-core-3.1.1.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/spring-data-commons-core-1.2.0.RC1.jar"/>
-	<classpathentry kind="lib" path="lib/spring-data-mongodb-1.0.0.RC1.jar"/>
-	<classpathentry kind="lib" path="/Users/svend/development/code/altermotif/lib/spring-expression-3.1.1.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/Users/svend/development/code/altermotif/lib/spring-instrument-3.1.1.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/spring-retry-1.0.0.RELEASE.jar"/>
-	<classpathentry kind="lib" path="/Users/svend/development/code/altermotif/lib/spring-tx-3.1.1.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/stax-1.2.0.jar"/>
-	<classpathentry kind="lib" path="lib/bcmail-jdk14-138.jar"/>
-	<classpathentry kind="lib" path="lib/bcprov-jdk14-138.jar"/>
-	<classpathentry kind="lib" path="lib/commons-digester-2.1.jar"/>
-	<classpathentry kind="lib" path="lib/freemarker-2.3.15.jar"/>
-	<classpathentry kind="lib" path="lib/hibernate-validator-4.2.0.Final.jar"/>
-	<classpathentry kind="lib" path="lib/itext-2.1.7.jar"/>
-	<classpathentry kind="lib" path="/Users/svend/development/code/altermotif/lib/jackson-core-asl-1.9.5.jar"/>
-	<classpathentry kind="lib" path="lib/jackson-mapper-asl-1.9.4.jar"/>
-	<classpathentry kind="lib" path="lib/jasperreports-2.0.5.jar"/>
-	<classpathentry kind="lib" path="lib/jaxb-api-2.2.jar"/>
-	<classpathentry kind="lib" path="lib/jaxb-impl-2.1.12.jar"/>
-	<classpathentry kind="lib" path="lib/jcommon-1.0.16.jar"/>
-	<classpathentry kind="lib" path="lib/jdtcore-3.2.0.v_658.jar"/>
-	<classpathentry kind="lib" path="lib/jfreechart-1.0.1.jar"/>
-	<classpathentry kind="lib" path="lib/jsoup-1.5.2.jar"/>
-	<classpathentry kind="lib" path="lib/oro-2.0.8.jar"/>
-	<classpathentry kind="lib" path="lib/quartz-1.6.2.jar"/>
-	<classpathentry kind="lib" path="lib/spring-context-support-3.1.0.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/spring-jdbc-3.1.0.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/velocity-1.5.jar"/>
-	<classpathentry kind="lib" path="lib/xml-apis-1.3.02.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/altermotif_lib"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="eclipse/classes"/>
 </classpath>
