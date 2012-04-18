@@ -22,7 +22,7 @@
 #{get 'moreStyles' /}
 
 
-<link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+<link rel="shortcut icon" type="image/png" href="${dabImagesPath}/favicon.png'}">
 
 <script src="@{'/public/javascripts/nondab/jquery/jquery.min-1.7.1.js'}" type="text/javascript" ></script>
 <script src="@{'/public/javascripts/nondab/jquery/jquery-ui-1.8.18.custom.min.js'}" type="text/javascript" ></script>
@@ -63,6 +63,12 @@
 
 <!-- TOOL'S BAR /// begin -->
 <div id="toolBar">
+
+	<div id="buttonHome">
+		<a href="@{Application.index( )}">
+			<img src="${dabImagesPath}/buttonHome.png">
+		</a>
+	</div>
 
 	<div id="toolBarFirstPart">
 		<a href="@{Application.donate()}" class="donateButton">&{'donate'}</a>
