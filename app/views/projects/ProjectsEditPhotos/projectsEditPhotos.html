@@ -1,7 +1,6 @@
 #{extends 'masterTemplate.html' /}
 
 #{set 'moreStyles'}
-    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/profile.css'}" />
 #{/set}
 
 #{set 'moreScripts'}
@@ -27,7 +26,6 @@
 	#{photos.uploadPhotoMPToolbox uploadPhotoLinkActive:uploadPhotoLinkActive, setAsMainPhotoText:"projectPhotosSetAsMainPhoto", photoEditType:"project" /}
 	
 	#{photos.centralPhotoContainer /}
-
 </div>
 <div id="hiddenUploadPhotoForm" style="display: none">
 	<form method="post"	enctype="multipart/form-data" action="@{projects.ProjectsEditPhotos.doUploadPhoto()}">

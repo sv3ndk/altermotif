@@ -1,5 +1,9 @@
 #{extends 'masterTemplate.html' /}
 
+#{set 'moreStyles'}
+    <link rel="stylesheet" type="text/css" media="screen" href="${dabStylesheetsPath}/searchResults.css" />
+#{/set}
+
 #{set 'moreScripts'}
     <script src="@{'/public/javascripts/dab/searchResult.js'}" type="text/javascript" charset="${_response_encoding}"></script>
 	<script src="@{'/public/javascripts/groups/groupsResults.js'}" type="text/javascript" charset="${_response_encoding}"></script>
@@ -11,13 +15,7 @@
 	    var defaultReferenceLatitude = "${defaultReferenceLatitude}";
 	    var defaultReferenceLongitude = "${defaultReferenceLongitude}";
 	</script>
-	
 #{/set}
-
-#{set 'moreStyles'}
-    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/searchResults.css'}" />
-#{/set}
-
 
 <div class="searchResultContainer" >
 

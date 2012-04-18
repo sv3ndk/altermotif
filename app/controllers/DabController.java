@@ -12,7 +12,8 @@ public class DabController extends Controller{
     	new SessionWrapper(session).putInArgsList(renderArgs);
     	renderArgs.put("selectedUserLanguageCode", getSessionWrapper().getSelectedLg());
     	
-   		renderArgs.put("dabStylesheetsPath", BeanProvider.getResourceLocator().getStylesheetPath());
+   		renderArgs.put("dabStylesheetsPath", BeanProvider.getResourceLocator().getDabStylesheetPath());
+   		renderArgs.put("dabImagesPath", BeanProvider.getResourceLocator().getDabImagesPath());
    		
     	
     	if (getSessionWrapper().isLoggedIn()) {

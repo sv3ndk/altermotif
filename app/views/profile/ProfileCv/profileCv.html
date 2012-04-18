@@ -10,21 +10,21 @@
 		<ul>
 			<li>
 				#{if userProfile.hasCv()}
-					<a href="${userProfile.cvLink.address}" target="_blank"><img src="@{'/public/images/download.png'}" class="iconLink"></img> <span class="dabLink">&{'viewMyCv'}</span></a>
+					<a href="${userProfile.cvLink.address}" target="_blank"><img src="${dabImagesPath}/download.png" class="iconLink"></img> <span class="dabLink">&{'viewMyCv'}</span></a>
 				#{/if}
 				#{else}
-					<img src="@{'/public/images/download.png'}" class="iconLinkInactive"></img> <span class="dabLinkDisabled">&{'viewMyCv'}</span>
+					<img src="${dabImagesPath}/download.png" class="iconLinkInactive"></img> <span class="dabLinkDisabled">&{'viewMyCv'}</span>
 				#{/else}
 			</li>
 			<li >
-				<img id="uploadCvButton" src="@{'/public/images/upload.png'}" class="iconLink"></img> <span id="uploadCvLink" class="dabLink">&{'profileSelectCvToUpload'}</span>
+				<img id="uploadCvButton" src="${dabImagesPath}/upload.png" class="iconLink"></img> <span id="uploadCvLink" class="dabLink">&{'profileSelectCvToUpload'}</span>
 			</li>
 			<li>
 				#{if userProfile.hasCv()}
-					<img id="removeCvButton" src="@{'/public/images/trash.png'}" class="iconLink"> <span class="dabLink" id="removeCvLink">&{'removeMyCv'}</span>
+					<img id="removeCvButton" src="${dabImagesPath}/trash.png" class="iconLink"> <span class="dabLink" id="removeCvLink">&{'removeMyCv'}</span>
 				#{/if}
 				#{else}
-					<img src="@{'/public/images/trash.png'}" class="iconLinkInactive"></img> <span class="dabLinkDisabled">&{'removeMyCv'}</span>
+					<img src="${dabImagesPath}/trash.png" class="iconLinkInactive"></img> <span class="dabLinkDisabled">&{'removeMyCv'}</span>
 				#{/else}
 			</li>
 			
@@ -43,7 +43,7 @@
 	<div id="pleaseWaitDialog">
 		&{'uploadCVPleaseWait'}
 		<br />
-		<img  src="@{'/public/images/image_upload.gif'}" class="iconLink" />
+		<img  src="${dabImagesPath}/image_upload.gif" class="iconLink" />
 	</div>
 
 
@@ -53,9 +53,7 @@
 
 	<div  style="display: none" id="hiddenDeleteCvForm">
 		#{form @profile.ProfileCv.deleteCv()}
-	
 		#{/form }
 	</div>
 
 </div>
-				

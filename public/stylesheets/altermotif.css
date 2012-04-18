@@ -607,7 +607,7 @@ ul.tabNavigation li a:hover{
 	width:182px;
 	height:322px;
 	margin-left:200px;
-	background-image:url(../images/am_logo_new.png);
+	background-image:url(https://s3.amazonaws.com/altermotif/static/images/am_logo_new.png);
 	background-repeat:no-repeat;
 	}
 .generalInfoTexts{
@@ -881,7 +881,7 @@ home page
 #profileMPCentralPhotoContainer {
 	clear: left;
 	margin-left:30px;
-	margin-top: 284px;
+	margin-top: 350px;
 	/*margin-left: auto;*/
 	/*margin-right: auto;*/
 	width: 300px;
@@ -907,7 +907,7 @@ home page
 	width:300px;
 	clear:both;
 	margin-left: 30px;
-	margin-top: 194px;
+	margin-top: 120px;
 }
 
 #profileMPToolbox ul li {
@@ -1100,3 +1100,82 @@ popup dans la page "write new message", pour afficher la liste des contacts parm
 	background-color: #FFFFFF;
 }
 
+/*****************************************
+view group page
+*********************************************/
+
+
+#groupPhotoContainer {
+	width: 300px;
+	float: left;
+	margin-left: 3%;
+	text-align: center;
+}
+
+
+#groupBasicDetails {
+	width: 30%;
+	float: left;
+	margin-left: 50px;
+}
+
+#groupRightColumn{
+	margin-left: 50px; 
+	float: left;
+}
+
+#groupToolBox {
+	border: thin solid;
+	padding: 20px 20px 20px 20px;
+	margin-left: 40px;
+}
+
+
+#groupBasicDetails label {
+	font-weight: bold;
+	margin-right: 10px;
+}
+
+#groupBasicDetails td {
+	vertical-align: top;
+}
+
+#groupProjects {
+	clear: left;
+	padding-top: 50px;
+}
+
+
+.groupToggleBlocks {
+	margin-left: 200px;
+	margin-top: 30px;
+}
+
+
+.confirmedParticipant {
+	padding: 20px;
+	height: 60px;
+}
+
+.applyingParticipant {
+	padding: 20px;
+	height: 60px;
+}
+
+#applyWithProfileTd {
+	padding-top: 30px;
+}
+
+#applyToGroupWithProjectDialog div {
+	text-align: center;
+}
+
+.applyingProject{
+	padding: 20px;
+	height: 60px;
+}
+
+.groupProject{
+	padding: 20px;
+	height: 60px;
+}

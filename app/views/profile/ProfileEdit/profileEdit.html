@@ -21,7 +21,6 @@
 
 
 #{set 'moreScripts'}
-
     <script src="@{'/public/javascripts/dabGeocoder.js'}" type="text/javascript" charset="${_response_encoding}"></script>
     <script src="@{'/public/javascripts/dab/profile/profileEdit.js'}" type="text/javascript" charset="${_response_encoding}"></script>
     	
@@ -33,12 +32,10 @@
 #{/set}
 
 
-
 <!-- some hidden data, for javascript -->
 <span id="allPossibleLanguageNames" class="hidden">${allPossibleLanguageNames}</span>
 <span id="allPossibleLevelNames"    class="hidden">["&{'low'}", "&{'average'}", "&{'good'}"]</span>
 <span id="initSelectGender"         class="hidden">${editedProfile == null ? flash['editedProfile.gender'] : editedProfile.gender}</span>
-
 
 
 <div id="personalContainer" class="pageContainer">
@@ -197,16 +194,13 @@
 			
 		#{/form}
 		
-		
 		<div>
 			<input id="editProfileButton" type="submit"  value=" &{'profileUdpateProfile'} " class="editProfileUpdateBottomButton"/>
 			<input id="cancelProfileButton" type="submit"  value=" &{'profileCancelChanges'} " class="editProfileCancelBottomButton"/>
 		</div>
-	
 	</div>
-	
 
-	<img id="trashImg" src="@{'/public/images/trash.png'}" style="display: none" class="deleteImageLink"></img>
+	<img id="trashImg" src="${dabImagesPath}/trash.png" style="display: none" class="deleteImageLink"></img>
 	
 	<div id="hiddenCancelForm">
 		#{form @profile.ProfileEdit.cancelEdit()}

@@ -1,5 +1,9 @@
 #{extends 'masterTemplate.html' /}
 
+#{set 'moreStyles'}
+    <link rel="stylesheet" type="text/css" media="screen" href="${dabStylesheetsPath}/searchResults.css" />
+#{/set}
+
 #{set 'moreScripts'}
     <script src="@{'/public/javascripts/dab/searchResult.js'}" type="text/javascript" charset="${_response_encoding}"></script>
     <script src="@{'/public/javascripts/projects/projectsResults.js'}" type="text/javascript" charset="${_response_encoding}"></script>
@@ -15,9 +19,6 @@
     
 #{/set}
 
-#{set 'moreStyles'}
-    <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/searchResults.css'}" />
-#{/set}
 
 <div id="projectSearchResultContainer" class="searchResultContainer">
 	<span id="searchResultTitle">&{'projectSearchResultTitle'}</span>
