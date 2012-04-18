@@ -2,7 +2,7 @@
 
 	<a href="@{groups.GroupsView.groupsView( _overview.groupId )}" class="dabLink">
 		#{if !_overview.hasAThumbPhoto() }
-				<img src="${dabImagesPath}/defaultGroupThumb.jpg" class="oneLinerThumb" />
+				<img src="${_dabImagesPath}/defaultGroupThumb.jpg" class="oneLinerThumb" />
 		#{/if}
 		
 		#{if _overview.hasAThumbPhoto() } 

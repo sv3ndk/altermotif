@@ -87,7 +87,7 @@
 	
 	<div id="projectSearchResultList">
 		#{list items:projectsOverviews, as:'oneOverview'}
-			#{projects.projectOverview overview:oneOverview /}
+			#{projects.projectOverview overview:oneOverview, dabImagesPath:dabImagesPath /}
 		#{/list}
 	</div>
 </div>

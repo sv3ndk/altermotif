@@ -18,7 +18,7 @@ import controllers.BeanProvider;
 
 public class ProjectGroup {
 
-	private static final String DEFAULT_GROUP_IMAGE = "/defaultGroupImage.jpg";;
+	private static final String DEFAULT_GROUP_IMAGE = "/defaultGroupImage.jpg";
 
 	private String id;
 
