@@ -3,7 +3,7 @@
 	<a href="@{projects.ProjectsView.projectsView( _overview.projectId )}" class="dabLink"> 
 	
 	#{if !_overview.hasAThumbPhoto() }
-			<img src="@{'/public/images/defaultProjectThumb.jpg'}" class="oneLinerThumb" />
+			<img src="${dabImagesPath}/defaultProjectThumb.jpg" class="oneLinerThumb" />
 	#{/if}
 	
 	#{if _overview.hasAThumbPhoto() } 
@@ -12,8 +12,6 @@
 	</a>
 
 	<div>
-		
-		
 		<table>
 			<tbody>
 				<tr>

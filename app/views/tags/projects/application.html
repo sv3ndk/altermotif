@@ -8,7 +8,7 @@
 					<img src="${_application.user.mainPhotoThumbLink}" class="profileContactThumb"></img>
 				#{/if}
 				#{if _application.user.mainPhotoThumbLink == null}
-					<img src="@{'/public/images/defaultProfileThumb.jpg'}" class="profileContactThumb"></img>
+					<img src="${_dabImagesPath}/defaultProfileThumb.jpg" class="profileContactThumb"></img>
 				#{/if}
 			</a>
 		

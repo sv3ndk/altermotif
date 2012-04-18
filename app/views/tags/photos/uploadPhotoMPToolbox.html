@@ -3,19 +3,19 @@
 <div id="profileMPToolbox">
 	<ul>
 		<li>
-			<img id="deletePhotoButton" src="@{'/public/images/trash.png'}" class="iconLink"> <span class="dabLink" id="deletePhotoLink">&{'profileMPDeletePhotoLink'}</span>
+			<img id="deletePhotoButton" src="${_dabImagesPath}/trash.png" class="iconLink"> <span class="dabLink" id="deletePhotoLink">&{'profileMPDeletePhotoLink'}</span>
 		</li>
 		<li>
 			#{if _uploadPhotoLinkActive}
-				<img id="uploadPhotoButton" src="@{'/public/images/upload.png'}" class="iconLink"> <span class="dabLink" id="uploadPhotoLink">&{'profileMPUploadPhoto'}</span>
+				<img id="uploadPhotoButton" src="${_dabImagesPath}/upload.png" class="iconLink"> <span class="dabLink" id="uploadPhotoLink">&{'profileMPUploadPhoto'}</span>
 			#{/if}
 			#{if !_uploadPhotoLinkActive}
-				<img id="uploadPhotoButton" src="@{'/public/images/upload.png'}" class="iconLinkInactive"> <span class="dabLinkDisabled" id="uploadPhotoLink">&{'profileMPUploadPhoto'}</span>
+				<img id="uploadPhotoButton" src="${_dabImagesPath}/upload.png" class="iconLinkInactive"> <span class="dabLinkDisabled" id="uploadPhotoLink">&{'profileMPUploadPhoto'}</span>
 			#{/if}
 		</li>
 		
 		<li>
-			<img id="setAsMainPhotoImage" src="@{'/public/images/profilePhoto.png'}" class="iconLinkInactive"> <span class="dabLinkDisabled" id="setAsMainPhotoLink">&{_setAsMainPhotoText}</span>
+			<img id="setAsMainPhotoImage" src="${_dabImagesPath}/profilePhoto.png" class="iconLinkInactive"> <span class="dabLinkDisabled" id="setAsMainPhotoLink">&{_setAsMainPhotoText}</span>
 		</li>
 	</ul>
 </div>
@@ -23,7 +23,7 @@
 <div id="pleaseWaitUploadDialog">
 	&{'uploadPhotoPleaseWait'}
 	<br />
-	<img  src="@{'/public/images/image_upload.gif'}" class="iconLink" />
+	<img  src="${_dabImagesPath}/image_upload.gif" class="iconLink" />
 </div>
 
 <div id="dialogConfirmDeletePhoto" title="&{'confirmationPopupTitle'}" style="display: none">

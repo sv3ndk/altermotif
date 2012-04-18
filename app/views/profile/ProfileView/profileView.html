@@ -47,7 +47,7 @@
 <span id="profileContacts" style="display: none"}>&{'profileContacts'}</span>
 <span id="isAddToContactLinkVisible" style="display: none"}>${profileVisibility.addToContactLinkVisible}</span>
 <span id="isAddedToContactLinkVisible" style="display: none"}>${profileVisibility.addedToContactVisible}</span>
-<img id="defaultProfileThumbImage" src="@{'/public/images/defaultProfileThumb.jpg'}" style="display: none"></img>
+<img id="defaultProfileThumbImage" src="${dabImagesPath}/defaultProfileThumb.jpg" style="display: none"></img>
 
 <div id="personalContainer"	class="pageContainer">
 
@@ -69,7 +69,7 @@
 			isPhotoGalleryVisible:profileVisibility.userPhotoGalleryVisible/}
 	</div>
 	
-	#{profile.userProfileBasicDetails visitedUserProfile:visitedUserProfile, profileVisibility:profileVisibility/}
+	#{profile.userProfileBasicDetails visitedUserProfile:visitedUserProfile, profileVisibility:profileVisibility, dabImagesPath:dabImagesPath/}
 
 	<div class="userProfileSection" id="userProfilePersonalStuff">
 	
@@ -118,7 +118,7 @@
 				#{/if}
 				
 				 #{list items:visitedUserProfile.receivedReferences, as:'oneReference'}
-						#{profile.receivedReference reference: oneReference, loggedInUserProfileId:userSession.loggedInUserProfileId /}
+						#{profile.receivedReference reference: oneReference, loggedInUserProfileId:userSession.loggedInUserProfileId, dabImagesPath:dabImagesPath /}
 				 #{/list}
 			</div>
 		</div>
@@ -127,7 +127,7 @@
 			<span class="toggleLink" id="profileSentReferencesLink"></span>
 			<div id="writtendReferenceContainer" class="toggleContainer" style="display: none">
 				 #{list items:visitedUserProfile.writtenReferences, as:'oneReference'}
-					#{profile.writtenReference reference: oneReference, profileVisibility:profileVisibility/}
+					#{profile.writtenReference reference: oneReference, profileVisibility:profileVisibility, dabImagesPath:dabImagesPath/}
 				 #{/list}
 			</div>
 		</div>
@@ -136,7 +136,7 @@
 			<span class="toggleLink">&{'profileProjects'} (${visitedUserProfile.numberOfConfirmedProjects})</span>
 			<div class="toggleContainer" style="display: none">
 				 #{list items:visitedUserProfile.confirmedProjects, as:'oneProject'}
-					#{projectParticipation participation: oneProject /}
+					#{projectParticipation participation: oneProject, dabImagesPath:dabImagesPath /}
 				 #{/list}
 			</div>
 		</div>
@@ -145,7 +145,7 @@
 			<span class="toggleLink">&{'profileGroups'} (${visitedUserProfile.numberOfGroups})... </span>
 			<div class="toggleContainer" style="display: none">
 				 #{list items:visitedUserProfile.groups, as:'oneGroup'}
-				 	#{groups.groupParticipation group: oneGroup /}
+				 	#{groups.groupParticipation group: oneGroup, dabImagesPath:dabImagesPath /}
 				 #{/list}
 			</div>
 		</div>
@@ -175,20 +175,20 @@
 				#{if profileVisibility.visitingHisOwnProfile}
 					<div id="pendingReceivedContactRequestsContainer">
 						 #{list items:visitedUserProfile.pendingReceivedContactRequests, as:'oneContact'}
-							#{profile.receivedContactRequest contact: oneContact/}
+							#{profile.receivedContactRequest contact: oneContact, dabImagesPath:dabImagesPath/}
 						 #{/list}
 					</div>
 	
 					<div id="pendingSentContactRequestsContainer">
 						 #{list items:visitedUserProfile.pendingSentContactRequests, as:'oneContact'}
-							#{profile.sentContactRequest contact: oneContact/}
+							#{profile.sentContactRequest contact: oneContact, dabImagesPath:dabImagesPath/}
 						 #{/list}
 					</div>
 				#{/if}
 
 				<div id="confirmedContactContainer">
 					 #{list items:visitedUserProfile.myActiveContacts, as:'oneContact'}
-						#{profile.contact contact: oneContact, profileVisibility:profileVisibility/}
+						#{profile.contact contact: oneContact, profileVisibility:profileVisibility, dabImagesPath:dabImagesPath/}
 					 #{/list}
 				</div>
 			</div>

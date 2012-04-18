@@ -6,7 +6,7 @@
 		#{/if }
 	
 			#{if _participant.user.mainPhotoThumbLink == null}
-				<img src="@{'/public/images/defaultProfileThumb.jpg'}" class="oneLinerThumb" />
+				<img src="${_dabImagesPath}/defaultProfileThumb.jpg" class="oneLinerThumb" />
 			#{/if }
 			#{if _participant.user.mainPhotoThumbLink != null}
 				<img class="oneLinerThumb" src="${_participant.user.mainPhotoThumbLink}"/> 

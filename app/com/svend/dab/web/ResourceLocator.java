@@ -4,6 +4,9 @@ import static com.svend.dab.core.beans.Config.DEPLOYMENT_MODE.devLocal;
 
 import org.springframework.stereotype.Service;
 
+import play.mvc.Router;
+import play.vfs.VirtualFile;
+
 import controllers.BeanProvider;
 
 @Service
@@ -18,20 +21,21 @@ public class ResourceLocator {
 	
 	
 	public String getDabStylesheetPath() {
-    	if (BeanProvider.getConfig().getDeploymentMode() == devLocal) {
-    		return  LOCAL_PUBLIC_RESOURCES + "/stylesheets";
-    	} else {
-    		return  ONLINE_PUBLIC_RESOURCES + "/stylesheets";
-    	}
+		return  getDabResourcesPath() + "/stylesheets";
 	}
 
 	public String getDabImagesPath() {
+		return  getDabResourcesPath() + "/images";
+	}
+	
+	public String getDabResourcesPath() {
 		if (BeanProvider.getConfig().getDeploymentMode() == devLocal) {
-			return  LOCAL_PUBLIC_RESOURCES + "/images";
+			return Router.reverse(VirtualFile.fromRelativePath(LOCAL_PUBLIC_RESOURCES), false);
 		} else {
-			return  ONLINE_PUBLIC_RESOURCES + "/images";
+			return  ONLINE_PUBLIC_RESOURCES ;
 		}
 	}
+	
 	
 	
 

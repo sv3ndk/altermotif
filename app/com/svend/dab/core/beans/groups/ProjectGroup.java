@@ -18,7 +18,7 @@ import controllers.BeanProvider;
 
 public class ProjectGroup {
 
-	private static final String DEFAULT_GROUP_IMAGE = "/public/images/defaultGroupImage.jpg";;
+	private static final String DEFAULT_GROUP_IMAGE = "/defaultGroupImage.jpg";;
 
 	private String id;
 
@@ -96,7 +96,7 @@ public class ProjectGroup {
 		photoAlbum.setPhotoS3RootFolder("/groups/" + id + "/photos/");
 		photoAlbum.setThumbS3RootFolder("/groups/" + id + "/thumbs/");
 		photoAlbum.setMaxNumberOfPhotos(BeanProvider.getConfig().getMaxNumberOfPhotosInGroup());
-		photoAlbum.setDefaultMainPhoto(DEFAULT_GROUP_IMAGE);
+		photoAlbum.setDefaultMainPhoto(BeanProvider.getResourceLocator().getDabImagesPath() + DEFAULT_GROUP_IMAGE);
 		
 		return photoAlbum;
 	}

@@ -29,7 +29,7 @@ public class UserProfile implements Serializable {
 
 	private static final long serialVersionUID = -6374495407099516286L;
 
-	private static final String DEFAULT_PROFILE_IMAGE = "/public/images/defaultProfilePicture.png";
+	private static final String DEFAULT_PROFILE_IMAGE = "/defaultProfilePicture.png";
 
 	private static Logger logger = Logger.getLogger(UserProfile.class.getName());
 
@@ -200,7 +200,7 @@ public class UserProfile implements Serializable {
 		photoAlbum.setPhotoS3RootFolder("/profiles/" + username + "/photos/");
 		photoAlbum.setThumbS3RootFolder("/profiles/" + username + "/thumbs/");
 		photoAlbum.setMaxNumberOfPhotos(BeanProvider.getConfig().getMaxNumberOfPhotosInProfile());
-		photoAlbum.setDefaultMainPhoto(DEFAULT_PROFILE_IMAGE);
+		photoAlbum.setDefaultMainPhoto(BeanProvider.getResourceLocator().getDabImagesPath() + DEFAULT_PROFILE_IMAGE);
 
 		return photoAlbum;
 	}

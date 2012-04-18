@@ -1,29 +1,28 @@
-	<span class="hiddenRefid" style="display: none" id="${_reference.id}">${_reference.id}</span>
-	<p>
+<span class="hiddenRefid" style="display: none" id="${_reference.id}">${_reference.id}</span>
+<p>
 
+	#{if _profileVisibility.visitingHisOwnProfile}
+		<img src="${_dabImagesPath}/trash.png" class="deleteImageLink" onclick="showConfirmRemoveReferencePopup('${_reference.id}', '${_reference.toUser.userName}')"></img>
+	#{/if }
 
-		#{if _profileVisibility.visitingHisOwnProfile}
-			<img src="@{'/public/images/trash.png'}" class="deleteImageLink" onclick="showConfirmRemoveReferencePopup('${_reference.id}', '${_reference.toUser.userName}')"></img>
-		#{/if }
+	<span class="referenceFromFor">&{'dabfor'}: </span>
 
-		<span class="referenceFromFor">&{'dabfor'}: </span>
-
-		#{if _reference.toUser.profileActive}
-			<a href="@{profile.ProfileView.profileView( _reference.toUser.userName )}" class="dabLink">${_reference.toUser.userName}</a>
-			<a href="@{profile.ProfileView.profileView( _reference.toUser.userName )}" class="dabLink">
-				<img src="${_reference.toUser.mainPhotoThumbLink}" class="profileContactThumb" />
-			</a>
-		#{/if }
-		#{if ! _reference.toUser.profileActive}
-			<span class="dabLinkDisabled">${_reference.toUser.userName}</span>
-			<img src="${_reference.toUser.mainPhotoThumbLink}" class="profileContactThumb"></img>
-		#{/if }
-		
-		${_reference.toUser.location} &{'leftOn'} ${_reference.creationDateStr}
-		
-	</p>
-	<p>
-		${_reference.text}
-	</p>
+	#{if _reference.toUser.profileActive}
+		<a href="@{profile.ProfileView.profileView( _reference.toUser.userName )}" class="dabLink">${_reference.toUser.userName}</a>
+		<a href="@{profile.ProfileView.profileView( _reference.toUser.userName )}" class="dabLink">
+			<img src="${_reference.toUser.mainPhotoThumbLink}" class="profileContactThumb" />
+		</a>
+	#{/if }
+	#{if ! _reference.toUser.profileActive}
+		<span class="dabLinkDisabled">${_reference.toUser.userName}</span>
+		<img src="${_reference.toUser.mainPhotoThumbLink}" class="profileContactThumb"></img>
+	#{/if }
+	
+	${_reference.toUser.location} &{'leftOn'} ${_reference.creationDateStr}
+	
+</p>
+<p>
+	${_reference.text}
+</p>
 
 

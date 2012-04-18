@@ -21,11 +21,11 @@
 		<a href="@{groups.GroupsView.groupsView( editedGroup.id )}" class="dabLink" >&{'groupForumThreadBackToGroup'}</a>
 	</p>
 
-	#{photos.uploadPhotoThumbs photoAlbum:editedGroup.getPhotoAlbum() /}
+	#{photos.uploadPhotoThumbs photoAlbum:editedGroup.getPhotoAlbum(), dabImagesPath:dabImagesPath /}
 	
-	#{photos.uploadPhotoMPToolbox uploadPhotoLinkActive:uploadPhotoLinkActive, setAsMainPhotoText:"projectPhotosSetAsMainPhoto", photoEditType:"project" /}
+	#{photos.uploadPhotoMPToolbox uploadPhotoLinkActive:uploadPhotoLinkActive, setAsMainPhotoText:"projectPhotosSetAsMainPhoto", photoEditType:"project", dabImagesPath:dabImagesPath /}
 	
-	#{photos.centralPhotoContainer /}
+	#{photos.centralPhotoContainer dabImagesPath:dabImagesPath/}
 
 </div>
 

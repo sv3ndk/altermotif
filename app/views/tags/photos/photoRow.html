@@ -3,7 +3,7 @@
 	
 		#{if onePhoto_index  > _startIndex && onePhoto_index < _endIndex +1}
 			#{if onePhoto.isPhotoEmpty}
-				<img src="@{'/public/images/empty.png'}" class="profileEmptyImage"></img>
+				<img src="${_dabImagesPath}/empty.png" class="profileEmptyImage"></img>
 			#{/if}
 			#{else}
 				#{if onePhoto_index == (_photoAlbum.mainPhotoIndex + 1 )}

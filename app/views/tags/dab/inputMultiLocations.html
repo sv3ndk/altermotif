@@ -1,13 +1,11 @@
 <div>
-
 	<ul class="locationsList" data-bind="foreach: locations">
 		<li >
 			<span class="hidden hiddenLocationIndex" data-bind="text: index"></span> 
 			<span  data-bind="text: location"></span> 
-			<img src="@{'/public/images/trash.png'}"  class="deleteImageLink"></img>
+			<img src="${dabImagesPath}/trash.png"  class="deleteImageLink"></img>
 		</li>
 	</ul>
-
 
 	<span  class="addLocationLink dabLink"> ${_addLocationLinkLabel}...</span>
 	<div class="editGroupLocation">
@@ -17,6 +15,4 @@
 		<br />
 		<span class="formFieldExplanation">${_explanation}</span>
 	#{/if}
-	
-
 </div>

@@ -2,7 +2,7 @@
 
 <p>
 	#{if _loggedInUserProfileId == _reference.fromUser.userName}
-		<img src="@{'/public/images/trash.png'}" class="deleteImageLink" onclick="showConfirmRemoveReferencePopup('${_reference.id}', '${_reference.toUser.userName}')"></img>
+		<img src="${_dabImagesPath}/trash.png" class="deleteImageLink" onclick="showConfirmRemoveReferencePopup('${_reference.id}', '${_reference.toUser.userName}')"></img>
 	#{/if }
 
 	<span class="referenceFromFor">&{'from'}: </span>

@@ -14,13 +14,10 @@ public class DabController extends Controller{
     	
    		renderArgs.put("dabStylesheetsPath", BeanProvider.getResourceLocator().getDabStylesheetPath());
    		renderArgs.put("dabImagesPath", BeanProvider.getResourceLocator().getDabImagesPath());
-   		
     	
     	if (getSessionWrapper().isLoggedIn()) {
     		renderArgs.put("numberOfUnreadReceivedMessages", BeanProvider.getMessagesService().getNumberOfUnreadMessages(getSessionWrapper().getLoggedInUserProfileId()));
     	}
-
-    	
 	}
 	
 	public static SessionWrapper getSessionWrapper() {

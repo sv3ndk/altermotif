@@ -21,11 +21,11 @@
 		<a href="@{projects.ProjectsView.projectsView( editedProject.id )}" class="dabLink" >&{'projectForumThreadBackToProject'}</a>
 	</p>
 
-	#{photos.uploadPhotoThumbs photoAlbum:editedProject.getPhotoAlbum() /}
+	#{photos.uploadPhotoThumbs photoAlbum:editedProject.getPhotoAlbum(), dabImagesPath:dabImagesPath /}
 	
-	#{photos.uploadPhotoMPToolbox uploadPhotoLinkActive:uploadPhotoLinkActive, setAsMainPhotoText:"projectPhotosSetAsMainPhoto", photoEditType:"project" /}
+	#{photos.uploadPhotoMPToolbox uploadPhotoLinkActive:uploadPhotoLinkActive, setAsMainPhotoText:"projectPhotosSetAsMainPhoto", photoEditType:"project", dabImagesPath:dabImagesPath /}
 	
-	#{photos.centralPhotoContainer /}
+	#{photos.centralPhotoContainer dabImagesPath:dabImagesPath/}
 </div>
 <div id="hiddenUploadPhotoForm" style="display: none">
 	<form method="post"	enctype="multipart/form-data" action="@{projects.ProjectsEditPhotos.doUploadPhoto()}">

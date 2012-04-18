@@ -24,7 +24,7 @@ import controllers.BeanProvider;
  */
 public class Project {
 
-	public static final String DEFAULT_PROJECT_IMAGE = "/public/images/defaultProjectImage.jpg";
+	public static final String DEFAULT_PROJECT_IMAGE = "/defaultProjectImage.jpg";
 
 	public enum PROJECT_VISIBILITY {
 		everybody, loggedin, members, admins, owner;
@@ -127,7 +127,7 @@ public class Project {
 		photoAlbum.setPhotoS3RootFolder("/projects/" + id + "/photos/");
 		photoAlbum.setThumbS3RootFolder("/projects/" + id + "/thumbs/");
 		photoAlbum.setMaxNumberOfPhotos(BeanProvider.getConfig().getMaxNumberOfPhotosInProject());
-		photoAlbum.setDefaultMainPhoto(DEFAULT_PROJECT_IMAGE);
+		photoAlbum.setDefaultMainPhoto(BeanProvider.getResourceLocator().getDabImagesPath() + DEFAULT_PROJECT_IMAGE);
 		
 		return photoAlbum;
 	}

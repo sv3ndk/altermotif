@@ -34,7 +34,7 @@
 
 		<tbody data-bind="foreach: tasks">
 			<tr>
-				<td><img src="@{'/public/images/trash.png'}"  class="deleteImageLink deleteTaskLink" /></td>
+				<td><img src="${dabImagesPath}/trash.png"  class="deleteImageLink deleteTaskLink" /></td>
 				<td><span class="hidden hiddenTaskId" data-bind="text: id"></span><input data-bind="value: name"></input></td>
 				<td>
 					<select data-bind="options: taskStatusLabels, value: status, optionsValue: 'name', optionText: 'localizedName'" ></select>
@@ -43,7 +43,7 @@
 					<ul data-bind="template : {foreach: assignees, beforeRemove: beforeRemoveAssignee, afterAdd: afterAddAssignee}">
 						<li>
 							<span data-bind="text: userName" class="taskUserName"></span> 
-							<img  src="@{'/public/images/trash.png'}"  class="deleteImageLink removeTaskAssignee" />
+							<img  src="${dabImagesPath}/trash.png"  class="deleteImageLink removeTaskAssignee" />
 						</li>
 					</ul>
 					<br />

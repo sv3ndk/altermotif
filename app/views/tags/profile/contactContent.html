@@ -7,7 +7,7 @@
 <div class="profileContactLink">
 
 	#{if _profileVisibility.visitingHisOwnProfile}
-		<img src="@{'/public/images/trash.png'}" class="deleteImageLink" />
+		<img src="${_dabImagesPath}/trash.png" class="deleteImageLink" />
 		<span class="hiddenUserName" style="display: none">${_contact.otherUser.userName}</span>
 	#{/if}
 

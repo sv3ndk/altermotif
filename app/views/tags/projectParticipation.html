@@ -2,7 +2,7 @@
 
 	<a href="@{projects.ProjectsView.projectsView( _participation.projectSummary.projectId )}" class="dabLink"> 
 	#{if !_participation.projectSummary.hasAThumbPhoto() }
-			<img src="@{'/public/images/defaultProjectThumb.jpg'}" class="oneLinerThumb" />
+			<img src="${_dabImagesPath}/defaultProjectThumb.jpg" class="oneLinerThumb" />
 	#{/if}
 	
 	#{else  } 

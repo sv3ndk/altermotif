@@ -6,9 +6,6 @@ import java.util.List;
 
 import org.springframework.data.annotation.Transient;
 
-import play.mvc.Router;
-import play.vfs.VirtualFile;
-
 import com.svend.dab.core.beans.profile.Photo;
 
 public class PhotoAlbum {
@@ -43,7 +40,7 @@ public class PhotoAlbum {
 	public String getMainPhotoAddress() {
 
 		if (getMainPhoto().getNormalPhotoAddress() == null) {
-			return Router.reverse(VirtualFile.fromRelativePath(defaultMainPhoto), false);
+			return defaultMainPhoto;
 		} else {
 			return getMainPhoto().getNormalPhotoAddress();
 		}
