@@ -4,11 +4,11 @@ french=Français
 dutch=Nederlands
 turkish=Türkçe
 donate=Bağış Yapın
-signIn=Oturum Açın  
+signIn=Giriş Yapın 
 orText=veya 
 register=Kaydolun 
 forFreeOfCourse=(Tabii ki Ücretsiz!)
-loggedInAs=Şu anki kullanıcı
+loggedInAs=Kullanıcı
 logout=Çıkış
 confirmationPopupTitle=Onay
 OkButton=Tamam
@@ -21,16 +21,16 @@ elapsedTimeMinutes=dakika önce
 elapsedTimeHours=saat önce
 
 
-aboutUsPart1=AlterMotif, bu sitede yeralan herhangi bir proje olabilirdi. Herşey basit bir fikirle başladı: yaşadığımız dünyayı daha iyi bir yer yapmayı nasıl başarabiliriz? Sonra yavaş yavaş farkına vardık ki; sorunlarımızın temelinde yatan önemli bir şey vardı: sürekli büyümek, daha fazla kar etmek, kalkınmak istiyoruz. Sonuçlarına aldırış etmeden, diğer insanlara ve dünyamızın sağlığına olan etkilerine rağmen sürdürüyoruz bu oyunu. Bu oyun bizi asıl yapmak istediğimiz asıl şeylerden de alıkoyuyor üstelik. Bunu değiştirmenin en etkin yolunun, kişisel girişimler olduğuna karar verdik. Kişisel motivasyonumuza dayalı, yeni yardımlaşma şekilleriyle hayata geçirilen projeler dünyaya yeni açılımlar sunabilir ve gerçek bir değişime katkı yapabilirler.
-aboutUsPart2=AlterMotif bu sitede yer alan diğer projeler gibi, bir fikir olarak başladı ve bir grup insana ilham verdi, onları biraraya getirdi. AlterMotif, bu insanların ortak çabalarının sonucu. AlterMotif, başlangıç prensibine sadık kalmak için kar amacı gütmeyen bir kuruluş olarak tasarlandı. Böylece, kar etmek, asla AlterMotif'in asıl amacı olamaycak. Siteye yapılan tüm bağışlar yine bu amaç için, yani kar amacı gütmeyen her türlü yardımlaşma şekline destek olmak için kullanılacak.
-aboutUsPart3=AlterMotif, kendini sürekli yenileyen, hiç sona ermeyen bir proje. Bu projenin amacı, insanların isteklerine, yeteneklerine sahip çıkarak, yaptıkları 'işi' pazar ekonomisinin dar zihniyetinden kurtararak yeniden toplumsal bir platforma yerleştirdiği   A pursuit for another world in which people can reappropriate their work by pulling actions from the market into their social environment and in which real values have precedence over monetary values. AlterMotif invites you to become part of this project. Start a project, join other projects, share your experience on the forums, donate, spread the word, join our team… anything will do so that together, we can make it happen!
+aboutUsPart1=AlterMotif, bu sitede yeralan herhangi bir proje olabilirdi. Herşey basit bir fikirle başladı: yaşadığımız dünyayı daha iyi bir yer yapmayı nasıl başarabiliriz? Sonra yavaş yavaş farkına vardık ki; sorunlarımızın temelinde yatan önemli bir şey var: hep büyümek, daha fazla kar etmek istiyoruz. Sonuçlarına aldırış etmeden, diğer insanlara ve dünyamızın sağlığına olan etkilerine rağmen sürdürüyoruz bu oyunu. Bu oyun bizi asıl yapmak istediğimiz şeylerden de alıkoyuyor üstelik. Bunu değiştirmenin en etkin yolunun, kişisel girişimler olduğuna karar verdik. Kişisel motivasyona dayalı, yeni yardımlaşma şekilleriyle hayata geçirilen projeler dünyaya yeni açılımlar sunabilir ve gerçek bir değişime katkı yapabilirler.
+aboutUsPart2=AlterMotif bu sitede yer alan diğer projeler gibi, bir fikir olarak başladı ve bir grup insana ilham verdi, onları biraraya getirdi. AlterMotif, bu insanların ortak çabalarının sonucu. AlterMotif, başlangıç prensibine sadık kalmak için kar amacı gütmeyen bir kuruluş olarak tasarlandı. Böylece, kar etmek, asla AlterMotif'in asıl amacı olamaycak. Siteye yapılan tüm bağışlar yine bu amaç için, yani kar amacı gütmeyen her türlü yardımlaşma şekline destek olan bu sitenin hayatta kalması için kullanılacak.
+aboutUsPart3=AlterMotif, kendini sürekli yenileyen, hiç sona ermeyen bir proje. Amacı, insanların isteklerine ve yeteneklerine ket vuran, sadece "kar" zihniyetiyle çalışan pazar ekonomisine bir alternatif oluşturmak. Herkesin istediklerini yapma özgürlüğü olması gerektiğine inanıyoruz. Bunun için insanlara bir şans verilirse, dünyaya katkı sağlayan, parasal değerin ötesinde toplumsal değerlere vurgu yapan işlerin yapılacağına ikna olmuş durumdayız.Biliyoruz ki, sizin de yapmak istediğiniz ama kaynak bulamadığınız için unutmaya terkettiğiniz projeleriniz var. Şimdi bir fırsatınız var: bir proje başlatın, veya diğer projelere katılın,forumlarda tecrübelerinizi paylaşın, bağış yapın,bilmeyenlere haber verin,ekibimize destek olun...Tüm bunlar, AlterMotif'in amacına destek olmak için yeterli!Yalnız yapamadıklarımızı beraber başarabiliriz!
 
 # error messages
 errorValueRequired=Bu alan boş olamaz
-passwordMayNotBeEmpty=Şifre boş olamaz
+passwordMayNotBeEmpty=Şifre girmelisin!
 passwordMustBeIdentical=Girdiğin şifreler aynı değil!
-errorUsernameFormat=Kullanıcı adın sadece küçük harf ve sayılardan oluşmalı
-errorLocaltionMissingOrKnown=Böyle bir yer yok veya biz bilmiyoruz. Yeni deneme
+errorUsernameFormat=Kullanıcı adı sadece küçük harf ve sayılardan oluşmalı
+errorLocaltionMissingOrKnown=Böyle bir yer yok veya biz bilmiyoruz. Yeniden dene
 atLeastOneLanguage=En azından bir dil seçmelisin
 userAlreadyExist=Bu kullanıcı adı bir başkası tarafından alınmış!
 incorrectEmailFormat=E-Posta adresi uygun formatta değil!
@@ -42,16 +42,16 @@ errorIncorrectDate=İstenen tarih formatı GG AAA YYYY
 uploadGenericError=Bilgi yüklenirken hata oluştu
 uploadedFileTooBigError=Yüklemek istediğin dosya çok büyük 
 profileUploadCvNotAPdf=Hata: Özgeçmiş PDF formatında olmalı
-profileUploadPhotoNotAnImage=Yüklemeye çalıştığın dosya resim dosyası değil
+profileUploadPhotoNotAnImage=Yüklemeye çalıştığın resim uygun formatta değil
 illegalHttpAddressFormat=Girdiğin bağlantı formatında bir sorun var
 registerMustAcceptConditionsErrorMessage=Bir profil oluşturabilmek için önce kullanım kurallarını onaylaman gerekiyor 
 
 
 # note: this message is not displayed by Firefox: they actually refuse to do that because some website exploit this against their users, see here:https://bugzilla.mozilla.org/show_bug.cgi?id=578828 
-warningUnsavedChangesText=Profilini değiştirdin ama bu değişiklikleri kaydetmedin. Sayfadan ayrılmadan önce yaptığın değişiklikleri kaydetmeyi unutma!
+warningUnsavedChangesText=Profilini değiştirdin ama değişiklikleri kaydetmedin. Sayfadan ayrılmadan önce yaptığın değişiklikleri kaydetmeyi unutma!
 
 # error page (among other things, displayed after a refused upload)
-errorPageMessage=Ufak bir hata oluştu, özür dileriz! 
+errorPageMessage=Özür dileriz, ufak bir hata oluştu! 
 errorPageGoBack=Geri dön
 
 whoShouldSeeThis=Bunu kimler görebilir?
@@ -62,7 +62,7 @@ registerPageInvalidCaptcha=Geçersiz onay kodu
 
 #Home page messages
 pageTitle=AlterMotif
-homePageTitle1=Kişisel hedeflerinize ulaşın!
+homePageTitle1=Hedeflerinize ulaşın!
 homePageTitle2=Fikirlerin gerçek olduğu bir yer
 homePageHowDoesItWort=Nasıl mı? 
 homePageExplanation=Bir fikir sunun, diğer üyelerin desteğini alın ve hedefinize ulaşın!
@@ -78,21 +78,21 @@ homeYouHavePendingInvitationNotificationPart2=Kabul veya reddetmek için
 
 
 # sign-in and login sreen:
-username=kullanıcı adı
-password=şifre
-passwordAgain=şifre tekrar
+username=Kullanıcı adı
+password=Şifre
+passwordAgain=Şifre tekrar
 notYetAMember=Henüz kaydolmadınız mı?
 alreadyAMember=Üye misiniz?
 loginButtonText=Giriş Yapın
 registerButtonText=Kaydolun
 registerMessage=Hesabınızı oluşturun(Tabii ki ücretsiz)! 
-loginMessage=Oturum Açın
-loginErrorMessage=Oturum açma hatası
+loginMessage=Giriş Yapın
+loginErrorMessage=Giriş hatası
 loginErrorDetailMessage=Kullanıcı adı/şifre hatalı!
 registerPageCaptchaTitle=Lütfen harfleri alfabetik sıraya koyun 
 registerPageWelcomText=Hoşgeldin!Kaydolduktan sonra, hesabı kişiselleştirebilir, profilini görünür veya gizli yapabilir, hesabınla ilgili bazı bilgilerin (gerçek adın ve doğum tarihin gibi)gizlilik derecesine karar verebilirsin. AlterMotif, yeni iletişim ve üretim şekilleri arayan insanların oluşturduğu bir topluluk.Artık sen de bu topluluğun bir parçasısın.Burada işbirliği karşılıklı motivasyona dayanıyor.Projelerin kar etmenin ötesine geçen belirgin amaçları var. Hayatta yapmak istediklerini değerlendirirken sürekli tek bir kritere, yani projenin kar potensiyeline önem vermekten sıkıldın mı? AlterMotif kullanıcılarını bu sınırlamadan kurtarmak amacıyla kuruldu.İsteklerinin peşinden gidebilmen, projelerini sizin gibi düşünen insanların desteği ile hayata geçirebilmen için. AlterMotif dünyasında sen ekonomi için çalışmıyorsun, ekonomi senin için çalışıyor. Buradaki en önemli şey, senin hedeflerin.Senin ne yapmak istediğin.
-registerAcceptConditions_part1=Kullanım Koşullarını
-registerAcceptConditions_part2=Kabul ediyorum 
+registerAcceptConditions_part1=Kabul ediyorum 
+registerAcceptConditions_part2=Kullanım Koşullarını
 
 
 #Top menu 
@@ -129,9 +129,9 @@ yourApplications=Başvuruların
 profileYourProfileIsInactiveNotificationPart1=Profilin pasif durumda. Bu sayfayı sadece sen görebilirsin. Profilini aktif yapmak için
 profileYourProfileIsInactiveNotificationLinkName=gizlilik ayarlarına gitmelisin
 profileYourProfileIsInactiveNotificationPart2=sayfa
-profileUsername=Kullanıcı İsmi
-profileFirstName=İsim/Kurum Adı
-profileLastName=Soyisim/Kurum tipi
+profileUsername=Kullanıcı Adı
+profileFirstName=Ad/Kurum Adı
+profileLastName=Soyad/Kurum tipi
 profileAge=Yaş
 yearsOld=Yaş
 profileCity=Şehir
@@ -271,61 +271,61 @@ groupRole=Gruptaki rolü
 groupRoleAdmin=Yönetici
 groupRoleMember=Üye
 
-groupsViewEdit=***Edit group
-groupsViewClose=***Close group
-groupsViewCannotCloseGroup=***Closing a group is a non undoable action. If you are sure this is what you want to do, please remove manually all user member and project members from this group and then click again on this link
-groupsViewConfirmCloseGroup=***Are you sure you want to close this group? The group will no longer be accessible. THIS ACTION CANNOT BE UNDONE. Are you sure this is what you want to do?
+groupsViewEdit=Grubu güncelle
+groupsViewClose=Grubu Sil
+groupsViewCannotCloseGroup=Grubu sildiğinde bu hareketi geri alman mümkün olmayacak. Eğer grubu silmek istediğine eminsen önce tüm üyeleri gruptan sil ve yeniden bu linke tıkla.
+groupsViewConfirmCloseGroup=Eğer grubu silmek istediğine emin misin?Grup tamamen silinecek. Bu hareket geri alınamaz.Devam etmek istiyor musun?
 groupsViewCreatedOn=Şu tarihte yaratıldı
 groupsViewMembers=Üyeler
 groupsViewProjects=Projeler
 groupsViewParticipants=Katılımcılar
 groupsViewApplyToGroupAsProject=Bu gruba bir projeyle katılmak için başvurun
 groupsViewApplyToGroupAsPerson=Bu gruba bireysel olarak katılmak için başvurun
-roupsViewAlreadyAppliedToGroupAsPerson=***You have already applied to be a member of this group. Waiting for an admin to accept/reject this application
-groupsViewCancelApplicationToGroupAsPerson=***Cancel application
-groupsViewConfirmCancelApplyToGroup=***Are you sure you want to cancel your application to this group?
-groupsViewApplicationPopupText=***Please enter a short text that will be attached to the application to join this group.
-groupsViewApplicationWithProjectPopupText=***Please select one of the project where you are administrator below. Please also enter a short text that will be attached to the application to join this group. 
-groupsViewApplicants=***User applications
-groupsViewAcceptUserApplication=***Accept application
-groupsViewRejectUserApplication=***Reject application
-groupsViewConfirmAcceptApplyToGroup=***Are you sure you want to accept this user membership request to this group?
-groupsViewConfirmRejectApplyToGroup=***Are you sure you want to reject this user membership request to this group?
-groupsViewLeaveGroup=***Leave group
-groupsViewConfirmLeaveToGroup=***Are you sure you want to leave this group?
-groupsViewMakeAdministrator=***Make administrator
-groupsViewConfirmMakeAdminText=***Are you sure you want to upgrade the status of this member to administrator of this group?
-groupsViewMakeMember=***Make member
+roupsViewAlreadyAppliedToGroupAsPerson=Bu gruba üye olmak için zaten başvurmuşsun. Grup yöneticisinin kararı bekleniyor
+groupsViewCancelApplicationToGroupAsPerson=Başvuruyu iptal et
+groupsViewConfirmCancelApplyToGroup=Başvuruyu iptal etmek istediğine emin misin
+groupsViewApplicationPopupText=Başvuruna eklemek için kısa bir metin yazabilirsin
+groupsViewApplicationWithProjectPopupText=Bu gruba yöneticisi olduğun projlerden birisiyle başvurmak istiyorsan, aşağıdaki listeden  seçim yap.Başvuruna kısa bir metin ekleyebilirsin.
+groupsViewApplicants=Kullanıcı başvurusu
+groupsViewAcceptUserApplication=Kabul et
+groupsViewRejectUserApplication=Reddet
+groupsViewConfirmAcceptApplyToGroup=Bu kullanıcı gruba katılsın mı?
+groupsViewConfirmRejectApplyToGroup=Bu kullanıcının başvurusu reddedilecek.
+groupsViewLeaveGroup=Grubu terket
+groupsViewConfirmLeaveToGroup=Grubu terketmek istediğine emin misin?
+groupsViewMakeAdministrator=Yönetici yap
+groupsViewConfirmMakeAdminText=Bu üyeyi yönetici konumuna yükseltmek istediğine emin misin?
+groupsViewMakeMember=Üye yap
 groupsViewConfirmMakeMemberText=***Are you sure you want to downgrade the status of this member to simple member of this group?
-groupsViewRemoveMember=***Remove member
-groupsViewconfirmRemoveMemberAText=***Are you sure you want to remove this member from this group?
-groupsViewProjectApplicants=***Project applications
-groupsViewAcceptProjectApplication=***Accept application
-groupsViewRejectProjectApplication=***Reject application
-groupsViewConfirmAcceptProjectApplication=***Are you sure you want to accept this project membership application? After you click OK, this project will appear as part of this group
-groupsViewConfirmRejectProjectApplication=***Are you sure you want to reject this project membership application?
-groupsViewRemoveProjectFromGroup=*Remove project
-groupsViewConfirmRemoveProject=***Are you sure you want to remove this project from this group? 
+groupsViewRemoveMember=Üyeyi gruptan sil
+groupsViewconfirmRemoveMemberAText=Bu üyeyi gruptan silmek istediğine emin misin?
+groupsViewProjectApplicants=Proje başvurusu
+groupsViewAcceptProjectApplication=Kabul et
+groupsViewRejectProjectApplication=Reddet
+groupsViewConfirmAcceptProjectApplication=Bu projeyi gruba kabul etmek istediğine emin misin?Proje grubun parçası olarak görünecek
+groupsViewConfirmRejectProjectApplication=Bu projeyi reddetmek istediğine emin misin?
+groupsViewRemoveProjectFromGroup=Projeyi sil
+groupsViewConfirmRemoveProject=Projeyi silmek istediğine emin misin?
 groupsViewForum=Forum
-groupsViewForumAddThread=***Add thread
-groupsViewForumAddThreadPopupPublicThread=***Public
-groupForumThreadBackToGroup=***Back to group page
+groupsViewForumAddThread=Yeni başlık
+groupsViewForumAddThreadPopupPublicThread=Herkese açık
+groupForumThreadBackToGroup=Grup sayfasına geri dön
 
-groupSearchResultTitle=***Search results
-groupSearchResultBackToSearchPage=***Back to group search page
-groupSearchResultNumberOfUserParticipants=***Number of altermotif members
-groupSearchResultNumberOfProjectParticipants=***Number of projects
-groupSearchKeyWords=***Any group with all these keywords
-groupSearchCategories=***and in any of these categories
+groupSearchResultTitle=Arama Sonuçları
+groupSearchResultBackToSearchPage=Grup arama sayfasına geri dön
+groupSearchResultNumberOfUserParticipants=AlterMotif üye sayısı
+groupSearchResultNumberOfProjectParticipants=Proje sayısı
+groupSearchKeyWords=Bu anahtar kelimeleri barındıran tüm projeler
+groupSearchCategories=Bu kategorilerin herhangi birisine dahil
 
-groupResultFilterByDetailsCurrentQueryDescription_part1=***Looking for groups
-groupResultFilterByDetailsCurrentQueryDescription_part2_keywords=*** with key words
-groupResultFilterByDetailsCurrentQueryDescription_part2_tag=*** with tag
-groupResultFilterByDetailsCurrentQueryDescription_part2_category=*** with category
-groupResultFilterByDetailsCurrentQueryDescription_part3_and=***and
-groupResultFilterByProximity_part1=***no further than
-groupResultFilterByProximity_part2=***km from
-groupResultChangeRefLocationLink=***Change reference location
+groupResultFilterByDetailsCurrentQueryDescription_part1=Grup arama
+groupResultFilterByDetailsCurrentQueryDescription_part2_keywords=anahtar kelime ile
+groupResultFilterByDetailsCurrentQueryDescription_part2_tag=etiket ile
+groupResultFilterByDetailsCurrentQueryDescription_part2_category=kategori ile
+groupResultFilterByDetailsCurrentQueryDescription_part3_and=ve
+groupResultFilterByProximity_part1=daha uzak olmasın
+groupResultFilterByProximity_part2=km
+groupResultChangeRefLocationLink=Yer bilgisini değiştir
 
 groupsEditName=Grup adı
 groupsEditDescription=Grup tanımı
@@ -339,8 +339,8 @@ groupsEditAddOneTheme=Tema ekleyin
 groupsEditSelectTags=Grup etiketleri
 groupsEditAddOneTagLink=Etiket ekle
 groupsEditCreateGroupButton=Grubu oluştur
-groupsEditConfirmEditGroupButton=***Apply changes
-groupsEditCancelEditGroupButton=***Cancel edition
+groupsEditConfirmEditGroupButton=Değişikleri kaydet
+groupsEditCancelEditGroupButton=Değişikleri iptal et
 
 
 #################################
@@ -365,7 +365,7 @@ projectThemeAnimalRightsSubThemeTestingonAnimals=Deneyler'de Canlı Hayvan Kulla
 projectThemeAnimalRightsSubThemeOther=Diğer
 
 projectThemeArts=Sanat
-projectThemeArtsSubThemeArchitecture=Mimari
+projectThemeArtsSubThemeArchitecture=Mimarlık
 projectThemeArtsSubThemeCalligraphy=Hat Sanatı
 projectThemeArtsSubThemeCinema=Sinema
 projectThemeArtsSubThemeComics=Çizgi Roman
@@ -398,24 +398,24 @@ projectThemeCultureSubThemeGames=Oyunlar
 projectThemeCultureSubThemeOther=Diğer
 
 projectThemeDevelopment=Kalkınma
-projectThemeDevelopmentSubThemeFairTrade=Fair Trade
-projectThemeDevelopmentSubThemeNorthSouthRelations=***North-South Relations
-projectThemeDevelopmentSubThemePropaganda=***Propaganda
-projectThemeDevelopmentSubThemeRethinkingEstablishedIdeas=***Rethinking Established Ideas
-projectThemeDevelopmentSubThemeSustainableLiving=***Sustainable Living
+projectThemeDevelopmentSubThemeFairTrade=Adil Ticaret
+projectThemeDevelopmentSubThemeNorthSouthRelations=Kuzey-Güney ilişkileri
+projectThemeDevelopmentSubThemePropaganda=Propaganda
+projectThemeDevelopmentSubThemeRethinkingEstablishedIdeas=Yerleşik Fikirleri Tekrar Düşünmek
+projectThemeDevelopmentSubThemeSustainableLiving=Sürdürülebilir Yaşam
 projectThemeDevelopmentSubThemeOther=Diğer
 
 
 projectThemeEnvironment=Çevre
 projectThemeEnvironmentSubThemeAgriculture=Tarım
-projectThemeEnvironmentSubThemeAwarenessRaising=***Awareness Raising
-projectThemeEnvironmentSubThemeLobbying=***Lobbying
-projectThemeEnvironmentSubThemeClimateChange=***Climate Change
-projectThemeEnvironmentSubThemeConservation=***Conservation
-projectThemeEnvironmentSubThemeEnergy=***Energy
-projectThemeEnvironmentSubThemeRecyclingReuse=***Recycling & Reuse
-projectThemeEnvironmentSubThemeResearch=***Research
-projectThemeEnvironmentSubThemeWasteManagement=***Waste Management
+projectThemeEnvironmentSubThemeAwarenessRaising=Bilinç Oluşturma
+projectThemeEnvironmentSubThemeLobbying=Lobicilik
+projectThemeEnvironmentSubThemeClimateChange=Iklim değişikliği
+projectThemeEnvironmentSubThemeConservation=Koruma
+projectThemeEnvironmentSubThemeEnergy=Enerji
+projectThemeEnvironmentSubThemeRecyclingReuse=Dönüştürmek ve yeniden kullanmak
+projectThemeEnvironmentSubThemeResearch=Araştırma
+projectThemeEnvironmentSubThemeWasteManagement=Atık yönetimi
 projectThemeEnvironmentSubThemeOther=Diğer
 
 
@@ -427,29 +427,29 @@ projectThemeScienceSubThemeTechnology=Teknoloji
 projectThemeScienceSubThemeOther=Diğer
 
 projectThemeSociety=Toplum
-projectThemeSocietySubThemeElderly=***Elderly
-projectThemeSocietySubThemeEmployment=***Employment
-projectThemeSocietySubThemeGatherings=***Gatherings
-projectThemeSocietySubThemePeaceDisarmement=***Peace & Disarmement
-projectThemeSocietySubThemePoverty=***Poverty
-projectThemeSocietySubThemeSocialCohesion=***Social Cohesion/Exclusion
-projectThemeSocietySubThemeUrbanism=***Urbanism
-projectThemeSocietySubThemeWomen=***Women
-projectThemeSocietySubThemeYouth=***Youth
+projectThemeSocietySubThemeElderly=Yaşlı insanlar
+projectThemeSocietySubThemeEmployment=iş
+projectThemeSocietySubThemeGatherings=Toplantılar
+projectThemeSocietySubThemePeaceDisarmement=Barış ve silahsızlanma
+projectThemeSocietySubThemePoverty=Fakirlike Mücadele
+projectThemeSocietySubThemeSocialCohesion=Sosyal entegrasyon
+projectThemeSocietySubThemeUrbanism=Şehircilik
+projectThemeSocietySubThemeWomen=Kadın
+projectThemeSocietySubThemeYouth=Gençlik
 projectThemeSocietySubThemeOther=Diğer
 
 projectThemeSports=Spor
 projectThemeSportsSubThemeTeamBuilding=Takım Kurma
 projectThemeSportsSubThemeEvent=Spor Etkinlikleri
-projectThemeSportsSubThemeEducation=***Education
+projectThemeSportsSubThemeEducation=Eğitim
 projectThemeSportsSubThemeOther=Diğer
 
 projectThemeTravel=Seyahat
-projectThemeTravelSubThemeEcoTourism=***Eco Tourism
-projectThemeTravelSubThemeExploration=***Exploration
-projectThemeTravelSubThemeTravellingInGroup=***Group Travel
-projectThemeTravelSubThemeTravellingIntExchange=***International Exchange
-projectThemeTravelSubThemeOther=***Other
+projectThemeTravelSubThemeEcoTourism=Ekolojik Turizm
+projectThemeTravelSubThemeExploration=Keşifler
+projectThemeTravelSubThemeTravellingInGroup=Grup seyahati
+projectThemeTravelSubThemeTravellingIntExchange=Uluslararası değişim
+projectThemeTravelSubThemeOther=Diğer
 
 
 # create project page
@@ -591,8 +591,8 @@ projectTaskEditionTableDescription=Tanım
 projectTaskEditionTableAddTask=Görev ekle
 projectTaskEditionTableConfirmRemoveTask=Bu görevi projeden silmek istediğine emin misin?
 projectTaskEditionTableConfirmRemoveUser=Bu görevi bu kullanıcıdan almak istediğine emin misin?
-projectTaskEditionTableAddAssignee=***add assignee...
-projectTaskEditionTableChooseAssigneePopupTitle=***Select the assignee
+projectTaskEditionTableAddAssignee=Bu görevi birisine ver
+projectTaskEditionTableChooseAssigneePopupTitle=Görevi kime vereceğini seç
 projectTaskEditionTableNewTaskPopupTitle=Yeni görev 
 
 projectAssetEditionTableAddAsset=Beceri ekle
