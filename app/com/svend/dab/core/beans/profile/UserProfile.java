@@ -43,9 +43,6 @@ public class UserProfile implements Serializable {
 
 	private PrivacySettings privacySettings;
 
-	// TODO: remove this (after deployments...)
-	private List<Photo> photos;
-
 	private PhotoAlbum photoAlbum;
 
 	private List<UserReference> writtenReferences = new LinkedList<UserReference>();
@@ -145,15 +142,6 @@ public class UserProfile implements Serializable {
 		this.uploadPermKey = copied.getUploadPermKey();
 	}
 
-	public UserProfile(String userName, String password, String firstName, String email, String gender, String lastName, String location, String locationLat,
-			String locationLong, String website, String personalObjective, String personalDescription, String personalPhilosophy, String personalAssets) {
-
-		this.pdata = new PersonalData(location, password, firstName, lastName, email, gender, null, null, website, locationLat, locationLong,
-				personalObjective, personalDescription, personalPhilosophy, personalAssets);
-		this.username = userName;
-
-	}
-
 	// ----------------------------------
 	// business logic
 	// ----------------------------------
@@ -164,6 +152,15 @@ public class UserProfile implements Serializable {
 	public boolean isComplete() {
 		return pdata != null && pdata.isComplete();
 	}
+	
+	public boolean checkPassword(String password) {
+		if ( pdata == null) {
+			return false;
+		}
+		
+		return pdata.checkPassword(password);
+	}
+
 
 	// -----------------------------------------------------
 	// CV
@@ -789,14 +786,6 @@ public class UserProfile implements Serializable {
 		return dateOfLatestLogin;
 	}
 
-//	public List<Photo> getPhotos() {
-//		return photos;
-//	}
-//
-//	public void setPhotos(List<Photo> photos) {
-//		this.photos = photos;
-//	}
-
 	public List<UserReference> getWrittenReferences() {
 		return writtenReferences;
 	}
@@ -1107,11 +1096,5 @@ public class UserProfile implements Serializable {
 		this.groups = groups;
 	}
 
-	public List<Photo> getPhotos() {
-		return photos;
-	}
 
-	public void setPhotos(List<Photo> photos) {
-		this.photos = photos;
-	}
 }

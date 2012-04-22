@@ -1,11 +1,16 @@
 #{extends 'masterTemplate.html' /}
 
+<br />
+<br />
+<br />
+
 <ul>
 
 	<li>
 	#{form @Admin.doUpdateCreationDateOfAllProjectSummaries()}
 		<input type="submit" value="update all project summaries"></input>
 	#{/form }
+	
 	</li>
 	
 	<li>
@@ -33,9 +38,10 @@
 	</li>
 	
 	<li>
-	#{form @Admin.copyPhotosToAlbumPhotos()}
-		<input type="submit" value="copy Photos To AlbumPhotos"></input>
+	#{form @Admin.doEncryptAllPass()}
+		<input type="submit" value="encrypt all user passwords"></input>
 	#{/form }
 	</li>
+
 
 </ul>

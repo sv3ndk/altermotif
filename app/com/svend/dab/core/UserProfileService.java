@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.Strings;
@@ -101,6 +102,8 @@ public class UserProfileService implements IUserProfileService, Serializable {
 		// synchronously (and this should be fast...)
 		createdUserProfile.setUploadPermKey(UUID.randomUUID().toString());
 		createdUserProfile.setDateOfLatestLogin(new Date());
+		
+		
 		userProfileRepo.save(createdUserProfile);
 		return createdUserProfile;
 	}

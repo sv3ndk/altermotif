@@ -99,7 +99,7 @@ public class CreatedProfile {
 	
 	public void applyToPData(PersonalData pdata) {
 		
-		pdata.setPassword(firstpassword);
+		pdata.updatePassword(firstpassword);
 		pdata.setFirstName(firstName);
 		pdata.setLastName(lastName);
 		pdata.setEmail(email);

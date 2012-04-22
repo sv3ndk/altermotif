@@ -50,7 +50,7 @@ public class Enter extends DabController {
 
 		UserProfile userProfile = BeanProvider.getUserProfileService().loadUserProfile(username, false);
 
-		if (userProfile != null && password.equals(userProfile.getPdata().getPassword())) {
+		if (userProfile != null && userProfile.checkPassword(password)  ) {
 			BeanProvider.getUserProfileService().loggedIn(userProfile);
 			getSessionWrapper().setLoggedInUserProfileId(username);
 			ProfileHome.profileHome();

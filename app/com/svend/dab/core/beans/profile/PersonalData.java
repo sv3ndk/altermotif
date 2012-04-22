@@ -10,18 +10,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.springframework.data.annotation.Transient;
+import org.springframework.security.crypto.password.StandardPasswordEncoder;
 
 /**
  * @author svend
  * 
  */
-public class PersonalData implements Serializable{
+public class PersonalData implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -2171159429855330690L;
-
 
 	// associates the gender, as stored in persistence, to the localized label to be displayed to user, as defined in the .properties files
 	private static Map<String, String> GENDER_LABEL_MAPPING = new HashMap<String, String>();
@@ -30,16 +30,18 @@ public class PersonalData implements Serializable{
 		GENDER_LABEL_MAPPING.put("F", "profileFemale");
 		GENDER_LABEL_MAPPING.put("U", "profileGenderUnspecified");
 	}
-	
+
 	private static Logger logger = Logger.getLogger(PersonalData.class.getName());
-	
-	
+
+	private final static String FIXED_SALT = "apUPJI!G+[-b,vox#_TUO @r0-NdfB4}9qp\\:HGz!tfS/)5U0e";
+
 	// -------------------
 	// basic info
 
 	private String location;
 
 	private String password;
+	private String passwd;
 
 	private String firstName;
 	private String lastName;
@@ -65,26 +67,22 @@ public class PersonalData implements Serializable{
 	// this isrecomputed each time the date of birth is set (and is not persisted)
 	@Transient
 	private Integer computedAge;
-	
-	
+
 	// assuming an average year of 365.242199 days...
-	public static long MILLIS_IN_YEAR = 31556925993l;  
-	
-	
+	public static long MILLIS_IN_YEAR = 31556925993l;
+
 	// -------------------------
 	// -------------------------
 
 	public PersonalData() {
 	}
-	
-	
-	
-	public PersonalData(String location, String password, String firstName, String lastName, String email,
-			String gender, Date dateOfBirth, Set<Language> languages, String website, String locationLat, String locationLong, String personalObjective,
-			String personalDescription, String personalPhilosophy, String personalAssets) {
+
+	public PersonalData(String location, String password, String passwd, String firstName, String lastName, String email, String gender, Date dateOfBirth, Set<Language> languages, String website,
+			String locationLat, String locationLong, String personalObjective, String personalDescription, String personalPhilosophy, String personalAssets) {
 		super();
 		this.location = location;
 		this.password = password;
+		this.passwd = passwd;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
@@ -96,33 +94,42 @@ public class PersonalData implements Serializable{
 		this.personalDescription = personalDescription;
 		this.personalPhilosophy = personalPhilosophy;
 		this.personalAssets = personalAssets;
-		
-		
+
 		this.languages = new HashSet<Language>();
 		if (languages != null) {
 			for (Language lg : languages) {
 				this.languages.add(new Language(lg));
 			}
 		}
-		
+
 		this.dateOfBirth = dateOfBirth;
 		recomputeAge();
 	}
 
-	
 	/**
 	 * @param copied
 	 */
 	public PersonalData(PersonalData copied) {
-		this(copied.location, copied.password, copied.firstName, copied.lastName, copied.email,
-				copied.gender, copied.dateOfBirth, copied.languages, copied.website, copied.locationLat, copied.locationLong, copied.personalObjective,
-				copied.personalDescription, copied.personalPhilosophy, copied.personalAssets);
+		this(copied.location, copied.password, copied.passwd, copied.firstName, copied.lastName, copied.email, copied.gender, copied.dateOfBirth, copied.languages, copied.website, copied.locationLat,
+				copied.locationLong, copied.personalObjective, copied.personalDescription, copied.personalPhilosophy, copied.personalAssets);
 	}
 
-
 	// -------------------------
 	// -------------------------
 
+	public void updatePassword(String password) {
+		StandardPasswordEncoder encoder = new StandardPasswordEncoder(FIXED_SALT);
+		this.passwd = encoder.encode(password);
+	}
+
+	
+	public boolean checkPassword(String password) {
+		StandardPasswordEncoder encoder = new StandardPasswordEncoder(FIXED_SALT);
+		return encoder.matches(password, this.passwd);
+	}
+
+	
+	
 	/**
 	 * 
 	 */
@@ -132,9 +139,8 @@ public class PersonalData implements Serializable{
 			long ageInMillis = nowInMillis - dateOfBirth.getTime();
 			computedAge = (int) Math.ceil(ageInMillis / MILLIS_IN_YEAR);
 		}
-	}	
-	
-	
+	}
+
 	/**
 	 * @return the computed age
 	 */
@@ -148,19 +154,16 @@ public class PersonalData implements Serializable{
 		}
 		return computedAge;
 	}
-	
+
 	/**
 	 * @return true if the profile has a minimun information for a minimal profile (used when registering a user)
 	 */
 	public boolean isComplete() {
-		
-		return firstName != null && !"".equals(firstName) && lastName != null && !"".equals(lastName) && dateOfBirth != null && languages != null
-				&& languages.size() > 0;
+
+		return firstName != null && !"".equals(firstName) && lastName != null && !"".equals(lastName) && dateOfBirth != null && languages != null && languages.size() > 0;
 
 	}
 
-	
-	
 	public int getNumberOfKnownLanguages() {
 		if (getLanguages() == null) {
 			return 0;
@@ -198,7 +201,7 @@ public class PersonalData implements Serializable{
 
 			for (Language existingLg : languages) {
 				if (existingLg != null && addedLanguageCode.equals(existingLg.getName())) {
-					logger.log(Level.WARNING, "No adding already existing langage to profile: " + addedLanguageCode );
+					logger.log(Level.WARNING, "No adding already existing langage to profile: " + addedLanguageCode);
 					break donotadd;
 				}
 			}
@@ -207,8 +210,7 @@ public class PersonalData implements Serializable{
 		}
 
 	}
-	
-	
+
 	/**
 	 * @return the label associated to the gender of this {@link UserProfile}
 	 */
@@ -219,25 +221,24 @@ public class PersonalData implements Serializable{
 			return GENDER_LABEL_MAPPING.get(gender);
 		}
 	}
-	
-	
+
 	/**
 	 * @param otherPdata
 	 * @return
 	 */
 	public boolean isLocationDifferent(PersonalData otherPdata) {
-		if (otherPdata == null ) {
+		if (otherPdata == null) {
 			return false;
 		}
-		
+
 		if (location == null) {
 			return otherPdata.getLocation() != null;
 		}
-		
-		return ! location.equals(otherPdata.getLocation());
-		
+
+		return !location.equals(otherPdata.getLocation());
+
 	}
-	
+
 	// -------------------------
 	// -------------------------
 
@@ -293,7 +294,7 @@ public class PersonalData implements Serializable{
 		return dateOfBirth;
 	}
 
-	public void setDateOfBirth(Date  dateOfBirth) {
+	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 		recomputeAge();
 	}
@@ -362,11 +363,12 @@ public class PersonalData implements Serializable{
 		this.personalAssets = personalAssets;
 	}
 
+	public String getPasswd() {
+		return passwd;
+	}
 
-
-
-
-
-
+	public void setPasswd(String passwd) {
+		this.passwd = passwd;
+	}
 
 }

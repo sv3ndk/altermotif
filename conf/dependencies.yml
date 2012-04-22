@@ -15,6 +15,7 @@ require:
     - org.springframework -> spring-context-support 3.1.1.RELEASE
     - org.springframework.data -> spring-data-mongodb 1.0.0.RC1
     - org.springframework.amqp -> spring-rabbit 1.0.0.RELEASE
+    - org.springframework.security -> spring-security-core 3.1.0.RELEASE
     
     - org.hibernate -> hibernate-validator 4.2.0.Final
     

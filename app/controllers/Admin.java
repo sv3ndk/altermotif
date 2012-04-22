@@ -4,7 +4,7 @@ package controllers;
  * @author svend
  * TODO: add more indexes to MongoDb...
  */
-public class Admin extends DabLoggedController {
+public class Admin extends DabController {
 
 	public static void admin() {
 		render();
@@ -35,9 +35,14 @@ public class Admin extends DabLoggedController {
 		admin();
 	}
 	
-	public static void copyPhotosToAlbumPhotos() {
-		BeanProvider.getAdminService().copyPhotosToAlbumPhotos();
+	public static void doEncryptAllPass() {
+		BeanProvider.getAdminService().encryptUserPasswords();
 		admin();
 	}
+	
+//	public static void copyPhotosToAlbumPhotos() {
+//		BeanProvider.getAdminService().copyPhotosToAlbumPhotos();
+//		admin();
+//	}
 	
 }

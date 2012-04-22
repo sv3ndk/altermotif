@@ -18,8 +18,6 @@ import java.util.logging.Logger;
 import models.altermotif.MappedValue;
 import models.altermotif.SessionWrapper;
 
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import play.mvc.Scope.RenderArgs;
@@ -37,11 +35,11 @@ public class Utils {
 	private static Logger logger = Logger.getLogger(Utils.class.getName());
 
 	// both these contain the same thing, but the second is more practicel fro use in the back end (the first one is for the from end)
-	private static HashMap<String, List<MappedValue>> allPossibleLanguageNames = null;
+	private static HashMap<String, List<MappedValue>> ALL_POSSIBLE_LANGUAGE_NAMES = null;
 
 	// map of language name to language code
-	private static HashMap<String, HashMap<String, String>> languageToCodeMap = null;
-	private static HashMap<String, HashMap<String, String>> codeToLanguageMap = null;
+	private static HashMap<String, HashMap<String, String>> LANGUANGE_TO_CODE_MAP = null;
+	private static HashMap<String, HashMap<String, String>> CODE_TO_LANGUAGE_MAP = null;
 
 	private static ObjectMapper jsonMapper = new ObjectMapper();
 
@@ -80,15 +78,13 @@ public class Utils {
 
 	public static List<MappedValue> getAllPossibleLanguageNames(String inLanguage) {
 
-		// TODO: optmization: cache this in memory, do not load it every time!
-		
-		if (allPossibleLanguageNames == null) {
+		if (ALL_POSSIBLE_LANGUAGE_NAMES == null) {
 			synchronized (Utils.class) {
-				if (allPossibleLanguageNames == null) {
+				if (ALL_POSSIBLE_LANGUAGE_NAMES == null) {
 
-					allPossibleLanguageNames = new HashMap<String, List<MappedValue>>();
-					languageToCodeMap = new HashMap<String, HashMap<String, String>>();
-					codeToLanguageMap = new HashMap<String, HashMap<String, String>>();
+					ALL_POSSIBLE_LANGUAGE_NAMES = new HashMap<String, List<MappedValue>>();
+					LANGUANGE_TO_CODE_MAP = new HashMap<String, HashMap<String, String>>();
+					CODE_TO_LANGUAGE_MAP = new HashMap<String, HashMap<String, String>>();
 
 					for (filenames propertyFileName : filenames.values()) {
 
@@ -110,9 +106,9 @@ public class Utils {
 								addedCodeMap.put(code, name);
 							}
 
-							allPossibleLanguageNames.put(propertyFileName.toString(), addedListOfNames);
-							languageToCodeMap.put(propertyFileName.toString(), addedLanguageToCodeMap);
-							codeToLanguageMap.put(propertyFileName.toString(), addedCodeMap);
+							ALL_POSSIBLE_LANGUAGE_NAMES.put(propertyFileName.toString(), addedListOfNames);
+							LANGUANGE_TO_CODE_MAP.put(propertyFileName.toString(), addedLanguageToCodeMap);
+							CODE_TO_LANGUAGE_MAP.put(propertyFileName.toString(), addedCodeMap);
 
 						} catch (IOException e) {
 							logger.log(Level.WARNING, "Could not load languages names as jar resource", e);
@@ -123,19 +119,19 @@ public class Utils {
 			}
 		}
 
-		return allPossibleLanguageNames.get(inLanguage);
+		return ALL_POSSIBLE_LANGUAGE_NAMES.get(inLanguage);
 	}
 
 	public static HashMap<String, String> getLangugeToCodeMap(String inLanguage) {
 		// makes sure the lazy loader is executed...
 		getAllPossibleLanguageNames(inLanguage);
-		return languageToCodeMap.get(inLanguage);
+		return LANGUANGE_TO_CODE_MAP.get(inLanguage);
 	}
 
 	public static HashMap<String, String> getCodeToLanguageMap(String inLanguage) {
 		// makes sure the lazy loader is executed...
 		getAllPossibleLanguageNames(inLanguage);
-		return codeToLanguageMap.get(inLanguage);
+		return CODE_TO_LANGUAGE_MAP.get(inLanguage);
 	}
 
 	/**
