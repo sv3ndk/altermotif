@@ -2,6 +2,7 @@ package models.altermotif;
 
 /**
  * @author Svend
+	this class simply maps a value to a code: this is a simple key-value thingy
  * 
  */
 public class MappedValue {
