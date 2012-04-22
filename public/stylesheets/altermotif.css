@@ -228,6 +228,7 @@ ul {
 
 
 
+
 /*TOOL BAR*/
 #toolBar{
 	width:100%;
@@ -235,7 +236,7 @@ ul {
 	height:40px;
 }
 #toolBarFirstPart{
-	padding:10px 0 0 20px;
+	padding:15px 0 0 20px;/**/
 	float:left;
 }
 
@@ -243,6 +244,7 @@ ul {
 	float:right;
 }
 #sloganToolBar{
+	padding-top:20px;
 	padding-left:50px;
 	color:#fff;
 }
@@ -260,7 +262,7 @@ ul {
 }
 #toolBarAccountControls{
 	float:left;
-	padding:10px 20px 0 0;
+	padding:15px 20px 0 0;/**/
 }
 
 #topLinks {
@@ -297,6 +299,19 @@ ul {
 	z-index:999;
 }
 
+
+/*Bouton Home*/
+#buttonHome{
+	margin:0 0 0 40px;
+	padding:0;
+	float:left;
+	background-color:#F5F5F5;
+	width:40px;
+	height:40px;
+}
+#buttonHome:hover{
+	background-color:#ffeb00;
+}
 
 
 
@@ -607,7 +622,7 @@ ul.tabNavigation li a:hover{
 	width:182px;
 	height:322px;
 	margin-left:200px;
-	background-image:url(https://s3.amazonaws.com/altermotif/static/images/am_logo_new.png);
+	background-image:url(../images/am_logo_new.png);
 	background-repeat:no-repeat;
 	}
 .generalInfoTexts{
