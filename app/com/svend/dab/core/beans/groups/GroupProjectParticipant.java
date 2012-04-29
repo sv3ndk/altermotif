@@ -12,7 +12,7 @@ import com.svend.dab.core.beans.projects.ProjectSummary;
 public class GroupProjectParticipant {
 
 	private ProjectSummary projet;
-
+	private String applicationText;
 	private boolean accepted;
 
 	public GroupProjectParticipant() {
@@ -26,7 +26,6 @@ public class GroupProjectParticipant {
 		this.applicationText = applicationText;
 	}
 
-	private String applicationText;
 
 	public ProjectSummary getProjet() {
 		return projet;

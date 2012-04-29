@@ -21,6 +21,7 @@ import com.svend.dab.core.beans.groups.GroupParticipant.ROLE;
 import com.svend.dab.core.beans.groups.GroupPep;
 import com.svend.dab.core.beans.groups.GroupProjectParticipant;
 import com.svend.dab.core.beans.groups.ProjectGroup;
+import com.svend.dab.core.beans.profile.Photo;
 import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.profile.UserSummary;
 import com.svend.dab.core.beans.projects.Participation;
@@ -83,7 +84,7 @@ public class GroupsView extends DabController {
 		} else {
 			GroupPep pep = new GroupPep(group);
 			if (pep.isUserAllowedToApplyToGroup((getSessionWrapper().getLoggedInUserProfileId()))) {
-				BeanProvider.getGroupService().applyToGroup(groupId, getSessionWrapper().getLoggedInUserProfileId());
+				BeanProvider.getGroupService().applyToGroup(groupId, getSessionWrapper().getLoggedInUserProfileId(), applicationText);
 				renderJSON(new BinaryResponse(true));
 			} else {
 				renderJSON(new BinaryResponse(false));
@@ -112,7 +113,7 @@ public class GroupsView extends DabController {
 				BeanProvider.getGroupService().acceptUserApplicationToGroup(groupId, applicantId);
 
 				// building response with updated user rights
-				group.addParticipant(new GroupParticipant(ROLE.member, new UserSummary(applicantId, null, null, true)));
+				group.addParticipant(new GroupParticipant(ROLE.member, new UserSummary(applicantId, null, new Photo(), true)));
 				renderJSON(buildOutcome(group, applicantId, null));
 			} else {
 				renderJSON(new BinaryResponse(false));

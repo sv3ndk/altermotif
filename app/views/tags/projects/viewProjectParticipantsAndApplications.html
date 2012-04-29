@@ -1,31 +1,30 @@
 <div>
 	<div id="projectParticipants">
-		<span id="numberOfParticipantSpan" class="toggleLink">&{'viewProjectParticipants'} (${_numberOfConfirmedParticipants}) </span>
+		<span id="numberOfParticipantSpan" class="toggleLink"><span>&{'viewProjectParticipants'} (${_numberOfConfirmedParticipants})</span> </span>
 		<div class="toggleContainer">
 			#{list items:_confirmedParticipants, as:'participant'}
-				#{projects.participant participant:participant, projectVisibility:_projectVisibility, dabImagesPath_:dabImagesPath /} 
+				#{projects.participant participant:participant, projectVisibility:_projectVisibility, dabImagesPath:_dabImagesPath /} 
 			#{/list}
 		</div>
 	</div>
 	
 	#{if _projectVisibility.isVisibleApplicationBox()}
 	<div id="projectApplications">
-		<span id="numberOfApplicantsSpan" class="toggleLink">&{'viewProjectApplications'} (${_numberOfApplications}) </span>
+		<span id="numberOfApplicantsSpan" class="toggleLink"><span>&{'viewProjectApplications'} (${_numberOfApplications})</span> </span>
 		<div class="toggleContainer">
 			#{list items:_unconfirmedActiveParticipants, as:'application'}
-				#{projects.application application:application, projectVisibility:_projectVisibility, dabImagesPath_:dabImagesPath /} 
+				#{projects.application application:application, projectVisibility:_projectVisibility, dabImagesPath:_dabImagesPath /} 
 			#{/list}
 		</div>
 	</div>
 	#{/if}
 	
 	<div id="projectGroupParticipations">
-		<span  class="toggleLink">&{'viewProjectGroups'} (${_numberOfGroups}) </span>
+		<span  class="toggleLink"><span>&{'viewProjectGroups'} (${_numberOfGroups}) </span></span>
 		<div class="toggleContainer">
 			#{list items:_groups, as:'group'}
-				#{groups.groupSummary groupSummary:group, projectVisibility:_projectVisibility, dabImagesPath_:dabImagesPath /} 
+				#{groups.groupSummary groupSummary:group, projectVisibility:_projectVisibility, dabImagesPath:_dabImagesPath /} 
 			#{/list}
 		</div>
 	</div>
-	
 </div>

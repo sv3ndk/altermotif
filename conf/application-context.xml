@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:task="http://www.springframework.org/schema/task" xmlns:cloud="http://schema.cloudfoundry.org/spring"
-	xmlns:mongo="http://www.springframework.org/schema/data/mongo" xmlns:rabbit="http://www.springframework.org/schema/rabbit"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-    	http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/s 	pring-context-3.0.xsd
-        http://www.springframework.org/schema/tx
-     	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
-     	http://www.springframework.org/schema/data/mongo
-        http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
-        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
-        http://schema.cloudfoundry.org/spring http://schema.cloudfoundry.org/spring/cloudfoundry-spring-0.7.xsd
-        http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.0.xsd">
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:task="http://www.springframework.org/schema/task" 
+	xmlns:cloud="http://schema.cloudfoundry.org/spring"
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo" 
+	xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 			http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+    	http://www.springframework.org/schema/context 							http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        http://www.springframework.org/schema/tx 								http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+     	http://www.springframework.org/schema/data/mongo 						http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
+        http://www.springframework.org/schema/task 								http://www.springframework.org/schema/task/spring-task-3.1.xsd
+        http://schema.cloudfoundry.org/spring 									http://schema.cloudfoundry.org/spring/cloudfoundry-spring-0.7.xsd
+        http://www.springframework.org/schema/rabbit 							http://www.springframework.org/schema/rabbit/spring-rabbit-1.0.xsd">
 
 	<!-- ================================ basic stuff ========================== -->
 
@@ -144,22 +145,25 @@
 		</bean>
 	</beans>	
 
- 	<mongo:repositories base-package="com.svend.dab.dao.mongo" >
- 	</mongo:repositories>
- 	
-	<!-- ================================ mail server config ========================== -->
+	<beans >
 	
-	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-  		<property name="host" value="smtp.gmail.com"/>
-  		<property name="port" value="587"></property>
-  		<property name="username" value="noreply@altermotif.org"></property>
-  		<property name="password" value="A}RZHMKm,Yc-LI_Mfh%R1bLrAUiln$$YD0pLcY)19-1X1I945vXjdo(Jb0_"></property>
-  		<property name="javaMailProperties">
-	   		<props>
-       	      <prop key="mail.smtp.auth">true</prop>
-       	      <prop key="mail.smtp.starttls.enable">true</prop>
-       	   </props>
-		</property>
-	</bean>
+	 	<mongo:repositories base-package="com.svend.dab.dao.mongo" >
+	 	</mongo:repositories>
+	 	
+		<!-- ================================ mail server config ========================== -->
+		
+		<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	  		<property name="host" value="smtp.gmail.com"/>
+	  		<property name="port" value="587"></property>
+	  		<property name="username" value="noreply@altermotif.org"></property>
+	  		<property name="password" value="A}RZHMKm,Yc-LI_Mfh%R1bLrAUiln$$YD0pLcY)19-1X1I945vXjdo(Jb0_"></property>
+	  		<property name="javaMailProperties">
+		   		<props>
+	       	      <prop key="mail.smtp.auth">true</prop>
+	       	      <prop key="mail.smtp.starttls.enable">true</prop>
+	       	   </props>
+			</property>
+		</bean>
+	</beans>
 
 </beans>

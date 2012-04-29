@@ -131,8 +131,6 @@
 	</div>
 	
 	
-	
-	
 	<div id="groupRightColumn">
 		#{if groupViewVisibility.isToolBoxVisible() }
 			<div id="groupToolBox">
@@ -154,9 +152,8 @@
 	</div>
 	
 	
-	
 	<div id="groupProjects" class="groupToggleBlocks">
-		<span class="toggleLink dabLink" >&{'groupsViewProjects'} (<span class="dabLink" data-bind="text: numberOfProjectMembers"></span><span class="dabLink">)...</span></span>
+		<span class="toggleLink dabLink" ><span>&{'groupsViewProjects'} (</span><span data-bind="text: numberOfProjectMembers"></span><span>)...</span></span>
 		<div class="toggleContainer" style="display: none">
 			<div data-bind="foreach: projectsMembers">
 				<div class="groupProject">
@@ -173,16 +170,14 @@
 					
 					<br />
 					<span class="dabLink projectRemoveFromGroup" data-bind="visible: isRemoveFromGroupLinkVisible">&{'groupsViewRemoveProjectFromGroup'}</span>
-				
 				</div>
-			
 			</div>
 		</div>
 	</div>
 	
 	#{if groupViewVisibility.projectsApplicationsAreVisible }
 		<div id="groupPendingProjectsApplicants" class="groupToggleBlocks">
-			<span class="toggleLink dabLink" >&{'groupsViewProjectApplicants'} (<span class="dabLink" data-bind="text: numberOfProjectApplicants"></span><span class="dabLink">)...</span></span>
+			<span class="toggleLink dabLink" ><span>&{'groupsViewProjectApplicants'} (</span><span data-bind="text: numberOfProjectApplicants"></span><span>)...</span></span>
 			<div class="toggleContainer" style="display: none">
 			
 				<div data-bind="foreach: projectApplicants">
@@ -201,10 +196,13 @@
 						<br />
 						<span class="dabLink projectApplicantAccept">&{'groupsViewAcceptProjectApplication'}</span>
 						<span class="dabLink projectApplicantReject"> &{'groupsViewRejectProjectApplication'}</span>
+
+		
+						<br />
+						<span class="viewApplicationText dabLink" >&{'viewProjectViewApplicationText'}</span>
 					
 					</div>
 				</div>
-			
 			</div>
 		</div>
 	#{/if}
@@ -244,7 +242,7 @@
 	
 	
 	<div id="groupParticipants" class="groupToggleBlocks">
-		<span class="toggleLink dabLink" >&{'groupsViewParticipants'} (<span class="dabLink" data-bind="text: numberOfUserParticipants"></span><span class="dabLink">)...</span></span>
+		<span class="toggleLink dabLink" ><span>&{'groupsViewParticipants'} (</span><span data-bind="text: numberOfUserParticipants"></span><span>)...</span></span>
 		<div class="toggleContainer" style="display: none">
 		
 			<div data-bind="foreach: acceptedParticipants">
@@ -276,7 +274,7 @@
 	
 	#{if groupViewVisibility.userApplicationsAreVisible }
 		<div id="groupPendingApplicants" class="groupToggleBlocks">
-			<span class="toggleLink dabLink" >&{'groupsViewApplicants'} (<span class="dabLink" data-bind="text: numberOfUserApplicants"></span><span class="dabLink">)...</span></span>
+			<span class="toggleLink dabLink"> <span>&{'groupsViewApplicants'} (</span><span data-bind="text: numberOfUserApplicants"></span><span >)...</span></span>
 			<div class="toggleContainer" style="display: none">
 			
 				<div data-bind="foreach: applicants">
@@ -296,6 +294,9 @@
 						<span class="acceptUserApplication dabLink" >&{'groupsViewAcceptUserApplication'}</span>
 						<span> - </span>
 						<span class="rejectUserApplication dabLink" >&{'groupsViewRejectUserApplication'}</span>
+						<br />
+						
+						<span class="viewApplicationText dabLink" >&{'viewProjectViewApplicationText'}</span>
 						
 					</div>
 				</div>
@@ -321,6 +322,7 @@
 					<img src="${oneParticipant.user.mainPhotoThumbLink}" class="profileContactThumb" />
 					<span class="userLocation">${oneParticipant.user.location}</span>
 					<span class="groupRole">&{oneParticipant.role.label}</span>
+					<pre class="applicationText">${oneParticipant.applicationText}</pre>
 				</div>
 			 #{/list}
 		</div>
@@ -332,7 +334,7 @@
 	
 	
 	<div id="groupForum" class="groupToggleBlocks">
-		<span class="toggleLink dabLink" >&{'groupsViewForum'}...</span>
+		<span class="toggleLink dabLink" ><span>&{'groupsViewForum'}...</span></span>
 		<div class="toggleContainer" style="display: none">
 		
 			#{if groupViewVisibility.addForumThreadLinkVisible}
@@ -404,5 +406,13 @@
 		<br />
 		<label><input type="checkbox"  class="threadVisibility" checked > &{'groupsViewForumAddThreadPopupPublicThread'}</label>
 	</div>
+	
+	<div id="applicationMotivationPopup" title="&{'applicationMoticationTextPopupTitle'}">
+		<textarea readonly="readonly" rows="7" cols="45" ></textarea>
+	</div>
+	
+	
 </div>
+	
+	
 	

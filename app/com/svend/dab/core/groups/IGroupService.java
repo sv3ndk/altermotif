@@ -16,7 +16,7 @@ public interface IGroupService {
 
 	void closeGroup(String groupId);
 
-	void applyToGroup(String groupId, String loggedInUserProfileId);
+	void applyToGroup(String groupId, String loggedInUserProfileId, String applicationText);
 
 	void cancelUserApplicationToGroup(String groupId, String loggedInUserProfileId);
 

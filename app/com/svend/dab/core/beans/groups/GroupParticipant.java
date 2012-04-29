@@ -9,7 +9,6 @@ public class GroupParticipant {
 	public enum ROLE {
 
 		admin("groupRoleAdmin"),
-
 		member("groupRoleMember");
 
 		private final String label;
@@ -24,24 +23,19 @@ public class GroupParticipant {
 	}
 
 	private ROLE role;
-
 	private UserSummary user;
-
 	private boolean accepted = true;
+	private String applicationText;
 
-	public GroupParticipant() {
-		super();
-	}
-
-	public GroupParticipant(ROLE role, UserSummary user) {
-		super();
+	public GroupParticipant(ROLE role, UserSummary user, boolean accepted, String applicationText) {
 		this.role = role;
 		this.user = user;
+		this.accepted = accepted;
+		this.applicationText = applicationText;
 	}
 
-	public GroupParticipant(ROLE role, UserSummary user, boolean accepted) {
-		this(role, user);
-		this.accepted = accepted;
+	public GroupParticipant(ROLE role, UserSummary userSummary) {
+		this(role, userSummary, true, "");
 	}
 
 	public void generatePhotoLinks(Date expirationdate) {
@@ -72,6 +66,14 @@ public class GroupParticipant {
 
 	public void setAccepted(boolean accepted) {
 		this.accepted = accepted;
+	}
+
+	public String getApplicationText() {
+		return applicationText;
+	}
+
+	public void setApplicationText(String applicationText) {
+		this.applicationText = applicationText;
 	}
 
 }

@@ -98,14 +98,14 @@ public class GroupService implements IGroupService {
 		}
 	}
 
-	public void applyToGroup(String groupId, String userId) {
+	public void applyToGroup(String groupId, String userId, String applicationText) {
 
 		ProjectGroup group = groupDao.retrieveGroupById(groupId);
 		UserProfile user = userProfileRepo.retrieveUserProfileById(userId);
 
 		if (group != null && group.isActive() && user != null && user.getPrivacySettings().isProfileActive()) {
 			if (!group.isMemberOrHasALreadyApplied(userId)) {
-				groupDao.addUserApplication(groupId, new UserSummary(user));
+				groupDao.addUserApplication(groupId, new UserSummary(user), applicationText);
 			}
 		}
 	}

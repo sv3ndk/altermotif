@@ -48,9 +48,13 @@ public class AdminService {
 			for (Participation participation : userProfile.getProjects()) {
 				Project project = projectDao.findOne(participation.getProjectSummary().getProjectId());
 				participation.getProjectSummary().setCreationDate(project.getPdata().getCreationDate());
+				participation.getProjectSummary().setMainPhoto(project.getPhotoAlbum().getMainPhoto().buildCopyWithThumbOnly());
 			}
 			userProfileDao.save(userProfile);
 		}
+		
+		
+		
 	}
 
 	public void indexAllProjects() {
@@ -84,43 +88,5 @@ public class AdminService {
 			userProfileDao.save(userProfile);
 		}
 	}
-
-//	public void copyPhotosToAlbumPhotos() {
-//		
-//		Set<String> allProjectIds = projectDao.getAllProjectIds();
-//		for (String projectId : allProjectIds) {
-//			Project project = profileService.loadProject(projectId, false);
-//			
-//			if (project.getPhotos() != null) {
-//				PhotoAlbum photoAlbum = project.getPhotoAlbum();
-//				photoAlbum.setPhotos(project.getPhotos());
-//				
-//				projectDao.updatePhotoAlbum(projectId, photoAlbum);
-//				
-//				// Not in DAO: this "photos" is deprecated => not re-usable logic
-//				Query query = query(where("_id").is(projectId));
-//				mongoTemplate.updateFirst(query, new Update().unset("photos"), Project.class);
-//			}
-//
-//		}
-//		
-//		Set<String> allUserIds = userProfileDao.getAllUsernames();
-//		for (String username : allUserIds) {
-//			UserProfile profile = userProfileDao.retrieveUserProfileById(username);
-//			
-//			if (profile.getPhotos() != null) {
-//				PhotoAlbum photoAlbum = profile.getPhotoAlbum();
-//				photoAlbum.setPhotos(profile.getPhotos());
-//				
-//				userProfileDao.updatePhotoAlbum(username, photoAlbum);
-//	
-//				// Not in DAO: this "photos" is deprecated => not re-usable logic
-//				Query query = query(where("username").is(username));
-//				mongoTemplate.updateFirst(query, new Update().unset("photos"), UserProfile.class);
-//			}
-//
-//		}
-//		
-//	}
 
 }

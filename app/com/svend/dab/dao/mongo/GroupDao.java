@@ -112,8 +112,8 @@ public class GroupDao implements IGroupDao {
 		});
 	}
 
-	public void addUserApplication(String groupId, UserSummary userSummary) {
-		mongoTemplate.updateFirst(query(where("id").is(groupId)), new Update().addToSet("participants", new GroupParticipant(ROLE.member, userSummary, false)),
+	public void addUserApplication(String groupId, UserSummary userSummary, String applicationText) {
+		mongoTemplate.updateFirst(query(where("id").is(groupId)), new Update().addToSet("participants", new GroupParticipant(ROLE.member, userSummary, false, applicationText)),
 				ProjectGroup.class);
 
 	}

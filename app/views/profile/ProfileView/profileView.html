@@ -108,7 +108,7 @@
 	<div class="userProfileSection" id="profileReceivedReference">
 	
 		<div class="profileViewTogglableSection">
-			<span class="toggleLink" id="profileReceivedReferencesLink"></span>
+			<span class="toggleLink"><span id="profileReceivedReferencesLink"></span></span>
 			<div id="receivedReferenceContainer" class="toggleContainer" style="display: none" >
 			
 				#{if profileVisibility.leaveAReferenceLinkVisible}
@@ -124,7 +124,7 @@
 		</div>
 
 		<div class="profileViewTogglableSection">
-			<span class="toggleLink" id="profileSentReferencesLink"></span>
+			<span class="toggleLink"> <span id="profileSentReferencesLink"></span></span>
 			<div id="writtendReferenceContainer" class="toggleContainer" style="display: none">
 				 #{list items:visitedUserProfile.writtenReferences, as:'oneReference'}
 					#{profile.writtenReference reference: oneReference, profileVisibility:profileVisibility, dabImagesPath:dabImagesPath/}
@@ -133,7 +133,7 @@
 		</div>
 
 		<div class="profileViewTogglableSection">
-			<span class="toggleLink">&{'profileProjects'} (${visitedUserProfile.numberOfConfirmedProjects})</span>
+			<span class="toggleLink"><span>&{'profileProjects'} (${visitedUserProfile.numberOfConfirmedProjects})</span></span>
 			<div class="toggleContainer" style="display: none">
 				 #{list items:visitedUserProfile.confirmedProjects, as:'oneProject'}
 					#{projectParticipation participation: oneProject, dabImagesPath:dabImagesPath /}
@@ -142,7 +142,7 @@
 		</div>
 
 		<div class="profileViewTogglableSection">
-			<span class="toggleLink">&{'profileGroups'} (${visitedUserProfile.numberOfGroups})... </span>
+			<span class="toggleLink"><span>&{'profileGroups'} (${visitedUserProfile.numberOfGroups})... </span></span>
 			<div class="toggleContainer" style="display: none">
 				 #{list items:visitedUserProfile.groups, as:'oneGroup'}
 				 	#{groups.groupParticipation group: oneGroup, dabImagesPath:dabImagesPath /}
@@ -151,7 +151,7 @@
 		</div>
 		
 		<div class="profileViewTogglableSection">
-			<span class="toggleLink" id="profileContactsLink"></span>
+			<span class="toggleLink"><span id="profileContactsLink"></span></span>
 			
 			#{if profileVisibility.pendingInvitationTextVisible}
 				<span class="profilePendingInvitations" id="profilePendingInvitations">&{'profileYouHavePendingInvitations'}</span>

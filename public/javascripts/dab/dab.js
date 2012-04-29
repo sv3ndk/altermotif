@@ -137,8 +137,8 @@ function initChangeLanguageLogic(updateLanguageAction) {
 
 function registerToggleDabLinks() {
 	
-	$("body").on("click", "span.toggleLink", function(event) {
-		var toggelable = $($(event.target).siblings(".toggleContainer"));
+	$("body").on("click", "span.toggleLink span", function(event) {
+		var toggelable = $($(event.target).parent().siblings(".toggleContainer"));
 		toggelable.toggle("blind", {}, 250);
 	});
 }

@@ -16,9 +16,9 @@ var dabGroupsViewLib = {
 		this.clickedParticipantId;
 		this.clickedProjectApplicantId;
 		this.clickedProjectId;
+		var self = this;
 
 		this.init = function() {
-			var self = this;
 
 			// knockout bindings for user participant
 			ko.applyBindings(this.userParticipantKoModel,$("#applyWithProfileTd")[0]);
@@ -44,13 +44,20 @@ var dabGroupsViewLib = {
 				photo : true
 			});
 
+			// popup for displaying aplication texts
+			$("#applicationMotivationPopup").dialog({
+				autoOpen : false,
+				modal : true,
+				width : 372,
+				height : 214,
+			});
 			
 			// click on "close group"
 			if (isCloseGroupLinkEffective) {
 				new Confirm.AskAndProceed(this, "#groupToolBox", "#closeGroupLink", confirmCloseGroupText, null, self.afterUserConfirmsCloseGroup).init();
 			} else {
 				var displayer = new Confirm.MessageDisplayer(cannotCloseGroupText);
-				$("#closeGroupLink").click(function(event) {
+				$("#closeGroupLinwhenUserConfirmsRejectUserApplicationk").click(function(event) {
 					displayer.showDialog();
 				});
 			}
@@ -68,22 +75,25 @@ var dabGroupsViewLib = {
 					}).init();
 
 			// click on "accept user application"
-			new Confirm.AskAndProceed(this, "#groupPendingApplicants",
-					".acceptUserApplication", confirmAcceptApplyToGroup,
+			new Confirm.AskAndProceed(this, "#groupPendingApplicants", ".acceptUserApplication", confirmAcceptApplyToGroup,
 					self.whenUserClicksOnAcceptUserApplication, function() {
 						self.whenUserConfirmsAcceptUserApplication()
 					}).init();
 
 			// click on "reject user application"
-			new Confirm.AskAndProceed(this, "#groupPendingApplicants",
-					".rejectUserApplication", confirmRejectApplyToGroup,
+			new Confirm.AskAndProceed(this, "#groupPendingApplicants", ".rejectUserApplication", confirmRejectApplyToGroup,
 					self.whenUserClicksOnRejectUserApplication, function() {
 						self.whenUserConfirmsRejectUserApplication()
 					}).init();
 
+
+			// click on "view user application text"
+			$("#groupPendingApplicants").on("click", ".viewApplicationText", function(event) {
+				self.viewUserApplicationText(event);
+			});
+			
 			// click on "leave group"
-			new Confirm.AskAndProceed(this, "#groupParticipants",
-					".leaveGroup", confirmLeaveGroup, null,
+			new Confirm.AskAndProceed(this, "#groupParticipants", ".leaveGroup", confirmLeaveGroup, null,
 					this.whenUserConfirmsLeaveGroup).init();
 
 			// click on "make admin"
@@ -92,14 +102,12 @@ var dabGroupsViewLib = {
 					this.whenUserConfirmsMakeAdmin).init();
 
 			// click on "make admin"
-			new Confirm.AskAndProceed(this, "#groupParticipants",
-					".makeMember", confirmMemberAdminText,
+			new Confirm.AskAndProceed(this, "#groupParticipants", ".makeMember", confirmMemberAdminText,
 					this.whenUserClicksOnMakeMember,
 					this.whenUserConfirmsMakeMember).init();
 
 			// click on "remove member"
-			new Confirm.AskAndProceed(this, "#groupParticipants",
-					".removeMember", confirmRemoveMemberText,
+			new Confirm.AskAndProceed(this, "#groupParticipants", ".removeMember", confirmRemoveMemberText,
 					this.whenUserClicksOnRemoveMember,
 					this.whenUserConfirmsRemoveMember).init();
 
@@ -109,22 +117,24 @@ var dabGroupsViewLib = {
 			});
 
 			// click on "accept project application"
-			new Confirm.AskAndProceed(this, "#groupPendingProjectsApplicants",
-					".projectApplicantAccept",
+			new Confirm.AskAndProceed(this, "#groupPendingProjectsApplicants", ".projectApplicantAccept",
 					confirmAcceptProjectApplicationText,
 					this.whenUserClicksOnAcceptProjectMembershipRequest,
 					this.whenUserConfirmsAcceptProjectMembershipRequest).init();
 
 			// click on "reject project application"
-			new Confirm.AskAndProceed(this, "#groupPendingProjectsApplicants",
-					".projectApplicantReject",
+			new Confirm.AskAndProceed(this, "#groupPendingProjectsApplicants", ".projectApplicantReject",
 					confirmRejectProjectApplicationText,
 					this.whenUserClicksOnRejectProjectMembershipRequest,
 					this.whenUserConfirmsRejectProjectMembershipRequest).init();
 			
+			// click on view group  application text"
+			$("#groupPendingProjectsApplicants").on("click", ".viewApplicationText", function(event) {
+				self.viewProjectApplicationText(event);
+			});
+			
 			// click on "remove project from group"
-			new Confirm.AskAndProceed(this, "#groupProjects",
-					"span.projectRemoveFromGroup",
+			new Confirm.AskAndProceed(this, "#groupProjects", "span.projectRemoveFromGroup",
 					confirmRemoveProjectFromGroupText,
 					this.whenUserClicksOnRemoveProject,
 					this.whenUserConfirmsRemoveProject).init();
@@ -153,21 +163,20 @@ var dabGroupsViewLib = {
 		};
 
 		this.whenUserConfirmsAcceptUserApplication = function() {
-			var self = this;
 			$.post(
-							acceptUserApplicationToGroup({
-								groupId : visitedGroupId,
-								applicantId : self.clickedApplicantId
-							}),
-							function(response) {
-								if (response.success) {
-									self.userParticipantKoModel
-											.moveApplicantToParticipants(self.clickedApplicantId);
-									self.applyUpdatedRoles(response,
-											self.clickedApplicantId);
-								}
+				acceptUserApplicationToGroup({
+					groupId : visitedGroupId,
+					applicantId : self.clickedApplicantId
+				}),
+				function(response) {
+					if (response.success) {
+						self.userParticipantKoModel
+								.moveApplicantToParticipants(self.clickedApplicantId);
+						self.applyUpdatedRoles(response,
+								self.clickedApplicantId);
+					}
 
-							});
+				});
 		};
 
 		this.whenUserClicksOnRejectUserApplication = function(self, event) {
@@ -175,7 +184,6 @@ var dabGroupsViewLib = {
 		};
 
 		this.whenUserConfirmsRejectUserApplication = function() {
-			var self = this;
 			$.post(rejectUserApplicationToGroup({
 				groupId : visitedGroupId,
 				applicantId : self.clickedApplicantId
@@ -185,6 +193,15 @@ var dabGroupsViewLib = {
 			});
 		};
 
+		this.viewUserApplicationText = function (event) {
+			self.recordClickedApplicantId(event);
+			var applicant = self.userParticipantKoModel.findApplicantById(self.clickedApplicantId);
+			$("#applicationMotivationPopup textarea").text(applicant.applicationText);
+			$("#applicationMotivationPopup").dialog("open");
+		};
+
+		
+		
 		this.whenUserConfirmsLeaveGroup = function(self) {
 			$.post(leaveGroup({
 				groupId : visitedGroupId,
@@ -310,16 +327,30 @@ var dabGroupsViewLib = {
 					}
 				});
 		};
+		
+		
+		this.viewProjectApplicationText = function (event) {
+			self.recordClickedProjectApplicantId(event);
+			var projectApplicant = self.projectsParticipantKoModel.findApplicantById(self.clickedProjectApplicantId);
+			$("#applicationMotivationPopup textarea").text(projectApplicant.projectApplicationText);
+			$("#applicationMotivationPopup").dialog("open");
+		};
+
+		
+		
+		
+		
+		
+		
+		
 		// ///////////////////////////
 
 		this.recordClickedApplicantId = function(event) {
-			this.clickedApplicantId = $(event.target).parent().find(
-					".hiddenParticipantId").text();
+			this.clickedApplicantId = $(event.target).parent().find(".hiddenParticipantId").text();
 		};
 
 		this.recordClickedParticipantId = function(event) {
-			this.clickedParticipantId = $(event.target).parent().parent().find(
-					".hiddenParticipantId").text();
+			this.clickedParticipantId = $(event.target).parent().parent().find(".hiddenParticipantId").text();
 		};
 
 		this.applyUpdatedRoles = function(participantActionOutcome, otherUser) {
@@ -641,6 +672,7 @@ var dabGroupsViewLib = {
 			var profileLink = $(oneHtmlParticipant).find(".profileLink").attr("href");
 			var userLocation = $(oneHtmlParticipant).find(".userLocation").text();
 			var role = $(oneHtmlParticipant).find(".groupRole").text();
+			var applicationText = $(oneHtmlParticipant).find(".applicationText").text();
 
 			var photoLocation = $(oneHtmlParticipant).find(".profileContactThumb").attr("src");
 			if (photoLocation == undefined || photoLocation == "") {
@@ -657,9 +689,10 @@ var dabGroupsViewLib = {
 								profileLink, photoLocation, userLocation, role,
 								isLeaveLinkVisible, isMakeAdminLinkVisible,
 								isMakeMemberLinkVisible,
-								isRemoveMemberLinkVisible));
+								isRemoveMemberLinkVisible,
+								applicationText));
 			} else {
-				this.applicants.push(new dabGroupsViewLib.UserParticipant(userName, profileLink, photoLocation, userLocation, role, false, false, false, false));
+				this.applicants.push(new dabGroupsViewLib.UserParticipant(userName, profileLink, photoLocation, userLocation, role, false, false, false, false, applicationText));
 			}
 		};
 
@@ -734,7 +767,8 @@ var dabGroupsViewLib = {
 
 	UserParticipant : function(userName, profileLink, photoLocation,
 			userLocation, role, isLeaveLinkVisible, isMakeAdminLinkVisible,
-			isMakeMemberLinkVisible, isRemoveMemberLinkVisible) {
+			isMakeMemberLinkVisible, isRemoveMemberLinkVisible, applicationText) {
+		
 		this.userName = userName;
 		this.profileLink = profileLink;
 		this.photoLocation = photoLocation;
@@ -745,6 +779,7 @@ var dabGroupsViewLib = {
 		this.isMakeMemberLinkVisible = ko.observable(isMakeMemberLinkVisible);
 		this.isRemoveMemberLinkVisible = ko
 				.observable(isRemoveMemberLinkVisible);
+		this.applicationText = applicationText;
 	},
 
 	ProjectSummary : function(projectId, isProjectAccepted, projectApplicationText, projectName, projectLink, projectMainThumb, isRemoveFromGroupLinkVisible) {

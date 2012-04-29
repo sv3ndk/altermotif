@@ -18,7 +18,7 @@
 
 	<div class="homeToggleBlock">
 		
-		<span class="toggleLink dabLink">&{'yourProjects'} (${visitedUserProfile.numberOfConfirmedProjects})...</span>
+		<span class="toggleLink dabLink"><span>&{'yourProjects'} (${visitedUserProfile.numberOfConfirmedProjects})...</span></span>
 		<div class="toggleContainer" style="display: none">
 			 #{list items:visitedUserProfile.confirmedProjects, as:'oneProject'}
 				#{projectParticipation participation: oneProject, dabImagesPath:dabImagesPath /}
@@ -27,7 +27,7 @@
 		
 		
 		<div class="homeToggleBlock">
-			<span class="toggleLink dabLink">&{'yourGroups'} (${visitedUserProfile.numberOfGroups})... </span>
+			<span class="toggleLink dabLink"><span>&{'yourGroups'} (${visitedUserProfile.numberOfGroups})... </span></span>
 				<div class="toggleContainer" style="display: none">
 					 #{list items:visitedUserProfile.groups, as:'oneGroup'}
 					 	#{groups.groupParticipation group: oneGroup, dabImagesPath:dabImagesPath /}
@@ -36,7 +36,7 @@
 			</div>
 			
 			<div class="homeToggleBlock">
-				<span class="toggleLink dabLink">&{'yourInbox'} (${numberOfUnreadReceivedMessages})... </span>
+				<span class="toggleLink dabLink"><span>&{'yourInbox'} (${numberOfUnreadReceivedMessages})... </span></span>
 				<div class="toggleContainer">
 					#{if numberOfUnreadReceivedMessages > 0}
 						<table class="messagesListTable">
@@ -76,7 +76,7 @@
 			
 			
 			<div class="homeToggleBlock">
-				<span class="toggleLink dabLink">&{'yourApplications'} (${visitedUserProfile.numberOfApplications})...</span>
+				<span class="toggleLink dabLink"><span>&{'yourApplications'} (${visitedUserProfile.numberOfApplications})...</span></span>
 				<div id="applicationsDetails" class="toggleContainer">
 					 #{list items:visitedUserProfile.applications, as:'oneProject'}
 					 	#{projectParticipation participation: oneProject, dabImagesPath:dabImagesPath /}
