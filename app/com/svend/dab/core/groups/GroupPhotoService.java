@@ -2,9 +2,13 @@ package com.svend.dab.core.groups;
 
 import static com.svend.dab.core.PhotoUtils.JPEG_MIME_TYPE;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,54 +32,58 @@ public class GroupPhotoService implements IGroupPhotoService {
 
 	@Autowired
 	private IGroupService groupService;
-	
+
 	@Autowired
 	private PhotoUtils photoUtils;
-	
+
 	@Autowired
 	private IGroupDao groupDao;
-	
+
 	@Autowired
 	private IPhotoBinaryDao photoDao;
-	
+
 	@Autowired
 	private EventEmitter emitter;
-	
+
 	private static Logger logger = Logger.getLogger(GroupPhotoService.class.getName());
-	
+
 	public void addOnePhoto(String groupId, File photoContent) {
-		
+
 		if (photoContent == null) {
 			throw new DabUploadFailedException("cannot process: upload request null ?! ", failureReason.technicalError);
 		}
 
 		ProjectGroup updatedGroup = groupService.loadGroupById(groupId, false);
-		
+
 		if (updatedGroup == null) {
 			throw new DabUploadFailedException("cannot process upload: no group found for id profile found for  " + groupId, failureReason.technicalError);
 		}
-		
+
 		if (updatedGroup.getPhotoAlbum().isFull()) {
 			throw new DabUploadFailedException("cannot process upload: group " + groupId + " has already enough photos! THis should be prevented on browser side!", failureReason.technicalError);
 		}
-		
-		final boolean wasPhotoAlbumEmptyBeforeAddingThis = updatedGroup.getPhotoAlbum().isPhotoPackEmpty(); 
-		
-		byte[] receivedPhoto = photoUtils.readPhotoContent(photoContent);
-		
-		// todo: optimization: we could probably launch two threads here to perform both operation in parallel...
-		byte[] normalSize = photoUtils.resizePhotoToNormalSize(receivedPhoto);
-		byte[] thumbSize = photoUtils.resizePhotoToThumbSize(receivedPhoto);
-		
-		Photo newPhoto = photoUtils.createOnePhotoPlaceholder(updatedGroup.getPhotoAlbum().getPhotoS3RootFolder(), updatedGroup.getPhotoAlbum().getThumbsS3RootFolder());
-		photoDao.savePhoto(newPhoto, normalSize, thumbSize, JPEG_MIME_TYPE);
-		
-		groupDao.addOnePhoto(updatedGroup.getId(), newPhoto);
 
-		if (wasPhotoAlbumEmptyBeforeAddingThis) {
-			GroupSummaryUpdated event = new GroupSummaryUpdated(new GroupSummary(updatedGroup));
-			event.getUpdatedSummary().setMainPhoto(newPhoto);
-			emitter.emit(event);
+		final boolean wasPhotoAlbumEmptyBeforeAddingThis = updatedGroup.getPhotoAlbum().isPhotoPackEmpty();
+
+		try {
+			BufferedImage photoImage = ImageIO.read(photoContent);
+
+			// todo: optimization: we could probably launch two threads here to perform both operation in parallel...
+			byte[] normalSize = photoUtils.resizePhotoToNormalSize(photoImage);
+			byte[] thumbSize = photoUtils.resizePhotoToThumbSize(photoImage);
+
+			Photo newPhoto = photoUtils.createOnePhotoPlaceholder(updatedGroup.getPhotoAlbum().getPhotoS3RootFolder(), updatedGroup.getPhotoAlbum().getThumbsS3RootFolder());
+			photoDao.savePhoto(newPhoto, normalSize, thumbSize, JPEG_MIME_TYPE);
+
+			groupDao.addOnePhoto(updatedGroup.getId(), newPhoto);
+
+			if (wasPhotoAlbumEmptyBeforeAddingThis) {
+				GroupSummaryUpdated event = new GroupSummaryUpdated(new GroupSummary(updatedGroup));
+				event.getUpdatedSummary().setMainPhoto(newPhoto);
+				emitter.emit(event);
+			}
+		} catch (IOException e) {
+			throw new DabUploadFailedException("could not read uploaded photo", failureReason.technicalError, e);
 		}
 	}
 
@@ -88,7 +96,7 @@ public class GroupPhotoService implements IGroupPhotoService {
 			if (removed == null) {
 				logger.log(Level.WARNING, "It seems the profile refused to remove photo with index == " + deletedPhotoIdx + " => not propagating any event");
 			}
-			
+
 			if (group.getPhotoAlbum().getMainPhotoIndex() < deletedPhotoIdx) {
 				groupDao.removeOnePhoto(group.getId(), removed);
 			} else if (group.getPhotoAlbum().getMainPhotoIndex() == deletedPhotoIdx) {
@@ -119,13 +127,13 @@ public class GroupPhotoService implements IGroupPhotoService {
 			logger.log(Level.WARNING, "Cannot update photo caption of a null group: not doing anything");
 		} else {
 			Photo editedPhoto = group.getPhotoAlbum().getPhoto(photoIndex);
-			
+
 			if (editedPhoto == null) {
 				logger.log(Level.WARNING, "Cannot update photo caption: no photo found with index " + photoIndex);
 			} else {
 				groupDao.updatePhotoCaption(group.getId(), editedPhoto.getNormalPhotoLink().getS3Key(), photoCaption);
 			}
-			
+
 		}
 
 	}

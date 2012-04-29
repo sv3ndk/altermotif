@@ -63,111 +63,88 @@ public class PhotoUtils {
 
 	
 	
-	/**
-	 * @param photoContent
-	 * @return
-	 * @throws DabUploadFailedException
-	 */
-	public byte[] readPhotoContent(File photoContent) throws DabUploadFailedException {
+//	/**
+//	 * @param photoContent
+//	 * @return
+//	 * @throws DabUploadFailedException
+//	 */
+//	public byte[] readPhotoContent(File photoContent) throws DabUploadFailedException {
+//
+//		InputStream photoContentStream = null;
+//
+//		try {
+//
+//			photoContentStream = new BufferedInputStream(new FileInputStream(photoContent));
+//
+//			if (photoContentStream.available() == 0 || photoContentStream.available() > config.getMaxUploadedPhotoSizeInBytes()) {
+//				throw new DabUploadFailedException("Photo size is too big", failureReason.fileTooBig);
+//			}
+//
+//			byte[] receivedPhoto = new byte[photoContentStream.available()];
+//			ByteStreams.readFully(photoContentStream, receivedPhoto);
+//			return receivedPhoto;
+//
+//		} catch (IOException e) {
+//			throw new DabUploadFailedException("Could not upload photo" + failureReason.fileFormatIncorrectError, e);
+//		} finally {
+//			try {
+//				photoContentStream.close();
+//			} catch (IOException e) {
+//				logger.log(Level.WARNING, "Could not close uploaded content stream", e);
+//			}
+//		}
+//
+//	}
 
-		InputStream photoContentStream = null;
-
-		try {
-
-			photoContentStream = new BufferedInputStream(new FileInputStream(photoContent));
-
-			if (photoContentStream.available() == 0 || photoContentStream.available() > config.getMaxUploadedPhotoSizeInBytes()) {
-				throw new DabUploadFailedException("Photo size is too big", failureReason.fileTooBig);
-			}
-
-			byte[] receivedPhoto = new byte[photoContentStream.available()];
-			ByteStreams.readFully(photoContentStream, receivedPhoto);
-			return receivedPhoto;
-
-		} catch (IOException e) {
-			throw new DabUploadFailedException("Could not upload photo" + failureReason.fileFormatIncorrectError, e);
-		} finally {
-			try {
-				photoContentStream.close();
-			} catch (IOException e) {
-				logger.log(Level.WARNING, "Could not close uploaded content stream", e);
-			}
-		}
-
-	}
-
-	/**
-	 * @param photoContent
-	 * @return
-	 */
-	public byte[] resizePhotoToThumbSize(byte[] photoContent) {
+	public byte[] resizePhotoToThumbSize(BufferedImage photoContent) {
 		return resizePhotoToTargetSize(photoContent, THUMB_PHOTO_MAX_GREATEST_DIMENSION);
 	}
 
-	/**
-	 * @param photoContent
-	 * @return
-	 */
-	public byte[] resizePhotoToNormalSize(byte[] photoContent) {
-		return resizePhotoToTargetSize(photoContent, NORMAL_PHOTO_MAX_GREATEST_DIMENSION);
+	public byte[] resizePhotoToNormalSize(BufferedImage photo) {
+		return resizePhotoToTargetSize(photo, NORMAL_PHOTO_MAX_GREATEST_DIMENSION);
 	}
 
-	/**
-	 * @param photoContent
-	 * @return
-	 */
-	public byte[] resizePhotoToTargetSize(byte[] photoContent, int targetMaxDimension) {
-
-		InputStream in = null;
+	
+	
+	public byte[] resizePhotoToTargetSize(BufferedImage image, int targetMaxDimension) {
+		
 		ByteArrayOutputStream baos = null;
+		Graphics2D graphic = null;
+		
 		try {
-			in = new BufferedInputStream(new ByteArrayInputStream(photoContent));
-			BufferedImage image = ImageIO.read(in);
-
+			
 			if (image == null) {
 				throw new DabUploadFailedException("cannot read this image", failureReason.fileFormatIncorrectError);
 			}
-
+			
 			double scaleCoef = computeCoef(image.getWidth(), image.getHeight(), targetMaxDimension);
-
-			if (scaleCoef == 1d) {
-				return photoContent;
-			} else {
-
-				int newWidth = (int) (image.getWidth() * scaleCoef);
-				int newHeight = (int) (image.getHeight() * scaleCoef);
-
-				int type = image.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : image.getType();
-				BufferedImage resizedImage = new BufferedImage(newWidth, newHeight, type);
-
-				Graphics2D graphic = resizedImage.createGraphics();
-				graphic.setComposite(AlphaComposite.Src);
-				graphic.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-				graphic.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-				graphic.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-				graphic.drawImage(image, 0, 0, newWidth, newHeight, null);
-
-				baos = new ByteArrayOutputStream();
-				ImageIO.write(resizedImage, "jpg", baos);
-				
-				graphic.dispose();
-				graphic.finalize();
-
-				return baos.toByteArray();
-
-			}
-
+			
+			int newWidth = (int) (image.getWidth() * scaleCoef);
+			int newHeight = (int) (image.getHeight() * scaleCoef);
+			
+			int type = image.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : image.getType();
+			BufferedImage resizedImage = new BufferedImage(newWidth, newHeight, type);
+			
+			graphic = resizedImage.createGraphics();
+			graphic.setComposite(AlphaComposite.Src);
+			
+			graphic.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+			graphic.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+			graphic.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			graphic.drawImage(image, 0, 0, newWidth, newHeight, null);
+			
+			baos = new ByteArrayOutputStream();
+			ImageIO.write(resizedImage, "jpg", baos);
+			byte [] result = baos.toByteArray(); 
+			return result;
+			
 		} catch (IOException e) {
 			throw new DabUploadFailedException("", failureReason.technicalError, e);
-
+			
 		} finally {
-
-			if (in != null) {
-				try {
-					in.close();
-				} catch (Exception e) {
-					logger.log(Level.WARNING, "Error while trying to close stream, ignoring...", e);
-				}
+			
+			if (graphic != null) {
+				graphic.dispose();
 			}
 
 			if (baos != null) {
@@ -177,7 +154,8 @@ public class PhotoUtils {
 					logger.log(Level.WARNING, "Error while trying to close stream, ignoring...", e);
 				}
 			}
-
+			
+			
 		}
 	}
 
@@ -210,4 +188,12 @@ public class PhotoUtils {
 	public void setConfig(Config config) {
 		this.config = config;
 	}
+
+
+
+
+
+
+
+
 }

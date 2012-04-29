@@ -2,9 +2,13 @@ package com.svend.dab.core;
 
 import static com.svend.dab.core.PhotoUtils.JPEG_MIME_TYPE;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,23 +73,27 @@ public class ProfilePhotoService implements IProfilePhotoService {
 			throw new DabUploadFailedException("cannot process: no user profile found for  " + username + ": already 20 photos! (the front end shoud prevent this!)", failureReason.technicalError);
 		}
 
-		byte[] receivedPhoto = photoUtils.readPhotoContent(photoContent);
-
-		// todo: optimization: we could probably launch two threads here to perform both operation in parallel...
-		byte[] normalSize = photoUtils.resizePhotoToNormalSize(receivedPhoto);
-		byte[] thumbSize = photoUtils.resizePhotoToThumbSize(receivedPhoto);
-
-		Photo photo = photoUtils.createOnePhotoPlaceholder(profile.getPhotoAlbum().getPhotoS3RootFolder(), profile.getPhotoAlbum().getThumbsS3RootFolder());
-
-		// saves first the photo in S3 => in case of failure, we just have some lost space over there (+ a message on the user screen)
-		photoDao.savePhoto(photo, normalSize, thumbSize, JPEG_MIME_TYPE);
-
-		boolean hasMainPhotoChanged = profile.getPhotoAlbum().isPhotoPackEmpty();
-		userProfileRepo.addOnePhoto(profile.getUsername(), photo);
-
-		if (hasMainPhotoChanged) {
-			UserProfile updatedProfile = userProfileRepo.retrieveUserProfileById(profile.getUsername());
-			emitter.emit(new UserSummaryUpdated(new UserSummary(updatedProfile)));
+		try {
+			BufferedImage photoImage = ImageIO.read(photoContent);
+			
+			// todo: optimization: we could probably launch two threads here to perform both operation in parallel...
+			byte[] normalSize = photoUtils.resizePhotoToNormalSize(photoImage);
+			byte[] thumbSize = photoUtils.resizePhotoToThumbSize(photoImage);
+			Photo photo = photoUtils.createOnePhotoPlaceholder(profile.getPhotoAlbum().getPhotoS3RootFolder(), profile.getPhotoAlbum().getThumbsS3RootFolder());
+	
+			// saves first the photo in S3 => in case of failure, we just have some lost space over there (+ a message on the user screen)
+			photoDao.savePhoto(photo, normalSize, thumbSize, JPEG_MIME_TYPE);
+	
+			boolean hasMainPhotoChanged = profile.getPhotoAlbum().isPhotoPackEmpty();
+			userProfileRepo.addOnePhoto(profile.getUsername(), photo);
+	
+			if (hasMainPhotoChanged) {
+				UserProfile updatedProfile = userProfileRepo.retrieveUserProfileById(profile.getUsername());
+				emitter.emit(new UserSummaryUpdated(new UserSummary(updatedProfile)));
+			}
+			
+		} catch (IOException e) {
+			throw new DabUploadFailedException("could not read uploaded photo", failureReason.technicalError, e);
 		}
 	}
 

@@ -55,7 +55,6 @@ public class ProfilePhotos extends DabLoggedController {
 			} else {
 				logger.log(Level.SEVERE, "Could not process uploaded request, upload failure reason: " + e.getReason(), e);
 				flash.put(SESSION_ATTR_ERROR_MESSAGE_KEY, e.getReason().getErrorMessageKey());
-
 			}
 
 			UploadError.uploadError();
