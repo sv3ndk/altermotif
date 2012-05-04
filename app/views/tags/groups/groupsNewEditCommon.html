@@ -17,13 +17,16 @@
 	rows: 4,
 /}
 
+
+
 <tr>
 	<td class="formlabel"><label>&{'groupsEditLocation'}*: </label></td>
 	<td id="inputGroupLocations" colspan="2" >
 		<input id="hiddenLocationsJson" name="editedGroup.locationJson" type="hidden" value="${_editedGroup == null ? flash['editedGroup.locationJson'] : _editedGroup.locationJson}"/>
 		#{dab.inputMultiLocations 
 			addLocationLinkLabel:messages.get('groupsEditAddLocationLink'), 
-			explanation:messages.get('groupsEditLocationExplanation')   /}
+			explanation:messages.get('groupsEditLocationExplanation'),
+			dabImagesPath:_dabImagesPath   /}
 	</td>
 </tr>
 <tr class="errorRow">
@@ -36,7 +39,9 @@
 	<td class="formlabel"><label>&{'groupsEditSelectThemes'}: </label></td>
 	<td id="inputGroupThemes" colspan="2">
 	<input id="hiddenThemesJson" name="editedGroup.themesJson" type="hidden" value="${_editedGroup == null ? flash['editedGroup.themesJson'] : _editedGroup.themesJson  }" />
-	#{dab.inputMultiThemes  addThemeLinkLabel:messages.get('groupsEditAddOneTheme')/}
+	#{dab.inputMultiThemes  
+		addThemeLinkLabel:messages.get('groupsEditAddOneTheme'), 
+		dabImagesPath:_dabImagesPath/}
 </td>
 <tr>
 
@@ -46,7 +51,7 @@
 		<input id="hiddenAllTagsJson" name="editedGroup.tagsJson" type="hidden" value="${_editedGroup == null ? flash['editedGroup.tagsJson'] : _editedGroup.tagsJson  }"/>
 		#{dab.inputMultiText 
 			inputTextSize="15",
-			addTextLinkLabel:messages.get('groupsEditAddOneTagLink') /}
+			addTextLinkLabel:messages.get('groupsEditAddOneTagLink'), dabImagesPath:_dabImagesPath /}
 	</td>
 </tr>
 

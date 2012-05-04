@@ -33,14 +33,14 @@
 		
 		<tbody data-bind="foreach: assets">
 			<tr>
-				<td><img id="trashImg" src="${dabImagesPath}/trash.png"  class="deleteImageLink deleteTaskLink" /></td>
+				<td><img id="trashImg" src="${_dabImagesPath}/trash.png"  class="deleteImageLink deleteTaskLink" /></td>
 				<td><span class="hidden hiddenAssetId" data-bind="text: id"></span><input data-bind="value: name"></input></td>
 				<td>
 					<select data-bind="options: assetStatusLabels, value: status, optionsValue: 'name', optionText: 'localizedName'" ></select>
 				</td>
 				<td>
 					<ul data-bind="template : {foreach: assignees, beforeRemove: beforeRemoveAssignee, afterAdd: afterAddAssignee}">
-						<li><span data-bind="text: userName" class="taskUserName"></span> <img  src="${dabImagesPath}/trash.png"  class="deleteImageLink removeAssetAssignee" /></li>
+						<li><span data-bind="text: userName" class="taskUserName"></span> <img  src="${_dabImagesPath}/trash.png"  class="deleteImageLink removeAssetAssignee" /></li>
 					</ul>
 					<br />
 					<span class="dabLink addAssetAssigneeLink"  data-bind="visible: isAddAssigneeVisible">&{'projectTaskEditionTableAddAssignee'}</span>

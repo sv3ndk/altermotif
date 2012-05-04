@@ -2,7 +2,7 @@
 	<td class="formlabel"><label>&{'projectNewProjectLocations'}*: </label></td>
 	<td id="inputProjectLocations" colspan="2" >
 		<input id="hiddenAllLocationJson" name="editedProject.pdata.allLocationJson" type="hidden" value="${_editedProject == null ? flash['editedProject.pdata.allLocationJson'] : _editedProject.pdata.allLocationJson}"/>
-		#{dab.inputMultiLocations addLocationLinkLabel: messages.get('projectNewProjectaddALocation')  /}
+		#{dab.inputMultiLocations addLocationLinkLabel: messages.get('projectNewProjectaddALocation'), dabImagesPath:_dabImagesPath  /}
 	</td>
 </tr>
 <tr class="errorRow">
@@ -88,7 +88,7 @@
 	</td>
 	<td colspan="2">
 		#{if _projectEditVisibility.editTasksVisible}
-			#{projects.projectsEditTasks confirmedActiveParticipants:_editedProject?.confirmedActiveParticipants /}
+			#{projects.projectsEditTasks confirmedActiveParticipants:_editedProject?.confirmedActiveParticipants, dabImagesPath:_dabImagesPath /}
 			<br />
 			<span class="formFieldExplanation">&{'projectNewRequiredTasksExplanation'}</span>
 		#{/if}
@@ -104,7 +104,7 @@
 	</td>
 	<td colspan="2">
 		#{if _projectEditVisibility.editAssetsVisible}
-			#{projects.projectsEditAssets confirmedActiveParticipants:_editedProject?.confirmedActiveParticipants /}
+			#{projects.projectsEditAssets confirmedActiveParticipants:_editedProject?.confirmedActiveParticipants, dabImagesPath:_dabImagesPath /}
 			<br />
 			<span class="formFieldExplanation">&{'projectNewRequiredAssetsExplanation'}</span>
 		#{/if}
@@ -131,7 +131,7 @@
 		<div>
 			<ul id="linksGroup">
 				<li id="hiddenLinkTemplate" class="hidden"><span class="dabLinkDisabled"></span> 
-						<img id="trashImg" src="${dabImagesPath}/trash.png"  class="deleteImageLink"/>
+						<img id="trashImg" src="${_dabImagesPath}/trash.png"  class="deleteImageLink"/>
 				</li>
 			</ul>
 			
@@ -161,7 +161,8 @@
 		#{dab.inputMultiThemes  
 				readOnly:!_projectEditVisibility.editThemesVisible,
 			    addThemeLinkLabel:messages.get('projectNewAddOneTheme'), 
-			    explanationText:messages.get('projectNewSelectThemesExplanation') /}
+			    explanationText:messages.get('projectNewSelectThemesExplanation'),
+			    dabImagesPath:_dabImagesPath /}
 	</td>
 <tr>
 
@@ -172,7 +173,8 @@
 		#{dab.inputMultiText 
 			inputTextSize="15",
 			readOnly:!_projectEditVisibility.editTagsVisible,
-			addTextLinkLabel:messages.get('projectNewAddOneTagLink') /}
+			addTextLinkLabel:messages.get('projectNewAddOneTagLink'),
+			dabImagesPath:_dabImagesPath /}
 	</td>
 </tr>
 
