@@ -1,22 +1,23 @@
 <div class="profileMPThumbContainer">
 	#{list items:_photoAlbum.getCompletList(), as: 'onePhoto'}
-	
 		#{if onePhoto_index  > _startIndex && onePhoto_index < _endIndex +1}
-			#{if onePhoto.isPhotoEmpty}
-				<img src="${_dabImagesPath}/empty.png" class="profileEmptyImage"></img>
-			#{/if}
-			#{else}
-				#{if onePhoto_index == (_photoAlbum.mainPhotoIndex + 1 )}
-					<img src="${onePhoto.thumbAddress}" alt="${onePhoto.caption}" class="mainPhoto"></img>
+			<div class="profileSimpleMPThumbContainer">
+				#{if onePhoto.isPhotoEmpty}
+					<!--  img src="${_dabImagesPath}/empty.png" class="profileEmptyImage"></img-->
 				#{/if}
-				#{else }
-					<img src="${onePhoto.thumbAddress}" alt="${onePhoto.caption}" ></img>
+				#{else}
+					#{if onePhoto_index == (_photoAlbum.mainPhotoIndex + 1 )}
+						<img src="${onePhoto.thumbAddress}" alt="${onePhoto.caption}" class="mainPhoto"></img>
+					#{/if}
+					#{else }
+						<img src="${onePhoto.thumbAddress}" alt="${onePhoto.caption}" ></img>
+					#{/else}
+					
+					<span class="hidden" >${onePhoto.normalPhotoAddress}</span>
 				#{/else}
-				
-				<span class="hidden" >${onePhoto.normalPhotoAddress}</span>
-			#{/else}
-	
-			<span class="hidden" id="hiddenPhotoCaption">${onePhoto.caption}</span>
+		
+				<span class="hidden" id="hiddenPhotoCaption">${onePhoto.caption}</span>
+			</div>
 		#{/if}
 	#{/list }
 </div>

@@ -19,12 +19,13 @@
 	<p>
 		<a href="@{profile.ProfileView.profileView( userProfile.username)}" class="dabLink" >&{'profilePhotosBackToProfile'}</a>
 	</p>
+	#{photos.uploadPhotoMPToolbox uploadPhotoLinkActive:uploadPhotoLinkActive, setAsMainPhotoText:'profileMSetProfilePhoto', photoEditType:"profile", dabImagesPath:dabImagesPath/}
+
+	#{photos.centralPhotoContainer dabImagesPath:dabImagesPath /}
 	
 	#{photos.uploadPhotoThumbs photoAlbum:userProfile.getPhotoAlbum(), dabImagesPath:dabImagesPath /}
 	
-	#{photos.uploadPhotoMPToolbox uploadPhotoLinkActive:uploadPhotoLinkActive, setAsMainPhotoText:'profileMSetProfilePhoto', photoEditType:"profile", dabImagesPath:dabImagesPath/}
 	
-	#{photos.centralPhotoContainer dabImagesPath:dabImagesPath /}
 </div>
 
 *{ the following 3 forms are requried by photoedit.js}*

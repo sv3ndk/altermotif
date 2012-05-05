@@ -20,7 +20,7 @@
 
 
 <tr>
-	<td class="formlabel"><label>&{'groupsEditLocation'}*: </label></td>
+	<td class="formlabel"><label>&{'groupsEditLocation'}* </label></td>
 	<td id="inputGroupLocations" colspan="2" >
 		<input id="hiddenLocationsJson" name="editedGroup.locationJson" type="hidden" value="${_editedGroup == null ? flash['editedGroup.locationJson'] : _editedGroup.locationJson}"/>
 		#{dab.inputMultiLocations 
@@ -36,7 +36,7 @@
 
 
 <tr>
-	<td class="formlabel"><label>&{'groupsEditSelectThemes'}: </label></td>
+	<td class="formlabel"><label>&{'groupsEditSelectThemes'} </label></td>
 	<td id="inputGroupThemes" colspan="2">
 	<input id="hiddenThemesJson" name="editedGroup.themesJson" type="hidden" value="${_editedGroup == null ? flash['editedGroup.themesJson'] : _editedGroup.themesJson  }" />
 	#{dab.inputMultiThemes  
@@ -46,7 +46,7 @@
 <tr>
 
 
-<td class="formlabel"><label>&{'groupsEditSelectTags'}: </label></td>
+<td class="formlabel"><label>&{'groupsEditSelectTags'} </label></td>
 	<td id="inputTags" colspan="2">
 		<input id="hiddenAllTagsJson" name="editedGroup.tagsJson" type="hidden" value="${_editedGroup == null ? flash['editedGroup.tagsJson'] : _editedGroup.tagsJson  }"/>
 		#{dab.inputMultiText 

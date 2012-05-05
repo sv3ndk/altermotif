@@ -12,7 +12,6 @@
 	</script>
 #{/set}
 
-
 <div id="signinMenu">
 	
 	#{form @Enter.doLogin() }
@@ -23,27 +22,34 @@
 
 		<table>
 			<tr>
-				<td><label>&{'username'}: </label></td>
+				<td><label>&{'username'} </label></td>
+				<td></td>
+			</tr>
+			<tr>
 				<td><input type="text" id="usernameInput" name="username" value="${flash.username}"/></td>
+				<td></td>
 			</tr>
 			<tr>
-				<td></td>
 				<td><div class="errorMessage">#{error 'username' /}</div></td>
-			</tr>
-			<tr>
-				<td><label>&{'password'}: </label></td>
-				<td><input type="password" id="password" name="password" /></td>
-			</tr>
-			<tr>
 				<td></td>
-				<td><div class="errorMessage">#{error 'password' /}</div></td>
 			</tr>
-		
-		</table>
+			<tr>
+				<td><label>&{'password'} </label></td>
+				<td></td>
+			<tr>
+				<td><input type="password" id="password" name="password" /></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><div class="errorMessage">#{error 'password' /}</div></td>
+				<td></td>
+			</tr>
 
-		<p class="loginButton">
-			<input type="submit" value=" &{'loginButtonText'} "></input>
-		</p>
+			<tr>
+				<td><input type="submit" value=" &{'loginButtonText'} "></td>
+				<td></td>
+			</tr>
+		</table>
 	#{/form}
 
 </div>
@@ -53,8 +59,3 @@
 	<a href="@{Enter.register()}" class="dabLink">&{'register'}</a>
 	&{'forFreeOfCourse'}
 </div>
-
-
-
-
-

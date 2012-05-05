@@ -16,6 +16,10 @@ public class Application extends DabController {
 		render();
 	}
 
+	public static void login() {
+		render();
+	}
+
 
 	public static void udpateLanguage(String selection) {
 		getSessionWrapper().updateSelectedLanguage(selection);

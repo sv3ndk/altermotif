@@ -1,5 +1,5 @@
 <tr>
-	<td class="formlabel"><label>&{'projectNewProjectLocations'}*: </label></td>
+	<td class="formlabel"><label>&{'projectNewProjectLocations'}*</label></td>
 	<td id="inputProjectLocations" colspan="2" >
 		<input id="hiddenAllLocationJson" name="editedProject.pdata.allLocationJson" type="hidden" value="${_editedProject == null ? flash['editedProject.pdata.allLocationJson'] : _editedProject.pdata.allLocationJson}"/>
 		#{dab.inputMultiLocations addLocationLinkLabel: messages.get('projectNewProjectaddALocation'), dabImagesPath:_dabImagesPath  /}
@@ -76,7 +76,7 @@
 #{/if}
 #{else}
 	<tr>
-		<td class="formlabel"><label >&{'projectNewOffer'}: </label></td>
+		<td class="formlabel"><label >&{'projectNewOffer'}</label></td>
 		<td><pre>${_editedProject.pdata.offer}</pre></td>
 	</tr>
 #{/else}
@@ -126,7 +126,7 @@
 /}
 
 <tr>
-	<td ><label class="formlabel">&{'projectNewUsefulLinks'}: </label></td>
+	<td ><label class="formlabel">&{'projectNewUsefulLinks'} </label></td>
 	<td colspan="2">
 		<div>
 			<ul id="linksGroup">
@@ -155,7 +155,7 @@
 
 
 <tr>
-	<td class="formlabel"><label>&{'projectNewSelectThemes'}: </label></td>
+	<td class="formlabel"><label>&{'projectNewSelectThemes'} </label></td>
 	<td id="inputMultiThemes" colspan="2">
 		<input id="hiddenAllThemesJson" name="editedProject.allThemesJson" type="hidden" value="${_editedProject == null ? flash['editedProject.allThemesJson'] : _editedProject.allThemesJson  }"/>
 		#{dab.inputMultiThemes  
@@ -167,7 +167,7 @@
 <tr>
 
 
-<td class="formlabel"><label>&{'projectNewSelectTags'}: </label></td>
+<td class="formlabel"><label>&{'projectNewSelectTags'}</label></td>
 	<td id="inputTags" colspan="2">
 		<input id="hiddenAllTagsJson" name="editedProject.allTagsJson" type="hidden" value="${_editedProject == null ? flash['editedProject.allTagsJson'] : _editedProject.allTagsJson  }"/>
 		#{dab.inputMultiText 
