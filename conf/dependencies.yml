@@ -19,6 +19,8 @@ require:
     
     - org.hibernate -> hibernate-validator 4.2.0.Final
     
+    - org.apache.solr -> solr-solrj 3.6.0
+    
     
 repositories:
     

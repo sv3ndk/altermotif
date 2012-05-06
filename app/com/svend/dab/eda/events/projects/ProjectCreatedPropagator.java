@@ -10,6 +10,7 @@ import com.svend.dab.core.beans.projects.Participant.ROLE;
 import com.svend.dab.core.beans.projects.Participation;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.dao.IProjectDao;
+import com.svend.dab.core.dao.IProjectIndexDao;
 import com.svend.dab.core.dao.IUserProfileDao;
 import com.svend.dab.core.projects.IProjectFtsService;
 import com.svend.dab.eda.IEventPropagator;
@@ -30,6 +31,9 @@ public class ProjectCreatedPropagator implements IEventPropagator<ProjectCreated
 	@Autowired
 	private IProjectFtsService projectFTSService;
 	
+	@Autowired
+	private IProjectIndexDao projectIndexDao;
+	
 	public void propagate(ProjectCreated event) throws DabException {
 		
 		Project project = event.getCreatedProject();
@@ -43,7 +47,8 @@ public class ProjectCreatedPropagator implements IEventPropagator<ProjectCreated
 		projetRepo.save(project);
 		userProfileRepo.addProjectParticipation(creatorProfile, new Participation(project, ROLE.initiator, true));
 		
-		projectFTSService.updateProjetIndex(event.getCreatedProject().getId(), false);
+//		projectFTSService.updateProjetIndex(event.getCreatedProject().getId(), false);
+		projectIndexDao.updateIndex(project);
 		
 	}
 }

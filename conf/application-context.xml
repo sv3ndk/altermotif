@@ -7,6 +7,7 @@
 	xmlns:cloud="http://schema.cloudfoundry.org/spring"
 	xmlns:mongo="http://www.springframework.org/schema/data/mongo" 
 	xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 			http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
     	http://www.springframework.org/schema/context 							http://www.springframework.org/schema/context/spring-context-3.1.xsd
         http://www.springframework.org/schema/tx 								http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
@@ -21,6 +22,76 @@
 	<context:component-scan base-package="com.svend" />
 
 	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+
+
+	<beans profile="devOnline, devLocal">
+		<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+			<constructor-arg >
+				<bean class="org.springframework.data.mongodb.core.SimpleMongoDbFactory" >
+					<constructor-arg name="mongo">
+						<bean class="com.mongodb.Mongo">
+							<constructor-arg name="host" value="localhost" />
+							<constructor-arg name="port" value="27017" />
+						</bean>
+					</constructor-arg>
+					<constructor-arg name="databaseName" value="dabdb" />
+				</bean>
+			</constructor-arg>
+		</bean>
+		
+		<bean id="solrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
+			<constructor-arg index="0" value="http://localhost:8983/solr/altermotif" />
+			<property name="requestWriter" ref="solrRequestWriter"></property>
+		</bean>
+		
+	</beans>
+
+	<beans profile="prod" >
+		<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+			<constructor-arg >
+				<bean class="org.springframework.data.mongodb.core.SimpleMongoDbFactory" >
+					<constructor-arg name="mongo">
+						<bean class="com.mongodb.Mongo">
+							<constructor-arg name="host" value="172.30.48.72" />
+							<constructor-arg name="port" value="25063" />
+						</bean>
+					</constructor-arg>
+					<constructor-arg name="databaseName" value="db" />
+					<constructor-arg name="userCredentials">
+						<bean class="org.springframework.data.authentication.UserCredentials">
+							<constructor-arg name="username" value="bf6dcf65-6a85-4e23-ac49-0c59547ad78c"/>
+							<constructor-arg name="password" value="d450ffe8-2f8d-49ed-85b3-e507667569a2"/>
+						</bean>
+					</constructor-arg>
+				</bean>
+			</constructor-arg>
+		</bean>
+	</beans>	
+
+	<!-- common beans for all config -->
+	<beans >
+	
+	 	<mongo:repositories base-package="com.svend.dab.dao.mongo" />
+
+		<bean id="solrRequestWriter" class="org.apache.solr.client.solrj.impl.BinaryRequestWriter" />
+	 	
+		<!-- ================================ mail server config ========================== -->
+		
+		<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	  		<property name="host" value="smtp.gmail.com"/>
+	  		<property name="port" value="587"></property>
+	  		<property name="username" value="noreply@altermotif.org"></property>
+	  		<property name="password" value="A}RZHMKm,Yc-LI_Mfh%R1bLrAUiln$$YD0pLcY)19-1X1I945vXjdo(Jb0_"></property>
+	  		<property name="javaMailProperties">
+		   		<props>
+	       	      <prop key="mail.smtp.auth">true</prop>
+	       	      <prop key="mail.smtp.starttls.enable">true</prop>
+	       	   </props>
+			</property>
+		</bean>
+	</beans>
+
+
 
 
 	<!-- ================================ RabbitMQ config ========================== -->
@@ -64,7 +135,6 @@
 	<rabbit:queue name="dab.events" durable="true" />
 
 	<rabbit:queue name="dab.events.retry" durable="true" />
-	-->
 
 
 	<task:annotation-driven scheduler="myScheduler" executor="myExecutor" />
@@ -72,6 +142,7 @@
 	<task:scheduler id="myScheduler" pool-size="1" />
 
 	<tx:annotation-driven transaction-manager="txManager" />
+	-->
 
 
 	<!-- connection directly injected by cloudfoundry
@@ -81,89 +152,5 @@
 	<!--  local deployment
 	<bean id="rabbitConnectionFactory" class="org.springframework.amqp.rabbit.connection.CachingConnectionFactory"></bean>
 	-->
-	
- 	<!-- CF deployment 
- {"rabbitmq-2.4":[{"name":"rabbitmq-altermotif-dev","label":"rabbitmq-2.4","plan":"free","tags":["rabbitmq"],"credentials":{"url":"amqp://wwfbvdve:wBZIjIwaNvvZrfEn@172.30.48.102:11096/ztzduacf"}}],
- 
- amqp://wwfbvdve:wBZIjIwaNvvZrfEn@172.30.48.102:11096/ztzduacf
-	<bean id="rabbitConnectionFactory" class="org.springframework.amqp.rabbit.connection.CachingConnectionFactory">
-		<property name="username" value="wwfbvdve"/>
-		<property name="password" value="wBZIjIwaNvvZrfEn"/>
-		<property name="host" value="172.30.48.102"/>
-		<property name="port" value="11096"/>
-		<property name="virtualHost" value="ztzduacf"/>
-	</bean>
-
-	<bean id="receptionEventErrorHandler" class="com.svend.dab.eda.errorhandling.EventReceptionErrorHandler"></bean>
-
-	<bean id="txManager" class="org.springframework.amqp.rabbit.transaction.RabbitTransactionManager">
-		<property name="connectionFactory" ref="rabbitConnectionFactory"></property>
-	</bean>
-	
-	<bean class="com.svend.dab.eda.errorhandling.NonFailingJsonMessageConverter" id="jsonEventConverter" />
- 	-->
-
-	<!-- ================================ MongoDB config ========================== -->
-
-	<!--  cloud:mongo-db-factory id="mongoDbFactory" /-->
-
-	<beans profile="devOnline, devLocal">
-		<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
-			<constructor-arg >
-				<bean class="org.springframework.data.mongodb.core.SimpleMongoDbFactory" >
-					<constructor-arg name="mongo">
-						<bean class="com.mongodb.Mongo">
-							<constructor-arg name="host" value="localhost" />
-							<constructor-arg name="port" value="27017" />
-						</bean>
-					</constructor-arg>
-					<constructor-arg name="databaseName" value="dabdb" />
-				</bean>
-			</constructor-arg>
-		</bean>
-	</beans>
-
-	<beans profile="prod" >
-		<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
-			<constructor-arg >
-				<bean class="org.springframework.data.mongodb.core.SimpleMongoDbFactory" >
-					<constructor-arg name="mongo">
-						<bean class="com.mongodb.Mongo">
-							<constructor-arg name="host" value="172.30.48.72" />
-							<constructor-arg name="port" value="25063" />
-						</bean>
-					</constructor-arg>
-					<constructor-arg name="databaseName" value="db" />
-					<constructor-arg name="userCredentials">
-						<bean class="org.springframework.data.authentication.UserCredentials">
-							<constructor-arg name="username" value="bf6dcf65-6a85-4e23-ac49-0c59547ad78c"/>
-							<constructor-arg name="password" value="d450ffe8-2f8d-49ed-85b3-e507667569a2"/>
-						</bean>
-					</constructor-arg>
-				</bean>
-			</constructor-arg>
-		</bean>
-	</beans>	
-
-	<beans >
-	
-	 	<mongo:repositories base-package="com.svend.dab.dao.mongo" >
-	 	</mongo:repositories>
-	 	
-		<!-- ================================ mail server config ========================== -->
-		
-		<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-	  		<property name="host" value="smtp.gmail.com"/>
-	  		<property name="port" value="587"></property>
-	  		<property name="username" value="noreply@altermotif.org"></property>
-	  		<property name="password" value="A}RZHMKm,Yc-LI_Mfh%R1bLrAUiln$$YD0pLcY)19-1X1I945vXjdo(Jb0_"></property>
-	  		<property name="javaMailProperties">
-		   		<props>
-	       	      <prop key="mail.smtp.auth">true</prop>
-	       	      <prop key="mail.smtp.starttls.enable">true</prop>
-	       	   </props>
-			</property>
-		</bean>
-	</beans>
 
 </beans>

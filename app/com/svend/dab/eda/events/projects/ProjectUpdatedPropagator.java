@@ -7,6 +7,7 @@ import com.svend.dab.core.beans.DabException;
 import com.svend.dab.core.beans.projects.Asset;
 import com.svend.dab.core.beans.projects.Task;
 import com.svend.dab.core.dao.IProjectDao;
+import com.svend.dab.core.dao.IProjectIndexDao;
 import com.svend.dab.core.projects.IProjectFtsService;
 import com.svend.dab.eda.IEventPropagator;
 
@@ -16,6 +17,9 @@ public class ProjectUpdatedPropagator implements IEventPropagator<ProjectUpdated
 	@Autowired
 	private IProjectDao projetRepo;
 	
+	@Autowired
+	private IProjectIndexDao projectIndexDao;
+
 	@Autowired
 	private IProjectFtsService projectFTSService;
 
@@ -46,7 +50,9 @@ public class ProjectUpdatedPropagator implements IEventPropagator<ProjectUpdated
 			}
 		}
 		
-		projectFTSService.updateProjetIndex(event.getUpdatedProject().getId(), false);
+		projectIndexDao.updateIndex(event.getUpdatedProject());
+		
+//		projectFTSService.updateProjetIndex(event.getUpdatedProject().getId(), false);
 	}
 
 	public void setProjetRepo(IProjectDao projetRepo) {

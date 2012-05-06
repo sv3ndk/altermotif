@@ -3,7 +3,7 @@ package com.svend.dab.eda.events.s3;
 import com.svend.dab.core.beans.DabIllegalFormatException;
 import com.svend.dab.core.beans.aws.S3Link;
 import com.svend.dab.core.beans.profile.ExternalLink;
-import com.svend.dab.dao.aws.sdb.DabAwsAccessException;
+import com.svend.dab.dao.aws.s3.DabS3AccessException;
 import com.svend.dab.eda.Event;
 import com.svend.dab.eda.IEventPropagator;
 import com.svend.dab.eda.IEventPropagatorsContainer;
@@ -28,7 +28,7 @@ public class BinaryNoLongerRequiredEvent extends Event {
 
 	public BinaryNoLongerRequiredEvent(ExternalLink cvLink) {
 		if (cvLink == null) {
-			throw new DabAwsAccessException("cannot build a BinaryNoLongerRequiredEvent from null link");
+			throw new DabS3AccessException("cannot build a BinaryNoLongerRequiredEvent from null link");
 		}
 		
 		if (cvLink instanceof S3Link) {
