@@ -1,16 +1,33 @@
 package com.svend.dab.dao.solr;
 
+import java.io.IOException;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
+import org.apache.solr.client.solrj.request.QueryRequest;
+import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.UpdateResponse;
-import org.apache.solr.common.SolrInputDocument;
+import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.params.CommonParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import web.utils.Utils;
+
+import com.svend.dab.core.beans.Config;
 import com.svend.dab.core.beans.projects.Project;
+import com.svend.dab.core.beans.projects.ProjectOverview;
+import com.svend.dab.core.beans.projects.SearchQuery;
+import com.svend.dab.core.dao.IProjectDao;
 import com.svend.dab.core.dao.IProjectIndexDao;
+
+import controllers.BeanProvider;
 
 
 @Service
@@ -18,48 +35,91 @@ public class ProjectIndexDao implements IProjectIndexDao {
 
 	private static Logger logger = Logger.getLogger(ProjectIndexDao.class.getName());
 	
-	// prefixing the ids of the projects, because both groups and projects and indexed in the same index
-	public static String ID_PREFIX = "prj_";
+	@Autowired
+	private HttpSolrServer solr;
 	
 	@Autowired
-	private HttpSolrServer server;
+	private Config config;
 	
+	@Autowired
+	private ProjectSolrConverter converter;
+	
+	@Autowired
+	private IProjectDao projectDao;
 
-	public void updateIndex(Project project) {
+	
+	public void updateIndex(String projectId, boolean immediate) {
 
-//		server.setRequestWriter(new org.apache.solr.client.solrj.impl.BinaryRequestWriter());
-		
+		if (!immediate) {
+			// increasing the chances to actually catch the updated data in db (you know, eventual consistency thingy...)
+			// TODO: clean this up: mongo driver can be configured not to return until we are sure to have written something 
+			Utils.waitABit();
+		}
+
+		Project project = projectDao.findOne(projectId);
+
 		if (project == null || project.getPdata() == null) {
 			logger.log(Level.WARNING, "refusing to index a null project or project with null pdata");
-		}
-		
-		SolrInputDocument prjDoc = new SolrInputDocument();
-		prjDoc.addField( "id", ID_PREFIX + project.getId());
-		
-		prjDoc.addField( "prj_name", project.getPdata().getName());
-		prjDoc.addField( "prj_goal", project.getPdata().getGoal());
-		prjDoc.addField( "prj_description", project.getPdata().getDescription());
-		prjDoc.addField( "prj_reason", project.getPdata().getReason());
-		prjDoc.addField( "prj_strategy", project.getPdata().getStrategy());
-		prjDoc.addField( "prj_offer", project.getPdata().getOffer());
-		
-		if (project.getTags() != null && !project.getTags().isEmpty()) {
-			// this will produce blasf, blabla, blwf, bla, which Solr will automatically parse for us... :-)
-			String tags = project.getTags().toString();
-			prjDoc.addField( "prj_tags", tags.substring(1, tags.length()-2));
-		}
-		
-		try {
-			UpdateResponse response = server.add(prjDoc);
-			logger.log(Level.INFO, "response status: " + response.getStatus());
-			server.commit();
-		} catch (Exception e) {
-			
-			// TODO: this assumes that all SOLR errors are recoverable (i.e. "retryable"), but only those related to netword or storage issues should be retried
-			// the errors related to schema or any incorrect input should not be retried.
-			throw new SolrAccessException("Problem while trying to index project", e);
+		} else {
+			try {
+				UpdateResponse response = solr.add(converter.toSolrInputDocument(project), config.getSolrCommitWithin());
+				logger.log(Level.INFO, "response status: " + response.getStatus());
+				solr.commit();
+			} catch (Exception e) {
+				
+				// TODO: this assumes that all SOLR errors are recoverable (i.e. "retryable"), but only those related to netword or storage issues should be retried
+				// the errors related to schema or any incorrect input should not be retried.
+				throw new SolrAccessException("Problem while trying to index project", e);
+			}
 		}
 		
 	}
+	
+	
+	public List<ProjectOverview> searchForProjects(SearchQuery request) {
+		
+		
+		List<ProjectOverview> projectOverviews = new LinkedList<ProjectOverview>();
+		
+		try {
+			
+			String userQuery = "";
+			
+			// white spaces get replaced by "+" at some point => using "," instead
+			if (request.getSearchTerm() != null) {
+				userQuery = request.getSearchTerm().replace(" ", ",");
+			}
+			
+			SolrQuery solrQuery = new SolrQuery(userQuery);
+			solrQuery.set(CommonParams.QT, "/projects");
+			
+			QueryResponse response = solr.query(solrQuery);
+			
+			if (response != null && response.getResults() != null) {
+				
+				Date expirationdate = new Date();
+				expirationdate.setTime(expirationdate.getTime() + BeanProvider.getConfig().getCvExpirationDelayInMillis());
+
+				
+				for (SolrDocument doc : response.getResults()) {
+					projectOverviews.add(converter.toProjectOverview(doc, expirationdate));
+				}
+			}
+			
+			
+		} catch (SolrServerException e) {
+			
+			// TODO: this assumes that all SOLR errors are recoverable (i.e. "retryable"), but only those related to netword or storage issues should be retried
+			// the errors related to schema or any incorrect input should not be retried.
+			throw new SolrAccessException("Problem while trying to retrieve a project", e);
+		} 
+		
+
+		return projectOverviews;
+
+		
+		
+	}
+
 
 }

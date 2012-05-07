@@ -13,6 +13,7 @@ import com.svend.dab.core.beans.profile.Photo;
  */
 public class ProjectOverview {
 
+
 	private String projectId;
 	private String name;
 	private String goal;
@@ -25,6 +26,10 @@ public class ProjectOverview {
 
 	private Photo mainThumb;
 	
+	public ProjectOverview() {
+		super();
+	}
+
 	public ProjectOverview(Project project) {
 		projectId = project.getId();
 		name = project.getPdata().getName();

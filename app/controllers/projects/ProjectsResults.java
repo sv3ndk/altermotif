@@ -25,7 +25,8 @@ public class ProjectsResults extends DabController {
 
 			renderArgs.put("originalSearchRequestJson", Utils.objectToJsonString(r));
 			renderArgs.put("originalSearchRequest", r);
-			renderArgs.put("projectsOverviews", BeanProvider.getProjectFullTextSearchService().searchForProjects(r.toBackendRequest()));
+//			renderArgs.put("projectsOverviews", BeanProvider.getProjectFullTextSearchService().searchForProjects(r.toBackendRequest()));
+			renderArgs.put("projectsOverviews", BeanProvider.getProjectIndexDao().searchForProjects(r.toBackendRequest()));
 			render();
 		}
 	}

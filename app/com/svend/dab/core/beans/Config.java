@@ -6,12 +6,10 @@ import java.util.List;
 import models.altermotif.projects.theme.SubTheme;
 import models.altermotif.projects.theme.Theme;
 
-import org.apache.commons.lang.NotImplementedException;
 import org.springframework.stereotype.Component;
 
 import play.i18n.Messages;
 import play.modules.spring.SpringPlugin;
-
 import controllers.BeanProvider;
 
 /**
@@ -56,6 +54,9 @@ public class Config {
 
 	private final Location defaultSearchReferenceLocation = new Location("City of Brussels, Belgium", "50.8503396", "4.351710300000036");
 
+	private final int SOLR_COMMIT_WITHIN = 30000;
+	
+	
 	// ------------------------------------------------------
 	// ------------------------------------------------------
 
@@ -278,6 +279,12 @@ public class Config {
 
 	public int getMaxNumberOfPhotosInGroup() {
 		return maxNumberOfPhotosInGroup;
+	}
+
+
+
+	public int getSolrCommitWithin() {
+		return SOLR_COMMIT_WITHIN;
 	}
 
 

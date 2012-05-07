@@ -58,7 +58,6 @@ public class ForumPost {
 	public ForumPost(String threadId, /*String projectId, */ Date creationDate, UserSummary author, String content) {
 		super();
 		this.threadId = threadId;
-//		this.projectId = projectId;
 		this.creationDate = creationDate;
 		this.author = author;
 		this.content = content;
@@ -86,14 +85,6 @@ public class ForumPost {
 	public void setThreadId(String threadId) {
 		this.threadId = threadId;
 	}
-
-//	public String getProjectId() {
-//		return projectId;
-//	}
-//
-//	public void setProjectId(String projectId) {
-//		this.projectId = projectId;
-//	}
 
 	public Date getCreationDate() {
 		return creationDate;

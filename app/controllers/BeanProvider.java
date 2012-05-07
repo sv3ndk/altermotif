@@ -21,6 +21,7 @@ import com.svend.dab.core.groups.IGroupService;
 import com.svend.dab.core.projects.IProjectFtsService;
 import com.svend.dab.core.projects.IProjectPhotoService;
 import com.svend.dab.core.projects.IProjectService;
+import com.svend.dab.dao.solr.ProjectIndexDao;
 import com.svend.dab.eda.errorhandling.NonFailingJsonMessageConverter;
 import com.svend.dab.web.ResourceLocator;
 import com.svend.dab.web.upload.IUploadProcessor;
@@ -65,6 +66,10 @@ public class BeanProvider {
 
 	public static IProjectFtsService getProjectFullTextSearchService() {
 		return Spring.getBeanOfType(IProjectFtsService.class);
+	}
+
+	public static ProjectIndexDao getProjectIndexDao() {
+		return Spring.getBeanOfType(ProjectIndexDao.class);
 	}
 
 	public static IGroupFtsService getGroupFullTextSearchService() {
