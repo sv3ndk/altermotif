@@ -36,6 +36,11 @@ public class SelectedTheme {
 		this.subThemeId = subThemeId;
 		this.subThemeLabel = subThemeLabel;
 	}
+	
+	
+	public String buildStringRepresentation() {
+		return getThemeId() + "_" + getSubThemeId();
+	}
 
 
 	public String getThemeId() {

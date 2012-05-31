@@ -8,16 +8,26 @@ How to setup a dev environment:
 setup:
 -------
 - install mongoDB 1.8 
+
 - install Play 1.2.4
+ + add the following Spring integration module into Play:  http://www.playframework.org/modules/spring-1.0.2/home
+ + get this fork of the play Spring integration module https://github.com/svendx4f/Play--framework-Spring-module, compile it and replace the jar produced by previous step with the jar from this fork
+
+- install Solr 3.6.0
+ +  get the altermotif solr config and schema from here: https://github.com/svendx4f/altermotif_solr
+
 - git clone this project
+
 - run this in order to download all dependencies: 
   play dependency --sync
-=> at this point you shoud have everything to run the application localy.
+  
+=> at this point you should have everything to run the application locally.
 
 
 running the application:
 --------------------------
 - start mongodb.
+- start solr 
 - have a look at conf/application-context.xml in order to make sure the mongodb coordinates are ok for you mongo setup (if you used all default values with no security, it should be ok)
 - make sure conf/application.conf contains "play.spring.profile=devLocal", which means "using parameters for local development" (including local mongo DB)
 - run this:
@@ -26,13 +36,13 @@ play clean
 play precompile
 play run
 
-(in most of the cases, only the last one is required, but some precompilation is sometimes required due to a but in the Spring/Play integration module) 
+(in most of the cases, only the last one is required, but some pre-compilation is sometimes required due to a but in the Spring/Play integration module) 
 
 
 
 editing the code with Eclipse:
 ----------------------------------
-- install STS 2.8.1  
+- install STS 2.9.2  
 - start Eclise, import the code => Eclise should complain about missing libs
      * in Eclipse define a variable called PLAY pointing to the place where the Play framework is installed
      * in Eclipse, define a "user library" containing all the libs in lib/ of this project (that were downloaded by "play dependency" above)   

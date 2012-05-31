@@ -92,7 +92,7 @@ public class Photo implements Serializable {
 	 * @return
 	 */
 	public boolean isPhotoEmpty() {
-		return normalPhotoLink == null;
+		return normalPhotoLink == null && thumbLink == null;
 	}
 
 	/**

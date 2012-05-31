@@ -1,7 +1,11 @@
 package com.svend.dab.core.beans.projects;
 
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
+import com.google.common.base.Strings;
+import com.svend.dab.core.beans.Location;
 import com.svend.dab.core.beans.profile.Photo;
 
 /**
@@ -13,7 +17,6 @@ import com.svend.dab.core.beans.profile.Photo;
  */
 public class ProjectOverview {
 
-
 	private String projectId;
 	private String name;
 	private String goal;
@@ -22,10 +25,12 @@ public class ProjectOverview {
 	private Date dueDate;
 	private Date creationDate;
 
+	private List<String> locationNames = new LinkedList<String>();
+
 	private int numberOfMembers;
 
 	private Photo mainThumb;
-	
+
 	public ProjectOverview() {
 		super();
 	}
@@ -35,27 +40,44 @@ public class ProjectOverview {
 		name = project.getPdata().getName();
 		goal = project.getPdata().getGoal();
 		description = project.getPdata().getDescription();
-		
+
 		dueDate = project.getPdata().getDueDate();
 		creationDate = project.getPdata().getCreationDate();
-		
+
 		numberOfMembers = project.getConfirmedActiveParticipants().size();
-		
 		mainThumb = project.getPhotoAlbum().getMainPhoto();
-		
+
+		if (project.getPdata().getLocations() != null) {
+			for (Location location : project.getPdata().getLocations()) {
+				locationNames.add(location.getLocation());
+			}
+		}
 	}
-	
-	
+
+	public boolean hasLocations() {
+		return !locationNames.isEmpty();
+	}
+
+	public boolean hasMoreThanOneLocation() {
+		return locationNames.size() > 1;
+	}
+
 	public void generatePhotoLinks(Date expirationdate) {
 		if (mainThumb != null) {
 			mainThumb.generatePresignedLinks(expirationdate, false, true);
 		}
 	}
-	
+
+	public void addLocation(String location) {
+		if (!Strings.isNullOrEmpty(location)) {
+			locationNames.add(location);
+		}
+	}
+
 	public boolean hasAThumbPhoto() {
 		return mainThumb != null && !mainThumb.isPhotoEmpty();
 	}
-	
+
 	public String getMainPhotoThumbLink() {
 		if (hasAThumbPhoto()) {
 			return mainThumb.getThumbAddress();
@@ -63,7 +85,6 @@ public class ProjectOverview {
 			return "";
 		}
 	}
-
 
 	public String getProjectId() {
 		return projectId;
@@ -128,6 +149,5 @@ public class ProjectOverview {
 	public void setMainThumb(Photo mainThumb) {
 		this.mainThumb = mainThumb;
 	}
-
 
 }

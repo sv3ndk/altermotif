@@ -315,7 +315,7 @@ groupSearchResultTitle=Zoekresultaten
 groupSearchResultBackToSearchPage=Terug naar de zoekpagina
 groupSearchResultNumberOfUserParticipants=Aantal deelnemers
 groupSearchResultNumberOfProjectParticipants=Aantal projecten
-groupSearchKeyWords=Elke groep met de volgende sleutelwoorden
+groupSearchKeyWords=***Any group with any these keywords
 groupSearchCategories=in elk van de volgende categorieën
 
 groupResultFilterByDetailsCurrentQueryDescription_part1=Zoek projecten
@@ -611,7 +611,7 @@ projectEditEditPhotos=Foto's wijzigen...
 projectPhotosSetAsMainPhoto=Instellen als standaard projectfoto
 
 # project search page
-projectSearchKeyWords=Elk project met de volgende sleutelwoorden
+projectSearchKeyWords=***any project with any of these keywords
 projectSearchCategories=in elk van de volgende categorieën
 projectSearchSimpleModeExplanation=Selecteer een categorie of klik een markering aan om onmiddelijk de overeenstemmende resultaten te zien
 projectSearchSimpleModeExplanation_GotoAdvancedMode=of klik hier om over te schakelen naar 
@@ -624,8 +624,8 @@ projectSearchResultTitle=Resultaten van de zoekopdracht
 projectSearchResultBackToSearchPage=Terug naar de zoekpagina
 projectSearchResultFilterResults=Filter resultaten
 projectSearchResultSortBy=Sorteer
-projectSearchResultSortByAlphabetic=in alfabetische volgorde
-projectSearchResultSortByDueDate=dichtstbijzijnde uiterste datum eerst
+projectSearchResultSortByRelevancy=***relevancy
+projectSearchResultSortByDueDate=***due date (earliest first)
 projectSearchResultSortByProximity=eerst de projecten die gelegen zijn dichtbij
 projectSearchResultUpdateButtonText=Actualiseer zoekresultaten
 projectResultChangeRefLocationLink=Wijzig de referentielocatie

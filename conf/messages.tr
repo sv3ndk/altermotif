@@ -315,7 +315,7 @@ groupSearchResultTitle=Arama Sonuçları
 groupSearchResultBackToSearchPage=Grup arama sayfasına geri dön
 groupSearchResultNumberOfUserParticipants=AlterMotif üye sayısı
 groupSearchResultNumberOfProjectParticipants=Proje sayısı
-groupSearchKeyWords=Bu anahtar kelimeleri barındıran tüm projeler
+groupSearchKeyWords=***Any group with any these keywords
 groupSearchCategories=Bu kategorilerin herhangi birisine dahil
 
 groupResultFilterByDetailsCurrentQueryDescription_part1=Grup arama
@@ -610,7 +610,7 @@ projectPhotosSetAsMainPhoto=Proje resmi
 
 
 # project search page
-projectSearchKeyWords=bu anahtar kelimeleri içeren tüm projeler
+projectSearchKeyWords=***any project with any of these keywords
 projectSearchCategories=bu kategorilerin herhangi biri
 projectSearchSimpleModeExplanation=Bir kategori seçin veya bağlantılı sonuçlara ulaşmak için etiketlere tıklayın
 projectSearchSimpleModeExplanation_GotoAdvancedMode=veya buraya tıklayın
@@ -623,8 +623,8 @@ projectSearchResultTitle=Arama Sonuçları
 projectSearchResultBackToSearchPage=Arama sayfasına geri dön
 projectSearchResultFilterResults=Sonuçları filtreler
 projectSearchResultSortBy=Sıraya sok
-projectSearchResultSortByAlphabetic=A-Z
-projectSearchResultSortByDueDate=Bitiş tarihi en yakın
+projectSearchResultSortByRelevancy=***relevancy
+projectSearchResultSortByDueDate=***due date (earliest first)
 projectSearchResultSortByProximity=Şu yere yakın olan 
 projectSearchResultUpdateButtonText=Sonuçları güncelle
 projectResultChangeRefLocationLink=Yer seçimini değiştir

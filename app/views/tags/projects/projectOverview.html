@@ -26,6 +26,23 @@
 					<td>${_overview.description}</td>
 				</tr>
 				
+				#{if  _overview.hasLocations() } 
+					<tr>
+						<td class="formlabel"><label>&{'viewProjectLocation'}:</label></td>
+						<td>${_overview.locationNames[0]}</td>
+					</tr>
+					#{if ! _overview.hasMoreThanOneLocation() } 
+						#{list items:_overview.locationNames, as:'location'}
+							#{if ! location_isFirst } 
+								<tr>
+									<td></td>
+									<td>${location}</td>
+								</tr>
+							#{/if}
+						#{/list}
+					#{/if}
+				#{/if}
+				
 				<tr>
 					<td class="formlabel"><label>&{'viewProjectNumberOfParticipants'}:</label></td>
 					<td>${_overview.numberOfMembers}</td>
@@ -50,4 +67,3 @@
 		
 	</div>
 </div>
-

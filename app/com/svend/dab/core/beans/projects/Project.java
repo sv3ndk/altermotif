@@ -2,6 +2,7 @@ package com.svend.dab.core.beans.projects;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -360,6 +361,21 @@ public class Project {
 
 	// ------------------------------------------------------------------------------
 	//
+	
+	public Set<String> buildSetOfThemeRepresentation() {
+		Set<String> response = new HashSet<String>();
+		
+		for (SelectedTheme theme : getThemes()) {
+			response.add(theme.buildStringRepresentation());
+		}
+		
+		return response;
+	}
+	
+	// ------------------------------------------------------------------------------
+	//
+	
+	
 
 	public ProjectData getPdata() {
 		return pdata;

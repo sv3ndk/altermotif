@@ -38,7 +38,7 @@ public class WebSearchRequest {
 	// ISO code of the filtered language
 	private String lg;
 	
-	private String sortkey;
+	private String sortkey = "relevancy";
 	
 	// in case of sort by proximity and/or filter by proximity, we need a "reference location"
 	private Location rl;
@@ -46,6 +46,9 @@ public class WebSearchRequest {
 	private boolean filterProx;
 	private boolean filterDate;
 	private boolean filterLg;
+	
+	
+	private Set<SelectedTheme> cachedThemeSet = null;
 	
 
 	public SearchQuery toBackendRequest() {
@@ -65,8 +68,7 @@ public class WebSearchRequest {
 
 		if (!Strings.isNullOrEmpty(themes)) {
 			request.setThemes(new LinkedList<SelectedTheme>());
-			Set<SelectedTheme> themeSet = Utils.jsonToSetOfStuf(themes, SelectedTheme[].class);
-			request.getThemes().addAll(themeSet);
+			request.getThemes().addAll(getParsedSelectedThemes());
 		}
 		
 		////////////////////////////////////
@@ -121,6 +123,31 @@ public class WebSearchRequest {
 	
 	public boolean hasSearchTheme() {
 		return !Strings.isNullOrEmpty(themes);
+	}
+	
+	
+	public Set<SelectedTheme>  getParsedSelectedThemes() {
+		if (cachedThemeSet == null) {
+			cachedThemeSet = Utils.jsonToSetOfStuf(themes, SelectedTheme[].class);
+		}
+		return cachedThemeSet;
+	}
+	
+	public String getReadableThemes() {
+		StringBuffer response = new StringBuffer();
+		
+		if (getParsedSelectedThemes() != null && !getParsedSelectedThemes() .isEmpty()) {
+			for (SelectedTheme theme : getParsedSelectedThemes()) {
+				response.append(theme.getThemeLabel());
+				response.append( " - " );
+				response.append( theme.getSubThemeLabel());
+				response.append( ", " );
+			}
+			
+			response.deleteCharAt(response.length()-1);
+		}
+		
+		return response.toString();
 	}
 	
 	// ---------------------------------------

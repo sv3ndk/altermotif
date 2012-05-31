@@ -312,7 +312,7 @@ groupSearchResultTitle=Résultats de recherche
 groupSearchResultBackToSearchPage=Retour à la page de recherche
 groupSearchResultNumberOfUserParticipants=Nombre de participants
 groupSearchResultNumberOfProjectParticipants=Nombre de projets
-groupSearchKeyWords=Chaque groupe avec les mots clés suivants
+groupSearchKeyWords=***Any group with any these keywords
 groupSearchCategories=et dans un des catégories suivants
 
 groupResultFilterByDetailsCurrentQueryDescription_part1=Recherche de groupes
@@ -605,7 +605,7 @@ projectEditEditPhotos=Editer les photos
 projectPhotosSetAsMainPhoto=Choisir comme photo principale du projet
 
 # project search page
-projectSearchKeyWords=chaque projet avec tous ces mots clés
+projectSearchKeyWords=any project with any of these keywords
 projectSearchCategories=dans une de ces catégories
 projectSearchSimpleModeExplanation=Sélectionnez une catégorie ou cliquez sur une étiquette pour accéder directement au résultat correspondant
 projectSearchSimpleModeExplanation_GotoAdvancedMode=ou cliquez ici pour passer au
@@ -618,8 +618,8 @@ projectSearchResultTitle=résultats de la recherche
 projectSearchResultBackToSearchPage=retour vers la page de recherche
 projectSearchResultFilterResults=filtrer les résultats
 projectSearchResultSortBy=Trier par 
-projectSearchResultSortByAlphabetic=ordre alphabétique
-projectSearchResultSortByDueDate=date d'échéance (le plus proche d'abord)
+projectSearchResultSortByRelevancy=***relevancy
+projectSearchResultSortByDueDate=***due date (earliest first)
 projectSearchResultSortByProximity=emplacement, en commençant par les projects plus proches de
 projectSearchResultUpdateButtonText=mettre à jour les résultats de recherche
 projectResultChangeRefLocationLink=changer l'emplacement de référence

@@ -317,7 +317,7 @@ groupSearchResultTitle=Search results
 groupSearchResultBackToSearchPage=Back to group search page
 groupSearchResultNumberOfUserParticipants=Number of members
 groupSearchResultNumberOfProjectParticipants=Number of projects
-groupSearchKeyWords=Any group with all these keywords
+groupSearchKeyWords=Any group with any these keywords
 groupSearchCategories=and in any of these categories
 
 groupResultFilterByDetailsCurrentQueryDescription_part1=Look for groups
@@ -610,7 +610,7 @@ projectEditEditPhotos=Edit photos...
 projectPhotosSetAsMainPhoto=Set as main project photo
 
 # project search page
-projectSearchKeyWords=any project with all these keywords
+projectSearchKeyWords=any project with any of these keywords
 projectSearchCategories=in any of these categories
 projectSearchSimpleModeExplanation=Select one category or click on a tag for direct access to the corresponding result
 projectSearchSimpleModeExplanation_GotoAdvancedMode=or click here to switch to
@@ -623,8 +623,8 @@ projectSearchResultTitle=Search results
 projectSearchResultBackToSearchPage=Back to search page
 projectSearchResultFilterResults=Filter results
 projectSearchResultSortBy=Sort by
-projectSearchResultSortByAlphabetic=alphabetic order
-projectSearchResultSortByDueDate=due date (closest first)
+projectSearchResultSortByRelevancy=relevancy
+projectSearchResultSortByDueDate=due date (earliest first)
 projectSearchResultSortByProximity=location, starting with those close to 
 projectSearchResultUpdateButtonText=Update search results
 projectResultChangeRefLocationLink=change reference location

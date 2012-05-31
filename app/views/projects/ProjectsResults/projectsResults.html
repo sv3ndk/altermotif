@@ -39,7 +39,7 @@
 				<span >&{'projectResultFilterByDetailsCurrentQueryDescription_part2_tag'}: "${originalSearchRequest.tag}"</span>
 			#{/if}
 			#{if originalSearchRequest.hasSearchTheme()}
-				<span >&{'projectResultFilterByDetailsCurrentQueryDescription_part2_category'}: "${originalSearchRequest.themes}"</span>
+				<span >&{'projectResultFilterByDetailsCurrentQueryDescription_part2_category'}: "${originalSearchRequest.readableThemes}"</span>
 			#{/if}
 			<br />
 			&{'projectResultFilterByDetailsCurrentQueryDescription_part3_and'}:
@@ -58,7 +58,7 @@
 					&{'projectResultFilterByDueDate'} <input id="projectResultMaxDueDate" data-bind="value: filterByDueDateMaxDate" type="text" size="11"></input> 
 				</li>
 				<li> <input type="checkbox" data-bind="checked: isFilteredByLanguage"></input>
-					&{'projectResultFilterByLanguage'}: <input class="searchResultFilterLanguage"type="text" size="25"></input> 
+					&{'projectResultFilterByLanguage'}: <input id="projectResultFilterLanguage" class="searchResultFilterLanguage" type="text" size="25"></input> 
 				</li>
 			</ul>
 		</div>
@@ -68,7 +68,7 @@
 		<span  class="dabLink searchResultSortByLink">&{'projectSearchResultSortBy'}...</span>
 		<div id="projectResultSortByDetails" class="searchResultSortByDetails" data-bind="visible: isSortByVisible">
 			<ul>
-				<li><label><input type="radio" value="alphabetic" data-bind="checked: sortKey"></input>&{'projectSearchResultSortByAlphabetic'}</label></li>
+				<li><label><input type="radio" value="relevancy" data-bind="checked: sortKey"></input>&{'projectSearchResultSortByRelevancy'}</label></li>
 				<li><label><input type="radio" value="duedate" data-bind="checked: sortKey"></input>&{'projectSearchResultSortByDueDate'}</label></li>
 				<li><label><input type="radio" value="proximity" data-bind="checked: sortKey"></input>&{'projectSearchResultSortByProximity'}: <span data-bind="text: refLocation"  ></span>
 				<span class="dabLink searchResultSortByProximityChangeRefLocationLink" >(&{'projectResultChangeRefLocationLink'}...)</span>

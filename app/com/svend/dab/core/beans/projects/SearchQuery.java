@@ -14,7 +14,7 @@ import java.util.List;
 public class SearchQuery {
 	
 	public enum SORT_KEY {
-		alphabetic,
+		relevancy,
 		duedate,
 		proximity
 	}
@@ -37,7 +37,7 @@ public class SearchQuery {
 
 	private String language;
 	
-	private SORT_KEY sortKey = SORT_KEY.alphabetic;
+	private SORT_KEY sortKey = SORT_KEY.relevancy;
 	
 	
 
@@ -51,6 +51,8 @@ public class SearchQuery {
 	public SearchQuery() {
 		super();
 	}
+	
+	
 
 	public String getSearchTerm() {
 		return searchTerm;

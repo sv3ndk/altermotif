@@ -22,6 +22,11 @@ var dabProjectResultsLib = {
 			this.filterController.init();
 			$("#projectResultFilterLanguage").val(this.languageMapper.resolveLanguageOfCode(originalSearchRequestJson.lg));
 			
+			$("#projectResultFilterLanguage").autocomplete({
+				source : self.languageMapper.allPossibleLanguagesList
+			}
+			);
+			
 			// click on "refresh result" button
 			$("input.searchResultUpdateResultButton").click(function(event) {
 				self.refreshPageController.refresh();
@@ -41,7 +46,7 @@ var dabProjectResultsLib = {
 		this.refresh = function() {
 			$("#hiddenRefreshResultsForm form input.term").val(originalSearchRequestJson.term);
 			$("#hiddenRefreshResultsForm form input.tag").val(originalSearchRequestJson.tag);
-			$("#hiddenRefreshResultsForm form input.allThemesJson").val(originalSearchRequestJson.themes);
+			$("#hiddenRefreshResultsForm form input.allThemesJson").val( originalSearchRequestJson.themes);
 			
 			$("#hiddenRefreshResultsForm form input.sortkey").val(this.refreshModel.sortKey());
 			
@@ -62,3 +67,6 @@ var dabProjectResultsLib = {
 	},
 
 };
+
+
+

@@ -1,7 +1,11 @@
 package models.altermotif.projects.theme;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+
+import org.apache.solr.common.util.Hash;
 
 
 /**
@@ -19,6 +23,16 @@ public class Theme {
 		this.id = id;
 		this.label = label;
 	}
+	
+	
+	public Set<String> buildSetOfStringRepresentation() {
+		Set<String> response = new HashSet<String>();
+		for (SubTheme subTheme : subThemes){
+			response.add(id + "_" + subTheme.getId());
+		}
+		return response;
+	}
+
 
 	public String getId() {
 		return id;
