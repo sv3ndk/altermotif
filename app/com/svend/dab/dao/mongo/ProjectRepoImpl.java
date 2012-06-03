@@ -70,7 +70,7 @@ public class ProjectRepoImpl implements IProjectDao {
 		Query query = query(where("_id").in(allIds));
 
 		switch (sortkey) {
-		case alphabetic:
+		case relevancy:
 			query.sort().on("pdata.name", Order.ASCENDING);
 			break;
 		case duedate:

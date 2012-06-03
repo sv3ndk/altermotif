@@ -69,7 +69,7 @@ public class GroupDao implements IGroupDao {
 		Query query = query(where("_id").in(allIds));
 
 		switch (sortKey) {
-		case alphabetic:
+		case relevancy:
 			query.sort().on("name", Order.ASCENDING);
 			break;
 		case duedate:
