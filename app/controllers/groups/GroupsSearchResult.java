@@ -20,7 +20,7 @@ public class GroupsSearchResult extends DabLoggedController{
 			renderArgs.put("originalSearchRequestJson", Utils.objectToJsonString(r));
 			renderArgs.put("originalSearchRequest", r);
 			
-			renderArgs.put("groupsOverviews", BeanProvider.getGroupFullTextSearchService().searchForGroups(r.toBackendRequest()));
+			renderArgs.put("groupsOverviews", BeanProvider.getGroupIndexDao().searchForGroups(r.toBackendRequest()));
 			
 			render();
 		}

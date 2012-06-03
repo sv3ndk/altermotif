@@ -9,10 +9,10 @@ import com.svend.dab.core.beans.profile.UserProfile;
 import com.svend.dab.core.beans.projects.Participation;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.dao.IGroupDao;
+import com.svend.dab.core.dao.IGroupIndexDao;
 import com.svend.dab.core.dao.IProjectDao;
+import com.svend.dab.core.dao.IProjectIndexDao;
 import com.svend.dab.core.dao.IUserProfileDao;
-import com.svend.dab.core.groups.IGroupFtsService;
-import com.svend.dab.core.projects.IProjectFtsService;
 
 /**
  * @author svend
@@ -31,14 +31,14 @@ public class AdminService {
 	private IGroupDao groupDao;
 	
 	@Autowired
-	private IProjectFtsService projectFtsService;
+	private IProjectIndexDao projectIndexDao;
 
 	@Autowired
-	private IGroupFtsService groupFtsService;
+	private IGroupIndexDao groupIndexDao;
 
 
 	/**
-	 * this ugly method has been created when we added the "creation date" to the proejct summary => we updated all existing data like this (very dangerous
+	 * this ugly method has been created when we added the "creation date" to the project summary => we updated all existing data like this (very dangerous
 	 * method: loses udpates is other users are connected...)
 	 */
 	public void updateAllProjectsSummaries() {
@@ -53,23 +53,20 @@ public class AdminService {
 			userProfileDao.save(userProfile);
 		}
 		
-		
-		
 	}
 
 	public void indexAllProjects() {
-		projectFtsService.ensureIndexOnLocation();
 		Set<String> allProjectIds = projectDao.getAllProjectIds();
 		for (String id : allProjectIds) {
-			projectFtsService.updateProjetIndex(id, true);
+			projectIndexDao.updateIndex(id, true);
 		}
 	}
 
 	public void indexAllGroups() {
-		groupFtsService.ensureIndexOnLocation();
 		Set<String> allGroupIds = groupDao.getAllGroupsIds();
 		for (String id : allGroupIds) {
-			groupFtsService.updateGroupIndex(id, true);
+			
+			groupIndexDao.updateIndex(id, true);
 		}
 	}
 

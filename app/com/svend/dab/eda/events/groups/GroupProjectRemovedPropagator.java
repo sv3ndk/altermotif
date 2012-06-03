@@ -14,13 +14,13 @@ import com.svend.dab.core.beans.DabException;
 import com.svend.dab.core.beans.groups.ProjectGroup;
 import com.svend.dab.core.beans.projects.Project;
 import com.svend.dab.core.dao.IGroupDao;
+import com.svend.dab.core.dao.IGroupIndexDao;
 import com.svend.dab.core.dao.IProjectDao;
-import com.svend.dab.core.groups.IGroupFtsService;
 import com.svend.dab.eda.IEventPropagator;
 
 /**
  * @author svend
- *
+ * 
  */
 @Service
 public class GroupProjectRemovedPropagator implements IEventPropagator<GroupProjectRemoved> {
@@ -29,33 +29,32 @@ public class GroupProjectRemovedPropagator implements IEventPropagator<GroupProj
 
 	@Autowired
 	private IGroupDao groupDao;
-	
+
 	@Autowired
 	private IProjectDao projectDao;
 
 	@Autowired
-	private IGroupFtsService groupFtsService;
-	
+	private IGroupIndexDao groupIndexDao;
+
 	public void propagate(GroupProjectRemoved event) throws DabException {
-		
+
 		if (event != null && !Strings.isNullOrEmpty(event.getGroupId()) && !Strings.isNullOrEmpty(event.getProjectId())) {
-			
+
 			ProjectGroup group = groupDao.retrieveGroupById(event.getGroupId());
 			Project project = projectDao.findOne(event.getProjectId());
-			
+
 			if (group == null || project == null) {
-				logger.log(Level.WARNING, "refusing to propagate a GroupProjectRemovedPropagator: no group and/or no project found for project id = " + event.getProjectId() + " and groupid == " + event.getGroupId());
+				logger.log(Level.WARNING, "refusing to propagate a GroupProjectRemovedPropagator: no group and/or no project found for project id = " + event.getProjectId() + " and groupid == "
+						+ event.getGroupId());
 			} else {
-				
+
 				groupDao.removeProjectParticipant(event.getGroupId(), event.getProjectId());
 				projectDao.removeParticipationInGroup(event.getProjectId(), event.getGroupId());
-				groupFtsService.updateGroupIndex(event.getGroupId(), false);
+				groupIndexDao.updateIndex(event.getGroupId(), false);
 
-				
 			}
 		}
 
-		
 	}
 
 }

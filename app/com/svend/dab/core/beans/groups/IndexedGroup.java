@@ -48,7 +48,7 @@ public class IndexedGroup {
 			}
 		}
 
-		// TODO: we need MongoDB >= 1.9 in order to index 2D based on several location, but cloundfoundry only provide MongoDb 1.8 for now
+		// TODO: we need MongoDB >= 1.9 in order to index 2D based on several location, but cloudfoundry only provide MongoDb 1.8 for now
 		// => we only take the first location for the moment (to be improved when we migrate to Lucene)
 		if (group.getLocation() != null && !group.getLocation().isEmpty()) {
 			Location loc = group.getLocation().get(0);

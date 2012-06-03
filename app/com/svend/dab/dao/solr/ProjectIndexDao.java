@@ -2,7 +2,6 @@ package com.svend.dab.dao.solr;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -16,7 +15,6 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.params.CommonParams;
-import org.apache.solr.common.params.SolrParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -85,8 +83,6 @@ public class ProjectIndexDao implements IProjectIndexDao {
 			solrQuery.set(CommonParams.QT, "/projects");
 			QueryResponse response = solr.query(solrQuery);
 
-//			System.out.println("response: " + response);
-			
 			if (response != null && response.getResults() != null) {
 
 				Date expirationdate = new Date();
@@ -114,7 +110,7 @@ public class ProjectIndexDao implements IProjectIndexDao {
 	 * @param request
 	 * @return
 	 */
-	public SolrQuery buildSolrQuery(SearchQuery request) {
+	protected SolrQuery buildSolrQuery(SearchQuery request) {
 		StringBuffer userQuery = new StringBuffer();
 
 		// white spaces get replaced by "+" at some point => using "," instead

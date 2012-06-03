@@ -53,6 +53,7 @@ public class ProjectSolrConverter {
 		prjDoc.addField("prj_creation_date", project.getPdata().getCreationDate());
 
 		prjDoc.addField("prj_participants", project.getNumberOfConfirmedParticipants());
+		
 		if (project.getPhotoAlbum().getMainPhoto().getThumbLink() != null) {
 			prjDoc.addField("prj_thumb_bucket", project.getPhotoAlbum().getMainPhoto().getThumbLink().getS3BucketName());
 			prjDoc.addField("prj_thumb_key", project.getPhotoAlbum().getMainPhoto().getThumbLink().getS3Key());

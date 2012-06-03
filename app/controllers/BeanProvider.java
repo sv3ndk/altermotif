@@ -13,15 +13,14 @@ import com.svend.dab.core.beans.Config;
 import com.svend.dab.core.dao.IForumPostDao;
 import com.svend.dab.core.dao.IForumThreadDao;
 import com.svend.dab.core.dao.IGroupDao;
+import com.svend.dab.core.dao.IGroupIndexDao;
 import com.svend.dab.core.dao.IProjectDao;
+import com.svend.dab.core.dao.IProjectIndexDao;
 import com.svend.dab.core.dao.IUserProfileDao;
-import com.svend.dab.core.groups.IGroupFtsService;
 import com.svend.dab.core.groups.IGroupPhotoService;
 import com.svend.dab.core.groups.IGroupService;
-import com.svend.dab.core.projects.IProjectFtsService;
 import com.svend.dab.core.projects.IProjectPhotoService;
 import com.svend.dab.core.projects.IProjectService;
-import com.svend.dab.dao.solr.ProjectIndexDao;
 import com.svend.dab.eda.errorhandling.NonFailingJsonMessageConverter;
 import com.svend.dab.web.ResourceLocator;
 import com.svend.dab.web.upload.IUploadProcessor;
@@ -64,16 +63,8 @@ public class BeanProvider {
 		return Spring.getBeanOfType(IProjectService.class);
 	}
 
-	public static IProjectFtsService getProjectFullTextSearchService() {
-		return Spring.getBeanOfType(IProjectFtsService.class);
-	}
-
-	public static ProjectIndexDao getProjectIndexDao() {
-		return Spring.getBeanOfType(ProjectIndexDao.class);
-	}
-
-	public static IGroupFtsService getGroupFullTextSearchService() {
-		return Spring.getBeanOfType(IGroupFtsService.class);
+	public static IProjectIndexDao getProjectIndexDao() {
+		return Spring.getBeanOfType(IProjectIndexDao.class);
 	}
 
 	public static IProjectDao getProjectDao() {
@@ -114,6 +105,10 @@ public class BeanProvider {
 
 	public static IGroupPhotoService getGroupPhotoService() {
 		return Spring.getBeanOfType(IGroupPhotoService.class);
+	}
+	
+	public static IGroupIndexDao getGroupIndexDao() {
+		return Spring.getBeanOfType(IGroupIndexDao.class);
 	}
 
 }
