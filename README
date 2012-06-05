@@ -16,7 +16,7 @@ setup:
 - install Solr 3.6.0
  +  get the altermotif solr config and schema from here: https://github.com/svendx4f/altermotif_solr
 
-- git clone this project
+- git clone the current project
 
 - run this in order to download all dependencies: 
   play dependency --sync
@@ -24,7 +24,7 @@ setup:
 => at this point you should have everything to run the application locally.
 
 
-running the application:
+running the application locally:
 --------------------------
 - start mongodb.
 - start solr 
@@ -48,3 +48,50 @@ editing the code with Eclipse:
      * in Eclipse, define a "user library" containing all the libs in lib/ of this project (that were downloaded by "play dependency" above)   
 
 
+Installing a Solr instance of EC server (with pre-installed)
+------------------------------------------------------------
+A zip of the whole solr server (with appropriate config) has been uploaded here:
+
+=> unzip it to some folder on the EC2 instance, make sure Java is available, and start it
+
+As an alternative, it is also possible to install it manually (see next section)
+
+
+Installing a Solr instance of EC server (manually)
+----------------------------------------
+
+- if necessary, create an EC2 instance (I used Ubuntu image: Ubuntu Server 12.04 LTS (ami-a29943cb))
+
+- follow EC2 instruction to log to it via SSH from computer 
+
+- download solr: 
+   wget http://apache.belnet.be/lucene/solr/3.6.0/apache-solr-3.6.0.zip
+
+- install unzip:
+   sudo apt-get install unzip
+
+- unzip Solr: 
+   unzip apache-solr-3.6.0.zip
+
+- install java:
+   sudo apt-get install openjdk-6-jre
+
+- install git:
+   sudo apt-get install git
+   
+- follow git instruction to add ssh keys:
+  => read this: https://help.github.com/articles/generating-ssh-keys  
+  (I used "altermotif" without the quotes as passphrase for the ssh key)
+ 		
+- get the altermotif config from solr into the altermotif folder:
+  git clone git@github.com:svendx4f/altermotif_solr.git altermotif
+  
+- deploy patch 2155 to solr for geographic search 
+   => read this: http://wiki.apache.org/solr/SpatialSearch#SOLR-2155
+   
+- start solr :-)
+  cd ..
+  java -jar start.jar
+
+
+    
