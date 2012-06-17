@@ -71,7 +71,7 @@
 	</div>
 
 	<div id="toolBarFirstPart">
-		<a href="@{Application.donate()}" class="donateButton">&{'donate'}</a>
+		<a href="@{Application.donate(selectedUserLanguageCode)}" class="donateButton">&{'donate'}</a>
 		<span id="sloganToolBar"> <strong>AlterMotif | </strong>&{'slogan'}</span>
 
 	</div>		
@@ -206,6 +206,13 @@
 	<a class="fr" href="@{Application.privacyStatement('fr')}"></a>
 	<a class="nl" href="@{Application.privacyStatement('nl')}"></a>
 	<a class="tr" href="@{Application.privacyStatement('tr')}"></a>
+</div>
+
+<div id="hiddenLinksToDonate" class="hidden">
+	<a class="en" href="@{Application.donate('en')}"></a>
+	<a class="fr" href="@{Application.donate('fr')}"></a>
+	<a class="nl" href="@{Application.donate('nl')}"></a>
+	<a class="tr" href="@{Application.donate('tr')}"></a>
 </div>
 
 <div id="confirmationPopup" title="&{'confirmationPopupTitle'}">

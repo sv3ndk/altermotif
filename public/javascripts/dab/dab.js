@@ -35,20 +35,8 @@ var dabUtils =  {
 		}	
 	},
 	
-	
-	
 	showMessage : function(message) {
-		
-		
-		
-		
-		
 	},
-	
-	
-	
-	
-	
 }
 
 
@@ -124,6 +112,9 @@ function initChangeLanguageLogic(updateLanguageAction) {
 					} else if (typeof isPrivacyStatementPage != 'undefined') {
 						// in case of "privacy statements", we have to relaod the page corresponding to the new language
 						window.location.href=$("#hiddenLinksToPrivacyStatement a." +newLanguageCode).attr("href");
+					} else if (typeof isDonatePage != 'undefined') {
+						// in case of "donate", we have to relaod the page corresponding to the new language
+						window.location.href=$("#hiddenLinksToDonate a." +newLanguageCode).attr("href");
  					} else {
  						// in most cases, we just reload the current page
  						window.location.href=window.location.href;

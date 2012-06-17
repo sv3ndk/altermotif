@@ -10,6 +10,7 @@ GET     /admin                                  Admin.admin
 GET     /info/aboutus                           Application.aboutUs
 GET     /info/conditions/{languageCode}         Application.termsAndConditions
 GET     /info/privacy/{languageCode}            Application.privacyStatement
+GET     /info/donate/{languageCode}             Application.donate
 
 GET     /profile/home                           profile.ProfileHome.profileHome
 GET     /profile/{vuser}/public			       	profile.ProfileView.profileView

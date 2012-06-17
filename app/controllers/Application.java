@@ -27,7 +27,6 @@ public class Application extends DabController {
 	}
 
 	public static void termsAndConditions(String languageCode) {
-		
 		if (LANGUAGE_CODE_DUTCH.equalsIgnoreCase(languageCode)) {
 			render("Application/termsAndConditions_nl.html");
 		} else if (LANGUAGE_CODE_FRENCH.equalsIgnoreCase(languageCode)) {
@@ -53,8 +52,18 @@ public class Application extends DabController {
 		}
 	}
 	
+	
 	public static void donate(String languageCode) {
-		render();
+		if (LANGUAGE_CODE_DUTCH.equalsIgnoreCase(languageCode)) {
+			render("Application/donate_nl.html");
+		} else if (LANGUAGE_CODE_FRENCH.equalsIgnoreCase(languageCode)) {
+			render("Application/donate_fr.html");
+		} else if (LANGUAGE_CODE_TURKISH.equalsIgnoreCase(languageCode)) {
+			render("Application/donate_tr.html");
+		} else  {
+			// always defaulting to English
+			render("Application/donate_en.html");
+		}
 	}
 	
 	
