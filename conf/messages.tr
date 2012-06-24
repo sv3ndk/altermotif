@@ -610,7 +610,7 @@ projectPhotosSetAsMainPhoto=Proje resmi
 
 
 # project search page
-projectSearchKeyWords=***any project with any of these keywords
+projectSearchKeyWords=anahtar kelimelere uyan tüm projeler
 projectSearchCategories=bu kategorilerin herhangi biri
 projectSearchSimpleModeExplanation=Bir kategori seçin veya bağlantılı sonuçlara ulaşmak için etiketlere tıklayın
 projectSearchSimpleModeExplanation_GotoAdvancedMode=veya buraya tıklayın
@@ -621,10 +621,10 @@ projectSearchAdvancedModeExplanation_GotoSimpleMode_Link=basit arama
 # project search results page
 projectSearchResultTitle=Arama Sonuçları
 projectSearchResultBackToSearchPage=Arama sayfasına geri dön
-projectSearchResultFilterResults=Sonuçları filtreler
+projectSearchResultFilterResults=Sonuçları filtrele
 projectSearchResultSortBy=Sıraya sok
-projectSearchResultSortByRelevancy=***relevancy
-projectSearchResultSortByDueDate=***due date (earliest first)
+projectSearchResultSortByRelevancy=Yakınlık derecesi
+projectSearchResultSortByDueDate=Bitiş tarihine göre (en yakın en başta)
 projectSearchResultSortByProximity=Şu yere yakın olan 
 projectSearchResultUpdateButtonText=Sonuçları güncelle
 projectResultChangeRefLocationLink=Yer seçimini değiştir
