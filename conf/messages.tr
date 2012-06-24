@@ -22,8 +22,8 @@ elapsedTimeHours=saat önce
 
 
 aboutUsPart1=AlterMotif, bu sitede yeralan herhangi bir proje olabilirdi. Herşey basit bir fikirle başladı: yaşadığımız dünyayı daha iyi bir yer yapmayı nasıl başarabiliriz? Sonra yavaş yavaş farkına vardık ki; sorunlarımızın temelinde yatan önemli bir şey var: hep büyümek, daha fazla kar etmek istiyoruz. Sonuçlarına aldırış etmeden, diğer insanlara ve dünyamızın sağlığına olan etkilerine rağmen sürdürüyoruz bu oyunu. Bu oyun bizi asıl yapmak istediğimiz şeylerden de alıkoyuyor üstelik. Bunu değiştirmenin en etkin yolunun, kişisel girişimler olduğuna karar verdik. Kişisel motivasyona dayalı, yeni yardımlaşma şekilleriyle hayata geçirilen projeler dünyaya yeni açılımlar sunabilir ve gerçek bir değişime katkı yapabilirler.
-aboutUsPart2=AlterMotif bu sitede yer alan diğer projeler gibi, bir fikir olarak başladı ve bir grup insana ilham verdi, onları biraraya getirdi. AlterMotif, bu insanların ortak çabalarının sonucu. AlterMotif, başlangıç prensibine sadık kalmak için kar amacı gütmeyen bir kuruluş olarak tasarlandı. Böylece, kar etmek, asla AlterMotif'in asıl amacı olamaycak. Siteye yapılan tüm bağışlar yine bu amaç için, yani kar amacı gütmeyen her türlü yardımlaşma şekline destek olan bu sitenin hayatta kalması için kullanılacak.
-aboutUsPart3=AlterMotif, kendini sürekli yenileyen, hiç sona ermeyen bir proje. Amacı, insanların isteklerine ve yeteneklerine ket vuran, sadece "kar" zihniyetiyle çalışan pazar ekonomisine bir alternatif oluşturmak. Herkesin istediklerini yapma özgürlüğü olması gerektiğine inanıyoruz. Bunun için insanlara bir şans verilirse, dünyaya katkı sağlayan, parasal değerin ötesinde toplumsal değerlere vurgu yapan işlerin yapılacağına ikna olmuş durumdayız.Biliyoruz ki, sizin de yapmak istediğiniz ama kaynak bulamadığınız için unutmaya terkettiğiniz projeleriniz var. Şimdi bir fırsatınız var: bir proje başlatın, veya diğer projelere katılın,forumlarda tecrübelerinizi paylaşın, bağış yapın,bilmeyenlere haber verin,ekibimize destek olun...Tüm bunlar, AlterMotif'in amacına destek olmak için yeterli!Yalnız yapamadıklarımızı beraber başarabiliriz!
+aboutUsPart2=AlterMotif bu sitede yer alan diğer projeler gibi, bir fikir olarak başladı ve bir grup insana ilham verdi, onları biraraya getirdi. AlterMotif, bu insanların ortak çabalarının sonucu. AlterMotif, başlangıç prensibine sadık kalmak için kar amacı gütmeyen bir kuruluş olarak tasarlandı. Böylece, kar etmek, asla AlterMotif'in asıl amacı olamaycak. Siteye yapılan tüm bağışlar yine bu amaç için, yani kar amacı gütmeyen her türlü yardımlaşma şekline olan bu sitenin hayatta kalması için kullanılacak.
+aboutUsPart3=AlterMotif, kendini sürekli yenileyen, hiç sona ermeyen bir proje. Amacı, insanların isteklerine ve yeteneklerine ket vuran, sadece "kar" zihniyetiyle çalışan pazar ekonomisine bir alternatif oluşturmak. Herkesin istediklerini yapma özgürlüğü olması gerektiğine inanıyoruz. Bunun için insanlara bir şans verilirse, dünyaya katkı sağlayan, parasal değerin ötesinde toplumsal değerlere vurgu yapan işlerin yapılacağına ikna olmuş durumdayız.Biliyoruz ki, sizin de yapmak istediğiniz ama kaynak bulamadığınız için unutmaya terkettiğiniz projeleriniz var. Şimdi bir fırsatınız var: bir proje başlatın, veya diğer projelere katılın,forumlarda tecrübelerinizi paylaşın, bağış yapın,bilmeyenlere haber verin,ekibimize k olun...Tüm bunlar, AlterMotif'in amacına destek olmak için yeterli!Yalnız yapamadıklarımızı beraber başarabiliriz!
 
 # error messages
 errorValueRequired=Bu alan boş olamaz
@@ -63,9 +63,9 @@ registerPageInvalidCaptcha=Geçersiz onay kodu
 #Home page messages
 pageTitle=AlterMotif
 homePageTitle1=Hedeflerinize ulaşın!
-homePageTitle2=Fikirlerin gerçek olduğu bir yer
+homePageTitle2=Fikirlerin gerçeğe dönüştüğü yer!
 homePageHowDoesItWort=Nasıl mı? 
-homePageExplanation=Bir fikir sunun, diğer üyelerin desteğini alın ve hedefinize ulaşın!
+homePageExplanation=Bir fikir sunun, diğerlerinin desteğini alın ve hedefinize ulaşın!
 homePageFindAProject=Proje Bul
 homePageRules=Kullanım Kuralları
 homePagePrivacy=Gizlilik Politikası
@@ -90,16 +90,16 @@ loginMessage=Giriş Yapın
 loginErrorMessage=Giriş hatası
 loginErrorDetailMessage=Kullanıcı adı/şifre hatalı!
 registerPageCaptchaTitle=Lütfen harfleri alfabetik sıraya koyun 
-registerPageWelcomText=Hoşgeldin!Kaydolduktan sonra, hesabı kişiselleştirebilir, profilini görünür veya gizli yapabilir, hesabınla ilgili bazı bilgilerin (gerçek adın ve doğum tarihin gibi)gizlilik derecesine karar verebilirsin. AlterMotif, yeni iletişim ve üretim şekilleri arayan insanların oluşturduğu bir topluluk.Artık sen de bu topluluğun bir parçasısın.Burada işbirliği karşılıklı motivasyona dayanıyor.Projelerin kar etmenin ötesine geçen belirgin amaçları var. Hayatta yapmak istediklerini değerlendirirken sürekli tek bir kritere, yani projenin kar potensiyeline önem vermekten sıkıldın mı? AlterMotif kullanıcılarını bu sınırlamadan kurtarmak amacıyla kuruldu.İsteklerinin peşinden gidebilmen, projelerini sizin gibi düşünen insanların desteği ile hayata geçirebilmen için. AlterMotif dünyasında sen ekonomi için çalışmıyorsun, ekonomi senin için çalışıyor. Buradaki en önemli şey, senin hedeflerin.Senin ne yapmak istediğin.
-registerAcceptConditions_part1=Kabul ediyorum 
-registerAcceptConditions_part2=Kullanım Koşullarını
+registerPageWelcomText=Hoşgeldin!Kaydolduktan sonra, hesabını kişiselleştirebilir, profilini görünür veya gizli yapabilir, hesabınla ilgili bazı bilgilerin (gerçek adın ve doğum tarihin gibi)gizlilik derecesine karar verebilirsin. AlterMotif, yeni iletişim ve üretim şekilleri arayan insanların oluşturduğu bir topluluk.Artık sen de bu topluluğun bir parçasısın.Burada işbirliği karşılıklı motivasyona dayanıyor.Projelerin kar etmenin ötesine geçen belirgin amaçları var. Hayatta yapmak istediklerini değerlendirirken sürekli tek bir kritere, yani projenin kar potensiyeline önem vermekten sıkıldın mı? AlterMotif kullanıcılarını bu sınırlamadan kurtarmak amacıyla kuruldu.İsteklerinin peşinden gidebilmen, projelerini sizin gibi düşünen insanların desteği ile hayata geçirebilmen için. AlterMotif dünyasında sen ekonomi için çalışmıyorsun, ekonomi senin için çalışıyor. Buradaki en önemli şey, senin hedeflerin.Senin ne yapmak istediğin.
+registerAcceptConditions_part1=Kullanım Kurallarını
+registerAcceptConditions_part2=Kabul ediyorum
 
 
 #Top menu 
 topMenuProfile=Profil
 topMenuProfileHome=Anasayfa
 topMenuProfileMyProfile=Profilim
-topMenuProfileEditProfile=Profilimi Güncelle
+topMenuProfileEditProfile=Profil Ayarları
 topMenuProfileManagePhotos=Resim Ayarları
 topMenuProfileManageCv=Özgeçmişim
 topMenuProfilePrivacySettings=Gizlilik Ayarları
