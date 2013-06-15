@@ -481,6 +481,7 @@ projectNewAddOneTagLink=Ajouter une étiquette
 projectNewSelectTagsExplanation=Entrez des mots clés liés au projet. D'autres utilisateurs pourront trouver votre projet à base de ces mots clés.
 projectNewSelectLanguage=Langue
 projectNewSelectLanguageExplanation=Indiquez quelle langue devrait être utilisé pour la communication entre les participants au projet
+defaultTaskName=***default task name
 
 projectNewStartProjectButton=Démarrer le projet
 

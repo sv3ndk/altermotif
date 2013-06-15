@@ -134,7 +134,7 @@ function EditTaskViewModel() {
 	};
 
 	this.addStaticTask = function(staticTask, isNew) {
-		this.addTask(new ViewProjectResource(staticTask, isNew, this.maxNumOfAssigneePerTask, "default task name").init());
+		this.addTask(new ViewProjectResource(staticTask, isNew, this.maxNumOfAssigneePerTask, defaultTaskName).init());
 	};
 
 	this.addTask = function(dynamicTask) {

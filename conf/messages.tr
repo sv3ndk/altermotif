@@ -486,6 +486,7 @@ projectNewAddOneTagLink=Etiket ekle
 projectNewSelectTagsExplanation=Proje ile ilgili anahtar kelimeler girebilirsin. Diğer kullanıcılar böylece projeye daha kolay ulaşabilirler. 
 projectNewSelectLanguage=Dil
 projectNewSelectLanguageExplanation=Proje'nin iletişim dilini ne olacak?  
+defaultTaskName=***default task name
 
 projectNewStartProjectButton=Projeyi Başlat 
 

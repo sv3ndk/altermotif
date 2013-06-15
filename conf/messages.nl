@@ -488,6 +488,7 @@ projectNewAddOneTagLink=Een markering toevoegen
 projectNewSelectTagsExplanation=Plaats kernwoorden die gerelateerd zijn aan het project. Anderen zullen uw project kunnen vinden op basis van deze kernwoorden.
 projectNewSelectLanguage=Taal
 projectNewSelectLanguageExplanation=Duidt aan in welke taal de deelnemers aan dit project zouden moeten communiceren
+defaultTaskName=***default task name
 
 projectNewStartProjectButton=Start project 
 

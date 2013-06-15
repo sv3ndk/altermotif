@@ -16,7 +16,6 @@ CancelButton=Cancel
 nolabel=
 slogan=Get together. Get things done. A new approach to doing things
 
-
 elapsedTimeSeconds=a few seconds ago
 elapsedTimeMinutes= minutes ago
 elapsedTimeHours= hours ago
@@ -485,6 +484,8 @@ projectNewAddOneTagLink=Add a tag...
 projectNewSelectTagsExplanation=Enter keywords related to the project. Others will be able to  find your project based on these keywords. 
 projectNewSelectLanguage=Language
 projectNewSelectLanguageExplanation=Indicate what language should be used for communication between project participants
+defaultTaskName=default task name
+
 
 projectNewStartProjectButton=Start project 
 
